@@ -124,7 +124,7 @@ const restart = () => {
     </nav>
     <div id="body">
         <div ref="container_el" id="textbox">{{text}}</div>
-        <input 
+        <input
         @keydown.delete.prevent
         @input="typing" 
         @keyup.enter.prevent="restart"
@@ -147,7 +147,7 @@ const restart = () => {
             </div>
           </div>
           <div>
-            <div>Elapsed time: {{typing_time}} seconds</div>
+            <div>Time: {{typing_time}} seconds</div>
               <div>Character per second: {{Math.ceil(correct_count / typing_time)}}</div>
           </div>
         </div>
