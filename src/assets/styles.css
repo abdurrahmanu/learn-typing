@@ -2,15 +2,15 @@ body, *{
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    position: relative;
 }
 
-#cont {
-padding-top: 100px;
+body {
+    background: #cccce6;
 }
 
 #app {
-    height: 100vh;
-    background: #cccce6;
+    padding-top: 110px;
 }
 
 .green, .red {
@@ -41,9 +41,10 @@ width: 100%;
 display: flex;
 align-items: center;
 justify-content: space-between;
+z-index: 10;
 }
 
-#body {
+main {
     width: 450px;
     height: fit-content;
     padding: 20px;
@@ -52,6 +53,8 @@ justify-content: space-between;
     border-radius: 10px;
     box-shadow: 1px 1px 2px #7a7878;
     background: #f7f6f6;
+    max-width: 90%;
+    min-width: 350px;
 }
 
 #textbox {
