@@ -122,7 +122,7 @@ const restart = () => {
       <div>TYPING-TEST</div>
       <div class="time">{{minutes}}:{{typing_time}}</div>
     </nav>
-    <div id="body">
+    <main >
         <div ref="container_el" id="textbox">{{text}}</div>
         <input
         @keydown.delete.prevent
@@ -151,10 +151,24 @@ const restart = () => {
               <div>Character per second: {{Math.ceil(correct_count / typing_time)}}</div>
           </div>
         </div>
-    </div>
+      </main>
 
   </div>
 </template>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
