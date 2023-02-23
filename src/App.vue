@@ -122,6 +122,7 @@ const restart = () => {
       <div>TYPING-TEST</div>
       <div class="time">{{minutes}}:{{typing_time}}</div>
     </nav>
+    <div class="under_nav"></div>
     <main >
         <div ref="container_el" id="textbox">{{text}}</div>
         <input
