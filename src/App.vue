@@ -1,10 +1,11 @@
 <template>
-  <div class="bg-black">
-    <HomeView />
+    <div class="app">
+      <RouterView />
   </div>
 </template>
 
-<script setup>
-import HomeView from './views/HomeView.vue';
-</script>
-
+<style scoped>
+.app {
+  @apply bg-neutral-900 relative min-h-screen m-auto max-w-[1000px]
+}
+</style>

@@ -1,18 +1,23 @@
 <template>
-    <div class="flex justify-center py-5 md:py-10 gap-5 transition duration-75">
-        <div>
-            <button @click="$emit('restart')" class="px-8 p-2 md:px-10 hover:bg-zinc-800 hover:text-white rounded-full bg-slate-300 text-black">RESTART</button>
-        </div>
-        <div>
-            <button @click="$emit('restart', 'skip')" class="px-12 p-2 md:px-18 rounded-full hover:bg-zinc-800 hover:text-white bg-slate-300 text-black">SKIP</button>
+    <div class="flex w-full text-slate-300 transition duration-75">
+        <div class="bg-neutral-800 w-fit px-4 p-2 rounded-md m-auto">
+            <p class="text-center py-2"> NEXT</p>
+            <div class="font-mono">
+                <span>Press</span> <span class="bg-slate-600 text-[10px] font-mono p-1 rounded-md m-1">Escape</span> <span>keys</span>
+            </div>
         </div>
     </div>
-    </template>
+</template>
 
-<script>
-    
+<script setup>
+import { ref, defineEmits } from 'vue';
+
+const emit = defineEmits(['EscapeToNextSession'])
+window.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+        emit ('EscapeToNextSession')
+    }
+})
+
 </script>
 
-<style lang="less" scoped>
-
-</style>

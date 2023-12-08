@@ -1,150 +1,172 @@
 <template>
-    <div class="text-slate-100 p-5 rounded-md  transition-all duration-75 relative max-w-[700px] w-[85%] m-auto">
-        <lightEffect />
+    <div 
+    :class="[!containerText.length ? 'pt-[100px]' : 'pt-12']" 
+    class="typing-container">
 
-        <Transition appear>
-            <timerComponent 
-            v-if="completedTyping"
-            :startTime="startTime"
-            :endTime="endTime"
-            />
-        </Transition>
+        <div
+        class="text-style"
+        v-if="containerText.length" 
+        :class="[textAlign ? 'text-center' : '']" >
 
-        <div @click="focusInput = true" v-if="containerText.length" :class="[completedTyping ? 'pt-5' : 'pt-32']" class="text-center leading-9 md:leading-[40px] text-lg md:text-xl pb-10">
-            <alphabetSpan 
-            :clearAlphabet="restartTyping"
-            @equal="correctCount++"
-            @unequal="wrongCount++"
-            @containerTextLength="textLength = $event"
+        <div ref="textContainer">
+            <alphabetSpan
             v-for="(alphabet, index) in containerText"
             :key="index"
+            @equal="correctCount++"
+            @unequal="wrongCount++"
+            :clearAlphabet="restartTyping"
             :alphabet="alphabet"
             :index="index"
-            :unequal="typedAlphabet !== alphabet && typedAlphabetIndex === index && typedAlphabet.length > 0"
-            :equal="typedAlphabet === alphabet && typedAlphabetIndex === index && typedAlphabet.length > 0" />
+            :currentIndex="playerInputLength === index"
+            :unequal="playerLastInput !== alphabet && playerInputLength - 1 === index && playerLastInput.length > 0"
+            :equal="playerLastInput === alphabet && playerInputLength - 1 === index && playerLastInput.length > 0" />
         </div>
 
-        <div class="text-center pt-32 pb-5 font-serif text-slate-400 text-2xl active:text-white" @click="generate()" v-else>
-            CLICK TO GENERATE TEXT
+            <RangeInput 
+            :range="completionLevel" />
+
         </div>
 
-        <restartButtonComponent
-        @restart="restart($event)"
-        />
-        
-        <inputComponent
-        @start="start"
-        :clearInput="restartTyping"
-        :focusInput="focusInput"
-        @complete="complete"
-        @typingEvent="typingEvent"
-        :containerText="containerText" />
-        
-        <showResultComponent
-        v-if="completedTyping"
-        :clearResult="restartTyping"
-        :correctCount="correctCount"
-        :wrongCount="wrongCount"
-        :startTime="startTime"
-        :endTime="endTime"
-        />
+        <div class="w-fit h-fit m-auto">
+            <div class="text-center font-serif text-slate-400 text-2xl active:text-white relative" @click="generateText" v-if="!focusInput && !playerLastInput.length && !next && !sessionCompleted">
+                <span class="text-white active:text-slate-400 font-mono">start</span>
+            </div>
+        </div>
 
     </div>
 </template>
 
 <script setup>
-import { ref, defineProps, watchEffect, defineEmits } from 'vue';
+import { ref, defineProps, watchEffect, defineEmits, onMounted } from 'vue';
 import alphabetSpan from './alphabetSpan.vue'
-import inputComponent from './inputComponent.vue';
-import showResultComponent from './showResultComponent.vue';
-import timerComponent from './timerComponent.vue'
-import lightEffect from './lightEffect.vue'
-import restartButtonComponent from './restartButtonComponent.vue'
-
-const emit = defineEmits(['generate'])
-const correctCount = ref(0)
-const wrongCount = ref(0)
-const typedAlphabet = ref('')
-const typedAlphabetIndex = ref(0)
-const textLength = ref(0)
-const completedTyping = ref(false)
-const startTiming = ref(false)
-const restartTyping = ref(false)
-const focusInput = ref(false)
-const startTime = ref(0)
-const endTime = ref(0)
+import RangeInput from '@/components/RangeInput.vue'
+import { UseGetQuotes } from '../composables/UseGetQuotes'
 
 const props = defineProps({
-    containerText: String,
+    next: Boolean,
+    customizeSettingsProp: Array,
+    textAlign: Boolean,
+    restart: Boolean
 })
 
-const generate = () => {
-    focusInput.value = true
-    emit('generate')
-}
-
-const start = () => {
-    startTime.value = new Date().getTime()
-}
-
-const complete = () => {
-    endTime.value = new Date().getTime()
-    completedTyping.value = true
-}
-
-const restart = (event) => {
-    if (!props.containerText.length) return
-    focusInput.value = true
-    restartTyping.value = true
-    correctCount.value = 0
-    wrongCount.value = 0
-    typedAlphabet.value = ''
-    typedAlphabetIndex.value = ''
-    textLength.value = ''
-    completedTyping.value = ''
-    startTiming.value = false
-    setTimeout(() => {
-        restartTyping.value = false
-    }, 0);
-    if (event === 'skip') {
-        emit('generate');
-    }
-}
-
-window.addEventListener('click', e => {
-    focusInput.value = false
-})
-
-const typingEvent = (alphabet, alphabetIndex) => {
-    typedAlphabet.value = alphabet
-    typedAlphabetIndex.value = alphabetIndex
-}
-
+const emit = defineEmits(['generate', 'sessionCompleted', 'resultData', 'startedTyping'])
+const textContainer = ref(null)
+const completionLevel = ref(0)
+const correctCount = ref(0)
+const wrongCount = ref(0)
+const containerText = ref('')
+const playerLastInput = ref('')
+const playerInputLength = ref(0)
+const sessionCompleted = ref(false)
+const restartTyping = ref(false)
+const focusInput = ref(false)
+const startTime = ref(null)
+const resultData = ref({})
+const totalTime = ref(null)
+const lines = ref('')
 
 watchEffect(() => {
-    //TYPING TIMER
+    if (textContainer.value) {
+        lines.value = textContainer.value.textContent.split('\n')
+    }
+
+    console.log(containerText.value[playerInputLength.value]);
 })
 
-//npm update-browserslist-db@latest
+
+window.addEventListener('keypress', e => {
+    if (focusInput.value && containerText.value.length && !sessionCompleted.value) {
+        if (playerInputLength.value === 0) startTime.value = performance.now();
+        completionLevel.value = ((playerInputLength.value + 1) / containerText.value.length) * 100
+        playerLastInput.value = e.key
+        playerInputLength.value++
+
+        if (playerInputLength.value === containerText.value.length) {
+            sessionCompleted.value = true
+            emit('sessionCompleted')
+            totalTime.value = performance.now() - startTime.value
+            resultData.value = {
+                correctCount: correctCount.value,
+                wrongCount: wrongCount.value,
+                containerText: containerText.value,
+                characters: containerText.value.length,
+                totalTime: Math.round(totalTime.value),
+                testType: 'English-10-words'
+            }
+            emit('resultData', resultData.value)
+            setTimeout(() => {                
+                resultData.value
+            }, 10);
+        }
+
+    }
+})
+
+const generateText = () => {
+    completionLevel.value = 0
+    focusInput.value = true
+    if (props.customizeSettingsProp.length) {
+        containerText.value = UseGetQuotes(props.customizeSettingsProp).res.value
+    }
+    else {
+        containerText.value = UseGetQuotes().res.value
+    }
+    emit('startedTyping')
+}
+
+const BeginNextSession = () => {
+    resultData.value = {}
+    totalTime.value = null
+    completionLevel.value = 0
+    startTime.value = null
+    correctCount.value = 0
+    wrongCount.value = 0
+    focusInput.value = false
+    containerText.value = ''
+    playerLastInput.value = ''
+    playerInputLength.value = 0
+    sessionCompleted.value = false
+    restartTyping.value = true
+    setTimeout(() => {
+    restartTyping.value = false
+    }, 0);
+}
+
+watchEffect(() => {
+    if (props.next) {
+        BeginNextSession()
+        generateText()
+    }
+
+    if (props.restart) {
+        completionLevel.value = 0
+        BeginNextSession()
+        generateText()
+    }
+})
 </script>
 
 <style scoped>
-.v-enter-from {
-    transform: translateY(-40px);
-    opacity: 0;
+.text-style {
+    @apply leading-9 md:leading-[40px] transition-all duration-500 relative md:text-xl border-l-4 border-l-zinc-800 pl-4 
 }
 
-.v-enter-active {
-    transition: all 1s ease;
+
+.typing-container {
+    @apply text-slate-100 h-full w-[90%] min-h-[200px] px-5 relative transition-all duration-200 max-w-[800px] m-auto
 }
 
-.v-leave-to {
-    opacity: 0;
-}
-
-.v-leave-active {
-    transition: all 1s ease;
-}
 </style>
+
+
+
+
+
+
+
+
+
+
+
 
 

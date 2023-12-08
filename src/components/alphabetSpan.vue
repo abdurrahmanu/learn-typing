@@ -1,5 +1,17 @@
 <template>
-    <span class="text-slate-400 hover:text-white" :class="[equal && !(alphabet === ' ') ? 'text-green-900 opacity-40' : '', unequal && !(alphabet === ' ') ? 'text-red-900 opacity-40' : '', equal && alphabet === ' ' ? 'bg-green-900 opacity-40' : '', unequal && alphabet === ' ' ? 'bg-red-900 opacity-40' : '']">{{ alphabet }}</span>
+    <div 
+    class="main-style" 
+    :class="[ currentIndex ? 'text-white' : '',
+    equal && !(alphabet === ' ') ? 'text-green-500' : 'text-slate-400',
+    unequal && !(alphabet === ' ') ? 'text-red-500' : 'text-slate-400']">
+
+        <Transition name="focus">
+            <span v-if="currentIndex" class="focus animateFocus"></span>
+        </Transition>
+
+        <span>{{ alphabet }}</span>
+
+    </div>
 </template>
 
 <script setup>
@@ -13,7 +25,8 @@ const props = defineProps({
     equal: Boolean,
     unequal: Boolean,
     index: Number,
-    clearAlphabet: Boolean
+    clearAlphabet: Boolean,
+    currentIndex: Boolean,
 })
 
 watchEffect(() => {
@@ -33,3 +46,27 @@ watchEffect(() => {
     }
 })
 </script>
+
+<style scoped>
+.focus {
+    @apply w-full py-3 rounded-md absolute inline-block top-[50%] opacity-20 translate-y-[-50%] bg-zinc-500 transition-all ease-in-out
+}
+
+.main-style {
+    @apply relative hover:text-white font-mono inline w-fit whitespace-pre-wrap
+}
+
+.focus-enter-from {
+    left: -100%;
+}
+
+.focus-enter-active, .focus-leave-active {
+    transition: all 200ms ease;
+}
+
+.focus-leave-to {
+    right: -100%
+}
+
+
+</style>
