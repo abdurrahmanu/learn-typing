@@ -1,48 +1,52 @@
 <template>
     <div 
     class="main-style" 
-    :class="[ currentIndex ? 'text-white' : '',
-    equal && !(alphabet === ' ') ? 'text-green-500' : 'text-slate-400',
-    unequal && !(alphabet === ' ') ? 'text-red-500' : 'text-slate-400']">
-
+    :class=" {'text-white' : currentIndex, 'text-slate-200' : alphabet === ' ', 'text-slate-400' : !(alphabet === ' '), 'text-red-500' : unequal && !(alphabet === ' '), }">
         <Transition name="focus">
             <span v-if="currentIndex" class="focus animateFocus"></span>
         </Transition>
 
         <span>{{ alphabet }}</span>
-
     </div>
 </template>
 
 <script setup>
-import { defineProps, defineEmits, ref, watchEffect } from 'vue';
+import { defineProps, watchEffect, computed } from 'vue';
+import {storeToRefs} from 'pinia'
+import {typingStore} from '../store/typingStore'
 
-const emit = defineEmits(['equal', 'unequal'])
-const equal = ref(false)
-const unequal = ref(false)
+const store = typingStore()
+const { correctCount, wrongCount, playerLastInput , playerInputLength, sessionCompleted, restartTyping} = storeToRefs(store)
+
 const props = defineProps({
     alphabet: String,
-    equal: Boolean,
-    unequal: Boolean,
     index: Number,
-    clearAlphabet: Boolean,
-    currentIndex: Boolean,
+    currentIndex: Boolean
 })
 
 watchEffect(() => {
-    if (props.equal) {
-        equal.value = true
-        emit('equal')
+    if (props.currentIndex) console.log(props.alphabet)
+})
+
+const equal = computed(() => {
+    return playerLastInput.value === props.alphabet && playerInputLength.value - 1 === props.index && playerLastInput.length > 0
+})
+
+const unequal = computed(() => {
+    return playerLastInput.value !== props.alphabet && playerInputLength.value - 1 === props.index && playerLastInput.value.length > 0
+})
+
+watchEffect(() => {
+    if (equal.value) {
+        correctCount.value++
     }
 
-    if (props.unequal) {
-        unequal.value = true
-        emit('unequal')
+    if (unequal.value) {
+        wrongCount.value++
     }
 
-    if (props.clearAlphabet) {
-        equal.value = false,
-        unequal.value = false
+    if (restartTyping.value) {
+
     }
 })
 </script>

@@ -1,11 +1,11 @@
 <template>
     <!-- <Teleport to="#modal-root">
         <Transition>           
-            <div @click="toggleModal" v-if="toggle" class="fixed h-screen w-full top-0 left-0 bg-black opacity-40"></div>
+            <div @click="toggleModal" v-if="toggle" class="fixed top-0 left-0 w-full h-screen bg-black opacity-40"></div>
         </Transition>
         <Transition name="content">
             <div class="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] " v-if="toggle" >
-                <div class="bg-blue-300 text-white place-content-center p-4 pt-8 rounded-md">
+                <div class="p-4 pt-8 text-white bg-blue-300 rounded-md place-content-center">
                     <div @click="toggleModal" class="absolute top-0 right-2">x</div>
                     <slot ></slot>
                 </div>
@@ -16,7 +16,7 @@
     <!-- animated modal-->
 
     <Teleport to="#modal-root">
-        <div @click="toggleModal" v-if="toggle" class="h-screen w-full absolute top-0 left-0">
+        <div @click="toggleModal" v-if="toggle" class="absolute top-0 left-0 w-full h-screen">
             <Transition name="topLeft">                
                 <div v-if="toggleWait" class=" w-[50%] h-[50%] absolute top-0 left-0 bg-black opacity-[.5]"></div>
             </Transition>
@@ -33,8 +33,8 @@
 
         <Transition name="content" mode="out-in">
             <div class="fixed top-[40%] left-[50%] m-auto translate-x-[-50%] max-w-[500px] w-[60%] translate-y-[-50%]" v-if="toggleContent" >
-                <div class="text-white relative m-auto h-fit place-content-center w-full p-4 pt-8 rounded-md">
-                    <div @click="toggleModal" class="absolute top-0 right-2 px-2 rounded-full bg-zinc-800 text-gray-400">x</div>
+                <div class="relative w-full p-4 pt-8 m-auto text-white rounded-md h-fit place-content-center">
+                    <div @click="toggleModal" class="absolute top-0 px-2 text-gray-400 rounded-full right-2 bg-zinc-800">x</div>
                     <slot ></slot>
                 </div>
             </div>
@@ -64,7 +64,7 @@ watchEffect(() => {
             toggleWait.value = true
             setTimeout(() => {
                 toggleContent.value = true
-            }, 1000);
+            }, 500);
         }, 0);
     } else {
         setTimeout(() => {
@@ -100,7 +100,7 @@ const toggleModal = () => emit('false')
 .bottomLeft-enter-active,
 .bottomRight-enter-active {
     transition: all;
-    transition-duration: 1s;
+    transition-duration: 0.4s;
 }
 
 .topLeft-leave-to,
@@ -123,7 +123,7 @@ const toggleModal = () => emit('false')
 .bottomLeft-leave-active,
 .bottomRight-leave-active {
     transition: all;
-    transition-duration: 1s;
+    transition-duration: 0.4s;
 }
 
 /* .v-enter-from {

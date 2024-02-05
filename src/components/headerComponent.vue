@@ -1,9 +1,8 @@
 <template>
-    <section class="h-fit relative">
-        <nav class="fixed top-0 flex justify-around text-slate-300 left-0 w-full opacity-90 p-3 font-mono">
+    <section class="relative h-fit">
+        <nav class="fixed top-0 left-0 flex justify-around w-full p-3 font-mono text-slate-300 opacity-90">
             <div class="flex items-center gap-5 font-mono">
                 <div class="text-xl md:text-2xl">DORAYI TYPING</div>
-                <Navigation />
             </div>
             <div class="flex gap-3">
                 <div>00</div>
@@ -42,10 +41,15 @@
 
 <script setup>
 import { ref, defineEmits } from 'vue'
-import Navigation from './Navigation.vue'
 import SearchSvg from './svgComponents/SearchSvg.vue'
 import Modal from './modal.vue'
 import searchBar from './searchBar.vue'
+
+import {typingStore} from '../store/typingStore.js'
+import {storeToRefs} from 'pinia'
+const store = typingStore()
+const {customizeProp} = storeToRefs(store)
+const {checkConfiguration } = store
 
 const tooltip = ['random', 'length', 'word', 'format', 'format', 'word', 'word']
 const options = [
@@ -61,13 +65,13 @@ const options = [
 const openModal = ref(false)
 const hoverIndex = ref(null)
 const selections = ref([])
-const emit = defineEmits(['selectedOptionsArray', 'emitTextAlign', 'newConfig']) 
+const emit = defineEmits([ 'emitTextAlign']) 
 
 const mouseEnter = (index) => hoverIndex.value = index
 const mouseLeave = (index) => hoverIndex.value = null
 
 const selectedOption = (selectedOpt) => {
-    emit('newConfig')
+    checkConfiguration(selectedOpt)
     if (selectedOpt === 'centralize') {
         emit('emitTextAlign');
     }
@@ -81,7 +85,9 @@ const selectedOption = (selectedOpt) => {
             }
         } 
     }
-
-    emit('selectedOptionsArray', selections.value)
+    customizeProp(selections.value)
 }
+
+
+
 </script>

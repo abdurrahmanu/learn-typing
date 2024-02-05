@@ -1,28 +1,27 @@
 <template>
     <div class="min-h-[200px] text-center text-white">
-        <p class="py-2 text-center font-mono text-slate-500">STATISTICS</p>
+        <p class="py-2 font-mono text-center text-slate-500">STATISTICS</p>
         <div class="flex justify-center p-3 font-mono text-slate-400">
-            <div class="border-r text-center px-4 relative">
+            <div class="relative px-4 text-center border-r">
                 <div :class="[accuracy() > 85 ? 'bg-green-600' : 'bg-red-300']" class="w-[10px] absolute bottom-0 right-0 h-[10px]"></div>
                 <div class="text-xs">ACCURACY</div>
                 <div class="">{{ accuracy() }}%</div>
             </div>
-            <div class="border-r text-center px-4 relative">
+            <div class="relative px-4 text-center border-r">
                 <div class="text-xs">TIME</div>
                 <div class="">{{ elapsedTime() }}s</div>
             </div>
-            <div class="border-r text-center px-4 relative">
+            <div class="relative px-4 text-center border-r">
                 <div :class="[wordsPerMinute() > 50 ? 'bg-green-600' : 'bg-red-300']" class="w-[10px] absolute bottom-0 right-0 h-[10px]"></div>
                 <div class="text-xs">WPM</div>
                 <div class="">{{ wordsPerMinute() }}</div>
             </div>
-            <div class="px-4 relative"> 
+            <div class="relative px-4"> 
                 <div :class="[errorRatio() > 1/3 ? 'bg-green-600' : 'bg-red-300']" class="w-[10px] absolute bottom-0 right-0 h-[10px]"></div>
                 <div class="text-xs">ERROR RATIO</div>
                 <div class="">{{ errorRatio() }}</div>
             </div>
         </div>
-
         <div class="pt-10">
             <div class="w-[80%] max-w-[600px] m-auto min-h-[200px] bg-teal-700"></div>
         </div>
@@ -30,22 +29,17 @@
 </template>
 
 <script setup>
-import { ref, watchEffect, computed, defineProps, defineEmits } from 'vue';
+import {storeToRefs} from 'pinia'
+import {typingStore} from '../store/typingStore'
 
-const result = ref({})
-const emit = defineEmits(['nextSession'])
-const props = defineProps({
-    result: Object,
-})
+const store = typingStore()
+const {result} = storeToRefs(store)
+const {switchNext} = store
 
 window.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
-        emit('nextSession')
+        switchNext()
     }
-})
-
-watchEffect(() => {
-    result.value = props.result
 })
 
 const accuracy = () => {
@@ -63,9 +57,4 @@ const wordsPerMinute = () => {
 const errorRatio = () => {
     return result.value.wrongCount + '/' + (result.value.wrongCount + result.value.correctCount)
 }
-
-const comment = () => {
-
-}
-
 </script>
