@@ -1,12 +1,6 @@
 <template>
-    <div 
-    class="main-style" 
-    :class=" {'text-white' : currentIndex, 'text-slate-200' : alphabet === ' ', 'text-slate-400' : !(alphabet === ' '), 'text-red-500' : unequal && !(alphabet === ' '), }">
-        <Transition name="focus">
-            <span v-if="currentIndex" class="focus animateFocus"></span>
-        </Transition>
-
-        <span>{{ alphabet }}</span>
+    <div class="relative inline font-mono whitespace-pre-wrap w-fit">
+        <span :class="[equalStyle, unEqualStyle, currentIndexStyle, mainStyle]" class="text-sm transition-all duration-[30ms]">{{ alphabet }}</span>
     </div>
 </template>
 
@@ -16,16 +10,11 @@ import {storeToRefs} from 'pinia'
 import {typingStore} from '../store/typingStore'
 
 const store = typingStore()
-const { correctCount, wrongCount, playerLastInput , playerInputLength, sessionCompleted, restartTyping} = storeToRefs(store)
-
+const { correctCount, wrongCount, playerLastInput , playerInputLength} = storeToRefs(store)
 const props = defineProps({
     alphabet: String,
     index: Number,
     currentIndex: Boolean
-})
-
-watchEffect(() => {
-    if (props.currentIndex) console.log(props.alphabet)
 })
 
 const equal = computed(() => {
@@ -36,41 +25,24 @@ const unequal = computed(() => {
     return playerLastInput.value !== props.alphabet && playerInputLength.value - 1 === props.index && playerLastInput.value.length > 0
 })
 
+const equalStyle = computed(() => {
+    return equal.value ? 'text-green-500' : ''
+})
+
+const unEqualStyle = computed(() => {
+    return  unequal.value ? 'text-red-500' : ''
+})
+
+const currentIndexStyle = computed(() => {
+    return  props.currentIndex ? 'bg-zinc-700 py-[1px] rounded-md text-white animate-pulse transition-all duration-200' : ''
+})
+
+const mainStyle = computed(() => {
+    return !props.currentIndex && props.index > playerInputLength.value ? 'text-slate-400' : ''
+})
+
 watchEffect(() => {
-    if (equal.value) {
-        correctCount.value++
-    }
-
-    if (unequal.value) {
-        wrongCount.value++
-    }
-
-    if (restartTyping.value) {
-
-    }
+    if (equal.value) correctCount.value++
+    if (unequal.value) wrongCount.value++
 })
 </script>
-
-<style scoped>
-.focus {
-    @apply w-full py-3 rounded-md absolute inline-block top-[50%] opacity-20 translate-y-[-50%] bg-zinc-500 transition-all ease-in-out
-}
-
-.main-style {
-    @apply relative hover:text-white font-mono inline w-fit whitespace-pre-wrap
-}
-
-.focus-enter-from {
-    left: -100%;
-}
-
-.focus-enter-active, .focus-leave-active {
-    transition: all 200ms ease;
-}
-
-.focus-leave-to {
-    right: -100%
-}
-
-
-</style>

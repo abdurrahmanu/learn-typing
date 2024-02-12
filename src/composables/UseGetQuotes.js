@@ -7,7 +7,7 @@ import { useCustomizeWords } from './customizers/useCustomizeWords';
 import { useCustomizeFormat } from './customizers/useCustomizeFormat';
 import { useDefaultFormat } from './customizers/useDefaultFormat';
 
-export function UseGetQuotes(customizeProps) {
+export function  UseGetQuotes (customizeProps) {
     const res = ref('');
     const { data } = quotes()
     const customizeRandom = ref('')
