@@ -7,34 +7,28 @@
 <script setup>
 import { defineProps, watchEffect, computed } from 'vue';
 import {storeToRefs} from 'pinia'
-import {typingStore} from '../store/typingStore'
+import {mainStore} from '../store/mainStore'
 
-const store = typingStore()
+const store = mainStore()
 const { correctCount, wrongCount, playerLastInput , playerInputLength} = storeToRefs(store)
 const props = defineProps({
     alphabet: String,
     index: Number,
-    currentIndex: Boolean
-})
-
-const equal = computed(() => {
-    return playerLastInput.value === props.alphabet && playerInputLength.value - 1 === props.index && playerLastInput.length > 0
-})
-
-const unequal = computed(() => {
-    return playerLastInput.value !== props.alphabet && playerInputLength.value - 1 === props.index && playerLastInput.value.length > 0
+    currentIndex: Boolean,
+    equal: Boolean,
+    unequal: Boolean
 })
 
 const equalStyle = computed(() => {
-    return equal.value ? 'text-green-500' : ''
+    return props.equal ? 'text-green-500' : ''
 })
 
 const unEqualStyle = computed(() => {
-    return  unequal.value ? 'text-red-500' : ''
+    return  props.unequal ? 'text-red-500' : ''
 })
 
 const currentIndexStyle = computed(() => {
-    return  props.currentIndex ? 'bg-zinc-700 py-[1px] rounded-md text-white animate-pulse transition-all duration-200' : ''
+    return  props.currentIndex ? 'bg-zinc-700 text-white py-[1px] rounded-md animate-pulse transition-all duration-200' : ''
 })
 
 const mainStyle = computed(() => {
@@ -42,7 +36,7 @@ const mainStyle = computed(() => {
 })
 
 watchEffect(() => {
-    if (equal.value) correctCount.value++
-    if (unequal.value) wrongCount.value++
+    if (props.equal) correctCount.value++
+    if (props.unequal) wrongCount.value++
 })
 </script>

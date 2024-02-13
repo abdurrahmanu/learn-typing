@@ -17,6 +17,8 @@
                 :key="index"
                 :alphabet="alphabet"
                 :currentIndex ="playerInputLength === index"
+                :equal="    playerLastInput.value === alphabet && playerInputLength.value - 1 === index && playerLastInput.value.length > 0"
+                :unequal="playerLastInput.value !== alphabet && playerInputLength.value - 1 === index && playerLastInput.value.length > 0"
                 :index="index" />
             </div>
             <RangeInput />

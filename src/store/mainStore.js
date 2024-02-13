@@ -92,6 +92,7 @@ export const mainStore = defineStore('mainStore', () => {
         wrongCount,
         containerText,
         playerLastInput,
+        playerInputLength,
         sessionCompleted,
         restartTyping,
         focusInput,
