@@ -1,30 +1,28 @@
 <template>
     <div class="relative inline font-mono whitespace-pre-wrap w-fit">
-        <span :class="[equalStyle, unEqualStyle, currentIndexStyle, mainStyle]" class="text-sm transition-all duration-[30ms]">{{ alphabet }}</span>
+        <span :class="[equalStyle, currentIndexStyle, mainStyle]" class="transition-all duration-[30ms]">{{ alphabet }}</span>
     </div>
 </template>
 
 <script setup>
-import { defineProps, watchEffect, computed } from 'vue';
+import { defineProps, computed } from 'vue';
 import {storeToRefs} from 'pinia'
 import {mainStore} from '../store/mainStore'
 
 const store = mainStore()
-const { correctCount, wrongCount, playerLastInput , playerInputLength} = storeToRefs(store)
+const { playerInputLength} = storeToRefs(store)
+const emit = defineEmits(['equal', 'unequal'])
 const props = defineProps({
     alphabet: String,
     index: Number,
     currentIndex: Boolean,
-    equal: Boolean,
-    unequal: Boolean
+    equality: Boolean,
 })
+
+// if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches))
 
 const equalStyle = computed(() => {
-    return props.equal ? 'text-green-500' : ''
-})
-
-const unEqualStyle = computed(() => {
-    return  props.unequal ? 'text-red-500' : ''
+    return props.equality ? 'text-green-500' : 'text-red-500'
 })
 
 const currentIndexStyle = computed(() => {
@@ -33,10 +31,5 @@ const currentIndexStyle = computed(() => {
 
 const mainStyle = computed(() => {
     return !props.currentIndex && props.index > playerInputLength.value ? 'text-slate-400' : ''
-})
-
-watchEffect(() => {
-    if (props.equal) correctCount.value++
-    if (props.unequal) wrongCount.value++
 })
 </script>

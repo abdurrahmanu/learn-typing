@@ -1,27 +1,20 @@
 <template>
-    <div class="bg-neutral-900 relative min-h-screen m-auto max-w-[1000px]">
+    <div class="relative min-h-[100vh] mx-auto  bg-neutral-900">
       <RouterView />
   </div>
 </template>
 
 <script setup>
-import {typingStore} from './store/typingStore'
-import {useRouter, useRoute} from 'vue-router'
+import {customizeStore} from './store/customizeStore'
+import {useRouter} from 'vue-router'
 import { storeToRefs } from 'pinia';
-import { onMounted, watchEffect } from 'vue';
+import { watchEffect } from 'vue';
 
-const route = useRoute()
 const router = useRouter()
-const store = typingStore()
-const {goToProgressPage, result} = storeToRefs(store)
+const store = customizeStore()
+const {goToProgressPage} = storeToRefs(store)
 
 watchEffect(() => {
-  if (goToProgressPage.value) {
-    router.push('/progress')
-  }
-})
-
-onMounted(() => {
-  
+  if (goToProgressPage.value) router.push('/progress')
 })
 </script>

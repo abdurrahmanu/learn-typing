@@ -30,31 +30,33 @@
 
 <script setup>
 import {storeToRefs} from 'pinia'
-import {typingStore} from '../store/typingStore'
+import {useRouter} from 'vue-router'
+import {mainStore} from '../store/mainStore'
 
-const store = typingStore()
-const {result} = storeToRefs(store)
+const router = useRouter()
+const store = mainStore()
+const {resultData} = storeToRefs(store)
 const {switchNext} = store
 
 window.addEventListener('keydown', e => {
-    if (e.key === 'Escape') {
+    if (e.key === 'Escape' || e.key === 'Enter') {
         switchNext()
     }
 })
 
 const accuracy = () => {
-    return Math.round((result.value.correctCount/(result.value.correctCount + result.value.wrongCount) * 100))
+    return Math.round((resultData.value.correctCount/(resultData.value.correctCount + resultData.value.wrongCount) * 100))
 }
 
 const elapsedTime = () => {
-    return Math.round(result.value.totalTime / 1000)
+    return Math.round(resultData.value.totalTime / 1000)
 }
 
 const wordsPerMinute = () => {
-    return Math.round((result.value.correctCount / 5) * (60 / elapsedTime()))
+    return Math.round((resultData.value.correctCount / 5) * (60 / elapsedTime()))
 }
 
 const errorRatio = () => {
-    return result.value.wrongCount + '/' + (result.value.wrongCount + result.value.correctCount)
+    return resultData.value.wrongCount + '/' + (resultData.value.wrongCount + resultData.value.correctCount)
 }
 </script>

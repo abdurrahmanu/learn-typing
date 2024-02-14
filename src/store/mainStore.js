@@ -3,7 +3,6 @@ import {ref, computed} from 'vue'
 import {UseGetQuotes} from '../composables/useGetQuotes'
 
 export const mainStore = defineStore('mainStore', () => {
-    const textContainer = ref(null)
     const completionLevel = ref(0)
     const correctCount = ref(0)
     const wrongCount = ref(0)
@@ -19,6 +18,9 @@ export const mainStore = defineStore('mainStore', () => {
     const result = ref('')
     const customizeSettingsProp = ref([])
     const textAlign = ref(false)
+    const playerInput = ref('')
+    const restart = ref(false)
+    const next = ref(false)
 
     const resultData = computed(() => {
         return {
@@ -43,7 +45,6 @@ export const mainStore = defineStore('mainStore', () => {
     }
     
     const BeginNextSession = () => {
-        resultData.value = {}
         totalTime.value = null
         completionLevel.value = 0
         startTime.value = null
@@ -74,8 +75,16 @@ export const mainStore = defineStore('mainStore', () => {
             if (playerInputLength.value === 1)  startTime.value = performance.now();
             completionLevel.value = ((playerInputLength.value + 1) / containerText.value.length) * 100        
             playerLastInput.value = e.key
-            if (playerInputLength.value === containerText.value.length) sessionComplete
+            playerInput.value += playerLastInput.value
+            if (playerInputLength.value === containerText.value.length) sessionComplete()
         }
+    }
+
+    const switchNext = () => {
+        next.value = true
+        setTimeout(() => {    
+            next.value = false
+        }, 0);
     }
 
     return {
@@ -83,11 +92,14 @@ export const mainStore = defineStore('mainStore', () => {
         generateText,
         sessionComplete,
         playerTyping,
+        switchNext,
         textAlign,
         resultData,
+        restart,
+        next,
         totalTime,
-        textContainer,
         completionLevel,
+        playerInput,
         correctCount,
         wrongCount,
         containerText,

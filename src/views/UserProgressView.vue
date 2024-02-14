@@ -6,12 +6,12 @@
 
 <script setup>
 import {storeToRefs} from 'pinia'
-import {typingStore} from '../store/typingStore'
+import {customizeStore} from '../store/customizeStore'
 import { useRoute, useRouter } from 'vue-router';
 
 const route = useRoute()
 const router = useRouter()
-const store = typingStore()
+const store = customizeStore()
 const {next, customizeSettingsProp, textAlign} = storeToRefs(store)
 
 </script>

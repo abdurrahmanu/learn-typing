@@ -7,9 +7,9 @@
 
 <script setup>
 import { storeToRefs } from 'pinia';
-import { typingStore } from '../store/typingStore';
+import { customizeStore } from '../store/customizeStore';
 
 
-const store = typingStore()
+const store = customizeStore()
 const {completionLevel} = storeToRefs(store)
 </script>

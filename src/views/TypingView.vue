@@ -1,7 +1,7 @@
 <template>
-    <TypingContainerComponent />
+    <Text />
 </template>
 
 <script setup>
-import TypingContainerComponent from '../components/typingContainerComponent.vue';
+import Text from '../components/Text.vue';
 </script>
