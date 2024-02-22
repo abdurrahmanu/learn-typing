@@ -4,7 +4,7 @@
         ref="inputEl"
         type="text" 
         class="text-lg text-center rounded-md outline-none w-fit h-9 text-slate-500 max-w-[100px] bg-zinc-900 caret-transparent block mx-auto my-1" 
-        :maxlength="!startedTyping ? 6 : 1" 
+        :maxlength="!startedTyping ? '6' : '1'" 
         :placeholder="!startedTyping ? 'START' : ''"  
         :value="playerLastInput">
 
@@ -18,6 +18,7 @@
                 :equality="playerInput.at(index) === alphabet"
                 :alphabet="alphabet"/>
             </div>
+                {{ playerInput }}
             <RangeInput />
         </div>
     </div>
@@ -35,14 +36,14 @@ const store = mainStore()
 const { containerText, startedTyping, inputEquality, playerLastInput , playerInputLength, correctCount, wrongCount, playerInput} = storeToRefs(store)
 const {generateText, playerTyping} = store
 
-watch(playerInput, (newVal, oldVal) => {
+watch(playerInput, () => {
     if (inputEquality.value) correctCount.value ++
     else wrongCount.value++
 })
 
 onMounted(() => {
-    if (inputEl.value instanceof HTMLElement) inputEl.value.focus()
     generateText()
+    inputEl.value.focus()
     window.addEventListener('keypress', playerTyping)
 }) 
 </script>

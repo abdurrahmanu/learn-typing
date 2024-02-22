@@ -1,16 +1,16 @@
 <template>
-    <div class="relative inline font-mono whitespace-pre-wrap w-[1px]">
+    <div class="relative inline font-mono whitespace-pre-wrap ">
         <span :class="[equalStyle, currentIndexStyle, mainStyle]" class="transition-all duration-[10ms]">{{ alphabet }}</span>
     </div>
 </template>
 
 <script setup>
-import { defineProps, computed, watchEffect } from 'vue';
+import { defineProps, computed } from 'vue';
 import {storeToRefs} from 'pinia'
 import {mainStore} from '../store/mainStore'
 
 const store = mainStore()
-const { playerInputLength, correctCount} = storeToRefs(store)
+const { playerInputLength } = storeToRefs(store)
 const emit = defineEmits(['equal', 'unequal'])
 const props = defineProps({
     alphabet: String,
