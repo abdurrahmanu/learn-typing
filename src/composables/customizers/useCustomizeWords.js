@@ -1,6 +1,9 @@
+import {ref} from 'vue'
+import data from '../../../data/quotes.json'
 
 
+export function useCustomizeWords([...args]) {
+    const res = ref('')
 
-export function useCustomizeWords() {
-    return {}
+    return {res}
 }

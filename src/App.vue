@@ -1,20 +1,7 @@
 <template>
-    <div class="relative min-h-[100vh] mx-auto  bg-neutral-900">
+    <div class="relative min-h-[100vh] mx-auto  bg-neutral-900 selection:bg-transparent">
       <RouterView />
   </div>
 </template>
 
-<script setup>
-import {customizeStore} from './store/customizeStore'
-import {useRouter} from 'vue-router'
-import { storeToRefs } from 'pinia';
-import { watchEffect } from 'vue';
-
-const router = useRouter()
-const store = customizeStore()
-const {goToProgressPage} = storeToRefs(store)
-
-watchEffect(() => {
-  if (goToProgressPage.value) router.push('/progress')
-})
-</script>
+// if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches))

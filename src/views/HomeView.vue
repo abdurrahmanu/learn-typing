@@ -1,14 +1,12 @@
 <template>
-  <div class="pt-14">    
-      <Navbar />
-      <Customize />
+      <Header />
+      <Customize v-if="!result" />
       <RouterView />
       <Restart />
-  </div>
 </template>
 
 <script setup>
-import Navbar from '../components/Navbar.vue';
+import Header from '../components/Header.vue';
 import Customize from '../components/Customize.vue'
 import Restart from '../components/Restart.vue';
 import { ref, watchEffect, watch } from 'vue';
@@ -18,8 +16,8 @@ import { storeToRefs } from 'pinia';
 
 const router = useRouter()
 const store = mainStore()
-const {result, restart, next} = storeToRefs(store)
-const {BeginNextSession, generateText} = store
+const {switchNext} = store
+const {result, config} = storeToRefs(store)
 
 watchEffect(() => {
   if (result.value) {
@@ -31,20 +29,10 @@ watchEffect(() => {
   }
 })
 
-watchEffect(() => {
-  if (next.value) {
-    BeginNextSession()
-    generateText()
-  }
-})
 
-watchEffect(() => {
-  if (restart.value) {
-    setTimeout(() => {
-      restart.value = false
-    }, 100);
-  }
-})
+watch(config, (newVal, oldVal) => {
+  switchNext(newVal)
+}, {deep: true})
 </script>
 
 <style scoped>
@@ -68,5 +56,4 @@ watchEffect(() => {
 .scale-up-leave-to {
   display: hidden;
 }
-
 </style>

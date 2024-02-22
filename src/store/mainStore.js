@@ -1,6 +1,6 @@
 import {defineStore} from 'pinia'
 import {ref, computed} from 'vue'
-import {UseGetQuotes} from '../composables/useGetQuotes'
+import {UseGetQuotes} from '../composables/UseGetQuotes'
 
 export const mainStore = defineStore('mainStore', () => {
     const completionLevel = ref(0)
@@ -15,12 +15,11 @@ export const mainStore = defineStore('mainStore', () => {
     const startTime = ref(null)
     const totalTime = ref(null)
     const startedTyping = ref(false)
-    const result = ref('')
+    const result = ref(null)
     const customizeSettingsProp = ref([])
     const textAlign = ref(false)
     const playerInput = ref('')
-    const restart = ref(false)
-    const next = ref(false)
+    const config = ref({})
 
     const resultData = computed(() => {
         return {
@@ -33,20 +32,20 @@ export const mainStore = defineStore('mainStore', () => {
         }
     })
     
-    const generateText = () => {
-        completionLevel.value = 0
+    const generateText = (config) => {
         focusInput.value = true
-        if (customizeSettingsProp.value.length) {
-            containerText.value = UseGetQuotes(customizeSettingsProp.value).res.value
+        if (config) {
+            containerText.value = UseGetQuotes(config).res.value
         }
         else {
             containerText.value = UseGetQuotes().res.value
         }
     }
     
-    const BeginNextSession = () => {
-        totalTime.value = null
+    const resetToDefault = () => {
+        startedTyping.value = false
         completionLevel.value = 0
+        totalTime.value = null
         startTime.value = null
         correctCount.value = 0
         wrongCount.value = 0
@@ -56,6 +55,10 @@ export const mainStore = defineStore('mainStore', () => {
         playerInputLength.value = 0
         sessionCompleted.value = false
         restartTyping.value = true
+        customizeSettingsProp.value = []
+        textAlign.value = false
+        playerInput.value = ''
+        result.value = ''
         setTimeout(() => {
         restartTyping.value = false
         }, 0);
@@ -69,6 +72,7 @@ export const mainStore = defineStore('mainStore', () => {
     }
 
     const playerTyping = (e) => {
+        if (e.key === 'Enter') return
         if (focusInput.value && !sessionCompleted.value) {
             startedTyping.value = true
             playerInputLength.value++
@@ -80,23 +84,25 @@ export const mainStore = defineStore('mainStore', () => {
         }
     }
 
-    const switchNext = () => {
-        next.value = true
-        setTimeout(() => {    
-            next.value = false
-        }, 0);
+    const inputEquality = computed(() => {
+        return playerInput.value[playerInput.value.length - 1] === containerText.value[playerInput.value.length - 1]
+    })
+
+    const switchNext = (config) => {
+        resetToDefault()
+        config ? generateText(config) : generateText()
     }
 
     return {
-        BeginNextSession,
+        resetToDefault,
         generateText,
         sessionComplete,
         playerTyping,
         switchNext,
+        config,
+        inputEquality,
         textAlign,
         resultData,
-        restart,
-        next,
         totalTime,
         completionLevel,
         playerInput,
@@ -107,6 +113,7 @@ export const mainStore = defineStore('mainStore', () => {
         playerInputLength,
         sessionCompleted,
         restartTyping,
+        startedTyping,
         focusInput,
         focusInput,
         startTime,

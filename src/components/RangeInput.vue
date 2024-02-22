@@ -7,9 +7,8 @@
 
 <script setup>
 import { storeToRefs } from 'pinia';
-import { customizeStore } from '../store/customizeStore';
+import { mainStore } from '../store/mainStore';
 
-
-const store = customizeStore()
+const store = mainStore()
 const {completionLevel} = storeToRefs(store)
 </script>
