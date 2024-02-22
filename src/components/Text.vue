@@ -5,7 +5,7 @@
         type="text" 
         class="text-lg text-center rounded-md outline-none w-fit h-9 text-slate-500 max-w-[100px] bg-zinc-900 caret-white block mx-auto my-1" 
         maxlength="1" 
-        :value="!startedTyping ? '...' : playerLastInput">
+        :value="playerLastInput">
 
         <div v-if="containerText" class="leading-6 md:leading-[30px] text-sm transition-all duration-100 relative md:text-lg border-l-3 border-l-zinc-800 w-fit m-auto max-w-[600px]" @click="inputEl.focus()">
             <div>
@@ -18,7 +18,7 @@
                 :alphabet="alphabet"/>
             </div>
             <RangeInput />
-            {{ playerInput }}
+           start:  {{ playerLastInput }}
         </div>
     </div>
 </template>
@@ -32,7 +32,7 @@ import {mainStore} from '../store/mainStore'
 
 const inputEl = ref(null)
 const store = mainStore()
-const { containerText, startedTyping, inputEquality, playerLastInput , playerInputLength, correctCount, wrongCount, playerInput} = storeToRefs(store)
+const { containerText, inputEquality, playerLastInput , playerInputLength, correctCount, wrongCount, playerInput} = storeToRefs(store)
 const {generateText, playerTyping} = store
 
 watch(playerInput, () => {

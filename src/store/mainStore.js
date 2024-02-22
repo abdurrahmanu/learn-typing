@@ -9,10 +9,9 @@ export const mainStore = defineStore('mainStore', () => {
     const containerText = ref('')
     const playerLastInput = ref('')
     const playerInputLength = ref(0)
-    const sessionCompleted = ref(false)
     const startTime = ref(null)
     const totalTime = ref(null)
-    const startedTyping = ref(false)
+    const hasStartedSession = ref(false)
     const customizeSettingsProp = ref([])
     const textAlign = ref(false)
     const playerInput = ref('')
@@ -35,7 +34,7 @@ export const mainStore = defineStore('mainStore', () => {
     }
     
     const resetToDefault = () => {
-        startedTyping.value = false
+        hasStartedSession.value = false
         completionLevel.value = 0
         totalTime.value = null
         startTime.value = null
@@ -44,31 +43,26 @@ export const mainStore = defineStore('mainStore', () => {
         containerText.value = ''
         playerLastInput.value = ''
         playerInputLength.value = 0
-        sessionCompleted.value = false
         customizeSettingsProp.value = []
         textAlign.value = false
         playerInput.value = ''
     }
 
     const sessionComplete = () => {
-        sessionCompleted.value = true
-        startedTyping.value = false
+        hasStartedSession.value = false
         totalTime.value = performance.now() - startTime.value
     }
 
     const playerTyping = (e) => {
         if (e.key === 'Enter') return
-        if (!sessionCompleted.value) {
-            startedTyping.value = true
-            playerInputLength.value++
-            if (playerInputLength.value === 1)  startTime.value = performance.now();
-            completionLevel.value = ((playerInputLength.value + 1) / containerText.value.length) * 100        
-            playerLastInput.value = e.key
-            playerInput.value += playerLastInput.value
-            if (playerInputLength.value === containerText.value.length) {
-                sessionComplete()
-            } 
-        }
+        if (!hasStartedSession.value) hasStartedSession.value = true
+        playerInputLength.value++
+        if (playerInputLength.value === 1)  startTime.value = performance.now();
+        completionLevel.value = ((playerInputLength.value + 1) / containerText.value.length) * 100        
+        playerLastInput.value = e.key
+        playerInput.value += playerLastInput.value
+
+        if (playerInputLength.value === containerText.value.length) sessionComplete()
     }
 
     const inputEquality = computed(() => {
@@ -98,8 +92,7 @@ export const mainStore = defineStore('mainStore', () => {
         containerText,
         playerLastInput,
         playerInputLength,
-        sessionCompleted,
-        startedTyping,
+        hasStartedSession,
         startTime,
         totalTime,
     }
