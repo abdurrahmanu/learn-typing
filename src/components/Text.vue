@@ -18,7 +18,12 @@
                 :alphabet="alphabet"/>
             </div>
             <RangeInput />
-           start:  {{ playerLastInput }}
+           +:  {{ correctCount }}
+           -:  {{ wrongCount}}
+           'full' {{ playerInput }}
+           len: {{ playerInputLength }}
+           last: {{ playerLastInput }}
+           eq: {{ inputEquality }}
         </div>
     </div>
 </template>
@@ -41,11 +46,9 @@ watch(playerInput, () => {
 })
 
 onMounted(() => {
-    watchEffect(() => {
-    })
+
     generateText()
     inputEl.value.focus()
     window.addEventListener('keypress', playerTyping)
 }) 
 </script>
-
