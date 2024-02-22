@@ -54,12 +54,13 @@ export const mainStore = defineStore('mainStore', () => {
     }
 
     const playerTyping = (e) => {
-        if (e.key === 'Enter') return
+        // let eventSelector = getMobileOS ? e.data : e.key
+        let eventSelector = e.data
         if (!hasStartedSession.value) hasStartedSession.value = true
         playerInputLength.value++
         if (playerInputLength.value === 1)  startTime.value = performance.now();
         completionLevel.value = ((playerInputLength.value + 1) / containerText.value.length) * 100        
-        playerLastInput.value = e.key
+        playerLastInput.value = eventSelector
         playerInput.value += playerLastInput.value
 
         if (playerInputLength.value === containerText.value.length) sessionComplete()
@@ -73,8 +74,27 @@ export const mainStore = defineStore('mainStore', () => {
         resetToDefault()
         config ? generateText(config) : generateText()
     }
+    
+    function getMobileOS() {
+        let userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+        if (/windows phone/i.test(userAgent)) {
+            return "Windows Phone";
+        }
+
+        if (/android/i.test(userAgent)) {
+            return "Android";
+        }
+
+        if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+            return "iOS";
+        }
+
+        return "unknown";
+    }
 
     return {
+        getMobileOS,
         resetToDefault,
         generateText,
         sessionComplete,
