@@ -28,6 +28,6 @@ const currentIndexStyle = computed(() => {
 })
 
 const mainStyle = computed(() => {
-    return !props.currentIndex && props.index > playerInputLength.value ? 'text-slate-400' : ''
+    return props.index > playerInputLength.value ? 'text-slate-400' : ''
 })
 </script>

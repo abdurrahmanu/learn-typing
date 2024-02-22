@@ -12,7 +12,7 @@ const routes = [
       props: true,
       children: [
         {
-          path: 'typing',
+          path: '',
           name: 'typing',
           component: TypingView,
           props: true,

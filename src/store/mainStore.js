@@ -10,12 +10,9 @@ export const mainStore = defineStore('mainStore', () => {
     const playerLastInput = ref('')
     const playerInputLength = ref(0)
     const sessionCompleted = ref(false)
-    const restartTyping = ref(false)
-    const focusInput = ref(false)
     const startTime = ref(null)
     const totalTime = ref(null)
     const startedTyping = ref(false)
-    const result = ref(null)
     const customizeSettingsProp = ref([])
     const textAlign = ref(false)
     const playerInput = ref('')
@@ -33,13 +30,8 @@ export const mainStore = defineStore('mainStore', () => {
     })
     
     const generateText = (config) => {
-        focusInput.value = true
-        if (config) {
-            containerText.value = UseGetQuotes(config).res.value
-        }
-        else {
-            containerText.value = UseGetQuotes().res.value
-        }
+        if (config) containerText.value = UseGetQuotes(config).res.value
+        else containerText.value = UseGetQuotes().res.value
     }
     
     const resetToDefault = () => {
@@ -49,43 +41,38 @@ export const mainStore = defineStore('mainStore', () => {
         startTime.value = null
         correctCount.value = 0
         wrongCount.value = 0
-        focusInput.value = false
         containerText.value = ''
         playerLastInput.value = ''
         playerInputLength.value = 0
         sessionCompleted.value = false
-        restartTyping.value = true
         customizeSettingsProp.value = []
         textAlign.value = false
         playerInput.value = ''
-        result.value = ''
-        setTimeout(() => {
-        restartTyping.value = false
-        }, 0);
     }
 
     const sessionComplete = () => {
         sessionCompleted.value = true
         startedTyping.value = false
         totalTime.value = performance.now() - startTime.value
-        result.value = resultData.value
     }
 
     const playerTyping = (e) => {
         if (e.key === 'Enter') return
-        if (focusInput.value && !sessionCompleted.value) {
+        if (!sessionCompleted.value) {
             startedTyping.value = true
             playerInputLength.value++
             if (playerInputLength.value === 1)  startTime.value = performance.now();
             completionLevel.value = ((playerInputLength.value + 1) / containerText.value.length) * 100        
             playerLastInput.value = e.key
             playerInput.value += playerLastInput.value
-            if (playerInputLength.value === containerText.value.length) sessionComplete()
+            if (playerInputLength.value === containerText.value.length) {
+                sessionComplete()
+            } 
         }
     }
 
     const inputEquality = computed(() => {
-        return playerInput.value[playerInput.value.length - 1] === containerText.value[playerInput.value.length - 1]
+        return playerLastInput.value === containerText.value[playerInput.value.length - 1]
     })
 
     const switchNext = (config) => {
@@ -112,12 +99,8 @@ export const mainStore = defineStore('mainStore', () => {
         playerLastInput,
         playerInputLength,
         sessionCompleted,
-        restartTyping,
         startedTyping,
-        focusInput,
-        focusInput,
         startTime,
         totalTime,
-        result,
     }
 })

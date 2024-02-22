@@ -13,7 +13,7 @@ app.use(pinia)
 const store = mainStore()
 
 router.beforeEach((to, from) => {
-    if (to.name === 'result' && !store.result) {
+    if (to.name === 'result' && !store.resultData.totalTime) {
         return {name: 'typing'}
     }
 })

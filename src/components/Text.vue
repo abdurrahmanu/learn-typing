@@ -4,7 +4,7 @@
         ref="inputEl"
         type="text" 
         class="text-lg text-center rounded-md outline-none w-fit h-9 text-slate-500 max-w-[100px] bg-zinc-900 caret-transparent block mx-auto my-1" 
-        :maxlength="{6 : !startedTyping}" 
+        :maxlength="!startedTyping ? 6 : 1" 
         :placeholder="!startedTyping ? 'START' : ''"  
         :value="playerLastInput">
 
@@ -41,9 +41,8 @@ watch(playerInput, (newVal, oldVal) => {
 })
 
 onMounted(() => {
-    generateText()
     if (inputEl.value instanceof HTMLElement) inputEl.value.focus()
-
+    generateText()
     window.addEventListener('keypress', playerTyping)
 }) 
 </script>
