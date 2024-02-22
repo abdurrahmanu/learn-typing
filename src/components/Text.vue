@@ -59,11 +59,13 @@ function getMobileOS() {
     return "unknown";
 }
 
-
 onMounted(() => {
     OS.value = getMobileOS()
     generateText()
     inputEl.value.focus()
-    window.addEventListener('keypress', playerTyping)
+
+    if (OS.value) {
+        window.addEventListener('keydown', playerTyping)
+    } else window.addEventListener('keypress', playerTyping)
 }) 
 </script>
