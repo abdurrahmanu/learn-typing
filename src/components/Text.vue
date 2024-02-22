@@ -64,7 +64,7 @@ onMounted(() => {
     generateText()
     inputEl.value.focus()
 
-    if (OS.value) {
+    if (OS.value !== 'unknown') {
         window.addEventListener('keydown', playerTyping)
     } else window.addEventListener('keypress', playerTyping)
 }) 
