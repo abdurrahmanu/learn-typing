@@ -18,12 +18,7 @@
                 :alphabet="alphabet"/>
             </div>
             <RangeInput />
-           +:  {{ correctCount }}
-           -:  {{ wrongCount}}
-           'full' {{ playerInput }}
-           len: {{ playerInputLength }}
-           last: {{ playerLastInput }}
-           eq: {{ inputEquality }}
+           {{ OS }}
         </div>
     </div>
 </template>
@@ -35,6 +30,7 @@ import RangeInput from './RangeInput.vue'
 import {storeToRefs} from 'pinia'
 import {mainStore} from '../store/mainStore'
 
+const OS = ref()
 const inputEl = ref(null)
 const store = mainStore()
 const { containerText, inputEquality, playerLastInput , playerInputLength, correctCount, wrongCount, playerInput} = storeToRefs(store)
@@ -45,8 +41,27 @@ watch(playerInput, () => {
     else wrongCount.value++
 })
 
-onMounted(() => {
+function getMobileOS() {
+    let userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
+    if (/windows phone/i.test(userAgent)) {
+        return "Windows Phone";
+    }
+
+    if (/android/i.test(userAgent)) {
+        return "Android";
+    }
+
+    if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+        return "iOS";
+    }
+
+    return "unknown";
+}
+
+
+onMounted(() => {
+    OS.value = getMobileOS()
     generateText()
     inputEl.value.focus()
     window.addEventListener('keypress', playerTyping)
