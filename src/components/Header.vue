@@ -1,5 +1,5 @@
 <template>
-        <nav class="sticky top-0 flex justify-between w-full p-3 text-slate-300 max-w-[1000px] m-auto z-[999] bg-neutral-600 shadow-sm shadow-black items-center">
+        <nav class="sticky top-0 flex justify-between w-full p-3 text-slate-300 max-w-[1000px] m-auto z-[999] items-center">
             <div class="font-mono text-xl font-bold md:text-2xl">DORAYI TYPING</div>
             <div class="relative w-fit h-fit">                
                 <div @click="toggleDropdown = !toggleDropdown" class="w-10 h-8 bg-black"></div>

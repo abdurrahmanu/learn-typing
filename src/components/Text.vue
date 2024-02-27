@@ -10,7 +10,7 @@
         </div>
 
         <div v-if="containerText" class="leading-6 md:leading-[30px] text-sm transition-all duration-100 relative md:text-lg border-l-3 border-l-neutral-800 w-fit m-auto max-w-[600px]" >
-            <div>
+            <div class="min-h-[100px] h-fit border border-neutral-800 p-1">
                 <Alphabet
                 v-for="(alphabet, index) in containerText"
                 :index="index"
@@ -44,10 +44,7 @@ watch(playerInput, () => {
 onMounted(() => {
     generateText()
     inputEl.value.focus()
-
-    // if (getMobileOS() !== 'unknown') window.addEventListener('input', playerTyping)
-    // else window.addEventListener('keypress', playerTyping)
-
-    window.addEventListener('input', playerTyping)
+    if (getMobileOS()) window.addEventListener('input', playerTyping)
+    else window.addEventListener('keypress', playerTyping)
 }) 
 </script>

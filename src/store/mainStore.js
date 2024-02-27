@@ -54,8 +54,8 @@ export const mainStore = defineStore('mainStore', () => {
     }
 
     const playerTyping = (e) => {
-        // let eventSelector = getMobileOS ? e.data : e.key
-        let eventSelector = e.data
+        let eventSelector = getMobileOS() ? e.data : e.key
+        if (!getMobileOS() && e.key === 'Enter') return 
         if (!hasStartedSession.value) hasStartedSession.value = true
         playerInputLength.value++
         if (playerInputLength.value === 1)  startTime.value = performance.now();
@@ -90,7 +90,7 @@ export const mainStore = defineStore('mainStore', () => {
             return "iOS";
         }
 
-        return "unknown";
+        return '';
     }
 
     return {
