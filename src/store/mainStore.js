@@ -14,8 +14,8 @@ export const mainStore = defineStore('mainStore', () => {
     const hasStartedSession = ref(false)
     const customizeSettingsProp = ref([])
     const textAlign = ref(false)
+    const pauseTyping = ref(false)
     const playerInput = ref('')
-    const config = ref({})
 
     const resultData = computed(() => {
         return {
@@ -54,6 +54,7 @@ export const mainStore = defineStore('mainStore', () => {
     }
 
     const playerTyping = (e) => {
+        if (pauseTyping.value) return
         let eventSelector = getMobileOS() ? e.data : e.key
         if (!getMobileOS() && e.key === 'Enter') return 
         if (!hasStartedSession.value) hasStartedSession.value = true
@@ -100,7 +101,6 @@ export const mainStore = defineStore('mainStore', () => {
         sessionComplete,
         playerTyping,
         switchNext,
-        config,
         inputEquality,
         textAlign,
         resultData,
@@ -115,5 +115,6 @@ export const mainStore = defineStore('mainStore', () => {
         hasStartedSession,
         startTime,
         totalTime,
+        pauseTyping
     }
 })

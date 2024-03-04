@@ -1,8 +1,13 @@
 <template>
-    <div class="px-4 py-2 m-auto mt-10 rounded-md text-slate-400 bg-neutral-800 w-fit">
-        <p @click="restart" class="pb-3 text-xs text-center">{{hasStartedSession ? 'RESTART' : 'NEXT'}}</p>
-        <div v-if="!getMobileOS()" class="font-mono">
-            <span>Press</span> <span class="p-1 border border-transparent rounded-md bg-zinc-700 hover:border-green-400">{{resultData.totalTime ? 'Enter' : 'Escape'}}</span> <span>key</span>
+    <div class="pt-20">
+        <div v-if="getMobileOS()" class="w-fit m-auto">
+            <div v-if="!resultData.totalTime && hasStartedSession" @click="restart" class="w-fit m-auto text-center p-1">RESTART</div>
+            <div @click="next" class="w-fit m-auto text-center p-1">NEXT</div>
+        </div>
+    
+        <div v-else class="p-2 w-fit h-fit text-slate-500 space-y-3 m-auto font-mono">
+            <div v-if="!resultData.totalTime && hasStartedSession" class="text-center">Press <span @click="restart" class="rounded-md p-1 text-xs bg-neutral-800 hover:bg-blue-700 hover:text-white"> ESCAPE</span> to RESTART</div>
+            <div class="text-center">Press <span @click="next" class="rounded-md p-1 text-xs bg-neutral-800 hover:bg-blue-800 hover:text-white"> Ctrl + ESCAPE</span> for NEXT</div>
         </div>
     </div>
 </template>
@@ -21,6 +26,10 @@ window.addEventListener('keydown', event=> {
 })
 
 const restart = () => {
+    switchNext()
+}
+
+const next = () => {
     switchNext()
 }
 </script>

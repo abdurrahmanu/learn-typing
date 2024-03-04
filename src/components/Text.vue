@@ -9,8 +9,12 @@
             :maxlength="containerText.length" >
         </div>
 
-        <div v-if="containerText" class="leading-6 md:leading-[30px] text-sm transition-all duration-100 relative md:text-lg border-l-3 border-l-neutral-800 w-fit m-auto max-w-[600px]" >
-            <div class="min-h-[100px] h-fit border border-neutral-800 p-1">
+        <div v-if="containerText" class="leading-6 md:leading-[30px] text-sm transition-all duration-100 relative md:text-lg border-l-3 border-l-neutral-800 m-auto max-w-[600px] w-full" >
+            <div class="min-h-[100px] h-fit border-4 border-neutral-800 p-1 relative">
+                <div v-if="configChange" class="absolute top-0 bottom-0 left-0 w-full z-[9] flex">
+                    <div @click="useConfig(true)" class="w-[50%] h-[100%] flex items-center justify-center bg-slate-900 hover:opacity-100 opacity-40">Use config?</div>
+                    <div @click="useConfig(false)" class="w-[50%] h-[100%] flex items-center justify-center bg-slate-900 btext-black hover:opacity-100 opacity-40">Return</div>
+                </div>
                 <Alphabet
                 v-for="(alphabet, index) in containerText"
                 :index="index"
@@ -25,16 +29,21 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch, watchEffect } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import Alphabet from './Alphabet.vue'
 import RangeInput from './RangeInput.vue'
 import {storeToRefs} from 'pinia'
 import {mainStore} from '../store/mainStore'
+import { customizeStore } from '../store/customizeStore';
 
 const inputEl = ref(null)
 const store = mainStore()
-const { containerText, inputEquality , playerInputLength, correctCount, wrongCount, playerInput} = storeToRefs(store)
+const { containerText, inputEquality, playerInputLength, correctCount, wrongCount, playerInput} = storeToRefs(store)
 const {generateText, playerTyping, getMobileOS} = store
+
+const customize = customizeStore()
+const {configChange} = storeToRefs(customize)
+const {useConfig} = customize
 
 watch(playerInput, () => {
     if (inputEquality.value) correctCount.value ++
@@ -45,6 +54,8 @@ onMounted(() => {
     generateText()
     inputEl.value.focus()
     if (getMobileOS()) window.addEventListener('input', playerTyping)
-    else window.addEventListener('keypress', playerTyping)
+    else {
+        window.addEventListener('keypress', configChange.value ? null : playerTyping)
+    }
 }) 
 </script>

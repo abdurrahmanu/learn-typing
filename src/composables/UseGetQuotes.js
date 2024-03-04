@@ -23,10 +23,12 @@ export function  UseGetQuotes (config) {
         res.value = useCustomizeLength(config[0]).res.value
         res.value = useCustomizeWords([config[1], config[4], config[5]]).res.value
         res.value = useCustomizeFormat([config[2], config[3]], text).res.value
+
+        console.log(config);
     }
 
     generateText()
-    if (config) customize()
+    if (config !== undefined) customize()
 
     return { res }
 };

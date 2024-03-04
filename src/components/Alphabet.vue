@@ -2,7 +2,7 @@
     <div class="relative inline font-mono whitespace-pre-wrap ">
         <span :class="[equalStyle, currentIndexStyle, mainStyle]" class="transition-all duration-[10ms]">{{ alphabet }}</span>
     </div>
-</template>
+</template> 
 
 <script setup>
 import { defineProps, computed } from 'vue';

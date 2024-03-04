@@ -13,18 +13,23 @@ import { watch } from 'vue';
 import {useRouter} from 'vue-router'
 import { mainStore } from '../store/mainStore';
 import { storeToRefs } from 'pinia';
+import { customizeStore } from '../store/customizeStore';
 
 const router = useRouter()
 const store = mainStore()
 const {switchNext} = store
-const {resultData, config} = storeToRefs(store)
+const {resultData} = storeToRefs(store)
+
+const customize = customizeStore()
+const {config} = storeToRefs(customize)
 
 watch(resultData, (newVal, oldVal) => {
   if (newVal.totalTime) router.push({path: 'result'})
   else router.push({name: 'typing'})
 }, {deep: true})
 
-watch(config, (newVal, oldVal) => {
-  switchNext(newVal)
+watch(config, (newConfig, oldConfig) => {
+  switchNext(newConfig)
 }, {deep: true})
+
 </script>
