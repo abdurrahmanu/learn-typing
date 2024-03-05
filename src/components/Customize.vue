@@ -13,7 +13,7 @@
                 :key="index">
                     {{ option }} 
                 </div>
-                <div v-if="listIndex === hoverIndex" class="absolute z-10 left-0 text-black bottom-[-100%] shadow-sm shadow-black px-[6px] bg-neutral-100 rounded-full">{{tooltip[listIndex]}}</div>
+                <div v-if="listIndex === hoverIndex" class="absolute z-10 left-0 text-black bottom-[-100%] shadow-sm shadow-black px-[6px] bg-neutral-100 rounded-full whitespace-nowrap">{{tooltip[listIndex]}}</div>
             </div>
         </div>
     </div>
@@ -31,9 +31,9 @@ const {pauseTyping} = storeToRefs(main)
 const store = customizeStore()
 const {selectedCustomizers, configurationArgs, configChange, temporaryCustomizers} = storeToRefs(store)
 
-const tooltip = ['length', 'word', 'format', 'format', 'word', 'word']
+const tooltip = ['text-length', 'word-type', 'text-format', 'text-format', 'word-type', 'word-type']
 const options = [
-    ['auto', 'short', 'long', '10', '20', '30', '45'],
+    ['auto', '10+', '20+', '40+'],
     ['most-used', 'seldom-used', 'rarely-used'],
     ['quotes', 'random-text'],
     ['caps'],

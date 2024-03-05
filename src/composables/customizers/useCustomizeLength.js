@@ -3,54 +3,27 @@ import data from '../../../data/quotes.json'
 
 export function useCustomizeLength(arg) {
     const res = ref('')
-    const isNumber = ref(false)
+    const numberOfQuotes = ref(0)
 
-    try {
-        arg = eval(arg)
-        eval(arg) ? isNumber.value = true : false
-    } catch (error) {
-        isNumber.value = false
+    if (arg === 'auto') {
+        numberOfQuotes.value = Math.round(Math.random()  * 4) + 1
+    } 
+
+    if (arg === '10+') {
+
     }
 
-    if (isNumber.value) {
-        let numberOfQuotes = 4
-        const spaceLength = ref(0)
-        const resArr = ref([])
-        const singleWord = ref('')
+    if (arg === '20+') {
+        
+    }    
+    
+    if (arg === '40+') {
+        
+    }    
 
-        for (let index = 0; index < numberOfQuotes; index++) {
-            let random = Math.floor(Math.random() * data.length);
-            index < 1 ? res.value = data[random].quote : res.value += ' ' + data[random].quote;
-        }
-
-        for (let i = 0; i < res.value.length; i++) {
-            if (spaceLength.value === arg) {
-                break
-            } else {
-                if (res.value[i] === ' ') {
-                    spaceLength.value++
-                    resArr.value.push(singleWord.value)
-                    singleWord.value = ''
-                } else {
-                    singleWord.value += res.value[i]
-                }
-            }
-        }
-
-        res.value = resArr.value.join(' ')
-    } else {
-        const numberOfQuotes = ref(0)
-
-        if (arg === 'short') {
-            numberOfQuotes.value = 2;
-        } else {
-            numberOfQuotes.value = 4;
-        }
-        for (let index = 0; index < numberOfQuotes.value; index++) {
-            let random = Math.floor(Math.random() * data.length);
-            index < 1 ? res.value = data[random].quote : res.value += ' ' + data[random].quote;
-        }
-
+    for (let index = 0; index < numberOfQuotes.value; index++) {
+        let random = Math.floor(Math.random() * data.length);
+        index < 1 ? res.value = data[random].quote : res.value += ' ' + data[random].quote;
     }
 
     return { res }

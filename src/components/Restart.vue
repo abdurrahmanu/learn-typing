@@ -1,6 +1,6 @@
 <template>
     <div class="pt-20">
-        <div v-if="getMobileOS()" class="w-fit m-auto">
+        <div v-if="getMobileOS()" class="w-fit m-auto text-slate-500 text-xl">
             <div v-if="!resultData.totalTime && hasStartedSession" @click="restart" class="w-fit m-auto text-center p-1">RESTART</div>
             <div @click="next" class="w-fit m-auto text-center p-1">NEXT</div>
         </div>
