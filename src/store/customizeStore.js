@@ -3,24 +3,24 @@ import {ref} from 'vue'
 
 export const customizeStore = defineStore('customizeStore', () => {
     const configurationArgs = ref([])
-    const config = ref({})
     const configChange = ref(false)
     const selectedCustomizers = ref({
         0: 'auto',
         1: 'most-used', 
-        2: 'quotes',
-        3: 'caps',
-        4: 'punctuations',
-        5: 'numbers'
+        2: 'random-text',
+        3: '',
+        4: '',
+        5: ''
     })
     const temporaryCustomizers = ref({
         0: 'auto',
         1: 'most-used', 
-        2: 'quotes',
-        3: 'caps',
-        4: 'punctuations',
-        5: 'numbers'
+        2: 'random-text',
+        3: '',
+        4: '',
+        5: ''
     })
+    const config = ref(selectedCustomizers.value)
 
     const changeConfiguration = (opt, listIndex) => {
         if (selectedCustomizers.value[listIndex] === opt) selectedCustomizers.value[listIndex] = ''

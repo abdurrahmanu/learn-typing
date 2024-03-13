@@ -29,8 +29,7 @@ export const mainStore = defineStore('mainStore', () => {
     })
     
     const generateText = (config) => {
-        if (config) containerText.value = UseGetQuotes(config).res.value
-        else containerText.value = UseGetQuotes().res.value
+        containerText.value = UseGetQuotes(config).res.value
     }
     
     const resetToDefault = () => {
@@ -73,7 +72,7 @@ export const mainStore = defineStore('mainStore', () => {
 
     const switchNext = (config) => {
         resetToDefault()
-        config ? generateText(config) : generateText()
+        generateText(config)
     }
     
     function getMobileOS() {
