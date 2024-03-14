@@ -16,6 +16,10 @@
                 <div v-if="listIndex === hoverIndex" class="absolute z-10 left-0 text-black bottom-[-100%] shadow-sm shadow-black px-[6px] bg-neutral-100 rounded-full whitespace-nowrap">{{tooltip[listIndex]}}</div>
             </div>
         </div>
+        <div class="flex gap-2 p-1 border border-transparent rounded-sm hover:border-neutral-300">
+            <input @click="toggleBackSpace" type="checkbox" name="" id="">
+            <p>use backspace</p>
+        </div>
     </div>
 </template>
 
@@ -31,7 +35,7 @@ const {pauseTyping} = storeToRefs(main)
 const store = customizeStore()
 const {selectedCustomizers, configurationArgs, configChange, temporaryCustomizers} = storeToRefs(store)
 
-const tooltip = ['text-length', 'word-type', 'text-format', 'text-format', 'word-type', 'word-type']
+const tooltip = ['text-length', 'word-type', 'text-type', 'text-format', 'text-type', 'text-type']
 const options = [
     ['auto', '10+', '20+', '40+'],
     ['most-used', 'seldom-used', 'rarely-used'],
@@ -46,6 +50,10 @@ const emit = defineEmits([ 'emitTextAlign'])
 
 const mouseEnter = (index) => hoverIndex.value = index
 const mouseLeave = (index) => hoverIndex.value = null
+
+const toggleBackSpace = (e) => {
+    
+}
 
 watch(configurationArgs, (newVal) => {
     configChange.value = true

@@ -3,7 +3,8 @@ import data from '../../../data/quotes.json'
 
 
 export function useCustomizeWords([...args]) {
-    const res = ref('')
+    console.log(args);
+    const customizeWordsRes = ref('')
 
-    return {res}
+    return {customizeWordsRes}
 }

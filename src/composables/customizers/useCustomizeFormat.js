@@ -1,44 +1,44 @@
 import { ref } from 'vue'
 
 export function useCustomizeFormat(args, text) {
-    const res = ref(text);
-    const defaultRes = ref('')
+    const customizeFormatRes = ref(text);
+    const defaultcustomizeFormatRes = ref('')
     let numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
     let punctuations = [',', '.', ':', ';', '-', "'", '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '=', '[', ']', '{', '}', '|', "\\", '"', '<', '>', '/', '?']
 
     if (!args.includes('caps')) {
-        res.value = res.value.toLowerCase()
+        customizeFormatRes.value = customizeFormatRes.value.toLowerCase()
     }
 
     if (!args.includes('punctuations')) {
-        defaultRes.value = ''
+        defaultcustomizeFormatRes.value = ''
 
-        for (let index = 0; index < res.value.length; index++) {
-            if (punctuations.includes(res.value[index])) {
-                defaultRes.value += '';
+        for (let index = 0; index < customizeFormatRes.value.length; index++) {
+            if (punctuations.includes(customizeFormatRes.value[index])) {
+                defaultcustomizeFormatRes.value += '';
             } else {
-                defaultRes.value += res.value[index];
+                defaultcustomizeFormatRes.value += customizeFormatRes.value[index];
             }
         }
 
-        res.value = defaultRes.value
+        customizeFormatRes.value = defaultcustomizeFormatRes.value
     }
     
     if (!args.includes('numbers')) {
-        defaultRes.value = ''
+        defaultcustomizeFormatRes.value = ''
 
-        for (let index = 0; index < res.value.length; index++) {
-            if (res.value[index] == ' ') {
-                defaultRes.value += ' '
+        for (let index = 0; index < customizeFormatRes.value.length; index++) {
+            if (customizeFormatRes.value[index] == ' ') {
+                defaultcustomizeFormatRes.value += ' '
             } else {
-                if (isNaN(res.value[index])) {
-                    defaultRes.value += res.value[index]
+                if (isNaN(customizeFormatRes.value[index])) {
+                    defaultcustomizeFormatRes.value += customizeFormatRes.value[index]
                 }
             }
         }
 
-        res.value = defaultRes.value
+        customizeFormatRes.value = defaultcustomizeFormatRes.value
     }
 
-    return { res }
+    return { customizeFormatRes }
 }

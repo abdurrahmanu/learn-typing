@@ -3,6 +3,7 @@ import {ref, computed} from 'vue'
 import {UseGetQuotes} from '../composables/UseGetQuotes'
 
 export const mainStore = defineStore('mainStore', () => {
+    const enableBackSpace = ref(false)
     const completionLevel = ref(0)
     const correctCount = ref(0)
     const wrongCount = ref(0)
@@ -12,7 +13,6 @@ export const mainStore = defineStore('mainStore', () => {
     const startTime = ref(null)
     const totalTime = ref(null)
     const hasStartedSession = ref(false)
-    const customizeSettingsProp = ref([])
     const textAlign = ref(false)
     const pauseTyping = ref(false)
     const playerInput = ref('')
@@ -42,7 +42,6 @@ export const mainStore = defineStore('mainStore', () => {
         containerText.value = ''
         playerLastInput.value = ''
         playerInputLength.value = 0
-        customizeSettingsProp.value = []
         textAlign.value = false
         playerInput.value = ''
     }
@@ -93,6 +92,7 @@ export const mainStore = defineStore('mainStore', () => {
         return '';
     }
 
+
     return {
         getMobileOS,
         resetToDefault,
@@ -100,6 +100,7 @@ export const mainStore = defineStore('mainStore', () => {
         sessionComplete,
         playerTyping,
         switchNext,
+        enableBackSpace,
         inputEquality,
         textAlign,
         resultData,
