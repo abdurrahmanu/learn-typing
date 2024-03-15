@@ -5,7 +5,6 @@
         </Transition>
         <Transition :name="transitionType" mode="in-out" appear>
             <div ref="modalEl" class="fixed" v-if="toggle" >
-                {{ toggle }}
                 <div :class="class" class="text-white h-full w-full min-w-[100px] shadow-sm shadow-gray-500">
                     <slot ></slot>
                 </div>
@@ -19,7 +18,6 @@ import { ref, onBeforeMount, onMounted, watchEffect } from 'vue';
 
 const transitionType = ref('')
 const modalEl = ref(null)
-const toggle = ref(false)
 const emit = defineEmits(['close'])
 
 const props = defineProps({
@@ -101,20 +99,12 @@ onMounted(() => {
     })
 })
 
-watchEffect(() => {
-    if (props.toggle) {
-        setTimeout(() => {
-            toggle.value = true
-        }, 200);
-    }
-})
-
 const emitToggleValue = () => {
-    toggle.value = false
     setTimeout(() => {
         emit('close')
     }, 500);
 }
+
 </script>
 
 <style scoped>

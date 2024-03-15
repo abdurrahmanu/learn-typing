@@ -15,7 +15,7 @@
     <Modal 
       class="bg-zinc-800"
       @close="showMoreSettings = !showMoreSettings"
-      :toggle="(showMoreSettings && getMobileOS() == true)"
+      :toggle="toggleModal"
       >
         <Search />
       </Modal>
@@ -28,7 +28,7 @@ import Search from '../components/Search.vue'
 import Header from '../components/Header.vue';
 import Customize from '../components/Customize.vue'
 import Restart from '../components/Restart.vue';
-import { watch, ref } from 'vue';
+import { watch, ref, watchEffect, computed } from 'vue';
 import {useRouter} from 'vue-router'
 import { mainStore } from '../store/mainStore';
 import { storeToRefs } from 'pinia';
@@ -47,6 +47,10 @@ const screenWidth = ref(window.innerWidth)
 
 window.addEventListener('resize', () => {
   screenWidth.value = window.innerWidth
+})
+
+const toggleModal = computed(() => {
+  return getMobileOS() == true ? showMoreSettings.value : screenWidth.value < 1023 && showMoreSettings.value
 })
 
 watch(resultData, (newVal, oldVal) => {
