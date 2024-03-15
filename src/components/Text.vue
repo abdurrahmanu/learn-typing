@@ -1,11 +1,11 @@
 <template>
-    <div @click="inputEl.focus()" class="text-slate-100 h-full w-[90%] min-h-[200px] p-3 space-y-5 relative transition-all duration-200 max-w-[900px] m-auto">
+    <div @click="inputEl.focus()" class="text-slate-100 w-[90%] min-h-[200px] p-3 space-y-5 relative transition-all duration-200 max-w-[900px] m-auto">
         <div class="opacity-0 w-fit">
             <input 
+            @paste.prevent
             ref="inputEl"
             type="text" 
             class="text-sm text-center rounded-md appearance-none outline-none max-w-[100px] text-slate-500 bg-zinc-900 mx-auto" 
-            @keydown.delete.prevent
             :maxlength="containerText.length" >
         </div>
 
@@ -41,7 +41,7 @@ import {mainStore} from '../store/mainStore'
 
 const inputEl = ref(null)
 const store = mainStore()
-const { containerText, inputEquality, playerInputLength, correctCount, wrongCount, playerInput} = storeToRefs(store)
+const { containerText, inputEquality, backspaceIsPressed, playerInputLength, correctCount, wrongCount, playerInput} = storeToRefs(store)
 const {generateText, playerTyping, getMobileOS} = store
 
 const customize = customizeStore()
@@ -49,8 +49,16 @@ const {configChange, config} = storeToRefs(customize)
 const {useConfig} = customize
 
 watch(playerInput, () => {
-    if (inputEquality.value) correctCount.value ++
-    else wrongCount.value++
+    if (inputEquality.value) {
+        correctCount.value ++
+    }
+    else {        
+        if (backspaceIsPressed.value) return
+        else {
+            console.log('err');
+            wrongCount.value++
+        }
+    }
 })
 
 onMounted(() => {
@@ -58,7 +66,10 @@ onMounted(() => {
     inputEl.value.focus()
     if (getMobileOS()) window.addEventListener('input', playerTyping)
     else {
-        window.addEventListener('keypress', configChange.value ? null : playerTyping)
-    }
+window.addEventListener('keypress', configChange.value ? null : playerTyping)
+}
+
+window.addEventListener('keydown', playerTyping)
+    
 }) 
 </script>

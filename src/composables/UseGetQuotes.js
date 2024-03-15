@@ -1,22 +1,19 @@
 import { ref } from 'vue'
-import { quotes } from '../../data/quotes.js'
 import { englishWords } from '../../data/englishWords.js';
 import { useCustomizeFormat } from './customizers/useCustomizeFormat';
 
 export function  UseGetQuotes (config) {
     const res = ref('')
-    const { data } = quotes()
-    const {mostUsed, mediumUsed, rarelyUsed, numbers} = englishWords()
+    const {mostUsed, mediumUsed, rarelyUsed, numbers, wiseQuotes} = englishWords()
 
     function generateText(length) {
         if (config[2] === 'quotes') {
-            let quote = ref(data[Math.floor(Math.random() * data.length)])
+            let quote = ref(wiseQuotes[Math.floor(Math.random() * wiseQuotes.length)])
             res.value = quote.value
         }
 
         else {
             const words = ref('')
-            let punctuations = [',', '.', ':', ';', '-', "'", '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '=', '[', ']', '{', '}', '|', "\\", '"', '<', '>', '/', '?']
 
             if (config[5] === 'numbers') {
                 if (config[1] === 'most-used') words.value = [...mostUsed, ...numbers]
@@ -25,8 +22,8 @@ export function  UseGetQuotes (config) {
             }
             else {                
                 if (config[1] === 'most-used') words.value = mostUsed
-                if (config[1] === 'seldom-used') words.value = mediumUsed
-                if (config[1] === 'rarely-used') words.value = rarelyUsed
+                if (config[1] === 'seldom-used') words.value = [...mediumUsed, mostUsed]
+                if (config[1] === 'rarely-used') words.value = [...rarelyUsed, ...mostUsed, ...mediumUsed]
             }
 
             if (length) {

@@ -1,40 +1,12 @@
 <template>
-    <!-- <Teleport to="#modal-root">
-        <Transition>           
-            <div @click="toggleModal" v-if="toggle" class="fixed top-0 left-0 w-full h-screen bg-black opacity-40"></div>
+    <Teleport to="body">
+        <Transition name="overlay">           
+            <div @click="emitToggleValue" v-if="toggle" class="fixed top-0 left-0 w-full h-screen bg-black opacity-40"></div>
         </Transition>
-        <Transition name="content">
-            <div class="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] " v-if="toggle" >
-                <div class="p-4 pt-8 text-white bg-blue-300 rounded-md place-content-center">
-                    <div @click="toggleModal" class="absolute top-0 right-2">x</div>
-                    <slot ></slot>
-                </div>
-            </div>
-        </Transition>
-    </Teleport> -->
-
-    <!-- animated modal-->
-
-    <Teleport to="#modal-root">
-        <div @click="toggleModal" v-if="toggle" class="absolute top-0 left-0 w-full h-screen">
-            <Transition name="topLeft">                
-                <div v-if="toggleWait" class=" w-[50%] h-[50%] absolute top-0 left-0 bg-black opacity-[.5]"></div>
-            </Transition>
-            <Transition name="topRight">                
-                <div v-if="toggleWait" class="w-[50%] h-[50%] absolute top-0 right-0 bg-black opacity-[.5]"></div>
-            </Transition>
-            <Transition name="bottomLeft">                
-                <div v-if="toggleWait" class="w-[50%] h-[50%] absolute left-0 bottom-0 bg-black opacity-[.5]"></div>
-            </Transition>
-            <Transition name="bottomRight">                
-                <div v-if="toggleWait" class="w-[50%] h-[50%] absolute right-0 bottom-0 bg-black opacity-[.5]"></div>
-            </Transition>
-        </div>
-
-        <Transition name="content" mode="out-in">
-            <div class="fixed top-[40%] left-[50%] m-auto translate-x-[-50%] max-w-[500px] w-[60%] translate-y-[-50%]" v-if="toggleContent" >
-                <div class="relative w-full p-4 pt-8 m-auto text-white rounded-md h-fit place-content-center">
-                    <div @click="toggleModal" class="absolute top-0 px-2 text-gray-400 rounded-full right-2 bg-zinc-800">x</div>
+        <Transition :name="transitionType" mode="in-out" appear>
+            <div ref="modalEl" class="fixed" v-if="toggle" >
+                {{ toggle }}
+                <div :class="class" class="text-white h-full w-full min-w-[100px] shadow-sm shadow-gray-500">
                     <slot ></slot>
                 </div>
             </div>
@@ -43,111 +15,171 @@
 </template>
 
 <script setup>
-import { ref, defineProps, defineEmits, onBeforeMount, watchEffect } from 'vue';
+import { ref, onBeforeMount, onMounted, watchEffect } from 'vue';
 
-onBeforeMount(() => {
-    const modalRoot = ref(document.createElement('div'))
-    modalRoot.value.id = 'modal-root'
-    document.body.appendChild(modalRoot.value)
-})
+const transitionType = ref('')
+const modalEl = ref(null)
+const toggle = ref(false)
+const emit = defineEmits(['close'])
 
 const props = defineProps({
-    toggle: Boolean
+    class: {
+        type: String,
+        default: ''
+    },
+    toggle: {
+        type: Boolean,
+        default: false,
+    },
+    left: {
+        type: Boolean,
+        default: false,
+    },
+    right: {
+        type: Boolean,
+        default: false,
+    },
+    top: {
+        type: Boolean,
+        default: false,
+    },
+    bottom: {
+        type: Boolean,
+        default: false,
+    },
+    full: {
+        type: Boolean,
+        default: false
+    }
 })
 
-const toggleWait = ref(false)
-const toggleContent = ref(false)
+onBeforeMount(() => {
+    if (!props.left && !props.right && !props.top && !props.bottom) {
+        transitionType.value = 'auto'
+    }
+
+    if (props.left) {
+        transitionType.value = 'left'
+    }
+
+    if (props.right) {
+        transitionType.value = 'right'
+    }
+
+    if (props.top) {
+        transitionType.value = 'top'
+    }
+
+    if (props.bottom) {
+        transitionType.value = 'bottom'
+    }
+})
+
+onMounted(() => {
+    watchEffect(() => {
+        if (props.toggle && modalEl.value instanceof HTMLElement) {
+            if (!props.left && !props.right && !props.top && !props.bottom) {
+                modalEl.value.className += ' top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] rounded-md'
+            }
+
+            if (props.left) {
+                modalEl.value.className += ' top-0 left-0 h-full max-w-[40%]'
+            }
+    
+            if (props.right) {
+                modalEl.value.className += ' right-0 top-0 h-full max-w-[40%]'
+            }
+    
+            if (props.top) {
+                modalEl.value.className += ' top-0 lleft-0 w-full max-h-20%'
+            }
+    
+            if (props.bottom) {
+                modalEl.value.className += ' bottom-0 left-0 w-full max-h-[20%]'
+            }
+        }
+    })
+})
 
 watchEffect(() => {
     if (props.toggle) {
         setTimeout(() => {
-            toggleWait.value = true
-            setTimeout(() => {
-                toggleContent.value = true
-            }, 500);
-        }, 0);
-    } else {
-        setTimeout(() => {
-            toggleContent.value = false
-            toggleWait.value = false
-        }, 0);
+            toggle.value = true
+        }, 200);
     }
 })
 
-const emit = defineEmits(['false'])
-const toggleModal = () => emit('false')
+const emitToggleValue = () => {
+    toggle.value = false
+    setTimeout(() => {
+        emit('close')
+    }, 500);
+}
 </script>
 
 <style scoped>
-.topLeft-enter-to,
-.topRight-enter-to,
-.bottomLeft-enter-to,
-.bottomRight-enter-to {
-    width: 50%;
-    height: 50%;
-} 
-
-.topLeft-enter-from,
-.topRight-enter-from,
-.bottomLeft-enter-from,
-.bottomRight-enter-from {
-    width: 0;
-    height: 0;
+/* ENTER */
+.bottom-enter-from {
+    transform: translateY(100%);
 }
 
-.topLeft-enter-active,
-.topRight-enter-active,
-.bottomLeft-enter-active,
-.bottomRight-enter-active {
-    transition: all;
-    transition-duration: 0.4s;
+.left-enter-from {
+    transform: translateX(-100%);
 }
 
-.topLeft-leave-to,
-.topRight-leave-to,
-.bottomLeft-leave-to,
-.bottomRight-leave-to {    
-    width: 0;
-    height: 0;
-    bottom: 50%;
-    right: 50%;
-    top: 50%;
-    left: 50%;
-    background: #000;
-    transform: translateX(-50%);
-    transform: translateY(-50%);
+.right-enter-from {
+    transform: translateX(100%);
 }
 
-.topLeft-leave-active,
-.topRight-leave-active,
-.bottomLeft-leave-active,
-.bottomRight-leave-active {
-    transition: all;
-    transition-duration: 0.4s;
+.auto-enter-from {
+
 }
 
-/* .v-enter-from {
-    scale: 70%;
+.top-enter-from {
+    transform: translateY(-100%);
 }
 
-.v-enter-active {
-    transition: scale .2s linear;
+/* LEAVE */
+
+.bottom-leave-to {
+    transform: translateY(100%);
 }
 
-.content-leave-to {
-    opacity: 30%;
+.left-leave-to {
+    transform: translateX(-100%);
 }
 
-.content-leave-active {
-    transition: .1s linear;
+.right-leave-to {
+    transform: translateX(100%);
 }
 
-.v-leave-to {
-    opacity: 0;
+.auto-leave-to {
+    
 }
 
-.v-leave-active {
-    transition: all .3s linear;
-} */
+.top-leave-to {
+    transform: translateY(-100%);
+}
+
+/* ENTER ACTIVE */
+
+.left-enter-active, 
+.top-enter-active,
+.right-enter-active,
+.auto-enter-active,
+.bottom-enter-active {
+        transition: all 0.3s ease;
+}
+
+/*  LEAVE ACTIVE */
+
+.left-leave-active, 
+.top-leave-active,
+.right-leave-active,
+.auto-leave-active,
+.bottom-leave-active {
+        transition: all 0.3s ease;
+}
+
 </style>
 

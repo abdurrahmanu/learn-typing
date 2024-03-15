@@ -16,6 +16,10 @@ export const mainStore = defineStore('mainStore', () => {
     const textAlign = ref(false)
     const pauseTyping = ref(false)
     const playerInput = ref('')
+    const backspaceIsPressed = ref(false)
+    const timedTyping = ref(false)
+    const typingCountDown = ref(10)
+    const showMoreSettings = ref(false)
 
     const resultData = computed(() => {
         return {
@@ -52,17 +56,33 @@ export const mainStore = defineStore('mainStore', () => {
     }
 
     const playerTyping = (e) => {
+        if (e.type === 'keydown' && e.key === 'Backspace') {
+            if (playerInputLength.value === 0) return
+            backspaceIsPressed.value = true
+            playerInputLength.value--
+            playerInput.value = playerInput.value.slice(0, -1)
+            playerLastInput.value = playerInput.value[playerInput.value - 1]
+        }
+
+        if (e.type === 'keydown') return
+        if (e.type === 'keypress') {
+            backspaceIsPressed.value = false
+        }
         if (pauseTyping.value) return
         let eventSelector = getMobileOS() ? e.data : e.key
         if (!getMobileOS() && e.key === 'Enter') return 
         if (!hasStartedSession.value) hasStartedSession.value = true
         playerInputLength.value++
-        if (playerInputLength.value === 1)  startTime.value = performance.now();
+        if (playerInputLength.value === 1)  {
+            startTime.value = performance.now();
+        }
         completionLevel.value = ((playerInputLength.value + 1) / containerText.value.length) * 100        
         playerLastInput.value = eventSelector
         playerInput.value += playerLastInput.value
 
-        if (playerInputLength.value === containerText.value.length) sessionComplete()
+        if (playerInputLength.value === containerText.value.length) {
+            sessionComplete()
+        }
     }
 
     const inputEquality = computed(() => {
@@ -92,7 +112,6 @@ export const mainStore = defineStore('mainStore', () => {
         return '';
     }
 
-
     return {
         getMobileOS,
         resetToDefault,
@@ -101,6 +120,7 @@ export const mainStore = defineStore('mainStore', () => {
         playerTyping,
         switchNext,
         enableBackSpace,
+        showMoreSettings,
         inputEquality,
         textAlign,
         resultData,
@@ -115,6 +135,8 @@ export const mainStore = defineStore('mainStore', () => {
         hasStartedSession,
         startTime,
         totalTime,
-        pauseTyping
+        pauseTyping,
+        backspaceIsPressed,
+        timedTyping,
     }
 })

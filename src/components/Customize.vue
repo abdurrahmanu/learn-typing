@@ -1,5 +1,5 @@
 <template>
-    <div class="text-[10px] font-mono items-center w-[90%] bg-neutral-800 text-slate-300 rounded-md p-2 flex max-w-[650px] justify-center m-auto flex-wrap mt-5 relative">
+    <div class="text-[10px] font-mono items-center w-[90%] bg-neutral-800 text-slate-300 rounded-md p-2 flex max-w-[750px] justify-center m-auto flex-wrap relative">
         <div class="p-1" v-for="(optionArr, listIndex) in options" :key="listIndex">            
             <div 
             :class="[hoverIndex === listIndex ? 'border-zinc-400' : 'border-transparent']" class="relative flex gap-2 py-1 border rounded-lg"
@@ -20,17 +20,28 @@
             <input @click="toggleBackSpace" type="checkbox" name="" id="">
             <p>use backspace</p>
         </div>
+        <div class="flex gap-2 p-1 border border-transparent rounded-sm hover:border-neutral-300">
+            <input @click="toggleTimedTyping" type="checkbox" name="" id="">
+            <p>timer</p>
+            <div v-if="timedTyping" class="space-x-2">                
+                <span @click="typingCountdown = 10">10s</span>
+                <span @click="typingCountdown = 20">20s</span>
+                <span @click="typingCountdown = 30">30s</span>
+            </div>
+        </div>
+        <div @click="showMoreSettings = !showMoreSettings" class="absolute w-3 h-3 bg-white rounded-full bottom-2 right-2"></div>
     </div>
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, watchEffect } from 'vue'
 import {customizeStore} from '../store/customizeStore.js'
 import {storeToRefs} from 'pinia'
 import {mainStore} from '../store/mainStore'
 
 const main = mainStore()
-const {pauseTyping} = storeToRefs(main)
+const {pauseTyping, enableBackSpace, timedTyping, typingCountdown, showMoreSettings} = storeToRefs(main)
+const {getMobileOS} = main
 
 const store = customizeStore()
 const {selectedCustomizers, configurationArgs, configChange, temporaryCustomizers} = storeToRefs(store)
@@ -48,11 +59,16 @@ const options = [
 const hoverIndex = ref(null)
 const emit = defineEmits([ 'emitTextAlign']) 
 
+
 const mouseEnter = (index) => hoverIndex.value = index
 const mouseLeave = (index) => hoverIndex.value = null
 
 const toggleBackSpace = (e) => {
-    
+    enableBackSpace.value = !enableBackSpace.value
+}
+
+const toggleTimedTyping = () => {
+    timedTyping.value = !timedTyping.value
 }
 
 watch(configurationArgs, (newVal) => {
@@ -65,6 +81,5 @@ watch(configChange, (newVal, oldVal) => {
     if (newVal) pauseTyping.value = true
     else pauseTyping.value = false
 })
-
 </script>
 

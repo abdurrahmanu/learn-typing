@@ -1,6 +1,9 @@
 <template>
-    <div class="relative inline font-mono whitespace-pre-wrap ">
-        <span :class="[equalStyle, currentIndexStyle, mainStyle]" class="transition-all duration-[10ms]">{{ alphabet }}</span>
+    <div class="relative inline font-mono whitespace-pre-wrap">
+        <Transition v-if="currentIndex" appear>            
+            <span :class="[equalStyle, currentIndexStyle, mainStyle]" class="transition-all duration-[10ms]">{{ alphabet }}</span>
+        </Transition>
+        <span v-else :class="[equalStyle, currentIndexStyle, mainStyle]" class="transition-all duration-[10ms]">{{ alphabet }}</span>
     </div>
 </template> 
 
@@ -24,10 +27,20 @@ const equalStyle = computed(() => {
 })
 
 const currentIndexStyle = computed(() => {
-    return  props.currentIndex ? 'bg-zinc-700 text-white py-[2px] rounded-full animate-pulse' : ''
+    return  props.currentIndex ? 'bg-zinc-700 text-white py-[2px] animate-pulse' : ''
 })
 
 const mainStyle = computed(() => {
-    return props.index > playerInputLength.value ? 'text-slate-400' : ''
+    return props.index > playerInputLength.value ? 'text-slate-500' : ''
 })
 </script>
+
+<style scoped>
+.v-enter-from {
+    opacity: 0;
+}
+
+.v-enter-active, .v-leave-active {
+    transition: all .5s ease-in;
+}
+</style>
