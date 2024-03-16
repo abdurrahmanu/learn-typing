@@ -13,7 +13,7 @@ import {storeToRefs} from 'pinia'
 import {mainStore} from '../store/mainStore'
 
 const store = mainStore()
-const { playerInputLength } = storeToRefs(store)
+const { playerInputLength, typeBlindly } = storeToRefs(store)
 const emit = defineEmits(['equal', 'unequal'])
 const props = defineProps({
     alphabet: String,
@@ -23,7 +23,9 @@ const props = defineProps({
 })
 
 const equalStyle = computed(() => {
-    return props.equality ? 'text-green-300' : 'text-red-500'
+    if (!typeBlindly.value) {
+        return props.equality ? 'text-green-300' : 'text-red-500'
+    }
 })
 
 const currentIndexStyle = computed(() => {

@@ -18,12 +18,14 @@
                     <div class="">{{ wordsPerMinute() }}</div>
                 </div>
                 <div class="relative px-4"> 
-                    <div :class="[errorRatio() > 1/3 ? 'bg-green-600' : 'bg-red-300']" class="w-[10px] absolute bottom-0 right-0 h-[10px]"></div>
+                    <div :class="[errorRatioLevel ? 'bg-red-300' : 'bg-green-500']" class="w-[10px] absolute bottom-0 right-0 h-[10px]"></div>
                     <div class="text-xs">ERROR RATIO</div>
                     <div class="">{{ errorRatio() }}</div>
                 </div>
             </div>
+            <div class="text-zinc-600 py-1">{{ resultData.testType }}</div>
         </div>
+
         <div class="pt-10">
             <div class="w-[80%] max-w-[600px] m-auto min-h-[200px] bg-teal-700"></div>
         </div>
@@ -52,4 +54,9 @@ const wordsPerMinute = () => {
 const errorRatio = () => {
     return resultData.value.wrongCount + '/' + (resultData.value.wrongCount + resultData.value.correctCount)
 }
+
+const errorRatioLevel = () => {
+    return resultData.value.wrongCount / (resultData.value.wrongCount + resultData.value.correctCount) < 1/5
+}
+
 </script>

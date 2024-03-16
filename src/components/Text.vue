@@ -10,7 +10,7 @@
         </div>
 
         <div v-if="containerText" class="leading-6 md:leading-[30px] text-sm transition-all duration-100 relative md:text-lg border-l-3 border-l-neutral-800 m-auto max-w-[600px] w-full" >
-            <div class="min-h-[100px] h-fit border-4 border-neutral-800 p-1 relative">
+            <div class="min-h-[100px] h-fit overflow-y-auto border-4 border-neutral-800 p-1 relative">
                 <div  v-if="configChange"  class="absolute top-0 bottom-0 left-0 w-full">                    
                     <div class="flex h-[100%]">                        
                         <div @click="useConfig(true)" class="w-[50%] h-[100%] flex items-center justify-center z-[99] text-black  hover:bg-white">Use new config?</div>
@@ -26,7 +26,10 @@
                 :equality="playerInput[index] === alphabet"
                 :alphabet="alphabet"/>
             </div>
-            <RangeInput />
+            <div class="flex">
+                <RangeInput />
+                <span class="text-lg hover:text-green-500">+</span>
+            </div>
         </div>
     </div>
 </template>
@@ -41,7 +44,7 @@ import {mainStore} from '../store/mainStore'
 
 const inputEl = ref(null)
 const store = mainStore()
-const { containerText, inputEquality, backspaceIsPressed, playerInputLength, correctCount, wrongCount, playerInput} = storeToRefs(store)
+const { containerText, inputEquality, typeBlindly, backspaceIsPressed, playerInputLength, correctCount, wrongCount, playerInput} = storeToRefs(store)
 const {generateText, playerTyping, getMobileOS} = store
 
 const customize = customizeStore()
@@ -55,7 +58,6 @@ watch(playerInput, () => {
     else {        
         if (backspaceIsPressed.value) return
         else {
-            console.log('err');
             wrongCount.value++
         }
     }
@@ -65,11 +67,7 @@ onMounted(() => {
     generateText(config.value)
     inputEl.value.focus()
     if (getMobileOS()) window.addEventListener('input', playerTyping)
-    else {
-window.addEventListener('keypress', configChange.value ? null : playerTyping)
-}
-
-window.addEventListener('keydown', playerTyping)
-    
+    else window.addEventListener('keypress', configChange.value ? null : playerTyping)
+    window.addEventListener('keydown', playerTyping)
 }) 
 </script>

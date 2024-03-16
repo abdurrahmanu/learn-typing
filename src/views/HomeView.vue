@@ -13,7 +13,7 @@
 
   <div class="lg:hidden"  v-if="showMoreSettings">    
     <Modal 
-      class="bg-zinc-800"
+      class="bg-zinc-900 overflow-y-auto"
       @close="showMoreSettings = !showMoreSettings"
       :toggle="toggleModal"
       >
@@ -38,7 +38,7 @@ const router = useRouter()
 const store = mainStore()
 
 const {switchNext, getMobileOS} = store
-const {resultData, showMoreSettings} = storeToRefs(store)
+const {resultData, showMoreSettings, pauseTyping} = storeToRefs(store)
 
 const customize = customizeStore()
 const {config} = storeToRefs(customize)
@@ -62,4 +62,8 @@ watch(config, (newConfig, oldConfig) => {
   switchNext(newConfig)
 }, {deep: true})
 
+watch(showMoreSettings, (newVal, oldVal) => {
+  if (newVal) pauseTyping.value = true
+  else pauseTyping.value = false
+})
 </script>

@@ -1,5 +1,5 @@
 <template>
-    <div class="text-[10px] font-mono items-center w-[90%] bg-neutral-800 text-slate-300 rounded-md p-2 flex max-w-[750px] justify-center m-auto flex-wrap relative">
+    <div class="text-[10px] font-mono items-center w-[90%] bg-neutral-800 text-slate-300 rounded-md p-2 flex max-w-[950px] justify-center m-auto flex-wrap relative">
         <div class="p-1" v-for="(optionArr, listIndex) in options" :key="listIndex">            
             <div 
             :class="[hoverIndex === listIndex ? 'border-zinc-400' : 'border-transparent']" class="relative flex gap-2 py-1 border rounded-lg"
@@ -15,10 +15,6 @@
                 </div>
                 <div v-if="listIndex === hoverIndex" class="absolute z-10 left-0 text-black bottom-[-100%] shadow-sm shadow-black px-[6px] bg-neutral-100 rounded-full whitespace-nowrap">{{tooltip[listIndex]}}</div>
             </div>
-        </div>
-        <div class="flex gap-2 p-1 border border-transparent rounded-sm hover:border-neutral-300">
-            <input @click="toggleBackSpace" type="checkbox" name="" id="">
-            <p>use backspace</p>
         </div>
         <div class="flex gap-2 p-1 border border-transparent rounded-sm hover:border-neutral-300">
             <input @click="toggleTimedTyping" type="checkbox" name="" id="">
@@ -46,7 +42,7 @@ const {getMobileOS} = main
 const store = customizeStore()
 const {selectedCustomizers, configurationArgs, configChange, temporaryCustomizers} = storeToRefs(store)
 
-const tooltip = ['text-length', 'word-type', 'text-type', 'text-format', 'text-type', 'text-type']
+const tooltip = ['length', 'words', 'test-type', 'format', 'test-type', 'test-type']
 const options = [
     ['auto', '10+', '20+', '40+'],
     ['most-used', 'seldom-used', 'rarely-used'],

@@ -4,8 +4,8 @@
             <div @click="emitToggleValue" v-if="toggle" class="fixed top-0 left-0 w-full h-screen bg-black opacity-40"></div>
         </Transition>
         <Transition :name="transitionType" mode="in-out" appear>
-            <div ref="modalEl" class="fixed" v-if="toggle" >
-                <div :class="class" class="text-white h-full w-full min-w-[100px] shadow-sm shadow-gray-500">
+            <div ref="modalEl" class="fixed w-[80%] max-w-[500px] z-[999]" v-if="toggle" >
+                <div :class="class" class="text-white shadow-sm shadow-gray-500">
                     <slot ></slot>
                 </div>
             </div>

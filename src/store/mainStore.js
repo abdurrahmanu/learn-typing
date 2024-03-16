@@ -3,7 +3,7 @@ import {ref, computed} from 'vue'
 import {UseGetQuotes} from '../composables/UseGetQuotes'
 
 export const mainStore = defineStore('mainStore', () => {
-    const enableBackSpace = ref(false)
+    const enableBackSpace = ref(true)
     const completionLevel = ref(0)
     const correctCount = ref(0)
     const wrongCount = ref(0)
@@ -20,6 +20,8 @@ export const mainStore = defineStore('mainStore', () => {
     const timedTyping = ref(false)
     const typingCountDown = ref(10)
     const showMoreSettings = ref(false)
+    const typeBlindly = ref(false)
+    const customTexts = ref({})
 
     const resultData = computed(() => {
         return {
@@ -57,13 +59,13 @@ export const mainStore = defineStore('mainStore', () => {
 
     const playerTyping = (e) => {
         if (e.type === 'keydown' && e.key === 'Backspace') {
+            if (!enableBackSpace.value) return
             if (playerInputLength.value === 0) return
             backspaceIsPressed.value = true
             playerInputLength.value--
             playerInput.value = playerInput.value.slice(0, -1)
             playerLastInput.value = playerInput.value[playerInput.value - 1]
         }
-
         if (e.type === 'keydown') return
         if (e.type === 'keypress') {
             backspaceIsPressed.value = false
@@ -119,8 +121,10 @@ export const mainStore = defineStore('mainStore', () => {
         sessionComplete,
         playerTyping,
         switchNext,
+        typeBlindly,
         enableBackSpace,
         showMoreSettings,
+        customTexts,
         inputEquality,
         textAlign,
         resultData,
