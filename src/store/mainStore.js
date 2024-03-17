@@ -18,10 +18,15 @@ export const mainStore = defineStore('mainStore', () => {
     const playerInput = ref('')
     const backspaceIsPressed = ref(false)
     const timedTyping = ref(false)
-    const typingCountDown = ref(10)
     const showMoreSettings = ref(false)
     const typeBlindly = ref(false)
     const customTexts = ref({})
+    const useCustomText = ref(false)
+    const enableRepeat = ref(false)
+    const storedTextForRepeat = ref('')
+    const typingCountdown = ref(30)
+    const beginCountdown = ref(false)
+    const countdown = ref(0)
 
     const resultData = computed(() => {
         return {
@@ -34,12 +39,18 @@ export const mainStore = defineStore('mainStore', () => {
         }
     })
     
-    const generateText = (config) => {
-        containerText.value = UseGetQuotes(config).res.value
+    const generateText = (config, restart) => {
+        if (enableRepeat.value || restart) {
+            containerText.value = storedTextForRepeat.value
+        } else {
+            containerText.value = UseGetQuotes(config).res.value
+        }
     }
     
     const resetToDefault = () => {
         hasStartedSession.value = false
+        countdown.value = 0
+        beginCountdown.value = false
         completionLevel.value = 0
         totalTime.value = null
         startTime.value = null
@@ -76,6 +87,7 @@ export const mainStore = defineStore('mainStore', () => {
         if (!hasStartedSession.value) hasStartedSession.value = true
         playerInputLength.value++
         if (playerInputLength.value === 1)  {
+            if (timedTyping.value) beginCountdown.value = true
             startTime.value = performance.now();
         }
         completionLevel.value = ((playerInputLength.value + 1) / containerText.value.length) * 100        
@@ -91,9 +103,9 @@ export const mainStore = defineStore('mainStore', () => {
         return playerLastInput.value === containerText.value[playerInput.value.length - 1]
     })
 
-    const switchNext = (config) => {
+    const switchNext = (config, restart) => {
         resetToDefault()
-        generateText(config)
+        generateText(config, restart)
     }
     
     function getMobileOS() {
@@ -121,9 +133,15 @@ export const mainStore = defineStore('mainStore', () => {
         sessionComplete,
         playerTyping,
         switchNext,
+        countdown,
         typeBlindly,
+        typingCountdown,
+        beginCountdown,
         enableBackSpace,
+        useCustomText,
         showMoreSettings,
+        enableRepeat,
+        storedTextForRepeat,
         customTexts,
         inputEquality,
         textAlign,

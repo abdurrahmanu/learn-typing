@@ -40,7 +40,7 @@ const store = mainStore()
 const {resultData} = storeToRefs(store)
 
 const accuracy = () => {
-    return Math.round((resultData.value.correctCount/(resultData.value.correctCount + resultData.value.wrongCount) * 100))
+    return Math.round((resultData.value.correctCount/(resultData.value.containerText.length) * 100))
 }
 
 const elapsedTime = () => {
@@ -52,11 +52,11 @@ const wordsPerMinute = () => {
 }
 
 const errorRatio = () => {
-    return resultData.value.wrongCount + '/' + (resultData.value.wrongCount + resultData.value.correctCount)
+    return (resultData.value.containerText.length - resultData.value.correctCount) + '/' + (resultData.value.containerText.length)
 }
 
 const errorRatioLevel = () => {
-    return resultData.value.wrongCount / (resultData.value.wrongCount + resultData.value.correctCount) < 1/5
+    return (resultData.value.containerText.length - resultData.value.correctCount) + '/' + (resultData.value.containerText.length)
 }
 
 </script>

@@ -22,7 +22,7 @@ export function  UseGetQuotes (config) {
             }
             else {                
                 if (config[1] === 'most-used') words.value = mostUsed
-                if (config[1] === 'seldom-used') words.value = [...mediumUsed, mostUsed]
+                if (config[1] === 'seldom-used') words.value = [...mediumUsed, ...mostUsed]
                 if (config[1] === 'rarely-used') words.value = [...rarelyUsed, ...mostUsed, ...mediumUsed]
             }
 
