@@ -11,7 +11,7 @@
       <div class="w-[100%] lg:w-[70%] mx-auto flex-none">      
         <Customize v-if="!resultData.totalTime" />
         <RouterView />
-        <div class="pt-28">
+        <div class="pt-10">
           <Restart />
         </div>
       </div>
@@ -60,7 +60,7 @@ watch(showMoreSettings, (newVal, oldVal) => {
 
 onMounted(() => {
   if (localStorage.getItem('custom-text') ) {
-    customTexts.value = localStorage.getItem('custom-text')
+    customTexts.value = JSON.parse(localStorage.getItem('custom-text'))
   }
 })
 </script>

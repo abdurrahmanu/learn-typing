@@ -1,9 +1,11 @@
 <template>
     <div class="text-xs leading-5 md:text-sm h-fit rounded-[10px]">
-        
+
         <div  class="font-mono text-right flex justify-between px-2 sticky z-[99999] top-[0] w-full bg-neutral-800 shadow-sm shadow-black">
             <div class="text-white text-lg font-mono">ALL SETTINGS</div>
-            <div class="p-[2px] text-white font-bold font-mono hover:text-red-400 text-lg" @click="showMoreSettings = !showMoreSettings">X</div>
+            <div class="p-[2px] text-white font-bold font-mono text-lg" @click="showMoreSettings = !showMoreSettings">
+                <img src="/cancel.svg" class="w-7" alt="">
+            </div>
         </div>
 
         <div class="m-auto text-center p-2">
@@ -14,7 +16,7 @@
             <div class="flex justify-between p-1 border border-transparent rounded-sm hover:border-neutral-300 text-zinc-300 w-full">
                 <div class="flex gap-4">
                     <input :checked="enableBackSpace" @click="enableBackSpace = !enableBackSpace" type="checkbox" name="" id="">
-                    <p>use backspace</p>
+                    <p>Backspace</p>
                 </div>
                 <div class="font-mono">></div>
             </div>
@@ -25,18 +27,18 @@
             <div class="flex justify-between p-1 border border-transparent rounded-sm hover:border-neutral-300 text-zinc-300 w-full">
                 <div class="flex gap-4">
                     <input :checked="timedTyping" @click="timedTyping = !timedTyping" type="checkbox" name="" id="">
-                    <p>use timer</p>
+                    <p>Countdown Typing</p>
                 </div>
                 <div class="font-mono">></div>
             </div>
-            <p class="text-zinc-400">Type with timer countdown, test automatically ends after times reaches 0</p>
+            <p class="text-zinc-400">Type with countdown, test automatically ends after times reaches 0, untyped alphabets are considered as errors</p>
         </div>
 
         <div class="px-1 border-t border-neutral-900 p-2 hover:bg-neutral-900">
             <div class="flex justify-between p-1 border border-transparent rounded-sm hover:border-neutral-300 text-zinc-300 w-full">
                 <div class="flex gap-4">
                     <input :checked="typeBlindly" @click="typeBlindly = !typeBlindly" type="checkbox" name="" id="">
-                    <p>Type blindly</p>
+                    <p>Blind mode</p>
                 </div>
                 <div class="font-mono">></div>
             </div>
@@ -47,7 +49,7 @@
             <div class="flex justify-between p-1 border border-transparent rounded-sm hover:border-neutral-300 text-zinc-300 w-full">
                 <div class="flex gap-4">
                     <input :disabled="Object.keys(customTexts).length === 0" :checked="useCustomText" @click="useCustomText = !useCustomText" type="checkbox" name="" id="">
-                    <p>Use your custom text</p>
+                    <p>Add custom text</p>
                 </div>
                 <div class="font-mono">></div>
             </div>
@@ -96,7 +98,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { ref, watch } from 'vue';
 import {customizeStore} from '../store/customizeStore.js';
 import {storeToRefs} from 'pinia';
 import {mainStore} from '../store/mainStore';
@@ -162,6 +164,12 @@ const saveNewCustomText = () => {
         textSaved.value = false
     }, 500);
 }
+
+watch(customTexts, (newVal) => {
+    if (newVal) {
+        localStorage.setItem('custom-text', JSON.stringify(newVal))
+    }
+}, {deep: true})
 
 </script>
 

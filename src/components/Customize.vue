@@ -71,7 +71,6 @@ watch(configChange, (newVal, oldVal) => {
 watch(customTexts, (newVal, oldVal) => {
     if (newVal) {
         localStorage.setItem('custom-text', JSON.stringify(newVal))
-        console.log(JSON.parse(localStorage.getItem('custom-text')));
     }
 }, {deep: true})
 </script>

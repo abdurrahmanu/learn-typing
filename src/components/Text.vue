@@ -8,11 +8,23 @@
             class="text-sm text-center rounded-md appearance-none outline-none max-w-[100px] text-slate-500 bg-zinc-900 mx-auto" 
             :maxlength="containerText.length" >
     </div>
+        <div  class="flex justify-between max-w-[600px] m-auto">
+            <div v-if="timedTyping && !beginCountdown" class="flex w-fit font-mono items-center">  
+                    <img @click="timedTyping = !timedTyping" class="h-7" src="/playTimer.svg" alt="">
+                    <div class="border flex text-xs h-fit">
+                        <div class="w-fit px-2 border-r" :class="[typingCountdown === 10 ? 'text-green-500' : 'text-slate-300']" @click="typingCountdown = 10">10s</div>
+                        <div class="w-fit px-2 border-r" :class="[typingCountdown === 20 ? 'text-green-500' : 'text-slate-300']" @click="typingCountdown = 20">20s</div>
+                        <div class="w-fit px-2 border-l" :class="[typingCountdown === 30 ? 'text-green-500' : 'text-slate-300']" @click="typingCountdown = 30">30s</div>
+                    </div>
+            </div>
+            <div class="w-fit" @click="timedTyping = !timedTyping" v-else>
+                <img class="h-7" src="/pauseTimer.svg" alt="">
+            </div>
 
-        <div v-if="timedTyping && !beginCountdown" class="flex w-fit border font-mono">                
-                <div class="w-fit px-2 border-r" :class="[typingCountdown === 10 ? 'text-green-500' : 'text-slate-300']" @click="typingCountdown = 10">10s</div>
-                <div class="w-fit px-2 border-r" :class="[typingCountdown === 20 ? 'text-green-500' : 'text-slate-300']" @click="typingCountdown = 20">20s</div>
-                <div class="w-fit px-2 border-l" :class="[typingCountdown === 30 ? 'text-green-500' : 'text-slate-300']" @click="typingCountdown = 30">30s</div>
+            <div @click="typeBlindly = !typeBlindly" class="flex w-fit">
+                <img v-if="typeBlindly" class="h-7" src="/closedEye.svg" alt="">
+                <img v-else class="h-7" src="/openEye.svg" alt="">
+            </div>
         </div>
         <div v-if="timedTyping && beginCountdown">{{  countdown  }}</div>
         <div v-if="containerText" class="leading-6 md:leading-[30px] text-sm transition-all duration-100 relative md:text-lg border-l-3 border-l-neutral-800 m-auto max-w-[600px] w-full " >
@@ -49,7 +61,7 @@ import {mainStore} from '../store/mainStore'
 const intervalID = ref()
 const inputEl = ref(null)
 const store = mainStore()
-const { containerText, inputEquality, typingCountdown, timedTyping, countdown, beginCountdown, enableRepeat, storedTextForRepeat, backspaceIsPressed, playerInputLength, correctCount, wrongCount, playerInput} = storeToRefs(store)
+const { containerText, inputEquality, typeBlindly, typingCountdown, timedTyping, countdown, beginCountdown, enableRepeat, storedTextForRepeat, backspaceIsPressed, playerInputLength, correctCount, wrongCount, playerInput} = storeToRefs(store)
 const {generateText, playerTyping, getMobileOS, sessionComplete} = store
 
 const customize = customizeStore()
