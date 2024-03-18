@@ -33,12 +33,13 @@ export function  UseGetQuotes (config, customText) {
             else {
                 if (config[5] === 'numbers') {
                     if (config[1] === 'most-used') words.value = [...mostUsed, ...numbers]
-                    if (config[1] === 'seldom-used') words.value = [...mediumUsed, ...numbers]
+                    if (config[1] === 'less-used') words.value = [...mediumUsed, ...numbers]
                     if (config[1] === 'rarely-used') words.value =  [...rarelyUsed, ...numbers]
                 }
                 else {                
+
                     if (config[1] === 'most-used') words.value = mostUsed
-                    if (config[1] === 'seldom-used') words.value = [...mediumUsed, ...mostUsed]
+                    if (config[1] === 'less-used') words.value = [...mediumUsed, ...mostUsed]
                     if (config[1] === 'rarely-used') words.value = [...rarelyUsed, ...mostUsed, ...mediumUsed]
                 }
     
@@ -69,7 +70,7 @@ export function  UseGetQuotes (config, customText) {
     }
 
     // generate text with new config and customize
-    if (config[0] !== 'auto') generateText(+config[0].slice(0, -1))
+    if (config[0] !== 'auto') generateText(+config[0])
     else  generateText()
     customize()
     

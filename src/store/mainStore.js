@@ -41,10 +41,15 @@ export const mainStore = defineStore('mainStore', () => {
         }
     })
     
-    const generateText = (config, restart) => {
+    const generateText = (config, restart, options) => {
         if (howToUseCustomText.value === 'use both system and custom') {
             let custom = Object.values(customTexts.value)
             containerText.value = UseGetQuotes(config, custom).res.value
+            return
+        }
+
+        if (useCustomText.value && howToUseCustomText.value === 'select text using options' && options) {
+            containerText.value = storedTextForRepeat.value
             return
         }
 
@@ -56,7 +61,7 @@ export const mainStore = defineStore('mainStore', () => {
             return
         }
 
-        if (enableRepeat.value || restart || (useCustomText.value && howToUseCustomText.value === 'select text using options')) {
+        if (enableRepeat.value || restart ) {
             containerText.value = storedTextForRepeat.value
         } 
         else {
@@ -124,9 +129,9 @@ export const mainStore = defineStore('mainStore', () => {
         return playerLastInput.value === containerText.value[playerInput.value.length - 1]
     })
 
-    const switchNext = (config, restart) => {
+    const switchNext = (config, restart, options) => {
         resetToDefault()
-        generateText(config, restart)
+        generateText(config, restart, options)
     }
     
     function getMobileOS() {

@@ -19,7 +19,7 @@
 </template>
 
 <script setup>
-import Settings from '../components/Settings.vue'
+import Settings from '../components/Settings/Settings.vue'
 import Header from '../components/Header.vue';
 import Customize from '../components/Customize.vue'
 import Restart from '../components/Restart.vue';

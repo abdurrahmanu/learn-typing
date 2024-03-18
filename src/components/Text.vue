@@ -25,14 +25,14 @@
 
             <div class="flex gap-4 items-center ">
                 <div v-if="useCustomText" class="relative">
+                    <div v-if="howToUseCustomText === 'use only custom'" class="text-[10px] p-[2px] px-3 border border-neutral-500 rounded-md uppercase text-green-500">use only custom text</div>
+                    <div v-if="howToUseCustomText === 'use both system and custom'" class="text-[10px] p-[2px] px-3 border border-neutral-500 rounded-md uppercase text-green-500">use custom text with system text</div>
                     <div v-if="howToUseCustomText === 'select text using options'" @click="toggleSelect = !toggleSelect" class="text-[10px] p-[2px] px-3 border border-neutral-500 rounded-md uppercase">
                         <span>select custom text</span>
                         <div class="inline-block pl-4">
                             <div class=" text-white rotate-90 inline-block font-mono">></div>
                         </div>
                     </div>
-                    <div v-if="howToUseCustomText === 'use only custom'" class="text-[10px] p-[2px] px-3 border border-neutral-500 rounded-md uppercase text-green-500">use only custom text</div>
-                    <div v-if="howToUseCustomText === 'use both system and custom'" class="text-[10px] p-[2px] px-3 border border-neutral-500 rounded-md uppercase text-green-500">use custom text with system text</div>
                     <div class="absolute top-[110%] z-[9] left-[50%] translate-x-[-50%] bg-neutral-700 text-xs overflow-y-auto max-h-[200px]" v-if="Object.keys(customTexts).length && toggleSelect">
                         <div @click="startUsingCustomText(value)" class="hover:bg-neutral-800 px-3 p-1 whitespace-nowrap border-b border-b-neutral-900" v-for="(value, key, index) in customTexts" :key="index">{{ key }}</div>
                     </div>
@@ -44,7 +44,7 @@
                 </div>
             </div>
         </div>
-        <div v-if="containerText" class="leading-6 md:leading-[30px] text-sm transition-all duration-100 relative md:text-lg border-l-3 border-l-neutral-800 m-auto max-w-[600px] w-full " >
+        <div v-if="containerText" class="leading-6 md:leading-[30px] transition-all duration-100 relative md:text-lg border-l-3 border-l-neutral-800 m-auto max-w-[600px] w-full  text-base" >
             <div class="min-h-[100px] h-fit overflow-y-auto border-4 border-neutral-800 p-1 relative pb-5">
                 <div  v-if="configChange"  class="absolute top-0 bottom-0 left-0 w-full">                    
                     <div class="flex h-[100%]">                        
@@ -88,7 +88,7 @@ const {useConfig} = customize
 const startUsingCustomText =  (text) => {
     storedTextForRepeat.value = text
     toggleSelect.value = !toggleSelect.value
-    switchNext(config.value, undefined, 'custom')
+    switchNext(config.value, undefined, 'options')
 }
 
 watch(beginCountdown, (newVal, oldVal) => {

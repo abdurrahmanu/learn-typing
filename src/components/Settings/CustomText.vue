@@ -1,50 +1,4 @@
 <template>
-    <div class="text-xs leading-5 md:text-sm h-fit rounded-[10px]">
-
-        <div  class="font-mono text-right flex justify-between px-2 sticky z-[99999] top-[0] w-full bg-neutral-800 shadow-sm shadow-black">
-            <div class="text-white text-lg font-mono">ALL SETTINGS</div>
-            <div class="p-[2px] text-white font-bold font-mono text-lg" @click="showMoreSettings = !showMoreSettings">
-                <img src="/cancel.svg" class="w-7" alt="">
-            </div>
-        </div>
-
-        <div class="m-auto text-center p-2">
-            <input type="search" class="px-3 w-full min-w-[100%] max-w-[300px] outline-none text-black p-1 rounded-full" name="" id="" placeholder="search settings">
-        </div>
-
-        <div class="px-1 border-t border-neutral-900 p-2 hover:bg-neutral-900">
-            <div class="flex justify-between p-1 border border-transparent rounded-sm hover:border-neutral-300 text-zinc-300 w-full">
-                <div class="flex gap-4">
-                    <input :checked="enableBackSpace" @click="enableBackSpace = !enableBackSpace" type="checkbox" name="" id="">
-                    <p>Backspace</p>
-                </div>
-                <div class="font-mono">></div>
-            </div>
-            <p class="text-zinc-400">This enables or disables player ability to utilize the backspace key while typing.</p>
-        </div>
-
-        <div class="px-1 border-t border-neutral-900 p-2 hover:bg-neutral-900">
-            <div class="flex justify-between p-1 border border-transparent rounded-sm hover:border-neutral-300 text-zinc-300 w-full">
-                <div class="flex gap-4">
-                    <input :checked="timedTyping" @click="timedTyping = !timedTyping" type="checkbox" name="" id="">
-                    <p>Countdown Typing</p>
-                </div>
-                <div class="font-mono">></div>
-            </div>
-            <p class="text-zinc-400">With countdown enabled, tests automatically end at the end of countdown, untyped alphabets are considered as errors</p>
-        </div>
-
-        <div class="px-1 border-t border-neutral-900 p-2 hover:bg-neutral-900">
-            <div class="flex justify-between p-1 border border-transparent rounded-sm hover:border-neutral-300 text-zinc-300 w-full">
-                <div class="flex gap-4">
-                    <input :checked="typeBlindly" @click="typeBlindly = !typeBlindly" type="checkbox" name="" id="">
-                    <p>Blind mode</p>
-                </div>
-                <div class="font-mono">></div>
-            </div>
-            <p class="text-zinc-400">How confident are you?  Instead of depending on red-color / green-color inputs, Type while fully trusting your muscle memory to tell you when you have typed wrongly. </p>
-        </div>
-
         <div class="px-1 border-t border-neutral-900 p-2 relative hover:bg-neutral-900">
             <div class="flex justify-between p-1 border border-transparent rounded-sm hover:border-neutral-300 text-zinc-300 w-full">
                 <div class="flex gap-4">
@@ -83,30 +37,12 @@
                     </div>
             </div>
         </div>
-        
-        <div class="px-1 border-t border-neutral-900 p-2 hover:bg-neutral-900">
-            <div class="flex justify-between p-1 border border-transparent rounded-sm hover:border-neutral-300 text-zinc-300 w-full">
-                <div class="flex gap-4">
-                    <p>Difficulty Level</p>
-                </div>
-                <div class="font-mono">></div>
-            </div>
-            <div class=" text-slate-400 p-1">Select the Level that suits you</div>
-            <div class="flex gap-5 p-1 text-xs m-auto justify-evenly">
-                <div class="p-1 px-3 rounded-md bg-zinc-700 text-white font-mono hover:bg-neutral-700">Easy</div>
-                <div class="p-1 px-3 rounded-md bg-zinc-700 text-white font-mono hover:bg-neutral-700">Mid</div>
-                <div class="p-1 px-3 rounded-md bg-zinc-700 text-white font-mono hover:bg-neutral-700">Expert</div>
-            </div>
-        </div>
-        
-    </div>
 </template>
 
 <script setup>
-import { ref, watch, watchEffect } from 'vue';
-import {customizeStore} from '../store/customizeStore.js';
+import {ref, watch} from 'vue'
 import {storeToRefs} from 'pinia';
-import {mainStore} from '../store/mainStore';
+import {mainStore} from '../../store/mainStore';
 
 const inputError = ref(false)
 const textAreaPlaceholder = ref('Input custom text')
@@ -114,14 +50,10 @@ const titlePlaceholder = ref('Add title')
 const textAreaValue = ref('')
 const saveCustomText = ref(false)
 const textSaved = ref(false)
-
 const customTextTitle = ref('')
 const main = mainStore()
 const textAreaValueStore = ref('')
-const { enableBackSpace, showMoreSettings, howToUseCustomText, typeBlindly, timedTyping, customTexts, useCustomText} = storeToRefs(main)
-const {getMobileOS} = main
-
-const store = customizeStore()
+const { howToUseCustomText,  customTexts, useCustomText} = storeToRefs(main)
 
 const startSavingCustomText = () => {
     if (!textAreaValue.value.length) {
@@ -166,13 +98,4 @@ const saveNewCustomText = () => {
     }, 500);
 }
 
-watch(customTexts, (newVal) => {
-    if (newVal) {
-        localStorage.setItem('custom-text', JSON.stringify(newVal))
-    }
-}, {deep: true})
-
 </script>
-
-<style scoped>
-</style>../store/mainStore.js

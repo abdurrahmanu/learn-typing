@@ -19,32 +19,26 @@
             </div>
         </div>
     </div>
-
-    <!-- <div v-if="useCustomText" :class="[useCustomText ? 'text-green-300 p-[1px] bg-zinc-900' : '']" class="mx-1 w-[200px]">
-                <select name="" id="">
-                    <option value="custom text"></option>
-                    <option class="px-2 py-1" :value="key" v-for="(value, key, index) in customTexts" :key="index">{{ value }}</option>
-                </select>
-            </div> -->
+    <!-- config[2] !== 'random-text'  -->
 </template>
 
+
 <script setup>
-import { ref, watch, watchEffect } from 'vue'
+import { ref, watch } from 'vue'
 import {customizeStore} from '../store/customizeStore.js'
 import {storeToRefs} from 'pinia'
 import {mainStore} from '../store/mainStore'
 
 const main = mainStore()
 const {pauseTyping, customTexts,} = storeToRefs(main)
-const {getMobileOS} = main
 
 const store = customizeStore()
-const {selectedCustomizers, configurationArgs, configChange, temporaryCustomizers} = storeToRefs(store)
+const {selectedCustomizers, config, configurationArgs, configChange, temporaryCustomizers} = storeToRefs(store)
 
 const tooltip = ['length', 'words', 'test-type', 'format', 'test-type', 'test-type']
 const options = [
-    ['auto', '10+', '20+', '40+'],
-    ['most-used', 'less-often-used', 'rarely-used'],
+    ['auto', 10, 20, 30],
+    ['most-used', 'less-used', 'rarely-used'],
     ['quotes', 'random-text'],
     ['caps'],
     ['punctuations'],
@@ -68,7 +62,7 @@ watch(configChange, (newVal, oldVal) => {
     else pauseTyping.value = false
 })
 
-watch(customTexts, (newVal, oldVal) => {
+watch(customTexts, (newVal) => {
     if (newVal) {
         localStorage.setItem('custom-text', JSON.stringify(newVal))
     }
