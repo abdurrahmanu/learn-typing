@@ -9,7 +9,6 @@
             :maxlength="containerText.length" >
     </div>
 
-
         <div v-if="timedTyping && !beginCountdown" class="flex w-fit border font-mono">                
                 <div class="w-fit px-2 border-r" :class="[typingCountdown === 10 ? 'text-green-500' : 'text-slate-300']" @click="typingCountdown = 10">10s</div>
                 <div class="w-fit px-2 border-r" :class="[typingCountdown === 20 ? 'text-green-500' : 'text-slate-300']" @click="typingCountdown = 20">20s</div>
