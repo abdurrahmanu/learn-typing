@@ -9,6 +9,7 @@
             :maxlength="containerText.length" >
     </div>
         <div  class="flex justify-between max-w-[600px] m-auto">
+            <img v-if="!timedTyping" @click="timedTyping = !timedTyping" class="h-7" src="/playTimer.svg" alt="">
             <div v-if="timedTyping && !beginCountdown" class="flex w-fit font-mono items-center">  
                     <img @click="timedTyping = !timedTyping" class="h-7" src="/playTimer.svg" alt="">
                     <div class="border flex text-xs h-fit">
@@ -17,16 +18,32 @@
                         <div class="w-fit px-2 border-l" :class="[typingCountdown === 30 ? 'text-green-500' : 'text-slate-300']" @click="typingCountdown = 30">30s</div>
                     </div>
             </div>
-            <div class="w-fit" @click="timedTyping = !timedTyping" v-else>
-                <img class="h-7" src="/pauseTimer.svg" alt="">
+            <div class="flex items-center gap-2" v-if="beginCountdown">
+                <img class="h-7" src="/playTimer.svg" alt="">
+                <div v-if="timedTyping && beginCountdown" class="text-lg font-mono">{{  countdown  }}</div>
             </div>
 
-            <div @click="typeBlindly = !typeBlindly" class="flex w-fit">
-                <img v-if="typeBlindly" class="h-7" src="/closedEye.svg" alt="">
-                <img v-else class="h-7" src="/openEye.svg" alt="">
+            <div class="flex gap-4 items-center ">
+                <div v-if="useCustomText" class="relative">
+                    <div v-if="howToUseCustomText === 'select text using options'" @click="toggleSelect = !toggleSelect" class="text-[10px] p-[2px] px-3 border border-neutral-500 rounded-md uppercase">
+                        <span>select custom text</span>
+                        <div class="inline-block pl-4">
+                            <div class=" text-white rotate-90 inline-block font-mono">></div>
+                        </div>
+                    </div>
+                    <div v-if="howToUseCustomText === 'use only custom'" class="text-[10px] p-[2px] px-3 border border-neutral-500 rounded-md uppercase text-green-500">use only custom text</div>
+                    <div v-if="howToUseCustomText === 'use both system and custom'" class="text-[10px] p-[2px] px-3 border border-neutral-500 rounded-md uppercase text-green-500">use custom text with system text</div>
+                    <div class="absolute top-[110%] z-[9] left-[50%] translate-x-[-50%] bg-neutral-700 text-xs overflow-y-auto max-h-[200px]" v-if="Object.keys(customTexts).length && toggleSelect">
+                        <div @click="startUsingCustomText(value)" class="hover:bg-neutral-800 px-3 p-1 whitespace-nowrap border-b border-b-neutral-900" v-for="(value, key, index) in customTexts" :key="index">{{ key }}</div>
+                    </div>
+                </div>
+
+                <div @click="typeBlindly = !typeBlindly" class="flex w-fit">
+                    <img v-if="typeBlindly" class="h-7" src="/closedEye.svg" alt="">
+                    <img v-else class="h-7" src="/openEye.svg" alt="">
+                </div>
             </div>
         </div>
-        <div v-if="timedTyping && beginCountdown">{{  countdown  }}</div>
         <div v-if="containerText" class="leading-6 md:leading-[30px] text-sm transition-all duration-100 relative md:text-lg border-l-3 border-l-neutral-800 m-auto max-w-[600px] w-full " >
             <div class="min-h-[100px] h-fit overflow-y-auto border-4 border-neutral-800 p-1 relative pb-5">
                 <div  v-if="configChange"  class="absolute top-0 bottom-0 left-0 w-full">                    
@@ -58,30 +75,40 @@ import {storeToRefs} from 'pinia'
 import { customizeStore } from '../store/customizeStore';
 import {mainStore} from '../store/mainStore'
 
-const intervalID = ref()
+const toggleSelect = ref(false)
 const inputEl = ref(null)
 const store = mainStore()
-const { containerText, inputEquality, typeBlindly, typingCountdown, timedTyping, countdown, beginCountdown, enableRepeat, storedTextForRepeat, backspaceIsPressed, playerInputLength, correctCount, wrongCount, playerInput} = storeToRefs(store)
-const {generateText, playerTyping, getMobileOS, sessionComplete} = store
+const { containerText, timerID, inputEquality, typeBlindly, typingCountdown, pauseTyping, howToUseCustomText, useCustomText, timedTyping, countdown, customTexts, beginCountdown, enableRepeat, storedTextForRepeat, backspaceIsPressed, playerInputLength, correctCount, wrongCount, playerInput} = storeToRefs(store)
+const {generateText, playerTyping, switchNext, getMobileOS, sessionComplete} = store
 
 const customize = customizeStore()
 const {configChange, config} = storeToRefs(customize)
 const {useConfig} = customize
 
+const startUsingCustomText =  (text) => {
+    storedTextForRepeat.value = text
+    toggleSelect.value = !toggleSelect.value
+    switchNext(config.value, undefined, 'custom')
+}
+
 watch(beginCountdown, (newVal, oldVal) => {
     if (newVal) {
         countdown.value = typingCountdown.value
-        intervalID.value = setInterval(() => {
+        timerID.value = setInterval(() => {
             countdown.value = countdown.value - 1
         }, 1000);
-    }    
+    }
 })
 
 watch(countdown, (newVal, oldVal) => {
-    if (newVal === 0 && beginCountdown.value) {
-        clearInterval(intervalID.value)
+    if (newVal === 0) {
         sessionComplete()
     }
+})
+
+watch(toggleSelect, (newVal, oldVal) => {
+    if (newVal) pauseTyping.value = true
+    else pauseTyping.value = false
 })
 
 watch(playerInput, () => {

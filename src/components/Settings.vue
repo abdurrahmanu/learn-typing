@@ -20,7 +20,7 @@
                 </div>
                 <div class="font-mono">></div>
             </div>
-            <p class="text-zinc-400">This enables or disables player ability to utilize the backspace key to clear errors while typing. Sometimes playing to test your typing ability while considering the number of errors and keys that most errors come from is handy.</p>
+            <p class="text-zinc-400">This enables or disables player ability to utilize the backspace key while typing.</p>
         </div>
 
         <div class="px-1 border-t border-neutral-900 p-2 hover:bg-neutral-900">
@@ -31,7 +31,7 @@
                 </div>
                 <div class="font-mono">></div>
             </div>
-            <p class="text-zinc-400">Type with countdown, test automatically ends after times reaches 0, untyped alphabets are considered as errors</p>
+            <p class="text-zinc-400">With countdown enabled, tests automatically end at the end of countdown, untyped alphabets are considered as errors</p>
         </div>
 
         <div class="px-1 border-t border-neutral-900 p-2 hover:bg-neutral-900">
@@ -42,18 +42,23 @@
                 </div>
                 <div class="font-mono">></div>
             </div>
-            <p class="text-zinc-400">How confident are you? Type without having to worry about your errors while fully trusting your muscle memory. This makes you type without showing your errors (red-color) or correct (green-color) inputs.</p>
+            <p class="text-zinc-400">How confident are you?  Instead of depending on red-color / green-color inputs, Type while fully trusting your muscle memory to tell you when you have typed wrongly. </p>
         </div>
 
         <div class="px-1 border-t border-neutral-900 p-2 relative hover:bg-neutral-900">
             <div class="flex justify-between p-1 border border-transparent rounded-sm hover:border-neutral-300 text-zinc-300 w-full">
                 <div class="flex gap-4">
                     <input :disabled="Object.keys(customTexts).length === 0" :checked="useCustomText" @click="useCustomText = !useCustomText" type="checkbox" name="" id="">
-                    <p>Add custom text</p>
+                    <p>Use custom text</p>
                 </div>
                 <div class="font-mono">></div>
             </div>
-            <p class="text-zinc-400 pb-2">Adding Custom Text. Would you like your fingers to perfect a particular test, quote or story! press <span class="bg-zinc-700 text-white px-2" @click="addCustomText = true">+</span> to add and use your custom text</p>
+            <div class="text-slate-400 p-1" v-if="useCustomText">
+                <div><input type="radio" v-model="howToUseCustomText" value="use only custom"> use only your custom texts</div>
+                <div><input type="radio" v-model="howToUseCustomText" value="use both system and custom"> use custom text together with system text</div>
+                <div><input type="radio" v-model="howToUseCustomText" value="select text using options" > use options to select text</div>
+            </div>
+            <p class="text-zinc-400 pb-2">Would you like your fingers to perfect a particular test, quote or story! Use the text field to add and use your custom text.</p>
 
             <div class="text-center relative py-1">
                 <div v-if="saveCustomText" class="w-full  absolute top-0 left-0 right-0 bottom-0 bg-black opacity-50 "></div>
@@ -98,14 +103,10 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
+import { ref, watch, watchEffect } from 'vue';
 import {customizeStore} from '../store/customizeStore.js';
 import {storeToRefs} from 'pinia';
 import {mainStore} from '../store/mainStore';
-
-const props = defineProps({
-    class: String
-})
 
 const inputError = ref(false)
 const textAreaPlaceholder = ref('Input custom text')
@@ -117,7 +118,7 @@ const textSaved = ref(false)
 const customTextTitle = ref('')
 const main = mainStore()
 const textAreaValueStore = ref('')
-const { enableBackSpace, showMoreSettings, typeBlindly, timedTyping, customTexts, useCustomText} = storeToRefs(main)
+const { enableBackSpace, showMoreSettings, howToUseCustomText, typeBlindly, timedTyping, customTexts, useCustomText} = storeToRefs(main)
 const {getMobileOS} = main
 
 const store = customizeStore()
@@ -174,4 +175,4 @@ watch(customTexts, (newVal) => {
 </script>
 
 <style scoped>
-</style>
+</style>../store/mainStore.js

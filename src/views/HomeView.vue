@@ -4,7 +4,7 @@
       <div :class="{'z-[999] lg:z-[1]' : !(showMoreSettings && !getMobileOS())}" class="absolute lg:relative top-0 bottom-0 right-0 left-0 z-[99] lg:w-[30%]" v-if="showMoreSettings">
         <div @click="showMoreSettings = !showMoreSettings" class="opacity-30 absolute bg-black w-full lg:hidden top-0 bottom-0 right-0 left-0 z-[999] lg:z-[1]"></div>
         <div class="bg-zinc-800 h-[calc(100vh_-_62px)] overflow-y-auto" :class="{'block w-[400px] top-[50%] translate-y-[-50%] lg:translate-y-0 lg:top-0 max-w-[90%] absolute left-[50%] translate-x-[-50%] lg:relative lg:left-0 lg:translate-x-[0] z-[999] lg:z-[1]' : showMoreSettings && !getMobileOS(), 'w-[90%] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-[999]' : showMoreSettings && getMobileOS()}">
-          <Search />
+          <Settings />
         </div>
       </div>
 
@@ -19,7 +19,7 @@
 </template>
 
 <script setup>
-import Search from '../components/Search.vue'
+import Settings from '../components/Settings.vue'
 import Header from '../components/Header.vue';
 import Customize from '../components/Customize.vue'
 import Restart from '../components/Restart.vue';
@@ -63,4 +63,4 @@ onMounted(() => {
     customTexts.value = JSON.parse(localStorage.getItem('custom-text'))
   }
 })
-</script>
+</script>../components/Settings.vue

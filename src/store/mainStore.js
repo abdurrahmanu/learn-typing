@@ -27,6 +27,8 @@ export const mainStore = defineStore('mainStore', () => {
     const typingCountdown = ref(30)
     const beginCountdown = ref(false)
     const countdown = ref(0)
+    const howToUseCustomText = ref('select text using options')
+    const timerID = ref()
 
     const resultData = computed(() => {
         return {
@@ -40,16 +42,35 @@ export const mainStore = defineStore('mainStore', () => {
     })
     
     const generateText = (config, restart) => {
-        if (enableRepeat.value || restart) {
+        if (howToUseCustomText.value === 'use both system and custom') {
+            let custom = Object.values(customTexts.value)
+            containerText.value = UseGetQuotes(config, custom).res.value
+            return
+        }
+
+        if (howToUseCustomText.value === 'use only custom') {
+            let texts = Object.values(customTexts.value)
+            let length = Object.keys(customTexts.value).length - 1
+            let index = Math.round(Math.random() * length)
+            containerText.value = texts[index]
+            return
+        }
+
+        if (enableRepeat.value || restart || (useCustomText.value && howToUseCustomText.value === 'select text using options')) {
             containerText.value = storedTextForRepeat.value
-        } else {
+        } 
+        else {
             containerText.value = UseGetQuotes(config).res.value
         }
     }
     
     const resetToDefault = () => {
+        if (timedTyping.value) {
+            clearInterval(timerID.value)
+            beginCountdown.value = false
+            countdown.value = false
+        }
         hasStartedSession.value = false
-        countdown.value = 0
         beginCountdown.value = false
         completionLevel.value = 0
         totalTime.value = null
@@ -64,11 +85,17 @@ export const mainStore = defineStore('mainStore', () => {
     }
 
     const sessionComplete = () => {
+        if (timedTyping.value) {
+            clearInterval(timerID.value)
+            beginCountdown.value = false
+            countdown.value = false
+        }
         hasStartedSession.value = false
         totalTime.value = performance.now() - startTime.value
     }
 
     const playerTyping = (e) => {
+        if (pauseTyping.value) return
         if (e.type === 'keydown' && e.key === 'Backspace') {
             if (!enableBackSpace.value) return
             if (playerInputLength.value === 0) return
@@ -78,10 +105,7 @@ export const mainStore = defineStore('mainStore', () => {
             playerLastInput.value = playerInput.value[playerInput.value - 1]
         }
         if (e.type === 'keydown') return
-        if (e.type === 'keypress') {
-            backspaceIsPressed.value = false
-        }
-        if (pauseTyping.value) return
+        if (e.type === 'keypress')  backspaceIsPressed.value = false        
         let eventSelector = getMobileOS() ? e.data : e.key
         if (!getMobileOS() && e.key === 'Enter') return 
         if (!hasStartedSession.value) hasStartedSession.value = true
@@ -93,10 +117,7 @@ export const mainStore = defineStore('mainStore', () => {
         completionLevel.value = ((playerInputLength.value + 1) / containerText.value.length) * 100        
         playerLastInput.value = eventSelector
         playerInput.value += playerLastInput.value
-
-        if (playerInputLength.value === containerText.value.length) {
-            sessionComplete()
-        }
+        if (playerInputLength.value === containerText.value.length) sessionComplete()
     }
 
     const inputEquality = computed(() => {
@@ -133,6 +154,8 @@ export const mainStore = defineStore('mainStore', () => {
         sessionComplete,
         playerTyping,
         switchNext,
+        timerID,
+        howToUseCustomText,
         countdown,
         typeBlindly,
         typingCountdown,
