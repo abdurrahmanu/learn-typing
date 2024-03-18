@@ -44,7 +44,7 @@ const {selectedCustomizers, configurationArgs, configChange, temporaryCustomizer
 const tooltip = ['length', 'words', 'test-type', 'format', 'test-type', 'test-type']
 const options = [
     ['auto', '10+', '20+', '40+'],
-    ['most-used', 'seldom-used', 'rarely-used'],
+    ['most-used', 'less-often-used', 'rarely-used'],
     ['quotes', 'random-text'],
     ['caps'],
     ['punctuations'],
