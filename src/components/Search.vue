@@ -1,5 +1,6 @@
 <template>
     <div class="text-xs leading-5 md:text-sm h-fit rounded-[10px]">
+        
         <div  class="font-mono text-right flex justify-between px-2 sticky z-[99999] top-[0] w-full bg-neutral-800 shadow-sm shadow-black">
             <div class="text-white text-lg font-mono">ALL SETTINGS</div>
             <div class="p-[2px] text-white font-bold font-mono hover:text-red-400 text-lg" @click="showMoreSettings = !showMoreSettings">X</div>
