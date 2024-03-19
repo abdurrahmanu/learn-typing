@@ -1,19 +1,22 @@
 <template>
-    <div class="text-xs leading-5 md:text-sm h-fit rounded-[10px]">
+    <div class="text-xs leading-5 md:text-sm h-fit rounded-[10px] relative">
         <Header />
-        <div class="m-auto text-center p-2">
-            <input type="search" class="px-3 w-full min-w-[100%] max-w-[300px] outline-none text-black p-1 rounded-full" name="" id="" placeholder="search settings">
-        </div>
         <BlindMode />
         <BackSpace />
         <CustomText />
         <DifficultyLevel />
         <Countdown />
+        <AllCaps />
+        <CustomCamelCase />
+        <NoSpaceText />
     </div>
 </template>
 
 <script setup>
 import Header from './Header.vue'
+import AllCaps from './AllCaps.vue'
+import CustomCamelCase from './CustomCamelCase.vue'
+import NoSpaceText from './NoSpaceText.vue'
 import BlindMode from './BlindMode.vue'
 import BackSpace from './BackSpace.vue';
 import CustomText from './CustomText.vue';
