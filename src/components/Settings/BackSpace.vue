@@ -12,9 +12,14 @@
 </template>
 
 <script setup>
+import {watch} from 'vue'
 import {storeToRefs} from 'pinia';
-import {mainStore} from '../../store/mainStore';
+import {customizeStore} from '../../store/customizeStore';
 
-const main = mainStore()
-const { enableBackSpace} = storeToRefs(main)
+const main = customizeStore()
+const { enableBackSpace, selectedCustomizers} = storeToRefs(main)
+
+watch(enableBackSpace, (newVal) => {
+    selectedCustomizers.value[7] = newVal
+})
 </script>

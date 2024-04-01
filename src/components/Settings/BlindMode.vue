@@ -13,14 +13,15 @@
 </template>
 
 <script setup>
+import {watch} from 'vue'
 import {storeToRefs} from 'pinia';
-import {mainStore} from '../../store/mainStore';
+import {customizeStore} from '../../store/customizeStore';
 
-const main = mainStore()
-const { typeBlindly } = storeToRefs(main)
+const main = customizeStore()
+const { typeBlindly, selectedCustomizers } = storeToRefs(main)
+
+watch(typeBlindly, (newVal) => {
+    selectedCustomizers.value[8] = newVal
+})
 
 </script>
-
-<style scoped>
-
-</style>

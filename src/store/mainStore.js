@@ -13,13 +13,10 @@ export const mainStore = defineStore('mainStore', () => {
     const startTime = ref(null)
     const totalTime = ref(null)
     const hasStartedSession = ref(false)
-    const textAlign = ref(false)
     const pauseTyping = ref(false)
     const playerInput = ref('')
     const backspaceIsPressed = ref(false)
     const timedTyping = ref(false)
-    const showMoreSettings = ref(false)
-    const typeBlindly = ref(false)
     const customTexts = ref({})
     const useCustomText = ref(false)
     const enableRepeat = ref(false)
@@ -85,7 +82,6 @@ export const mainStore = defineStore('mainStore', () => {
         containerText.value = ''
         playerLastInput.value = ''
         playerInputLength.value = 0
-        textAlign.value = false
         playerInput.value = ''
     }
 
@@ -151,7 +147,7 @@ export const mainStore = defineStore('mainStore', () => {
 
         return '';
     }
-
+    
     return {
         getMobileOS,
         resetToDefault,
@@ -162,17 +158,14 @@ export const mainStore = defineStore('mainStore', () => {
         timerID,
         howToUseCustomText,
         countdown,
-        typeBlindly,
         typingCountdown,
         beginCountdown,
         enableBackSpace,
         useCustomText,
-        showMoreSettings,
         enableRepeat,
         storedTextForRepeat,
         customTexts,
         inputEquality,
-        textAlign,
         resultData,
         totalTime,
         completionLevel,

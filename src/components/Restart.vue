@@ -7,7 +7,7 @@
     
         <div v-else class="p-2 m-auto space-y-3 font-mono w-fit h-fit text-slate-500">
             <div v-if="!resultData.totalTime && hasStartedSession" class="text-center"><span @click="restart" class="p-1 text-xs rounded-md bg-neutral-800 hover:bg-blue-800 hover:text-white">Click to Restart</span></div>
-            <div class="text-center">Press <span @click="next" class="p-1 text-xs rounded-md bg-neutral-800 hover:bg-blue-700 hover:text-white"> Esc</span> for NEXT</div>
+            <div class="text-center">Press <span @click="next" class="p-1 text-xs rounded-md bg-neutral-800 hover:bg-blue-700 hover:text-white">{{ resultData.totalTime ? 'Enter' : 'Esc' }}</span> for NEXT</div>
         </div>
     </div>
 </template>
@@ -22,7 +22,7 @@ const {switchNext, getMobileOS} = store
 const {resultData, hasStartedSession} = storeToRefs(store)
 
 const customize = customizeStore()
-const { config} = storeToRefs(customize)
+const { selectedCustomizers} = storeToRefs(customize)
 
 window.addEventListener('keydown', event=> {
     if (event.key === 'Escape' && !resultData.value.totalTime) next()
@@ -30,10 +30,10 @@ window.addEventListener('keydown', event=> {
 })
 
 const restart = () => {
-    switchNext(config.value, 'restart')
+    switchNext(selectedCustomizers.value, 'restart')
 }
 
 const next = () => {
-    switchNext(config.value)
+    switchNext(selectedCustomizers.value)
 }
 </script>

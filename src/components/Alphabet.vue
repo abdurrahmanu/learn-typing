@@ -1,5 +1,5 @@
 <template>
-    <div class="relative inline font-mono whitespace-pre-wrap">
+    <div :class="[noSpace ? '' : 'whitespace-pre-wrap']" class="relative inline font-mono">
         <Transition v-if="currentIndex" appear>            
             <span :class="[equalStyle, currentIndexStyle, mainStyle]" class="transition-all duration-[10ms]">{{ alphabet }}</span>
         </Transition>
@@ -11,9 +11,13 @@
 import { defineProps, computed } from 'vue';
 import {storeToRefs} from 'pinia'
 import {mainStore} from '../store/mainStore'
+import { customizeStore } from '../store/customizeStore';
 
 const store = mainStore()
-const { playerInputLength, typeBlindly } = storeToRefs(store)
+const { playerInputLength } = storeToRefs(store)
+
+const customize = customizeStore()
+const {typeBlindly, noSpace} = storeToRefs(customize)
 const emit = defineEmits(['equal', 'unequal'])
 const props = defineProps({
     alphabet: String,

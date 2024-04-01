@@ -14,14 +14,12 @@
                     :key="index">
                         {{ option }} 
                     </div>
-                    <div v-if="listIndex === hoverIndex" class="absolute z-10 left-0 text-black bottom-[-100%] shadow-sm shadow-black px-[6px] bg-neutral-100 rounded-full whitespace-nowrap">{{tooltip[listIndex]}}</div>
+                    <div v-if="listIndex === hoverIndex" class="absolute z-10 left-0 text-black bottom-[-100%] shadow-sm shadow-black px-[6px] bg-neutral-100 rounded-full whitespace-nowrap">{{optionsTooltip[listIndex]}}</div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- config[2] !== 'random-text'  -->
 </template>
-
 
 <script setup>
 import { ref, watch } from 'vue'
@@ -30,12 +28,12 @@ import {storeToRefs} from 'pinia'
 import {mainStore} from '../store/mainStore'
 
 const main = mainStore()
-const {pauseTyping, customTexts,} = storeToRefs(main)
+const {pauseTyping} = storeToRefs(main)
 
 const store = customizeStore()
-const {selectedCustomizers, config, configurationArgs, configChange, temporaryCustomizers} = storeToRefs(store)
+const {selectedCustomizers, configurationArgs, configChange, temporaryCustomizers} = storeToRefs(store)
 
-const tooltip = ['length', 'words', 'test-type', 'format', 'test-type', 'test-type']
+const optionsTooltip = ['length', 'words', 'test-type', 'format', 'test-type', 'test-type']
 const options = [
     ['auto', 10, 20, 30],
     ['most-used', 'less-used', 'rarely-used'],
@@ -46,8 +44,6 @@ const options = [
 ]
 
 const hoverIndex = ref(null)
-const emit = defineEmits([ 'emitTextAlign']) 
-
 const mouseEnter = (index) => hoverIndex.value = index
 const mouseLeave = (index) => hoverIndex.value = null
 
@@ -62,9 +58,11 @@ watch(configChange, (newVal, oldVal) => {
     else pauseTyping.value = false
 })
 
-watch(customTexts, (newVal) => {
-    if (newVal) {
-        localStorage.setItem('custom-text', JSON.stringify(newVal))
+watch(selectedCustomizers, (newVal) => {
+    if (newVal[2] === 'quotes') {
+        newVal[1] = ''
+    } else {
+        newVal[1] = 'most-used'
     }
 }, {deep: true})
 </script>

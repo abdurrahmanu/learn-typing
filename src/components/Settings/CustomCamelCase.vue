@@ -12,5 +12,18 @@
 </template>
 
 <script setup>
+import {watch} from 'vue'
+import {storeToRefs} from 'pinia'
+import {customizeStore} from '../../store/customizeStore'
 
+const store = customizeStore()
+const {customCamelCase, selectedCustomizers, allCaps} = storeToRefs(store)
+
+watch(customCamelCase, (newVal) => {
+    selectedCustomizers.value[9] = newVal
+
+    if (newVal && allCaps.value) {
+        allCaps.value = false
+    }
+})
 </script>

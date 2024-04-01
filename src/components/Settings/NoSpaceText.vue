@@ -3,7 +3,7 @@
         <div class="flex justify-between p-1 border border-transparent rounded-sm hover:border-neutral-300 text-zinc-300 w-full">
             <div class="flex gap-4">
                 <input :checked="noSpace" @click="noSpace = !noSpace" type="checkbox">
-                <p>Backspace</p>
+                <p>NoSpace</p>
             </div>
             <div class="font-mono">></div>
         </div>
@@ -12,9 +12,32 @@
 </template>
 
 <script setup>
+import {watch} from 'vue'
+import {storeToRefs} from 'pinia'
+import {customizeStore} from '../../store/customizeStore'
 
+const store = customizeStore()
+const {noSpace, selectedCustomizers} = storeToRefs(store)
+
+watch(noSpace, (newVal) => {
+    selectedCustomizers.value[10] = newVal
+})
 </script>
 
-<style lang="scss" scoped>
 
-</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

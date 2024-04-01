@@ -1,18 +1,18 @@
 <template>
     <Header />
     <div class="m-auto max-w-[1100px] lg:flex pt-3"> 
-      <div :class="{'z-[999] lg:z-[1]' : !(showMoreSettings && !getMobileOS())}" class="absolute lg:relative top-0 bottom-0 right-0 left-0 z-[99] lg:w-[30%]" v-if="showMoreSettings">
-        <div @click="showMoreSettings = !showMoreSettings" class="opacity-30 absolute bg-black w-full lg:hidden top-0 bottom-0 right-0 left-0 z-[999] lg:z-[1]"></div>
-        <div class="bg-zinc-800 h-[calc(100vh_-_62px)] overflow-y-auto" :class="{'block w-[400px] top-[50%] translate-y-[-50%] lg:translate-y-0 lg:top-0 max-w-[90%] absolute left-[50%] translate-x-[-50%] lg:relative lg:left-0 lg:translate-x-[0] z-[999] lg:z-[1]' : showMoreSettings && !getMobileOS(), 'w-[90%] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-[999]' : showMoreSettings && getMobileOS()}">
-          <Settings />
-        </div>
-      </div>
-
       <div class="w-[100%] lg:w-[70%] mx-auto flex-none">      
         <Customize v-if="!resultData.totalTime" />
         <RouterView />
         <div class="pt-10">
           <Restart />
+        </div>
+      </div>
+
+      <div :class="{'z-[999] lg:z-[1]' : !(showMoreSettings && !getMobileOS())}" class="absolute lg:relative top-0 bottom-0 right-0 left-0 z-[99] lg:w-[30%]" v-if="showMoreSettings">
+        <div @click="showMoreSettings = !showMoreSettings" class="opacity-30 absolute bg-black w-full lg:hidden top-0 bottom-0 right-0 left-0 z-[999] lg:z-[1]"></div>
+        <div class="bg-zinc-800 h-[calc(100vh_-_62px)] overflow-y-auto" :class="{'block w-[600px] top-[50%] translate-y-[-50%] lg:translate-y-0 lg:top-0 lg:max-w-[100%] max-w-[90%] absolute left-[50%] translate-x-[-50%] lg:relative lg:left-0 lg:translate-x-[0] z-[999] lg:z-[1]' : showMoreSettings && !getMobileOS(), 'w-[90%] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-[999]' : showMoreSettings && getMobileOS()}">
+          <Settings />
         </div>
       </div>
     </div>
@@ -33,10 +33,10 @@ const router = useRouter()
 const store = mainStore()
 
 const {switchNext, getMobileOS} = store
-const {resultData, showMoreSettings,  pauseTyping, customTexts} = storeToRefs(store)
+const {resultData,  pauseTyping, customTexts} = storeToRefs(store)
 
 const customize = customizeStore()
-const {config} = storeToRefs(customize)
+const {selectedCustomizers, showMoreSettings} = storeToRefs(customize)
 
 const screenWidth = ref(window.innerWidth)
 
@@ -49,7 +49,7 @@ watch(resultData, (newVal, oldVal) => {
   else router.push({name: 'typing'})
 }, {deep: true})
 
-watch(config, (newConfig, oldConfig) => {
+watch(selectedCustomizers, (newConfig, oldConfig) => {
   switchNext(newConfig)
 }, {deep: true})
 

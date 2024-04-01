@@ -9,9 +9,9 @@
 
 <script setup>
 import {storeToRefs} from 'pinia'
-import {mainStore} from '../store/mainStore'
+import {customizeStore} from '../store/customizeStore'
 
-const main = mainStore()
+const main = customizeStore()
 const { showMoreSettings} = storeToRefs(main)
 </script>
 

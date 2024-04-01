@@ -26,13 +26,13 @@
             <div class="text-zinc-600 py-1">{{ resultData.testType }}</div>
         </div>
 
-        <div class="pt-10">
-            <div class="w-[80%] max-w-[600px] m-auto min-h-[200px] bg-teal-700"></div>
-        </div>
+        <!-- <Scatter  class="bg-white m-auto" /> -->
+
     </div>
 </template>
 
 <script setup>
+import { Scatter } from 'vue-chartjs';
 import {storeToRefs} from 'pinia'
 import {mainStore} from '../store/mainStore'
 

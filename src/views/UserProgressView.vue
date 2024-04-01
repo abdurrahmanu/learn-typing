@@ -13,7 +13,6 @@ const route = useRoute()
 const router = useRouter()
 const store = customizeStore()
 const {next, customizeSettingsProp, textAlign} = storeToRefs(store)
-
 </script>
 
 <style lang="scss" scoped>

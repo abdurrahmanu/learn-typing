@@ -1,5 +1,5 @@
 <template>
-    <div class="text-xs leading-5 md:text-sm h-fit rounded-[10px] relative">
+    <div class="text-xs leading-5 md:text-sm relative">
         <Header />
         <BlindMode />
         <BackSpace />
@@ -22,5 +22,4 @@ import BackSpace from './BackSpace.vue';
 import CustomText from './CustomText.vue';
 import DifficultyLevel from './DifficultyLevel.vue'
 import Countdown from './CountDown.vue'
-import {mainStore} from '../../store/mainStore';
 </script>

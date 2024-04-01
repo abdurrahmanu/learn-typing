@@ -3,13 +3,19 @@ import { englishWords } from '../../data/englishWords.js';
 import { useCustomizeFormat } from './customizers/useCustomizeFormat';
 
 export function  UseGetQuotes (config, customText) {
+    //config array indexes
+    // config[6] == allCaps
+    // config[7] == backSapce
+    // config[8] == blindMode
+    // config[9] == customCamelCase
+    // config[10] == noSpace
+
     const res = ref('')
     const {mostUsed, mediumUsed, rarelyUsed, numbers, wiseQuotes, quotesWithoutAuthors} = englishWords()
 
     function generateText(length) {
         if (config[2] === 'quotes') {
             if (customText) {
-                console.log('object');
                 let quotes = [...customText, ...wiseQuotes, ...quotesWithoutAuthors]
                 let quote = ref(quotes[Math.floor(Math.random() * quotes.length)])
                 res.value = quote.value
@@ -66,7 +72,7 @@ export function  UseGetQuotes (config, customText) {
     }
 
     function customize () {
-        res.value = useCustomizeFormat([config[3], config[4], config[5]], res.value).customizeFormatRes.value
+        res.value = useCustomizeFormat([config[3], config[4], config[5], config[6], config[9], config[10]], res.value).customizeFormatRes.value
     }
 
     // generate text with new config and customize
