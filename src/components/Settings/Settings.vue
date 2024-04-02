@@ -1,6 +1,6 @@
 <template>
     <div class="text-xs leading-5 md:text-sm relative">
-        <Header />
+        <!-- <Header /> -->
         <BlindMode />
         <BackSpace />
         <CustomText />

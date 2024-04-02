@@ -31,6 +31,14 @@ export function useCustomizeFormat(args, text) {
 
     if (!args.includes('caps') && !args[4] && !args[3]) {
         customizeFormatRes.value = customizeFormatRes.value.toLowerCase()
+    } else {
+        let newText = customizeFormatRes.value
+        customizeFormatRes.value = ''
+        for (let index = 0; index < newText.length; index++) {
+            if (!newText[index - 1]) customizeFormatRes.value += newText[index].toUpperCase()
+            else if (newText[index - 1] === ' ' && index % 3 === 0) customizeFormatRes.value += newText[index].toUpperCase()
+            else customizeFormatRes.value += newText[index]
+        }
     }
 
     if (!args.includes('punctuations')) {
@@ -40,6 +48,14 @@ export function useCustomizeFormat(args, text) {
         for (let index = 0; index < newText.length; index++) {
             if (!punctuations.includes(customizeFormatRes.value[index])) customizeFormatRes.value += newText[index];
         }
+    } else {
+        // let newText = customizeFormatRes.value
+        // customizeFormatRes.value = ''
+        // for (let index = 0; index < newText.length; index++) {
+        //     if (newText[index + 1] === ' ' && index % 3 === 0) {
+        //         customizeFormatRes.value += '.'
+        //     } else customizeFormatRes.value += newText[index]
+        // }
     }
 
     return { customizeFormatRes }
