@@ -52,7 +52,7 @@
                 </div>
             </div>
         </div>
-        <div v-if="containerText" class="leading-6 md:leading-[30px] transition-all duration-100 relative md:text-lg border-l-3 border-l-neutral-800 m-auto max-w-[600px] w-full  text-base" >
+        <div v-if="containerText" class="leading-6 md:leading-[30px] transition-all duration-100 relative border-l-3 border-l-neutral-800 m-auto max-w-[600px] w-full  text-base" >
             <div :class="[noSpace ? 'break-all' : '']" class="min-h-[100px] h-fit overflow-y-auto border-4 border-neutral-800 p-1 relative pb-7">
                 <div  v-if="configChange"  class="absolute top-0 bottom-0 left-0 w-full">                    
                     <div class="flex h-[100%]">                        
@@ -90,17 +90,17 @@ const { containerText, timerID, inputEquality, typingCountdown, pauseTyping, how
 const {generateText, playerTyping, switchNext, getMobileOS, sessionComplete} = store
 
 const customize = customizeStore()
-const {configChange, selectedCustomizers, typeBlindly, noSpace} = storeToRefs(customize)
+const {configChange, customizers, typeBlindly, noSpace} = storeToRefs(customize)
 const {useConfig} = customize
 
 const startUsingCustomText =  (text) => {
     storedTextForRepeat.value = text
     toggleSelect.value = !toggleSelect.value
-    switchNext(selectedCustomizers.value, undefined, 'options')
+    switchNext(customizers.value, undefined, 'options')
 }
 
 watch(timedTyping, (newVal) => {
-    selectedCustomizers.value[11] = newVal
+    customizers.value[11] = newVal
 })
 
 watch(beginCountdown, (newVal, oldVal) => {
@@ -142,7 +142,7 @@ watch(customTexts, (newVal) => {
 }, {deep: true})
 
 onMounted(() => {
-    generateText(selectedCustomizers.value)
+    generateText(customizers.value)
     if (getMobileOS()) inputEl.value.focus()
     if (getMobileOS()) window.addEventListener('input', playerTyping)
     else window.addEventListener('keypress', configChange.value ? null : playerTyping)

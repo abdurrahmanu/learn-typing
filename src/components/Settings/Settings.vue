@@ -22,4 +22,15 @@ import BackSpace from './BackSpace.vue';
 import CustomText from './CustomText.vue';
 import DifficultyLevel from './DifficultyLevel.vue'
 import Countdown from './CountDown.vue'
+
+const settings = [
+    'Blind mode',
+    'Backspace',
+    'Custom Text',
+    'Difficulty Level',
+    'Countdown Typing',
+    'All Caps',
+    'Custom camel case',
+    'NoSpace'
+]
 </script>

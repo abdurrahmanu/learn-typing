@@ -12,33 +12,6 @@ export const customizeStore = defineStore('customizeStore', () => {
     const beginCountdown = ref(false)
     const enableBackSpace = ref(true)
     const showMoreSettings = ref(false)
-    const selectedCustomizers = ref({
-        0: 'auto',
-        1: 'most-used', 
-        2: 'random-text',
-        3: '',
-        4: '',
-        5: '',
-        6: false,
-        7: false,
-        8: false,
-        9: false,
-        10: false
-    })
-    
-    const temporaryCustomizers = ref({
-        0: 'auto',
-        1: 'most-used', 
-        2: 'random-text',
-        3: '',
-        4: '',
-        5: '',
-        6: false,
-        7: false,
-        8: false,
-        9: false,
-        10: false
-    })
 
     const customizers = ref({
         'text-length': 'auto',
@@ -68,9 +41,23 @@ export const customizeStore = defineStore('customizeStore', () => {
         'no-space': noSpace.value
     })
 
-    const changeConfiguration = (opt, listIndex) => {
-        if (selectedCustomizers.value[listIndex] === opt) selectedCustomizers.value[listIndex] = ''
-        else selectedCustomizers.value[listIndex] = opt
+    const allOptions = ref({
+        'text-length' : ['auto', 10, 20, 30],
+        'words-type' : ['most-used', 'less-used', 'rarely-used'],
+        'test-type' : ['quotes', 'random-text'],
+        'include-caps' : ['caps'],
+        'include-punctuations' : ['punctuations'],
+        'include-numbers' : ['numbers'],
+        'all-caps' : ['all caps'],
+        'backspace' : ['backspace'],
+        'blind-mode' : ['blind mode'],
+        'custom-camel-case' : ['custom camel case'],
+        'no-space' : ['no space']
+    })
+
+    const changeConfiguration = (opt, key) => {
+        if (customizers.value[key] === opt) customizers.value[key] = ''
+        else customizers.value[key] = opt
     }
 
     const useConfig = (boolean) => {
@@ -86,13 +73,12 @@ export const customizeStore = defineStore('customizeStore', () => {
         typingCountdown,
         beginCountdown,
         enableBackSpace,
-        temporaryCustomizers,
-        selectedCustomizers,
         configurationArgs,
         showMoreSettings,
         configChange,
         tempCustomizers,
         customizers,
+        allOptions,
         changeConfiguration,
         useConfig, 
     }

@@ -36,7 +36,7 @@ const {switchNext, getMobileOS} = store
 const {resultData,  pauseTyping, customTexts} = storeToRefs(store)
 
 const customize = customizeStore()
-const {selectedCustomizers, showMoreSettings} = storeToRefs(customize)
+const {customizers, showMoreSettings} = storeToRefs(customize)
 
 const screenWidth = ref(window.innerWidth)
 
@@ -49,7 +49,7 @@ watch(resultData, (newVal, oldVal) => {
   else router.push({name: 'typing'})
 }, {deep: true})
 
-watch(selectedCustomizers, (newConfig, oldConfig) => {
+watch(customizers, (newConfig, oldConfig) => {
   switchNext(newConfig)
 }, {deep: true})
 
@@ -63,4 +63,4 @@ onMounted(() => {
     customTexts.value = JSON.parse(localStorage.getItem('custom-text'))
   }
 })
-</script>../components/Settings.vue
+</script>

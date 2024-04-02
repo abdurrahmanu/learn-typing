@@ -3,7 +3,7 @@
             <div class="flex justify-between p-1 border border-transparent rounded-sm hover:border-neutral-300 text-zinc-300 w-full">
                 <div class="flex gap-4">
                     <input :disabled="Object.keys(customTexts).length === 0" :checked="useCustomText" @click="useCustomText = !useCustomText" type="checkbox" name="" id="">
-                    <p>Use custom text</p>
+                    <p>Custom text</p>
                 </div>
                 <div class="font-mono">></div>
             </div>

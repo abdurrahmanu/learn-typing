@@ -22,7 +22,7 @@ const {switchNext, getMobileOS} = store
 const {resultData, hasStartedSession} = storeToRefs(store)
 
 const customize = customizeStore()
-const { selectedCustomizers} = storeToRefs(customize)
+const { customizers} = storeToRefs(customize)
 
 window.addEventListener('keydown', event=> {
     if (event.key === 'Escape' && !resultData.value.totalTime) next()
@@ -30,10 +30,10 @@ window.addEventListener('keydown', event=> {
 })
 
 const restart = () => {
-    switchNext(selectedCustomizers.value, 'restart')
+    switchNext(customizers.value, 'restart')
 }
 
 const next = () => {
-    switchNext(selectedCustomizers.value)
+    switchNext(customizers.value)
 }
 </script>

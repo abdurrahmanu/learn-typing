@@ -3,18 +3,11 @@ import { englishWords } from '../../data/englishWords.js';
 import { useCustomizeFormat } from './customizers/useCustomizeFormat';
 
 export function  UseGetQuotes (config, customText) {
-    //config array indexes
-    // config[6] == allCaps
-    // config[7] == backSapce
-    // config[8] == blindMode
-    // config[9] == customCamelCase
-    // config[10] == noSpace
-
     const res = ref('')
     const {mostUsed, mediumUsed, rarelyUsed, numbers, wiseQuotes, quotesWithoutAuthors} = englishWords()
 
     function generateText(length) {
-        if (config[2] === 'quotes') {
+        if (config['test-type'] === 'quotes') {
             if (customText) {
                 let quotes = [...customText, ...wiseQuotes, ...quotesWithoutAuthors]
                 let quote = ref(quotes[Math.floor(Math.random() * quotes.length)])
@@ -37,16 +30,16 @@ export function  UseGetQuotes (config, customText) {
                 res.value = words.value[index]
             }
             else {
-                if (config[5] === 'numbers') {
-                    if (config[1] === 'most-used') words.value = [...mostUsed, ...numbers]
-                    if (config[1] === 'less-used') words.value = [...mediumUsed, ...numbers]
-                    if (config[1] === 'rarely-used') words.value =  [...rarelyUsed, ...numbers]
+                if (config['include-numbers'] === 'numbers') {
+                    if (config['words-type'] === 'most-used') words.value = [...mostUsed, ...numbers]
+                    if (config['words-type'] === 'less-used') words.value = [...mediumUsed, ...numbers]
+                    if (config['words-type'] === 'rarely-used') words.value =  [...rarelyUsed, ...numbers]
                 }
                 else {                
 
-                    if (config[1] === 'most-used') words.value = mostUsed
-                    if (config[1] === 'less-used') words.value = [...mediumUsed, ...mostUsed]
-                    if (config[1] === 'rarely-used') words.value = [...rarelyUsed, ...mostUsed, ...mediumUsed]
+                    if (config['words-type'] === 'most-used') words.value = mostUsed
+                    if (config['words-type'] === 'less-used') words.value = [...mediumUsed, ...mostUsed]
+                    if (config['words-type'] === 'rarely-used') words.value = [...rarelyUsed, ...mostUsed, ...mediumUsed]
                 }
     
                 if (length) {
@@ -72,13 +65,13 @@ export function  UseGetQuotes (config, customText) {
     }
 
     function customize () {
-        res.value = useCustomizeFormat([config[3], config[4], config[5], config[6], config[9], config[10]], res.value).customizeFormatRes.value
+        res.value = useCustomizeFormat([config['include-numbers'], config['include-punctuations'], config['include-caps'], config['all-caps'], config['custom-camel-case'], config['no-space']], res.value).customizeFormatRes.value
     }
 
     // generate text with new config and customize
-    if (config[0] !== 'auto') generateText(+config[0])
+    if (config['text-length'] !== 'auto') generateText(+config['text-length'])
     else  generateText()
     customize()
-    
+
     return { res }
 };
