@@ -21,10 +21,10 @@ const main = mainStore()
 const {switchNext} = storeToRefs(main)
 
 const store = customizeStore()
-const {allCaps, selectedCustomizers, customCamelCase} = storeToRefs(store)
+const {allCaps, customizers, customCamelCase} = storeToRefs(store)
 
 watch(allCaps, (newVal) => {
-    selectedCustomizers.value[6] = newVal
+    customizers.value['all-caps'] = newVal
 
     if (newVal && customCamelCase.value) {
         customCamelCase.value = false

@@ -1,6 +1,6 @@
 <template>
     <div class="bg-neutral-800 text-slate-300 rounded-md  w-[90%] m-auto">
-        <div class="text-[10px] font-mono items-center p-2 flex max-w-[950px] justify-center flex-wrap relative">
+        <div class="text-[12px] font-mono items-center p-2 flex max-w-[950px] justify-center flex-wrap relative">
             <div class="p-1" v-for="(optionArr, key, listIndex) in option" :key="listIndex">          
                 <div 
                 :class="[hoverIndex === listIndex ? 'border-zinc-400' : 'border-transparent']" class="relative flex gap-2 py-1 border rounded-lg"

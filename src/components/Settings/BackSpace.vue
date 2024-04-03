@@ -17,9 +17,9 @@ import {storeToRefs} from 'pinia';
 import {customizeStore} from '../../store/customizeStore';
 
 const main = customizeStore()
-const { enableBackSpace, selectedCustomizers} = storeToRefs(main)
+const { enableBackSpace, customizers} = storeToRefs(main)
 
 watch(enableBackSpace, (newVal) => {
-    selectedCustomizers.value[7] = newVal
+    customizers.value['backspace'] = newVal
 })
 </script>

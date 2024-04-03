@@ -18,10 +18,10 @@ import {storeToRefs} from 'pinia';
 import {customizeStore} from '../../store/customizeStore';
 
 const main = customizeStore()
-const { typeBlindly, selectedCustomizers } = storeToRefs(main)
+const { typeBlindly, customizers } = storeToRefs(main)
 
 watch(typeBlindly, (newVal) => {
-    selectedCustomizers.value[8] = newVal
+    customizers.value['blind-mode'] = newVal
 })
 
 </script>

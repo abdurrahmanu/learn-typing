@@ -17,10 +17,10 @@ import {storeToRefs} from 'pinia'
 import {customizeStore} from '../../store/customizeStore'
 
 const store = customizeStore()
-const {customCamelCase, selectedCustomizers, allCaps} = storeToRefs(store)
+const {customCamelCase, customizers, allCaps} = storeToRefs(store)
 
 watch(customCamelCase, (newVal) => {
-    selectedCustomizers.value[9] = newVal
+    customizers.value['custom-camel-case'] = newVal
 
     if (newVal && allCaps.value) {
         allCaps.value = false

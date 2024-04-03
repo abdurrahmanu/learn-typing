@@ -17,10 +17,10 @@ import {storeToRefs} from 'pinia'
 import {customizeStore} from '../../store/customizeStore'
 
 const store = customizeStore()
-const {noSpace, selectedCustomizers} = storeToRefs(store)
+const {noSpace, customizers} = storeToRefs(store)
 
 watch(noSpace, (newVal) => {
-    selectedCustomizers.value[10] = newVal
+    customizers.value['no-space'] = newVal
 })
 </script>
 

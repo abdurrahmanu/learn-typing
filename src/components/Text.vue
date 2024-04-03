@@ -25,7 +25,7 @@
                         <div v-if="timedTyping && beginCountdown" class="text-lg font-mono">{{  countdown  }}</div>
                     </div>
                 </div>
-                <div class="absolute bottom-[-20px] left-[50%] translate-x-[-50%] text-[9px] bg-black p-[3px] whitespace-nowrap z-[9] uppercase invisible peer-hover:visible">timer mode</div>
+                <div v-if="!getMobileOS()" class="absolute bottom-[-20px] left-[50%] translate-x-[-50%] text-[9px] bg-black p-[3px] whitespace-nowrap z-[9] uppercase invisible peer-hover:visible">timer mode</div>
             </div>
             
             <div class="flex gap-4 items-center">
@@ -48,11 +48,11 @@
                         <img v-if="typeBlindly" class="h-7" src="/closedEye.svg" alt="">
                         <img v-else class="h-7" src="/openEye.svg" alt="">
                     </div>
-                    <div class="absolute bottom-[-15px] left-[50%] translate-x-[-50%] text-[9px] whitespace-nowrap z-[9] uppercase bg-black px-[3px] invisible peer-hover:visible">blind mode</div>
+                    <div v-if="!getMobileOS()" class="absolute bottom-[-15px] left-[50%] translate-x-[-50%] text-[9px] whitespace-nowrap z-[9] uppercase bg-black px-[3px] invisible peer-hover:visible">blind mode</div>
                 </div>
             </div>
         </div>
-        <div v-if="containerText" class="leading-6 md:leading-[30px] transition-all duration-100 relative border-l-3 border-l-neutral-800 m-auto max-w-[600px] w-full  text-base" >
+        <div v-if="containerText" class="leading-6 md:leading-[30px] transition-all duration-100 relative border-l-3 border-l-neutral-800 m-auto max-w-[600px] w-full  text-[18px]" >
             <div :class="[noSpace ? 'break-all' : '']" class="min-h-[100px] h-fit overflow-y-auto border-4 border-neutral-800 p-1 relative pb-7">
                 <div  v-if="configChange"  class="absolute top-0 bottom-0 left-0 w-full">                    
                     <div class="flex h-[100%]">                        
