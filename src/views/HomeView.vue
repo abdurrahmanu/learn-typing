@@ -1,6 +1,6 @@
 <template>
     <Header />
-    <div class="m-auto max-w-[1100px] lg:flex pt-3"> 
+    <div class="m-auto max-w-[1300px] lg:flex pt-3"> 
       <div class="w-[100%] lg:w-[70%] mx-auto flex-none">      
         <Customize v-if="!resultData.totalTime" />
         <RouterView />

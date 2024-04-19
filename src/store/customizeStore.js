@@ -27,18 +27,13 @@ export const customizeStore = defineStore('customizeStore', () => {
         'no-space': noSpace.value
     })
 
-    const tempCustomizers = ref({
-        'text-length': 'auto',
-        'words-type': 'most-used', 
-        'test-type': 'random-text',
-        'include-caps': '',
-        'include-punctuation': '',
-        'include-numbers': '',
-        'all-caps': allCaps.value,
-        'backspace': enableBackSpace.value,
-        'blind-mode': typeBlindly.value,
-        'custom-camel-case': customCamelCase.value,
-        'no-space': noSpace.value
+    const disableOption = ref({
+        'text-length' : false,
+        'words-type': false, 
+        'test-type': false,
+        'include-caps': false, 
+        'include-punctuations': false,
+        'include-numbers': false
     })
 
     const allOptions = ref({
@@ -60,14 +55,29 @@ export const customizeStore = defineStore('customizeStore', () => {
         else customizers.value[key] = opt
     }
 
-    const useConfig = (boolean) => {
-        if (boolean) changeConfiguration(configurationArgs.value[0], configurationArgs.value[1])
+    const useConfig = () => {
+        let wordType = customizers.value['words-type']
+        let testType = customizers.value['test-type']
+        let textLength = customizers.value['text-length']
+        if (!customizers.value['words-type']) customizers.value['words-type'] = wordType
+        if (!customizers.value['test-type']) customizers.value['test-type'] = testType
+        if (!customizers.value['text-length']) customizers.value['text-length'] = textLength
+        changeConfiguration(configurationArgs.value[0], configurationArgs.value[1])
+
+        if (customizers.value['test-type'] === 'quotes') {
+            disableOption.value['words-type'] = true
+            disableOption.value['include-numbers'] = true
+        } else {
+            disableOption.value['words-type'] = false
+            disableOption.value['include-numbers'] = false
+        }
         configChange.value  = false
     }
 
     return {
         typeBlindly,
         noSpace,
+        disableOption,
         customCamelCase,
         allCaps,
         typingCountdown,
@@ -76,7 +86,6 @@ export const customizeStore = defineStore('customizeStore', () => {
         configurationArgs,
         showMoreSettings,
         configChange,
-        tempCustomizers,
         customizers,
         allOptions,
         changeConfiguration,

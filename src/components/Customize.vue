@@ -8,8 +8,8 @@
                 @mouseleave="mouseLeave(listIndex)" >
                     <div 
                     class="px-1 hover:bg-neutral-900" 
-                    :class="[configChange && tempCustomizers[key] === option || !configChange && customizers[key] === option ? 'text-green-400 bg-neutral-900' : '']"
-                    @click="configurationArgs = [option, key]" 
+                    :class="[disableOption[key] ? 'opacity-50 cursor-not-allowed' : '', !configChange && customizers[key] === option && !disableOption[key]  ? 'text-green-400 bg-neutral-900' : '']"
+                    @click="!disableOption[key] ? configurationArgs = [option, key] : ''" 
                     v-for="(option, index) in optionArr" 
                     :key="index">
                         {{ option }} 
@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-import { ref, watch, watchEffect } from 'vue'
+import { ref, watch } from 'vue'
 import {customizeStore} from '../store/customizeStore.js'
 import {storeToRefs} from 'pinia'
 import {mainStore} from '../store/mainStore'
@@ -30,12 +30,21 @@ import {mainStore} from '../store/mainStore'
 const main = mainStore()
 const {pauseTyping} = storeToRefs(main)
 
-const store = customizeStore()
-const { allOptions, configurationArgs, configChange, tempCustomizers, customizers} = storeToRefs(store)
+const customize = customizeStore()
+const { allOptions, configurationArgs, configChange, customizers, disableOption} = storeToRefs(customize)
+const {useConfig} = customize
 
 const optionsTooltip = ['length', 'words', 'test-type', 'format', 'test-type', 'test-type']
 
-const {'text-length' : textLength, 'words-type':  wordType, 'test-type': testType, 'include-caps': includeCaps,'include-punctuations':  includePunctuations, 'include-numbers': includeNumbers} = allOptions.value
+const {
+    'text-length' : textLength,
+    'words-type':  wordType,
+    'test-type': testType,
+    'include-caps': includeCaps,
+    'include-punctuations':  includePunctuations,
+    'include-numbers': includeNumbers
+    } = allOptions.value
+
 const option = ref({
     'text-length' : textLength,
     'words-type': wordType, 
@@ -50,9 +59,8 @@ const mouseEnter = (index) => hoverIndex.value = index
 const mouseLeave = (index) => hoverIndex.value = null
 
 watch(configurationArgs, (newVal) => {
-    configChange.value = true    
-    if (tempCustomizers.value[newVal[1]] === newVal[0] && allOptions.value[newVal[1]].length === 1) tempCustomizers.value[newVal[1]] = ''
-    else tempCustomizers.value[newVal[1]] = newVal[0]
+    configChange.value = true
+    useConfig()
 })
 
 watch(configChange, (newVal, oldVal) => {

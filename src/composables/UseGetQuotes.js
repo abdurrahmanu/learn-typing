@@ -18,7 +18,6 @@ export function  UseGetQuotes (config, customText) {
             let quote = ref(quotes[Math.floor(Math.random() * quotes.length)])
             res.value = quote.value
         }
-        
         else {
             const words = ref([])
             let choice = Math.round(Math.random() * 1000)
@@ -36,7 +35,6 @@ export function  UseGetQuotes (config, customText) {
                     if (config['words-type'] === 'rarely-used') words.value =  [...rarelyUsed, ...numbers]
                 }
                 else {                
-
                     if (config['words-type'] === 'most-used') words.value = mostUsed
                     if (config['words-type'] === 'less-used') words.value = [...mediumUsed, ...mostUsed]
                     if (config['words-type'] === 'rarely-used') words.value = [...rarelyUsed, ...mostUsed, ...mediumUsed]
