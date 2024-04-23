@@ -6,9 +6,9 @@
                 <img src="/cancel.svg" class="w-7" alt="">
             </div>
         </div>
-        <div class="m-auto text-center p-2 bg-neutral-600">
+        <!-- <div class="m-auto text-center p-2 bg-neutral-600">
             <input type="search" class="px-3 pl-5 w-full min-w-[100%] max-w-[300px] outline-none text-black p-1 py-2 rounded-full text-sm" name="" id="" placeholder="Search...">
-        </div>
+        </div> -->
     </div>
 </template>
 

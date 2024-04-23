@@ -14,8 +14,8 @@
             <CustomText v-if="!alphabets" />
             <Blind />
         </div>
-        <div v-if="containerText" class="leading-6 md:leading-[30px] transition-all duration-100 relative border-l-3 border-l-neutral-800 m-auto max-w-[600px] w-full  text-[18px]">
-            <div :class="[noSpace ? 'break-words' : '', alphabets ? 'text-center py-5 break-words leading-10': 'text-left border-4 border-neutral-800 pb-7 min-h-[100px]']" class="relative p-1 overflow-y-auto h-fit">
+        <div v-if="containerText" class="leading-6 md:leading-[30px] transition-all duration-100 relative m-auto max-w-[600px] w-full  text-[15px] md:text-[18px]">
+            <div :class="[noSpace ? 'break-words' : '', alphabets ? 'text-center py-5 break-words leading-10': 'text-left border-2 border-neutral-800 pb-7 min-h-[100px]', getMobileOS() ? 'border-none' : '', textPosition === 'center' ? 'text-center' : textPosition === 'right' ? 'text-right' : 'text-left']" class="relative p-1 overflow-y-auto h-fit">
                 <Alphabet
                 v-for="(alphabet, index) in containerText"
                 :index="index"
@@ -28,8 +28,43 @@
             <RangeInput />
         </div>
     </div>
-    <div class="py-4">
-        <p @click="alphabets = !alphabets" class="p-1 m-auto font-mono text-xl text-center rounded-md text-slate-400 opacity-30 hover:opacity-100 w-fit hover:border hover:border-slate-400">
+    <div class="flex gap-3 opacity-50 justify-center text-xs text-white">
+        <div >
+            <p :class="[textPosition === 'left' ? 'text-white' : 'text-slate-400']" class="text-center">LEFT</p>
+            <div :class="[textPosition === 'left' ? 'border-green-400' : '']" @click="textPosition = 'left'" class="space-y-[3px] border rounded-sm hover:border-green-800 p-1">
+                <div class="h-[1px] w-7 bg-white"></div>
+                <div class="h-[1px] bg-slate-400 w-5"></div>
+                <div class="h-[1px] bg-white w-7"></div>
+                <div class="h-[1px] bg-slate-400 w-5"></div>
+                <div class="h-[1px] bg-white w-7"></div>
+                <div class="h-[1px] bg-slate-400 w-5"></div>
+            </div>
+        </div>
+        <div>
+            <p :class="[textPosition === 'center' ? 'text-white' : 'text-slate-400']" class="text-center">CENTER</p>
+            <div :class="[textPosition === 'center' ? 'border-green-400' : '']" @click="textPosition = 'center'" class="w-fit space-y-[3px] rounded-sm hover:border-green-800 p-1 border">
+                <div class="h-[1px] bg-slate-400 w-7"></div>
+                <div class="h-[1px] w-5 m-auto bg-white"></div>
+                <div class="h-[1px] bg-slate-400 w-7"></div>
+                <div class="h-[1px] bg-slate-400 w-5 m-auto"></div>
+                <div class="h-[1px] bg-white w-7 m-auto"></div>
+                <div class="h-[1px] w-5 bg-slate-400 m-auto"></div>
+            </div>
+        </div>
+        <div>
+            <p :class="[textPosition === 'right' ? 'text-white' : 'text-slate-400']" class="text-center">RIGHT</p>
+            <div :class="[textPosition === 'right' ? 'border-green-400' : '']" @click="textPosition = 'right'" class="space-y-[3px] border rounded-sm hover:border-green-800 p-1 relative">
+                <div class="h-[1px] bg-white w-7"></div>
+                <div class="h-[1px] bg-slate-400 w-5 relative right-[-30%]"></div>
+                <div class="h-[1px] bg-white w-7"></div>
+                <div class="h-[1px] bg-slate-400 w-7"></div>
+                <div class="h-[1px] bg-slate-400 w-7"></div>
+                <div class="h-[1px] w-5 relative right-[-30%] bg-white"></div>
+            </div>
+        </div>
+    </div>
+    <div class="my-6 w-fit m-auto h-fit">
+        <p @click="alphabets = !alphabets" class="m-auto font-mono md:text-xl text-center rounded-md border-opacity-20 hover:border-opacity-100 text-slate-400 opacity-30 hover:opacity-100 w-fit hover:border-slate-400 p-1 border">
             <span v-if="!alphabets">TEST TYPING THE ENGLISH ALPHABETS</span>
             <span v-else>TYPING TESTS</span>
         </p>
@@ -55,6 +90,7 @@ const {generateText, getMobileOS, playerInputTyping, sessionComplete, resetToDef
 const customize = customizeStore()
 const {customizers, noSpace} = storeToRefs(customize)
 
+const textPosition = ref('left')
 const paste = () => {
     e.preventDefault()
     return
