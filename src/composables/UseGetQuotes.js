@@ -4,24 +4,56 @@ import { useCustomizeFormat } from './customizers/useCustomizeFormat';
 
 export function  UseGetQuotes (config, customText) {
     const res = ref('')
-    const {mostUsed, mediumUsed, rarelyUsed, numbers, wiseQuotes, quotesWithoutAuthors} = englishWords()
+    const {mostUsed, mediumUsed, rarelyUsed, numbers, quotesWithoutAuthors} = englishWords()
 
     function generateText(length) {
         if (config['test-type'] === 'quotes') {
             if (customText) {
-                let quotes = [...customText, ...wiseQuotes, ...quotesWithoutAuthors]
+                let quotes = [...customText, ...quotesWithoutAuthors.value.ten, ...quotesWithoutAuthors.value.twenty, ...quotesWithoutAuthors.value.thirty, ...quotesWithoutAuthors.value.fourty]
                 let quote = ref(quotes[Math.floor(Math.random() * quotes.length)])
                 res.value = quote.value
                 return
             }
-            let quotes = [...wiseQuotes, ...quotesWithoutAuthors]
-            let quote = ref(quotes[Math.floor(Math.random() * quotes.length)])
-            res.value = quote.value
+
+            else {
+                if (config['text-length'] === 10) {
+                    let quotes = [...quotesWithoutAuthors.value.ten]
+                    let quote = ref(quotes[Math.floor(Math.random() * quotes.length)])
+                    res.value = quote.value
+                    return
+                } 
+                
+                else if (config['text-length'] === 20) {
+                    let quotes = [...quotesWithoutAuthors.value.twenty]
+                    let quote = ref(quotes[Math.floor(Math.random() * quotes.length)])
+                    res.value = quote.value
+                    return
+                } 
+                
+                else if (config['text-length'] === 30) {
+                    let quotes = [...quotesWithoutAuthors.value.thirty]
+                    let quote = ref(quotes[Math.floor(Math.random() * quotes.length)])
+                    res.value = quote.value
+                    return
+                } 
+                
+                else if  (config['text-length'] === 40) {
+                    let quotes = [...quotesWithoutAuthors.value.fourty]
+                    let quote = ref(quotes[Math.floor(Math.random() * quotes.length)])
+                    res.value = quote.value
+                    return
+                }
+
+                else {
+                    let quotes = [...quotesWithoutAuthors.value.ten, ...quotesWithoutAuthors.value.twenty, ...quotesWithoutAuthors.value.thirty, ...quotesWithoutAuthors.value.fourty]
+                    let quote = ref(quotes[Math.floor(Math.random() * quotes.length)])
+                    res.value = quote.value
+                }
+            }
         }
         else {
             const words = ref([])
             let choice = Math.round(Math.random() * 1000)
-
             if ( customText && (choice % 2 === 0 && choice < 320)) {
                 words.value = [...customText]
                 let length = words.value.length - 1
@@ -63,7 +95,7 @@ export function  UseGetQuotes (config, customText) {
     }
 
     function customize () {
-        res.value = useCustomizeFormat([config['include-numbers'], config['include-punctuations'], config['include-caps'], config['all-caps'], config['custom-camel-case'], config['no-space']], res.value).customizeFormatRes.value
+        res.value = useCustomizeFormat([config['include-numbers'], config['include-punctuations'], config['include-caps'], config['all-caps'], config['custom-camel-case'], config['no-space'], config['test-type']],  res.value).customizeFormatRes.value
     }
 
     // generate text with new config and customize

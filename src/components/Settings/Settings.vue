@@ -1,10 +1,9 @@
 <template>
-    <div class="text-xs leading-5 md:text-sm relative">
-        <!-- <Header /> -->
+    <div class="relative text-xs leading-5 md:text-sm">
+        <Header />
         <BlindMode />
         <BackSpace />
         <CustomText />
-        <DifficultyLevel />
         <Countdown />
         <AllCaps />
         <CustomCamelCase />
@@ -20,7 +19,6 @@ import NoSpaceText from './NoSpaceText.vue'
 import BlindMode from './BlindMode.vue'
 import BackSpace from './BackSpace.vue';
 import CustomText from './CustomText.vue';
-import DifficultyLevel from './DifficultyLevel.vue'
 import Countdown from './CountDown.vue'
 
 const settings = [

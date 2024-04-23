@@ -56,7 +56,7 @@ const errorRatio = () => {
 }
 
 const errorRatioLevel = () => {
-    return (resultData.value.containerText.length - resultData.value.correctCount) + '/' + (resultData.value.containerText.length)
+    return (resultData.value.wrongCount) + '/' + (resultData.value.containerText.length)
 }
 
 </script>

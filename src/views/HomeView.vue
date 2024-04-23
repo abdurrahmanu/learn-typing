@@ -2,7 +2,15 @@
     <Header />
     <div class="m-auto max-w-[1300px] lg:flex pt-3"> 
       <div class="w-[100%] lg:w-[70%] mx-auto flex-none">      
-        <Customize v-if="!resultData.totalTime" />
+        <Customize v-if="!resultData.totalTime && !alphabets" />
+        <div v-else-if="!resultData.totalTime && alphabets" class="flex flex-wrap justify-center gap-3 pt-10 text-sm text-slate-300">
+          <div :class="[alphabetsMode.uppercase ? 'bg-neutral-700' : '']" @click="alphabetsMode.uppercase = !alphabetsMode.uppercase" class="px-3 py-1 uppercase border rounded-md hover:text-white border-slate-600 w-fit">uppercase</div>
+          <div :class="[alphabetsMode.customCase ? 'bg-neutral-700' : '']" @click="alphabetsMode.customCase = !alphabetsMode.customCase" class="px-3 py-1 border rounded-md hover:text-white border-slate-600 w-fit">cUstoMCaSE</div>
+          <div :class="[alphabetsMode.spaced ? 'bg-neutral-700' : '']" @click="alphabetsMode.spaced = !alphabetsMode.spaced" class="px-3 py-1 uppercase border rounded-md hover:text-white border-slate-600 w-fit">spaced</div>
+          <div :class="[alphabetsMode.backwards ? 'bg-neutral-700' : '']" @click="alphabetsMode.backwards = !alphabetsMode.backwards" class="px-3 py-1 uppercase border rounded-md hover:text-white border-slate-600 w-fit">backwards</div>
+          <div :class="[alphabetsMode.jumbo ? 'bg-neutral-700' : '']" @click="alphabetsMode.jumbo = !alphabetsMode.jumbo" class="px-3 py-1 uppercase border rounded-md hover:text-white border-slate-600 w-fit">jumbo</div>
+          <div :class="[alphabetsMode.styled ? 'bg-neutral-700' : '']" @click="alphabetsMode.styled = !alphabetsMode.styled" class="px-3 py-1 uppercase border rounded-md hover:text-white border-slate-600 w-fit">styled</div>
+        </div>
         <RouterView />
         <div class="pt-10">
           <Restart />
@@ -23,17 +31,16 @@ import Settings from '../components/Settings/Settings.vue'
 import Header from '../components/Header.vue';
 import Customize from '../components/Customize.vue'
 import Restart from '../components/Restart.vue';
-import { watch, ref, watchEffect, computed, onMounted } from 'vue';
-import {useRouter} from 'vue-router'
+import { watch, ref, onMounted } from 'vue';
+import {useRouter} from 'vue-router';
 import { mainStore } from '../store/mainStore';
 import { storeToRefs } from 'pinia';
 import { customizeStore } from '../store/customizeStore';
 
 const router = useRouter()
 const store = mainStore()
-
-const {switchNext, getMobileOS} = store
-const {resultData,  pauseTyping, customTexts} = storeToRefs(store)
+const {switchNext, getMobileOS, resetToDefault, generateText} = store
+const {resultData,  pauseTyping, customTexts, alphabets, alphabetsMode} = storeToRefs(store)
 
 const customize = customizeStore()
 const {customizers, showMoreSettings} = storeToRefs(customize)
@@ -57,6 +64,13 @@ watch(showMoreSettings, (newVal, oldVal) => {
   if (newVal) pauseTyping.value = true
   else pauseTyping.value = false
 })
+
+watch(alphabetsMode, (newVal) => {
+  if (newVal) {
+    resetToDefault()
+    generateText(customizers.value)
+  }
+}, {deep: true})
 
 onMounted(() => {
   if (localStorage.getItem('custom-text') ) {

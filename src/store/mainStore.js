@@ -26,6 +26,15 @@ export const mainStore = defineStore('mainStore', () => {
     const countdown = ref(0)
     const howToUseCustomText = ref('select text using options')
     const timerID = ref()
+    const alphabets = ref(false)
+    const alphabetsMode = ref({
+        uppercase: false,
+        customCase: false,
+        jumbo: false,
+        backwards: false,
+        spaced: false,
+        styled: false,
+    })
 
     const resultData = computed(() => {
         return {
@@ -39,6 +48,48 @@ export const mainStore = defineStore('mainStore', () => {
     })
     
     const generateText = (config, restart, options) => {
+        if (alphabets.value) {
+            const englishAlphabets = ref('abcdefghijklmnopqrstuvwxyz')
+            const spaced = 'a b c d e f g h i j k l m n o p q r s t u v w x y z'
+            containerText.value = englishAlphabets.value
+
+            if (alphabetsMode.value.spaced) {
+                containerText.value = spaced
+            }
+
+            if (alphabetsMode.value.jumbo) {
+                const text = ref(containerText.value.split(''))
+                for (let index = text.value.length - 1; index > 0; index--) {
+                    let random = Math.floor(Math.random() * index + 1)
+                }
+                containerText.value = text.value
+                containerText.value = 'yuiopasdertflkjhgzxcqwmnbv'
+                if (alphabetsMode.value.spaced) {
+                    containerText.value = 'y u i o p a s d e r t f l k j h g z x c q w m n b v'
+                }
+            }
+
+            if (alphabetsMode.value.customCase) {
+                let text = containerText.value
+                containerText.value = ''
+                for (let index = 0; index < text.length; index++) {
+                    let random = Math.round(Math.random() + 1)
+                    if (random % 2 === 0) containerText.value += text[index].toUpperCase()
+                    else containerText.value += text[index].toLowerCase()
+                }
+            }
+
+            if (alphabetsMode.value.uppercase) {
+                containerText.value = containerText.value.split('').map(alpha => alpha.toUpperCase()).join('')
+            }
+
+            if (alphabetsMode.value.backwards) {
+                containerText.value = containerText.value.split('').reverse().join('')
+            }
+
+            return
+        }
+
         if (howToUseCustomText.value === 'use both system and custom') {
             let custom = Object.values(customTexts.value)
             containerText.value = UseGetQuotes(config, custom).res.value
@@ -92,6 +143,7 @@ export const mainStore = defineStore('mainStore', () => {
             countdown.value = false
         }
         hasStartedSession.value = false
+
         totalTime.value = performance.now() - startTime.value
     }
 
@@ -106,8 +158,8 @@ export const mainStore = defineStore('mainStore', () => {
             playerLastInput.value = playerInput.value[playerInput.value - 1]
         }
         if (e.type === 'keydown') return
-        if (e.type === 'keypress')  backspaceIsPressed.value = false        
-        let eventSelector = getMobileOS() ? e.data : e.key
+        if (e.type === 'keypress')  backspaceIsPressed.value = false   
+        let eventSelector = e.key || e.data
         if (!getMobileOS() && e.key === 'Enter') return 
         if (!hasStartedSession.value) hasStartedSession.value = true
         playerInputLength.value++
@@ -121,8 +173,29 @@ export const mainStore = defineStore('mainStore', () => {
         if (playerInputLength.value === containerText.value.length) sessionComplete()
     }
 
+    const playerInputTyping = (e) => {
+        if (pauseTyping.value) return
+        if (e.inputType === 'deleteContentBackward') {
+            if (!enableBackSpace.value) return
+            if (playerInputLength.value === 0) return
+            backspaceIsPressed.value = true
+            playerInputLength.value--
+        }
+        if (e.inputType === 'deleteContentBackward') return
+        backspaceIsPressed.value = false
+        if (!hasStartedSession.value) hasStartedSession.value = true
+        playerInputLength.value++
+        if (playerInputLength.value === 1)  {
+            if (timedTyping.value) beginCountdown.value = true
+            startTime.value = performance.now();
+        }
+        completionLevel.value = ((playerInputLength.value + 1) / containerText.value.length) * 100        
+        if (playerInputLength.value === containerText.value.length) sessionComplete()
+    }
+
     const inputEquality = computed(() => {
-        return playerLastInput.value === containerText.value[playerInput.value.length - 1]
+        if (backspaceIsPressed.value) return
+        return  playerLastInput.value === containerText.value[playerInput.value.length - 1] 
     })
 
     const switchNext = (config, restart, options) => {
@@ -132,19 +205,9 @@ export const mainStore = defineStore('mainStore', () => {
     
     function getMobileOS() {
         let userAgent = navigator.userAgent || navigator.vendor || window.opera;
-
-        if (/windows phone/i.test(userAgent)) {
-            return "Windows Phone";
+        if ( /windows phone/i.test(userAgent) || /android/i.test(userAgent) || (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) ) {
+            return 'mobile'
         }
-
-        if (/android/i.test(userAgent)) {
-            return "Android";
-        }
-
-        if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-            return "iOS";
-        }
-
         return '';
     }
     
@@ -155,6 +218,7 @@ export const mainStore = defineStore('mainStore', () => {
         sessionComplete,
         playerTyping,
         switchNext,
+        playerInputTyping,
         timerID,
         howToUseCustomText,
         countdown,
@@ -181,5 +245,7 @@ export const mainStore = defineStore('mainStore', () => {
         pauseTyping,
         backspaceIsPressed,
         timedTyping,
+        alphabets,
+        alphabetsMode,
     }
 })

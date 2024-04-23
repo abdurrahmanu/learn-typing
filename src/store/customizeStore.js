@@ -2,8 +2,7 @@ import {defineStore} from 'pinia'
 import {ref} from 'vue'
 
 export const customizeStore = defineStore('customizeStore', () => {
-    const configurationArgs = ref([])
-    const configChange = ref(false)
+    const configs = ref([])
     const typeBlindly = ref(false)
     const noSpace = ref(false)
     const customCamelCase = ref(false)
@@ -56,13 +55,14 @@ export const customizeStore = defineStore('customizeStore', () => {
     }
 
     const useConfig = () => {
-        let wordType = customizers.value['words-type']
-        let testType = customizers.value['test-type']
-        let textLength = customizers.value['text-length']
-        if (!customizers.value['words-type']) customizers.value['words-type'] = wordType
-        if (!customizers.value['test-type']) customizers.value['test-type'] = testType
-        if (!customizers.value['text-length']) customizers.value['text-length'] = textLength
-        changeConfiguration(configurationArgs.value[0], configurationArgs.value[1])
+        let currentWordType = customizers.value['words-type']
+        let currentTestType = customizers.value['test-type']
+        let currentTextLength = customizers.value['text-length']
+        let clicked = configs.value[0]
+        if (clicked === currentWordType || clicked === currentTestType || clicked === currentTextLength) return
+        
+
+        changeConfiguration(configs.value[0], configs.value[1])
 
         if (customizers.value['test-type'] === 'quotes') {
             disableOption.value['words-type'] = true
@@ -71,7 +71,6 @@ export const customizeStore = defineStore('customizeStore', () => {
             disableOption.value['words-type'] = false
             disableOption.value['include-numbers'] = false
         }
-        configChange.value  = false
     }
 
     return {
@@ -83,9 +82,8 @@ export const customizeStore = defineStore('customizeStore', () => {
         typingCountdown,
         beginCountdown,
         enableBackSpace,
-        configurationArgs,
+        configs,
         showMoreSettings,
-        configChange,
         customizers,
         allOptions,
         changeConfiguration,

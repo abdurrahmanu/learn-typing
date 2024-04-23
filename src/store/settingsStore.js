@@ -1,17 +1,8 @@
 import {defineStore} from 'pinia'
 import {ref} from 'vue'
 
-export const customizeStore = defineStore('customizeStore', () => {
-    
-
-
+export const settingsStore = defineStore('settingsStore', () => {
     return {
-        temporaryCustomizers,
-        selectedCustomizers,
-        configurationArgs,
-        configChange,
-        changeConfiguration,
-        useConfig, 
     }
 })
 

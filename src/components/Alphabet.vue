@@ -1,9 +1,9 @@
 <template>
     <div :class="[noSpace ? '' : 'whitespace-pre-wrap']" class="relative inline font-mono">
         <Transition v-if="currentIndex" appear>            
-            <span :class="[equalStyle, currentIndexStyle, mainStyle]" class="transition-all duration-[10ms]">{{ alphabet }}</span>
+            <span :class="[equalStyle, currentIndexStyle, mainStyle, styledAlphas]" class="transition-all duration-[10ms]">{{ alphabet }}</span>
         </Transition>
-        <span v-else :class="[equalStyle, currentIndexStyle, mainStyle]" class="transition-all duration-[10ms]">{{ alphabet }}</span>
+        <span v-else :class="[equalStyle, currentIndexStyle, mainStyle, styledAlphas]" class="transition-all duration-[10ms]">{{ alphabet }}</span>
     </div>
 </template> 
 
@@ -14,7 +14,7 @@ import {mainStore} from '../store/mainStore'
 import { customizeStore } from '../store/customizeStore';
 
 const store = mainStore()
-const { playerInputLength } = storeToRefs(store)
+const { playerInputLength, alphabets, alphabetsMode } = storeToRefs(store)
 
 const customize = customizeStore()
 const {typeBlindly, noSpace} = storeToRefs(customize)
@@ -29,6 +29,12 @@ const props = defineProps({
 const equalStyle = computed(() => {
     if (!typeBlindly.value) {
         return props.equality ? 'text-green-300' : 'text-red-500'
+    }
+})
+
+const styledAlphas = computed(() => {
+    if (alphabets.value && alphabetsMode.value.styled) {
+        return 'border border-slate-500 bg-zinc-900 rounded-md p-1'
     }
 })
 

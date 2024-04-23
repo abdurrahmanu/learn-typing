@@ -6,8 +6,8 @@
                             <img @click="timedTyping = !timedTyping" class="h-7" src="/playTimer.svg" alt="">
                             <div class="flex text-xs border h-fit">
                                 <div class="px-2 border-r w-fit" :class="[typingCountdown === 10 ? 'text-green-500' : 'text-slate-300']" @click="typingCountdown = 10">10s</div>
-                                <div class="px-2 border-r w-fit" :class="[typingCountdown === 20 ? 'text-green-500' : 'text-slate-300']" @click="typingCountdown = 20">20s</div>
-                                <div class="px-2 border-l w-fit" :class="[typingCountdown === 30 ? 'text-green-500' : 'text-slate-300']" @click="typingCountdown = 30">30s</div>
+                                <div v-if="!alphabets" class="px-2 border-r w-fit" :class="[typingCountdown === 20 ? 'text-green-500' : 'text-slate-300']" @click="typingCountdown = 20">20s</div>
+                                <div v-if="!alphabets" class="px-2 border-l w-fit" :class="[typingCountdown === 30 ? 'text-green-500' : 'text-slate-300']" @click="typingCountdown = 30">30s</div>
                             </div>
                     </div>
                     <div class="flex items-center gap-2" v-if="beginCountdown">
@@ -20,17 +20,10 @@
 </template>
 
 <script setup>
-import {ref} from 'vue'
 import {storeToRefs} from 'pinia'
-import { customizeStore } from '../store/customizeStore';
 import {mainStore} from '../store/mainStore'
 
 const store = mainStore()
-const { typingCountdown,  timedTyping, countdown, beginCountdown} = storeToRefs(store)
+const { typingCountdown,  timedTyping, countdown, beginCountdown, alphabets} = storeToRefs(store)
 const {getMobileOS} = store
-
 </script>
-
-<style scoped>
-
-</style>

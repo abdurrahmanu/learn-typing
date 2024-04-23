@@ -4,6 +4,8 @@ export function useCustomizeFormat(args, text) {
     const customizeFormatRes = ref(text);
     let punctuations = [',', '.', ':', ';', '-', "'", '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '=', '[', ']', '{', '}', '|', "\\", '"', '<', '>', '/', '?']
 
+    
+    
     // Custom Random Camel Case
     if (args[4]) {
         customizeFormatRes.value = ''
@@ -16,11 +18,13 @@ export function useCustomizeFormat(args, text) {
 
     // No space text
     if (args[5]) {
-        let newText = customizeFormatRes.value
-        customizeFormatRes.value = ''
-        for (let index = 0; index < text.length; index++) {
-            if (newText[index] !== ' ') customizeFormatRes.value += newText[index]
-            else customizeFormatRes.value += ''
+        if (!args[1]) {
+            let newText = customizeFormatRes.value
+            customizeFormatRes.value = ''
+            for (let index = 0; index < text.length; index++) {
+                if (newText[index] !== ' ') customizeFormatRes.value += newText[index]
+                else customizeFormatRes.value += ''
+            }
         }
     }
 
@@ -32,30 +36,46 @@ export function useCustomizeFormat(args, text) {
     if (!args.includes('caps') && !args[4] && !args[3]) {
         customizeFormatRes.value = customizeFormatRes.value.toLowerCase()
     } else {
-        let newText = customizeFormatRes.value
-        customizeFormatRes.value = ''
-        for (let index = 0; index < newText.length; index++) {
-            if (!newText[index - 1]) customizeFormatRes.value += newText[index].toUpperCase()
-            else if (newText[index - 1] === ' ' && index % 3 === 0) customizeFormatRes.value += newText[index].toUpperCase()
-            else customizeFormatRes.value += newText[index]
+        if (args[6] === 'random-text') {
+            let newText = customizeFormatRes.value
+            customizeFormatRes.value = ''
+            for (let index = 0; index < newText.length; index++) {
+                if (!newText[index - 1]) customizeFormatRes.value += newText[index].toUpperCase()
+                else if (newText[index - 1] === ' ' && index % 3 === 0) customizeFormatRes.value += newText[index].toUpperCase()
+                else customizeFormatRes.value += newText[index]
+            }
         }
     }
 
-    if (!args.includes('punctuations')) {
+    // Punctuations
+    if (!args[1]) {
         let newText = customizeFormatRes.value
         customizeFormatRes.value = ''
-
         for (let index = 0; index < newText.length; index++) {
-            if (!punctuations.includes(customizeFormatRes.value[index])) customizeFormatRes.value += newText[index];
+            if (!punctuations.includes(newText[index])) {
+                customizeFormatRes.value += newText[index];
+            }
         }
-    } else {
-        // let newText = customizeFormatRes.value
-        // customizeFormatRes.value = ''
-        // for (let index = 0; index < newText.length; index++) {
-        //     if (newText[index + 1] === ' ' && index % 3 === 0) {
-        //         customizeFormatRes.value += '.'
-        //     } else customizeFormatRes.value += newText[index]
-        // }
+    }
+    else {
+        if (args[6] === 'random-text') {
+            let punctuations = [',', '.', ';', '.', '.', '.', ',', ',', '?', '!']
+            let newText = customizeFormatRes.value
+            customizeFormatRes.value = ''
+            for (let index = 0; index < newText.length; index++) {
+                if (newText[index] === ' ' && index % 5 === 0) {
+                    customizeFormatRes.value += punctuations[Math.round(Math.random() * 10)] + ' '
+                } else customizeFormatRes.value += newText[index]
+            }
+        }
+        if (args[5]) {
+            let newText = customizeFormatRes.value
+            customizeFormatRes.value = ''
+            for (let index = 0; index < text.length; index++) {
+                if (newText[index] !== ' ') customizeFormatRes.value += newText[index]
+                else customizeFormatRes.value += ''
+            }
+        }
     }
 
     return { customizeFormatRes }

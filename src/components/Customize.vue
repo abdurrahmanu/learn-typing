@@ -8,8 +8,8 @@
                 @mouseleave="mouseLeave(listIndex)" >
                     <div 
                     class="px-1 hover:bg-neutral-900" 
-                    :class="[disableOption[key] ? 'opacity-50 cursor-not-allowed' : '', !configChange && customizers[key] === option && !disableOption[key]  ? 'text-green-400 bg-neutral-900' : '']"
-                    @click="!disableOption[key] ? configurationArgs = [option, key] : ''" 
+                    :class="[disableOption[key] ? 'opacity-50 cursor-not-allowed' : '', customizers[key] === option && !disableOption[key]  ? 'text-green-400 bg-neutral-900' : '']"
+                    @click="!disableOption[key] ? configs = [option, key] : ''" 
                     v-for="(option, index) in optionArr" 
                     :key="index">
                         {{ option }} 
@@ -25,15 +25,11 @@
 import { ref, watch } from 'vue'
 import {customizeStore} from '../store/customizeStore.js'
 import {storeToRefs} from 'pinia'
-import {mainStore} from '../store/mainStore'
-
-const main = mainStore()
-const {pauseTyping} = storeToRefs(main)
+import { mainStore } from '../store/mainStore.js';
 
 const customize = customizeStore()
-const { allOptions, configurationArgs, configChange, customizers, disableOption} = storeToRefs(customize)
+const { allOptions, configs, customizers, disableOption} = storeToRefs(customize)
 const {useConfig} = customize
-
 const optionsTooltip = ['length', 'words', 'test-type', 'format', 'test-type', 'test-type']
 
 const {
@@ -58,14 +54,7 @@ const hoverIndex = ref(null)
 const mouseEnter = (index) => hoverIndex.value = index
 const mouseLeave = (index) => hoverIndex.value = null
 
-watch(configurationArgs, (newVal) => {
-    configChange.value = true
+watch(configs, (newVal) => {
     useConfig()
 })
-
-watch(configChange, (newVal, oldVal) => {
-    if (newVal) pauseTyping.value = true
-    else pauseTyping.value = false
-})
 </script>
-
