@@ -4,12 +4,12 @@
       <div class="w-[100%] lg:w-[70%] mx-auto flex-none">      
         <Customize v-if="!resultData.totalTime && !alphabets" />
         <div v-else-if="!resultData.totalTime && alphabets" class="flex flex-wrap justify-center gap-3 pt-10 text-sm text-slate-300">
-          <div :class="[alphabetsMode.uppercase ? 'bg-neutral-700' : '']" @click="alphabetsMode.uppercase = !alphabetsMode.uppercase" class="px-3 py-1 uppercase border rounded-md hover:text-white border-slate-600 w-fit">uppercase</div>
-          <div :class="[alphabetsMode.customCase ? 'bg-neutral-700' : '']" @click="alphabetsMode.customCase = !alphabetsMode.customCase" class="px-3 py-1 border rounded-md hover:text-white border-slate-600 w-fit">cUstoMCaSE</div>
-          <div :class="[alphabetsMode.spaced ? 'bg-neutral-700' : '']" @click="alphabetsMode.spaced = !alphabetsMode.spaced" class="px-3 py-1 uppercase border rounded-md hover:text-white border-slate-600 w-fit">spaced</div>
-          <div :class="[alphabetsMode.backwards ? 'bg-neutral-700' : '']" @click="alphabetsMode.backwards = !alphabetsMode.backwards" class="px-3 py-1 uppercase border rounded-md hover:text-white border-slate-600 w-fit">backwards</div>
-          <div :class="[alphabetsMode.jumbo ? 'bg-neutral-700' : '']" @click="alphabetsMode.jumbo = !alphabetsMode.jumbo" class="px-3 py-1 uppercase border rounded-md hover:text-white border-slate-600 w-fit">jumbo</div>
-          <div :class="[alphabetsMode.styled ? 'bg-neutral-700' : '']" @click="alphabetsMode.styled = !alphabetsMode.styled" class="px-3 py-1 uppercase border rounded-md hover:text-white border-slate-600 w-fit">styled</div>
+          <div :class="[alphabetsMode.uppercase ? 'bg-neutral-700' : '']" @click="changeMode('uppercase')" class="px-3 py-1 uppercase border rounded-md hover:text-white border-slate-600 w-fit">uppercase</div>
+          <div :class="[alphabetsMode.customCase ? 'bg-neutral-700' : '']" @click="changeMode('customCase')" class="px-3 py-1 border rounded-md hover:text-white border-slate-600 w-fit">cUstoMCaSE</div>
+          <div :class="[alphabetsMode.spaced ? 'bg-neutral-700' : '']" @click="changeMode('spaced')" class="px-3 py-1 uppercase border rounded-md hover:text-white border-slate-600 w-fit">spaced</div>
+          <div :class="[alphabetsMode.backwards ? 'bg-neutral-700' : '']" @click="changeMode('backwards')" class="px-3 py-1 uppercase border rounded-md hover:text-white border-slate-600 w-fit">backwards</div>
+          <div :class="[alphabetsMode.jumbo ? 'bg-neutral-700' : '']" @click="changeMode('jumbo')" class="px-3 py-1 uppercase border rounded-md hover:text-white border-slate-600 w-fit">jumbo</div>
+          <div :class="[alphabetsMode.styled ? 'bg-neutral-700' : '']" @click="changeMode('styled')" class="px-3 py-1 uppercase border rounded-md hover:text-white border-slate-600 w-fit">styled</div>
         </div>
         <RouterView />
         <div class="pt-10">
@@ -44,6 +44,36 @@ const {resultData,  pauseTyping, customTexts, alphabets, alphabetsMode} = storeT
 
 const customize = customizeStore()
 const {customizers, showMoreSettings} = storeToRefs(customize)
+
+const changeMode = (mode) => {
+  if (mode === 'uppercase') {
+    if (alphabetsMode.value.customCase && !alphabetsMode.value.uppercase) alphabetsMode.value.customCase = false
+    alphabetsMode.value.uppercase = !alphabetsMode.value.uppercase
+  }
+
+  if (mode === 'customCase') {
+    if (alphabetsMode.value.uppercase && !alphabetsMode.value.customCase) alphabetsMode.value.uppercase = false
+    alphabetsMode.value.customCase = !alphabetsMode.value.customCase
+  }
+
+  if (mode === 'jumbo') {
+    if (alphabetsMode.value.backwards && !alphabetsMode.value.jumbo) alphabetsMode.value.backwards = false
+    alphabetsMode.value.jumbo = !alphabetsMode.value.jumbo
+  }
+
+  if (mode === 'backwards') {
+    if (alphabetsMode.value.jumbo && !alphabetsMode.value.backwards) alphabetsMode.value.jumbo = false
+    alphabetsMode.value.backwards = !alphabetsMode.value.backwards
+  }
+
+  if (mode === 'styled') {
+    alphabetsMode.value.styled = !alphabetsMode.value.styled
+  }
+
+  if (mode === 'spaced') {
+    alphabetsMode.value.spaced = !alphabetsMode.value.spaced
+  }
+}
 
 const screenWidth = ref(window.innerWidth)
 

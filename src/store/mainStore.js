@@ -43,7 +43,7 @@ export const mainStore = defineStore('mainStore', () => {
             containerText: containerText.value,
             characters: containerText.value.length,
             totalTime: Math.round(totalTime.value),
-            testType: 'English-10-words'
+            testType: ''
         }
     })
     
@@ -155,7 +155,7 @@ export const mainStore = defineStore('mainStore', () => {
             backspaceIsPressed.value = true
             playerInputLength.value--
             playerInput.value = playerInput.value.slice(0, -1)
-            playerLastInput.value = playerInput.value[playerInput.value - 1]
+            playerLastInput.value = playerInput.value[playerInput.value.length - 1]
         }
         if (e.type === 'keydown') return
         if (e.type === 'keypress')  backspaceIsPressed.value = false   
@@ -167,7 +167,6 @@ export const mainStore = defineStore('mainStore', () => {
             if (timedTyping.value) beginCountdown.value = true
             startTime.value = performance.now();
         }
-        completionLevel.value = ((playerInputLength.value + 1) / containerText.value.length) * 100        
         playerLastInput.value = eventSelector
         playerInput.value += playerLastInput.value
         if (playerInputLength.value === containerText.value.length) sessionComplete()
@@ -179,24 +178,16 @@ export const mainStore = defineStore('mainStore', () => {
             if (!enableBackSpace.value) return
             if (playerInputLength.value === 0) return
             backspaceIsPressed.value = true
-            playerInputLength.value--
         }
         if (e.inputType === 'deleteContentBackward') return
         backspaceIsPressed.value = false
         if (!hasStartedSession.value) hasStartedSession.value = true
-        playerInputLength.value++
         if (playerInputLength.value === 1)  {
             if (timedTyping.value) beginCountdown.value = true
             startTime.value = performance.now();
         }
-        completionLevel.value = ((playerInputLength.value + 1) / containerText.value.length) * 100        
         if (playerInputLength.value === containerText.value.length) sessionComplete()
     }
-
-    const inputEquality = computed(() => {
-        if (backspaceIsPressed.value) return
-        return  playerLastInput.value === containerText.value[playerInput.value.length - 1] 
-    })
 
     const switchNext = (config, restart, options) => {
         resetToDefault()
@@ -205,7 +196,8 @@ export const mainStore = defineStore('mainStore', () => {
     
     function getMobileOS() {
         let userAgent = navigator.userAgent || navigator.vendor || window.opera;
-        if ( /windows phone/i.test(userAgent) || /android/i.test(userAgent) || (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) ) {
+        let regex = /Mobi|Android|webOS|iPhone|iPad|iPod|Blackberry|IEMobile|Opera Mini/i.test(userAgent) && !window.MSStream
+        if (regex && ('ontouchstart' in window || navigator.maxTouchPoints > 0)) {
             return 'mobile'
         }
         return '';
@@ -229,7 +221,6 @@ export const mainStore = defineStore('mainStore', () => {
         enableRepeat,
         storedTextForRepeat,
         customTexts,
-        inputEquality,
         resultData,
         totalTime,
         completionLevel,

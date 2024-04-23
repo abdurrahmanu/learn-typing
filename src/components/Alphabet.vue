@@ -34,7 +34,7 @@ const equalStyle = computed(() => {
 
 const styledAlphas = computed(() => {
     if (alphabets.value && alphabetsMode.value.styled) {
-        return 'border border-slate-500 bg-zinc-900 rounded-md p-1'
+        return 'border border-slate-500 bg-zinc-900 rounded-md p-1 mx-[2px]'
     }
 })
 

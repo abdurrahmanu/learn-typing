@@ -19,7 +19,7 @@ import { customizeStore } from '../store/customizeStore';
 
 const store = mainStore()
 const {switchNext, getMobileOS} = store
-const {resultData, hasStartedSession} = storeToRefs(store)
+const {resultData, hasStartedSession, enableRepeat} = storeToRefs(store)
 
 const customize = customizeStore()
 const { customizers} = storeToRefs(customize)
