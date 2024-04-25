@@ -8,5 +8,7 @@ export default {
     extend: {},
   },
   plugins: [],
-  darkMode: 'class'
+  darkMode: 'class',
+  ssr: false,
+  spaLoadingTemplate: 'loading-template.html',
 };

@@ -28,39 +28,18 @@
             <RangeInput />
         </div>
     </div>
-    <div class="flex gap-3 opacity-50 justify-center text-xs text-white">
+    <div v-if="!getMobileOS()"class="flex gap-7 opacity-50 justify-center text-xs text-white">
         <div >
-            <p :class="[textPosition === 'left' ? 'text-white' : 'text-slate-400']" class="text-center">LEFT</p>
-            <div :class="[textPosition === 'left' ? 'border-green-400' : '']" @click="textPosition = 'left'" class="space-y-[3px] border rounded-sm hover:border-green-800 p-1">
-                <div class="h-[1px] w-7 bg-white"></div>
-                <div class="h-[1px] bg-slate-400 w-5"></div>
-                <div class="h-[1px] bg-white w-7"></div>
-                <div class="h-[1px] bg-slate-400 w-5"></div>
-                <div class="h-[1px] bg-white w-7"></div>
-                <div class="h-[1px] bg-slate-400 w-5"></div>
-            </div>
+            <p :class="[textPosition === 'left' ? 'text-green-500' : 'text-slate-400']" class="text-center">LEFT</p>
+            <img src="/alignLeft.svg" :class="[textPosition === 'left' ? 'border-green-400' : '']" @click="textPosition = 'left'" class="w-7 m-auto">
         </div>
         <div>
-            <p :class="[textPosition === 'center' ? 'text-white' : 'text-slate-400']" class="text-center">CENTER</p>
-            <div :class="[textPosition === 'center' ? 'border-green-400' : '']" @click="textPosition = 'center'" class="w-fit space-y-[3px] rounded-sm hover:border-green-800 p-1 border">
-                <div class="h-[1px] bg-slate-400 w-7"></div>
-                <div class="h-[1px] w-5 m-auto bg-white"></div>
-                <div class="h-[1px] bg-slate-400 w-7"></div>
-                <div class="h-[1px] bg-slate-400 w-5 m-auto"></div>
-                <div class="h-[1px] bg-white w-7 m-auto"></div>
-                <div class="h-[1px] w-5 bg-slate-400 m-auto"></div>
-            </div>
+            <p :class="[textPosition === 'center' ? 'text-green-500' : 'text-slate-400']" class="text-center">CENTER</p>
+            <img src="/alignCenter.svg" :class="[textPosition === 'center' ? 'border-green-400' : '']" @click="textPosition = 'center'" class="w-7 m-auto">
         </div>
         <div>
-            <p :class="[textPosition === 'right' ? 'text-white' : 'text-slate-400']" class="text-center">RIGHT</p>
-            <div :class="[textPosition === 'right' ? 'border-green-400' : '']" @click="textPosition = 'right'" class="space-y-[3px] border rounded-sm hover:border-green-800 p-1 relative">
-                <div class="h-[1px] bg-white w-7"></div>
-                <div class="h-[1px] bg-slate-400 w-5 relative right-[-30%]"></div>
-                <div class="h-[1px] bg-white w-7"></div>
-                <div class="h-[1px] bg-slate-400 w-7"></div>
-                <div class="h-[1px] bg-slate-400 w-7"></div>
-                <div class="h-[1px] w-5 relative right-[-30%] bg-white"></div>
-            </div>
+            <p :class="[textPosition === 'right' ? 'text-green-500' : 'text-slate-400']" class="text-center">RIGHT</p>
+            <img src="/alignRight.svg" :class="[textPosition === 'right' ? 'border-green-400' : '']" @click="textPosition = 'right'" class="w-7 m-auto">
         </div>
     </div>
     <div class="my-6 w-fit m-auto h-fit">
