@@ -22,7 +22,6 @@
   </div>
 
   <div id="boxesContainer"></div>
-
 <!-- if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) -->
 </template>
 
@@ -69,7 +68,13 @@ watch(secondAnimation, (newVal) => {
       const cssObject = getComputedStyle(document.body)
       const width = ref(+cssObject.getPropertyValue('width').slice(0, -2))
       const height = ref(+cssObject.getPropertyValue('height').slice(0, -2))
-      const squareLength = ref(50)      
+      const squareLength = ref(40)      
+      if (width.value > 500) {
+      squareLength.value = 55
+      } 
+      if (width.value > 800) {
+        squareLength.value = 70
+      }
       const numberOfboxesV = height.value / squareLength.value
       const numberOfboxesH = width.value  / squareLength.value
       boxWidth.value = squareLength.value + ((width.value % squareLength.value) / numberOfboxesH) + 'px'
