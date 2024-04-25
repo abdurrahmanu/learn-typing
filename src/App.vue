@@ -1,5 +1,5 @@
 <template>
-  <div ref="loader" v-show="animateLoader" class="bg-neutral-700 h-[100dvh] relative">
+  <div ref="loader" v-show="animateLoader" class="h-[100dvh] relative bg-neutral-700">
     <div ref="laptop" class="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[195px] m-auto transition-opacity duration-1000">
       <div class="glow w-full relative top-[100px] z-[-3] animate-pulse"></div>
       <div class="screen-container m-auto rounded-t-md w-[188px] h-[90px] bg-neutral-700 pt-2 pb-1 z-[2] border border-black">
@@ -10,25 +10,44 @@
     </div>
   </div>
 
-    <div v-show="!animateLoader" class="relative min-h-[100vh] mx-auto  bg-neutral-900 selection:bg-transparent text-white">
+    <div v-show="!animateLoader" :class="[appBg]" class="relative min-h-[100vh] mx-auto selection:bg-transparent text-white">
       <div  v-show="secondAnimation"  ref="boxesContainer" class="absolute w-full h-[100vdh] left-0 top-0 flex flex-wrap bg-transparent">
         <div v-for="(box, index) in numberOfBoxes" :key="index" class="w-fit h-fit z-[20] box-container">
           <div :style="{'width' : boxWidth, 'height': boxHeight}" class=" bg-neutral-600 box"></div>
         </div>
       </div>
+      
       <div>
         <RouterView />
       </div>
   </div>
 
-  <div id="boxesContainer"></div>
+  <div ref="bgContainer" v-if="!animateLoader && !secondAnimation" @click="openBackgrounds = !openBackgrounds" class="grid items-center justify-center rounded-full w-7 rotate-180 p-1 space-y-1  border-slate-300 border fixed bottom-3 right-3 bg-neutral-700 transition-all duration-200">
+    <div @click="currentColor='red'" v-if="currentColor === 'red' || openBackgrounds" class="w-5 h-5 rounded-full border border-black bg-red-400"></div>
+    <div @click="currentColor='blue'" v-if="currentColor === 'blue' || openBackgrounds" class="w-5 h-5 rounded-full border border-black bg-blue-400"></div>
+    <div @click="currentColor='green'" v-if="currentColor === 'green' || openBackgrounds" class="w-5 h-5 rounded-full border border-black bg-green-400"></div>
+    <div @click="currentColor='teal'" v-if="currentColor === 'teal' || openBackgrounds" class="w-5 h-5 rounded-full border border-black bg-teal-400"></div>
+    <div @click="currentColor='pink'" v-if="currentColor === 'pink' || openBackgrounds" class="w-5 h-5 rounded-full border border-black bg-pink-400"></div>
+    <div @click="currentColor='gray'" v-if="currentColor === 'gray' || openBackgrounds" class="w-5 h-5 rounded-full border border-black bg-zinc-400"></div>
+    <div @click="currentColor='white'" v-if="currentColor === 'white' || openBackgrounds" class="w-5 h-5 rounded-full border border-black bg-white"></div>
+    <div @click="currentColor='neutral'" v-if="currentColor === 'neutral' || openBackgrounds" class="w-5 h-5 rounded-full border border-black bg-neutral-900"></div>
+  </div>
+
 <!-- if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) -->
 </template>
 
 <script setup>
 
 import Keyboard from './components/Keyboard.vue'
-import {ref, watch, onMounted} from 'vue'
+import {ref, watch, computed, onMounted} from 'vue'
+import {mainStore} from './store/mainStore'
+import { storeToRefs } from 'pinia';
+
+const main = mainStore()
+const {pauseTyping} = storeToRefs(main)
+const openBackgrounds = ref(false)
+const currentColor = ref('neutral')
+const bgContainer = ref(null)
 
 const animateLoader  = ref(true)
 const animationCounter = ref(0)
@@ -41,6 +60,25 @@ const boxesContainer = ref(null)
 const numberOfBoxes = ref(0)
 const boxWidth = ref(0)
 const boxHeight = ref(0)
+
+const appBg = computed(() => {
+  if (currentColor.value === 'neutral') return 'bg-neutral-900'
+  if (currentColor.value === 'pink') return 'bg-yellowgreen-400 text-neutral-600'
+  if (currentColor.value === 'red') return 'bg-yellow-300 text-black'
+  if (currentColor.value === 'blue') return 'bg-blue-500 text-black'
+  if (currentColor.value === 'white') return 'bg-slate-400 text-zinc-900'
+  if (currentColor.value === 'teal') return 'bg-teal-800 text-white'
+  if (currentColor.value === 'gray') return 'bg-gray-200 text-neutral-700'
+  if (currentColor.value === 'green') return 'bg-green-300 text-black'
+})
+
+onMounted(() => {
+  window.addEventListener('click', (event) => {
+    if (!bgContainer.value.contains(event.target) && event.target !== bgContainer.value) {
+      openBackgrounds.value = false
+    }
+  })
+})
 
 onMounted(() => {
   intervalID.value = setInterval(() => {
@@ -108,6 +146,9 @@ watch(secondAnimation, (newVal) => {
             if (count.value === length) {
               clearInterval(interval.value)
               secondAnimation.value = !secondAnimation.value
+              setTimeout(() => {                
+                pauseTyping.value = false
+              }, 100);
             }
           }, 5)
         }, 0)
@@ -115,7 +156,6 @@ watch(secondAnimation, (newVal) => {
     }
   }
 })
-
 
 // const {quotesWithoutAuthors} = englishWords()
 // for (let index = 0; index < quotesWithoutAuthors.length; index++) {

@@ -9,13 +9,13 @@
             class="text-sm text-center rounded-md appearance-none outline-none max-w-[100px] text-slate-100 bg-zinc-900 mx-auto opacity-0" 
             :maxlength="containerText.length">
         </div>
-        <div :class="[alphabets ? 'px-2 py-1 max-w-[300px]' : 'max-w-[600px]']"  class="flex justify-between m-auto">
+        <div :class="[alphabets ? 'px-2 py-1 max-w-[300px]' : 'max-w-[600px]']"  class="flex justify-between m-auto pt-10">
             <Clock />
             <CustomText v-if="!alphabets" />
             <Blind />
         </div>
         <div v-if="containerText" class="leading-6 md:leading-[30px] transition-all duration-100 relative m-auto max-w-[600px] w-full  text-[15px] md:text-[18px]">
-            <div :class="[noSpace ? 'break-words' : '', alphabets ? 'text-center py-5 break-words leading-10': 'text-left border-2 border-neutral-800 pb-7 min-h-[100px]', getMobileOS() ? 'border-none' : '', textPosition === 'center' ? 'text-center' : textPosition === 'right' ? 'text-right' : 'text-left']" class="relative p-1 overflow-y-auto h-fit">
+            <div :class="[noSpace ? 'break-words' : '', alphabets ? 'text-center py-5 break-words leading-10': 'text-left border-none pt-4 md:border-2 md:border-neutral-800 pb-7 min-h-[100px]', getMobileOS() ? 'border-none' : '', textPosition === 'center' ? 'text-center' : textPosition === 'right' ? 'text-right' : 'text-left']" class="relative p-1 overflow-y-auto h-fit">
                 <Alphabet
                 v-for="(alphabet, index) in containerText"
                 :index="index"
@@ -23,12 +23,15 @@
                 :currentIndex ="playerInputLength === index" 
                 :equality="playerInput[index] === alphabet"
                 :alphabet="alphabet"/>
-                <p v-if="!alphabets" @click="enableRepeat = !enableRepeat" :class="[enableRepeat ? 'text-green-500' : 'text-slate-400']" class="absolute bottom-0 right-0 p-[1px] px-2 bg-zinc-800 hover:bg-zinc-700">Repeat</p>
             </div>
-            <RangeInput />
+            <div class="flex items-center py-3 m-auto">
+                <RangeInput />
+                <img class="w-4" src="/repeat.svg" alt="" v-if="!alphabets && !enableRepeat" @click="enableRepeat = !enableRepeat">
+                <img class="w-4" src="/green-repeat.svg" alt="" v-if="enableRepeat" @click="enableRepeat = !enableRepeat">
+            </div>
         </div>
     </div>
-    <div v-if="!getMobileOS()"class="flex gap-7 opacity-50 justify-center text-xs text-white">
+    <div v-if="!getMobileOS() && !alphabets"class="flex gap-7 opacity-50 justify-center text-xs text-white">
         <div >
             <p :class="[textPosition === 'left' ? 'text-green-500' : 'text-slate-400']" class="text-center">LEFT</p>
             <img src="/alignLeft.svg" :class="[textPosition === 'left' ? 'border-green-400' : '']" @click="textPosition = 'left'" class="w-7 m-auto">

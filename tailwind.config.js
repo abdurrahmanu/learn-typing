@@ -9,6 +9,4 @@ export default {
   },
   plugins: [],
   darkMode: 'class',
-  ssr: false,
-  spaLoadingTemplate: 'loading-template.html',
 };

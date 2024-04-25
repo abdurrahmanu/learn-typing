@@ -13,7 +13,7 @@ export const mainStore = defineStore('mainStore', () => {
     const startTime = ref(null)
     const totalTime = ref(null)
     const hasStartedSession = ref(false)
-    const pauseTyping = ref(false)
+    const pauseTyping = ref(true)
     const playerInput = ref('')
     const backspaceIsPressed = ref(false)
     const timedTyping = ref(false)

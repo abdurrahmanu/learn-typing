@@ -1,13 +1,13 @@
 <template>
-    <div class="bg-neutral-800 text-slate-300 rounded-md  w-[90%] m-auto">
-        <div class="text-[12px] font-mono items-center p-2 flex max-w-[950px] justify-center flex-wrap relative">
+    <div class="bg-neutral-600 text-slate-300 rounded-md  w-[90%] m-auto max-w-fit">
+        <div class="text-[12px] font-mono items-center p-[1px] flex max-w-[1000px] justify-center flex-wrap relative">
             <div class="p-1" v-for="(optionArr, key, listIndex) in option" :key="listIndex">          
                 <div 
-                :class="[hoverIndex === listIndex ? 'border-zinc-400' : 'border-transparent']" class="relative flex gap-2 py-1 border rounded-lg"
+                :class="[hoverIndex === listIndex ? 'border-zinc-400' : 'border-transparent']" class="relative flex gap-2 py-[2px] border rounded-lg"
                 @mouseenter="mouseEnter(listIndex)"
                 @mouseleave="mouseLeave(listIndex)" >
                     <div 
-                    class="px-1 hover:bg-neutral-900" 
+                    class="px-[5px] hover:bg-neutral-900 rounded-md" 
                     :class="[disableOption[key] ? 'opacity-50 cursor-not-allowed' : '', customizers[key] === option && !disableOption[key]  ? 'text-green-400 bg-neutral-900' : '']"
                     @click="!disableOption[key] ? configs = [option, key] : ''" 
                     v-for="(option, index) in optionArr" 
