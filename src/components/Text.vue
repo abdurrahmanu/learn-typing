@@ -1,5 +1,5 @@
 <template>
-    <div @click="getMobileOS() ? inputEl.focus() : ''" class="text-slate-100 w-[90%] min-h-[150px] p-3 py-3 space-y-1 relative transition-all duration-200  max-w-[900px] m-auto">
+    <div @click="getMobileOS() ? inputEl.focus() : ''" class="w-[90%] min-h-[150px] p-3 py-3 space-y-1 relative transition-all duration-200  max-w-[900px] m-auto">
         <div v-if="getMobileOS()"class="w-fit">
             <input
             @paste.prevent="paste"
@@ -31,7 +31,7 @@
             </div>
         </div>
     </div>
-    <div v-if="!getMobileOS() && !alphabets"class="flex gap-7 opacity-50 justify-center text-xs text-white">
+    <div v-if="!getMobileOS() && !alphabets"class="flex gap-7 opacity-50 justify-center text-xs">
         <div >
             <p :class="[textPosition === 'left' ? 'text-green-500' : 'text-slate-400']" class="text-center">LEFT</p>
             <img src="/alignLeft.svg" :class="[textPosition === 'left' ? 'border-green-400' : '']" @click="textPosition = 'left'" class="w-7 m-auto">
@@ -54,7 +54,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch } from 'vue';
+import { onMounted, ref, watch, computed } from 'vue';
 import CustomText from './CustomText.vue';
 import Blind from './Blind.vue';
 import Clock from './Clock.vue'
@@ -66,7 +66,7 @@ import {mainStore} from '../store/mainStore'
 
 const inputEl = ref(null)
 const store = mainStore()
-const { containerText, timerID, completionLevel, alphabets, typingCountdown, timedTyping, countdown, customTexts, beginCountdown, enableRepeat, storedTextForRepeat, backspaceIsPressed, playerInputLength, correctCount, wrongCount, playerInput, playerLastInput} = storeToRefs(store)
+const { containerText, currentColor, timerID, completionLevel, alphabets, typingCountdown, timedTyping, countdown, customTexts, beginCountdown, enableRepeat, storedTextForRepeat, backspaceIsPressed, playerInputLength, correctCount, wrongCount, playerInput, playerLastInput} = storeToRefs(store)
 const {generateText, getMobileOS, playerInputTyping, sessionComplete, resetToDefault, playerTyping} = store
 
 const customize = customizeStore()

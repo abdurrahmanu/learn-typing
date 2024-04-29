@@ -17,6 +17,7 @@ export const mainStore = defineStore('mainStore', () => {
     const playerInput = ref('')
     const backspaceIsPressed = ref(false)
     const timedTyping = ref(false)
+    const currentColor = ref('neutral')
     const customTexts = ref({})
     const useCustomText = ref(false)
     const enableRepeat = ref(false)
@@ -238,5 +239,6 @@ export const mainStore = defineStore('mainStore', () => {
         timedTyping,
         alphabets,
         alphabetsMode,
+        currentColor,
     }
 })

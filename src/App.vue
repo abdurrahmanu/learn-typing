@@ -10,7 +10,7 @@
     </div>
   </div>
 
-    <div v-show="!animateLoader" :class="[appBg]" class="relative min-h-[100vh] mx-auto selection:bg-transparent text-white">
+    <div v-show="!animateLoader" :class="[appTheme]" class="relative min-h-[100vh] mx-auto selection:bg-transparent text-white">
       <div  v-show="secondAnimation"  ref="boxesContainer" class="absolute w-full h-[100vdh] left-0 top-0 flex flex-wrap bg-transparent">
         <div v-for="(box, index) in numberOfBoxes" :key="index" class="w-fit h-fit z-[20] box-container">
           <div :style="{'width' : boxWidth, 'height': boxHeight}" class=" bg-neutral-600 box"></div>
@@ -44,9 +44,8 @@ import {mainStore} from './store/mainStore'
 import { storeToRefs } from 'pinia';
 
 const main = mainStore()
-const {pauseTyping} = storeToRefs(main)
+const {pauseTyping, currentColor} = storeToRefs(main)
 const openBackgrounds = ref(false)
-const currentColor = ref('neutral')
 const bgContainer = ref(null)
 
 const animateLoader  = ref(true)
@@ -61,12 +60,12 @@ const numberOfBoxes = ref(0)
 const boxWidth = ref(0)
 const boxHeight = ref(0)
 
-const appBg = computed(() => {
+const appTheme = computed(() => {
   if (currentColor.value === 'neutral') return 'bg-neutral-900'
-  if (currentColor.value === 'pink') return 'bg-yellowgreen-400 text-neutral-600'
-  if (currentColor.value === 'red') return 'bg-yellow-300 text-black'
-  if (currentColor.value === 'blue') return 'bg-blue-500 text-black'
-  if (currentColor.value === 'white') return 'bg-slate-400 text-zinc-900'
+  if (currentColor.value === 'pink') return 'bg-pink-400 text-neutral-600'
+  if (currentColor.value === 'red') return 'bg-red-300 text-black'
+  if (currentColor.value === 'blue') return 'bg-blue-400 text-black'
+  if (currentColor.value === 'white') return 'bg-white text-zinc-900'
   if (currentColor.value === 'teal') return 'bg-teal-800 text-white'
   if (currentColor.value === 'gray') return 'bg-gray-200 text-neutral-700'
   if (currentColor.value === 'green') return 'bg-green-300 text-black'
