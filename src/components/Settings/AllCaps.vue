@@ -1,12 +1,12 @@
 <template>
-    <div class="p-2 px-1 border-t border-neutral-900 hover:bg-neutral-900">
-        <div class="flex justify-between w-full p-1 border border-transparent rounded-sm hover:border-neutral-300 text-zinc-300">
+    <div class="p-2 px-1 border-t border-neutral-900">
+        <div @click="allCaps = !allCaps"  class="flex justify-between w-full p-1 border border-transparent rounded-sm hover:border-neutral-300">
             <div class="flex gap-4">
-                <input :checked="allCaps" @click="allCaps = !allCaps" type="checkbox">
+                <input :checked="allCaps" type="checkbox">
                 <p>All Caps</p>
             </div>
         </div>
-        <p class="text-zinc-400">All texts and quotes will be converted to Uppercase</p>
+        <p>All texts and quotes will be converted to Uppercase</p>
     </div>
 </template>
 

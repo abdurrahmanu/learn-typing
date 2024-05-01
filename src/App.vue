@@ -4,7 +4,7 @@
       <div class="glow w-full relative top-[100px] z-[-3] animate-pulse"></div>
       <div class="screen-container m-auto rounded-t-md w-[188px] h-[90px] bg-neutral-700 pt-2 pb-1 z-[2] border border-black">
         <div class="h-[3px] w-[3px] rounded-full bg-slate-400 absolute top-[4px] left-[50%] translate-x-[-50%]"></div>
-        <div class=" bg-neutral-900 screen rounded-sm w-[90%] m-auto py-6 text-white font-mono text-center uppercase"><span :class="[!complete ? 'animate-pulse' : 'text-green-400']">{{complete || 'DORAYI TYPING' }}</span></div>
+        <div class=" bg-neutral-900 screen rounded-sm w-[90%] m-auto py-6 text-white font-mono text-center uppercase"><span :class="[!complete ? 'animate-pulse' : 'text-green-400']">{{complete || 'TYPING' }}</span></div>
       </div>
       <Keyboard :animationToggle="animateLoader" class="top-[-20px] relative" />
     </div>

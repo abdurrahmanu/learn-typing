@@ -14,7 +14,7 @@ import {mainStore} from '../store/mainStore'
 import { customizeStore } from '../store/customizeStore';
 
 const store = mainStore()
-const { playerInputLength, alphabets, alphabetsMode } = storeToRefs(store)
+const { playerInputLength, alphabets, alphabetsMode, theme } = storeToRefs(store)
 
 const customize = customizeStore()
 const {typeBlindly, noSpace} = storeToRefs(customize)
@@ -28,23 +28,27 @@ const props = defineProps({
 
 const equalStyle = computed(() => {
     if (!typeBlindly.value) {
-
-        return props.equality ? 'text-green-500' : 'text-red-500'
+        let correctText = theme.value === 'neutral' ? 'text-green-300' : 'text-green-700'
+        let wrongText = theme.value === 'neutral' ? 'text-red-500' : 'text-red-600'
+        return props.equality ? correctText : wrongText
     }
 })
 
 const styledAlphas = computed(() => {
     if (alphabets.value && alphabetsMode.value.styled) {
-        return 'border border-slate-500 bg-zinc-900 rounded-md p-1 mx-[2px]'
+        let style = theme.value === 'neutral' ? 'bg-zinc-900 border-slate-400' : 'bg-slate-100 border-neutral-800'
+        return 'border rounded-md p-1 mx-[2px] ' + style
     }
 })
 
 const currentIndexStyle = computed(() => {
-    return  props.currentIndex ? 'bg-zinc-700 text-white py-[2px] animate-pulse' : ''
+    let text = theme.value === 'neutral' ? 'border border-zinc-700 text-white' : 'bg-transparent border border-black text-neutral-900'
+    return  props.currentIndex ? 'py-[2px] animate-pulse ' + text : ''
 })
 
 const mainStyle = computed(() => {
-    return props.index > playerInputLength.value ? 'text-slate-500' : ''
+    let text = theme.value === 'neutral' ? 'text-slate-400' : 'text-neutral-900'
+    return props.index > playerInputLength.value ? text : ''
 })
 </script>
 

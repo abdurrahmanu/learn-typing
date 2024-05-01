@@ -1,17 +1,17 @@
 <template>
-        <div class="p-2 px-1 border-t border-neutral-900 hover:bg-neutral-900">
-            <div class="flex justify-between w-full p-1 border border-transparent rounded-sm hover:border-neutral-300 text-zinc-300">
+        <div class="p-2 px-1 border-t border-neutral-900">
+            <div @click="useCustomText = !useCustomText" class="flex justify-between w-full p-1 border border-transparent rounded-sm hover:border-neutral-300 ">
                 <div class="flex gap-4">
-                    <input :disabled="Object.keys(customTexts).length === 0" :checked="useCustomText" @click="useCustomText = !useCustomText" type="checkbox" name="" id="">
+                    <input :disabled="Object.keys(customTexts).length === 0" :checked="useCustomText"  type="checkbox" name="" id="">
                     <p>Custom text</p>
                 </div>
             </div>
-            <div class="p-1 text-slate-400" v-if="useCustomText">
+            <div class="p-1" v-if="useCustomText">
                 <div><input type="radio" v-model="howToUseCustomText" value="use only custom"> use only your custom texts</div>
                 <div><input type="radio" v-model="howToUseCustomText" value="use both system and custom"> use custom text together with system text</div>
                 <div><input type="radio" v-model="howToUseCustomText" value="select text using options" > use options to select text</div>
             </div>
-            <p class="pb-2 text-zinc-400">Would you like your fingers to perfect a particular test, quote or story! Use the text field to add and use your custom text.</p>
+            <p class="pb-2">Would you like your fingers to perfect a particular test, quote or story! Use the text field to add and use your custom text.</p>
 
             <div class="py-1 text-center">
                 <div v-if="saveCustomText" class="absolute top-0 bottom-0 left-0 right-0 w-full bg-black opacity-50 "></div>

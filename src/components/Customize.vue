@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-transparent rounded-md  w-[90%] m-auto max-w-fit ring-1 ring-green-500">
+    <div v-if="!resultData.totalTime && !alphabets" class="bg-transparent rounded-md  w-[90%] m-auto max-w-fit ring-1 ring-green-500">
         <div class="text-[12px] font-mono items-center p-[1px] flex max-w-[1000px] justify-center flex-wrap relative">
             <div class="p-1" v-for="(optionArr, key, listIndex) in option" :key="listIndex">          
                 <div 
@@ -19,6 +19,14 @@
             </div>
         </div>
     </div>
+    <div v-if="!resultData.totalTime && alphabets" class="flex flex-wrap justify-center gap-3 pt-10 text-sm">
+          <div :class="[alphabetsMode.uppercase ? 'bg-neutral-700' : '']" @click="changeMode('uppercase')" class="px-3 py-1 uppercase border rounded-md border-slate-600 w-fit">uppercase</div>
+          <div :class="[alphabetsMode.customCase ? 'bg-neutral-700' : '']" @click="changeMode('customCase')" class="px-3 py-1 border hover:font-medium rounded-md border-slate-600 w-fit">cUstoMCaSE</div>
+          <div :class="[alphabetsMode.spaced ? 'bg-neutral-700' : '']" @click="changeMode('spaced')" class="px-3 py-1 uppercase border hover:font-medium rounded-md border-slate-600 w-fit">spaced</div>
+          <div :class="[alphabetsMode.backwards ? 'bg-neutral-700' : '']" @click="changeMode('backwards')" class="px-3 py-1 uppercase border hover:font-medium rounded-md border-slate-600 w-fit">backwards</div>
+          <div :class="[alphabetsMode.jumbo ? 'bg-neutral-700' : '']" @click="changeMode('jumbo')" class="px-3 py-1 uppercase border hover:font-medium rounded-md border-slate-600 w-fit">jumbo</div>
+          <div :class="[alphabetsMode.styled ? 'bg-neutral-700' : '']" @click="changeMode('styled')" class="px-3 py-1 uppercase border hover:font-medium rounded-md border-slate-600 w-fit">styled</div>
+        </div>
 </template>
 
 <script setup>
@@ -27,6 +35,8 @@ import {customizeStore} from '../store/customizeStore.js'
 import {storeToRefs} from 'pinia'
 import { mainStore } from '../store/mainStore.js';
 
+const store = mainStore()
+const {alphabets, resultData} = storeToRefs(store)
 const customize = customizeStore()
 const { allOptions, configs, customizers, disableOption} = storeToRefs(customize)
 const {useConfig} = customize
