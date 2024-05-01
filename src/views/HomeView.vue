@@ -3,7 +3,7 @@
     <div class="m-auto max-w-[1300px] lg:flex pt-3"> 
       <div class="w-[100%] mx-auto flex-none">      
         <Customize v-if="!resultData.totalTime && !alphabets" />
-        <div v-else-if="!resultData.totalTime && alphabets" class="flex flex-wrap justify-center gap-3 pt-10 text-sm text-slate-300">
+        <div v-else-if="!resultData.totalTime && alphabets" class="flex flex-wrap justify-center gap-3 pt-10 text-sm">
           <div :class="[alphabetsMode.uppercase ? 'bg-neutral-700' : '']" @click="changeMode('uppercase')" class="px-3 py-1 uppercase border rounded-md hover:text-white border-slate-600 w-fit">uppercase</div>
           <div :class="[alphabetsMode.customCase ? 'bg-neutral-700' : '']" @click="changeMode('customCase')" class="px-3 py-1 border rounded-md hover:text-white border-slate-600 w-fit">cUstoMCaSE</div>
           <div :class="[alphabetsMode.spaced ? 'bg-neutral-700' : '']" @click="changeMode('spaced')" class="px-3 py-1 uppercase border rounded-md hover:text-white border-slate-600 w-fit">spaced</div>
@@ -12,13 +12,13 @@
           <div :class="[alphabetsMode.styled ? 'bg-neutral-700' : '']" @click="changeMode('styled')" class="px-3 py-1 uppercase border rounded-md hover:text-white border-slate-600 w-fit">styled</div>
         </div>
         <RouterView />
-        <div class="pt-10">
+        <div class="pt-5">
           <Restart />
         </div>
       </div>
 
       <div :class="{'z-[999] lg:z-[1]' : !(showMoreSettings && !getMobileOS())}" class="absolute lg:relative top-0 bottom-0 right-0 left-0 z-[99] lg:w-[30%]" v-if="showMoreSettings">
-        <div @click="showMoreSettings = !showMoreSettings" class="opacity-30 absolute bg-black w-full lg:hidden top-0 bottom-0 right-0 left-0 z-[999] lg:z-[1]"></div>
+        <div @click="showMoreSettings = !showMoreSettings" class="opacity-40 absolute bg-black w-full lg:hidden top-0 bottom-0 right-0 left-0 z-[999] lg:z-[1] blur-lg"></div>
         <div class="bg-zinc-800 overflow-y-auto" :class="{'fixed top-0 right-0 bottom-0 h-[100dvh] max-w-[500px] w-fit z-[9999]' : showMoreSettings}">
           <Settings />
         </div>

@@ -1,0 +1,48 @@
+<template>
+    <div ref="bgContainer" :class="[openBackgrounds ? 'space-y-1' : '']" class="grid items-center justify-center rounded-full rotate-180 p-[2px]  border-slate-500 border fixed bottom-3 right-3 bg-neutral-700 transition-all duration-200 hover:border-green-500">
+        <div v-for="(color, index) in colors" :key="index" @click="theme = color, openBackgrounds = !openBackgrounds" v-show="openBackgrounds || color === theme"  :class="[bg[index], !openBackgrounds && color !== theme ? 'hidden' : 'block w-5 h-5 rounded-full border border-black']"></div>
+    </div>
+</template>
+
+<script setup>
+import {ref, onMounted} from 'vue'
+import {mainStore} from '../store/mainStore'
+import { storeToRefs } from 'pinia';
+
+const main = mainStore()
+const { theme } = storeToRefs(main)
+const openBackgrounds = ref(false)
+const bgContainer = ref(null)
+
+const colors = [
+    'neutral',
+    'white',
+    // 'stone',
+    // 'blue',
+    // 'lime',
+    // 'teal',
+    // 'sky',
+    // 'fuschia',
+    // 'emerald',
+]
+
+const bg = [
+    'bg-neutral-900',
+    'bg-white',
+    // 'bg-stone-600',
+    // 'bg-blue-400',
+    // 'bg-lime-300',
+    // 'bg-teal-700',
+    // 'bg-sky-400',
+    // 'bg-fuschia-600',
+    // 'bg-emerald-400',
+]
+
+onMounted(() => {
+    window.addEventListener('click', (event) => {
+        if (!bgContainer.value.contains(event.target) && event.target !== bgContainer.value) {
+        openBackgrounds.value = false
+        }
+    })
+})
+</script>

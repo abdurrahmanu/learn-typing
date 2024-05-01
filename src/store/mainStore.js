@@ -3,6 +3,7 @@ import {ref, computed} from 'vue'
 import {UseGetQuotes} from '../composables/UseGetQuotes'
 
 export const mainStore = defineStore('mainStore', () => {
+    const theme = ref('neutral')
     const enableBackSpace = ref(true)
     const completionLevel = ref(0)
     const correctCount = ref(0)
@@ -17,7 +18,6 @@ export const mainStore = defineStore('mainStore', () => {
     const playerInput = ref('')
     const backspaceIsPressed = ref(false)
     const timedTyping = ref(false)
-    const currentColor = ref('neutral')
     const customTexts = ref({})
     const useCustomText = ref(false)
     const enableRepeat = ref(false)
@@ -37,6 +37,30 @@ export const mainStore = defineStore('mainStore', () => {
         styled: false,
     })
 
+    const appTheme = computed(() => {
+        if (theme.value === 'stone') return 'bg-stone-600 text-black'
+        if (theme.value === 'blue') return 'bg-blue-400 text-neutral-600'
+        if (theme.value === 'lime') return 'bg-lime-300 text-black'
+        if (theme.value === 'teal') return 'bg-teal-700 text-slate-900'
+        if (theme.value === 'sky') return 'bg-sky-400 text-zinc-900'
+        if (theme.value === 'fuschia') return 'bg-fuschia-600 text-black'
+        if (theme.value === 'emerald') return 'bg-emerald-400 text-black'
+        if (theme.value === 'neutral') return 'bg-neutral-900 text-slate-100'
+        if (theme.value === 'white') return 'bg-slate-100 text-black'
+    })
+
+    const svgFill = computed(() => {
+        if (theme.value === 'stone') return 'white'
+        if (theme.value === 'blue') return 'black'
+        if (theme.value === 'lime') return 'black'
+        if (theme.value === 'teal') return 'white '
+        if (theme.value === 'sky') return 'black'
+        if (theme.value === 'fuschia') return 'black'
+        if (theme.value === 'emerald') return 'black'
+        if (theme.value === 'neutral') return 'white'
+        if (theme.value === 'white') return 'black '
+    })
+
     const resultData = computed(() => {
         return {
             correctCount: correctCount.value,
@@ -50,6 +74,7 @@ export const mainStore = defineStore('mainStore', () => {
     
     const generateText = (config, restart, options) => {
         if (alphabets.value) {
+            enableRepeat.value = false
             const englishAlphabets = ref('abcdefghijklmnopqrstuvwxyz')
             const spaced = 'a b c d e f g h i j k l m n o p q r s t u v w x y z'
             containerText.value = englishAlphabets.value
@@ -239,6 +264,8 @@ export const mainStore = defineStore('mainStore', () => {
         timedTyping,
         alphabets,
         alphabetsMode,
-        currentColor,
+        theme,
+        appTheme,
+        svgFill,
     }
 })

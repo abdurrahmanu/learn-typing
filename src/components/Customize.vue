@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-neutral-600 text-slate-300 rounded-md  w-[90%] m-auto max-w-fit">
+    <div class="bg-transparent rounded-md  w-[90%] m-auto max-w-fit ring-1 ring-green-500">
         <div class="text-[12px] font-mono items-center p-[1px] flex max-w-[1000px] justify-center flex-wrap relative">
             <div class="p-1" v-for="(optionArr, key, listIndex) in option" :key="listIndex">          
                 <div 
@@ -7,7 +7,7 @@
                 @mouseenter="mouseEnter(listIndex)"
                 @mouseleave="mouseLeave(listIndex)" >
                     <div 
-                    class="px-[5px] hover:bg-neutral-900 rounded-md" 
+                    class="px-[5px] hover:scale-110 rounded-md" 
                     :class="[disableOption[key] ? 'opacity-50 cursor-not-allowed' : '', customizers[key] === option && !disableOption[key]  ? 'text-green-400 bg-neutral-900' : '']"
                     @click="!disableOption[key] ? configs = [option, key] : ''" 
                     v-for="(option, index) in optionArr" 

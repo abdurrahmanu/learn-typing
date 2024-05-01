@@ -10,7 +10,7 @@
     </div>
   </div>
 
-    <div v-show="!animateLoader" :class="[appTheme]" class="relative min-h-[100vh] mx-auto selection:bg-transparent text-white">
+    <div v-show="!animateLoader" :class="[appTheme]" class="relative min-h-[100vh] mx-auto selection:bg-transparent">
       <div  v-show="secondAnimation"  ref="boxesContainer" class="absolute w-full h-[100vdh] left-0 top-0 flex flex-wrap bg-transparent">
         <div v-for="(box, index) in numberOfBoxes" :key="index" class="w-fit h-fit z-[20] box-container">
           <div :style="{'width' : boxWidth, 'height': boxHeight}" class=" bg-neutral-600 box"></div>
@@ -22,31 +22,19 @@
       </div>
   </div>
 
-  <div ref="bgContainer" v-if="!animateLoader && !secondAnimation" @click="openBackgrounds = !openBackgrounds" class="grid items-center justify-center rounded-full w-7 rotate-180 p-1 space-y-1  border-slate-300 border fixed bottom-3 right-3 bg-neutral-700 transition-all duration-200">
-    <div @click="currentColor='red'" v-if="currentColor === 'red' || openBackgrounds" class="w-5 h-5 rounded-full border border-black bg-red-400"></div>
-    <div @click="currentColor='blue'" v-if="currentColor === 'blue' || openBackgrounds" class="w-5 h-5 rounded-full border border-black bg-blue-400"></div>
-    <div @click="currentColor='green'" v-if="currentColor === 'green' || openBackgrounds" class="w-5 h-5 rounded-full border border-black bg-green-400"></div>
-    <div @click="currentColor='teal'" v-if="currentColor === 'teal' || openBackgrounds" class="w-5 h-5 rounded-full border border-black bg-teal-400"></div>
-    <div @click="currentColor='pink'" v-if="currentColor === 'pink' || openBackgrounds" class="w-5 h-5 rounded-full border border-black bg-pink-400"></div>
-    <div @click="currentColor='gray'" v-if="currentColor === 'gray' || openBackgrounds" class="w-5 h-5 rounded-full border border-black bg-zinc-400"></div>
-    <div @click="currentColor='white'" v-if="currentColor === 'white' || openBackgrounds" class="w-5 h-5 rounded-full border border-black bg-white"></div>
-    <div @click="currentColor='neutral'" v-if="currentColor === 'neutral' || openBackgrounds" class="w-5 h-5 rounded-full border border-black bg-neutral-900"></div>
-  </div>
-
+  <Theme  v-show="!animateLoader && !secondAnimation"/>
 <!-- if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) -->
 </template>
 
 <script setup>
-
+import Theme from './components/Theme.vue';
 import Keyboard from './components/Keyboard.vue'
-import {ref, watch, computed, onMounted} from 'vue'
+import {ref, watch, onMounted, watchEffect} from 'vue'
 import {mainStore} from './store/mainStore'
 import { storeToRefs } from 'pinia';
 
 const main = mainStore()
-const {pauseTyping, currentColor} = storeToRefs(main)
-const openBackgrounds = ref(false)
-const bgContainer = ref(null)
+const {pauseTyping, appTheme} = storeToRefs(main)
 
 const animateLoader  = ref(true)
 const animationCounter = ref(0)
@@ -60,31 +48,12 @@ const numberOfBoxes = ref(0)
 const boxWidth = ref(0)
 const boxHeight = ref(0)
 
-const appTheme = computed(() => {
-  if (currentColor.value === 'neutral') return 'bg-neutral-900'
-  if (currentColor.value === 'pink') return 'bg-pink-400 text-neutral-600'
-  if (currentColor.value === 'red') return 'bg-red-300 text-black'
-  if (currentColor.value === 'blue') return 'bg-blue-400 text-black'
-  if (currentColor.value === 'white') return 'bg-white text-zinc-900'
-  if (currentColor.value === 'teal') return 'bg-teal-800 text-white'
-  if (currentColor.value === 'gray') return 'bg-gray-200 text-neutral-700'
-  if (currentColor.value === 'green') return 'bg-green-300 text-black'
-})
-
-onMounted(() => {
-  window.addEventListener('click', (event) => {
-    if (!bgContainer.value.contains(event.target) && event.target !== bgContainer.value) {
-      openBackgrounds.value = false
-    }
-  })
-})
-
 onMounted(() => {
   intervalID.value = setInterval(() => {
     animationCounter.value++
     }, 1000);
 })
-  
+
 watch(animationCounter, (newVal) => {
     if (newVal === 3) {
       clearInterval(intervalID.value)

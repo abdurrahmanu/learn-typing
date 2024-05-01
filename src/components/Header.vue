@@ -1,15 +1,17 @@
 <template>
-    <nav class="sticky top-0 flex justify-between w-[100%] h-[50px] text-slate-300 px-5 pr-2 bg-zinc-900 shadow-sm shadow-black max-w-[1300px] m-auto z-[9] items-center ">
-        <div class="font-mono text-xl font-bold md:text-2xl">DORAYI TYPING</div>
-        <div v-if="!alphabets" class="flex gap-2 rounded-full w-fit">
-            <img v-if="!showMoreSettings" @click="showMoreSettings = !showMoreSettings" class="h-7" src="/settings.svg" alt="">
+    <nav class="sticky top-0 w-[100%] h-[50px] shadow-sm shadow-neutral-600 max-w-[1300px] m-auto z-[9] mb-4">
+        <div class="flex px-5 pr-2 items-center  justify-between py-2 absolute top-0 left-0 w-full">
+            <div class="font-mono text-xl font-bold md:text-2xl">DORAYI TYPING</div>
+            <div v-if="!alphabets" class="flex gap-2 rounded-full w-fit">
+                <settings v-if="!showMoreSettings" @click="showMoreSettings = !showMoreSettings" class="h-7" />
+            </div>
         </div>
     </nav>
 </template>
 
 <script setup>
+import settings from './svg/settings.vue';
 import {onBeforeMount} from 'vue'
-import BackgroundButton from './BackgroundButton.vue';
 import {storeToRefs} from 'pinia'
 import {customizeStore} from '../store/customizeStore'
 import { useDarkMode } from '../store/useDarkMode'
@@ -23,7 +25,6 @@ const { showMoreSettings} = storeToRefs(main)
 
 const darkMode = useDarkMode()
 const {checkLocalStorageForSavedBackground} = darkMode
-const {toggleDarkMode} = storeToRefs(darkMode)
 
 onBeforeMount(() => {
     checkLocalStorageForSavedBackground()

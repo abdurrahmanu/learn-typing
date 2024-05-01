@@ -28,7 +28,8 @@ const props = defineProps({
 
 const equalStyle = computed(() => {
     if (!typeBlindly.value) {
-        return props.equality ? 'text-green-300' : 'text-red-500'
+
+        return props.equality ? 'text-green-500' : 'text-red-500'
     }
 })
 
