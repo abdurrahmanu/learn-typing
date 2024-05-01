@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import ResultView from '../views/ResultView.vue'
 import TypingView from '../views/TypingView.vue'
 import UserProgressView from '../views/UserProgressView.vue'
+import SignView from '../views/SignView.vue'
 
 const routes = [
     {
@@ -29,6 +30,12 @@ const routes = [
       path: '/progress',
       name: 'progress',
       component: UserProgressView,
+      props: true
+    },
+    {
+      path: '/sign',
+      name: 'sign',
+      component: SignView,
       props: true
     }
   ]

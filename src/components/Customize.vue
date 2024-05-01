@@ -36,7 +36,7 @@ import {storeToRefs} from 'pinia'
 import { mainStore } from '../store/mainStore.js';
 
 const store = mainStore()
-const {alphabets, resultData} = storeToRefs(store)
+const {alphabets, resultData, alphabetsMode} = storeToRefs(store)
 const customize = customizeStore()
 const { allOptions, configs, customizers, disableOption} = storeToRefs(customize)
 const {useConfig} = customize
@@ -64,7 +64,38 @@ const hoverIndex = ref(null)
 const mouseEnter = (index) => hoverIndex.value = index
 const mouseLeave = (index) => hoverIndex.value = null
 
+const changeMode = (mode) => {
+    if (mode === 'uppercase') {
+      if (alphabetsMode.value.customCase && !alphabetsMode.value.uppercase) alphabetsMode.value.customCase = false
+      alphabetsMode.value.uppercase = !alphabetsMode.value.uppercase
+    }
+  
+    if (mode === 'customCase') {
+      if (alphabetsMode.value.uppercase && !alphabetsMode.value.customCase) alphabetsMode.value.uppercase = false
+      alphabetsMode.value.customCase = !alphabetsMode.value.customCase
+    }
+  
+    if (mode === 'jumbo') {
+      if (alphabetsMode.value.backwards && !alphabetsMode.value.jumbo) alphabetsMode.value.backwards = false
+      alphabetsMode.value.jumbo = !alphabetsMode.value.jumbo
+    }
+  
+    if (mode === 'backwards') {
+      if (alphabetsMode.value.jumbo && !alphabetsMode.value.backwards) alphabetsMode.value.jumbo = false
+      alphabetsMode.value.backwards = !alphabetsMode.value.backwards
+    }
+  
+    if (mode === 'styled') {
+      alphabetsMode.value.styled = !alphabetsMode.value.styled
+    }
+  
+    if (mode === 'spaced') {
+      alphabetsMode.value.spaced = !alphabetsMode.value.spaced
+    }
+  }
+
 watch(configs, (newVal) => {
     useConfig()
 })
 </script>
+

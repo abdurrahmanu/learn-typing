@@ -31,36 +31,6 @@ const {resultData,  pauseTyping, customTexts, alphabets, alphabetsMode, appTheme
 const customize = customizeStore()
 const {customizers, showMoreSettings} = storeToRefs(customize)
 
-const changeMode = (mode) => {
-  if (mode === 'uppercase') {
-    if (alphabetsMode.value.customCase && !alphabetsMode.value.uppercase) alphabetsMode.value.customCase = false
-    alphabetsMode.value.uppercase = !alphabetsMode.value.uppercase
-  }
-
-  if (mode === 'customCase') {
-    if (alphabetsMode.value.uppercase && !alphabetsMode.value.customCase) alphabetsMode.value.uppercase = false
-    alphabetsMode.value.customCase = !alphabetsMode.value.customCase
-  }
-
-  if (mode === 'jumbo') {
-    if (alphabetsMode.value.backwards && !alphabetsMode.value.jumbo) alphabetsMode.value.backwards = false
-    alphabetsMode.value.jumbo = !alphabetsMode.value.jumbo
-  }
-
-  if (mode === 'backwards') {
-    if (alphabetsMode.value.jumbo && !alphabetsMode.value.backwards) alphabetsMode.value.jumbo = false
-    alphabetsMode.value.backwards = !alphabetsMode.value.backwards
-  }
-
-  if (mode === 'styled') {
-    alphabetsMode.value.styled = !alphabetsMode.value.styled
-  }
-
-  if (mode === 'spaced') {
-    alphabetsMode.value.spaced = !alphabetsMode.value.spaced
-  }
-}
-
 const screenWidth = ref(window.innerWidth)
 
 window.addEventListener('resize', () => {

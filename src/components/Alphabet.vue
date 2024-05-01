@@ -1,7 +1,7 @@
 <template>
     <div :class="[noSpace ? '' : 'whitespace-pre-wrap']" class="relative inline font-mono">
         <Transition v-if="currentIndex" appear>            
-            <span :class="[equalStyle, currentIndexStyle, mainStyle, styledAlphas]" class="transition-all duration-[10ms]">{{ alphabet }}</span>
+            <span :class="[mainStyle, equalStyle, currentIndexStyle, styledAlphas]" class="transition-all duration-[10ms]">{{ alphabet }}</span>
         </Transition>
         <span v-else :class="[equalStyle, currentIndexStyle, mainStyle, styledAlphas]" class="transition-all duration-[10ms]">{{ alphabet }}</span>
     </div>
@@ -28,21 +28,21 @@ const props = defineProps({
 
 const equalStyle = computed(() => {
     if (!typeBlindly.value) {
-        let correctText = theme.value === 'neutral' ? 'text-green-300' : 'text-green-700'
+        let correctText = theme.value === 'neutral' ? 'text-green-300' : 'text-green-500'
         let wrongText = theme.value === 'neutral' ? 'text-red-500' : 'text-red-600'
-        return props.equality ? correctText : wrongText
+        return props.equality && props.index < playerInputLength.value ? correctText : wrongText
     }
 })
 
 const styledAlphas = computed(() => {
     if (alphabets.value && alphabetsMode.value.styled) {
-        let style = theme.value === 'neutral' ? 'bg-zinc-900 border-slate-400' : 'bg-slate-100 border-neutral-800'
+        let style = theme.value === 'neutral' ? ' bg-zinc-900 border-slate-400' : ' bg-slate-100 border-neutral-800 '
         return 'border rounded-md p-1 mx-[2px] ' + style
     }
 })
 
 const currentIndexStyle = computed(() => {
-    let text = theme.value === 'neutral' ? 'border border-zinc-700 text-white' : 'bg-transparent border border-black text-neutral-900'
+    let text = theme.value === 'neutral' ? ' border border-zinc-700 text-white' : ' bg-transparent border border-black text-neutral-900'
     return  props.currentIndex ? 'py-[2px] animate-pulse ' + text : ''
 })
 

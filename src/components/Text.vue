@@ -14,7 +14,7 @@
             <CustomText v-if="!alphabets" />
             <Blind />
         </div>
-        <div v-if="containerText" class="leading-6 md:leading-[30px] transition-all duration-100 relative m-auto max-w-[600px] w-full  text-[15px] md:text-[18px]">
+        <div v-if="containerText" class="leading-6 md:leading-[30px] transition-all duration-100 relative m-auto max-w-[600px] w-full  text-[17px] md:text-[19px]">
             <div @click="getMobileOS() ? inputEl.focus() : ''" :class="[noSpace ? 'break-words' : '', alphabets ? 'text-center py-5 break-words leading-10': 'text-left border-none pt-4 md:border-2 md:border-neutral-800 pb-7 min-h-[100px]', getMobileOS() ? 'border-none' : '', !alphabets && textPosition=== 'center' ? 'text-center' : !alphabets && textPosition=== 'right' ? 'text-right' : 'text-left']" class="relative p-1 overflow-y-auto h-fit">
                 <Alphabet
                 v-for="(alphabet, index) in containerText"
