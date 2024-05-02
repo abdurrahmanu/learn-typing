@@ -76,20 +76,19 @@ const saveNewCustomText = () => {
         return
     }
 
-    customTexts.value[customTextTitle.value] =textAreaValueStore.value
+    customTexts.value[customTextTitle.value] = textAreaValueStore.value
     textSaved.value = true
     customTextTitle.value = ''
     textAreaValueStore.value = ''
     
-    setTimeout(() => {
-        saveCustomText.value = false
-        textSaved.value = false
-    }, 500);
+    saveCustomText.value = false
+    textSaved.value = false
 }
 
 const cancel = () => {
     saveCustomText.value = false
     textSaved.value = false
+    customTextTitle.value = ''
 }
 
 </script>
