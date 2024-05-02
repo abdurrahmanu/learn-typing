@@ -81,8 +81,10 @@ const saveNewCustomText = () => {
     customTextTitle.value = ''
     textAreaValueStore.value = ''
     
-    saveCustomText.value = false
-    textSaved.value = false
+    setTimeout(() => {
+        saveCustomText.value = false
+        textSaved.value = false
+    }, 500);
 }
 
 const cancel = () => {
