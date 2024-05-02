@@ -2,19 +2,19 @@
     <div class="flex gap-7 opacity-50 justify-center text-xs">
         <div >
             <p :class="[textPosition === 'left' ? 'rounded-md border-black' : 'border-transparent']" class="text-center border p-[2px]">LEFT</p>
-            <div @click="$emit('align', 'left')" class="w-fit m-auto">
+            <div @click="$emit('align', 'left')" class="w-fit m-auto scale-75">
                 <alignLeft />
             </div>
         </div>
         <div>
             <p :class="[textPosition === 'center' ? 'rounded-md border-black' : 'border-transparent']" class="text-center border p-[2px]">CENTER</p>
-            <div  @click="$emit('align', 'center')" class="w-fit m-auto">
+            <div  @click="$emit('align', 'center')" class="w-fit m-auto scale-75">
                 <alignMiddle/>
             </div>
         </div>
         <div>
             <p :class="[textPosition === 'right' ? 'rounded-md border-black' : 'border-transparent']" class="text-center border p-[2px]">RIGHT</p>
-            <div @click="$emit('align', 'right')" class="w-fit m-auto">
+            <div @click="$emit('align', 'right')" class="w-fit m-auto scale-75">
                 <alignRight />
             </div>
         </div>

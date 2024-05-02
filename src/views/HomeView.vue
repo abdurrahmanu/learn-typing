@@ -25,8 +25,8 @@ import { customizeStore } from '../store/customizeStore';
 
 const router = useRouter()
 const store = mainStore()
-const {switchNext, getMobileOS, resetToDefault, generateText} = store
-const {resultData,  pauseTyping, customTexts, alphabets, alphabetsMode, appTheme} = storeToRefs(store)
+const {switchNext, resetToDefault, generateText} = store
+const {resultData,  pauseTyping, customTexts, alphabetsMode} = storeToRefs(store)
 
 const customize = customizeStore()
 const {customizers, showMoreSettings} = storeToRefs(customize)

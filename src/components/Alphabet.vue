@@ -3,7 +3,7 @@
         <Transition v-if="currentIndex" appear>            
             <span :class="[mainStyle, equalStyle, currentIndexStyle, styledAlphas]" class="transition-all duration-[10ms]">{{ alphabet }}</span>
         </Transition>
-        <span v-else :class="[equalStyle, currentIndexStyle, mainStyle, styledAlphas]" class="transition-all duration-[10ms]">{{ alphabet }}</span>
+        <span v-else :class="[equalStyle, currentIndexStyle, mainStyle, styledAlphas]" class="transition-all duration-[10ms]">{{ alphabet }} </span>
     </div>
 </template> 
 
@@ -29,8 +29,8 @@ const props = defineProps({
 const equalStyle = computed(() => {
     if (!typeBlindly.value) {
         let correctText = theme.value === 'neutral' ? 'text-green-300' : 'text-green-500'
-        let wrongText = theme.value === 'neutral' ? 'text-red-500' : 'text-red-600'
-        return props.equality && props.index < playerInputLength.value ? correctText : wrongText
+        let wrongText = theme.value === 'neutral' ? 'text-red-500' : theme.value !== 'neutral' && props.index < playerInputLength.value  ? 'text-red-600' : ''
+        return props.equality ? correctText : wrongText
     }
 })
 

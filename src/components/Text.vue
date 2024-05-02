@@ -68,6 +68,9 @@ const paste = () => {
 
 watch(timedTyping, (newVal) => {
     customizers.value[11] = newVal
+    if (!newVal) {
+        typingCountdown.value = 0
+    }
 })
 
 watch(beginCountdown, (newVal, oldVal) => {

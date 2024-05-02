@@ -1,5 +1,5 @@
 <template>
-  <div ref="loader" v-show="animateLoader" class="h-[100dvh] relative bg-neutral-700">
+  <div ref="loader" v-show="animateLoader" class="h-[100dvh] relative bg-neutral-700 selection:bg-none">
     <div ref="laptop" class="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[195px] m-auto transition-opacity duration-1000">
       <div class="glow w-full relative top-[100px] z-[-3] animate-pulse"></div>
       <div class="screen-container m-auto rounded-t-md w-[188px] h-[90px] bg-neutral-700 pt-2 pb-1 z-[2] border border-black">

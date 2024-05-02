@@ -20,12 +20,12 @@
         </div>
     </div>
     <div v-if="!resultData.totalTime && alphabets" class="flex flex-wrap justify-center gap-3 pt-10 text-sm">
-          <div :class="[alphabetsMode.uppercase ? 'bg-neutral-700' : '']" @click="changeMode('uppercase')" class="px-3 py-1 uppercase border rounded-md border-slate-600 w-fit">uppercase</div>
-          <div :class="[alphabetsMode.customCase ? 'bg-neutral-700' : '']" @click="changeMode('customCase')" class="px-3 py-1 border hover:font-medium rounded-md border-slate-600 w-fit">cUstoMCaSE</div>
-          <div :class="[alphabetsMode.spaced ? 'bg-neutral-700' : '']" @click="changeMode('spaced')" class="px-3 py-1 uppercase border hover:font-medium rounded-md border-slate-600 w-fit">spaced</div>
-          <div :class="[alphabetsMode.backwards ? 'bg-neutral-700' : '']" @click="changeMode('backwards')" class="px-3 py-1 uppercase border hover:font-medium rounded-md border-slate-600 w-fit">backwards</div>
-          <div :class="[alphabetsMode.jumbo ? 'bg-neutral-700' : '']" @click="changeMode('jumbo')" class="px-3 py-1 uppercase border hover:font-medium rounded-md border-slate-600 w-fit">jumbo</div>
-          <div :class="[alphabetsMode.styled ? 'bg-neutral-700' : '']" @click="changeMode('styled')" class="px-3 py-1 uppercase border hover:font-medium rounded-md border-slate-600 w-fit">styled</div>
+          <div :class="[alphabetsMode.uppercase ? 'bg-neutral-500' : '']" @click="changeMode('uppercase')" class="px-3 py-1 uppercase border rounded-md border-slate-600 w-fit">uppercase</div>
+          <div :class="[alphabetsMode.customCase ? 'bg-neutral-500' : '']" @click="changeMode('customCase')" class="px-3 py-1 border hover:font-medium rounded-md border-slate-600 w-fit">cUstoMCaSE</div>
+          <div :class="[alphabetsMode.spaced ? 'bg-neutral-500' : '']" @click="changeMode('spaced')" class="px-3 py-1 uppercase border hover:font-medium rounded-md border-slate-600 w-fit">spaced</div>
+          <div :class="[alphabetsMode.backwards ? 'bg-neutral-500' : '']" @click="changeMode('backwards')" class="px-3 py-1 uppercase border hover:font-medium rounded-md border-slate-600 w-fit">backwards</div>
+          <div :class="[alphabetsMode.jumbo ? 'bg-neutral-500' : '']" @click="changeMode('jumbo')" class="px-3 py-1 uppercase border hover:font-medium rounded-md border-slate-600 w-fit">jumbo</div>
+          <div :class="[alphabetsMode.styled ? 'bg-neutral-500' : '']" @click="changeMode('styled')" class="px-3 py-1 uppercase border hover:font-medium rounded-md border-slate-600 w-fit">styled</div>
         </div>
 </template>
 

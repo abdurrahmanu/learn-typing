@@ -8,7 +8,6 @@
             </div>
             <p>With countdown enabled, tests automatically end at the end of countdown, untyped alphabets are considered as errors</p>
         </div>
-
 </template>
 
 <script setup>

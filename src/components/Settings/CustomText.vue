@@ -1,5 +1,5 @@
 <template>
-        <div class="p-2 px-1 border-t border-neutral-900">
+        <div class="px-1 border-t border-neutral-900">
             <div @click="useCustomText = !useCustomText" class="flex justify-between w-full p-1 border border-transparent rounded-sm hover:border-neutral-300 ">
                 <div class="flex gap-4">
                     <input :disabled="Object.keys(customTexts).length === 0" :checked="useCustomText"  type="checkbox" name="" id="">
@@ -13,8 +13,8 @@
             </div>
             <p class="pb-2">Would you like your fingers to perfect a particular test, quote or story! Use the text field to add and use your custom text.</p>
 
-            <div class="py-1 text-center">
-                <div v-if="saveCustomText" class="absolute top-0 bottom-0 left-0 right-0 w-full bg-black opacity-50 "></div>
+            <div class="py-1 text-center relative">
+                <div v-if="saveCustomText" class="absolute top-0 bottom-0 left-0 right-0 w-full bg-black opacity-50"></div>
                 <textarea 
                     v-model="textAreaValue"
                     :placeholder="textAreaPlaceholder" 
@@ -39,7 +39,7 @@
 </template>
 
 <script setup>
-import {ref, watch} from 'vue'
+import {ref} from 'vue'
 import {storeToRefs} from 'pinia';
 import {mainStore} from '../../store/mainStore';
 

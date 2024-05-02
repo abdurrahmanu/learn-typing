@@ -22,7 +22,7 @@ export const mainStore = defineStore('mainStore', () => {
     const useCustomText = ref(false)
     const enableRepeat = ref(false)
     const storedTextForRepeat = ref('')
-    const typingCountdown = ref(30)
+    const typingCountdown = ref(0)
     const beginCountdown = ref(false)
     const countdown = ref(0)
     const howToUseCustomText = ref('select text using options')
@@ -190,7 +190,7 @@ export const mainStore = defineStore('mainStore', () => {
         if (!hasStartedSession.value) hasStartedSession.value = true
         playerInputLength.value++
         if (playerInputLength.value === 1)  {
-            if (timedTyping.value) beginCountdown.value = true
+            if (timedTyping.value && typingCountdown.value) beginCountdown.value = true
             startTime.value = performance.now();
         }
         playerLastInput.value = eventSelector
@@ -209,7 +209,7 @@ export const mainStore = defineStore('mainStore', () => {
         backspaceIsPressed.value = false
         if (!hasStartedSession.value) hasStartedSession.value = true
         if (playerInputLength.value === 1)  {
-            if (timedTyping.value) beginCountdown.value = true
+            if (timedTyping.value && typingCountdown.value) beginCountdown.value = true
             startTime.value = performance.now();
         }
         if (playerInputLength.value === containerText.value.length) sessionComplete()

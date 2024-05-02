@@ -26,5 +26,4 @@ import {mainStore} from '../store/mainStore'
 
 const store = mainStore()
 const { typingCountdown,  timedTyping, countdown, beginCountdown, alphabets} = storeToRefs(store)
-const {getMobileOS} = store
 </script>
