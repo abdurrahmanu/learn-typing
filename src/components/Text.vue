@@ -40,7 +40,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch, computed } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import repeat from './svg/repeat.vue';
 import TextAlign from './TextAlign.vue'
 import CustomText from './CustomText.vue';
@@ -51,10 +51,12 @@ import RangeInput from './RangeInput.vue'
 import {storeToRefs} from 'pinia'
 import { customizeStore } from '../store/customizeStore';
 import {mainStore} from '../store/mainStore'
+import {useRouter} from 'vue-router'
 
+const router = useRouter()
 const inputEl = ref(null)
 const store = mainStore()
-const { containerText, timerID, completionLevel, alphabets, typingCountdown, timedTyping, countdown, customTexts, beginCountdown, enableRepeat, storedTextForRepeat, playerInputLength, correctCount, wrongCount, playerInput, playerLastInput} = storeToRefs(store)
+const { containerText, timerID, completionLevel, alphabets, resultData, typingCountdown, timedTyping, countdown, customTexts, beginCountdown, enableRepeat, storedTextForRepeat, playerInputLength, correctCount, wrongCount, playerInput, playerLastInput} = storeToRefs(store)
 const {generateText, getMobileOS, playerInputTyping, sessionComplete, resetToDefault, playerTyping} = store
 
 const customize = customizeStore()

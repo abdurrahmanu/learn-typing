@@ -1,9 +1,9 @@
 <template>
-    <div :class="[noSpace ? '' : 'whitespace-pre-wrap']" class="relative inline font-mono">
+    <div :class="[noSpace ? '' : 'whitespace-pre-wrap']" class="inline font-mono relative">
         <Transition v-if="currentIndex" appear>            
-            <span :class="[mainStyle, equalStyle, currentIndexStyle, styledAlphas]" class="transition-all duration-[10ms]">{{ alphabet }}</span>
+            <span :class="[mainStyle, equalStyle, currentIndexStyle, styledAlphas]" class="transition-all">{{ alphabet }}</span>
         </Transition>
-        <span v-else :class="[equalStyle, currentIndexStyle, mainStyle, styledAlphas]" class="transition-all duration-[10ms]">{{ alphabet }} </span>
+        <span v-else :class="[equalStyle, currentIndexStyle, mainStyle, styledAlphas]">{{ alphabet }} </span>
     </div>
 </template> 
 
@@ -42,8 +42,8 @@ const styledAlphas = computed(() => {
 })
 
 const currentIndexStyle = computed(() => {
-    let text = theme.value === 'neutral' ? ' border border-zinc-700 text-white' : ' bg-transparent border border-black text-neutral-900'
-    return  props.currentIndex ? 'py-[2px] animate-pulse ' + text : ''
+    let text = theme.value === 'neutral' ? ' border border-zinc-700 text-white' : ' bg-transparent border border-black text-neutral-900' 
+    return  props.currentIndex ? 'py-[2px]' + text : ''
 })
 
 const mainStyle = computed(() => {
@@ -53,11 +53,7 @@ const mainStyle = computed(() => {
 </script>
 
 <style scoped>
-.v-enter-from {
-    opacity: 0;
-}
-
 .v-enter-active, .v-leave-active {
-    transition: all .5s ease-in;
+    transition: all 1s ease-in-out;
 }
 </style>

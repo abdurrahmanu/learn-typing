@@ -60,7 +60,6 @@ export const customizeStore = defineStore('customizeStore', () => {
         let currentTextLength = customizers.value['text-length']
         let clicked = configs.value[0]
         if (clicked === currentWordType || clicked === currentTestType || clicked === currentTextLength) return
-        
 
         changeConfiguration(configs.value[0], configs.value[1])
 
@@ -71,6 +70,8 @@ export const customizeStore = defineStore('customizeStore', () => {
             disableOption.value['words-type'] = false
             disableOption.value['include-numbers'] = false
         }
+
+        localStorage.setItem('dorayi-typing-preferred-config', JSON.stringify([customizers.value, disableOption.value]))
     }
 
     return {

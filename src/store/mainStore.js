@@ -28,6 +28,7 @@ export const mainStore = defineStore('mainStore', () => {
     const howToUseCustomText = ref('select text using options')
     const timerID = ref()
     const alphabets = ref(false)
+    const currentAlphabetInputTime = ref(null)
     const alphabetsMode = ref({
         uppercase: false,
         customCase: false,
@@ -35,6 +36,9 @@ export const mainStore = defineStore('mainStore', () => {
         backwards: false,
         spaced: false,
         styled: false,
+    })
+    const alphabetsInputTime = ref({
+
     })
 
     const appTheme = computed(() => {
@@ -45,8 +49,8 @@ export const mainStore = defineStore('mainStore', () => {
         if (theme.value === 'sky') return 'bg-sky-400 text-zinc-900'
         if (theme.value === 'fuschia') return 'bg-fuschia-600 text-black'
         if (theme.value === 'emerald') return 'bg-emerald-400 text-black'
-        if (theme.value === 'neutral') return 'bg-neutral-900 text-slate-100'
-        if (theme.value === 'white') return 'bg-slate-100 text-black'
+        if (theme.value === 'neutral') return 'bg-neutral-900 text-slate-200'
+        if (theme.value === 'white') return 'bg-slate-200 text-neutral-700'
     })
 
     const svgFill = computed(() => {
@@ -160,6 +164,7 @@ export const mainStore = defineStore('mainStore', () => {
         playerLastInput.value = ''
         playerInputLength.value = 0
         playerInput.value = ''
+        currentAlphabetInputTime.value = 0
     }
 
     const sessionComplete = () => {
@@ -168,12 +173,26 @@ export const mainStore = defineStore('mainStore', () => {
             beginCountdown.value = false
             countdown.value = false
         }
-        hasStartedSession.value = false
 
+        hasStartedSession.value = false
         totalTime.value = performance.now() - startTime.value
+            
+        if (localStorage.getItem('dorayi-typing-result')) {
+            const res = ref(JSON.parse(localStorage.getItem('dorayi-typing-result')))
+            res.value.push(resultData.value)
+            localStorage.setItem('dorayi-typing-result', JSON.stringify(res.value))
+        } else {
+        localStorage.setItem('dorayi-typing-result', JSON.stringify([resultData.value]))
+        }
     }
 
     const playerTyping = (e) => {
+        const previousAlphabetInputTime = ref(0)
+
+        if (currentAlphabetInputTime.value) {
+            previousAlphabetInputTime.value = currentAlphabetInputTime.value
+        }
+
         if (pauseTyping.value) return
         if (e.type === 'keydown' && e.key === 'Backspace') {
             if (!enableBackSpace.value) return
@@ -189,16 +208,30 @@ export const mainStore = defineStore('mainStore', () => {
         if (!getMobileOS() && e.key === 'Enter') return 
         if (!hasStartedSession.value) hasStartedSession.value = true
         playerInputLength.value++
+
         if (playerInputLength.value === 1)  {
             if (timedTyping.value && typingCountdown.value) beginCountdown.value = true
             startTime.value = performance.now();
+            currentAlphabetInputTime.value = 0
+        } else {
+            currentAlphabetInputTime.value = ((performance.now() - startTime.value).toFixed(0) / 1000).toFixed(3)
         }
+
+        alphabetsInputTime.value[playerInputLength.value] = (currentAlphabetInputTime.value - previousAlphabetInputTime.value)
+        // alphabetsInputTime.value[playerInputLength.value] = (currentAlphabetInputTime.value - previousAlphabetInputTime.value) + (playerInputLength.value > 1 ? alphabetsInputTime.value[playerInputLength.value - 1] : 0)
+
         playerLastInput.value = eventSelector
         playerInput.value += playerLastInput.value
         if (playerInputLength.value === containerText.value.length) sessionComplete()
     }
 
     const playerInputTyping = (e) => {
+        const previousAlphabetInputTime = ref(0)
+
+        if (currentAlphabetInputTime.value) {
+            previousAlphabetInputTime.value = currentAlphabetInputTime.value
+        }
+
         if (pauseTyping.value) return
         if (e.inputType === 'deleteContentBackward') {
             if (!enableBackSpace.value) return
@@ -211,7 +244,14 @@ export const mainStore = defineStore('mainStore', () => {
         if (playerInputLength.value === 1)  {
             if (timedTyping.value && typingCountdown.value) beginCountdown.value = true
             startTime.value = performance.now();
+            currentAlphabetInputTime.value = 0
+        } else {
+            currentAlphabetInputTime.value = ((performance.now() - startTime.value).toFixed(0) / 1000).toFixed(3)
         }
+        
+        alphabetsInputTime.value[playerInputLength.value] = (currentAlphabetInputTime.value - previousAlphabetInputTime.value)
+        // alphabetsInputTime.value[playerInputLength.value] = (currentAlphabetInputTime.value - previousAlphabetInputTime.value) + (playerInputLength.value > 1 ? alphabetsInputTime.value[playerInputLength.value - 1] : 0)
+
         if (playerInputLength.value === containerText.value.length) sessionComplete()
     }
 
@@ -266,6 +306,7 @@ export const mainStore = defineStore('mainStore', () => {
         alphabetsMode,
         theme,
         appTheme,
+        alphabetsInputTime,
         svgFill,
     }
 })

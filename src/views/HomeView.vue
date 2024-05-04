@@ -29,7 +29,7 @@ const {switchNext, resetToDefault, generateText} = store
 const {resultData,  pauseTyping, customTexts, alphabetsMode} = storeToRefs(store)
 
 const customize = customizeStore()
-const {customizers, showMoreSettings} = storeToRefs(customize)
+const {customizers, showMoreSettings, disableOption} = storeToRefs(customize)
 
 const screenWidth = ref(window.innerWidth)
 
@@ -61,6 +61,12 @@ watch(alphabetsMode, (newVal) => {
 onMounted(() => {
   if (localStorage.getItem('custom-text') ) {
     customTexts.value = JSON.parse(localStorage.getItem('custom-text'))
+  }
+
+  if (localStorage.getItem('dorayi-typing-preferred-config')) {
+    let savedCustomizersAndDisabledOptions = JSON.parse(localStorage.getItem('dorayi-typing-preferred-config'))
+    customizers.value = savedCustomizersAndDisabledOptions[0]
+    disableOption.value = savedCustomizersAndDisabledOptions[1]
   }
 })
 </script>
