@@ -65,6 +65,7 @@ export const mainStore = defineStore('mainStore', () => {
         if (theme.value === 'white') return 'black '
     })
 
+
     const resultData = computed(() => {
         return {
             correctCount: correctCount.value,
@@ -151,7 +152,7 @@ export const mainStore = defineStore('mainStore', () => {
         if (timedTyping.value) {
             clearInterval(timerID.value)
             beginCountdown.value = false
-            countdown.value = false
+            countdown.value = 0
         }
         hasStartedSession.value = false
         beginCountdown.value = false
@@ -171,7 +172,7 @@ export const mainStore = defineStore('mainStore', () => {
         if (timedTyping.value) {
             clearInterval(timerID.value)
             beginCountdown.value = false
-            countdown.value = false
+            countdown.value = 0
         }
 
         hasStartedSession.value = false

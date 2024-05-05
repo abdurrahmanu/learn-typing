@@ -1,8 +1,10 @@
 <template>
         <div class="px-1 border-t border-neutral-900">
-            <div @click="useCustomText = !useCustomText" class="flex justify-between w-full p-1 border border-transparent rounded-sm hover:border-neutral-300 ">
+            <div class="flex justify-between w-full p-1 border border-transparent rounded-sm hover:border-neutral-300 ">
+            <!-- <div @click="useCustomText = !useCustomText" class="flex justify-between w-full p-1 border border-transparent rounded-sm hover:border-neutral-300 "> -->
                 <div class="flex gap-4">
-                    <input :disabled="Object.keys(customTexts).length === 0" :checked="useCustomText"  type="checkbox" name="" id="">
+                    <input disabled  type="checkbox" name="" id="">
+                    <!-- <input :disabled="Object.keys(customTexts).length === 0" :checked="useCustomText"  type="checkbox" name="" id=""> -->
                     <p>Custom text</p>
                 </div>
             </div>

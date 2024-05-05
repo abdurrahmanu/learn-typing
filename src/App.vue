@@ -5,6 +5,7 @@
       <RouterView />
     </div>
     <Theme />
+    <HideElements @click="hideElements = !hideElements" />
   </div>
 </template>
 
@@ -12,27 +13,43 @@
 import {onBeforeMount, watch} from 'vue'
 import Animate from './components/Animate.vue';
 import Theme from './components/Theme.vue';
+import HideElements from './components/HideElements.vue'
 import {mainStore} from './store/mainStore'
 import { storeToRefs } from 'pinia';
+import { customizeStore } from './store/customizeStore';
 
 const main = mainStore()
-const {appTheme, theme, alphabetsMode} = storeToRefs(main)
+const {appTheme, theme} = storeToRefs(main)
+
+const customize = customizeStore()
+const {hideElements} = storeToRefs(customize)
 
 onBeforeMount(() => {
-  if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-    theme.value = 'neutral'
+  if (!localStorage.getItem('dorayi-typing-theme')) {
+    if (localStorage.getItem('theme')) {
+      theme.value = 'neutral'
+      localStorage.setItem('dorayi-typing-theme', 'dark')
+    } else {
+      theme.value = 'white'
+      localStorage.setItem('dorayi-typing-theme', 'white')
+    }
   } else {
-    theme.value = 'white'
+    if (localStorage.getItem('dorayi-typing-theme') === 'dark') {
+      theme.value = 'neutral'
+      localStorage.setItem('dorayi-typing-theme', 'dark')
+    } else {
+      theme.value = 'white'
+      localStorage.setItem('dorayi-typing-theme', 'white')
+    }
   }
+
 })
 
 watch(theme, (newVal) => {
   if (newVal === 'neutral') {
-    localStorage.setItem('theme', 'dark')
-  } 
-
-  if (newVal !== 'neutral') {
-    localStorage.removeItem('theme')
+    localStorage.setItem('dorayi-typing-theme', 'dark')
+  }  else {
+    localStorage.setItem('dorayi-typing-theme', 'white')
   }
 })
 </script>

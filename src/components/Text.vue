@@ -1,5 +1,5 @@
 <template>
-    <div class="w-[90%] min-h-[150px] space-y-1 relative transition-all duration-200  max-w-[900px] m-auto">
+    <div :class="[hideElements ? 'pt-32' : 'pt-0']" class="w-[90%] min-h-[150px] space-y-1 relative transition-none  max-w-[900px] m-auto">
         <div v-if="getMobileOS()"class="w-fit">
             <input
             @paste.prevent="paste"
@@ -9,12 +9,13 @@
             class="text-sm text-center rounded-md appearance-none outline-none max-w-[100px] text-slate-100 bg-zinc-900 mx-auto opacity-0" 
             :maxlength="containerText.length">
         </div>
-        <div :class="[alphabets ? 'px-2 py-1 max-w-[300px]' : 'max-w-[600px]']"  class="flex justify-between m-auto pt-10">
+        <div v-if="!hideElements" :class="[alphabets ? 'px-2 py-1 max-w-[300px]' : 'max-w-[600px]']"  class="flex justify-between m-auto pt-10">
             <Clock />
-            <CustomText v-if="!alphabets" />
+            <!-- <CustomText v-if="!alphabets" /> -->
             <Blind />
         </div>
-        <div v-if="containerText" class="leading-6 md:leading-[30px] transition-all duration-100 relative m-auto max-w-[600px] w-full  text-[17px] md:text-[19px]">
+        <div v-if="containerText" :class="[hideElements ? 'text-[20px] md:text-[24px]' : 'text-[17px] md:text-[19px]']" class="leading-6 md:leading-[30px] transition-all duration-100 relative m-auto max-w-[600px] w-full ">
+            <p v-if="hideElements && beginCountdown && timedTyping" class="text-center text-[20px] font-mono">{{ countdown }}</p>
             <div @click="getMobileOS() ? inputEl.focus() : ''" :class="[noSpace ? 'break-words' : '', alphabets ? 'text-center py-5 break-words leading-10': 'text-left border-none pt-4 md:border-2 md:border-neutral-800 pb-7 min-h-[100px]', getMobileOS() ? 'border-none' : '', !alphabets && textPosition=== 'center' ? 'text-center' : !alphabets && textPosition=== 'right' ? 'text-right' : 'text-left']" class="relative p-1 overflow-y-auto h-fit">
                 <Alphabet
                 v-for="(alphabet, index) in containerText"
@@ -24,13 +25,13 @@
                 :equality="playerInput[index] === alphabet"
                 :alphabet="alphabet"/>
             </div>
-            <div class="flex items-center py-3 m-auto">
+            <div v-if="!hideElements" class="flex items-center py-3 m-auto">
                 <RangeInput />
                 <repeat class="w-4" v-if="!alphabets" @click="enableRepeat = !enableRepeat" />
             </div>
         </div>
     </div>
-    <TextAlign @align="textPosition = $event" :textPosition="textPosition" v-if="!getMobileOS() && !alphabets"/>
+    <TextAlign @align="textPosition = $event" :textPosition="textPosition" v-if="!getMobileOS() && !alphabets && !hideElements"/>
     <div class="my-6 w-fit m-auto h-fit">
         <p @click="alphabets = !alphabets" class="m-auto font-mono md:text-xl text-center rounded-md border-opacity-80 hover:border-opacity-100 opacity-60 hover:opacity-100 w-fit hover:border-slate-400 p-1 border">
             <span v-if="!alphabets">THE ENGLISH ALPHABETS</span>
@@ -56,11 +57,11 @@ import {useRouter} from 'vue-router'
 const router = useRouter()
 const inputEl = ref(null)
 const store = mainStore()
-const { containerText, timerID, completionLevel, alphabets, resultData, typingCountdown, timedTyping, countdown, customTexts, beginCountdown, enableRepeat, storedTextForRepeat, playerInputLength, correctCount, wrongCount, playerInput, playerLastInput} = storeToRefs(store)
+const { containerText, timerID, completionLevel, resultData, alphabets, typingCountdown, timedTyping, countdown, customTexts, beginCountdown, enableRepeat, storedTextForRepeat, playerInputLength, correctCount, wrongCount, playerInput, playerLastInput} = storeToRefs(store)
 const {generateText, getMobileOS, playerInputTyping, sessionComplete, resetToDefault, playerTyping} = store
 
 const customize = customizeStore()
-const {customizers, noSpace} = storeToRefs(customize)
+const {customizers, noSpace, hideElements} = storeToRefs(customize)
 
 const textPosition = ref('left')
 const paste = () => {
@@ -85,7 +86,7 @@ watch(beginCountdown, (newVal, oldVal) => {
 })
 
 watch(countdown, (newVal, oldVal) => {
-    if (newVal === 0) {
+    if (newVal === 0 && resultData.value.totalTime) {
         sessionComplete()
     }
 })

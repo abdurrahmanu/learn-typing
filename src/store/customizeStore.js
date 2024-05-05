@@ -11,6 +11,7 @@ export const customizeStore = defineStore('customizeStore', () => {
     const beginCountdown = ref(false)
     const enableBackSpace = ref(true)
     const showMoreSettings = ref(false)
+    const hideElements = ref(false)
 
     const customizers = ref({
         'text-length': 'auto',
@@ -87,6 +88,7 @@ export const customizeStore = defineStore('customizeStore', () => {
         showMoreSettings,
         customizers,
         allOptions,
+        hideElements,
         changeConfiguration,
         useConfig, 
     }

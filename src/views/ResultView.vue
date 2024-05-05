@@ -25,7 +25,7 @@
             </div>
             <div class="text-zinc-600 py-1">{{ resultData.testType }}</div>
         </div>
-        <Bar :data="chartData" class="w-[600px] max-w-[90%] bg-neutral-700 m-auto relative h-[300px] p-2"/>
+        <Bar :data="chartData" class="w-[600px] max-w-[90%] bg-neutral-700 m-auto relative p-2"/>
     </div>
 </template>
 
@@ -40,8 +40,6 @@ ChartJS.register( Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale
 
 const store = mainStore()
 const {resultData, alphabetsInputTime} = storeToRefs(store)
-
-// const allResults = JSON.parse(localStorage.getItem('dorayi-typing-result'))
 
 const scale = {
     xAxes: [ {
@@ -64,7 +62,7 @@ const scale = {
 
 const chartData = ref({
     labels: Object.keys(alphabetsInputTime.value),
-    datasets: [ {data: Object.values(alphabetsInputTime.value), label: 'SESSION RESULT', borderWidth: 1, borderColor: '#69e869', color: '#97a3b8', circular: true } ]
+    datasets: [ {data: Object.values(alphabetsInputTime.value), label: 'SESSION RESULT', borderWidth: 1, borderColor: '#69e869', color: '#97a3b8'} ]
 })
 
 

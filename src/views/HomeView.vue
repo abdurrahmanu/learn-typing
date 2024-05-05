@@ -2,7 +2,7 @@
     <Header />
     <div class="m-auto max-w-[1300px] lg:flex pt-3"> 
       <div class="w-[100%] mx-auto flex-none">      
-        <Customize />
+        <Customize v-if="!hideElements" />
         <RouterView />
         <div class="pt-5">
           <Restart />
@@ -29,7 +29,7 @@ const {switchNext, resetToDefault, generateText} = store
 const {resultData,  pauseTyping, customTexts, alphabetsMode} = storeToRefs(store)
 
 const customize = customizeStore()
-const {customizers, showMoreSettings, disableOption} = storeToRefs(customize)
+const {customizers, showMoreSettings, disableOption, hideElements} = storeToRefs(customize)
 
 const screenWidth = ref(window.innerWidth)
 
