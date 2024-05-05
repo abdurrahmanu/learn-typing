@@ -8,7 +8,6 @@
 <script setup>
 import { storeToRefs } from 'pinia';
 import { customizeStore } from '../store/customizeStore';
-import greaterThan from './svg/greaterThan.vue';
 
 const customize = customizeStore()
 const {hideElements} = storeToRefs(customize)

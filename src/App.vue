@@ -42,7 +42,6 @@ onBeforeMount(() => {
       localStorage.setItem('dorayi-typing-theme', 'white')
     }
   }
-
 })
 
 watch(theme, (newVal) => {
@@ -71,6 +70,6 @@ watch(theme, (newVal) => {
 }
 
 .box-container {
- perspective: 1000px
+  perspective: 1000px
 }
 </style>

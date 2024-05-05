@@ -69,7 +69,7 @@ const changeMode = (mode) => {
       if (alphabetsMode.value.customCase && !alphabetsMode.value.uppercase) alphabetsMode.value.customCase = false
       alphabetsMode.value.uppercase = !alphabetsMode.value.uppercase
     }
-  
+
     if (mode === 'customCase') {
       if (alphabetsMode.value.uppercase && !alphabetsMode.value.customCase) alphabetsMode.value.uppercase = false
       alphabetsMode.value.customCase = !alphabetsMode.value.customCase
@@ -94,9 +94,7 @@ const changeMode = (mode) => {
     }
 
     localStorage.setItem('alphabets-mode', JSON.stringify(alphabetsMode.value))
-  }
-
-  
+  }  
 
 watch(configs, (newVal) => {
     useConfig()

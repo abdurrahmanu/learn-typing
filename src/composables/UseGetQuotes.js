@@ -18,35 +18,35 @@ export function  UseGetQuotes (config, customText) {
             else {
                 if (config['text-length'] === 10) {
                     let quotes = [...quotesWithoutAuthors.value.ten]
-                    let quote = ref(quotes[Math.floor(Math.random() * quotes.length)])
+                    let quote = ref(quotes[Math.floor(Math.random() * quotes.length - 1)])
                     res.value = quote.value
                     return
                 } 
                 
                 else if (config['text-length'] === 20) {
                     let quotes = [...quotesWithoutAuthors.value.twenty]
-                    let quote = ref(quotes[Math.floor(Math.random() * quotes.length)])
+                    let quote = ref(quotes[Math.floor(Math.random() * quotes.length - 1)])
                     res.value = quote.value
                     return
                 } 
                 
                 else if (config['text-length'] === 30) {
                     let quotes = [...quotesWithoutAuthors.value.thirty]
-                    let quote = ref(quotes[Math.floor(Math.random() * quotes.length)])
+                    let quote = ref(quotes[Math.floor(Math.random() * quotes.length - 1)])
                     res.value = quote.value
                     return
                 } 
                 
                 else if  (config['text-length'] === 40) {
                     let quotes = [...quotesWithoutAuthors.value.fourty]
-                    let quote = ref(quotes[Math.floor(Math.random() * quotes.length)])
+                    let quote = ref(quotes[Math.floor(Math.random() * quotes.length - 1)])
                     res.value = quote.value
                     return
                 }
 
                 else {
                     let quotes = [...quotesWithoutAuthors.value.ten, ...quotesWithoutAuthors.value.twenty, ...quotesWithoutAuthors.value.thirty, ...quotesWithoutAuthors.value.fourty]
-                    let quote = ref(quotes[Math.floor(Math.random() * quotes.length)])
+                    let quote = ref(quotes[Math.floor(Math.random() * quotes.length - 1)])
                     res.value = quote.value
                 }
             }
@@ -75,18 +75,22 @@ export function  UseGetQuotes (config, customText) {
                 if (length) {
                     for (let index = 0; index < length; index++) {
                         if (index == 0) {
-                            res.value += words.value[Math.round(Math.random() * words.value.length)]
+                            let random = Math.round(Math.random() * words.value.length - 1)
+                            let word = words.value[random]               
+                            res.value += word
                         } else {
-                                res.value += ' ' + words.value[Math.round(Math.random() * words.value.length)]
+                            let random = Math.round(Math.random() * words.value.length - 1)
+                            let word = words.value[random]
+                            res.value += ' ' + word
                         }
                     }
                 }
                 else {
                     for (let index = 0; index < Math.round(Math.random() * 40) + 10; index++) {
                         if (index == 0) {
-                            res.value += words.value[Math.round(Math.random() * words.value.length)]
+                            res.value += words.value[Math.round(Math.random() * words.value.length - 1)]
                         } else {
-                                res.value += ' ' + words.value[Math.round(Math.random() * words.value.length)]
+                                res.value += ' ' + words.value[Math.round(Math.random() * words.value.length - 1)]
                         }
                     }
                 }
