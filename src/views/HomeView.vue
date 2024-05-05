@@ -63,6 +63,10 @@ onMounted(() => {
     customTexts.value = JSON.parse(localStorage.getItem('custom-text'))
   }
 
+  if (localStorage.getItem('alphabets-mode')) {
+    alphabetsMode.value = JSON.parse(localStorage.getItem('alphabets-mode'))
+  }
+
   if (localStorage.getItem('dorayi-typing-preferred-config')) {
     let savedCustomizersAndDisabledOptions = JSON.parse(localStorage.getItem('dorayi-typing-preferred-config'))
     customizers.value = savedCustomizersAndDisabledOptions[0]

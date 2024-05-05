@@ -92,7 +92,11 @@ const changeMode = (mode) => {
     if (mode === 'spaced') {
       alphabetsMode.value.spaced = !alphabetsMode.value.spaced
     }
+
+    localStorage.setItem('alphabets-mode', JSON.stringify(alphabetsMode.value))
   }
+
+  
 
 watch(configs, (newVal) => {
     useConfig()

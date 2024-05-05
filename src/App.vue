@@ -16,7 +16,7 @@ import {mainStore} from './store/mainStore'
 import { storeToRefs } from 'pinia';
 
 const main = mainStore()
-const {appTheme, theme} = storeToRefs(main)
+const {appTheme, theme, alphabetsMode} = storeToRefs(main)
 
 onBeforeMount(() => {
   if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
