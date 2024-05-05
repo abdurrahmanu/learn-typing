@@ -19,7 +19,7 @@ const main = mainStore()
 const {appTheme, theme} = storeToRefs(main)
 
 onBeforeMount(() => {
-  if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+  if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
     theme.value = 'neutral'
   } else {
     theme.value = 'white'

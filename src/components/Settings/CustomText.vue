@@ -15,11 +15,13 @@
 
             <div class="py-1 text-center relative">
                 <div v-if="saveCustomText" class="absolute top-0 bottom-0 left-0 right-0 w-full bg-black opacity-50"></div>
-                <textarea 
-                    v-model="textAreaValue"
-                    :placeholder="textAreaPlaceholder" 
-                    cols="30" rows="10" class="p-1 w-[90%] bg-zinc-700 text-slate-300 outline-none"></textarea>
-                <button @click="startSavingCustomText" class="p-1 px-8 text-black bg-green-500 rounded-full hover:bg-green-800 hover:text-white">Continue</button>
+                <div class="m-auto w-[90%] max-w-[350px]">
+                    <textarea 
+                        v-model="textAreaValue"
+                        :placeholder="textAreaPlaceholder" 
+                        cols="30" rows="10" class="p-1 w-full outline-none rounded-md" :class="[theme === 'neutral' ? 'bg-neutral-700 text-slate-100' : 'bg-slate-300 text-neutral-900']"></textarea>
+                        <button @click="startSavingCustomText" class="p-1 px-8 text-black bg-green-500 rounded-full hover:bg-green-800 hover:text-white">Continue</button>
+                </div>
                     <div v-if="saveCustomText" class="absolute w-full top-[50%] translate-y-[-50%]">
                         <div v-if="!textSaved" class="p-2 bg-neutral-500 absolute w-full top-[50%] translate-y-[-50%] z-[9999]">
                             <div>
@@ -52,7 +54,7 @@ const textSaved = ref(false)
 const customTextTitle = ref('')
 const main = mainStore()
 const textAreaValueStore = ref('')
-const { howToUseCustomText,  customTexts, useCustomText} = storeToRefs(main)
+const { howToUseCustomText,  customTexts, useCustomText, theme} = storeToRefs(main)
 
 const startSavingCustomText = () => {
     if (!textAreaValue.value.length) {

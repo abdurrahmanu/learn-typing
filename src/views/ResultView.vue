@@ -25,7 +25,7 @@
             </div>
             <div class="text-zinc-600 py-1">{{ resultData.testType }}</div>
         </div>
-        <Bar :data="chartData" class="w-[600px] max-w-[90%] bg-neutral-700 m-auto relative" :options="scale"/>
+        <Bar :data="chartData" class="w-[600px] max-w-[90%] bg-neutral-700 m-auto relative h-[300px] p-2"/>
     </div>
 </template>
 
@@ -64,7 +64,7 @@ const scale = {
 
 const chartData = ref({
     labels: Object.keys(alphabetsInputTime.value),
-    datasets: [ {data: Object.values(alphabetsInputTime.value), label: 'SESSION RESULT', borderWidth: 1, borderColor: '#94a3b8', color: '#97a3b8', circular: true } ]
+    datasets: [ {data: Object.values(alphabetsInputTime.value), label: 'SESSION RESULT', borderWidth: 1, borderColor: '#69e869', color: '#97a3b8', circular: true } ]
 })
 
 
@@ -91,3 +91,9 @@ const errorRatioLevel = () => {
     return (resultData.value.wrongCount) + '/' + (resultData.value.containerText.length)
 }
 </script>
+
+
+<style>
+.a {
+}
+</style>

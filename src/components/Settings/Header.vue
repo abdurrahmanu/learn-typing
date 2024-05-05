@@ -1,7 +1,7 @@
 <template>
-    <div class=" sticky z-[99999] top-[0]">
-        <div  class="font-mono text-right flex justify-between px-2 w-full bg-black border-r border-r-zinc-700 shadow-sm shadow-black items-center">
-            <div class="text-white text-lg font-mono py-2">ALL SETTINGS</div>
+    <div class=" sticky z-[99999] top-[0] bg-neutral-700 text-slate-200">
+        <div  class="font-mono text-right flex justify-between px-2 w-full border-r border-r-zinc-700 shadow-sm shadow-black items-center">
+            <div class=" text-lg font-mono py-2">ALL SETTINGS</div>
             <div class="p-[2px] text-white font-bold font-mono text-lg" @click="showMoreSettings = !showMoreSettings">
                 <img src="/cancel.svg" class="w-7" alt="">
             </div>

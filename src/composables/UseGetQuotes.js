@@ -53,8 +53,8 @@ export function  UseGetQuotes (config, customText) {
         }
         else {
             const words = ref([])
-            let choice = Math.round(Math.random() * 1000)
-            if ( customText && (choice % 2 === 0 && choice < 320)) {
+            let ChooseBetweenCustomAndSystemText = Math.round(Math.random() * 1000)
+            if ( customText && (ChooseBetweenCustomAndSystemText % 2 === 0 && ChooseBetweenCustomAndSystemText < 320)) {
                 words.value = [...customText]
                 let length = words.value.length - 1
                 let index = Math.round(Math.random() * length)
@@ -67,7 +67,7 @@ export function  UseGetQuotes (config, customText) {
                     if (config['words-type'] === 'rarely-used') words.value =  [...rarelyUsed, ...numbers]
                 }
                 else {                
-                    if (config['words-type'] === 'most-used') words.value = mostUsed
+                    if (config['words-type'] === 'most-used') words.value = [...mostUsed]
                     if (config['words-type'] === 'less-used') words.value = [...mediumUsed, ...mostUsed]
                     if (config['words-type'] === 'rarely-used') words.value = [...rarelyUsed, ...mostUsed, ...mediumUsed]
                 }
