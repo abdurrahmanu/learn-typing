@@ -43,6 +43,7 @@ watch(resultData, (newVal, oldVal) => {
 }, {deep: true})
 
 watch(customizers, (newConfig, oldConfig) => {
+  localStorage.setItem('dorayi-typing-preferred-config', JSON.stringify([newConfig, disableOption.value]))
   switchNext(newConfig)
 }, {deep: true})
 
@@ -67,13 +68,14 @@ onMounted(() => {
     alphabetsMode.value = JSON.parse(localStorage.getItem('alphabets-mode'))
   }
 
-  // if (localStorage.getItem('dorayi-typing-preferred-config')) {
-  //   let savedCustomizersAndDisabledOptions = JSON.parse(localStorage.getItem('dorayi-typing-preferred-config'))
-  //   customizers.value = savedCustomizersAndDisabledOptions[0]
-  //   disableOption.value = savedCustomizersAndDisabledOptions[1]
-  // } 
-  // else {
-  //   localStorage.setItem('dorayi-typing-preferred-config', JSON.stringify([customizers.value, disableOption.value]))
-  // }
+  if (localStorage.getItem('dorayi-typing-preferred-config')) {
+    let saved = JSON.parse(localStorage.getItem('dorayi-typing-preferred-config'))
+    customizers.value = saved[0]
+    disableOption.value = saved[1]
+  } 
+  else {
+    localStorage.setItem('dorayi-typing-preferred-config', JSON.stringify([customizers.value, disableOption.value]))
+  }
+
 })
 </script>

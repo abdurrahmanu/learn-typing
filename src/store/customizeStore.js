@@ -50,6 +50,10 @@ export const customizeStore = defineStore('customizeStore', () => {
         'no-space' : ['no space']
     })
 
+    const allSettings = ref({
+        
+    })
+
     const changeConfiguration = (opt, key) => {
         if (customizers.value[key] === opt) customizers.value[key] = ''
         else customizers.value[key] = opt
