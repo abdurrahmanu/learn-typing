@@ -9,7 +9,7 @@
             class="text-sm text-center rounded-md appearance-none outline-none max-w-[100px] text-slate-100 bg-zinc-900 mx-auto opacity-0" 
             :maxlength="containerText.length">
         </div>
-        <div :class="[alphabets ? 'px-2 py-1 max-w-[300px]' : 'max-w-[600px]', hideElements ? 'text-center' : '']"  class="flex justify-between pt-10 m-auto">
+        <div :class="[alphabets ? 'px-2 py-1 max-w-[300px]' : 'max-w-[600px]', hideElements ? 'text-center' : 'pt-10']"  class="flex justify-between m-auto">
             <Clock/>
             <Blind v-if="!hideElements" />
         </div>
