@@ -1,5 +1,5 @@
 <template>
-    <div :class="[noSpace ? '' : 'whitespace-pre-wrap']" class="inline font-mono relative">
+    <div :class="[customizers['no-space'] ? '' : 'whitespace-pre-wrap']" class="inline font-mono relative">
         <Transition v-if="currentIndex" appear>            
             <span :class="[mainStyle, equalStyle, currentIndexStyle, styledAlphas]" class="transition-all">{{ alphabet }}</span>
         </Transition>
@@ -17,7 +17,7 @@ const store = mainStore()
 const { playerInputLength, alphabets, alphabetsMode, theme } = storeToRefs(store)
 
 const customize = customizeStore()
-const {typeBlindly, noSpace} = storeToRefs(customize)
+const {customizers} = storeToRefs(customize)
 const emit = defineEmits(['equal', 'unequal'])
 const props = defineProps({
     alphabet: String,
@@ -27,7 +27,7 @@ const props = defineProps({
 })
 
 const equalStyle = computed(() => {
-    if (!typeBlindly.value) {
+    if (!customizers.value['blind-mode']) {
         let correctText = theme.value === 'neutral' ? 'text-green-300' : 'text-green-500'
         let wrongText = theme.value === 'neutral' ? 'text-red-500' : theme.value !== 'neutral' && props.index < playerInputLength.value  ? 'text-red-600' : ''
         return props.equality ? correctText : wrongText
@@ -47,7 +47,7 @@ const currentIndexStyle = computed(() => {
 })
 
 const mainStyle = computed(() => {
-    let text = theme.value === 'neutral' ? 'text-slate-400' : 'text-neutral-900'
+    let text = theme.value === 'neutral' ? 'text-slate-400' : 'text-neutral-500'
     return props.index > playerInputLength.value ? text : ''
 })
 </script>

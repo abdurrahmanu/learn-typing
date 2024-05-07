@@ -15,10 +15,4 @@
 </template>
 
 <script setup>
-import {storeToRefs} from 'pinia';
-import {mainStore} from '../../store/mainStore';
-
-const main = mainStore()
-const { enableBackSpace} = storeToRefs(main)
-
 </script>

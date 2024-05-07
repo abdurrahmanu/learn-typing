@@ -1,9 +1,10 @@
 <template>
     <div :class="{'z-[999]' : !(showMoreSettings && !getMobileOS())}" class="absolute top-0 bottom-0 right-0 left-0 z-[99]" v-if="showMoreSettings">
-        <div @click="showMoreSettings = !showMoreSettings" class="opacity-40 absolute bg-white w-full top-0 bottom-0 right-0 left-0 z-[999] blur-lg"></div>
+        <div @click="toggleSettings" class="opacity-40 absolute bg-white w-full top-0 bottom-0 right-0 left-0 z-[999] blur-lg"></div>
         <div class="overflow-y-auto" :class="[showMoreSettings ? 'fixed top-0 right-0 bottom-0 h-[100dvh] max-w-[500px] w-fit z-[9999]' : '', appTheme ]">
-            <div class="relative text-xs leading-5 md:text-sm lg:min-w-fit">
+            <div class="relative text-sm lg:text-base leading-5 md:text-sm lg:min-w-fit">
                 <Header />
+                <Fonts />
                 <BlindMode />
                 <BackSpace />
                 <CustomText />
@@ -17,6 +18,7 @@
 </template>
 
 <script setup>
+import Fonts from './Fonts.vue'
 import Header from './Header.vue'
 import AllCaps from './AllCaps.vue'
 import CustomCamelCase from './CustomCamelCase.vue'
@@ -30,20 +32,15 @@ import { mainStore } from '../../store/mainStore.js';
 import {customizeStore} from '../../store/customizeStore'
 
 const store = mainStore()
-const {alphabets, resultData, appTheme} = storeToRefs(store)
+const {appTheme, pauseTyping} = storeToRefs(store)
 const {getMobileOS} = store
 
 const customize = customizeStore()
-const {customizers, showMoreSettings} = storeToRefs(customize)
+const {showMoreSettings} = storeToRefs(customize)
 
-const settings = [
-    'Blind mode',
-    'Backspace',
-    'Custom Text',
-    'Difficulty Level',
-    'Countdown Typing',
-    'All Caps',
-    'Custom camel case',
-    'NoSpace'
-]
+const toggleSettings = () => {
+    showMoreSettings.value = !showMoreSettings.value
+    if (showMoreSettings.value) pauseTyping.value = true
+    else pauseTyping.value = false
+}
 </script>

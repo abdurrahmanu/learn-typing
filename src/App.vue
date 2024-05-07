@@ -3,6 +3,9 @@
     <Animate />
     <div class="min-h-[100dvh]">
       <RouterView />
+      <div class="pt-5">
+          <Restart />
+        </div>
     </div>
     <Theme />
     <HideElements @click="hideElements = !hideElements" />
@@ -11,6 +14,7 @@
 
 <script setup>
 import {onBeforeMount, watch} from 'vue'
+import Restart from './components/Restart.vue';
 import Animate from './components/Animate.vue';
 import Theme from './components/Theme.vue';
 import HideElements from './components/HideElements.vue'
@@ -19,10 +23,10 @@ import { storeToRefs } from 'pinia';
 import { customizeStore } from './store/customizeStore';
 
 const main = mainStore()
-const {appTheme, theme} = storeToRefs(main)
+const {appTheme, theme,alphabets, alphabetsMode, enableBackSpace, customTexts} = storeToRefs(main)
 
 const customize = customizeStore()
-const {hideElements} = storeToRefs(customize)
+const {hideElements, customizers, disableOption } = storeToRefs(customize)
 
 onBeforeMount(() => {
   if (!localStorage.getItem('dorayi-typing-theme')) {
@@ -42,18 +46,39 @@ onBeforeMount(() => {
       localStorage.setItem('dorayi-typing-theme', 'white')
     }
   }
-})
 
-watch(theme, (newVal) => {
-  if (newVal === 'neutral') {
-    localStorage.setItem('dorayi-typing-theme', 'dark')
-  }  else {
-    localStorage.setItem('dorayi-typing-theme', 'white')
+  if (localStorage.getItem('custom-text') ) {
+    customTexts.value = JSON.parse(localStorage.getItem('custom-text'))
   }
+
+  if (localStorage.getItem('dorayi-typing-mode')) {
+    if (localStorage.getItem('dorayi-typing-mode') === 'alphabets') {
+      alphabets.value = true
+    } else {
+      alphabets.value = false
+    }
+  }
+
+  if (localStorage.getItem('alphabets-mode')) {
+    alphabetsMode.value = JSON.parse(localStorage.getItem('alphabets-mode'))
+  }
+
+  
+  if (localStorage.getItem('dorayi-typing-preferred-config')) {
+    let saved = JSON.parse(localStorage.getItem('dorayi-typing-preferred-config'))
+    customizers.value = saved[0]
+    disableOption.value = saved[1]
+  } 
+  else {
+    localStorage.setItem('dorayi-typing-preferred-config', JSON.stringify([customizers.value, disableOption.value]))
+  }
+
+  enableBackSpace.value = customizers.value['backspace']
 })
 </script>
 
 <style scoped>
+
 .screen-container {
   perspective: 660px;
 }

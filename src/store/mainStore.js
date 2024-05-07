@@ -3,6 +3,13 @@ import {ref, computed} from 'vue'
 import {UseGetQuotes} from '../composables/UseGetQuotes'
 
 export const mainStore = defineStore('mainStore', () => {
+    const selectedFont = ref('font')
+    const allFonts = ref([
+        'font',
+        'font', 
+        'font',
+        'font'
+    ])
     const theme = ref('neutral')
     const enableBackSpace = ref(true)
     const completionLevel = ref(0)
@@ -14,17 +21,18 @@ export const mainStore = defineStore('mainStore', () => {
     const startTime = ref(null)
     const totalTime = ref(null)
     const hasStartedSession = ref(false)
+    const hasCompletedSession = ref(false)
     const pauseTyping = ref(true)
     const playerInput = ref('')
     const backspaceIsPressed = ref(false)
     const timedTyping = ref(false)
+    const savedCountdown = ref(0)
     const customTexts = ref({})
     const useCustomText = ref(false)
     const enableRepeat = ref(false)
     const storedTextForRepeat = ref('')
-    const typingCountdown = ref(0)
     const beginCountdown = ref(false)
-    const countdown = ref(0)
+    const previousPlayerInput = ref('')
     const howToUseCustomText = ref('select text using options')
     const timerID = ref()
     const alphabets = ref(false)
@@ -38,7 +46,6 @@ export const mainStore = defineStore('mainStore', () => {
         styled: false,
     })
     const alphabetsInputTime = ref({
-
     })
 
     const appTheme = computed(() => {
@@ -64,7 +71,6 @@ export const mainStore = defineStore('mainStore', () => {
         if (theme.value === 'neutral') return 'white'
         if (theme.value === 'white') return 'black '
     })
-
 
     const resultData = computed(() => {
         return {
@@ -146,14 +152,16 @@ export const mainStore = defineStore('mainStore', () => {
         else {
             containerText.value = UseGetQuotes(config).res.value
         }
+
+        storedTextForRepeat.value = containerText.value
     }
     
     const resetToDefault = () => {
         if (timedTyping.value) {
             clearInterval(timerID.value)
             beginCountdown.value = false
-            countdown.value = 0
         }
+        hasCompletedSession.value = false
         hasStartedSession.value = false
         beginCountdown.value = false
         completionLevel.value = 0
@@ -168,14 +176,35 @@ export const mainStore = defineStore('mainStore', () => {
         currentAlphabetInputTime.value = 0
     }
 
+    const managePlayerInput = () =>{
+        if (getMobileOS()) playerLastInput.value = playerInput.value[playerInput.value.length - 1]
+        if (!playerInput.value) {
+            if (previousPlayerInput.value === containerText.value[0]) correctCount.value--
+            else wrongCount.value--
+        }
+        else {
+            if (previousPlayerInput.value.length > playerInput.value.length) {
+                if (containerText.value[previousPlayerInput.value.length - 1] === previousPlayerInput.value[previousPlayerInput.value.length - 1]) correctCount.value--
+                else wrongCount.value--
+            }
+            else {
+                if (playerLastInput.value === containerText.value[playerInput.value.length - 1]) correctCount.value ++
+                else wrongCount.value++
+            }
+        }
+    
+        playerInputLength.value = playerInput.value.length
+        completionLevel.value = ((playerInputLength.value) / containerText.value.length) * 100     
+    }
+
     const sessionComplete = () => {
+        hasCompletedSession.value = true
+        hasStartedSession.value = false
         if (timedTyping.value) {
             clearInterval(timerID.value)
             beginCountdown.value = false
-            countdown.value = 0
         }
 
-        hasStartedSession.value = false
         totalTime.value = performance.now() - startTime.value
             
         if (localStorage.getItem('dorayi-typing-result')) {
@@ -211,7 +240,9 @@ export const mainStore = defineStore('mainStore', () => {
         playerInputLength.value++
 
         if (playerInputLength.value === 1)  {
-            if (timedTyping.value && typingCountdown.value) beginCountdown.value = true
+            if (timedTyping.value) {
+                beginCountdown.value = true
+            }
             startTime.value = performance.now();
             currentAlphabetInputTime.value = 0
         } else {
@@ -219,11 +250,12 @@ export const mainStore = defineStore('mainStore', () => {
         }
 
         alphabetsInputTime.value[playerInputLength.value] = (currentAlphabetInputTime.value - previousAlphabetInputTime.value)
-        // alphabetsInputTime.value[playerInputLength.value] = (currentAlphabetInputTime.value - previousAlphabetInputTime.value) + (playerInputLength.value > 1 ? alphabetsInputTime.value[playerInputLength.value - 1] : 0)
 
         playerLastInput.value = eventSelector
         playerInput.value += playerLastInput.value
-        if (playerInputLength.value === containerText.value.length) sessionComplete()
+        if (playerInputLength.value === containerText.value.length) {
+            sessionComplete()
+        }
     }
 
     const playerInputTyping = (e) => {
@@ -243,7 +275,9 @@ export const mainStore = defineStore('mainStore', () => {
         backspaceIsPressed.value = false
         if (!hasStartedSession.value) hasStartedSession.value = true
         if (playerInputLength.value === 1)  {
-            if (timedTyping.value && typingCountdown.value) beginCountdown.value = true
+            if (timedTyping.value) {
+                beginCountdown.value = true
+            }
             startTime.value = performance.now();
             currentAlphabetInputTime.value = 0
         } else {
@@ -251,16 +285,16 @@ export const mainStore = defineStore('mainStore', () => {
         }
         
         alphabetsInputTime.value[playerInputLength.value] = (currentAlphabetInputTime.value - previousAlphabetInputTime.value)
-        // alphabetsInputTime.value[playerInputLength.value] = (currentAlphabetInputTime.value - previousAlphabetInputTime.value) + (playerInputLength.value > 1 ? alphabetsInputTime.value[playerInputLength.value - 1] : 0)
 
         if (playerInputLength.value === containerText.value.length) sessionComplete()
     }
+
 
     const switchNext = (config, restart, options) => {
         resetToDefault()
         generateText(config, restart, options)
     }
-    
+
     function getMobileOS() {
         let userAgent = navigator.userAgent || navigator.vendor || window.opera;
         let regex = /Mobi|Android|webOS|iPhone|iPad|iPod|Blackberry|IEMobile|Opera Mini/i.test(userAgent) && !window.MSStream
@@ -278,10 +312,12 @@ export const mainStore = defineStore('mainStore', () => {
         playerTyping,
         switchNext,
         playerInputTyping,
+        managePlayerInput,
+        allFonts,
+        hasCompletedSession,
+        selectedFont,
         timerID,
         howToUseCustomText,
-        countdown,
-        typingCountdown,
         beginCountdown,
         enableBackSpace,
         useCustomText,
@@ -298,6 +334,7 @@ export const mainStore = defineStore('mainStore', () => {
         playerLastInput,
         playerInputLength,
         hasStartedSession,
+        savedCountdown,
         startTime,
         totalTime,
         pauseTyping,
@@ -308,6 +345,7 @@ export const mainStore = defineStore('mainStore', () => {
         theme,
         appTheme,
         alphabetsInputTime,
+        previousPlayerInput,
         svgFill,
     }
 })

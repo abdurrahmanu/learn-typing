@@ -1,8 +1,8 @@
 <template>
     <div class="p-2 px-1 border-t border-neutral-900 ">
-        <div  @click="customCamelCase = !customCamelCase"  class="flex justify-between w-full p-1 border border-transparent rounded-sm hover:border-neutral-300 ">
+        <div  @click="customize('custom-camel-case', !customizers['custom-camel-case'])"  class="flex justify-between w-full p-1 border border-transparent rounded-sm hover:border-neutral-300 ">
             <div class="flex gap-4">
-                <input :checked="customCamelCase" type="checkbox">
+                <input :checked="customizers['custom-camel-case']" type="checkbox">
                 <p>CusTOm cAMeL caSE</p>
             </div>
         </div>
@@ -11,18 +11,10 @@
 </template>
 
 <script setup>
-import {watch} from 'vue'
 import {storeToRefs} from 'pinia'
 import {customizeStore} from '../../store/customizeStore'
 
 const store = customizeStore()
-const {customCamelCase, customizers, allCaps} = storeToRefs(store)
-
-watch(customCamelCase, (newVal) => {
-    customizers.value['custom-camel-case'] = newVal
-
-    if (newVal && allCaps.value) {
-        allCaps.value = false
-    }
-})
+const {customizers} = storeToRefs(store)
+const {customize} = store
 </script>

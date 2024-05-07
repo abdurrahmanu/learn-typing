@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import ResultView from '../views/ResultView.vue'
-import TypingView from '../views/TypingView.vue'
 import UserProgressView from '../views/UserProgressView.vue'
 import SignView from '../views/SignView.vue'
 
@@ -10,19 +9,11 @@ const routes = [
       path: '/',
       name: 'home',
       component: HomeView,
-      children: [
-        {
-          path: '',
-          name: 'typing',
-          component: TypingView,
-  
-        },
-        {
-          path: '/result',
-          name: 'result',
-          component: ResultView,
-        }
-      ]
+    },
+    {
+      path: '/result',
+      name: 'result',
+      component: ResultView,
     },
     {
       path: '/progress',

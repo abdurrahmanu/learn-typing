@@ -3,15 +3,9 @@ import {ref} from 'vue'
 
 export const customizeStore = defineStore('customizeStore', () => {
     const configs = ref([])
-    const typeBlindly = ref(false)
-    const noSpace = ref(false)
-    const customCamelCase = ref(false)
-    const allCaps = ref(false)
-    const typingCountdown = ref(false)
-    const beginCountdown = ref(false)
-    const enableBackSpace = ref(true)
     const showMoreSettings = ref(false)
     const hideElements = ref(false)
+    const next = ref(false)
 
     const customizers = ref({
         'text-length': 'auto',
@@ -20,11 +14,11 @@ export const customizeStore = defineStore('customizeStore', () => {
         'include-caps': '',
         'include-punctuation': '',
         'include-numbers': '',
-        'all-caps': allCaps.value,
-        'backspace': enableBackSpace.value,
-        'blind-mode': typeBlindly.value,
-        'custom-camel-case': customCamelCase.value,
-        'no-space': noSpace.value
+        'all-caps': false,
+        'backspace': true,
+        'blind-mode': false,
+        'custom-camel-case': false,
+        'no-space': false,
     })
 
     const disableOption = ref({
@@ -50,23 +44,20 @@ export const customizeStore = defineStore('customizeStore', () => {
         'no-space' : ['no space']
     })
 
-    const allSettings = ref({
-        
-    })
-
-    const changeConfiguration = (opt, key) => {
-        if (customizers.value[key] === opt) customizers.value[key] = ''
-        else customizers.value[key] = opt
+    const changeConfiguration = (group, selection) => {
+        if (customizers.value[group] === selection) customizers.value[group] = ''
+        else customizers.value[group] = selection
     }
 
     const useConfig = () => {
         let currentWordType = customizers.value['words-type']
         let currentTestType = customizers.value['test-type']
         let currentTextLength = customizers.value['text-length']
-        let clicked = configs.value[0]
-        if (clicked === currentWordType || clicked === currentTestType || clicked === currentTextLength) return
+        let selection = configs.value[1]
+        let group = configs.value[0]
 
-        changeConfiguration(configs.value[0], configs.value[1])
+        if (selection === currentWordType || selection === currentTestType || selection === currentTextLength) return
+        changeConfiguration(group, selection)    
 
         if (customizers.value['test-type'] === 'quotes') {
             disableOption.value['words-type'] = true
@@ -77,24 +68,35 @@ export const customizeStore = defineStore('customizeStore', () => {
         }
 
         localStorage.setItem('dorayi-typing-preferred-config', JSON.stringify([customizers.value, disableOption.value]))
+        next.value = true
+    }
+
+    const customize = (mode, boolean) => {
+        if (boolean && mode === 'all-caps') {
+            customizers.value['custom-camel-case'] = false
+        }
+
+        if (boolean && mode === 'custom-camel-case') {
+            customizers.value['all-caps'] = false
+        }
+
+        customizers.value[mode] = boolean
+        
+        localStorage.setItem('dorayi-typing-preferred-config', JSON.stringify([customizers.value, disableOption.value]))
+        next.value = true
     }
 
     return {
-        typeBlindly,
-        noSpace,
         disableOption,
-        customCamelCase,
-        allCaps,
-        typingCountdown,
-        beginCountdown,
-        enableBackSpace,
         configs,
         showMoreSettings,
         customizers,
         allOptions,
         hideElements,
+        next,
         changeConfiguration,
         useConfig, 
+        customize,
     }
 })
 

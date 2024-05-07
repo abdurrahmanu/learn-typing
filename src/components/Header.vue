@@ -3,7 +3,7 @@
         <div class="flex px-5 pr-2 items-center  justify-between py-2 absolute top-0 left-0 w-full">
             <div class="font-mono text-xl font-bold md:text-2xl">DORAYI TYPING</div>
             <div v-if="!alphabets" class="flex gap-2 rounded-full w-fit">
-                <settings v-if="!showMoreSettings" @click="showMoreSettings = !showMoreSettings" class="h-7" />
+                <settings @click="toggleSettings" class="h-7" />
             </div>
         </div>
     </nav>
@@ -11,23 +11,20 @@
 
 <script setup>
 import settings from './svg/settings.vue';
-import {onBeforeMount} from 'vue'
 import {storeToRefs} from 'pinia'
 import {customizeStore} from '../store/customizeStore'
-import { useDarkMode } from '../store/useDarkMode'
 import { mainStore } from '../store/mainStore';
 
 const store = mainStore()
-const {alphabets} = storeToRefs(store)
+const {alphabets, pauseTyping} = storeToRefs(store)
 
 const main = customizeStore()
 const { showMoreSettings} = storeToRefs(main)
 
-const darkMode = useDarkMode()
-const {checkLocalStorageForSavedBackground} = darkMode
-
-onBeforeMount(() => {
-    checkLocalStorageForSavedBackground()
-})
+const toggleSettings = () => {
+    showMoreSettings.value = !showMoreSettings.value
+    if (showMoreSettings.value) pauseTyping.value = true
+    else pauseTyping.value = false
+}
 </script>
 

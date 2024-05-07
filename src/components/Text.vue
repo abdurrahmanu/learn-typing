@@ -9,14 +9,19 @@
             class="text-sm text-center rounded-md appearance-none outline-none max-w-[100px] text-slate-100 bg-zinc-900 mx-auto opacity-0" 
             :maxlength="containerText.length">
         </div>
-        <div v-if="!hideElements" :class="[alphabets ? 'px-2 py-1 max-w-[300px]' : 'max-w-[600px]']"  class="flex justify-between m-auto pt-10">
+        <div v-if="!hideElements" :class="[alphabets ? 'px-2 py-1 max-w-[300px]' : 'max-w-[600px]']"  class="flex justify-between pt-10 m-auto">
             <Clock />
-            <!-- <CustomText v-if="!alphabets" /> -->
             <Blind />
         </div>
         <div v-if="containerText" :class="[hideElements ? 'text-[20px] md:text-[24px]' : 'text-[17px] md:text-[19px]']" class="leading-6 md:leading-[30px] transition-all duration-100 relative m-auto max-w-[600px] w-full ">
-            <p v-if="hideElements && beginCountdown && timedTyping" class="text-center text-[20px] font-mono">{{ countdown }}</p>
-            <div @click="getMobileOS() ? inputEl.focus() : ''" :class="[noSpace ? 'break-words' : '', alphabets ? 'text-center py-5 break-words leading-10': 'text-left border-none pt-4 md:border-2 md:border-neutral-800 pb-7 min-h-[100px]', getMobileOS() ? 'border-none' : '', !alphabets && textPosition=== 'center' ? 'text-center' : !alphabets && textPosition=== 'right' ? 'text-right' : 'text-left']" class="relative p-1 overflow-y-auto h-fit">
+            <Countdown 
+            v-if="timedTyping && beginCountdown && hideElements" 
+            :start="beginCountdown" 
+            :cancel="timedTyping"
+            :length="countdown" 
+            :animate="true" 
+            :interval="1000" />
+            <div @click="getMobileOS() ? inputEl.focus() : ''" :class="[customizers['no-space'] ? 'break-words' : '', alphabets ? 'text-center py-5 break-words leading-10': 'text-left border-none pt-4 md:border-2 md:border-neutral-800 pb-7 min-h-[100px]', getMobileOS() ? 'border-none' : '', !alphabets && textPosition=== 'center' ? 'text-center' : !alphabets && textPosition=== 'right' ? 'text-right' : 'text-left']" class="relative p-1 overflow-y-auto h-fit">
                 <Alphabet
                 v-for="(alphabet, index) in containerText"
                 :index="index"
@@ -32,10 +37,10 @@
         </div>
     </div>
     <TextAlign @align="textPosition = $event" :textPosition="textPosition" v-if="!getMobileOS() && !alphabets && !hideElements"/>
-    <div class="my-6 w-fit m-auto h-fit">
-        <p @click="alphabets = !alphabets" class="m-auto font-mono md:text-xl text-center rounded-md border-opacity-80 hover:border-opacity-100 opacity-60 hover:opacity-100 w-fit hover:border-slate-400 p-1 border">
-            <span v-if="!alphabets">THE ENGLISH ALPHABETS</span>
-            <span v-else>TYPING TESTS</span>
+    <div class="m-auto my-6 w-fit h-fit">
+        <p class="p-1 m-auto font-mono text-center border rounded-md md:text-xl border-opacity-80 hover:border-opacity-100 opacity-60 hover:opacity-100 w-fit hover:border-slate-400">
+            <span @click="toggleMode('alphabets')" v-if="!alphabets">THE ENGLISH ALPHABETS</span>
+            <span @click="toggleMode('test')" v-else>TYPING TESTS</span>
         </p>
     </div>
 </template>
@@ -44,7 +49,7 @@
 import { onMounted, ref, watch } from 'vue';
 import repeat from './svg/repeat.vue';
 import TextAlign from './TextAlign.vue'
-import CustomText from './CustomText.vue';
+import Countdown from './Countdown.vue'
 import Blind from './Blind.vue';
 import Clock from './Clock.vue'
 import Alphabet from './Alphabet.vue'
@@ -52,38 +57,36 @@ import RangeInput from './RangeInput.vue'
 import {storeToRefs} from 'pinia'
 import { customizeStore } from '../store/customizeStore';
 import {mainStore} from '../store/mainStore'
-import {useRouter} from 'vue-router'
+import { countdownStore } from '../store/countdownStore';
 
-const router = useRouter()
 const inputEl = ref(null)
 const store = mainStore()
-const { containerText, timerID, completionLevel, resultData, alphabets, typingCountdown, timedTyping, countdown, customTexts, beginCountdown, enableRepeat, storedTextForRepeat, playerInputLength, correctCount, wrongCount, playerInput, playerLastInput} = storeToRefs(store)
-const {generateText, getMobileOS, playerInputTyping, sessionComplete, resetToDefault, playerTyping} = store
-
-const customize = customizeStore()
-const {customizers, noSpace, hideElements} = storeToRefs(customize)
+const { containerText, previousPlayerInput, resultData, alphabets, timedTyping, beginCountdown, enableRepeat, playerInputLength, playerInput} = storeToRefs(store)
+const {generateText, getMobileOS, playerInputTyping, managePlayerInput, sessionComplete, resetToDefault, playerTyping} = store
 
 const textPosition = ref('left')
+const customize = customizeStore()
+const { customizers, hideElements} = storeToRefs(customize)
+
+const count = countdownStore()
+const {countdown} = storeToRefs(count)
+
+const toggleMode = (mode) => {
+    alphabets.value = !alphabets.value
+    if (mode === 'alphabets') {
+        localStorage.setItem('dorayi-typing-mode', 'alphabets')
+    } else {
+        localStorage.setItem('dorayi-typing-mode', 'test')
+    }
+
+    resetToDefault()
+    generateText(customizers.value)
+}
+
 const paste = () => {
     e.preventDefault()
     return
 }
-
-watch(timedTyping, (newVal) => {
-    customizers.value[11] = newVal
-    if (!newVal) {
-        typingCountdown.value = 0
-    }
-})
-
-watch(beginCountdown, (newVal, oldVal) => {
-    if (newVal) {
-        countdown.value = typingCountdown.value
-        timerID.value = setInterval(() => {
-            countdown.value = countdown.value - 1
-        }, 1000);
-    }
-})
 
 watch(countdown, (newVal, oldVal) => {
     if (newVal === 0 && resultData.value.totalTime) {
@@ -92,35 +95,9 @@ watch(countdown, (newVal, oldVal) => {
 })
 
 watch(playerInput, (newVal, oldVal) => {
-    if (getMobileOS()) playerLastInput.value = newVal[newVal.length - 1]
-    if (!playerInput.value) {
-        if (oldVal === containerText.value[0]) correctCount.value--
-        else wrongCount.value--
-    }
-    else {
-        if (oldVal.length > newVal.length) {
-            if (containerText.value[oldVal.length - 1] === oldVal[oldVal.length - 1]) correctCount.value--
-            else wrongCount.value--
-        }
-        else {
-            if (playerLastInput.value === containerText.value[newVal.length - 1]) correctCount.value ++
-            else wrongCount.value++
-        }
-    }
-
-    playerInputLength.value = playerInput.value.length
-    completionLevel.value = ((playerInputLength.value) / containerText.value.length) * 100     
+    previousPlayerInput.value = oldVal
+    managePlayerInput()
 })
-
-watch(containerText, (newVal, oldVal) => {
-    storedTextForRepeat.value = newVal
-})
-
-watch(customTexts, (newVal) => {
-    if (newVal) {
-        localStorage.setItem('custom-text', JSON.stringify(newVal))
-    }
-}, {deep: true})
 
 onMounted(() => {
     generateText(customizers.value)
@@ -132,10 +109,5 @@ onMounted(() => {
         window.addEventListener('keypress', playerTyping)
         window.addEventListener('keydown', playerTyping)
     }
-}) 
-
-watch(alphabets, (newVal) => {
-    resetToDefault()
-    generateText(customizers.value)
 })
 </script>

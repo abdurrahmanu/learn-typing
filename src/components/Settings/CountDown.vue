@@ -11,10 +11,8 @@
 </template>
 
 <script setup>
-import { watch } from 'vue';
 import {storeToRefs} from 'pinia';
 import {mainStore} from '../../store/mainStore';
-import {customizeStore} from '../../store/customizeStore'
 
 const main = mainStore()
 const { timedTyping} = storeToRefs(main)

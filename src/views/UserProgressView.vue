@@ -19,15 +19,6 @@
 </template>
 
 <script setup>
-import {storeToRefs} from 'pinia'
-import {customizeStore} from '../store/customizeStore'
-import { useRoute, useRouter } from 'vue-router';
-
-const route = useRoute()
-const router = useRouter()
-const store = customizeStore()
-const {next, customizeSettingsProp, textAlign} = storeToRefs(store)
-
 const allResults = JSON.parse(localStorage.getItem('dorayi-typing-result'))
 </script>
 

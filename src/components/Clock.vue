@@ -1,29 +1,69 @@
 <template>
-            <div class="relative">
-                <div class="peer">
-                    <playTimer v-if="!timedTyping" @click="timedTyping = !timedTyping" class="h-7" />
-                    <div v-if="timedTyping && !beginCountdown" class="flex items-center font-mono w-fit">  
-                            <playTimer @click="timedTyping = !timedTyping" class="h-7" />
-                            <div class="flex text-xs border border-black h-fit">
-                                <div class="px-2 border-r border-r-black w-fit" :class="[typingCountdown === 10 ? 'text-green-500' : '']" @click="typingCountdown = 10">10s</div>
-                                <div v-if="!alphabets" class="px-2 border-r border-r-black w-fit" :class="[typingCountdown === 20 ? 'text-green-500' : '']" @click="typingCountdown = 20">20s</div>
-                                <div v-if="!alphabets" class="px-2 border-l border-l-black w-fit" :class="[typingCountdown === 30 ? 'text-green-500' : '']" @click="typingCountdown = 30">30s</div>
-                            </div>
+    <div class="relative">
+        <div class="peer">
+            <playTimer v-if="!timedTyping" @click="timer" class="h-7" />
+            <div v-if="timedTyping && !beginCountdown" class="flex items-center font-mono w-fit">  
+                    <playTimer @click="timer" class="h-7" />
+                    <div class="flex text-xs border border-black h-fit">
+                        <div class="px-2 border-r border-r-black w-fit" :class="[savedCountdown === 10 ? 'text-green-500' : '']" @click="selectCountDown(10)">10s</div>
+                        <div v-if="!alphabets" class="px-2 border-r border-r-black w-fit" :class="[savedCountdown === 20 ? 'text-green-500' : '']" @click="selectCountDown(20)">20s</div>
+                        <div v-if="!alphabets" class="px-2 border-l border-l-black w-fit" :class="[savedCountdown === 30 ? 'text-green-500' : '']" @click="selectCountDown(30)">30s</div>
                     </div>
-                    <div class="flex items-center gap-2" v-if="beginCountdown">
-                        <pauseTimer @click="timedTyping = !timedTyping" class="h-7" />
-                        <div v-if="timedTyping && beginCountdown" class="font-mono text-lg">{{  countdown  }}</div>
-                    </div>
-                </div>
             </div>
+            <div class="flex items-center gap-2" v-if="beginCountdown">
+                <pauseTimer @click="timer" class="h-7" />
+                <Countdown 
+                v-show="timedTyping && beginCountdown" 
+                :length="countdown" 
+                :start="beginCountdown" 
+                :cancel="timedTyping"
+                :animate="true"
+                :interval="1000" />
+            </div>
+        </div>
+    </div>
 </template>
 
 <script setup>
+import {watch} from 'vue'
+import Countdown from './Countdown.vue'
 import pauseTimer from '../components/svg/pauseTimer.vue'
 import playTimer from '../components/svg/playTimer.vue'
 import {storeToRefs} from 'pinia'
 import {mainStore} from '../store/mainStore'
+import { customizeStore} from '../store/customizeStore'
+import { countdownStore } from '../store/countdownStore'
+
+const count = countdownStore()
+const {countdown} = storeToRefs(count)
+const {clearCounter} = count
 
 const store = mainStore()
-const { typingCountdown,  timedTyping, countdown, beginCountdown, alphabets} = storeToRefs(store)
+const {  timedTyping, beginCountdown, alphabets, timerID, savedCountdown, hasCompletedSession} = storeToRefs(store)
+const {sessionComplete, switchNext} = store
+
+const customize = customizeStore()
+const {customizers} = storeToRefs(customize)
+
+const selectCountDown = (count) => {
+    savedCountdown.value = count
+    countdown.value = count
+}
+
+const timer = () => {
+    timedTyping.value = !timedTyping.value
+    if (!timedTyping.value) clearCounter()
+    if (beginCountdown.value) {
+        clearInterval(timerID.value)
+        switchNext(customizers.value)
+    }
+}
+
+watch(countdown, (newVal) => {
+    if (newVal === 0) {
+        setTimeout(() => {            
+            sessionComplete()
+        }, 100);
+    }
+})
 </script>

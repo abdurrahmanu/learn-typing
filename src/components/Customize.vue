@@ -1,5 +1,5 @@
 <template>
-    <div v-if="!resultData.totalTime && !alphabets" class="bg-transparent rounded-md  w-[90%] m-auto max-w-fit ring-1 ring-green-500">
+    <div v-if="!hasCompletedSession && !alphabets" class="bg-transparent rounded-md  w-[90%] m-auto max-w-fit ring-1 ring-green-500">
         <div class="text-[12px] font-mono items-center p-[1px] flex max-w-[1000px] justify-center flex-wrap relative">
             <div class="p-1" v-for="(optionArr, key, listIndex) in option" :key="listIndex">          
                 <div 
@@ -9,7 +9,7 @@
                     <div 
                     class="px-[5px] hover:scale-110 rounded-md" 
                     :class="[disableOption[key] ? 'opacity-50 cursor-not-allowed' : '', customizers[key] === option && !disableOption[key]  ? 'text-green-400 bg-neutral-900' : '']"
-                    @click="!disableOption[key] ? configs = [option, key] : ''" 
+                    @click="changeConfig(option, key)" 
                     v-for="(option, index) in optionArr" 
                     :key="index">
                         {{ option }} 
@@ -19,7 +19,7 @@
             </div>
         </div>
     </div>
-    <div v-if="!resultData.totalTime && alphabets" class="flex flex-wrap justify-center gap-3 pt-10 text-sm">
+    <div v-if="!hasCompletedSession && alphabets" class="flex flex-wrap justify-center gap-3 pt-10 text-sm">
           <div :class="[alphabetsMode.uppercase ? 'bg-neutral-500' : '']" @click="changeMode('uppercase')" class="px-3 py-1 uppercase border rounded-md border-slate-600 w-fit">uppercase</div>
           <div :class="[alphabetsMode.customCase ? 'bg-neutral-500' : '']" @click="changeMode('customCase')" class="px-3 py-1 border hover:font-medium rounded-md border-slate-600 w-fit">cUstoMCaSE</div>
           <div :class="[alphabetsMode.spaced ? 'bg-neutral-500' : '']" @click="changeMode('spaced')" class="px-3 py-1 uppercase border hover:font-medium rounded-md border-slate-600 w-fit">spaced</div>
@@ -36,9 +36,11 @@ import {storeToRefs} from 'pinia'
 import { mainStore } from '../store/mainStore.js';
 
 const store = mainStore()
-const {alphabets, resultData, alphabetsMode} = storeToRefs(store)
+const {alphabets, alphabetsMode, hasCompletedSession} = storeToRefs(store)
+const {switchNext, resetToDefault, generateText} = store
+
 const customize = customizeStore()
-const { allOptions, configs, customizers, disableOption} = storeToRefs(customize)
+const { allOptions, configs, customizers, disableOption, next} = storeToRefs(customize)
 const {useConfig} = customize
 const optionsTooltip = ['length', 'words', 'test-type', 'format', 'test-type', 'test-type']
 
@@ -75,29 +77,45 @@ const changeMode = (mode) => {
       alphabetsMode.value.customCase = !alphabetsMode.value.customCase
     }
   
+    
+      if (mode === 'spaced') {
+        alphabetsMode.value.spaced = !alphabetsMode.value.spaced
+      }
+
+      if (mode === 'backwards') {
+        if (alphabetsMode.value.jumbo && !alphabetsMode.value.backwards) alphabetsMode.value.jumbo = false
+        alphabetsMode.value.backwards = !alphabetsMode.value.backwards
+      }
+      
     if (mode === 'jumbo') {
       if (alphabetsMode.value.backwards && !alphabetsMode.value.jumbo) alphabetsMode.value.backwards = false
       alphabetsMode.value.jumbo = !alphabetsMode.value.jumbo
-    }
-  
-    if (mode === 'backwards') {
-      if (alphabetsMode.value.jumbo && !alphabetsMode.value.backwards) alphabetsMode.value.jumbo = false
-      alphabetsMode.value.backwards = !alphabetsMode.value.backwards
-    }
+    } 
   
     if (mode === 'styled') {
       alphabetsMode.value.styled = !alphabetsMode.value.styled
     }
-  
-    if (mode === 'spaced') {
-      alphabetsMode.value.spaced = !alphabetsMode.value.spaced
-    }
 
     localStorage.setItem('alphabets-mode', JSON.stringify(alphabetsMode.value))
+
+    resetToDefault()
+    generateText(customizers.value)
   }  
 
-watch(configs, (newVal) => {
+const changeConfig = (key, option) => {
+  if (!disableOption.value[option]) {
+    configs.value = [option, key]
     useConfig()
+  } 
+}
+
+watch(next, (newVal) => {
+  if (newVal) {
+    setTimeout(() => {      
+      switchNext(customizers.value)
+      next.value = !next.value
+    }, 100);
+  }
 })
 </script>
 

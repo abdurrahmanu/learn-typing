@@ -30,7 +30,7 @@
 </template>
 
 <script setup>
-import {ref, watch} from 'vue'
+import {ref} from 'vue'
 import {Bar} from 'vue-chartjs'
 import {Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale} from 'chart.js'
 import {storeToRefs} from 'pinia'
@@ -39,32 +39,12 @@ import {mainStore} from '../store/mainStore'
 ChartJS.register( Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
 const store = mainStore()
-const {resultData, alphabetsInputTime} = storeToRefs(store)
-
-const scale = {
-    xAxes: [ {
-        display: true,
-        scaleLabel: {
-            labelString: 'Time (s)',
-            display: true
-        }
-    }
-    ],
-    yAxes: [ {
-        display: true,
-        scaleLabel: {
-            labelString: 'Alphabet',
-            display: true
-        }
-    }
-    ]
-}
+const {resultData, alphabetsInputTime,} = storeToRefs(store)
 
 const chartData = ref({
     labels: Object.keys(alphabetsInputTime.value),
     datasets: [ {data: Object.values(alphabetsInputTime.value), label: 'SESSION RESULT', borderWidth: 1, borderColor: '#69e869', color: '#97a3b8'} ]
 })
-
 
 const accuracy = () => {
     return Math.round((resultData.value.correctCount/(resultData.value.containerText.length) * 100))
@@ -73,9 +53,6 @@ const accuracy = () => {
 const elapsedTime = () => {
     return Math.round(resultData.value.totalTime / 1000)
 }
-
-
-
 
 const wordsPerMinute = () => {
     return Math.round((resultData.value.correctCount / 5) * (60 / elapsedTime()))
@@ -89,9 +66,3 @@ const errorRatioLevel = () => {
     return (resultData.value.wrongCount) + '/' + (resultData.value.containerText.length)
 }
 </script>
-
-
-<style>
-.a {
-}
-</style>
