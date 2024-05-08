@@ -39,22 +39,22 @@ onMounted(() => {
                 if (props.animationType) {
                     animationName.value = props.animationType.split(' ').join('-')
                 } else {
-                    const types = [
-                        'slide-down',
-                        'slide-up',
-                        'slide-left',
-                        'slide-right',
-                        'slide-right-scale-down',
-                        'slide-left-scale-down',
-                        'slide-up-scale-down',
-                        'slide-down-scale-down',
-                        'slide-right-scale-up',
-                        'slide-left-scale-up',
-                        'slide-up-scale-up',
-                        'slide-down-scale-up'
-                    ]
-                    let randomAnimation = Math.round(Math.random() * types.length - 1)
-                    animationName.value = types[randomAnimation]
+                    // const types = [
+                    //     'slide-down',
+                    //     'slide-up',
+                    //     'slide-left',
+                    //     'slide-right',
+                    //     'slide-right-scale-down',
+                    //     'slide-left-scale-down',
+                    //     'slide-up-scale-down',
+                    //     'slide-down-scale-down',
+                    //     'slide-right-scale-up',
+                    //     'slide-left-scale-up',
+                    //     'slide-up-scale-up',
+                    //     'slide-down-scale-up'
+                    // ]
+                    // let randomAnimation = Math.round(Math.random() * types.length - 1)
+                    animationName.value = 'slide-right-scale-down'
                 }
             }
         }

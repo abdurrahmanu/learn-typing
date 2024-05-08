@@ -172,7 +172,7 @@ export function englishWords() {
     
     const numbers = [
         '2000', '13', '3405', '3', '1', '100', '233', '808', '111', '12', '234', '20', '234', '099', '001', '706', '23', '23',
-        '324', '23', '132', '45', '644', '345', '324', '2121', '86', '43', '7609', '345', '2000', '3423'
+        '324', '23', '132', '45', '644', '345', '324', '2121', '86', '43', '7609', '345', '2000', '3423', '242', '534', '001', '2005', '3424', '2', '1', '43', '24', '234', '3123', '43643', '34234'
     ]
 
     const quotesWithoutAuthors = ref({
@@ -528,7 +528,7 @@ export function englishWords() {
         { quote: "You are stronger than you think, Richard. Believe in yourself.", author: "Kahlan Amnell" }
         ]
     },
-    "Star Wars: Episode IV - A New Hope": {
+    "Star Wars": {
         quotes: [
         { quote: "May the Force be with you.", author: "Obi-Wan Kenobi" },
         { quote: "The Force will be with you, always.", author: "Obi-Wan Kenobi" },

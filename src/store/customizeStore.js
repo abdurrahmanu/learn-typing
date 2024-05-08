@@ -6,6 +6,7 @@ export const customizeStore = defineStore('customizeStore', () => {
     const showMoreSettings = ref(false)
     const hideElements = ref(false)
     const next = ref(false)
+    const onlyMovieQuotes = ref(false)
 
     const customizers = ref({
         'text-length': 'auto',
@@ -19,6 +20,7 @@ export const customizeStore = defineStore('customizeStore', () => {
         'blind-mode': false,
         'custom-camel-case': false,
         'no-space': false,
+        'movie-quotes': false
     })
 
     const disableOption = ref({
@@ -76,6 +78,10 @@ export const customizeStore = defineStore('customizeStore', () => {
             customizers.value['custom-camel-case'] = false
         }
 
+        if (boolean && mode === 'movie-quotes') {
+            customizers.value['text-length'] = 'auto'
+        }
+
         if (boolean && mode === 'custom-camel-case') {
             customizers.value['all-caps'] = false
         }
@@ -88,6 +94,7 @@ export const customizeStore = defineStore('customizeStore', () => {
 
     return {
         disableOption,
+        onlyMovieQuotes,
         configs,
         showMoreSettings,
         customizers,

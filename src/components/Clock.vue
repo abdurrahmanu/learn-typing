@@ -5,9 +5,9 @@
             <div v-if="timedTyping && !beginCountdown" class="flex items-center font-mono w-fit">  
                     <playTimer @click="timer" class="h-7" />
                     <div class="flex text-xs border border-black h-fit">
-                        <div class="px-2 border-r border-r-black w-fit" :class="[savedCountdown === 10 ? 'text-green-500' : '']" @click="selectCountDown(10)">10s</div>
-                        <div v-if="!alphabets" class="px-2 border-r border-r-black w-fit" :class="[savedCountdown === 20 ? 'text-green-500' : '']" @click="selectCountDown(20)">20s</div>
-                        <div v-if="!alphabets" class="px-2 border-l border-l-black w-fit" :class="[savedCountdown === 30 ? 'text-green-500' : '']" @click="selectCountDown(30)">30s</div>
+                        <div class="px-2 border-r border-r-black w-fit" :class="[savedCountdown === 10 ? 'text-green-700 bg-white font-black' : '']" @click="selectCountDown(10)">10s</div>
+                        <div class="px-2 border-r border-r-black w-fit" :class="[savedCountdown === 20 ? 'text-green-700 bg-white font-black' : '']" @click="selectCountDown(20)">20s</div>
+                        <div class="px-2 border-l border-l-black w-fit" :class="[savedCountdown === 30 ? 'text-green-700 bg-white font-black' : '']" @click="selectCountDown(30)">30s</div>
                     </div>
             </div>
             <div class="flex items-center gap-2" v-if="beginCountdown">
@@ -39,7 +39,7 @@ const {countdown} = storeToRefs(count)
 const {clearCounter} = count
 
 const store = mainStore()
-const {  timedTyping, beginCountdown, alphabets, timerID, savedCountdown, hasCompletedSession} = storeToRefs(store)
+const {  timedTyping, beginCountdown, alphabets, timerID, savedCountdown,} = storeToRefs(store)
 const {sessionComplete, switchNext} = store
 
 const customize = customizeStore()
@@ -48,6 +48,7 @@ const {customizers} = storeToRefs(customize)
 const selectCountDown = (count) => {
     savedCountdown.value = count
     countdown.value = count
+    switchNext(customizers.value)
 }
 
 const timer = () => {

@@ -13,7 +13,7 @@
 </template>
 
 <script setup>
-import {onBeforeMount, watch} from 'vue'
+import {onBeforeMount} from 'vue'
 import Restart from './components/Restart.vue';
 import Animate from './components/Animate.vue';
 import Theme from './components/Theme.vue';

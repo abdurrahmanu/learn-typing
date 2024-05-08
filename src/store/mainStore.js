@@ -10,6 +10,7 @@ export const mainStore = defineStore('mainStore', () => {
         'font',
         'font'
     ])
+    const movieQoutes = ref(false)
     const theme = ref('neutral')
     const enableBackSpace = ref(true)
     const completionLevel = ref(0)
@@ -26,7 +27,7 @@ export const mainStore = defineStore('mainStore', () => {
     const playerInput = ref('')
     const backspaceIsPressed = ref(false)
     const timedTyping = ref(false)
-    const savedCountdown = ref(0)
+    const savedCountdown = ref(10)
     const customTexts = ref({})
     const useCustomText = ref(false)
     const enableRepeat = ref(false)
@@ -37,6 +38,7 @@ export const mainStore = defineStore('mainStore', () => {
     const timerID = ref()
     const alphabets = ref(false)
     const currentAlphabetInputTime = ref(null)
+    const movie = ref({})
     const alphabetsMode = ref({
         uppercase: false,
         customCase: false,
@@ -150,7 +152,19 @@ export const mainStore = defineStore('mainStore', () => {
             containerText.value = storedTextForRepeat.value
         } 
         else {
-            containerText.value = UseGetQuotes(config).res.value
+            let quote = UseGetQuotes(config).res.value
+
+            if (typeof quote === 'object') {  
+                containerText.value = quote[2]
+                movie.value = {
+                    name : quote[0],
+                    quoteAuthor: quote[1]
+                }
+            } 
+            else {
+                movie.value = {}
+                containerText.value = quote
+            }
         }
 
         storedTextForRepeat.value = containerText.value
@@ -315,6 +329,7 @@ export const mainStore = defineStore('mainStore', () => {
         managePlayerInput,
         allFonts,
         hasCompletedSession,
+        movie,
         selectedFont,
         timerID,
         howToUseCustomText,
