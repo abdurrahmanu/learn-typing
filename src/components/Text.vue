@@ -23,7 +23,7 @@
                 :equality="playerInput[index] === alphabet"
                 :alphabet="alphabet"/>
             </div>
-            <p @click="searchMovie(movie.quoteAuthor, movie.name)"  v-if="movie.name" class="text-xs text-right text-slate-500 hover:underline max-w-[200px]">{{movie.quoteAuthor}} - {{ movie.name }}</p>
+            <p @click="searchMovie(movie.quoteAuthor, movie.name)"  v-if="movie.name" class="text-xs text-right text-slate-500 hover:underline">{{movie.quoteAuthor}} - {{ movie.name }}</p>
             <div v-if="!hideElements" class="flex items-center py-3 m-auto">
                 <RangeInput />
                 <repeat class="w-4" v-if="!alphabets" @click="enableRepeat = !enableRepeat" />
