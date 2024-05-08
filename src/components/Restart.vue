@@ -1,8 +1,8 @@
 <template>
     <div class="text-sm">
-        <div v-if="getMobileOS()" class="m-auto w-fit text-slate-500">
-            <div v-if="!hasStartedSession" @click="restart" class="p-1 m-auto text-center w-fit">RESTART</div>
-            <div @click="next" class="p-1 m-auto text-center w-fit">NEXT</div>
+        <div v-if="getMobileOS()" class="m-auto space-y-2 text-base w-fit text-slate-500">
+            <div v-if="!hasStartedSession" @click="restart" class="p-1 m-auto text-center border rounded-md w-fit border-neutral-600">RESTART</div>
+            <div @click="next" class="p-1 m-auto text-center border rounded-md w-fit border-neutral-600">NEXT</div>
         </div>
     
         <div v-else class="p-2 m-auto space-y-3 font-mono w-fit h-fit text-slate-500">
