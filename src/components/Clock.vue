@@ -56,8 +56,8 @@ const timer = () => {
     if (!timedTyping.value) clearCounter()
     if (beginCountdown.value) {
         clearInterval(timerID.value)
-        switchNext(customizers.value)
     }
+    switchNext(customizers.value)
 }
 
 watch(countdown, (newVal) => {

@@ -2,6 +2,7 @@ import { ref } from 'vue'
 import { englishWords } from '../../data/englishWords.js';
 import { useCustomizeFormat } from './customizers/useCustomizeFormat';
 import { customizeStore } from '../store/customizeStore.js';
+import authoredQuotes from '../../data/quotes.json'
 
 export function  UseGetQuotes (config, customText) {
     const res = ref('')
@@ -49,6 +50,17 @@ export function  UseGetQuotes (config, customText) {
                     let quote = ref(quotes[Math.ceil(Math.random() * quotes.length) - 1])
                     res.value = quote.value
 
+                    if (config['author-quotes']) {
+                        let quoteIndex = Math.ceil(Math.random() * authoredQuotes.length)  - 1
+                        let quote = authoredQuotes[quoteIndex]
+
+                        if (customizeStore().onlyAuthoredQuotes) {
+                            res.value = [quote.author, quote.quote]
+                        } else {
+                            if (choice) res.value = [quote.author, quote.quote]
+                        }
+                    }
+
                     if (config['movie-quotes']) {
                         let movies = [
                             movieQuotes['The Hobbit'].quotes,
@@ -68,7 +80,6 @@ export function  UseGetQuotes (config, customText) {
 
                         if (customizeStore().onlyMovieQuotes) {
                             res.value = [movieName, quote.author, quote.quote]
-                            console.log('object');
                         } else {
                             if (choice) res.value = [movieName, quote.author, quote.quote]
                         }
@@ -125,7 +136,11 @@ export function  UseGetQuotes (config, customText) {
 
     function customizers () {
         if (typeof res.value === 'object') {
-            res.value = [res.value[0], res.value[1], useCustomizeFormat([config['include-numbers'], config['include-punctuations'], config['include-caps'], config['all-caps'], config['custom-camel-case'], config['no-space'], config['test-type']],  res.value[2]).customizeFormatRes.value]
+            if (customizeStore().onlyAuthoredQuotes) {
+                res.value = [res.value[0], useCustomizeFormat([config['include-numbers'], config['include-punctuations'], config['include-caps'], config['all-caps'], config['custom-camel-case'], config['no-space'], config['test-type']],  res.value[1]).customizeFormatRes.value]
+            } else if (customizeStore().onlyMovieQuotes) {
+                res.value = [res.value[0], res.value[1], useCustomizeFormat([config['include-numbers'], config['include-punctuations'], config['include-caps'], config['all-caps'], config['custom-camel-case'], config['no-space'], config['test-type']],  res.value[2]).customizeFormatRes.value]
+            }
         } else {
             res.value = useCustomizeFormat([config['include-numbers'], config['include-punctuations'], config['include-caps'], config['all-caps'], config['custom-camel-case'], config['no-space'], config['test-type']],  res.value).customizeFormatRes.value
         }

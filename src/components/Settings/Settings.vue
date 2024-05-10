@@ -2,10 +2,11 @@
     <div :class="{'z-[999]' : !(showMoreSettings && !getMobileOS())}" class="absolute top-0 bottom-0 right-0 left-0 z-[99]" v-if="showMoreSettings">
         <div @click="toggleSettings" class="opacity-40 absolute bg-white w-full top-0 bottom-0 right-0 left-0 z-[999] blur-lg"></div>
         <div class="overflow-y-auto" :class="[showMoreSettings ? 'fixed top-0 right-0 bottom-0 h-[100dvh] max-w-[500px] w-fit z-[9999]' : '', appTheme ]">
-            <div class="relative text-sm leading-5 lg:text-base md:text-sm lg:min-w-fit">
+            <div class="relative text-sm leading-5 lg:text-base md:text-sm lg:min-w-fit" :class="[theme === 'neutral' ? 'text-slate-400' : 'text-slate-800']">
                 <Header />
                 <Fonts />
                 <MovieQuotes />
+                <AuthoredQoutes />
                 <BlindMode />
                 <BackSpace />
                 <Countdown />
@@ -20,6 +21,7 @@
 
 <script setup>
 import Fonts from './Fonts.vue'
+import AuthoredQoutes from './AuthoredQuotes.vue'
 import Header from './Header.vue'
 import AllCaps from './AllCaps.vue'
 import CustomCamelCase from './CustomCamelCase.vue'
@@ -34,7 +36,7 @@ import { mainStore } from '../../store/mainStore.js';
 import {customizeStore} from '../../store/customizeStore'
 
 const store = mainStore()
-const {appTheme, pauseTyping} = storeToRefs(store)
+const {appTheme, pauseTyping, theme} = storeToRefs(store)
 const {getMobileOS} = store
 
 const customize = customizeStore()

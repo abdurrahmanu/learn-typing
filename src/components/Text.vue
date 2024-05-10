@@ -1,20 +1,12 @@
 <template>
     <div :class="[hideElements ? 'pt-32' : 'pt-0']" class="w-[90%] min-h-[150px] space-y-1 relative transition-none  max-w-[900px] m-auto">
-        <div v-if="getMobileOS()"class="w-fit">
-            <input
-            @paste.prevent="paste"
-            v-model="playerInput"
-            ref="inputEl"
-            type="text" 
-            class="text-sm text-center rounded-md appearance-none outline-none max-w-[100px] text-slate-100 bg-zinc-900 mx-auto opacity-0" 
-            :maxlength="containerText.length">
-        </div>
+        <MobileInput />
         <div :class="[alphabets ? 'px-2 py-1 max-w-[300px]' : 'max-w-[600px]', hideElements ? 'text-center' : 'pt-10']"  class="flex justify-between m-auto">
             <Clock/>
             <Blind />
         </div>
         <div v-if="containerText" :class="[hideElements ? 'text-[20px] md:text-[24px]' : 'text-[17px] md:text-[19px]']" class="leading-6 md:leading-[30px] transition-all duration-100 relative m-auto max-w-[600px] w-full ">
-            <div @click="getMobileOS() ? inputEl.focus() : ''" :class="[customizers['no-space'] ? 'break-words' : '', alphabets ? 'text-center py-5 break-words leading-10': 'text-left border-none pt-4 md:border-2 md:border-neutral-800 pb-7 min-h-[100px]', getMobileOS() ? 'border-none' : '', !alphabets && textPosition=== 'center' ? 'text-center' : !alphabets && textPosition=== 'right' ? 'text-right' : 'text-left']" class="relative p-1 overflow-y-auto h-fit">
+            <div ref="containerRef" @click="getMobileOS() ? inputEl.focus() : ''" :class="[customizers['no-space'] ? 'break-words' : '', alphabets ? 'text-center break-words leading-10': 'text-left border-none md:border-neutral-800', getMobileOS() ? 'border-none' : '', !alphabets && textPosition=== 'center' ? 'text-center' : !alphabets && textPosition=== 'right' ? 'text-right' : 'text-left']" class="relative overflow-y-auto h-fit max-h-[50px] min-h-fit scroll-smooth noscrollbar">
                 <Alphabet
                 v-for="(alphabet, index) in containerText"
                 :index="index"
@@ -23,25 +15,26 @@
                 :equality="playerInput[index] === alphabet"
                 :alphabet="alphabet"/>
             </div>
-            <p @click="searchMovie(movie.quoteAuthor, movie.name)"  v-if="movie.name" class="text-xs text-right text-slate-500 hover:underline">{{movie.quoteAuthor}} - {{ movie.name }}</p>
+            <p @click="searchMovie(movie.quoteAuthor, movie.name)"  v-if="movie.name" class="text-xs italic text-right text-slate-500 hover:underline">{{movie.quoteAuthor}} - {{ movie.name }}</p>
+            <p  v-if="authoredQuote.author" class="text-xs italic text-right text-slate-500 hover:underline">{{authoredQuote.author}}</p>
             <div v-if="!hideElements" class="flex items-center py-3 m-auto">
                 <RangeInput />
                 <repeat class="w-4" v-if="!alphabets" @click="enableRepeat = !enableRepeat" />
             </div>
         </div>
     </div>
-    <TextAlign @align="textPosition = $event" :textPosition="textPosition" v-if="!getMobileOS() && !alphabets && !hideElements"/>
-    <div class="m-auto my-6 w-fit h-fit">
-        <p class="p-1 m-auto font-mono text-center border rounded-md md:text-xl border-opacity-80 hover:border-opacity-100 opacity-60 hover:opacity-100 w-fit hover:border-slate-400">
-            <span @click="toggleMode('alphabets')" v-if="!alphabets">THE ENGLISH ALPHABETS</span>
-            <span @click="toggleMode('test')" v-else>TYPING TESTS</span>
-        </p>
-    </div>
+    <TextAlign 
+    v-if="!getMobileOS() && !alphabets && !hideElements"
+    @align="textPosition = $event" 
+    :textPosition="textPosition" />
+    <SwitchModes />
 </template>
 
 <script setup>
 import { onMounted, ref, watch } from 'vue';
 import repeat from './svg/repeat.vue';
+import SwitchModes from './SwitchModes.vue'
+import MobileInput from'./MobileInput.vue'
 import TextAlign from './TextAlign.vue'
 import Blind from './Blind.vue';
 import Clock from './Clock.vue'
@@ -54,9 +47,10 @@ import { countdownStore } from '../store/countdownStore';
 
 const inputEl = ref(null)
 const store = mainStore()
-const { containerText, previousPlayerInput, resultData, alphabets, movie, enableRepeat, playerInputLength, playerInput} = storeToRefs(store)
-const {generateText, getMobileOS, playerInputTyping, managePlayerInput, sessionComplete, resetToDefault, playerTyping} = store
+const { containerText, previousPlayerInput, resultData, alphabets, movie, enableRepeat, playerInputLength, playerInput, authoredQuote, scrollTextContainer} = storeToRefs(store)
+const {generateText, getMobileOS, playerInputTyping, managePlayerInput, sessionComplete, playerTyping} = store
 
+const containerRef = ref(null)
 const textPosition = ref('left')
 const customize = customizeStore()
 const { customizers, hideElements} = storeToRefs(customize)
@@ -64,29 +58,17 @@ const { customizers, hideElements} = storeToRefs(customize)
 const count = countdownStore()
 const {countdown} = storeToRefs(count)
 
-const toggleMode = (mode) => {
-    alphabets.value = !alphabets.value
-    if (mode === 'alphabets') {
-        movie.value = {}
-        localStorage.setItem('dorayi-typing-mode', 'alphabets')
-    } else {
-        localStorage.setItem('dorayi-typing-mode', 'test')
-    }
-
-    resetToDefault()
-    generateText(customizers.value)
-}
-
-const paste = () => {
-    e.preventDefault()
-    return
-}
+watch(scrollTextContainer, (newVal)=> {
+    containerRef.value.scrollTo({
+        top: newVal.top
+    })
+}, {deep: true})
 
 const searchMovie = (author, movie) => {
     window.open(`https://google.com/search?q=${author}+${movie}`, '_blank')
 }
 
-watch(countdown, (newVal, oldVal) => {
+watch(countdown, (newVal) => {
     if (newVal === 0 && resultData.value.totalTime) {
         sessionComplete()
     }
@@ -109,3 +91,14 @@ onMounted(() => {
     }
 })
 </script>
+
+<style scoped>
+.noscrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none
+}
+</style>

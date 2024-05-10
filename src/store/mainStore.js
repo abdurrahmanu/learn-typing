@@ -10,7 +10,6 @@ export const mainStore = defineStore('mainStore', () => {
         'font',
         'font'
     ])
-    const movieQoutes = ref(false)
     const theme = ref('neutral')
     const enableBackSpace = ref(true)
     const completionLevel = ref(0)
@@ -36,9 +35,13 @@ export const mainStore = defineStore('mainStore', () => {
     const previousPlayerInput = ref('')
     const howToUseCustomText = ref('select text using options')
     const timerID = ref()
+    const scrollDistance = ref(0)
+    const scrollTextContainer = ref({})
     const alphabets = ref(false)
     const currentAlphabetInputTime = ref(null)
     const movie = ref({})
+    const authoredQuote = ref({})
+    const alphabetsInputTime = ref({})
     const alphabetsMode = ref({
         uppercase: false,
         customCase: false,
@@ -46,8 +49,6 @@ export const mainStore = defineStore('mainStore', () => {
         backwards: false,
         spaced: false,
         styled: false,
-    })
-    const alphabetsInputTime = ref({
     })
 
     const appTheme = computed(() => {
@@ -155,14 +156,23 @@ export const mainStore = defineStore('mainStore', () => {
             let quote = UseGetQuotes(config).res.value
 
             if (typeof quote === 'object') {  
-                containerText.value = quote[2]
-                movie.value = {
-                    name : quote[0],
-                    quoteAuthor: quote[1]
+                if (!quote[2]) {
+                    containerText.value = quote[1]
+                    authoredQuote.value = {
+                        author: quote[0]
+                    }
+                }
+                else {
+                    containerText.value = quote[2]
+                    movie.value = {
+                        name : quote[0],
+                        quoteAuthor: quote[1]
+                    }
                 }
             } 
             else {
                 movie.value = {}
+                authoredQuote.value = {}
                 containerText.value = quote
             }
         }
@@ -175,6 +185,7 @@ export const mainStore = defineStore('mainStore', () => {
             clearInterval(timerID.value)
             beginCountdown.value = false
         }
+        scrollDistance.value = 0
         hasCompletedSession.value = false
         hasStartedSession.value = false
         beginCountdown.value = false
@@ -361,6 +372,9 @@ export const mainStore = defineStore('mainStore', () => {
         appTheme,
         alphabetsInputTime,
         previousPlayerInput,
+        authoredQuote,
+        scrollTextContainer,
+        scrollDistance,
         svgFill,
     }
 })

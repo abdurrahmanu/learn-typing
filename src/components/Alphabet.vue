@@ -1,5 +1,5 @@
 <template>
-    <div :class="[customizers['no-space'] ? '' : 'whitespace-pre-wrap']" class="inline font-mono relative">
+    <div :ref="currentIndex ? 'currentAlphabet' : ''" :class="[customizers['no-space'] ? '' : 'whitespace-pre-wrap']" class="relative inline font-mono">
         <Transition v-if="currentIndex" appear>            
             <span :class="[mainStyle, equalStyle, currentIndexStyle, styledAlphas]" class="transition-all">{{ alphabet }}</span>
         </Transition>
@@ -8,14 +8,15 @@
 </template> 
 
 <script setup>
-import { defineProps, computed } from 'vue';
+import { defineProps, computed, watchEffect, ref } from 'vue';
 import {storeToRefs} from 'pinia'
 import {mainStore} from '../store/mainStore'
 import { customizeStore } from '../store/customizeStore';
 
 const store = mainStore()
-const { playerInputLength, alphabets, alphabetsMode, theme } = storeToRefs(store)
+const { playerInputLength, alphabets, alphabetsMode, theme, scrollTextContainer, scrollDistance} = storeToRefs(store)
 
+const currentAlphabet = ref(null)
 const customize = customizeStore()
 const {customizers} = storeToRefs(customize)
 const emit = defineEmits(['equal', 'unequal'])
@@ -24,6 +25,31 @@ const props = defineProps({
     index: Number,
     currentIndex: Boolean,
     equality: Boolean,
+})
+
+watchEffect(() => {
+    if (props.currentIndex) {
+        if (currentAlphabet.value instanceof HTMLElement) {
+            const parentHeight = ref(currentAlphabet.value.parentElement.getBoundingClientRect().height)
+            const parentScrollHeight = ref(currentAlphabet.value.parentElement.scrollHeight)
+            const parentScrollTop = ref(currentAlphabet.value.parentElement.scrollTop)
+            const caretTopOffset = ref(currentAlphabet.value.getBoundingClientRect().top + currentAlphabet.value.offsetHeight)
+            const bottom = currentAlphabet.value.parentElement.getBoundingClientRect().bottom
+
+            if (bottom - caretTopOffset.value <= 10) {
+                if (parentScrollHeight.value - parentHeight.value >= parentHeight.value) {
+                    scrollDistance.value += parentHeight.value - currentAlphabet.value.offsetHeight - 10
+                    console.log(scrollDistance.value);
+                }
+                else {
+                    scrollDistance.value += parentScrollHeight.value - parentScrollTop.value 
+                }
+                scrollTextContainer.value = {
+                    top: scrollDistance.value
+                }
+            }
+        }
+    }
 })
 
 const equalStyle = computed(() => {
@@ -43,7 +69,7 @@ const styledAlphas = computed(() => {
 
 const currentIndexStyle = computed(() => {
     let text = theme.value === 'neutral' ? ' border border-zinc-700 text-white' : ' bg-transparent border border-black text-neutral-900' 
-    return  props.currentIndex ? 'py-[2px]' + text : ''
+    return  props.currentIndex ? text : ''
 })
 
 const mainStyle = computed(() => {
