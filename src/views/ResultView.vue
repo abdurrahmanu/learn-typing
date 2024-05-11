@@ -25,7 +25,12 @@
             </div>
             <div class="py-1 text-zinc-600">{{ resultData.testType }}</div>
         </div>
+        <div v-if="beatCountdown" class="text-green-700 uppercase">You beat the time, you left {{ remainingTime() }}</div>
+        <div v-if="timedTyping && !beatCountdown" class="text-red-500">You were unable to beat the time</div>
         <!-- <Bar :data="chartData" class="w-[600px] max-w-[90%] bg-neutral-700 m-auto relative p-2"/> -->
+        <div class="py-16 font-mono text-2xl text-black uppercase">
+            PERFROMANCE GRAPH COMING SOON...
+        </div>
     </div>
 </template>
 
@@ -39,12 +44,16 @@ import {mainStore} from '../store/mainStore'
 // ChartJS.register( Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
 const store = mainStore()
-const {resultData, alphabetsInputTime, beatCountdown, timedTyping} = storeToRefs(store)
+const {resultData, alphabetsInputTime, beatCountdown, timedTyping, savedCountdown} = storeToRefs(store)
 
 // const chartData = ref({
 //     labels: Object.keys(alphabetsInputTime.value).reverse(),
 //     datasets: [ {data: Object.values(alphabetsInputTime.value), label: 'SESSION RESULT', borderWidth: 1, borderColor: '#69e869', color: '#97a3b8'} ]
 // })
+
+const remainingTime = () => {
+    return (savedCountdown.value - resultData.value.totalTime).toFixed(2)
+}
 
 const accuracy = () => {
     return Math.round((resultData.value.correctCount/(resultData.value.containerText.length) * 100))

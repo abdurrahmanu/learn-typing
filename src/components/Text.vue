@@ -17,9 +17,9 @@
             </div>
             <p @click="searchMovie(movie.quoteAuthor, movie.name)"  v-if="movie.name" class="text-xs italic text-right text-slate-500 hover:underline">{{movie.quoteAuthor}} - {{ movie.name }}</p>
             <p  v-if="authoredQuote.author" class="text-xs italic text-right text-slate-500 hover:underline">{{authoredQuote.author}}</p>
-            <div v-if="!hideElements" class="flex items-center py-3 m-auto">
+            <div v-if="!hideElements" class="flex items-center py-3 m-auto  w-[90%] space-x-2">
                 <RangeInput />
-                <repeat class="w-4" v-if="!alphabets" @click="enableRepeat = !enableRepeat" />
+                <repeat class="w-5" v-if="!alphabets" @click="enableRepeat = !enableRepeat" />
             </div>
         </div>
     </div>

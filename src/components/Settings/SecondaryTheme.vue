@@ -1,5 +1,6 @@
 <template>
-    <div class="flex flex-wrap p-2 px-1 border-t border-neutral-900">
+    <p class="py-2 text-center border-t border-t-black">SECONDARY COLOR</p>
+    <div class="flex flex-wrap p-2 px-1 pt-0 border-t">
         <div class="px-3 py-2 space-x-4">
             <input v-model="secondaryTheme" value="green" type="radio" name="" id="green">
             <label for="green">Green</label>

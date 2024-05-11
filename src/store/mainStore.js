@@ -232,7 +232,8 @@ export const mainStore = defineStore('mainStore', () => {
         if (timedTyping.value) {
             clearInterval(timerID.value)
             beginCountdown.value = false
-            totalTime.value = savedCountdown.value
+            if (!beatCountdown.value) totalTime.value = savedCountdown.value
+            else totalTime.value = (performance.now() - startTime.value).toFixed(0) / 1000
         } else {
             totalTime.value = (performance.now() - startTime.value).toFixed(0) / 1000
         }
@@ -270,6 +271,7 @@ export const mainStore = defineStore('mainStore', () => {
 
         if (playerInputLength.value === 1)  {
             if (timedTyping.value) {
+                beatCountdown.value = false
                 beginCountdown.value = true
             }
             startTime.value = performance.now();
@@ -283,6 +285,7 @@ export const mainStore = defineStore('mainStore', () => {
         playerLastInput.value = eventSelector
         playerInput.value += playerLastInput.value
         if (playerInputLength.value === containerText.value.length) {
+            if (timedTyping.value) beatCountdown.value = true
             sessionComplete()
         }
     }
@@ -305,6 +308,7 @@ export const mainStore = defineStore('mainStore', () => {
         if (!hasStartedSession.value) hasStartedSession.value = true
         if (playerInputLength.value === 1)  {
             if (timedTyping.value) {
+                beatCountdown.value = false
                 beginCountdown.value = true
             }
             startTime.value = performance.now();
