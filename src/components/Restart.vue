@@ -32,6 +32,7 @@ const { customizers} = storeToRefs(customize)
 window.addEventListener('keydown', event=> {
     if (event.key === 'Escape' && !hasCompletedSession.value) next()
     if (event.key === 'Enter' && hasCompletedSession.value) next()
+    
 })
 
 const restart = () => {
@@ -41,9 +42,9 @@ const restart = () => {
 
 const next = () => {
     if (timedTyping.value) clearCounter()
-    if (hasCompletedSession) {
-        router.push('/')
-    }
-    switchNext(customizers.value)
+        if (hasCompletedSession.value) {
+            router.push('/')
+        }
+        switchNext(customizers.value)
 }
 </script>

@@ -39,7 +39,7 @@ const {countdown} = storeToRefs(count)
 const {clearCounter} = count
 
 const store = mainStore()
-const {  timedTyping, beginCountdown, alphabets, timerID, savedCountdown,} = storeToRefs(store)
+const {  timedTyping, beginCountdown, timerID, savedCountdown,} = storeToRefs(store)
 const {sessionComplete, switchNext} = store
 
 const customize = customizeStore()
@@ -62,9 +62,7 @@ const timer = () => {
 
 watch(countdown, (newVal) => {
     if (newVal === 0) {
-        setTimeout(() => {            
-            sessionComplete()
-        }, 100);
+        sessionComplete()
     }
 })
 </script>

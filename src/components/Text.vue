@@ -6,7 +6,7 @@
             <Blind />
         </div>
         <div v-if="containerText" :class="[hideElements ? 'text-[20px] md:text-[24px]' : 'text-[17px] md:text-[19px]']" class="leading-6 md:leading-[30px] transition-all duration-100 relative m-auto max-w-[600px] w-full ">
-            <div ref="containerRef" @click="getMobileOS() ? inputEl.focus() : ''" :class="[customizers['no-space'] ? 'break-words' : '', alphabets ? 'text-center break-words leading-10': 'text-left border-none md:border-neutral-800', getMobileOS() ? 'border-none' : '', !alphabets && textPosition=== 'center' ? 'text-center' : !alphabets && textPosition=== 'right' ? 'text-right' : 'text-left']" class="relative overflow-y-auto h-fit max-h-[50px] min-h-fit scroll-smooth noscrollbar">
+            <div ref="containerRef" @click="getMobileOS() ? inputEl.focus() : ''" :class="[customizers['no-space'] ? 'break-words' : '', alphabets ? 'text-center break-words leading-10': 'text-left border-none md:border-neutral-800', getMobileOS() ? 'border-none' : '', !alphabets && textPosition=== 'center' ? 'text-center' : !alphabets && textPosition=== 'right' ? 'text-right' : 'text-left']" class="relative overflow-y-auto h-fit min-h-fit scroll-smooth noscrollbar">
                 <Alphabet
                 v-for="(alphabet, index) in containerText"
                 :index="index"
@@ -47,7 +47,7 @@ import { countdownStore } from '../store/countdownStore';
 
 const inputEl = ref(null)
 const store = mainStore()
-const { containerText, previousPlayerInput, resultData, alphabets, movie, enableRepeat, playerInputLength, playerInput, authoredQuote, scrollTextContainer} = storeToRefs(store)
+const { containerText, previousPlayerInput, resultData, alphabets, movie, beatCountdown, enableRepeat, playerInputLength, playerInput, authoredQuote, scrollTextContainer} = storeToRefs(store)
 const {generateText, getMobileOS, playerInputTyping, managePlayerInput, sessionComplete, playerTyping} = store
 
 const containerRef = ref(null)
@@ -70,6 +70,7 @@ const searchMovie = (author, movie) => {
 
 watch(countdown, (newVal) => {
     if (newVal === 0 && resultData.value.totalTime) {
+        beatCountdown.value = false
         sessionComplete()
     }
 })

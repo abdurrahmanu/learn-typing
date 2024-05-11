@@ -1,6 +1,7 @@
 import {defineStore} from 'pinia'
 import {ref, computed} from 'vue'
 import {UseGetQuotes} from '../composables/UseGetQuotes'
+import { settings } from 'firebase/analytics'
 
 export const mainStore = defineStore('mainStore', () => {
     const selectedFont = ref('font')
@@ -10,8 +11,10 @@ export const mainStore = defineStore('mainStore', () => {
         'font',
         'font'
     ])
+    const secondaryTheme = ref('green')
     const theme = ref('neutral')
     const enableBackSpace = ref(true)
+    const beatCountdown = ref(null)
     const completionLevel = ref(0)
     const correctCount = ref(0)
     const wrongCount = ref(0)
@@ -81,11 +84,11 @@ export const mainStore = defineStore('mainStore', () => {
             wrongCount: wrongCount.value,
             containerText: containerText.value,
             characters: containerText.value.length,
-            totalTime: Math.round(totalTime.value),
-            testType: ''
+            totalTime: totalTime.value.toFixed(2),
+            testType: timedTyping.value ? 'Countdown mode ' + savedCountdown.value + 's' : '' + alphabets.value ? 'Alphabets mode' : 'Test mode'
         }
     })
-    
+
     const generateText = (config, restart, options) => {
         if (alphabets.value) {
             enableRepeat.value = false
@@ -179,18 +182,19 @@ export const mainStore = defineStore('mainStore', () => {
 
         storedTextForRepeat.value = containerText.value
     }
-    
+
     const resetToDefault = () => {
         if (timedTyping.value) {
             clearInterval(timerID.value)
             beginCountdown.value = false
         }
+        if (beatCountdown.value && timedTyping.value) beatCountdown.value = false
+        else beatCountdown.value = null
         scrollDistance.value = 0
         hasCompletedSession.value = false
-        hasStartedSession.value = false
         beginCountdown.value = false
         completionLevel.value = 0
-        totalTime.value = null
+        totalTime.value = 0
         startTime.value = null
         correctCount.value = 0
         wrongCount.value = 0
@@ -228,10 +232,10 @@ export const mainStore = defineStore('mainStore', () => {
         if (timedTyping.value) {
             clearInterval(timerID.value)
             beginCountdown.value = false
+            totalTime.value = savedCountdown.value
+        } else {
+            totalTime.value = (performance.now() - startTime.value).toFixed(0) / 1000
         }
-
-        totalTime.value = performance.now() - startTime.value
-            
         if (localStorage.getItem('dorayi-typing-result')) {
             const res = ref(JSON.parse(localStorage.getItem('dorayi-typing-result')))
             res.value.push(resultData.value)
@@ -311,9 +315,11 @@ export const mainStore = defineStore('mainStore', () => {
         
         alphabetsInputTime.value[playerInputLength.value] = (currentAlphabetInputTime.value - previousAlphabetInputTime.value)
 
-        if (playerInputLength.value === containerText.value.length) sessionComplete()
+        if (playerInputLength.value === containerText.value.length) {
+            if (timedTyping.value) beatCountdown.value = true
+            sessionComplete()
+        }
     }
-
 
     const switchNext = (config, restart, options) => {
         resetToDefault()
@@ -338,6 +344,8 @@ export const mainStore = defineStore('mainStore', () => {
         switchNext,
         playerInputTyping,
         managePlayerInput,
+        beatCountdown,
+        secondaryTheme,
         allFonts,
         hasCompletedSession,
         movie,
@@ -351,7 +359,6 @@ export const mainStore = defineStore('mainStore', () => {
         storedTextForRepeat,
         customTexts,
         resultData,
-        totalTime,
         completionLevel,
         playerInput,
         correctCount,

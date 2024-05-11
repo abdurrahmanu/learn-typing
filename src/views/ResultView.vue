@@ -25,37 +25,33 @@
             </div>
             <div class="py-1 text-zinc-600">{{ resultData.testType }}</div>
         </div>
-        <Bar :data="chartData" class="w-[600px] max-w-[90%] bg-neutral-700 m-auto relative p-2"/>
+        <!-- <Bar :data="chartData" class="w-[600px] max-w-[90%] bg-neutral-700 m-auto relative p-2"/> -->
     </div>
 </template>
 
 <script setup>
 import {ref} from 'vue'
-import {Bar} from 'vue-chartjs'
-import {Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale} from 'chart.js'
+// import {Bar} from 'vue-chartjs'
+// import {Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale} from 'chart.js'
 import {storeToRefs} from 'pinia'
 import {mainStore} from '../store/mainStore'
 
-ChartJS.register( Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
+// ChartJS.register( Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
 const store = mainStore()
-const {resultData, alphabetsInputTime, timedTyping} = storeToRefs(store)
+const {resultData, alphabetsInputTime, beatCountdown, timedTyping} = storeToRefs(store)
 
-const chartData = ref({
-    labels: Object.keys(alphabetsInputTime.value),
-    datasets: [ {data: Object.values(alphabetsInputTime.value), label: 'SESSION RESULT', borderWidth: 1, borderColor: '#69e869', color: '#97a3b8'} ]
-})
+// const chartData = ref({
+//     labels: Object.keys(alphabetsInputTime.value).reverse(),
+//     datasets: [ {data: Object.values(alphabetsInputTime.value), label: 'SESSION RESULT', borderWidth: 1, borderColor: '#69e869', color: '#97a3b8'} ]
+// })
 
 const accuracy = () => {
     return Math.round((resultData.value.correctCount/(resultData.value.containerText.length) * 100))
 }
 
 const elapsedTime = () => {
-    if (!timedTyping.value) {        
-        return resultData.value.totalTime.toString().slice(0,1) + '.' + resultData.value.totalTime.toString().slice(1,2)
-    } else {
-        return resultData.value.totalTime
-    }
+    return resultData.value.totalTime
 }
 
 const wordsPerMinute = () => {

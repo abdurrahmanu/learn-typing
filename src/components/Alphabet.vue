@@ -27,30 +27,27 @@ const props = defineProps({
     equality: Boolean,
 })
 
-watchEffect(() => {
-    if (props.currentIndex) {
-        if (currentAlphabet.value instanceof HTMLElement) {
-            const parentHeight = ref(currentAlphabet.value.parentElement.getBoundingClientRect().height)
-            const parentScrollHeight = ref(currentAlphabet.value.parentElement.scrollHeight)
-            const parentScrollTop = ref(currentAlphabet.value.parentElement.scrollTop)
-            const caretTopOffset = ref(currentAlphabet.value.getBoundingClientRect().top + currentAlphabet.value.offsetHeight)
-            const bottom = currentAlphabet.value.parentElement.getBoundingClientRect().bottom
+// watchEffect(() => {
+//     if (props.currentIndex) {
+//         if (currentAlphabet.value instanceof HTMLElement) {
+//             const parentHeight = ref(currentAlphabet.value.parentElement.getBoundingClientRect().height)
+//             const parentScrollHeight = ref(currentAlphabet.value.parentElement.scrollHeight)
+//             const caretTopOffset = ref(currentAlphabet.value.getBoundingClientRect().top + currentAlphabet.value.offsetHeight)
+//             const bottom = currentAlphabet.value.parentElement.getBoundingClientRect().bottom
 
-            if (bottom - caretTopOffset.value <= 10) {
-                if (parentScrollHeight.value - parentHeight.value >= parentHeight.value) {
-                    scrollDistance.value += parentHeight.value - currentAlphabet.value.offsetHeight - 10
-                    console.log(scrollDistance.value);
-                }
-                else {
-                    scrollDistance.value += parentScrollHeight.value - parentScrollTop.value 
-                }
-                scrollTextContainer.value = {
-                    top: scrollDistance.value
-                }
-            }
-        }
-    }
-})
+//             // if (bottom - caretTopOffset.value <= 10) {
+//             //     if (parentScrollHeight.value - parentHeight.value >= parentHeight.value) {
+//             //         scrollDistance.value += parentHeight.value - currentAlphabet.value.offsetHeight - 5
+//             //     }
+//             //     scrollTextContainer.value = {
+//             //         top: scrollDistance.value
+//             //     }
+//             // }
+
+//             console.log(caretTopOffset.value);
+//         }
+//     }
+// })
 
 const equalStyle = computed(() => {
     if (!customizers.value['blind-mode']) {

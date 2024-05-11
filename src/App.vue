@@ -1,5 +1,5 @@
 <template>
-  <div :class="[appTheme]">
+  <div :class="[appTheme]" class="selection:bg-none">
     <Animate />
     <div class="min-h-[100dvh]">
       <RouterView />

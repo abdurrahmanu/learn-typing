@@ -13,6 +13,7 @@
                 <AllCaps />
                 <CustomCamelCase />
                 <NoSpaceText />
+                <SecondaryTheme />
                 <CustomText />
             </div>
         </div>
@@ -31,6 +32,7 @@ import BackSpace from './BackSpace.vue';
 import CustomText from './CustomText.vue';
 import Countdown from './CountDown.vue';
 import MovieQuotes from './MovieQuotes.vue'
+import SecondaryTheme from './SecondaryTheme.vue'
 import {storeToRefs} from 'pinia'
 import { mainStore } from '../../store/mainStore.js';
 import {customizeStore} from '../../store/customizeStore'
