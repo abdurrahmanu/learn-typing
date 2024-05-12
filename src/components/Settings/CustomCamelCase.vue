@@ -6,7 +6,7 @@
                 <p>CusTOm cAMeL caSE</p>
             </div>
         </div>
-        <p>Randomize the location of Caps and lowercase letters in words and quotes</p>
+        <p class="px-3">Randomize the location of Caps and lowercase letters in tests</p>
     </div>
 </template>
 

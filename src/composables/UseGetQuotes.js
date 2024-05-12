@@ -136,9 +136,10 @@ export function  UseGetQuotes (config, customText) {
 
     function customizers () {
         if (typeof res.value === 'object') {
-            if (customizeStore().onlyAuthoredQuotes) {
+            if (customizeStore().customizers['author-quotes']) {
                 res.value = [res.value[0], useCustomizeFormat([config['include-numbers'], config['include-punctuations'], config['include-caps'], config['all-caps'], config['custom-camel-case'], config['no-space'], config['test-type']],  res.value[1]).customizeFormatRes.value]
-            } else if (customizeStore().onlyMovieQuotes) {
+            } 
+            else if (customizeStore().customizers['movie-quotes']) {
                 res.value = [res.value[0], res.value[1], useCustomizeFormat([config['include-numbers'], config['include-punctuations'], config['include-caps'], config['all-caps'], config['custom-camel-case'], config['no-space'], config['test-type']],  res.value[2]).customizeFormatRes.value]
             }
         } else {

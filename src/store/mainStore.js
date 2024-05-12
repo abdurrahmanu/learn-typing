@@ -43,6 +43,7 @@ export const mainStore = defineStore('mainStore', () => {
     const alphabets = ref(false)
     const currentAlphabetInputTime = ref(null)
     const movie = ref({})
+    const inputEl = ref(null)
     const authoredQuote = ref({})
     const alphabetsInputTime = ref({})
     const alphabetsMode = ref({
@@ -191,6 +192,7 @@ export const mainStore = defineStore('mainStore', () => {
         if (beatCountdown.value && timedTyping.value) beatCountdown.value = false
         else beatCountdown.value = null
         scrollDistance.value = 0
+        scrollTextContainer.value = {}
         hasCompletedSession.value = false
         beginCountdown.value = false
         completionLevel.value = 0
@@ -207,6 +209,7 @@ export const mainStore = defineStore('mainStore', () => {
 
     const managePlayerInput = () =>{
         if (getMobileOS()) playerLastInput.value = playerInput.value[playerInput.value.length - 1]
+
         if (!playerInput.value) {
             if (previousPlayerInput.value === containerText.value[0]) correctCount.value--
             else wrongCount.value--
@@ -217,8 +220,21 @@ export const mainStore = defineStore('mainStore', () => {
                 else wrongCount.value--
             }
             else {
-                if (playerLastInput.value === containerText.value[playerInput.value.length - 1]) correctCount.value ++
-                else wrongCount.value++
+                if (getMobileOS()) {
+                    if (playerInput.value[playerInput.value.length - 1] === containerText.value[playerInput.value.length - 1]) {
+                        correctCount.value ++
+                    }
+                    else {
+                        wrongCount.value++
+                    }
+                } else {
+                    if (playerLastInput.value === containerText.value[playerInput.value.length - 1]) {
+                        correctCount.value ++
+                    }
+                    else {
+                        wrongCount.value++
+                    }
+                }
             }
         }
     
@@ -291,12 +307,6 @@ export const mainStore = defineStore('mainStore', () => {
     }
 
     const playerInputTyping = (e) => {
-        const previousAlphabetInputTime = ref(0)
-
-        if (currentAlphabetInputTime.value) {
-            previousAlphabetInputTime.value = currentAlphabetInputTime.value
-        }
-
         if (pauseTyping.value) return
         if (e.inputType === 'deleteContentBackward') {
             if (!enableBackSpace.value) return
@@ -305,7 +315,9 @@ export const mainStore = defineStore('mainStore', () => {
         }
         if (e.inputType === 'deleteContentBackward') return
         backspaceIsPressed.value = false
-        if (!hasStartedSession.value) hasStartedSession.value = true
+        if (!hasStartedSession.value) {
+            hasStartedSession.value = true
+        }
         if (playerInputLength.value === 1)  {
             if (timedTyping.value) {
                 beatCountdown.value = false
@@ -313,13 +325,10 @@ export const mainStore = defineStore('mainStore', () => {
             }
             startTime.value = performance.now();
             currentAlphabetInputTime.value = 0
-        } else {
+        }  else {
             currentAlphabetInputTime.value = ((performance.now() - startTime.value).toFixed(0) / 1000).toFixed(3)
         }
-        
-        alphabetsInputTime.value[playerInputLength.value] = (currentAlphabetInputTime.value - previousAlphabetInputTime.value)
-
-        if (playerInputLength.value === containerText.value.length) {
+        if (playerInput.value.length === containerText.value.length) {
             if (timedTyping.value) beatCountdown.value = true
             sessionComplete()
         }
@@ -351,6 +360,7 @@ export const mainStore = defineStore('mainStore', () => {
         beatCountdown,
         secondaryTheme,
         allFonts,
+        inputEl,
         hasCompletedSession,
         movie,
         selectedFont,
@@ -389,3 +399,4 @@ export const mainStore = defineStore('mainStore', () => {
         svgFill,
     }
 })
+

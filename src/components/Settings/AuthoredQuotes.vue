@@ -6,14 +6,14 @@
                 <p>Authored quotes</p>
             </div>
         </div>
-        <p class="px-2">Enable Movies quotes. Only avaible for quotes mode, auto length</p>
+        <p class="px-2">**This is only available for quotes mode with auto-length. On-select, it automatically enables both modes</p>
         <div v-if="customizers['author-quotes']"class="p-2">
             <div class="py-1 space-x-2 w-fit">      
-                <input id="mix-authored" :value="false" v-model="onlyAuthoredQuotes" class="w-7" type="radio"></input>
+                <input id="mix-authored" :value="false" @click="customize('author-quotes', customizers['author-quotes'])" v-model="onlyAuthoredQuotes" class="w-7" type="radio"></input>
                 <label for="mix-authored">Authored quotes with Unauthored quotes</label>          
             </div>
             <div class="py-1 space-x-2 w-fit">         
-                <input id="only-authored" :value="true" v-model="onlyAuthoredQuotes" class="w-7" type="radio"></input>
+                <input id="only-authored" :value="true" @click="customize('author-quotes', customizers['author-quotes'])" v-model="onlyAuthoredQuotes" class="w-7" type="radio"></input>
                 <label for="only-authored">Only authored quotes</label>       
             </div>
         </div>

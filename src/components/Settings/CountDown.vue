@@ -6,7 +6,7 @@
                     <p>Countdown Typing</p>
                 </div>
             </div>
-            <p>With countdown enabled, tests automatically end at the end of countdown, untyped alphabets are considered as errors</p>
+            <p class="px-3">Play with countdown, tests automatically end at the end of countdown, untyped alphabets are considered as errors</p>
         </div>
 </template>
 

@@ -29,7 +29,7 @@
         <div v-if="timedTyping && !beatCountdown" class="text-red-500">You were unable to beat the time</div>
         <!-- <Bar :data="chartData" class="w-[600px] max-w-[90%] bg-neutral-700 m-auto relative p-2"/> -->
         <div class="py-16 font-mono text-2xl text-black uppercase">
-            PERFROMANCE GRAPH COMING SOON...
+            STATISTICS GRAPH COMING SOON...
         </div>
     </div>
 </template>
@@ -68,10 +68,18 @@ const wordsPerMinute = () => {
 }
 
 const errorRatio = () => {
-    return (resultData.value.wrongCount) + '/' + (resultData.value.containerText.length)
+    if (timedTyping.value && !beatCountdown.value) {
+        return (resultData.value.wrongCount) + (resultData.value.containerText.length - resultData.value.correctCount) + '/' + (resultData.value.containerText.length)
+    } else {        
+        return (resultData.value.wrongCount) + '/' + (resultData.value.containerText.length)
+    }
 }
 
 const errorRatioLevel = () => {
+    if (timedTyping.value && !beatCountdown.value) {
+        return ((resultData.value.wrongCount) + (resultData.value.containerText.length - resultData.value.correctCount) / (resultData.value.containerText.length)) * 100 < 10
+    } else {        
     return (resultData.value.wrongCount / resultData.value.containerText.length) * 100 < 10
+    }
 }
 </script>

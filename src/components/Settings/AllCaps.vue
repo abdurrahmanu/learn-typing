@@ -6,7 +6,7 @@
                 <p>All Caps</p>
             </div>
         </div>
-        <p>All texts and quotes will be converted to Uppercase</p>
+        <p class="px-3">All texts and quotes are converted to CAPS</p>
     </div>
 </template>
 

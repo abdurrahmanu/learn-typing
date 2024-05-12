@@ -6,7 +6,7 @@
                     <p>Blind mode</p>
                 </div>
             </div>
-            <p>How confident are you?  Type while fully trusting your muscle memory. </p>
+            <p class="px-3">Type while fully trusting your muscle memory. </p>
         </div>
 
 </template>

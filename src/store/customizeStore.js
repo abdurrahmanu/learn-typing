@@ -60,6 +60,11 @@ export const customizeStore = defineStore('customizeStore', () => {
         let selection = configs.value[1]
         let group = configs.value[0]
 
+        if ((typeof configs.value[1] === 'number' && configs.value[0] === 'text-length' ) || configs.value[1] === 'random-text') {
+            customizers.value['movie-quotes'] = false
+            customizers.value['author-quotes'] = false
+        }
+
         if (selection === currentWordType || selection === currentTestType || selection === currentTextLength) return
         changeConfiguration(group, selection)    
 
@@ -83,11 +88,13 @@ export const customizeStore = defineStore('customizeStore', () => {
         if (boolean && mode === 'movie-quotes') {
             customizers.value['text-length'] = 'auto'
             customizers.value['author-quotes'] = false
+            customizers.value['test-type'] = 'quotes'
         }
 
         if (boolean && mode === 'author-quotes') {
             customizers.value['text-length'] = 'auto'
             customizers.value['movie-quotes'] = false
+            customizers.value['test-type'] = 'quotes'
         }
 
         if (boolean && mode === 'custom-camel-case') {

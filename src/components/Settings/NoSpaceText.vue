@@ -6,7 +6,7 @@
                 <p>NoSpace</p>
             </div>
         </div>
-        <p>Type without leaving space between words</p>
+        <p class="px-3">All white spaces are cleared between words</p>
     </div>
 </template>
 
