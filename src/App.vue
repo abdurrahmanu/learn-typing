@@ -6,6 +6,7 @@
       <div class="pt-5">
           <Restart />
         </div>
+        <SwitchModes />
     </div>
     <Theme />
     <HideElements @click="hideElements = !hideElements" />
@@ -14,6 +15,7 @@
 
 <script setup>
 import {onBeforeMount} from 'vue'
+import SwitchModes from './components/SwitchModes.vue';
 import Restart from './components/Restart.vue';
 import Animate from './components/Animate.vue';
 import Theme from './components/Theme.vue';
@@ -23,7 +25,7 @@ import { storeToRefs } from 'pinia';
 import { customizeStore } from './store/customizeStore';
 
 const main = mainStore()
-const {appTheme, theme,alphabets, alphabetsMode, enableBackSpace, customTexts} = storeToRefs(main)
+const {appTheme, theme,alphabets, alphabetsMode, enableBackSpace, customTexts, currentPage} = storeToRefs(main)
 
 const customize = customizeStore()
 const {hideElements, customizers, disableOption } = storeToRefs(customize)
@@ -54,8 +56,10 @@ onBeforeMount(() => {
   if (localStorage.getItem('dorayi-typing-mode')) {
     if (localStorage.getItem('dorayi-typing-mode') === 'alphabets') {
       alphabets.value = true
+      currentPage.value = 1
     } else {
       alphabets.value = false
+      currentPage.value = 0
     }
   }
 
@@ -63,7 +67,6 @@ onBeforeMount(() => {
     alphabetsMode.value = JSON.parse(localStorage.getItem('alphabets-mode'))
   }
 
-  
   if (localStorage.getItem('dorayi-typing-preferred-config')) {
     let saved = JSON.parse(localStorage.getItem('dorayi-typing-preferred-config'))
     customizers.value = saved[0]

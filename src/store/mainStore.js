@@ -11,6 +11,7 @@ export const mainStore = defineStore('mainStore', () => {
         'font',
         'font'
     ])
+    const currentPage = ref(0)
     const secondaryTheme = ref('green')
     const theme = ref('neutral')
     const enableBackSpace = ref(true)
@@ -390,6 +391,7 @@ export const mainStore = defineStore('mainStore', () => {
         alphabets,
         alphabetsMode,
         theme,
+        currentPage,
         appTheme,
         alphabetsInputTime,
         previousPlayerInput,
@@ -399,4 +401,17 @@ export const mainStore = defineStore('mainStore', () => {
         svgFill,
     }
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
 

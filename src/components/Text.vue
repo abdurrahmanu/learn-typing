@@ -6,7 +6,7 @@
             <Blind />
         </div>
         <div v-if="containerText" :class="[hideElements ? 'text-[20px] md:text-[24px]' : 'text-[17px] md:text-[19px]']" class="leading-6 md:leading-[30px] transition-all duration-100 relative m-auto max-w-[600px] w-full ">
-            <div ref="containerRef" @click="getMobileOS() ? inputEl.focus() : ''" :class="[customizers['no-space'] ? 'break-words' : '', alphabets ? 'text-center break-words': 'text-left', !alphabets && textPosition=== 'center' ? 'text-center' : !alphabets && textPosition=== 'right' ? 'text-right' : 'text-left']" class="relative overflow-y-auto h-fit min-h-fit scroll-smooth noscrollbar">
+            <div ref="containerRef" @click="getMobileOS() ? inputEl.focus() : ''" :class="[customizers['no-space'] ? 'break-words' : '', alphabets ? 'text-center break-words': 'text-left', !alphabets && textPosition=== 'center' ? 'text-center' : !alphabets && textPosition=== 'right' ? 'text-right' : 'text-left']" class="relative overflow-y-auto h-fit min-h-fit scroll-smooth noscrollbar max-h-[100px]">
                 <Alphabet
                 v-for="(alphabet, index) in containerText"
                 :index="index"
@@ -27,13 +27,11 @@
     v-if="!getMobileOS() && !alphabets && !hideElements"
     @align="textPosition = $event" 
     :textPosition="textPosition" />
-    <SwitchModes />
 </template>
 
 <script setup>
 import { onMounted, ref, watch } from 'vue';
 import repeat from './svg/repeat.vue';
-import SwitchModes from './SwitchModes.vue'
 import MobileInput from'./MobileInput.vue'
 import TextAlign from './TextAlign.vue'
 import Blind from './Blind.vue';

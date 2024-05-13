@@ -14,7 +14,7 @@ import Text from '../components/Text.vue'
 import Settings from '../components/Settings/Settings.vue'
 import Header from '../components/Header.vue';
 import Customize from '../components/Customize.vue'
-import { ref, onMounted, watch } from 'vue';
+import { ref, watch } from 'vue';
 import { mainStore } from '../store/mainStore';
 import { storeToRefs } from 'pinia';
 import { customizeStore } from '../store/customizeStore';

@@ -1,19 +1,23 @@
 <template>
-        <div class="m-auto my-6 w-fit h-fit">
-        <p class="p-1 m-auto font-mono text-center border rounded-md md:text-xl border-opacity-80 hover:border-opacity-100 opacity-60 hover:opacity-100 w-fit hover:border-slate-700">
-            <span @click="toggleMode('alphabets')" v-if="!alphabets">THE ENGLISH ALPHABETS</span>
-            <span @click="toggleMode('test')" v-else>TYPING TESTS</span>
-        </p>
+    <div class="m-auto my-6 w-fit h-fit">
+            <Pagination 
+            @page="currentPage = $event" 
+            :all-pages="pages" />
     </div>
 </template>
 
 <script setup>
+import {watch, ref} from 'vue'
 import { storeToRefs } from 'pinia';
 import { mainStore } from '../store/mainStore';
 import { customizeStore } from '../store/customizeStore';
+import Pagination from './Settings/Pagination.vue';
+
+const pages = ['TEST MODE', 'ALPHABETS MODE', 'DICTIONARY MODE', 'GAME MODE']
+const modes = ['test', 'alphabets', 'dictionary', 'game']
 
 const store = mainStore()
-const { alphabets, movie, authoredQuote} = storeToRefs(store)
+const { alphabets, movie, authoredQuote, currentPage} = storeToRefs(store)
 const {resetToDefault, generateText} = store
 
 const customize = customizeStore()
@@ -32,8 +36,8 @@ const toggleMode = (mode) => {
     resetToDefault()
     generateText(customizers.value)
 }
+
+watch(currentPage, (newVal, oldVal) => {
+    toggleMode(modes[newVal])
+})
 </script>
-
-<style scoped>
-
-</style>
