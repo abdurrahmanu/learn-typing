@@ -29,6 +29,8 @@ const store = mainStore()
 const { alphabetsCombination, useAlphabetCombination } = storeToRefs(store)
 const {resetToDefault, generateText} = store
 
+console.log(alphabetsCombination.value);
+
 const customize = customizeStore()
 const {customizers} = storeToRefs(customize)
 

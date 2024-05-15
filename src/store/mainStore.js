@@ -12,7 +12,7 @@ export const mainStore = defineStore('mainStore', () => {
     ])
     const searchInputEl = ref(null)
     const searchFieldIsFocused = ref(false)
-    const alphabetsCombination = ref({})
+    const alphabetsCombination = ref([])
     const dictionaryData = ref({})
     const useAlphabetCombination = ref(false)
     const currentPage = ref(0)
