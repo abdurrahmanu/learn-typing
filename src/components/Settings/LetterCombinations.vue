@@ -1,0 +1,68 @@
+<template>
+    <div class="p-3 px-1 border-t border-neutral-900 ">
+        <div @click="toggle" class="flex w-full p-1 border border-transparent rounded-sm hover:border-neutral-300 space-x-4">
+            <input :checked="useAlphabetCombination"  type="checkbox" name="" id="id">
+            <p for="id">Letter Combinations</p>
+        </div>
+        <div class="px-4">
+            <p>This test randomly repeats your selected alphabets, Maximum selection is five alphabets</p>
+        </div>
+        <div class="space-x-1 flex flex-wrap space-y-1 items-center justify-center px-3 py-4">
+            <span class="p-1 rounded-md border border-neutral-700 text-lg inline-block min-w-[20px] text-center hover:text-white" @click="addSelection(alphabet)" :class="[alphabetsCombination.includes(alphabet) ? 'bg-neutral-400 text-black' : ''] " v-for="(alphabet, index) in alphabets" :key="index">{{ alphabet }}</span>
+        </div>
+        <div class="text-xl font-mono px-2 text-center min-h-[16px]">{{ alphabetsCombination.join('') }}</div>
+        <div class="py-1 text-center">
+            <button @click="useCombination()" class="px-4 py-1 bg-green-700 hover:bg-green-500 text-slate-200 rounded-full ">USE THIS LETTER COMBINATION</button>
+        </div>
+    </div>
+
+</template>
+
+<script setup>
+import {ref} from 'vue'
+import {storeToRefs} from 'pinia';
+import {mainStore} from '../../store/mainStore'
+import { customizeStore } from '../../store/customizeStore';
+
+const alphabets = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+const store = mainStore()
+const { alphabetsCombination, useAlphabetCombination } = storeToRefs(store)
+const {resetToDefault, generateText} = store
+
+const customize = customizeStore()
+const {customizers} = storeToRefs(customize)
+
+const toggle = () => {
+    useAlphabetCombination.value = !useAlphabetCombination.value
+    if (useAlphabetCombination.value) {
+        localStorage.setItem('dorayi-typing-use-alphabets-combination', 'true')
+    } else {
+        localStorage.setItem('dorayi-typing-use-alphabets-combination', 'false')
+    }
+}
+
+const addSelection = (alphabet) => {
+    let index = alphabetsCombination.value.indexOf(alphabet)
+    if (index > -1) {
+        alphabetsCombination.value.splice(index, 1)
+        return
+    }
+    if (alphabetsCombination.value.length === 5) return
+    alphabetsCombination.value.push(alphabet)
+}
+
+const useCombination = () => {
+    if (alphabetsCombination.value.length < 2) return 
+    else {
+        if (useAlphabetCombination.value) {
+            localStorage.setItem('dorayi-typing-alphabet-combination', JSON.stringify(alphabetsCombination.value))
+            resetToDefault()
+            generateText(customizers.value)
+        }
+    }
+}
+</script>
+
+
+
+

@@ -1,9 +1,9 @@
 <template>
-    <div v-if="!hasCompletedSession && !alphabets" class="bg-transparent rounded-md  w-[90%] m-auto max-w-fit ring-1" :class="secTheme">
+    <div v-if="!hasCompletedSession && !alphabets && !dictionaryMode && !gameMode" class="bg-transparent rounded-md  w-[90%] m-auto max-w-fit ring-1" :class="secTheme">
         <div class="text-[12px] font-mono items-center p-[1px] flex max-w-[1000px] justify-center flex-wrap relative">
             <div class="p-1" v-for="(optionArr, key, listIndex) in option" :key="listIndex">          
                 <div 
-                :class="[hoverIndex === listIndex ? 'border-zinc-400' : 'border-transparent']" class="relative flex gap-2 py-[2px] border rounded-lg"
+                :class="[hoverIndex === listIndex ? 'border-zinc-400' : 'border-transparent']" class="relative flex gap-2 py-[2px] border rounded-lg cursor-pointer"
                 @mouseenter="mouseEnter(listIndex)"
                 @mouseleave="mouseLeave(listIndex)" >
                     <div 
@@ -19,24 +19,42 @@
             </div>
         </div>
     </div>
-    <div v-if="!hasCompletedSession && alphabets" class="flex flex-wrap justify-center gap-3 pt-10 text-sm">
+
+    <div v-if="!hasCompletedSession && alphabets && !dictionaryMode" class="flex flex-wrap justify-center gap-3 pt-10 text-sm">
           <div :class="[alphabetsMode.uppercase ? 'bg-neutral-500' : '']" @click="changeMode('uppercase')" class="px-3 py-1 uppercase border rounded-md border-slate-600 w-fit">uppercase</div>
           <div :class="[alphabetsMode.customCase ? 'bg-neutral-500' : '']" @click="changeMode('customCase')" class="px-3 py-1 border rounded-md hover:font-medium border-slate-600 w-fit">cUstoMCaSE</div>
           <div :class="[alphabetsMode.spaced ? 'bg-neutral-500' : '']" @click="changeMode('spaced')" class="px-3 py-1 uppercase border rounded-md hover:font-medium border-slate-600 w-fit">spaced</div>
           <div :class="[alphabetsMode.backwards ? 'bg-neutral-500' : '']" @click="changeMode('backwards')" class="px-3 py-1 uppercase border rounded-md hover:font-medium border-slate-600 w-fit">backwards</div>
           <div :class="[alphabetsMode.jumbo ? 'bg-neutral-500' : '']" @click="changeMode('jumbo')" class="px-3 py-1 uppercase border rounded-md hover:font-medium border-slate-600 w-fit">jumbo</div>
           <div :class="[alphabetsMode.styled ? 'bg-neutral-500' : '']" @click="changeMode('styled')" class="px-3 py-1 uppercase border rounded-md hover:font-medium border-slate-600 w-fit">styled</div>
+      </div>
+
+      <div v-if="dictionaryMode" class="text-center">
+        DICTIONARY WORDS
+        <div class="text-center py-4">
+          <input @focus="searchFieldIsFocused = true" @blur="searchFieldIsFocused = false" ref="searchInputEl" type="text" v-model="searchWord" class="px-2 py-1 text-xs rounded-md max-w-[400px] outline-none border-none text-black bg-slate-200 w-[80%]" placeholder="Type in a word to search definition">
+          <button  @click="fetchWordDefinitions(searchWord)" class="px-2 py-1 text-white bg-green-800 hover:bg-green-600 rounded-md text-xs">Search</button>
         </div>
+      </div>
+
+      <div v-if="gameMode" class="flex space-x-2 justify-center py-3">
+        <div  @click="" class="px-3 py-1 uppercase border rounded-md hover:font-medium border-slate-600 w-fit">GAME 1</div>
+          <div @click="" class="px-3 py-1 uppercase border rounded-md hover:font-medium border-slate-600 w-fit">GAME 2</div>
+          <div @click="" class="px-3 py-1 uppercase border rounded-md hover:font-medium border-slate-600 w-fit">GAME 3</div>
+          <div @click="" class="px-3 py-1 uppercase border rounded-md hover:font-medium border-slate-600 w-fit">GAME 4</div>
+      </div>
 </template>
 
 <script setup>
-import { ref, watch, computed } from 'vue'
+import { ref, watch, computed, onMounted } from 'vue'
 import {customizeStore} from '../store/customizeStore.js'
 import {storeToRefs} from 'pinia'
 import { mainStore } from '../store/mainStore.js';
+import {fetchWord} from '../composables/UseDictionary.js'
 
+const searchWord = ref('')
 const store = mainStore()
-const {alphabets, alphabetsMode, hasCompletedSession, secondaryTheme} = storeToRefs(store)
+const {alphabets, alphabetsMode, hasCompletedSession, secondaryTheme, dictionaryMode, searchFieldIsFocused, dictionaryData, gameMode, searchInputEl} = storeToRefs(store)
 const {switchNext, resetToDefault, generateText} = store
 
 const customize = customizeStore()
@@ -110,6 +128,15 @@ const changeMode = (mode) => {
     resetToDefault()
     generateText(customizers.value)
 }  
+
+async function fetchWordDefinitions(word) {
+  if (word) {
+    const {data} = await fetchWord(word)
+    dictionaryData.value = data.value
+    resetToDefault()
+    generateText(customizers.value)
+  }
+}
 
 const changeConfig = (key, option) => {
   if (!disableOption.value[option]) {

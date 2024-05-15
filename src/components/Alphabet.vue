@@ -41,20 +41,20 @@ watchEffect(() => {
             const prevSiblingBottomOffset = props.index > 0 ? currentAlphabet.value.previousElementSibling.getBoundingClientRect().bottom : 0
             const nextSiblingTopOffset = props.index > 0 && currentAlphabet.value.nextElementSibling ? currentAlphabet.value.nextElementSibling.getBoundingClientRect().top : 0
             
-            if (currentAlphabet.value.getBoundingClientRect().top < parentTopOffset) {
-                currentAlphabet.value.parentElement.scrollTo({
-                    top: -parentTopOffset
-                })
-            }
+            // if (currentAlphabet.value.getBoundingClientRect().top < parentTopOffset) {
+            //     currentAlphabet.value.parentElement.scrollTo({
+            //         top: -parentTopOffset
+            //     })
+            // }
 
-            if (currentAlphabet.value.getBoundingClientRect().bottom > parentBottomOffset) {
-                currentAlphabet.value.parentElement.scrollTo({
-                    top: parentBottomOffset
-                })
-            }
+            // if (currentAlphabet.value.getBoundingClientRect().bottom > parentBottomOffset) {
+            //     currentAlphabet.value.parentElement.scrollTo({
+            //         top: parentBottomOffset
+            //     })
+            // }
 
             if (!(parentBottomOffset - prevSiblingBottomOffset <= lineHeight) && parentBottomOffset - caretBottomOffset <= lineHeight && scrollDistance.value < parentScrollHeight) {
-                if (!backspaceIsPressed.value) {                    
+                if (!backspaceIsPressed.value) {     
                     if (currentAlphabet.value.parentElement.scrollTop + parentHeight === parentScrollHeight) return
                     else {
                         if (parentScrollHeight - currentAlphabet.value.parentElement.scrollTop > parentHeight) {                    

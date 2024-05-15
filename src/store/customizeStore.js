@@ -22,7 +22,7 @@ export const customizeStore = defineStore('customizeStore', () => {
         'custom-camel-case': false,
         'no-space': false,
         'movie-quotes': false,
-        'author-quotes': false
+        'author-quotes': false,
     })
 
     const disableOption = ref({
@@ -80,20 +80,27 @@ export const customizeStore = defineStore('customizeStore', () => {
         next.value = true
     }
 
-    const customize = (mode, boolean) => {
+    const customize = (mode, boolean, option) => {
         if (boolean && mode === 'all-caps') {
             customizers.value['custom-camel-case'] = false
         }
 
-        if (boolean && mode === 'movie-quotes') {
+        if (mode === 'movie-quotes') {
+            if (onlyAuthoredQuotes.value) onlyAuthoredQuotes.value = false
+            if (option) {
+                customizers.value['author-quotes'] = false
+            }
             customizers.value['text-length'] = 'auto'
-            customizers.value['author-quotes'] = false
             customizers.value['test-type'] = 'quotes'
         }
 
-        if (boolean && mode === 'author-quotes') {
+        if (mode === 'author-quotes') {
+            if (onlyMovieQuotes.value) onlyMovieQuotes.value = false
+            if (option) {
+                console.log('object');
+                customizers.value['movie-quotes'] = false
+            }
             customizers.value['text-length'] = 'auto'
-            customizers.value['movie-quotes'] = false
             customizers.value['test-type'] = 'quotes'
         }
 
@@ -101,7 +108,7 @@ export const customizeStore = defineStore('customizeStore', () => {
             customizers.value['all-caps'] = false
         }
 
-        customizers.value[mode] = boolean
+        if (!option && option !== false) customizers.value[mode] = boolean
         
         localStorage.setItem('dorayi-typing-preferred-config', JSON.stringify([customizers.value, disableOption.value]))
         next.value = true

@@ -1,7 +1,6 @@
 import {defineStore} from 'pinia'
 import {ref, computed} from 'vue'
 import {UseGetQuotes} from '../composables/UseGetQuotes'
-import { settings } from 'firebase/analytics'
 
 export const mainStore = defineStore('mainStore', () => {
     const selectedFont = ref('font')
@@ -11,7 +10,14 @@ export const mainStore = defineStore('mainStore', () => {
         'font',
         'font'
     ])
+    const searchInputEl = ref(null)
+    const searchFieldIsFocused = ref(false)
+    const alphabetsCombination = ref({})
+    const dictionaryData = ref({})
+    const useAlphabetCombination = ref(false)
     const currentPage = ref(0)
+    const gameMode = ref(false)
+    const dictionaryMode = ref(false)
     const secondaryTheme = ref('green')
     const theme = ref('neutral')
     const enableBackSpace = ref(true)
@@ -24,7 +30,6 @@ export const mainStore = defineStore('mainStore', () => {
     const playerInputLength = ref(0)
     const startTime = ref(null)
     const totalTime = ref(null)
-    const hasStartedSession = ref(false)
     const hasCompletedSession = ref(false)
     const pauseTyping = ref(true)
     const playerInput = ref('')
@@ -38,6 +43,7 @@ export const mainStore = defineStore('mainStore', () => {
     const beginCountdown = ref(false)
     const previousPlayerInput = ref('')
     const howToUseCustomText = ref('select text using options')
+    const allDictionaryDefinitons = ref({})
     const timerID = ref()
     const scrollDistance = ref(0)
     const scrollTextContainer = ref({})
@@ -47,6 +53,7 @@ export const mainStore = defineStore('mainStore', () => {
     const inputEl = ref(null)
     const authoredQuote = ref({})
     const alphabetsInputTime = ref({})
+    const timePaused = ref(0)
     const alphabetsMode = ref({
         uppercase: false,
         customCase: false,
@@ -92,72 +99,111 @@ export const mainStore = defineStore('mainStore', () => {
     })
 
     const generateText = (config, restart, options) => {
+        if (dictionaryMode.value) {
+            if (dictionaryData.value.wordData) {
+                if (dictionaryData.value.wordData.length) {
+                    for (let index = 0; index < dictionaryData.value.wordData.length; index++) {
+                        const {definitions} = dictionaryData.value.wordData[index]
+                        allDictionaryDefinitons.value[dictionaryData.value.wordData[index].partOfSpeech] = definitions.map((data) => data.definition )
+                    }
+                    let randomPartOfSpeech = Math.ceil(Math.random() * dictionaryData.value.wordData.length) - 1
+                    let randomDefiniton = Math.ceil(Math.random() * Object.values(allDictionaryDefinitons.value)[randomPartOfSpeech].length) - 1
+                    containerText.value = Object.values(allDictionaryDefinitons.value)[randomPartOfSpeech][randomDefiniton]
+                }
+            } else {
+                containerText.value = dictionaryData.value.error || dictionaryData.value.message || 'On load it is suppose to fetch a random word definition'
+            }
+        }
+
+        if (gameMode.value) {
+            containerText.value = 'This is game Mode'
+            return
+        }
+
         if (alphabets.value) {
             enableRepeat.value = false
             const englishAlphabets = ref('abcdefghijklmnopqrstuvwxyz')
-            const spaced = 'a b c d e f g h i j k l m n o p q r s t u v w x y z'
             containerText.value = englishAlphabets.value
 
-            if (alphabetsMode.value.spaced) {
-                containerText.value = spaced
+            if (useAlphabetCombination.value && alphabetsCombination.value) {
+                containerText.value = ''
+                for (let index = 1; index < 60; index++) {
+                    let random = Math.ceil(Math.random()  * alphabetsCombination.value.length) - 1
+                    if (index % 6 === 0) containerText.value += ' '
+                    else containerText.value += alphabetsCombination.value[random]
+                }
             }
 
             if (alphabetsMode.value.jumbo) {
-                const text = ref(containerText.value.split(''))
-                for (let index = text.value.length - 1; index > 0; index--) {
-                    let random = Math.floor(Math.random() * index + 1)
+                if (!(useAlphabetCombination.value && alphabetsCombination.value)) {
+                    const text = ref(containerText.value.split(''))
+                    let length = text.value.length
+                    containerText.value = ''
+    
+                    for (let index = 0; index < length; index++) {
+                        let random = Math.ceil(Math.random() * text.value.length) - 1
+                        containerText.value += text.value[random]
+                        text.value.splice(random, 1)
+                    }
                 }
-                containerText.value = text.value
-                containerText.value = 'yuiopasdertflkjhgzxcqwmnbv'
+            }
+
                 if (alphabetsMode.value.spaced) {
-                    containerText.value = 'y u i o p a s d e r t f l k j h g z x c q w m n b v'
+                    let text = containerText.value
+                    containerText.value = ''
+
+                    for (let index = 0; index < (2 * text.length) -1; index++) {
+                        if (index % 2 !== 0) {
+                            containerText.value += ' '
+                        } else {
+                            containerText.value += text[index/2]
+                        }
+                    }
                 }
-            }
 
-            if (alphabetsMode.value.customCase) {
-                let text = containerText.value
-                containerText.value = ''
-                for (let index = 0; index < text.length; index++) {
-                    let random = Math.round(Math.random() + 1)
-                    if (random % 2 === 0) containerText.value += text[index].toUpperCase()
-                    else containerText.value += text[index].toLowerCase()
+                if (alphabetsMode.value.customCase) {
+                    let text = containerText.value
+                    containerText.value = ''
+                    for (let index = 0; index < text.length; index++) {
+                        let random = Math.round(Math.random() + 1)
+                        if (random % 2 === 0) containerText.value += text[index].toUpperCase()
+                        else containerText.value += text[index].toLowerCase()
+                    }
                 }
-            }
-
-            if (alphabetsMode.value.uppercase) {
-                containerText.value = containerText.value.split('').map(alpha => alpha.toUpperCase()).join('')
-            }
-
-            if (alphabetsMode.value.backwards) {
-                containerText.value = containerText.value.split('').reverse().join('')
-            }
+    
+                if (alphabetsMode.value.uppercase) {
+                    containerText.value = containerText.value.split('').map(alpha => alpha.toUpperCase()).join('')
+                }
+    
+                if (alphabetsMode.value.backwards) {
+                    containerText.value = containerText.value.split('').reverse().join('')
+                }
+            
 
             return
         }
 
-        if (howToUseCustomText.value === 'use both system and custom') {
-            let custom = Object.values(customTexts.value)
-            containerText.value = UseGetQuotes(config, custom).res.value
-            return
-        }
-
-        if (useCustomText.value && howToUseCustomText.value === 'select text using options' && options) {
-            containerText.value = storedTextForRepeat.value
-            return
-        }
-
-        if (howToUseCustomText.value === 'use only custom') {
-            let texts = Object.values(customTexts.value)
-            let length = Object.keys(customTexts.value).length - 1
-            let index = Math.round(Math.random() * length)
-            containerText.value = texts[index]
-            return
-        }
+        // if (howToUseCustomText.value === 'use both system and custom') {
+        //     let custom = Object.values(customTexts.value)
+        //     containerText.value = UseGetQuotes(config, custom).res.value
+        //     return
+        // }
+        // if (useCustomText.value && howToUseCustomText.value === 'select text using options' && options) {
+        //     containerText.value = storedTextForRepeat.value
+        //     return
+        // }
+        // if (howToUseCustomText.value === 'use only custom') {
+        //     let texts = Object.values(customTexts.value)
+        //     let length = Object.keys(customTexts.value).length - 1
+        //     let index = Math.round(Math.random() * length)
+        //     containerText.value = texts[index]
+        //     return
+        // }
 
         if (enableRepeat.value || restart ) {
             containerText.value = storedTextForRepeat.value
         } 
-        else {
+        else if (!dictionaryMode.value && !alphabets.value && !gameMode.value) {
             let quote = UseGetQuotes(config).res.value
 
             if (typeof quote === 'object') {  
@@ -245,7 +291,6 @@ export const mainStore = defineStore('mainStore', () => {
 
     const sessionComplete = () => {
         hasCompletedSession.value = true
-        hasStartedSession.value = false
         if (timedTyping.value) {
             clearInterval(timerID.value)
             beginCountdown.value = false
@@ -264,12 +309,7 @@ export const mainStore = defineStore('mainStore', () => {
     }
 
     const playerTyping = (e) => {
-        const previousAlphabetInputTime = ref(0)
-
-        if (currentAlphabetInputTime.value) {
-            previousAlphabetInputTime.value = currentAlphabetInputTime.value
-        }
-
+        if (searchFieldIsFocused.value) return
         if (pauseTyping.value) return
         if (e.type === 'keydown' && e.key === 'Backspace') {
             if (!enableBackSpace.value) return
@@ -283,7 +323,6 @@ export const mainStore = defineStore('mainStore', () => {
         if (e.type === 'keypress')  backspaceIsPressed.value = false   
         let eventSelector = e.key || e.data
         if (!getMobileOS() && e.key === 'Enter') return 
-        if (!hasStartedSession.value) hasStartedSession.value = true
         playerInputLength.value++
 
         if (playerInputLength.value === 1)  {
@@ -292,12 +331,7 @@ export const mainStore = defineStore('mainStore', () => {
                 beginCountdown.value = true
             }
             startTime.value = performance.now();
-            currentAlphabetInputTime.value = 0
-        } else {
-            currentAlphabetInputTime.value = ((performance.now() - startTime.value).toFixed(0) / 1000).toFixed(3)
-        }
-
-        alphabetsInputTime.value[playerInputLength.value] = (currentAlphabetInputTime.value - previousAlphabetInputTime.value)
+        } 
 
         playerLastInput.value = eventSelector
         playerInput.value += playerLastInput.value
@@ -308,6 +342,7 @@ export const mainStore = defineStore('mainStore', () => {
     }
 
     const playerInputTyping = (e) => {
+        if (searchFieldIsFocused.value) return
         if (pauseTyping.value) return
         if (e.inputType === 'deleteContentBackward') {
             if (!enableBackSpace.value) return
@@ -316,9 +351,6 @@ export const mainStore = defineStore('mainStore', () => {
         }
         if (e.inputType === 'deleteContentBackward') return
         backspaceIsPressed.value = false
-        if (!hasStartedSession.value) {
-            hasStartedSession.value = true
-        }
         if (playerInputLength.value === 1)  {
             if (timedTyping.value) {
                 beatCountdown.value = false
@@ -360,11 +392,14 @@ export const mainStore = defineStore('mainStore', () => {
         managePlayerInput,
         beatCountdown,
         secondaryTheme,
+        searchInputEl,
         allFonts,
         inputEl,
         hasCompletedSession,
+        searchFieldIsFocused,
         movie,
         selectedFont,
+        dictionaryMode,
         timerID,
         howToUseCustomText,
         beginCountdown,
@@ -372,20 +407,24 @@ export const mainStore = defineStore('mainStore', () => {
         useCustomText,
         enableRepeat,
         storedTextForRepeat,
+        timePaused,
         customTexts,
         resultData,
+        gameMode,
         completionLevel,
         playerInput,
         correctCount,
         wrongCount,
         containerText,
+        useAlphabetCombination,
         playerLastInput,
         playerInputLength,
-        hasStartedSession,
         savedCountdown,
         startTime,
+        alphabetsCombination,
         totalTime,
         pauseTyping,
+        dictionaryData,
         backspaceIsPressed,
         timedTyping,
         alphabets,

@@ -9,11 +9,11 @@
         <p class="px-2">**This is only available for quotes mode with auto-length. On-select, it automatically enables both modes</p>
         <div v-if="customizers['movie-quotes']"class="p-2">
             <div class="py-1 space-x-2 w-fit">      
-                <input id="mix" :value="false" @click="customize('movie-quotes', customizers['movie-quotes'])" v-model="onlyMovieQuotes" class="w-7" type="radio"></input>
+                <input id="mix" :value="false" @click="customize('movie-quotes',null, false)" v-model="onlyMovieQuotes" class="w-7" type="radio"></input>
                 <label for="mix">Movie quotes with normal quotes</label>          
             </div>
             <div class="py-1 space-x-2 w-fit">         
-                <input id="only" :value="true" @click="customize('movie-quotes', customizers['movie-quotes'])" v-model="onlyMovieQuotes" class="w-7" type="radio"></input>
+                <input id="only" :value="true" @click="customize('movie-quotes',null,true)" v-model="onlyMovieQuotes" class="w-7" type="radio"></input>
                 <label for="only">Only movie quotes</label>       
             </div>
         </div>
