@@ -108,8 +108,8 @@ export const mainStore = defineStore('mainStore', () => {
                     }
                     let randomPartOfSpeech = Math.ceil(Math.random() * dictionaryData.value.wordData.length) - 1
                     let randomDefiniton = Math.ceil(Math.random() * Object.values(allDictionaryDefinitons.value)[randomPartOfSpeech].length) - 1
-                    containerText.value = Object.values(allDictionaryDefinitons.value)[randomPartOfSpeech][randomDefiniton]
-                }
+                    containerText.value = Object.values(allDictionaryDefinitons.value)[randomPartOfSpeech][randomDefiniton] || 'Nothing to show'
+                } 
             } else {
                 containerText.value = dictionaryData.value.error || dictionaryData.value.message || 'On load it is suppose to fetch a random word definition'
             }

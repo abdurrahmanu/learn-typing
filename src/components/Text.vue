@@ -57,7 +57,7 @@ const count = countdownStore()
 const {countdown} = storeToRefs(count)
 
 watch(scrollTextContainer, (newVal)=> {
-    if (Object.keys(newVal).length) {
+    if (Object.keys(newVal).length && !gameMode && !dictionaryMode) {
         containerRef.value.scrollTo({
             top: newVal.top
         })
