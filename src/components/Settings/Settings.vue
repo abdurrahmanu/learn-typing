@@ -13,7 +13,7 @@
                 <AllCaps />
                 <CustomCamelCase />
                 <NoSpaceText />
-                <CustomText />
+                <!-- <CustomText /> -->
             </div>
         </div>
         <div v-if="alphabets">
@@ -49,12 +49,6 @@
                 </div>
             </div>
         </div>
-        <!-- <div v-if="alphabets">
-            <div class="overflow-y-auto" :class="[showMoreSettings ? 'fixed top-0 right-0 bottom-0 h-[100dvh] max-w-[500px] w-fit z-[9999]' : '', appTheme ]">
-                <div class="relative text-sm leading-5 lg:text-base md:text-sm lg:min-w-fit" :class="[theme === 'neutral' ? 'text-slate-400' : 'text-slate-800']">
-                </div>
-            </div>
-        </div> -->
     </div>
 </template>
 

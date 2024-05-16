@@ -99,7 +99,7 @@ export const mainStore = defineStore('mainStore', () => {
             containerText: containerText.value,
             characters: containerText.value.length,
             totalTime: totalTime.value.toFixed(2),
-            testType: timedTyping.value ? 'Countdown mode ' + savedCountdown.value + 's' : '' + alphabets.value ? 'Alphabets mode' : 'Test mode'
+            testType: timedTyping.value ? 'Countdown mode ' + savedCountdown.value + 's' : ''
         }
     })
 
@@ -312,6 +312,7 @@ export const mainStore = defineStore('mainStore', () => {
     }
 
     const playerTyping = (e) => {
+        if (gameMode.value) return
         if (searchFieldIsFocused.value) return
         if (pauseTyping.value) return
         if (e.type === 'keydown' && e.key === 'Backspace') {
@@ -345,6 +346,7 @@ export const mainStore = defineStore('mainStore', () => {
     }
 
     const playerInputTyping = (e) => {
+        if (gameMode.value) return
         if (searchFieldIsFocused.value) return
         if (pauseTyping.value) return
         if (e.inputType === 'deleteContentBackward') {

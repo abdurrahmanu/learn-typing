@@ -19,7 +19,7 @@ const pages = ['TEST MODE', 'ALPHABETS MODE', 'DICTIONARY MODE', 'GAME MODE']
 const modes = ['test', 'alphabets', 'dictionary', 'game']
 
 const store = mainStore()
-const { alphabets, movie, authoredQuote, currentPage, dictionaryMode, dictionaryData, searchWord, gameMode} = storeToRefs(store)
+const { alphabets, movie, authoredQuote, currentPage, containerText, dictionaryMode, dictionaryData, searchWord, gameMode} = storeToRefs(store)
 const {resetToDefault, generateText} = store
 
 const customize = customizeStore()
@@ -34,25 +34,27 @@ const toggleMode = (mode) => {
         localStorage.setItem('dorayi-typing-mode', 'alphabets')
     } 
     else if (mode === 'dictionary') {
-        const {mostUsed} = englishWords()
-        const random = Math.ceil(Math.random() *  mostUsed.length) - 1
-        searchWord.value = mostUsed[random]
-
-        async function fetchWordDefinitions(word) {
-        if (word) {
-            await fetchWord(word).then((data) => {            
-                dictionaryData.value = data.data.value
-                dictionaryMode.value = true
-                gameMode.value = false
-                alphabets.value = false    
-                localStorage.setItem('dorayi-typing-mode', 'dictionary')
-            })
+        alphabets.value = false    
+        gameMode.value = false
+        if (!dictionaryMode.value) {
+            containerText.value = ''
+            const {mostUsed} = englishWords()
+            const random = Math.ceil(Math.random() *  mostUsed.length) - 1
+            searchWord.value = mostUsed[random]
+            async function fetchWordDefinitions(word) {
+                if (word) {
+                    await fetchWord(word).then((data) => {            
+                        dictionaryData.value = data.data.value
+                        localStorage.setItem('dorayi-typing-mode', 'dictionary')
+                        dictionaryMode.value = true
+                        resetToDefault()
+                        generateText(customizers.value)
+                    })
+                }
+            }
+            fetchWordDefinitions(searchWord.value)    
         }
-    }
-
-        fetchWordDefinitions(searchWord.value)    
     } 
-    
     else if (mode === 'game') {
         alphabets.value = false    
         dictionaryMode.value = false

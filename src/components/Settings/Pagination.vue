@@ -1,8 +1,8 @@
 <template>
     <div class="flex items-center m-auto rounded-md p-[2px] w-fit text-black text-xs py-4">
-        <div @click="prev" :class="[hasPrev ? 'cursor-pointer' : 'opacity-40 cursor-not-allowed']" class="p-1 font-mono text-center text-slate-500 rounded-md text-4xl px-5"><</div>
+        <LeftArrow @click="prev" :class="[hasPrev ? 'cursor-pointer' : 'opacity-40 cursor-not-allowed']" class="w-9 h-fit" />
         <div class="bg-neutral-700 py-1 px-3 w-fit text-sm transition-all duration-100 rounded-md text-green-500 cursor-pointer">{{ pagesArray[currentPage] }}</div>
-        <div @click="next" :class="[hasNext ? 'cursor-pointer' : 'opacity-40 cursor-not-allowed']" class="p-1 px-5 font-mono text-4xl text-center text-slate-500 rounded-md">></div>
+        <RightArrow @click="next" :class="[hasNext ? 'cursor-pointer' : 'opacity-40 cursor-not-allowed']" class="w-9 h-fit" />
     </div>
 </template>
 
@@ -10,6 +10,8 @@
 import { ref, onMounted, computed, watch } from 'vue';
 import { storeToRefs } from 'pinia';
 import { mainStore } from '../../store/mainStore';
+import LeftArrow from '../svg/LeftArrow.vue';
+import RightArrow from '../svg/RightArrow.vue';
 
 const store = mainStore()
 const { currentPage} = storeToRefs(store)

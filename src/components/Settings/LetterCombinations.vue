@@ -39,6 +39,10 @@ const toggle = () => {
     } else {
         localStorage.setItem('dorayi-typing-use-alphabets-combination', 'false')
     }
+    if (alphabetsCombination.value.length > 1) {
+        resetToDefault()
+        generateText(customizers.value)
+    }
 }
 
 const addSelection = (alphabet) => {

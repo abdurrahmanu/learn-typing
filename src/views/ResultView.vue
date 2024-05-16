@@ -1,23 +1,23 @@
 <template>
-    <div class="min-h-[200px] text-center text-white">
+    <div :class="appTheme" class="min-h-[200px] text-center">
         <p class="py-3 font-mono text-2xl text-center text-slate-500">STATISTICS</p>
         <div class="w-fit p-[1px] hover:bg-gradient-to-tr transition-all duration-500rounded-md m-auto">            
-            <div class="flex justify-center p-3 m-auto font-mono border border-transparent rounded-md bg-neutral-900 text-slatext-slate-400 w-fit hover:border-zinc-600">
-                <div class="relative px-4 text-center border-r">
+            <div class="flex justify-center p-3 m-auto font-mono border border-transparent rounded-md w-fit hover:border-zinc-600">
+                <div class="relative px-4 text-center border-r border-r-teal-700">
                     <div :class="[accuracy() > 85 ? 'bg-green-500' : 'bg-red-400']" class="w-[10px] absolute bottom-0 right-0 h-[10px]"></div>
                     <div class="text-xs">ACCURACY</div>
                     <div class="">{{ accuracy() }}%</div>
                 </div>
-                <div class="relative px-4 text-center border-r">
+                <div class="relative px-4 text-center border-r border-r-teal-700">
                     <div class="text-xs">TIME</div>
                     <div class="">{{ elapsedTime() }}s</div>
                 </div>
-                <div class="relative px-4 text-center border-r">
+                <div class="relative px-4 text-center border-r border-r-teal-700">
                     <div :class="[wordsPerMinute() > 50 ? 'bg-green-500' : 'bg-red-400']" class="w-[10px] absolute bottom-0 right-0 h-[10px]"></div>
                     <div class="text-xs">WPM</div>
                     <div class="">{{ wordsPerMinute() }}</div>
                 </div>
-                <div class="relative px-4"> 
+                <div class="relative px-4 border-r border-r-teal-700"> 
                     <div :class="[errorRatioLevel() ? 'bg-green-500' : 'bg-red-400']" class="w-[10px] absolute bottom-0 right-0 h-[10px]"></div>
                     <div class="text-xs">ERROR RATIO</div>
                     <div class="">{{ errorRatio() }}</div>
@@ -28,8 +28,8 @@
         <div v-if="beatCountdown" class="text-green-700 uppercase">You beat the time, you left {{ remainingTime() }}</div>
         <div v-if="timedTyping && !beatCountdown" class="text-red-500">You were unable to beat the time</div>
         <!-- <Bar :data="chartData" class="w-[600px] max-w-[90%] bg-neutral-700 m-auto relative p-2"/> -->
-        <div class="py-16 font-mono text-2xl text-black uppercase">
-            STATISTICS GRAPH COMING SOON...
+        <div class="py-16 font-mono text-2xl uppercase">
+            GRAPH COMING SOON...
         </div>
     </div>
 </template>
@@ -44,7 +44,7 @@ import {mainStore} from '../store/mainStore'
 // ChartJS.register( Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
 const store = mainStore()
-const {resultData, alphabetsInputTime, beatCountdown, timedTyping, savedCountdown} = storeToRefs(store)
+const {resultData, alphabetsInputTime, beatCountdown, timedTyping, savedCountdown, appTheme} = storeToRefs(store)
 
 // const chartData = ref({
 //     labels: Object.keys(alphabetsInputTime.value).reverse(),

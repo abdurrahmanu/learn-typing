@@ -37,11 +37,16 @@
         </div>
       </div>
 
-      <div v-if="gameMode" class="flex space-x-2 justify-center py-3">
-        <div  @click="" class="px-3 py-1 uppercase border rounded-md hover:font-medium border-slate-600 w-fit">GAME 1</div>
-          <div @click="" class="px-3 py-1 uppercase border rounded-md hover:font-medium border-slate-600 w-fit">GAME 2</div>
-          <div @click="" class="px-3 py-1 uppercase border rounded-md hover:font-medium border-slate-600 w-fit">GAME 3</div>
-          <div @click="" class="px-3 py-1 uppercase border rounded-md hover:font-medium border-slate-600 w-fit">GAME 4</div>
+      <div v-if="gameMode">
+        <div class="flex space-x-2 justify-center py-3">
+          <div  @click="" class="px-3 py-1 uppercase border rounded-md hover:font-medium border-slate-600 w-fit">GAME 1</div>
+            <div @click="" class="px-3 py-1 uppercase border rounded-md hover:font-medium border-slate-600 w-fit">GAME 2</div>
+            <div @click="" class="px-3 py-1 uppercase border rounded-md hover:font-medium border-slate-600 w-fit">GAME 3</div>
+            <div @click="" class="px-3 py-1 uppercase border rounded-md hover:font-medium border-slate-600 w-fit">GAME 4</div>
+        </div>
+          <div class="text-center text-xl">
+            COMING SOON...
+          </div>
       </div>
 </template>
 
