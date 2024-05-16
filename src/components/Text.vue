@@ -1,5 +1,5 @@
 <template>
-    <div :class="[hideElements ? 'pt-32' : 'pt-0']" class="w-[90%] min-h-[150px] space-y-1 relative transition-none  max-w-[900px] m-auto">
+    <div :class="[hideElements ? 'pt-10' : 'pt-0']" class="w-[90%] min-h-[150px] space-y-1 relative transition-none  max-w-[900px] m-auto">
         <MobileInput />
         <div :class="[alphabets ? 'px-2 py-1 max-w-[300px]' : 'max-w-[600px]', hideElements ? 'text-center' : 'pt-6']"  class="flex justify-between m-auto">
             <Clock/>
@@ -45,7 +45,7 @@ import {mainStore} from '../store/mainStore'
 import { countdownStore } from '../store/countdownStore';
 
 const store = mainStore()
-const { containerText, previousPlayerInput, resultData,  dictionaryData, alphabets, movie, beatCountdown, gameMode, enableRepeat, playerInputLength, playerInput, authoredQuote, scrollTextContainer, inputEl} = storeToRefs(store)
+const { containerText, previousPlayerInput, resultData, dictionaryMode,  dictionaryData, alphabets, movie, beatCountdown, gameMode, enableRepeat, playerInputLength, playerInput, authoredQuote, scrollTextContainer, inputEl} = storeToRefs(store)
 const {generateText, getMobileOS, playerInputTyping, managePlayerInput, sessionComplete, playerTyping} = store
 
 const containerRef = ref(null)
@@ -57,7 +57,7 @@ const count = countdownStore()
 const {countdown} = storeToRefs(count)
 
 watch(scrollTextContainer, (newVal)=> {
-    if (Object.keys(newVal).length && !gameMode && !dictionaryMode) {
+    if (Object.keys(newVal).length && !gameMode.value && !dictionaryMode.value) {
         containerRef.value.scrollTo({
             top: newVal.top
         })

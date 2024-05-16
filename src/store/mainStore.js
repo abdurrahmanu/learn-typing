@@ -13,7 +13,11 @@ export const mainStore = defineStore('mainStore', () => {
     const searchInputEl = ref(null)
     const searchFieldIsFocused = ref(false)
     const alphabetsCombination = ref([])
-    const dictionaryData = ref({})
+    const dictionaryData = ref({
+        wordData: '',
+        message: '',
+        error: ''
+    })
     const useAlphabetCombination = ref(false)
     const currentPage = ref(0)
     const gameMode = ref(false)
@@ -36,6 +40,7 @@ export const mainStore = defineStore('mainStore', () => {
     const backspaceIsPressed = ref(false)
     const timedTyping = ref(false)
     const savedCountdown = ref(10)
+    const searchWord = ref('')
     const customTexts = ref({})
     const useCustomText = ref(false)
     const enableRepeat = ref(false)
@@ -98,20 +103,18 @@ export const mainStore = defineStore('mainStore', () => {
         }
     })
 
-    const generateText = (config, restart, options) => {
+    const generateText = async (config, restart, options) => {
         if (dictionaryMode.value) {
-            if (dictionaryData.value.wordData) {
-                if (dictionaryData.value.wordData.length) {
-                    for (let index = 0; index < dictionaryData.value.wordData.length; index++) {
-                        const {definitions} = dictionaryData.value.wordData[index]
-                        allDictionaryDefinitons.value[dictionaryData.value.wordData[index].partOfSpeech] = definitions.map((data) => data.definition )
-                    }
-                    let randomPartOfSpeech = Math.ceil(Math.random() * dictionaryData.value.wordData.length) - 1
-                    let randomDefiniton = Math.ceil(Math.random() * Object.values(allDictionaryDefinitons.value)[randomPartOfSpeech].length) - 1
-                    containerText.value = Object.values(allDictionaryDefinitons.value)[randomPartOfSpeech][randomDefiniton] || 'Nothing to show'
-                } 
+            if (dictionaryData.value.wordData.length) {
+                for (let index = 0; index < dictionaryData.value.wordData.length; index++) {
+                    const {definitions} = dictionaryData.value.wordData[index]
+                    allDictionaryDefinitons.value[dictionaryData.value.wordData[index].partOfSpeech] = definitions.map((data) => data.definition )
+                }
+                let randomPartOfSpeech = Math.ceil(Math.random() * dictionaryData.value.wordData.length) - 1
+                let randomDefiniton = Math.ceil(Math.random() * Object.values(allDictionaryDefinitons.value)[randomPartOfSpeech].length) - 1
+                containerText.value = Object.values(allDictionaryDefinitons.value)[randomPartOfSpeech][randomDefiniton] || 'Nothing to show'
             } else {
-                containerText.value = dictionaryData.value.error || dictionaryData.value.message || 'On load it is suppose to fetch a random word definition'
+                containerText.value = dictionaryData.value.error || dictionaryData.value.message
             }
         }
 
@@ -412,6 +415,7 @@ export const mainStore = defineStore('mainStore', () => {
         resultData,
         gameMode,
         completionLevel,
+        searchWord,
         playerInput,
         correctCount,
         wrongCount,

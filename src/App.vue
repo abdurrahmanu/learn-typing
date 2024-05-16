@@ -27,7 +27,7 @@ import {englishWords} from '../data/englishWords.js'
 import {fetchWord} from './composables/UseDictionary.js'
 
 const main = mainStore()
-const {appTheme, theme,alphabets, alphabetsMode, dictionaryData, enableBackSpace, customTexts, currentPage, hasCompletedSession, alphabetsCombination, useAlphabetCombination, gameMode, dictionaryMode} = storeToRefs(main)
+const {appTheme, theme,alphabets, alphabetsMode, dictionaryData, searchWord, enableBackSpace, customTexts, currentPage, hasCompletedSession, alphabetsCombination, useAlphabetCombination, gameMode, dictionaryMode} = storeToRefs(main)
 
 const customize = customizeStore()
 const {hideElements, customizers, disableOption } = storeToRefs(customize)
@@ -69,19 +69,21 @@ onBeforeMount(() => {
     } 
 
     else if (localStorage.getItem('dorayi-typing-mode') === 'dictionary') {
-      currentPage.value = 2
-      dictionaryMode.value = true
       const {mostUsed} = englishWords()
       const random = Math.ceil(Math.random() *  mostUsed.length) - 1
-
-      fetchWordDefinitions(mostUsed[random])
+      searchWord.value = mostUsed[random]
 
       async function fetchWordDefinitions(word) {
         if (word) {
-          const {data} = await fetchWord(word)
-          dictionaryData.value = data.value
+          await fetchWord(word).then((data) => {            
+            dictionaryData.value = data.data.value
+            currentPage.value = 2
+            dictionaryMode.value = true
+          })
         }
       }
+
+      fetchWordDefinitions(mostUsed[random])
     }
 
     else if (localStorage.getItem('dorayi-typing-mode') === 'game') {
@@ -94,7 +96,6 @@ onBeforeMount(() => {
       currentPage.value = 0
     }
 }
-
 
   if (localStorage.getItem('alphabets-mode')) {
     alphabetsMode.value = JSON.parse(localStorage.getItem('alphabets-mode'))

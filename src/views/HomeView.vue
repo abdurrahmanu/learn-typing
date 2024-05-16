@@ -37,12 +37,4 @@ watch(hasCompletedSession, (newVal) => {
 window.addEventListener('resize', () => {
   screenWidth.value = window.innerWidth
 })
-
-onMounted(() => {
-  if (dictionaryMode.value) {
-    if (searchInputEl.value instanceof HTMLElement) {
-      searchInputEl.value.focus()
-    }
-  }
-})
 </script>

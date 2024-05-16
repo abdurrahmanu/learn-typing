@@ -6,7 +6,7 @@
                 <p>Backspace</p>
             </div>
         </div>
-        <p  class="px-3">**Cannot be disabled on Mobile devices</p>
+        <p v-if="getMobileOS()"  class="px-3">**Cannot be disabled on Mobile devices</p>
         <p  class="px-3">This enables or disables player ability to utilize the backspace key while typing.</p>
     </div>
 </template>

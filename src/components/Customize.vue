@@ -32,8 +32,8 @@
       <div v-if="dictionaryMode" class="text-center">
         DICTIONARY WORDS
         <div class="text-center py-4">
-          <input @focus="searchFieldIsFocused = true" @blur="searchFieldIsFocused = false" ref="searchInputEl" type="text" v-model="searchWord" class="px-2 py-1 text-xs rounded-md max-w-[400px] outline-none border-none text-black bg-slate-200 w-[80%]" placeholder="Type in a word to search definition">
-          <button  @click="fetchWordDefinitions(searchWord)" class="px-2 py-1 text-white bg-green-800 hover:bg-green-600 rounded-md text-xs">Search</button>
+          <input :class="[theme === 'neutral' ? 'text-slate-300 caret-slate-400 placeholder:text-neutral-600' : 'text-slate-700 caret-slate-800 placeholder:text-slate-500']" @keyup.enter="fetchWordDefinitions(searchWord)" @focus="searchFieldIsFocused = true" @blur="searchFieldIsFocused = false" ref="searchInputEl" type="text" v-model="searchWord" class="px-1 py-[3px] text-xs max-w-[400px] outline-none border-b border-b-green-600 bg-transparent w-[80%]" placeholder="Type in a word to search definition">
+          <button  @click="fetchWordDefinitions(searchWord)" class="px-2 py-1 text-white bg-green-800 hover:bg-green-600 rounded-md text-xs rounded-l-none">Search</button>
         </div>
       </div>
 
@@ -52,9 +52,8 @@ import {storeToRefs} from 'pinia'
 import { mainStore } from '../store/mainStore.js';
 import {fetchWord} from '../composables/UseDictionary.js'
 
-const searchWord = ref('')
 const store = mainStore()
-const {alphabets, alphabetsMode, hasCompletedSession, secondaryTheme, dictionaryMode, searchFieldIsFocused, dictionaryData, gameMode, searchInputEl} = storeToRefs(store)
+const {alphabets, alphabetsMode, hasCompletedSession, theme, secondaryTheme, dictionaryMode, searchWord, searchFieldIsFocused, dictionaryData, gameMode, searchInputEl} = storeToRefs(store)
 const {switchNext, resetToDefault, generateText} = store
 
 const customize = customizeStore()
