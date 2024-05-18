@@ -39,48 +39,50 @@ onMounted(() => {
     watchEffect(() => {
         if (props.currentIndex) {
             //Auto scroll- check if caret is within container viewport, if not - scroll in
-            if (currentAlphabet.value instanceof HTMLElement) {
-                const parentScrollHeight = containerRef.value.scrollHeight
-                const parentHeight = containerRef.value.getBoundingClientRect().height
-                const caretTopOffset = currentAlphabet.value.getBoundingClientRect().top
-                const parentTopOffset = containerRef.value.getBoundingClientRect().top
-                const caretBottomOffset = currentAlphabet.value.getBoundingClientRect().bottom
-                const parentBottomOffset = containerRef.value.getBoundingClientRect().bottom
-                const lineHeight = currentAlphabet.value.getBoundingClientRect().bottom - currentAlphabet.value.getBoundingClientRect().top
-                const prevSiblingBottomOffset = props.index > 0 ? currentAlphabet.value.previousElementSibling.getBoundingClientRect().bottom : 0
-                const nextSiblingTopOffset = props.index > 0 && currentAlphabet.value.nextElementSibling ? currentAlphabet.value.nextElementSibling.getBoundingClientRect().top : 0
+            setTimeout(() => {          
+                if (currentAlphabet.value instanceof HTMLElement) {
+                    const parentScrollHeight = containerRef.value.scrollHeight
+                    const parentHeight = containerRef.value.getBoundingClientRect().height
+                    const caretTopOffset = currentAlphabet.value.getBoundingClientRect().top
+                    const parentTopOffset = containerRef.value.getBoundingClientRect().top
+                    const caretBottomOffset = currentAlphabet.value.getBoundingClientRect().bottom
+                    const parentBottomOffset = containerRef.value.getBoundingClientRect().bottom
+                    const lineHeight = currentAlphabet.value.getBoundingClientRect().bottom - currentAlphabet.value.getBoundingClientRect().top
+                    const prevSiblingBottomOffset = props.index > 0 ? currentAlphabet.value.previousElementSibling.getBoundingClientRect().bottom : 0
+                    const nextSiblingTopOffset = props.index > 0 && currentAlphabet.value.nextElementSibling ? currentAlphabet.value.nextElementSibling.getBoundingClientRect().top : 0
+        
+                    console.log('object');
     
-                console.log('object');
-
-                if (!(parentBottomOffset - prevSiblingBottomOffset <= lineHeight) && parentBottomOffset - caretBottomOffset <= lineHeight && scrollDistance.value < parentScrollHeight) {
-                    if (!backspaceIsPressed.value) {     
-                        if (containerRef.value.scrollTop + parentHeight === parentScrollHeight) return
-                        else {
-                            if (parentScrollHeight - containerRef.value.scrollTop > parentHeight) {                    
-                                scrollDistance.value += (parentHeight - lineHeight) - (parentBottomOffset - caretBottomOffset)
-                            } else {
-                                scrollDistance.value += parentScrollHeight - containerRef.value.scrollTop
+                    if (!(parentBottomOffset - prevSiblingBottomOffset <= lineHeight) && parentBottomOffset - caretBottomOffset <= lineHeight && scrollDistance.value < parentScrollHeight) {
+                        if (!backspaceIsPressed.value) {     
+                            if (containerRef.value.scrollTop + parentHeight === parentScrollHeight) return
+                            else {
+                                if (parentScrollHeight - containerRef.value.scrollTop > parentHeight) {                    
+                                    scrollDistance.value += (parentHeight - lineHeight) - (parentBottomOffset - caretBottomOffset)
+                                } else {
+                                    scrollDistance.value += parentScrollHeight - containerRef.value.scrollTop
+                                }
+                                scrollTextContainer.value = {
+                                    top: scrollDistance.value
+                                }
                             }
-                            scrollTextContainer.value = {
+                        }
+                    }
+        
+                    if (caretTopOffset < parentTopOffset && props.index > 0 && nextSiblingTopOffset !== caretTopOffset) {    
+                        if (backspaceIsPressed.value) {
+                            if (containerRef.value.scrollTop < parentHeight) {
+                                scrollDistance.value -= containerRef.value.scrollTop
+                            } else {      
+                                scrollDistance.value -=  parentHeight
+                            }
+                                scrollTextContainer.value = {
                                 top: scrollDistance.value
                             }
                         }
                     }
                 }
-    
-                if (caretTopOffset < parentTopOffset && props.index > 0 && nextSiblingTopOffset !== caretTopOffset) {    
-                    if (backspaceIsPressed.value) {
-                        if (containerRef.value.scrollTop < parentHeight) {
-                            scrollDistance.value -= containerRef.value.scrollTop
-                        } else {      
-                            scrollDistance.value -=  parentHeight
-                        }
-                            scrollTextContainer.value = {
-                            top: scrollDistance.value
-                        }
-                    }
-                }
-            }
+            }, 0);
         }
     })
 })
