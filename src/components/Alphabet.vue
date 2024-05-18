@@ -39,6 +39,7 @@ onMounted(() => {
     watchEffect(() => {
         if (props.currentIndex) {
                 if (currentAlphabet.value) {
+                    console.log('object');
                     const parentScrollHeight = containerRef.value.scrollHeight
                     const parentHeight = containerRef.value.getBoundingClientRect().height
                     const caretTopOffset = currentAlphabet.value.getBoundingClientRect().top
@@ -77,6 +78,8 @@ onMounted(() => {
                             }
                         }
                     }
+                } else {
+                    console.log('object');
                 }
         }
     })
