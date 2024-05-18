@@ -1,4 +1,5 @@
 <template>
+    {{backspaceIsPressed}}
     <div :ref="currentIndex ? 'currentAlphabet' : ''" :class="[customizers['no-space'] ? '' : 'whitespace-pre-wrap']" class="relative inline font-mono">
         <Transition v-if="currentIndex" appear>            
             <span :class="[mainStyle, equalStyle, currentIndexStyle, styledAlphas]" class="transition-all">{{ alphabet }}</span>
