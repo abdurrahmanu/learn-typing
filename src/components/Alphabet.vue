@@ -37,6 +37,7 @@ window.addEventListener('input', event => {
 
 watchEffect(() => {
     if (props.currentIndex) {
+        console.log(index);
         //Auto scroll- check if caret is within container viewport, if not - scroll in
         if (currentAlphabet.value instanceof HTMLElement && containerRef.value instanceof HTMLElement) {
             const parentScrollHeight = containerRef.value.scrollHeight
