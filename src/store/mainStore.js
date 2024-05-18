@@ -27,6 +27,7 @@ export const mainStore = defineStore('mainStore', () => {
     const enableBackSpace = ref(true)
     const beatCountdown = ref(null)
     const completionLevel = ref(0)
+    const containerRef = ref(null)
     const correctCount = ref(0)
     const wrongCount = ref(0)
     const containerText = ref('')
@@ -435,6 +436,7 @@ export const mainStore = defineStore('mainStore', () => {
         alphabetsMode,
         theme,
         currentPage,
+        containerRef,
         appTheme,
         alphabetsInputTime,
         previousPlayerInput,
