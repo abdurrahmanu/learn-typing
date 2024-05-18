@@ -50,7 +50,7 @@ watchEffect(() => {
             const nextSiblingTopOffset = props.index > 0 && currentAlphabet.value.nextElementSibling ? currentAlphabet.value.nextElementSibling.getBoundingClientRect().top : 0
             
             if (!(parentBottomOffset - prevSiblingBottomOffset <= lineHeight) && parentBottomOffset - caretBottomOffset <= lineHeight && scrollDistance.value < parentScrollHeight) {
-                if (backspaceIsPressed.value) {     
+                if (!backspaceIsPressed.value) {     
                     if (currentAlphabet.value.parentElement.scrollTop + parentHeight === parentScrollHeight) return
                     else {
                         if (parentScrollHeight - currentAlphabet.value.parentElement.scrollTop > parentHeight) {                    
@@ -106,17 +106,17 @@ const mainStyle = computed(() => {
     return props.index > playerInputLength.value ? text : ''
 })
 
-            if (currentAlphabet.value.getBoundingClientRect().top < parentTopOffset) {
-                currentAlphabet.value.parentElement.scrollTo({
-                    top: -parentTopOffset
-                })
-            }
+            // if (currentAlphabet.value.getBoundingClientRect().top < parentTopOffset) {
+            //     currentAlphabet.value.parentElement.scrollTo({
+            //         top: -parentTopOffset
+            //     })
+            // }
 
-            if (currentAlphabet.value.getBoundingClientRect().bottom > parentBottomOffset) {
-                currentAlphabet.value.parentElement.scrollTo({
-                    top: parentBottomOffset
-                })
-            }
+            // if (currentAlphabet.value.getBoundingClientRect().bottom > parentBottomOffset) {
+            //     currentAlphabet.value.parentElement.scrollTo({
+            //         top: parentBottomOffset
+            //     })
+            // }
 
 </script>
 
