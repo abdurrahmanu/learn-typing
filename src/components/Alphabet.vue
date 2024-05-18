@@ -1,5 +1,4 @@
 <template>
-    {{backspaceIsPressed}}
     <div :ref="currentIndex ? 'currentAlphabet' : ''" :class="[customizers['no-space'] ? '' : 'whitespace-pre-wrap']" class="relative inline font-mono">
         <Transition v-if="currentIndex" appear>            
             <span :class="[mainStyle, equalStyle, currentIndexStyle, styledAlphas]" class="transition-all">{{ alphabet }}</span>
@@ -52,16 +51,19 @@ watchEffect(() => {
             
             if (!(parentBottomOffset - prevSiblingBottomOffset <= lineHeight) && parentBottomOffset - caretBottomOffset <= lineHeight && scrollDistance.value < parentScrollHeight) {
                 if (!backspaceIsPressed.value) {     
-                    if (currentAlphabet.value.parentElement.scrollTop + parentHeight === parentScrollHeight) return
-                    else {
-                        if (parentScrollHeight - currentAlphabet.value.parentElement.scrollTop > parentHeight) {                    
-                            scrollDistance.value += (parentHeight - lineHeight) - (parentBottomOffset - caretBottomOffset)
-                        } else {
-                            scrollDistance.value += parentScrollHeight - currentAlphabet.value.parentElement.scrollTop
-                        }
-                        scrollTextContainer.value = {
-                            top: scrollDistance.value
-                        }
+                    // if (currentAlphabet.value.parentElement.scrollTop + parentHeight === parentScrollHeight) return
+                    // else {
+                    //     if (parentScrollHeight - currentAlphabet.value.parentElement.scrollTop > parentHeight) {                    
+                    //         scrollDistance.value += (parentHeight - lineHeight) - (parentBottomOffset - caretBottomOffset)
+                    //     } else {
+                    //         scrollDistance.value += parentScrollHeight - currentAlphabet.value.parentElement.scrollTop
+                    //     }
+                    //     scrollTextContainer.value = {
+                    //         top: scrollDistance.value
+                    //     }
+                    // }
+                    scrollTextContainer.value = {
+                        top: 100
                     }
                 }
             }
@@ -107,17 +109,17 @@ const mainStyle = computed(() => {
     return props.index > playerInputLength.value ? text : ''
 })
 
-            // if (currentAlphabet.value.getBoundingClientRect().top < parentTopOffset) {
-            //     currentAlphabet.value.parentElement.scrollTo({
-            //         top: -parentTopOffset
-            //     })
-            // }
+            if (currentAlphabet.value.getBoundingClientRect().top < parentTopOffset) {
+                currentAlphabet.value.parentElement.scrollTo({
+                    top: -parentTopOffset
+                })
+            }
 
-            // if (currentAlphabet.value.getBoundingClientRect().bottom > parentBottomOffset) {
-            //     currentAlphabet.value.parentElement.scrollTo({
-            //         top: parentBottomOffset
-            //     })
-            // }
+            if (currentAlphabet.value.getBoundingClientRect().bottom > parentBottomOffset) {
+                currentAlphabet.value.parentElement.scrollTo({
+                    top: parentBottomOffset
+                })
+            }
 
 </script>
 
