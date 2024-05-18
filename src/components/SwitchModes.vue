@@ -34,10 +34,10 @@ const toggleMode = (mode) => {
         localStorage.setItem('dorayi-typing-mode', 'alphabets')
     } 
     else if (mode === 'dictionary') {
+        containerText.value = ''
         alphabets.value = false    
         gameMode.value = false
         if (!dictionaryMode.value) {
-            containerText.value = ''
             const {mostUsed} = englishWords()
             const random = Math.ceil(Math.random() *  mostUsed.length) - 1
             searchWord.value = mostUsed[random]

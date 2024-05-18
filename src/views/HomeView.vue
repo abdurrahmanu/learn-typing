@@ -22,6 +22,7 @@ import { storeToRefs } from 'pinia';
 import { customizeStore } from '../store/customizeStore';
 import { useRouter } from 'vue-router';
 
+
 const router = useRouter()
 const store = mainStore()
 const { hasCompletedSession, gameMode, dictionaryMode, searchInputEl} = storeToRefs(store)

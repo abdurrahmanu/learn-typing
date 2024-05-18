@@ -362,10 +362,8 @@ export const mainStore = defineStore('mainStore', () => {
                 beginCountdown.value = true
             }
             startTime.value = performance.now();
-            currentAlphabetInputTime.value = 0
-        }  else {
-            currentAlphabetInputTime.value = ((performance.now() - startTime.value).toFixed(0) / 1000).toFixed(3)
-        }
+        } 
+
         if (playerInput.value.length === containerText.value.length) {
             if (timedTyping.value) beatCountdown.value = true
             sessionComplete()

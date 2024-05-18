@@ -27,6 +27,14 @@ const props = defineProps({
     equality: Boolean,
 })
 
+window.addEventListener('input', event => {
+    if (event.inputType === 'deleteContentBackward' && props.currentIndex) {
+        backspaceIsPressed.value = true
+    } else if (event.inputType !== 'deleteContentBackward' && props.currentIndex)  {
+        backspaceIsPressed.value = false
+    }
+})
+
 watchEffect(() => {
     if (props.currentIndex) {
         //Auto scroll- check if caret is within container viewport, if not - scroll in
@@ -41,18 +49,6 @@ watchEffect(() => {
             const prevSiblingBottomOffset = props.index > 0 ? currentAlphabet.value.previousElementSibling.getBoundingClientRect().bottom : 0
             const nextSiblingTopOffset = props.index > 0 && currentAlphabet.value.nextElementSibling ? currentAlphabet.value.nextElementSibling.getBoundingClientRect().top : 0
             
-            // if (currentAlphabet.value.getBoundingClientRect().top < parentTopOffset) {
-            //     currentAlphabet.value.parentElement.scrollTo({
-            //         top: -parentTopOffset
-            //     })
-            // }
-
-            // if (currentAlphabet.value.getBoundingClientRect().bottom > parentBottomOffset) {
-            //     currentAlphabet.value.parentElement.scrollTo({
-            //         top: parentBottomOffset
-            //     })
-            // }
-
             if (!(parentBottomOffset - prevSiblingBottomOffset <= lineHeight) && parentBottomOffset - caretBottomOffset <= lineHeight && scrollDistance.value < parentScrollHeight) {
                 if (!backspaceIsPressed.value) {     
                     if (currentAlphabet.value.parentElement.scrollTop + parentHeight === parentScrollHeight) return
@@ -109,6 +105,19 @@ const mainStyle = computed(() => {
     let text = theme.value === 'neutral' ? 'text-slate-400' : 'text-neutral-500'
     return props.index > playerInputLength.value ? text : ''
 })
+
+            // if (currentAlphabet.value.getBoundingClientRect().top < parentTopOffset) {
+            //     currentAlphabet.value.parentElement.scrollTo({
+            //         top: -parentTopOffset
+            //     })
+            // }
+
+            // if (currentAlphabet.value.getBoundingClientRect().bottom > parentBottomOffset) {
+            //     currentAlphabet.value.parentElement.scrollTo({
+            //         top: parentBottomOffset
+            //     })
+            // }
+
 </script>
 
 <style scoped>
