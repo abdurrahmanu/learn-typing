@@ -51,19 +51,16 @@ watchEffect(() => {
             
             if (!(parentBottomOffset - prevSiblingBottomOffset <= lineHeight) && parentBottomOffset - caretBottomOffset <= lineHeight && scrollDistance.value < parentScrollHeight) {
                 if (backspaceIsPressed.value) {     
-                    // if (currentAlphabet.value.parentElement.scrollTop + parentHeight === parentScrollHeight) return
-                    // else {
-                    //     if (parentScrollHeight - currentAlphabet.value.parentElement.scrollTop > parentHeight) {                    
-                    //         scrollDistance.value += (parentHeight - lineHeight) - (parentBottomOffset - caretBottomOffset)
-                    //     } else {
-                    //         scrollDistance.value += parentScrollHeight - currentAlphabet.value.parentElement.scrollTop
-                    //     }
-                    //     scrollTextContainer.value = {
-                    //         top: scrollDistance.value
-                    //     }
-                    // }
-                    scrollTextContainer.value = {
-                        top: 100
+                    if (currentAlphabet.value.parentElement.scrollTop + parentHeight === parentScrollHeight) return
+                    else {
+                        if (parentScrollHeight - currentAlphabet.value.parentElement.scrollTop > parentHeight) {                    
+                            scrollDistance.value += (parentHeight - lineHeight) - (parentBottomOffset - caretBottomOffset)
+                        } else {
+                            scrollDistance.value += parentScrollHeight - currentAlphabet.value.parentElement.scrollTop
+                        }
+                        scrollTextContainer.value = {
+                            top: scrollDistance.value
+                        }
                     }
                 }
             }
