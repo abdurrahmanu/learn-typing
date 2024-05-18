@@ -56,14 +56,17 @@ const count = countdownStore()
 const {countdown} = storeToRefs(count)
 
 watch(scrollTextContainer, (newVal)=> {
-    if (Object.keys(newVal).length && !gameMode.value && !dictionaryMode.value) {
-        containerRef.value.scrollTo({
-            top: newVal.top
-        })
-    } else {
-        containerRef.value.scrollTo({
-            top: 0
-        })
+    if (containerRef.value instanceof HTMLElement) {
+        console.log('object');
+        if (Object.keys(newVal).length && !gameMode.value && !dictionaryMode.value) {
+            containerRef.value.scrollTo({
+                top: newVal.top
+            })
+        } else {
+            containerRef.value.scrollTo({
+                top: 0
+            })
+        }
     }
 }, {deep: true})
 

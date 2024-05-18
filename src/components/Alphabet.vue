@@ -1,5 +1,4 @@
 <template>
-    <div class="absolute top-5" v-if="currentIndex">{{ playerInputLength }}- {{ index }}</div>
     <div :ref="currentIndex ? 'currentAlphabet' : ''" :class="[customizers['no-space'] ? '' : 'whitespace-pre-wrap']" class="relative inline font-mono">
         <Transition v-if="currentIndex" appear>            
             <span :class="[mainStyle, equalStyle, currentIndexStyle, styledAlphas]" class="transition-all">{{ alphabet }}</span>
@@ -38,7 +37,6 @@ window.addEventListener('input', event => {
 
 watchEffect(() => {
     if (props.currentIndex) {
-        console.log(props.index);
         //Auto scroll- check if caret is within container viewport, if not - scroll in
         if (currentAlphabet.value instanceof HTMLElement && containerRef.value instanceof HTMLElement) {
             const parentScrollHeight = containerRef.value.scrollHeight
