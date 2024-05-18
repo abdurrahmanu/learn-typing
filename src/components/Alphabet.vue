@@ -1,5 +1,5 @@
 <template>
-    <div :ref="currentIndex ? 'currentAlphabet' : ''" :class="[customizers['no-space'] ? '' : 'whitespace-pre-wrap']" class="relative inline font-mono">
+    <div :ref="currentIndex ? 'currentAlphabet' : 'notCurrent'" :class="[customizers['no-space'] ? '' : 'whitespace-pre-wrap']" class="relative inline font-mono">
         <Transition v-if="currentIndex" appear>            
             <span :class="[mainStyle, equalStyle, currentIndexStyle, styledAlphas]" class="transition-all">{{ alphabet }}</span>
         </Transition>
@@ -38,9 +38,7 @@ window.addEventListener('input', event => {
 onMounted(() => {
     watchEffect(() => {
         if (props.currentIndex) {
-            //Auto scroll- check if caret is within container viewport, if not - scroll in
-            setTimeout(() => {          
-                if (currentAlphabet.value instanceof HTMLElement) {
+                if (currentAlphabet.value) {
                     const parentScrollHeight = containerRef.value.scrollHeight
                     const parentHeight = containerRef.value.getBoundingClientRect().height
                     const caretTopOffset = currentAlphabet.value.getBoundingClientRect().top
@@ -50,9 +48,7 @@ onMounted(() => {
                     const lineHeight = currentAlphabet.value.getBoundingClientRect().bottom - currentAlphabet.value.getBoundingClientRect().top
                     const prevSiblingBottomOffset = props.index > 0 ? currentAlphabet.value.previousElementSibling.getBoundingClientRect().bottom : 0
                     const nextSiblingTopOffset = props.index > 0 && currentAlphabet.value.nextElementSibling ? currentAlphabet.value.nextElementSibling.getBoundingClientRect().top : 0
-        
-                    console.log('object');
-    
+            
                     if (!(parentBottomOffset - prevSiblingBottomOffset <= lineHeight) && parentBottomOffset - caretBottomOffset <= lineHeight && scrollDistance.value < parentScrollHeight) {
                         if (!backspaceIsPressed.value) {     
                             if (containerRef.value.scrollTop + parentHeight === parentScrollHeight) return
@@ -82,7 +78,6 @@ onMounted(() => {
                         }
                     }
                 }
-            }, 10);
         }
     })
 })
