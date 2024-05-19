@@ -37,6 +37,7 @@ onMounted(() => {
         if (props.currentIndex) {
             if (containerRef.value) {
                 if (!currentAlphabet.value) return
+                console.log('object');
                 const parentScrollHeight = containerRef.value.scrollHeight
                 const parentHeight = containerRef.value.getBoundingClientRect().height
                 const caretTopOffset = currentAlphabet.value.getBoundingClientRect().top
