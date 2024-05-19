@@ -1,5 +1,5 @@
 <template>
-    <div :ref="currentIndex ? 'currentAlphabet' : 'notCurrent'" :class="[customizers['no-space'] ? '' : 'whitespace-pre-wrap']" class="relative inline font-mono">
+    <div ref="currentAlphabet" :class="[customizers['no-space'] ? '' : 'whitespace-pre-wrap']" class="relative inline font-mono">
         <span  :class="[equalStyle, currentIndexStyle, mainStyle, styledAlphas]">{{ alphabet }} </span>
     </div>
 </template> 
@@ -10,6 +10,7 @@ import {storeToRefs} from 'pinia'
 import {mainStore} from '../store/mainStore'
 import { customizeStore } from '../store/customizeStore';
 
+const currentEl = ref(document.getElementById(''))
 const store = mainStore()
 const { playerInputLength, alphabets, alphabetsMode, theme, containerRef, scrollTextContainer, scrollDistance, backspaceIsPressed, containerText} = storeToRefs(store)
 
@@ -35,9 +36,7 @@ window.addEventListener('input', event => {
 onMounted(() => {
     watchEffect(() => {
         if (props.currentIndex) {
-            if (containerRef.value) {
-                setTimeout(() => {                    
-                    console.log(currentAlphabet.value);
+            if (currentAlphabet.value) {                 
                     const parentScrollHeight = containerRef.value.scrollHeight
                     const parentHeight = containerRef.value.getBoundingClientRect().height
                     const caretTopOffset = currentAlphabet.value.getBoundingClientRect().top
@@ -76,7 +75,6 @@ onMounted(() => {
                             }
                         }
                     }
-                }, 500);
             }
         }
     })
