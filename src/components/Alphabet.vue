@@ -76,9 +76,7 @@ onMounted(() => {
                             }
                         }
                     }
-                }, 10);
-            } else {
-                console.log('jjj');
+                }, 500);
             }
         }
     })
