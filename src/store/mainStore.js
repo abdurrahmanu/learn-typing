@@ -240,6 +240,11 @@ export const mainStore = defineStore('mainStore', () => {
             clearInterval(timerID.value)
             beginCountdown.value = false
         }
+        const dictionaryData = ref({
+            wordData: '',
+            message: '',
+            error: ''
+        })
         if (beatCountdown.value && timedTyping.value) beatCountdown.value = false
         else beatCountdown.value = null
         scrollDistance.value = 0

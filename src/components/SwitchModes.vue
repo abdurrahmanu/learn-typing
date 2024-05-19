@@ -40,6 +40,11 @@ const toggleMode = (mode) => {
             const random = Math.ceil(Math.random() *  mostUsed.length) - 1
             searchWord.value = mostUsed[random]
             async function fetchWordDefinitions(word) {
+                const dictionaryData = ref({
+                    wordData: '',
+                    message: '',
+                    error: ''
+                })
                 if (word) {
                     await fetchWord(word).then((data) => {            
                         dictionaryData.value = data.data.value
