@@ -6,7 +6,7 @@
             <Blind />
         </div>
         <div v-if="containerText" :class="[hideElements ? 'text-[20px] md:text-[24px]' : 'text-[17px] md:text-[19px]']" class="leading-6 md:leading-[30px] transition-all duration-100 relative m-auto max-w-[600px] w-full ">
-            <div ref="containerRef" @click="getMobileOS() ? inputEl.focus() : ''" :class="[customizers['no-space'] ? 'break-words' : '', alphabets ? 'text-center break-words leading-10': 'text-left', !alphabets && textPosition=== 'center' ? 'text-center' : !alphabets && textPosition=== 'right' ? 'text-right' : 'text-left']" class="relative overflow-y-auto h-fit min-h-fit scroll-smooth noscrollbar max-h-[100px]">
+            <div ref="containerRef" @click="getMobileOS() ? inputEl.focus() : ''" :class="[customizers['no-space'] ? 'break-words' : '', alphabets ? 'text-center break-words leading-10': 'text-left', !alphabets && textPosition=== 'center' ? 'text-center' : !alphabets && textPosition=== 'right' ? 'text-right' : 'text-left', hideElements ? 'max-h-[103px]' : 'max-h-[100px]'] " class="relative overflow-y-auto h-fit min-h-fit scroll-smooth noscrollbar">
                 <Alphabet
                 v-for="(alphabet, index) in containerText"
                 :index="index"

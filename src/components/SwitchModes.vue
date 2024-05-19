@@ -1,5 +1,5 @@
 <template>
-    <div class="m-auto py-6 w-fit h-fit pt-4">
+    <div class="py-6 pt-4 m-auto w-fit h-fit">
             <Pagination 
             @page="currentPage = $event" 
             :pages-array="pages" />
@@ -35,8 +35,6 @@ const toggleMode = (mode) => {
     } 
     else if (mode === 'dictionary') {
         containerText.value = ''
-        alphabets.value = false    
-        gameMode.value = false
         if (!dictionaryMode.value) {
             const {mostUsed} = englishWords()
             const random = Math.ceil(Math.random() *  mostUsed.length) - 1
@@ -46,7 +44,6 @@ const toggleMode = (mode) => {
                     await fetchWord(word).then((data) => {            
                         dictionaryData.value = data.data.value
                         localStorage.setItem('dorayi-typing-mode', 'dictionary')
-                        dictionaryMode.value = true
                         resetToDefault()
                         generateText(customizers.value)
                     })
@@ -54,6 +51,9 @@ const toggleMode = (mode) => {
             }
             fetchWordDefinitions(searchWord.value)    
         }
+        dictionaryMode.value = true
+        alphabets.value = false    
+        gameMode.value = false
     } 
     else if (mode === 'game') {
         alphabets.value = false    
