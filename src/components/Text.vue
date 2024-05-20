@@ -5,8 +5,8 @@
             <Clock/>
             <Blind />
         </div>
-        <div v-if="containerText" :class="[hideElements ? 'text-[20px] md:text-[24px]' : 'text-[17px] md:text-[19px]']" class="leading-6 md:leading-[30px] transition-all duration-100 relative m-auto max-w-[600px] w-full ">
-            <div ref="containerRef" @click="getMobileOS() ? inputEl.focus() : ''" :class="[customizers['no-space'] ? 'break-words' : '', alphabets ? 'text-center break-words leading-10': 'text-left', !alphabets && textPosition=== 'center' ? 'text-center' : !alphabets && textPosition=== 'right' ? 'text-right' : 'text-left', hideElements ? 'max-h-[103px]' : 'max-h-[100px]'] " class="relative overflow-y-auto h-fit min-h-fit scroll-smooth noscrollbar">
+        <div v-if="containerText" class="leading-6 transition-all duration-100 relative m-auto max-w-[600px] w-full text-[17px]">
+            <div ref="containerRef" @click="getMobileOS() ? inputEl.focus() : ''" :class="[customizers['no-space'] ? 'break-words' : '', alphabets ? 'text-center break-words leading-10': 'text-left', !alphabets && textPosition=== 'center' ? 'text-center' : !alphabets && textPosition=== 'right' ? 'text-right' : 'text-left'] " class="relative overflow-y-auto h-fit min-h-fit scroll-smooth noscrollbar max-h-[100px]">
                 <Alphabet
                 v-for="(alphabet, index) in containerText"
                 :index="index"
@@ -45,7 +45,7 @@ import {mainStore} from '../store/mainStore'
 import { countdownStore } from '../store/countdownStore';
 
 const store = mainStore()
-const { containerText, previousPlayerInput, resultData, containerRef, dictionaryMode,  dictionaryData, alphabets, movie, beatCountdown, gameMode, enableRepeat, playerInputLength, playerInput, authoredQuote, scrollTextContainer, inputEl} = storeToRefs(store)
+const { containerText, previousPlayerInput, resultData, pauseTyping, containerRef, dictionaryMode,  dictionaryData, alphabets, movie, beatCountdown, gameMode, enableRepeat, playerInputLength, playerInput, authoredQuote, scrollTextContainer, inputEl} = storeToRefs(store)
 const {generateText, getMobileOS, playerInputTyping, managePlayerInput, sessionComplete, playerTyping} = store
 
 const textPosition = ref('left')
@@ -89,7 +89,7 @@ onMounted(() => {
     generateText(customizers.value)
     if (getMobileOS()) {
         inputEl.value.focus()
-        window.addEventListener('input', playerInputTyping)
+        inputEl.value.addEventListener('input', playerInputTyping)
     }
     else {
         window.addEventListener('keypress', playerTyping)

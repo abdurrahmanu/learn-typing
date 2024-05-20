@@ -34,8 +34,8 @@ const toggleMode = (mode) => {
         localStorage.setItem('dorayi-typing-mode', 'alphabets')
     } 
     else if (mode === 'dictionary') {
-        containerText.value = ''
         if (!dictionaryMode.value) {
+            containerText.value = ''
             const {mostUsed} = englishWords()
             const random = Math.ceil(Math.random() *  mostUsed.length) - 1
             searchWord.value = mostUsed[random]
@@ -55,10 +55,10 @@ const toggleMode = (mode) => {
                 }
             }
             fetchWordDefinitions(searchWord.value)    
+            dictionaryMode.value = true
+            alphabets.value = false    
+            gameMode.value = false
         }
-        dictionaryMode.value = true
-        alphabets.value = false    
-        gameMode.value = false
     } 
     else if (mode === 'game') {
         alphabets.value = false    

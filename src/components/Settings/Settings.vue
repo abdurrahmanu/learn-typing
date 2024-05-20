@@ -61,10 +61,8 @@ import CustomCamelCase from './CustomCamelCase.vue'
 import NoSpaceText from './NoSpaceText.vue'
 import BlindMode from './BlindMode.vue'
 import BackSpace from './BackSpace.vue';
-import CustomText from './CustomText.vue';
 import Countdown from './CountDown.vue';
 import MovieQuotes from './MovieQuotes.vue'
-import SecondaryTheme from './SecondaryTheme.vue'
 import LetterCombinations from './LetterCombinations.vue'
 import {storeToRefs} from 'pinia'
 import { mainStore } from '../../store/mainStore.js';

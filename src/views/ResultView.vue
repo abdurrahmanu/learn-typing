@@ -10,17 +10,17 @@
                 </div>
                 <div class="relative px-4 text-center border-r border-r-teal-700">
                     <div class="text-xs">TIME</div>
-                    <div class="">{{ elapsedTime() }}s</div>
+                    <div class="">{{ resultData.totalTime }}s</div>
                 </div>
                 <div class="relative px-4 text-center border-r border-r-teal-700">
-                    <div :class="[wordsPerMinute() > 50 ? 'bg-green-500' : 'bg-red-400']" class="w-[10px] absolute bottom-0 right-0 h-[10px]"></div>
+                    <div :class="[resultData.WPM > 50 ? 'bg-green-500' : 'bg-red-400']" class="w-[10px] absolute bottom-0 right-0 h-[10px]"></div>
                     <div class="text-xs">WPM</div>
-                    <div class="">{{ wordsPerMinute() }}</div>
+                    <div class="">{{ resultData.WPM }}</div>
                 </div>
                 <div class="relative px-4 border-r border-r-teal-700"> 
                     <div :class="[errorRatioLevel() ? 'bg-green-500' : 'bg-red-400']" class="w-[10px] absolute bottom-0 right-0 h-[10px]"></div>
                     <div class="text-xs">ERROR RATIO</div>
-                    <div class="">{{ errorRatio() }}</div>
+                    <div class="">{{ errorRatio() }}<span class="text-[9px] text-slate-300 font-cursive">letters</span></div>
                 </div>
             </div>
             <div class="py-1 text-zinc-600">{{ resultData.testType }}</div>
@@ -41,6 +41,8 @@ import {ref} from 'vue'
 import {storeToRefs} from 'pinia'
 import {mainStore} from '../store/mainStore'
 
+
+
 // ChartJS.register( Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
 const store = mainStore()
@@ -59,17 +61,9 @@ const accuracy = () => {
     return Math.round((resultData.value.correctCount/(resultData.value.containerText.length) * 100))
 }
 
-const elapsedTime = () => {
-    return resultData.value.totalTime
-}
-
-const wordsPerMinute = () => {
-    return Math.round((resultData.value.correctCount / 5) * (60 / elapsedTime()))
-}
-
 const errorRatio = () => {
     if (timedTyping.value && !beatCountdown.value) {
-        return (resultData.value.wrongCount) + (resultData.value.containerText.length - resultData.value.correctCount) + '/' + (resultData.value.containerText.length)
+        return (resultData.value.wrongCount) + (resultData.value.containerText.length - (resultData.value.wrongCount + resultData.value.correctCount)) + '/' + (resultData.value.containerText.length)
     } else {        
         return (resultData.value.wrongCount) + '/' + (resultData.value.containerText.length)
     }

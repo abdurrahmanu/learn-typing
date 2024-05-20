@@ -23,6 +23,7 @@ export const mainStore = defineStore('mainStore', () => {
     const gameMode = ref(false)
     const dictionaryMode = ref(false)
     const secondaryTheme = ref('green')
+    const toggleSidebar = ref(false)
     const theme = ref('neutral')
     const enableBackSpace = ref(true)
     const beatCountdown = ref(null)
@@ -100,8 +101,11 @@ export const mainStore = defineStore('mainStore', () => {
             containerText: containerText.value,
             characters: containerText.value.length,
             totalTime: totalTime.value.toFixed(2),
-            testType: timedTyping.value ? 'Countdown mode ' + savedCountdown.value + 's' : ''
+            testType: timedTyping.value ? 'Countdown mode ' + savedCountdown.value + 's' : '',
+            // WPM: Math.round( (((correctCount.value + wrongCount.value) / 5) - wrongCount.value) / (totalTime.value/60)),
+            WPM: Math.round( (((containerText.value.length - wrongCount.value) / 5)) / (totalTime.value/60))
         }
+
     })
 
     const generateText = async (config, restart, options) => {
@@ -449,6 +453,7 @@ export const mainStore = defineStore('mainStore', () => {
         scrollTextContainer,
         scrollDistance,
         svgFill,
+        toggleSidebar,
     }
 })
 

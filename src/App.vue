@@ -3,13 +3,13 @@
     <Animate />
     <div class="min-h-[100dvh]">
       <RouterView />
-      <div class="pt-5">
+      <div v-if="route.name === 'home'" class="pt-5">
           <Restart />
         </div>
-        <SwitchModes v-if="!hasCompletedSession" />
+        <SwitchModes v-if="!hasCompletedSession && route.name === 'home'" />
     </div>
     <Theme />
-    <HideElements @click="hideElements = !hideElements" />
+    <HideElements @click="hideElements = !hideElements" v-if="route.name === 'home'" />
   </div>
 </template>
 
@@ -25,7 +25,9 @@ import { storeToRefs } from 'pinia';
 import { customizeStore } from './store/customizeStore';
 import {englishWords} from '../data/englishWords.js'
 import {fetchWord} from './composables/UseDictionary.js'
+import {useRouter, useRoute} from 'vue-router'
 
+const route = useRoute()
 const main = mainStore()
 const {appTheme, theme,alphabets, alphabetsMode, dictionaryData, searchWord, enableBackSpace, customTexts, currentPage, hasCompletedSession, alphabetsCombination, useAlphabetCombination, gameMode, dictionaryMode} = storeToRefs(main)
 
