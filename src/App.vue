@@ -2,8 +2,9 @@
   <div :class="[appTheme]" class="selection:bg-none">
     <Animate />
     <div class="min-h-[100dvh]">
+      <Header />
       <RouterView />
-      <div v-if="route.name === 'home'" class="pt-5">
+      <div v-if="route.name == 'home' && route.name == 'result'" class="pt-5">
           <Restart />
         </div>
         <SwitchModes v-if="!hasCompletedSession && route.name === 'home'" />
@@ -15,6 +16,7 @@
 
 <script setup>
 import {onBeforeMount} from 'vue'
+import Header from './components/Header.vue'
 import SwitchModes from './components/SwitchModes.vue';
 import Restart from './components/Restart.vue';
 import Animate from './components/Animate.vue';

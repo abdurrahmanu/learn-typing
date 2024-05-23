@@ -1,5 +1,4 @@
 <template>
-    <Header />
     <div class="m-auto max-w-[1300px] lg:flex pt-1"> 
       <div class="w-[100%] mx-auto flex-none">      
         <Customize v-if="!hideElements" />

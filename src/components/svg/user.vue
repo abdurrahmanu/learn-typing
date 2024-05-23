@@ -1,6 +1,6 @@
 <template>
-	<div class="h-fit relative">		
-		<div @click="toggleSidebar = !toggleSidebar" :class="[toggleSidebar ? 'rounded-t-md shadow-sm shadow-black' : '']" class="transition-all duration-100 px-1 py-2 w-7">
+	<div class="relative h-fit">		
+		<div @click="toggleSidebar = !toggleSidebar" :class="[toggleSidebar ? 'rounded-t-md shadow-sm shadow-black' : '']" class="px-1 py-2 transition-all duration-100 w-7">
 			<svg v-if="!toggleSidebar"ersion="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 				 viewBox="0 0 472.615 472.615" style="enable-background:new 0 0 472.615 472.615;" xml:space="preserve">
 			<g>
@@ -46,11 +46,11 @@
 			<g>
 			</g>
 			</svg>			
-			<p v-else :class="[appTheme]" class="font-cursive text-red-700 hover:text-red-300 text-center text-sm"><span>X</span></p>
+			<p v-else :class="[appTheme]" class="text-sm text-center text-red-700 font-cursive hover:text-red-300"><span>X</span></p>
 		</div>
 		<div v-if="toggleSidebar" :class="[appTheme]" class="w-fit whitespace-nowrap absolute max-w-[200px] h-fit shadow-sm shadow-black z-[999999] top-[100%]">
 			<div>
-				<div @click="navigate(option)" class="px-8 py-3 text-sm text-center border-b border-b-slate-400 cursor-pointer" v-for="(option, index) in options" :key="index">{{ option }}</div>
+				<div @click="navigate(option)" class="px-8 py-3 text-sm text-center border-b cursor-pointer border-b-slate-400" v-for="(option, index) in options" :key="index">{{ option }}</div>
 			</div>
 		</div>
 	</div>
@@ -67,16 +67,17 @@ const route = useRouter()
 
 const main = mainStore()
 const { toggleSidebar, appTheme, svgFill,} = storeToRefs(main)
-const options = ['Logout', 'My Progress']
-
+const options = ['Logout', 'My Progress', 'Home']
 
 const navigate = (option) => {
-	console.log(option);
 	if (option === 'My Progress') {
 		router.push({path: 'progress'})
 	} 
 	if (option === 'Logout') {
 		router.push({path: 'sign'})
+	}
+	if (option === 'Home') {
+		router.push({path: '/'})
 	}
 }
 </script>
