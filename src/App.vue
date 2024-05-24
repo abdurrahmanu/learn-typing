@@ -4,7 +4,7 @@
     <div class="min-h-[100dvh]">
       <Header />
       <RouterView />
-      <div v-if="route.name == 'home' && route.name == 'result'" class="pt-5">
+      <div v-if="route.name == 'home' || route.name == 'result'" class="pt-5">
           <Restart />
         </div>
         <SwitchModes v-if="!hasCompletedSession && route.name === 'home'" />
