@@ -6,7 +6,7 @@
                 <div class="font-mono text-xl font-bold cursor-default md:text-2xl">DORAYI TYPING</div>
             </div>
             <div class="flex gap-2 rounded-full w-fit">
-                <settings @click="toggleSettings" class="h-7" />
+                <settings v-if="route.name === 'home'" @click="toggleSettings" class="h-7" />
             </div>
         </div>
     </nav>
@@ -18,7 +18,9 @@ import settings from './svg/settings.vue';
 import {storeToRefs} from 'pinia'
 import {customizeStore} from '../store/customizeStore'
 import { mainStore } from '../store/mainStore';
+import {useRouter, useRoute} from 'vue-router'
 
+const route = useRoute()
 const store = mainStore()
 const {alphabets, pauseTyping, toggleSidebar, appTheme} = storeToRefs(store)
 

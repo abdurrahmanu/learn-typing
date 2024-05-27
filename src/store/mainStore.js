@@ -10,6 +10,7 @@ export const mainStore = defineStore('mainStore', () => {
         'font',
         'font'
     ])
+    const containerHeight = ref(0)
     const searchInputEl = ref(null)
     const searchFieldIsFocused = ref(false)
     const alphabetsCombination = ref([])
@@ -64,7 +65,7 @@ export const mainStore = defineStore('mainStore', () => {
     const alphabetsMode = ref({
         uppercase: false,
         customCase: false,
-        jumbo: false,
+        random: false,
         backwards: false,
         spaced: false,
         styled: false,
@@ -142,7 +143,7 @@ export const mainStore = defineStore('mainStore', () => {
                 }
             }
 
-            if (alphabetsMode.value.jumbo) {
+            if (alphabetsMode.value.random) {
                 if (!(useAlphabetCombination.value && alphabetsCombination.value)) {
                     const text = ref(containerText.value.split(''))
                     let length = text.value.length
@@ -420,6 +421,7 @@ export const mainStore = defineStore('mainStore', () => {
         useCustomText,
         enableRepeat,
         storedTextForRepeat,
+        containerHeight,
         timePaused,
         customTexts,
         resultData,

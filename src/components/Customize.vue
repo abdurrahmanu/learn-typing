@@ -25,26 +25,23 @@
           <div :class="[alphabetsMode.customCase ? 'bg-neutral-500' : '']" @click="changeMode('customCase')" class="px-3 py-1 border rounded-md hover:font-medium border-slate-600 w-fit">cUstoMCaSE</div>
           <div :class="[alphabetsMode.spaced ? 'bg-neutral-500' : '']" @click="changeMode('spaced')" class="px-3 py-1 uppercase border rounded-md hover:font-medium border-slate-600 w-fit">spaced</div>
           <div :class="[alphabetsMode.backwards ? 'bg-neutral-500' : '']" @click="changeMode('backwards')" class="px-3 py-1 uppercase border rounded-md hover:font-medium border-slate-600 w-fit">backwards</div>
-          <div :class="[alphabetsMode.jumbo ? 'bg-neutral-500' : '']" @click="changeMode('jumbo')" class="px-3 py-1 uppercase border rounded-md hover:font-medium border-slate-600 w-fit">jumbo</div>
-          <div :class="[alphabetsMode.styled ? 'bg-neutral-500' : '']" @click="changeMode('styled')" class="px-3 py-1 uppercase border rounded-md hover:font-medium border-slate-600 w-fit">styled</div>
+          <div :class="[alphabetsMode.random ? 'bg-neutral-500' : '']" @click="changeMode('random')" class="px-3 py-1 uppercase border rounded-md hover:font-medium border-slate-600 w-fit">random</div>
       </div>
 
       <div v-if="dictionaryMode" class="text-center">
         DICTIONARY WORDS
-        <div class="text-center py-4">
+        <div class="py-4 text-center">
           <input :class="[theme === 'neutral' ? 'text-slate-300 caret-slate-400 placeholder:text-neutral-600' : 'text-slate-700 caret-slate-800 placeholder:text-slate-500']" @keyup.enter="fetchWordDefinitions(searchWord)" @focus="searchFieldIsFocused = true" @blur="searchFieldIsFocused = false" ref="searchInputEl" type="text" v-model="searchWord" class="px-1 py-[3px] text-xs max-w-[400px] outline-none border-b border-b-green-600 bg-transparent w-[80%]" placeholder="Type in a word to search definition">
-          <button  @click="fetchWordDefinitions(searchWord)" class="px-2 py-1 text-white bg-green-800 hover:bg-green-600 rounded-md text-xs rounded-l-none">Search</button>
+          <button  @click="fetchWordDefinitions(searchWord)" class="px-2 py-1 text-xs text-white bg-green-800 rounded-md rounded-l-none hover:bg-green-600">Search</button>
         </div>
       </div>
 
       <div v-if="gameMode">
-        <div class="flex space-x-2 justify-center py-3">
+        <div class="flex justify-center py-3 space-x-2">
           <div  @click="" class="px-3 py-1 uppercase border rounded-md hover:font-medium border-slate-600 w-fit">GAME 1</div>
             <div @click="" class="px-3 py-1 uppercase border rounded-md hover:font-medium border-slate-600 w-fit">GAME 2</div>
-            <div @click="" class="px-3 py-1 uppercase border rounded-md hover:font-medium border-slate-600 w-fit">GAME 3</div>
-            <div @click="" class="px-3 py-1 uppercase border rounded-md hover:font-medium border-slate-600 w-fit">GAME 4</div>
         </div>
-          <div class="text-center text-xl">
+          <div class="py-10 text-xl text-center">
             COMING SOON...
           </div>
       </div>
@@ -114,18 +111,14 @@ const changeMode = (mode) => {
       }
 
       if (mode === 'backwards') {
-        if (alphabetsMode.value.jumbo && !alphabetsMode.value.backwards) alphabetsMode.value.jumbo = false
+        if (alphabetsMode.value.random && !alphabetsMode.value.backwards) alphabetsMode.value.random = false
         alphabetsMode.value.backwards = !alphabetsMode.value.backwards
       }
       
-    if (mode === 'jumbo') {
-      if (alphabetsMode.value.backwards && !alphabetsMode.value.jumbo) alphabetsMode.value.backwards = false
-      alphabetsMode.value.jumbo = !alphabetsMode.value.jumbo
+    if (mode === 'random') {
+      if (alphabetsMode.value.backwards && !alphabetsMode.value.random) alphabetsMode.value.backwards = false
+      alphabetsMode.value.random = !alphabetsMode.value.random
     } 
-  
-    if (mode === 'styled') {
-      alphabetsMode.value.styled = !alphabetsMode.value.styled
-    }
 
     localStorage.setItem('alphabets-mode', JSON.stringify(alphabetsMode.value))
 

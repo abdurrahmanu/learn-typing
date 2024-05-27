@@ -45,9 +45,10 @@ import {mainStore} from '../store/mainStore'
 import { countdownStore } from '../store/countdownStore';
 
 const store = mainStore()
-const { containerText, previousPlayerInput, resultData, pauseTyping, containerRef, dictionaryMode,  dictionaryData, alphabets, movie, beatCountdown, gameMode, enableRepeat, playerInputLength, playerInput, authoredQuote, scrollTextContainer, inputEl} = storeToRefs(store)
+const { containerText, previousPlayerInput, resultData, containerHeight, containerRef, dictionaryMode,  dictionaryData, alphabets, movie, beatCountdown, gameMode, enableRepeat, playerInputLength, playerInput, authoredQuote, scrollTextContainer, inputEl} = storeToRefs(store)
 const {generateText, getMobileOS, playerInputTyping, managePlayerInput, sessionComplete, playerTyping} = store
 
+console.log(containerHeight.value);
 const textPosition = ref('left')
 const customize = customizeStore()
 const { customizers, hideElements} = storeToRefs(customize)

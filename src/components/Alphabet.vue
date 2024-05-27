@@ -1,6 +1,6 @@
 <template>
     <div ref="currentAlphabet" :class="[customizers['no-space'] ? '' : 'whitespace-pre-wrap']" class="relative inline font-mono">
-        <span  :class="[equalStyle, currentIndexStyle, mainStyle, styledAlphas]">{{ alphabet }} </span>
+        <span  :class="[equalStyle, currentIndexStyle, mainStyle]">{{ alphabet }} </span>
     </div>
 </template> 
 
@@ -11,9 +11,9 @@ import {mainStore} from '../store/mainStore'
 import { customizeStore } from '../store/customizeStore';
 
 const currentEl = ref(document.getElementById(''))
-const store = mainStore()
-const { playerInputLength, alphabets, alphabetsMode, theme, containerRef, scrollTextContainer, scrollDistance, backspaceIsPressed, containerText} = storeToRefs(store)
 
+const store = mainStore()
+const { playerInputLength, theme, containerRef, scrollTextContainer, scrollDistance, backspaceIsPressed, containerHeight} = storeToRefs(store)
 const currentAlphabet = ref(null)
 const customize = customizeStore()
 const {customizers} = storeToRefs(customize)
@@ -36,7 +36,11 @@ window.addEventListener('input', event => {
 onMounted(() => {
     watchEffect(() => {
         if (props.currentIndex) {
-            if (currentAlphabet.value) {                 
+            if (currentAlphabet.value) {       
+                    // const cssObject = getComputedStyle(clone.value)
+                    // containerHeight.value = cssObject.getPropertyValue('height')
+                    // console.log(containerHeight.value);
+                
                     const parentScrollHeight = containerRef.value.scrollHeight
                     const parentHeight = containerRef.value.getBoundingClientRect().height
                     const caretTopOffset = currentAlphabet.value.getBoundingClientRect().top
@@ -85,13 +89,6 @@ const equalStyle = computed(() => {
         let correctText = theme.value === 'neutral' ? 'text-green-300' : 'text-green-500'
         let wrongText = theme.value === 'neutral' ? 'text-red-500' : theme.value !== 'neutral' && props.index < playerInputLength.value  ? 'text-red-600' : ''
         return props.equality ? correctText : wrongText
-    }
-})
-
-const styledAlphas = computed(() => {
-    if (alphabets.value && alphabetsMode.value.styled) {
-        let style = theme.value === 'neutral' ? ' bg-zinc-900 border-slate-400' : ' bg-slate-100 border-neutral-800 '
-        return 'border rounded-md p-1 mx-[2px] ' + style
     }
 })
 

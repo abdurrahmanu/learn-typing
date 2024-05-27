@@ -10,7 +10,8 @@
         <SwitchModes v-if="!hasCompletedSession && route.name === 'home'" />
     </div>
     <Theme />
-    <HideElements @click="hideElements = !hideElements" v-if="route.name === 'home'" />
+    <HideElements @click="hideElements = !hideElements" v-if="route.name === 'home' && !gameMode" />
+    <Cookies />
   </div>
 </template>
 
@@ -18,6 +19,7 @@
 import {onBeforeMount} from 'vue'
 import Header from './components/Header.vue'
 import SwitchModes from './components/SwitchModes.vue';
+import Cookies from './components/Cookies.vue';
 import Restart from './components/Restart.vue';
 import Animate from './components/Animate.vue';
 import Theme from './components/Theme.vue';
@@ -31,7 +33,7 @@ import {useRouter, useRoute} from 'vue-router'
 
 const route = useRoute()
 const main = mainStore()
-const {appTheme, theme,alphabets, alphabetsMode, dictionaryData, searchWord, enableBackSpace, customTexts, currentPage, hasCompletedSession, alphabetsCombination, useAlphabetCombination, gameMode, dictionaryMode} = storeToRefs(main)
+const {appTheme, theme,alphabets, alphabetsMode, toggleSidebar, enableBackSpace, customTexts, currentPage, hasCompletedSession, alphabetsCombination, useAlphabetCombination, gameMode, dictionaryMode} = storeToRefs(main)
 
 const customize = customizeStore()
 const {hideElements, customizers, disableOption } = storeToRefs(customize)
@@ -60,7 +62,6 @@ onBeforeMount(() => {
   }
 
   if (localStorage.getItem('dorayi-typing-mode')) {
-
     if (localStorage.getItem('dorayi-typing-mode') === 'alphabets') {
       alphabets.value = true
       currentPage.value = 1
@@ -73,21 +74,8 @@ onBeforeMount(() => {
     } 
 
     else if (localStorage.getItem('dorayi-typing-mode') === 'dictionary') {
-      const {mostUsed} = englishWords()
-      const random = Math.ceil(Math.random() *  mostUsed.length) - 1
-      searchWord.value = mostUsed[random]
-
-      async function fetchWordDefinitions(word) {
-        if (word) {
-          await fetchWord(word).then((data) => {            
-            dictionaryData.value = data.data.value
-            currentPage.value = 2
-            dictionaryMode.value = true
-          })
-        }
-      }
-
-      fetchWordDefinitions(mostUsed[random])
+      currentPage.value = 2
+      dictionaryMode.value = true
     }
 
     else if (localStorage.getItem('dorayi-typing-mode') === 'game') {
@@ -101,19 +89,14 @@ onBeforeMount(() => {
     }
 }
 
-  if (localStorage.getItem('alphabets-mode')) {
-    alphabetsMode.value = JSON.parse(localStorage.getItem('alphabets-mode'))
-  }
+  if (localStorage.getItem('alphabets-mode')) alphabetsMode.value = JSON.parse(localStorage.getItem('alphabets-mode'))
 
   if (localStorage.getItem('dorayi-typing-preferred-config')) {
     let saved = JSON.parse(localStorage.getItem('dorayi-typing-preferred-config'))
     customizers.value = saved[0]
     disableOption.value = saved[1]
   } 
-  else {
-    localStorage.setItem('dorayi-typing-preferred-config', JSON.stringify([customizers.value, disableOption.value]))
-  }
-
+  else localStorage.setItem('dorayi-typing-preferred-config', JSON.stringify([customizers.value, disableOption.value]))
   enableBackSpace.value = customizers.value['backspace']
 })
 </script>
