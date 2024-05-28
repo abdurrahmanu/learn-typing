@@ -1,6 +1,6 @@
 <template>
     <div v-if="!hasCompletedSession && !alphabets && !dictionaryMode && !gameMode" class="bg-transparent rounded-md  w-[90%] m-auto max-w-fit ring-1" :class="secTheme">
-        <div class="text-[12px] font-mono items-center p-[1px] flex max-w-[1000px] justify-center flex-wrap relative">
+        <div class="text-[12px] items-center font-mono p-[1px] flex max-w-[1000px] justify-center flex-wrap relative">
             <div class="p-1" v-for="(optionArr, key, listIndex) in option" :key="listIndex">          
                 <div 
                 :class="[hoverIndex === listIndex ? 'border-zinc-400' : 'border-transparent']" class="relative flex gap-2 py-[2px] border rounded-lg cursor-pointer"
@@ -38,8 +38,7 @@
 
       <div v-if="gameMode">
         <div class="flex justify-center py-3 space-x-2">
-          <div  @click="" class="px-3 py-1 uppercase border rounded-md hover:font-medium border-slate-600 w-fit">GAME 1</div>
-            <div @click="" class="px-3 py-1 uppercase border rounded-md hover:font-medium border-slate-600 w-fit">GAME 2</div>
+          <div  @click="" class="px-3 py-1 uppercase border rounded-md hover:font-medium border-slate-600 w-fit">GAME</div>
         </div>
           <div class="py-10 text-xl text-center">
             COMING SOON...

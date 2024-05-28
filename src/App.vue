@@ -1,5 +1,5 @@
 <template>
-  <div :class="[appTheme]" class="selection:bg-none home">
+  <div :class="[appTheme]" class="font-light selection:bg-none home">
     <Animate />
     <div class="min-h-[100dvh]">
       <Header />
@@ -103,13 +103,14 @@ const height = () => {
   const span = document.createElement('p')
   span.style.fontSize = font.value + 'px'
   span.innerText = 'A'
+  span.style.lineHeight = '1.4'
   div.style.position = 'fixed'
   div.style.opacity = '0'
   div.appendChild(span)
   document.body.appendChild(div)
   const cssObject = getComputedStyle(div)
   const height = +cssObject.getPropertyValue('height').slice(0, -2)
-  containerHeight.value = (height * 3).toFixed(2) - (font.value * 0.4)
+  containerHeight.value = (height * 3).toFixed(2)
   document.body.removeChild(div)
 }
 
@@ -120,9 +121,25 @@ watch(font, (newVal) => height() )
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Exo:ital,wght@0,100..900;1,100..900&family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Reddit+Mono:wght@200..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Shadows+Into+Light&display=swap');
 
-.home {
+/* .home {
+  font-family: 'Exo', sans-serif;
+} */
+
+/* .home {
   font-family: 'Roboto', sans-serif;
-}
+} */
+
+/* .home {
+  font-family: 'Shadows+Into+Light', sans-serif;
+} */
+/* 
+.home {
+  font-family: 'Reddit', sans-serif
+} */
+
+/* .home {
+  font-family: 'Montserrat+Alternates, monospace'
+} */
 
 .screen-container {
   perspective: 660px;
@@ -133,11 +150,11 @@ watch(font, (newVal) => height() )
   transform-style: preserve-3d;
 } 
 
-.glow {
+/* .glow {
   -webkit-box-shadow:0px 0px 112px 50px #ffffff;
   -moz-box-shadow: 0px 0px 112px 50px #ffffff;
   box-shadow: 0px 0px 112px 50px #ffffff;
-}
+} */
 
 .box-container {
   perspective: 1000px

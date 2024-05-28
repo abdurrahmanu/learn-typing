@@ -5,8 +5,8 @@
             <Clock/>
             <Blind />
         </div>
-        <div v-if="containerText" class="transition-all duration-100 relative m-auto max-w-[600px] w-full">
-            <div ref="containerRef" @click="getMobileOS() ? inputEl.focus() : ''" :style="{'max-height' : containerHeight + 'px', 'font-size': font + 'px'}" :class="[ customizers['no-space'] ? 'break-words' : '', alphabets ? 'text-center break-words': 'text-left', !alphabets && textPosition=== 'center' ? 'text-center' : !alphabets && textPosition=== 'right' ? 'text-right' : 'text-left'] " class="relative overflow-y-auto h-fit scroll-smooth noscrollbar leading-[1.4]">
+        <div v-if="containerText" class="transition-all duration-100 relative mx-auto max-w-[600px] w-full">
+            <div ref="containerRef" @click="getMobileOS() ? inputEl.focus() : ''" :style="{'height' : containerHeight + 'px', 'font-size': font + 'px'}" :class="[ customizers['no-space'] ? 'break-words' : '', alphabets ? 'text-center break-words': 'text-left', !alphabets && textPosition=== 'center' ? 'text-center' : !alphabets && textPosition=== 'right' ? 'text-right' : 'text-left'] " class="overflow-y-auto scroll-smooth h-fit noscrollbar leading-[1.4]">
                 <Alphabet
                 v-for="(alphabet, index) in containerText"
                 :index="index"
@@ -90,6 +90,7 @@ onMounted(() => {
     if (getMobileOS()) {
         inputEl.value.focus()
         inputEl.value.addEventListener('input', playerInputTyping)
+        window.addEventListener('keydown', playerInputTyping)
     }
     else {
         window.addEventListener('keypress', playerTyping)

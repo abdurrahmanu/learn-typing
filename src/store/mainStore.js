@@ -3,9 +3,10 @@ import {ref, computed} from 'vue'
 import {UseGetQuotes} from '../composables/UseGetQuotes'
 
 export const mainStore = defineStore('mainStore', () => {
-    const font = ref(32)
+    const font = ref(20)
     const containerHeight = ref(0)
     const range = ref((font.value - 16) / 0.16)
+    const enterKey = ref(false)
     const searchInputEl = ref(null)
     const searchFieldIsFocused = ref(false)
     const alphabetsCombination = ref([])
@@ -318,6 +319,7 @@ export const mainStore = defineStore('mainStore', () => {
     }
 
     const playerTyping = (e) => {
+        if (e.key === 'Enter' && !enterKey.value) return
         if (gameMode.value) return
         if (searchFieldIsFocused.value) return
         if (pauseTyping.value) return
@@ -332,9 +334,9 @@ export const mainStore = defineStore('mainStore', () => {
         if (e.type === 'keydown') return
         if (e.type === 'keypress')  backspaceIsPressed.value = false   
         let eventSelector = e.key || e.data
-        if (!getMobileOS() && e.key === 'Enter') return 
+        if (e.key === 'Enter' && !enterKey.value) return 
         playerInputLength.value++
-
+        
         if (playerInputLength.value === 1)  {
             if (timedTyping.value) {
                 beatCountdown.value = false
@@ -342,8 +344,8 @@ export const mainStore = defineStore('mainStore', () => {
             }
             startTime.value = performance.now();
         } 
-
-        playerLastInput.value = eventSelector
+        if (e.key === 'Enter' && e.type === 'keypress' && enterKey.value) playerLastInput.value = ' '
+        else  playerLastInput.value = eventSelector
         playerInput.value += playerLastInput.value
         if (playerInputLength.value === containerText.value.length) {
             if (timedTyping.value) beatCountdown.value = true
@@ -352,6 +354,7 @@ export const mainStore = defineStore('mainStore', () => {
     }
 
     const playerInputTyping = (e) => {
+        if (e.key === 'Enter' && !enterKey.value) return
         if (gameMode.value) return
         if (searchFieldIsFocused.value) return
         if (pauseTyping.value) return
@@ -370,6 +373,7 @@ export const mainStore = defineStore('mainStore', () => {
             startTime.value = performance.now();
         } 
 
+        if (e.key === 'Enter' && enterKey.value)  playerInput.value += ' '
         if (playerInput.value.length === containerText.value.length) {
             if (timedTyping.value) beatCountdown.value = true
             sessionComplete()
@@ -413,6 +417,7 @@ export const mainStore = defineStore('mainStore', () => {
         range,
         beginCountdown,
         enableBackSpace,
+        enterKey,
         useCustomText,
         enableRepeat,
         storedTextForRepeat,

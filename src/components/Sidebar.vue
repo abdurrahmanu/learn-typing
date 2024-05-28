@@ -10,7 +10,6 @@
 </template>
 
 <script setup>
-import {ref, onMounted} from 'vue'
 import {storeToRefs} from 'pinia'
 import {mainStore} from './../store/mainStore'
 

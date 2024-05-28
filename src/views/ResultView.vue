@@ -20,7 +20,7 @@
                 <div class="relative px-4 border-r border-r-teal-700"> 
                     <div :class="[errorRatioLevel() ? 'bg-green-500' : 'bg-red-400']" class="w-[10px] absolute bottom-0 right-0 h-[10px]"></div>
                     <div class="text-xs">ERROR RATIO</div>
-                    <div class="">{{ errorRatio() }}<span class="text-[9px] text-slate-300 font-cursive">letters</span></div>
+                    <div class="">{{ errorRatio() }}<span class="text-[11px] font-cursive font-bold"> letters</span></div>
                 </div>
             </div>
             <div class="py-1 text-zinc-600">{{ resultData.testType }}</div>

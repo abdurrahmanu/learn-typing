@@ -1,6 +1,6 @@
 <template>
     <div ref="currentAlphabet" :class="[customizers['no-space'] ? '' : 'whitespace-pre-wrap']" class="relative inline ">
-        <span  :class="[equalStyle, currentIndexStyle, mainStyle]">{{ alphabet }} </span>
+        <span  :class="[equalStyle, currentIndexStyle, mainStyle, !currentIndex ? 'border-transparent' : '']" class="border" >{{ alphabet }} </span>
     </div>
 </template> 
 
@@ -11,7 +11,7 @@ import {mainStore} from '../store/mainStore'
 import { customizeStore } from '../store/customizeStore';
 
 const store = mainStore()
-const { playerInputLength, theme, containerRef, scrollTextContainer, scrollDistance, backspaceIsPressed, font, containerHeight } = storeToRefs(store)
+const { playerInputLength, theme, containerRef, scrollTextContainer, enterKey, scrollDistance, backspaceIsPressed, font, containerHeight } = storeToRefs(store)
 const currentAlphabet = ref(null)
 const customize = customizeStore()
 const {customizers} = storeToRefs(customize)
@@ -45,7 +45,11 @@ onMounted(() => {
                     const prevSiblingBottomOffset = props.index > 0 ? currentAlphabet.value.previousElementSibling.getBoundingClientRect().bottom : 0
                     const nextSiblingTopOffset = props.index > 0 && currentAlphabet.value.nextElementSibling ? currentAlphabet.value.nextElementSibling.getBoundingClientRect().top : 0
                     const nextSiblingBottomOffset = props.index > 0 && currentAlphabet.value.nextElementSibling ? currentAlphabet.value.nextElementSibling.getBoundingClientRect().bottom : 0
-                    
+
+                    if (nextSiblingBottomOffset > caretBottomOffset) enterKey.value = true
+                    else enterKey.value = false
+
+
                     if ((!(parentBottomOffset - prevSiblingBottomOffset <= lineHeight) && parentBottomOffset - caretBottomOffset <= lineHeight && scrollDistance.value < parentScrollHeight)) {
                         if (!backspaceIsPressed.value) {     
                             if (containerRef.value.scrollTop + parentHeight === parentScrollHeight) return
@@ -62,19 +66,18 @@ onMounted(() => {
                         }
                     }
 
-
-                    // if (caretTopOffset < parentTopOffset && props.index > 0 && nextSiblingTopOffset !== caretTopOffset) {    
-                    //     if (backspaceIsPressed.value) {
-                    //         if (containerRef.value.scrollTop >= parentHeight) {
-                    //             scrollDistance.value -= containerHeight.value
-                    //         } else {
-                    //             scrollDistance.value -= (parentScrollHeight - containerRef.value.scrollTop)
-                    //         }
-                    //             scrollTextContainer.value = {
-                    //             top: scrollDistance.value
-                    //         }
-                    //     }
-                    // }
+                    if (caretTopOffset < parentTopOffset && props.index > 0 && nextSiblingTopOffset !== caretTopOffset) {    
+                        if (backspaceIsPressed.value) {
+                            if (containerRef.value.scrollTop <= parentHeight) {
+                                scrollDistance.value = 0
+                            } else {
+                                scrollDistance.value -= ((containerHeight.value / 3) * 2)
+                            }
+                                scrollTextContainer.value = {
+                                top: scrollDistance.value
+                            }
+                        }
+                    }
             }
         }
     })
@@ -94,7 +97,7 @@ const currentIndexStyle = computed(() => {
 })
 
 const mainStyle = computed(() => {
-    let text = theme.value === 'neutral' ? 'text-slate-400' : 'text-neutral-500'
+    let text = theme.value === 'neutral' ? 'text-slate-300' : 'text-neutral-800'
     return props.index > playerInputLength.value ? text : ''
 })
 
