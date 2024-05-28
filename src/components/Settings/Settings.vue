@@ -1,5 +1,5 @@
 <template>
-    <div :class="{'z-[999]' : !(showMoreSettings && !getMobileOS())}" class="absolute top-0 bottom-0 right-0 left-0 z-[99] transition-all duration-150" v-if="showMoreSettings">
+    <div :class="{'z-[999]' : !(showMoreSettings && !getMobileOS())}" class="absolute top-0 bottom-0 right-0 left-0 z-[99] transition-all duration-150 font-sans" v-if="showMoreSettings">
         <div @click="toggleSettings" class="opacity-40 absolute bg-green-200 w-full top-0 bottom-0 right-0 left-0 z-[999] blur-lg"></div>
         <div v-if="!alphabets && !gameMode && !dictionaryMode" class="overflow-y-auto" :class="[showMoreSettings ? 'fixed top-0 right-0 bottom-0 h-[100dvh] max-w-[500px] w-fit z-[9999]' : '', appTheme ]">
             <div class="relative text-sm leading-5 lg:text-base md:text-sm lg:min-w-fit" :class="[theme === 'neutral' ? 'text-slate-400' : 'text-slate-800']">

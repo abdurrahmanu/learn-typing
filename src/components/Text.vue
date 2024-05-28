@@ -5,8 +5,8 @@
             <Clock/>
             <Blind />
         </div>
-        <div v-if="containerText" class="leading-6 transition-all duration-100 relative m-auto max-w-[600px] w-full text-[17px]">
-            <div ref="containerRef" @click="getMobileOS() ? inputEl.focus() : ''" :class="[customizers['no-space'] ? 'break-words' : '', alphabets ? 'text-center break-words leading-10': 'text-left', !alphabets && textPosition=== 'center' ? 'text-center' : !alphabets && textPosition=== 'right' ? 'text-right' : 'text-left'] " class="relative overflow-y-auto h-fit min-h-fit scroll-smooth noscrollbar max-h-[100px]">
+        <div v-if="containerText" class="transition-all duration-100 relative m-auto max-w-[600px] w-full">
+            <div ref="containerRef" @click="getMobileOS() ? inputEl.focus() : ''" :style="{'max-height' : containerHeight + 'px', 'font-size': font + 'px'}" :class="[ customizers['no-space'] ? 'break-words' : '', alphabets ? 'text-center break-words': 'text-left', !alphabets && textPosition=== 'center' ? 'text-center' : !alphabets && textPosition=== 'right' ? 'text-right' : 'text-left'] " class="relative overflow-y-auto h-fit scroll-smooth noscrollbar leading-[1.4]">
                 <Alphabet
                 v-for="(alphabet, index) in containerText"
                 :index="index"
@@ -45,10 +45,9 @@ import {mainStore} from '../store/mainStore'
 import { countdownStore } from '../store/countdownStore';
 
 const store = mainStore()
-const { containerText, previousPlayerInput, resultData, containerHeight, containerRef, dictionaryMode,  dictionaryData, alphabets, movie, beatCountdown, gameMode, enableRepeat, playerInputLength, playerInput, authoredQuote, scrollTextContainer, inputEl} = storeToRefs(store)
+const { containerText, previousPlayerInput, resultData, font, containerRef, containerHeight, dictionaryMode,  dictionaryData, alphabets, movie, beatCountdown, gameMode, enableRepeat, playerInputLength, playerInput, authoredQuote, scrollTextContainer, inputEl} = storeToRefs(store)
 const {generateText, getMobileOS, playerInputTyping, managePlayerInput, sessionComplete, playerTyping} = store
 
-console.log(containerHeight.value);
 const textPosition = ref('left')
 const customize = customizeStore()
 const { customizers, hideElements} = storeToRefs(customize)

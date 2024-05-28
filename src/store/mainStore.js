@@ -3,14 +3,9 @@ import {ref, computed} from 'vue'
 import {UseGetQuotes} from '../composables/UseGetQuotes'
 
 export const mainStore = defineStore('mainStore', () => {
-    const selectedFont = ref('font')
-    const allFonts = ref([
-        'font',
-        'font', 
-        'font',
-        'font'
-    ])
+    const font = ref(32)
     const containerHeight = ref(0)
+    const range = ref((font.value - 16) / 0.16)
     const searchInputEl = ref(null)
     const searchFieldIsFocused = ref(false)
     const alphabetsCombination = ref([])
@@ -407,15 +402,15 @@ export const mainStore = defineStore('mainStore', () => {
         beatCountdown,
         secondaryTheme,
         searchInputEl,
-        allFonts,
+        font,
         inputEl,
         hasCompletedSession,
         searchFieldIsFocused,
         movie,
-        selectedFont,
         dictionaryMode,
         timerID,
         howToUseCustomText,
+        range,
         beginCountdown,
         enableBackSpace,
         useCustomText,

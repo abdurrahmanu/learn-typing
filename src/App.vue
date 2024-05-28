@@ -1,5 +1,5 @@
 <template>
-  <div :class="[appTheme]" class="selection:bg-none">
+  <div :class="[appTheme]" class="selection:bg-none home">
     <Animate />
     <div class="min-h-[100dvh]">
       <Header />
@@ -16,7 +16,7 @@
 </template>
 
 <script setup>
-import {onBeforeMount} from 'vue'
+import {onBeforeMount, onMounted, watch} from 'vue'
 import Header from './components/Header.vue'
 import SwitchModes from './components/SwitchModes.vue';
 import Cookies from './components/Cookies.vue';
@@ -27,13 +27,11 @@ import HideElements from './components/HideElements.vue'
 import {mainStore} from './store/mainStore'
 import { storeToRefs } from 'pinia';
 import { customizeStore } from './store/customizeStore';
-import {englishWords} from '../data/englishWords.js'
-import {fetchWord} from './composables/UseDictionary.js'
-import {useRouter, useRoute} from 'vue-router'
+import {useRoute} from 'vue-router'
 
 const route = useRoute()
 const main = mainStore()
-const {appTheme, theme,alphabets, alphabetsMode, toggleSidebar, enableBackSpace, customTexts, currentPage, hasCompletedSession, alphabetsCombination, useAlphabetCombination, gameMode, dictionaryMode} = storeToRefs(main)
+const {appTheme, theme,alphabets, alphabetsMode, containerHeight, font, enableBackSpace, customTexts, currentPage, hasCompletedSession, alphabetsCombination, useAlphabetCombination, gameMode, dictionaryMode} = storeToRefs(main)
 
 const customize = customizeStore()
 const {hideElements, customizers, disableOption } = storeToRefs(customize)
@@ -99,9 +97,32 @@ onBeforeMount(() => {
   else localStorage.setItem('dorayi-typing-preferred-config', JSON.stringify([customizers.value, disableOption.value]))
   enableBackSpace.value = customizers.value['backspace']
 })
+
+const height = () => {
+  const div = document.createElement("div");
+  const span = document.createElement('p')
+  span.style.fontSize = font.value + 'px'
+  span.innerText = 'A'
+  div.style.position = 'fixed'
+  div.style.opacity = '0'
+  div.appendChild(span)
+  document.body.appendChild(div)
+  const cssObject = getComputedStyle(div)
+  const height = +cssObject.getPropertyValue('height').slice(0, -2)
+  containerHeight.value = (height * 3).toFixed(2) - (font.value * 0.4)
+  document.body.removeChild(div)
+}
+
+onMounted(() =>height() )
+watch(font, (newVal) => height() )
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Exo:ital,wght@0,100..900;1,100..900&family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Reddit+Mono:wght@200..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Shadows+Into+Light&display=swap');
+
+.home {
+  font-family: 'Roboto', sans-serif;
+}
 
 .screen-container {
   perspective: 660px;
