@@ -1,22 +1,9 @@
 <template>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-
-<!-- Uploaded to: SVG Repo, www.svgrepo.com, Transformed by: SVG Repo Mixer Tools -->
-<svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-
-<g id="SVGRepo_bgCarrier" stroke-width="0"/>
-
-<g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
-
-<g id="SVGRepo_iconCarrier"> <g id="Edit / Text_Align_Center"> <path id="Vector" d="M17 18H7M20 14H4M17 10H7M20 6H4" :stroke="svgFill" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/> </g> </g>
-
-</svg>
+<svg width="40px" height="40px" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools --> <title>align-text-center1</title> <desc>Created with Sketch.</desc> <g id="align-text-center1" stroke="none" stroke-width="1" :fill="position ? 'green' : '#000'" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"> <rect width="48" height="48" fill="white" fill-opacity="0.01"></rect> <g id="编组" transform="translate(6.000000, 8.000000)" :stroke="position ? 'green' : '#000'" stroke-width="4"> <path d="M30,11 L6,11" id="路径"> </path> <path d="M36,1 L0,1" id="路径"> </path> <path d="M36,21 L0,21" id="路径"> </path> <path d="M30,31 L6,31" id="路径"> </path> </g> </g> </g></svg>
 </template>
 
 <script setup>
-import {storeToRefs} from 'pinia'
-import {mainStore} from '../../store/mainStore'
-
-const main = mainStore()
-const { svgFill } = storeToRefs(main)
+const props = defineProps({
+    position: Boolean
+})
 </script>

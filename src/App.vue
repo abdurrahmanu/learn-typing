@@ -12,6 +12,7 @@
     <Theme />
     <HideElements @click="hideElements = !hideElements" v-if="route.name === 'home' && !gameMode" />
     <Cookies />
+    <div class="fixed flex items-center justify-center w-5 h-5 p-1 font-mono border rounded-full left-3 bottom-[14px] border-slate-500">i</div>
   </div>
 </template>
 

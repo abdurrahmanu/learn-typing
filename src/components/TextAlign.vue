@@ -1,32 +1,24 @@
 <template>
-    <div class="flex gap-7 opacity-50 justify-center text-xs scale-90 w-fit m-auto cursor-pointer">
-        <div :class="[textPosition === 'left' ? 'rounded-md border-black' : 'border-transparent']" class="border" >
-            <div @click="$emit('align', 'left')" class="w-fit m-auto scale-75">
-                <alignLeft />
-            </div>
+    <div class="flex justify-center mx-auto text-xs scale-90 opacity-50 cursor-pointer gap-7 w-fit">
+        <div @click="$emit('align', 'left'), position = 'left'" class="m-auto scale-75 w-fit">
+            <alignLeft :position="position === 'left'"/>
         </div>
-        <div :class="[textPosition === 'center' ? 'rounded-md border-black' : 'border-transparent']" class="border" >
-            <div  @click="$emit('align', 'center')" class="w-fit m-auto scale-75">
-                <alignMiddle/>
-            </div>
+        <div  @click="$emit('align', 'center'), position = 'center'" class="m-auto scale-75 w-fit">
+            <alignMiddle :position="position === 'center'"/>
         </div>
-        <div :class="[textPosition === 'right' ? 'rounded-md border-black' : 'border-transparent']" class="border" >
-            <div @click="$emit('align', 'right')" class="w-fit m-auto scale-75">
-                <alignRight />
-            </div>
+        <div @click="$emit('align', 'right'), position = 'right'" class="m-auto scale-75 w-fit">
+            <alignRight :position="position === 'right'" />
         </div>
     </div>
 </template>
 
 <script setup>
+import {ref} from 'vue'
 import alignLeft from './svg/alignLeft.vue';
 import alignMiddle from './svg/alignMiddle.vue';
 import alignRight from './svg/alignRight.vue';
-import {storeToRefs} from 'pinia'
-import {mainStore} from '../store/mainStore'
 
-const main = mainStore()
-const { svgFill } = storeToRefs(main)
+const position = ref('left')
 const props = defineProps({
     textPosition: String,
 })
