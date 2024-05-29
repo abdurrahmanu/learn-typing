@@ -1,77 +1,73 @@
 <template>
-        <div class="px-1 pb-5 border-t border-neutral-900">
+        <div class="px-1 pb-8 border-t border-neutral-900">
             <div class="flex justify-between w-full p-1 border border-transparent rounded-sm hover:border-neutral-300 ">
-            <!-- <div @click="useCustomText = !useCustomText" class="flex justify-between w-full p-1 border border-transparent rounded-sm hover:border-neutral-300 "> -->
-                <div class="flex gap-4">
-                    <input disabled  type="checkbox" name="" id="">
+                <div @click="Object.keys(customTexts).length === 0 ? '' : useCustomText = !useCustomText"  class="flex gap-4">
                     <!-- <input :disabled="Object.keys(customTexts).length === 0" :checked="useCustomText"  type="checkbox" name="" id=""> -->
-                    <p>Custom text</p>
+                    <input type="checkbox" disabled name="" id="">
+                    <p>Custom text</p><span class="text-sm text-red-400">incomplete</span>
                 </div>
             </div>
             <div class="p-1" v-if="useCustomText">
-                <div><input type="radio" v-model="howToUseCustomText" value="use only custom"> use only your custom texts</div>
-                <div><input type="radio" v-model="howToUseCustomText" value="use both system and custom"> use custom text together with system text</div>
-                <div><input type="radio" v-model="howToUseCustomText" value="select text using options" > use options to select text</div>
+                <div class="space-x-3">
+                    <input type="radio" v-model="howToUseCustomText" value="use only custom">
+                    Use only your custom texts
+                </div>
+                <div class="space-x-3">
+                    <input type="radio" v-model="howToUseCustomText" value="use both system and custom">
+                    Add custom text into system text
+                </div>
+                <div class="space-x-3">
+                    <input type="radio" v-model="howToUseCustomText" value="select text using options" >
+                    Manually select text by name
+                </div>
             </div>
             <p class="pb-2">Would you like your fingers to perfect a particular test, quote or story! Use the text field to add and use your custom text.</p>
 
-            <div class="relative py-1 text-center">
-                <div v-if="saveCustomText" class="absolute top-0 bottom-0 left-0 right-0 w-full bg-black opacity-50"></div>
-                <div class="m-auto w-[90%] max-w-[350px]">
-                    <textarea 
-                        v-model="textAreaValue"
-                        :placeholder="textAreaPlaceholder" 
-                        cols="30" rows="10" class="w-full p-1 rounded-md outline-none" :class="[theme === 'neutral' ? 'bg-neutral-700 text-slate-100' : 'bg-slate-300 text-neutral-900']"></textarea>
-                        <button @click="startSavingCustomText" class="p-1 px-8 text-black bg-green-500 rounded-full hover:bg-green-800 hover:text-white">Continue</button>
+            <div v-if="!saveCustomText" class="space-y-1 text-center">
+                <textarea v-model="textValue" :class="[appTheme]" class="w-[90%] max-w-[300px] h-32 outline-none border border-slate-500 rounded-md p-2" :placeholder="textAreaPlaceholder" />
+                <div @click="startSavingCustomText" class="py-1 m-auto text-center border rounded-full px-7 w-fit border-slate-600 hover:bg-green-500 hover:text-white">ADD TEXT</div>
+            </div>
+            <div v-else class="pt-3 space-y-4 text-center">
+                <p v-if="textSaved" class="text-xs text-center text-green-400">Added Successfully</p>
+                <input v-model="customTextTitle" type="text" :placeholder="titlePlaceholder" class="p-1 px-2 text-center bg-transparent border-b outline-none border-b-blue-500 placeholder:text-center">
+                <div class="flex justify-center gap-2 m-auto w-fit">                    
+                    <div @click="cancel" class="py-1 m-auto text-center border rounded-l-full px-7 w-fit border-slate-600 hover:bg-red-500 hover:text-white">CANCEL</div>
+                    <div @click="saveNewCustomText" class="py-1 m-auto text-center border rounded-r-full px-7 w-fit border-slate-600 hover:bg-green-500 hover:text-white">SAVE</div>
                 </div>
-                    <div v-if="saveCustomText" class="absolute w-full top-[50%] translate-y-[-50%]">
-                        <div v-if="!textSaved" class="p-2 bg-neutral-500 absolute w-full top-[50%] translate-y-[-50%] z-[9999]">
-                            <div>
-                                <p v-if="inputError && saveCustomText" class="text-red-600 text-[11px] bg-white p-[1px]">Title should not be more than 15 letters long</p>
-                                <div>Custom text Title:</div>
-                                <input class="p-1 text-black rounded-md outline-none caret-black" :placeholder="titlePlaceholder" v-model="customTextTitle" type="text">
-                                <div class="p-2 space-x-4 text-center">
-                                    <button @click="cancel" class="p-1 px-8 text-black bg-red-500 rounded-full hover:bg-red-800 hover:text-white">Cancel</button>
-                                    <button @click="saveNewCustomText" class="p-1 px-8 text-black bg-green-500 rounded-full hover:bg-green-800 hover:text-white">Save text</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div v-else class="px-4 py-1 font-mono text-lg text-green-400 bg-neutral-700">New custom text  added Successfully!</div>
-                    </div>
             </div>
         </div>
 </template>
 
 <script setup>
-import {ref} from 'vue'
+import {ref, watchEffect} from 'vue'
 import {storeToRefs} from 'pinia';
 import {mainStore} from '../../store/mainStore';
 
 const inputError = ref(false)
 const textAreaPlaceholder = ref('Input custom text')
 const titlePlaceholder = ref('Add title')
-const textAreaValue = ref('')
+const textValue = ref('')
 const saveCustomText = ref(false)
 const textSaved = ref(false)
 const customTextTitle = ref('')
 const main = mainStore()
 const textAreaValueStore = ref('')
-const { howToUseCustomText,  customTexts, useCustomText, theme} = storeToRefs(main)
+const { howToUseCustomText,  customTexts, useCustomText, theme, appTheme} = storeToRefs(main)
 
 const startSavingCustomText = () => {
-    if (!textAreaValue.value.length) {
+    if (!textValue.value.length) {
         textAreaPlaceholder.value = 'Your text field is empty'
         return
     }
-    if (textAreaValue.value.length < 10) {
-        textAreaValue.value = ''
+    if (textValue.value.length < 10) {
+        textValue.value = ''
         textAreaPlaceholder.value = 'Your input is too short'
         return
     }
 
     saveCustomText.value = true
-    textAreaValueStore.value = textAreaValue.value
-    textAreaValue.value = ''
+    textAreaValueStore.value = textValue.value
+    textValue.value = ''
 }
 
 const saveNewCustomText = () => {
@@ -84,7 +80,7 @@ const saveNewCustomText = () => {
     textSaved.value = true
     customTextTitle.value = ''
     textAreaValueStore.value = ''
-    
+
     setTimeout(() => {
         saveCustomText.value = false
         textSaved.value = false
@@ -96,5 +92,4 @@ const cancel = () => {
     textSaved.value = false
     customTextTitle.value = ''
 }
-
 </script>

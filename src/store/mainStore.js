@@ -10,6 +10,7 @@ export const mainStore = defineStore('mainStore', () => {
     const searchInputEl = ref(null)
     const searchFieldIsFocused = ref(false)
     const alphabetsCombination = ref([])
+    const aboutPage = ref(false)
     const dictionaryData = ref({
         wordData: '',
         message: '',
@@ -417,6 +418,7 @@ export const mainStore = defineStore('mainStore', () => {
         range,
         beginCountdown,
         enableBackSpace,
+        aboutPage,
         enterKey,
         useCustomText,
         enableRepeat,

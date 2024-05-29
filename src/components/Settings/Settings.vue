@@ -13,7 +13,7 @@
                 <AllCaps />
                 <CustomCamelCase />
                 <NoSpaceText />
-                <!-- <CustomText /> -->
+                <CustomText />
             </div>
         </div>
         <div v-if="alphabets">
@@ -60,6 +60,7 @@ import AllCaps from './AllCaps.vue'
 import CustomCamelCase from './CustomCamelCase.vue'
 import NoSpaceText from './NoSpaceText.vue'
 import BlindMode from './BlindMode.vue'
+import CustomText from './CustomText.vue'
 import BackSpace from './BackSpace.vue';
 import Countdown from './CountDown.vue';
 import MovieQuotes from './MovieQuotes.vue'

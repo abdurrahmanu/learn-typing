@@ -3,6 +3,7 @@
         <MobileInput />
         <div :class="[alphabets ? 'px-2 py-1 max-w-[300px]' : 'max-w-[600px]', hideElements ? 'text-center' : 'pt-6']"  class="flex justify-between m-auto">
             <Clock/>
+            <CustomText />
             <Blind />
         </div>
         <div v-if="containerText" class="transition-all duration-100 relative mx-auto max-w-[600px] w-full">
@@ -32,6 +33,7 @@
 
 <script setup>
 import { onMounted, ref, watch } from 'vue';
+import CustomText from './CustomText.vue'
 import repeat from './svg/repeat.vue';
 import MobileInput from'./MobileInput.vue'
 import TextAlign from './TextAlign.vue'
@@ -47,7 +49,6 @@ import { countdownStore } from '../store/countdownStore';
 const store = mainStore()
 const { containerText, previousPlayerInput, resultData, font, containerRef, containerHeight, dictionaryMode,  dictionaryData, alphabets, movie, beatCountdown, gameMode, enableRepeat, playerInputLength, playerInput, authoredQuote, scrollTextContainer, inputEl} = storeToRefs(store)
 const {generateText, getMobileOS, playerInputTyping, managePlayerInput, sessionComplete, playerTyping} = store
-
 const textPosition = ref('left')
 const customize = customizeStore()
 const { customizers, hideElements} = storeToRefs(customize)
@@ -86,7 +87,7 @@ watch(playerInput, (newVal, oldVal) => {
 })
 
 onMounted(() => {
-    generateText(customizers.value)
+    if (!containerText.value) generateText(customizers.value)
     if (getMobileOS()) {
         inputEl.value.focus()
         inputEl.value.addEventListener('input', playerInputTyping)

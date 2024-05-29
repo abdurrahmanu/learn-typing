@@ -120,7 +120,6 @@ const changeMode = (mode) => {
     } 
 
     localStorage.setItem('alphabets-mode', JSON.stringify(alphabetsMode.value))
-
     resetToDefault()
     generateText(customizers.value)
 }  

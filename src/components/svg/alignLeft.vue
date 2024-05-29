@@ -2,25 +2,27 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 
 <!-- Uploaded to: SVG Repo, www.svgrepo.com, Transformed by: SVG Repo Mixer Tools -->
-<svg width="40px" height="40px" viewBox="0 0 24 24" :fill="position ? 'green' : '#000'" xmlns="http://www.w3.org/2000/svg">
-
+<svg width="40px" height="40px" viewBox="0 0 24 24" :fill="bg" xmlns="http://www.w3.org/2000/svg">
 <g id="SVGRepo_bgCarrier" stroke-width="0"/>
-
 <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
-
-<g id="SVGRepo_iconCarrier"> <path d="M3 5C2.44772 5 2 5.44772 2 6C2 6.55228 2.44772 7 3 7H21C21.5523 7 22 6.55228 22 6C22 5.44772 21.5523 5 21 5H3Z" :fill="position ? 'green' : '#000'"/> <path d="M3 13C2.44772 13 2 13.4477 2 14C2 14.5523 2.44772 15 3 15H21C21.5523 15 22 14.5523 22 14C22 13.4477 21.5523 13 21 13H3Z" :fill="position ? 'green' : '#000'"/> <path d="M2 10C2 9.44772 2.44772 9 3 9H15C15.5523 9 16 9.44772 16 10C16 10.5523 15.5523 11 15 11H3C2.44772 11 2 10.5523 2 10Z" :fill="position ? 'green' : '#000'"/> <path d="M3 17C2.44772 17 2 17.4477 2 18C2 18.5523 2.44772 19 3 19H15C15.5523 19 16 18.5523 16 18C16 17.4477 15.5523 17 15 17H3Z" :fill="position ? 'green' : '#000'"/> </g>
+<g id="SVGRepo_iconCarrier"> <path d="M3 5C2.44772 5 2 5.44772 2 6C2 6.55228 2.44772 7 3 7H21C21.5523 7 22 6.55228 22 6C22 5.44772 21.5523 5 21 5H3Z" :fill="bg"/> <path d="M3 13C2.44772 13 2 13.4477 2 14C2 14.5523 2.44772 15 3 15H21C21.5523 15 22 14.5523 22 14C22 13.4477 21.5523 13 21 13H3Z" :fill="bg"/> <path d="M2 10C2 9.44772 2.44772 9 3 9H15C15.5523 9 16 9.44772 16 10C16 10.5523 15.5523 11 15 11H3C2.44772 11 2 10.5523 2 10Z" :fill="bg"/> <path d="M3 17C2.44772 17 2 17.4477 2 18C2 18.5523 2.44772 19 3 19H15C15.5523 19 16 18.5523 16 18C16 17.4477 15.5523 17 15 17H3Z" :fill="bg"/> </g>
 
 </svg>
 </template>
+
 <script setup>
 import {computed} from 'vue'
 import {storeToRefs} from 'pinia'
 import {mainStore} from '../../store/mainStore'
 
 const main = mainStore()
-const { svgFill } = storeToRefs(main)
+const { svgFill, theme } = storeToRefs(main)
 
 const props = defineProps({
     position: Boolean
+})
+
+const bg = computed(() => {
+    return props.position ? 'green' : theme.value === 'neutral' && !props.position ? 'white' : theme.value !== 'neutral' && !props.position ? 'black' : ''
 })
 </script>

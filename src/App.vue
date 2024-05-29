@@ -12,13 +12,14 @@
     <Theme />
     <HideElements @click="hideElements = !hideElements" v-if="route.name === 'home' && !gameMode" />
     <Cookies />
-    <div class="fixed flex items-center justify-center w-5 h-5 p-1 font-mono border rounded-full left-3 bottom-[14px] border-slate-500">i</div>
+    <About />
   </div>
 </template>
 
 <script setup>
 import {onBeforeMount, onMounted, watch} from 'vue'
 import Header from './components/Header.vue'
+import About from './components/About.vue'
 import SwitchModes from './components/SwitchModes.vue';
 import Cookies from './components/Cookies.vue';
 import Restart from './components/Restart.vue';
@@ -115,7 +116,7 @@ const height = () => {
   document.body.removeChild(div)
 }
 
-onMounted(() =>height() )
+onMounted(() => height())
 watch(font, (newVal) => height() )
 </script>
 

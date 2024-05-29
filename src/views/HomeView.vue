@@ -20,7 +20,7 @@ import { useRouter } from 'vue-router';
 
 const router = useRouter()
 const store = mainStore()
-const { hasCompletedSession, gameMode, dictionaryMode} = storeToRefs(store)
+const { hasCompletedSession, gameMode, dictionaryMode, playerInput} = storeToRefs(store)
 
 const customize = customizeStore()
 const { hideElements } = storeToRefs(customize)

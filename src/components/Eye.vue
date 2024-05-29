@@ -1,16 +1,16 @@
 <template>
-    <div class="relative flex gap-2 py-5 m-auto w-fit h-fit">
-        <div id="eyeright" class="transition-all duration-500 trans">
+    <!-- <div class="relative flex gap-2 py-5 m-auto w-fit h-fit">
+        <div id="eyeright" class="relative transition-all duration-500 moon">
             <span ref="rightEyeBall" class="eyeball">
                 <span class="eyelid"></span>
             </span>
         </div>
-        <div id="eyeleft" class="transition-all duration-500 trans">
+        <div id="eyeleft" class="relative transition-all duration-500 moon">
             <span ref="leftEyeBall" class="eyeball">
                 <span class="eyelid"></span>
             </span>
         </div>
-    </div>
+    </div> -->
 </template>
 
 <script setup>
@@ -76,8 +76,8 @@ const mouseX = ref(0)
 :root {
     --dots: #aead0d;
     --body: #fff56c;
-    --eyes: #26b9c8;
-    --black: #0457a0;
+    --eyes: #474848;
+    --black: #1b1e20;
     --white: #fff;
 }
 
@@ -112,4 +112,16 @@ const mouseX = ref(0)
     background: var(--black);
     border: 2px solid black;
 }
+
+.moon:after {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    top: 10px;
+    width: 100%;
+    height: 80px;
+    border-radius: 50%;
+    box-shadow:  0 15px 0 0  rgb(214, 118, 8);
+    transform: rotate(180deg);
+    }
 </style>
