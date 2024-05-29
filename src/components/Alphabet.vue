@@ -9,9 +9,17 @@ import { defineProps, computed, watchEffect, ref, onMounted, watch } from 'vue';
 import {storeToRefs} from 'pinia'
 import {mainStore} from '../store/mainStore'
 import { customizeStore } from '../store/customizeStore';
+import {themeStore}  from '../store/themeStore'
+import {fontStore}  from '../store/fontStore'
+
+const theme_ = themeStore()
+const {theme } = storeToRefs(theme_)
+
+const font_ = fontStore()
+const {font } = storeToRefs(font_)
 
 const store = mainStore()
-const { playerInputLength, theme, containerRef, scrollTextContainer, enterKey, scrollDistance, backspaceIsPressed, font, containerHeight } = storeToRefs(store)
+const { playerInputLength, containerRef, scrollTextContainer, enterKey, scrollDistance, backspaceIsPressed, containerHeight } = storeToRefs(store)
 const currentAlphabet = ref(null)
 const customize = customizeStore()
 const {customizers} = storeToRefs(customize)
@@ -97,7 +105,7 @@ const currentIndexStyle = computed(() => {
 })
 
 const mainStyle = computed(() => {
-    let text = theme.value === 'neutral' ? 'text-slate-300' : 'text-neutral-800'
+    let text = theme.value === 'neutral' ? 'text-slate-400' : 'text-zinc-500'
     return props.index > playerInputLength.value ? text : ''
 })
 

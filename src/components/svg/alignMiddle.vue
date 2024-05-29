@@ -5,10 +5,11 @@
 <script setup>
 import {computed} from 'vue'
 import {storeToRefs} from 'pinia'
-import {mainStore} from '../../store/mainStore'
+import {themeStore}  from '../../store/themeStore'
 
-const main = mainStore()
-const { theme } = storeToRefs(main)
+const theme_ = themeStore()
+const {theme } = storeToRefs(theme_)
+
 const props = defineProps({
     position: Boolean
 })

@@ -12,9 +12,15 @@
 <script setup>
 import {storeToRefs} from 'pinia'
 import {mainStore} from './../store/mainStore'
+import {pagesStore}  from '../../store/pagesStore'
+import {themeStore}  from '../../store/themeStore'
 
-const main = mainStore()
-const { toggleSidebar, appTheme } = storeToRefs(main)
+const pages = pagesStore()
+const {currentPage } = storeToRefs(pages)
+
+const theme_ = themeStore()
+const {theme, appTheme } = storeToRefs(theme_)
+
 const options = ['Logout', 'My Progress']
 </script>
 

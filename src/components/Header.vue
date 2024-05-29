@@ -19,10 +19,15 @@ import {storeToRefs} from 'pinia'
 import {customizeStore} from '../store/customizeStore'
 import { mainStore } from '../store/mainStore';
 import {useRouter, useRoute} from 'vue-router'
+import {themeStore}  from '../store/themeStore'
+
+const theme_ = themeStore()
+const {theme, appTheme } = storeToRefs(theme_)
+
 
 const route = useRoute()
 const store = mainStore()
-const {alphabets, pauseTyping, toggleSidebar, appTheme} = storeToRefs(store)
+const {alphabets, pauseTyping} = storeToRefs(store)
 
 const main = customizeStore()
 const { showMoreSettings} = storeToRefs(main)

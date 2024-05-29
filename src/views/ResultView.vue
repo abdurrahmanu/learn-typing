@@ -40,13 +40,15 @@ import {ref} from 'vue'
 // import {Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale} from 'chart.js'
 import {storeToRefs} from 'pinia'
 import {mainStore} from '../store/mainStore'
+import {themeStore}  from '../store/themeStore'
 
-
+const theme_ = themeStore()
+const {theme, appTheme } = storeToRefs(theme_)
 
 // ChartJS.register( Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
 const store = mainStore()
-const {resultData, alphabetsInputTime, beatCountdown, timedTyping, savedCountdown, appTheme} = storeToRefs(store)
+const {resultData, alphabetsInputTime, beatCountdown, timedTyping, savedCountdown} = storeToRefs(store)
 
 // const chartData = ref({
 //     labels: Object.keys(alphabetsInputTime.value).reverse(),

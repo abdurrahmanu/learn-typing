@@ -12,16 +12,20 @@ import { storeToRefs } from 'pinia';
 import { mainStore } from '../store/mainStore';
 import { customizeStore } from '../store/customizeStore';
 import Pagination from './Settings/Pagination.vue';
+import {pagesStore}  from '../store/pagesStore'
 
 const pages = ['TEST MODE', 'ALPHABETS MODE', 'DICTIONARY MODE', 'GAME MODE']
 const modes = ['test', 'alphabets', 'dictionary', 'game']
 
 const store = mainStore()
-const { alphabets, movie, authoredQuote, currentPage, containerText, dictionaryMode, gameMode} = storeToRefs(store)
+const { alphabets, movie, authoredQuote, containerText, dictionaryMode, gameMode} = storeToRefs(store)
 const {resetToDefault, generateText} = store
 
 const customize = customizeStore()
 const { customizers} = storeToRefs(customize)
+
+const pages_ = pagesStore()
+const {currentPage } = storeToRefs(pages_)
 
 const toggleMode = (mode) => {
     if (mode === 'alphabets') {

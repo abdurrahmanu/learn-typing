@@ -6,6 +6,7 @@
             <p @click="signUp = !signUp" :class="[signUp ? 'border-green-500' : '']" class="px-4 border rounded-sm">SIGN UP</p>
             <p @click="signUp = !signUp" :class="[!signUp ? 'border-green-400' : '']" class="px-4 border rounded-sm">SIGN IN</p>
         </div>
+        <p class="text-red-600">INCOMPLETE</p>
         
         <form @submit.prevent :class="[appTheme]" class="space-y-3 m-auto  max-w-[450px] rounded-md px-2 border border-neutral-600 py-3 w-[90%] transition-all duration-300" > 
                 <div v-if="signUp" class="flex items-center justify-between gap-3 m-auto transition">
@@ -32,14 +33,18 @@
 import {ref} from 'vue'
 import {storeToRefs} from 'pinia'
 import Eye from '../components/Eye.vue'
-import {mainStore} from './../store/mainStore'
 import {useRouter, useRoute} from 'vue-router'
+import {pagesStore}  from '../store/pagesStore'
+import {themeStore}  from '../store/themeStore'
+
+const theme_ = themeStore()
+const {theme, appTheme } = storeToRefs(theme_)
+
+const pages = pagesStore()
+const {toggleSidebar } = storeToRefs(pages)
 
 const router  = useRouter()
 const route = useRouter()
-
-const main = mainStore()
-const { toggleSidebar, appTheme, theme} = storeToRefs(main)
 
 const signUp = ref(true)
 </script>

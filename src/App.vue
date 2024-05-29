@@ -30,13 +30,25 @@ import {mainStore} from './store/mainStore'
 import { storeToRefs } from 'pinia';
 import { customizeStore } from './store/customizeStore';
 import {useRoute} from 'vue-router'
+import {pagesStore}  from './store/pagesStore'
+import {themeStore}  from './store/themeStore'
+import {fontStore}  from './store/fontStore'
+
+const theme_ = themeStore()
+const {theme, appTheme } = storeToRefs(theme_)
+
+const font_ = fontStore()
+const {font } = storeToRefs(font_)
 
 const route = useRoute()
 const main = mainStore()
-const {appTheme, theme,alphabets, alphabetsMode, containerHeight, font, enableBackSpace, customTexts, currentPage, hasCompletedSession, alphabetsCombination, useAlphabetCombination, gameMode, dictionaryMode} = storeToRefs(main)
+const {alphabets, alphabetsMode, containerHeight, enableBackSpace, customTexts, hasCompletedSession, alphabetsCombination, useAlphabetCombination, gameMode, dictionaryMode} = storeToRefs(main)
 
 const customize = customizeStore()
 const {hideElements, customizers, disableOption } = storeToRefs(customize)
+
+const pages = pagesStore()
+const {currentPage } = storeToRefs(pages)
 
 onBeforeMount(() => {
   if (!localStorage.getItem('dorayi-typing-theme')) {

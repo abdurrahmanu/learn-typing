@@ -8,10 +8,11 @@
 <script setup>
 import {computed} from 'vue'
 import { storeToRefs } from 'pinia';
-import { mainStore } from '../../store/mainStore';
+import {themeStore}  from '../../store/themeStore'
 
-const store = mainStore()
-const {theme} = storeToRefs(store)
+const theme_ = themeStore()
+const {theme } = storeToRefs(theme_)
+
 
 const fill = computed(() => {
     return theme.value === 'neutral' ? '#e8e7e7' : '#373636'

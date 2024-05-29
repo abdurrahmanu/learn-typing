@@ -3,63 +3,21 @@ import {ref, computed} from 'vue'
 import {UseGetQuotes} from '../composables/UseGetQuotes'
 
 export const mainStore = defineStore('mainStore', () => {
-    const font = ref(20)
-    const containerHeight = ref(0)
-    const range = ref((font.value - 16) / 0.16)
-    const enterKey = ref(false)
-    const searchInputEl = ref(null)
+    //Dictionary mode states
+    const searchWord = ref('')
+    const searchInputEl = ref(null) // Search Element
     const searchFieldIsFocused = ref(false)
-    const alphabetsCombination = ref([])
-    const aboutPage = ref(false)
-    const dictionaryData = ref({
+    const allDictionaryDefinitons = ref({}) // Fetched definitions
+    const dictionaryData = ref({ // Fetched data
         wordData: '',
         message: '',
         error: ''
     })
+    
+    //Alphabets mode states
     const useAlphabetCombination = ref(false)
-    const currentPage = ref(0)
-    const gameMode = ref(false)
-    const dictionaryMode = ref(false)
-    const secondaryTheme = ref('green')
-    const toggleSidebar = ref(false)
-    const theme = ref('neutral')
-    const enableBackSpace = ref(true)
-    const beatCountdown = ref(null)
-    const completionLevel = ref(0)
-    const containerRef = ref(null)
-    const correctCount = ref(0)
-    const wrongCount = ref(0)
-    const containerText = ref('')
-    const playerLastInput = ref('')
-    const playerInputLength = ref(0)
-    const startTime = ref(null)
-    const totalTime = ref(null)
-    const hasCompletedSession = ref(false)
-    const pauseTyping = ref(true)
-    const playerInput = ref('')
-    const backspaceIsPressed = ref(false)
-    const timedTyping = ref(false)
-    const savedCountdown = ref(10)
-    const searchWord = ref('')
-    const customTexts = ref({})
-    const useCustomText = ref(false)
-    const enableRepeat = ref(false)
-    const storedTextForRepeat = ref('')
-    const beginCountdown = ref(false)
-    const previousPlayerInput = ref('')
-    const howToUseCustomText = ref('select text using options')
-    const allDictionaryDefinitons = ref({})
-    const timerID = ref()
-    const scrollDistance = ref(0)
-    const scrollTextContainer = ref({})
-    const alphabets = ref(false)
-    const currentAlphabetInputTime = ref(null)
-    const movie = ref({})
-    const inputEl = ref(null)
-    const authoredQuote = ref({})
-    const alphabetsInputTime = ref({})
-    const timePaused = ref(0)
-    const alphabetsMode = ref({
+    const alphabetsCombination = ref([]) // Alphabets combination for typing
+    const alphabetsMode = ref({ // Alphabets mode config
         uppercase: false,
         customCase: false,
         random: false,
@@ -67,30 +25,58 @@ export const mainStore = defineStore('mainStore', () => {
         spaced: false,
         styled: false,
     })
+    
+    // Element for input event - Mobile devices
+    const inputEl = ref(null)
 
-    const appTheme = computed(() => {
-        if (theme.value === 'stone') return 'bg-stone-600 text-black'
-        if (theme.value === 'blue') return 'bg-blue-400 text-neutral-600'
-        if (theme.value === 'lime') return 'bg-lime-300 text-black'
-        if (theme.value === 'teal') return 'bg-teal-700 text-slate-900'
-        if (theme.value === 'sky') return 'bg-sky-400 text-zinc-900'
-        if (theme.value === 'fuschia') return 'bg-fuschia-600 text-black'
-        if (theme.value === 'emerald') return 'bg-emerald-400 text-black'
-        if (theme.value === 'neutral') return 'bg-neutral-900 text-slate-200'
-        if (theme.value === 'white') return 'bg-slate-200 text-neutral-700'
-    })
+    //Test container
+    const containerRef = ref(null)
+    const containerHeight = ref(0)
+    const scrollDistance = ref(0) // Container scroll Y axis
+    const scrollTextContainer = ref({}) // Scroll top distance {top: number}
+    const containerText = ref('') // Test
 
-    const svgFill = computed(() => {
-        if (theme.value === 'stone') return 'white'
-        if (theme.value === 'blue') return 'black'
-        if (theme.value === 'lime') return 'black'
-        if (theme.value === 'teal') return 'white '
-        if (theme.value === 'sky') return 'black'
-        if (theme.value === 'fuschia') return 'black'
-        if (theme.value === 'emerald') return 'black'
-        if (theme.value === 'neutral') return 'white'
-        if (theme.value === 'white') return 'black '
-    })
+    //Modes
+    const dictionaryMode = ref(false)
+    const gameMode = ref(false)
+    const alphabets = ref(false)
+
+    //keys states
+    const enterKey = ref(false)
+    const enableBackSpace = ref(true)
+    const backspaceIsPressed = ref(false)
+
+    // Time states
+    const timedTyping = ref(false)
+    const startTime = ref(null)
+    const totalTime = ref(null)
+    const timerID = ref()
+    const timePaused = ref(0)
+    const beginCountdown = ref(false)
+
+    // On-typing states
+    const pauseTyping = ref(true)
+    const completionLevel = ref(0) // test completion percentage
+    const playerInput = ref('') // player current input
+    const previousPlayerInput = ref('')
+    const playerLastInput = ref('')
+    const playerInputLength = ref(0)
+    const hasCompletedSession = ref(false)
+    const correctCount = ref(0)
+    const wrongCount = ref(0)
+
+    const beatCountdown = ref(null)
+    const savedCountdown = ref(10) // default countdown || set countdown
+    const useCustomText = ref(false) // user custom text
+    const enableRepeat = ref(false) // repeat a test
+    const storedTextForRepeat = ref('') // test to repeat
+    const howToUseCustomText = ref('select text using options')
+
+    // Tests data for different modes 
+    const movie = ref({}) // Data for quotes mode && movie quotes
+    const customTexts = ref({}) // Data for custom quotes
+    const authoredQuote = ref({}) // Data for quotes mode && authored quotes
+
 
     const resultData = computed(() => {
         return {
@@ -100,10 +86,8 @@ export const mainStore = defineStore('mainStore', () => {
             characters: containerText.value.length,
             totalTime: totalTime.value.toFixed(2),
             testType: timedTyping.value ? 'Countdown mode ' + savedCountdown.value + 's' : '',
-            // WPM: Math.round( (((correctCount.value + wrongCount.value) / 5) - wrongCount.value) / (totalTime.value/60)),
             WPM: Math.round( (((containerText.value.length - wrongCount.value) / 5)) / (totalTime.value/60))
         }
-
     })
 
     const generateText = async (config, restart, options) => {
@@ -242,11 +226,11 @@ export const mainStore = defineStore('mainStore', () => {
             clearInterval(timerID.value)
             beginCountdown.value = false
         }
-        const dictionaryData = ref({
+        dictionaryData.value = {
             wordData: '',
             message: '',
             error: ''
-        })
+        }
         if (beatCountdown.value && timedTyping.value) beatCountdown.value = false
         else beatCountdown.value = null
         scrollDistance.value = 0
@@ -262,7 +246,6 @@ export const mainStore = defineStore('mainStore', () => {
         playerLastInput.value = ''
         playerInputLength.value = 0
         playerInput.value = ''
-        currentAlphabetInputTime.value = 0
     }
 
     const managePlayerInput = () =>{
@@ -404,60 +387,61 @@ export const mainStore = defineStore('mainStore', () => {
         switchNext,
         playerInputTyping,
         managePlayerInput,
-        beatCountdown,
-        secondaryTheme,
+        resultData,
+
+        searchWord,
         searchInputEl,
-        font,
-        inputEl,
-        hasCompletedSession,
         searchFieldIsFocused,
-        movie,
+        allDictionaryDefinitons,
+        dictionaryData ,
+
+        useAlphabetCombination,
+        alphabetsCombination,
+        alphabets,
+        
+        inputEl,
+
+        containerRef,
+        containerHeight,
+        scrollDistance,
+        scrollTextContainer,
+        containerText ,
+        
+        alphabetsMode,
         dictionaryMode,
-        timerID,
-        howToUseCustomText,
-        range,
-        beginCountdown,
-        enableBackSpace,
-        aboutPage,
+        gameMode,
+
         enterKey,
+        enableBackSpace,
+        backspaceIsPressed,
+
+        timedTyping,
+        startTime,
+        totalTime,
+        timerID,
+        timePaused,
+
+        pauseTyping,
+        completionLevel,
+        playerInput,
+        playerLastInput,
+        previousPlayerInput,
+        playerInputLength,
+        beginCountdown,
+        hasCompletedSession,
+        correctCount,
+        wrongCount,
+
+        beatCountdown,
+        savedCountdown,
         useCustomText,
         enableRepeat,
         storedTextForRepeat,
-        containerHeight,
-        timePaused,
+        howToUseCustomText,
+
+        movie,
         customTexts,
-        resultData,
-        gameMode,
-        completionLevel,
-        searchWord,
-        playerInput,
-        correctCount,
-        wrongCount,
-        containerText,
-        useAlphabetCombination,
-        playerLastInput,
-        playerInputLength,
-        savedCountdown,
-        startTime,
-        alphabetsCombination,
-        totalTime,
-        pauseTyping,
-        dictionaryData,
-        backspaceIsPressed,
-        timedTyping,
-        alphabets,
-        alphabetsMode,
-        theme,
-        currentPage,
-        containerRef,
-        appTheme,
-        alphabetsInputTime,
-        previousPlayerInput,
         authoredQuote,
-        scrollTextContainer,
-        scrollDistance,
-        svgFill,
-        toggleSidebar,
     }
 })
 

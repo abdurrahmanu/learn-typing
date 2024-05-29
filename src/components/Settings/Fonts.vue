@@ -20,10 +20,13 @@ import { mainStore } from '../../store/mainStore';
 import { customizeStore } from '../../store/customizeStore';
 import { storeToRefs } from 'pinia';
 import { countdownStore } from '../../store/countdownStore'
+import { fontStore } from '../../store/fontStore'
 
+const font_ = fontStore()
+const { font, range} = storeToRefs(font_)
 
 const store = mainStore()
-const {font, range, timedTyping, playerInput} = storeToRefs(store)
+const {timedTyping, playerInput} = storeToRefs(store)
 const {switchNext} = store
 
 const customize = customizeStore()

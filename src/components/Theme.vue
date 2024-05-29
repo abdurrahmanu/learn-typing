@@ -6,11 +6,12 @@
 
 <script setup>
 import {ref, onMounted} from 'vue'
-import {mainStore} from '../store/mainStore'
 import { storeToRefs } from 'pinia';
+import {themeStore}  from '../store/themeStore'
 
-const main = mainStore()
-const { theme } = storeToRefs(main)
+const theme_ = themeStore()
+const {theme, appTheme } = storeToRefs(theme_)
+
 const openBackgrounds = ref(false)
 const bgContainer = ref(null)
 

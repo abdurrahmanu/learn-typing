@@ -64,12 +64,19 @@ import {ref, onMounted} from 'vue'
 import {storeToRefs} from 'pinia'
 import {mainStore} from '../../store/mainStore'
 import {useRouter} from 'vue-router'
+import {pagesStore}  from '../../store/pagesStore'
+import {themeStore}  from '../../store/themeStore'
+
+const theme_ = themeStore()
+const {theme, appTheme, svgFill } = storeToRefs(theme_)
+
+const pages = pagesStore()
+const {toggleSidebar } = storeToRefs(pages)
 
 const router  = useRouter()
-const main = mainStore()
+
 const menuEl = ref(null)
 const images = ['keyboard.svg', 'keyboard.svg', 'keyboard.svg']
-const { toggleSidebar, appTheme, svgFill, theme} = storeToRefs(main)
 const options = ['Home', 'Sign Up', 'My Progress']
 
 onMounted(() => {

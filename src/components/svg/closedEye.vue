@@ -4,8 +4,8 @@
 
 <script setup>
 import {storeToRefs} from 'pinia'
-import {mainStore} from '../../store/mainStore'
+import {themeStore} from '../../store/themeStore'
 
-const main = mainStore()
-const { svgFill } = storeToRefs(main)
+const theme_ = themeStore()
+const { svgFill } = storeToRefs(theme_)
 </script>

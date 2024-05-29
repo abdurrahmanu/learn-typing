@@ -11,9 +11,14 @@ import { ref, defineProps, defineEmits, onMounted, onBeforeMount } from 'vue';
 import { mainStore } from '../store/mainStore';
 import { storeToRefs } from 'pinia';
 import {countdownStore} from '../store/countdownStore'
+import {themeStore}  from '../store/themeStore'
+
+const theme_ = themeStore()
+const {theme, appTheme } = storeToRefs(theme_)
+
 
 const main = mainStore()
-const {theme, savedCountdown} = storeToRefs(main)
+const { savedCountdown} = storeToRefs(main)
 
 const count = countdownStore()
 const { animationName, countDownElement, isNextCountDown, timerID, intervalID, start, countdown} = storeToRefs(count)

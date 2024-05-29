@@ -16,8 +16,8 @@
                 :equality="playerInput[index] === alphabet"
                 :alphabet="alphabet"/>
             </div>
-            <p @click="searchMovie(movie.quoteAuthor, movie.name)"  v-if="movie.name" class="pt-5 text-xs italic text-right text-slate-500 hover:underline whitespace-nowrap">{{movie.quoteAuthor}} - {{ movie.name }}</p>
-            <p  v-if="authoredQuote.author" class="text-xs italic text-right text-slate-500 hover:underline">{{authoredQuote.author}}</p>
+            <p v-if="movie.name" :class="[theme === 'neutral' ? 'text-white' : 'text-black']" class="pt-5 text-xs italic text-right text-slate-500 whitespace-nowrap">{{movie.quoteAuthor}} - {{ movie.name }}</p>
+            <p  v-if="authoredQuote.author" class="text-xs italic text-right text-slate-500">{{authoredQuote.author}}</p>
             <p v-if="Object.keys(dictionaryData).length" class="text-xs text-right text-slate-500 hover:underline">{{ dictionaryData.wordData.word }}</p>
             <div v-if="!hideElements" class="flex items-center py-3 m-auto  w-[90%] space-x-2">
                 <RangeInput />
@@ -45,16 +45,24 @@ import {storeToRefs} from 'pinia'
 import { customizeStore } from '../store/customizeStore';
 import {mainStore} from '../store/mainStore'
 import { countdownStore } from '../store/countdownStore';
+import { fontStore } from '../store/fontStore';
+import { themeStore } from '../store/themeStore';
 
 const store = mainStore()
-const { containerText, previousPlayerInput, resultData, font, containerRef, containerHeight, dictionaryMode,  dictionaryData, alphabets, movie, beatCountdown, gameMode, enableRepeat, playerInputLength, playerInput, authoredQuote, scrollTextContainer, inputEl} = storeToRefs(store)
+const { containerText, previousPlayerInput, resultData, containerRef, containerHeight, dictionaryMode,  dictionaryData, alphabets, movie, beatCountdown, gameMode, enableRepeat, playerInputLength, playerInput, authoredQuote, scrollTextContainer, inputEl} = storeToRefs(store)
 const {generateText, getMobileOS, playerInputTyping, managePlayerInput, sessionComplete, playerTyping} = store
 const textPosition = ref('left')
 const customize = customizeStore()
 const { customizers, hideElements} = storeToRefs(customize)
 
+const theme_ = themeStore()
+const {theme} = storeToRefs(theme_)
+
 const count = countdownStore()
 const {countdown} = storeToRefs(count)
+
+const font_ = fontStore()
+const {font} = storeToRefs(font_)
 
 watch(scrollTextContainer, (newVal, oldVal)=> {
     if (containerRef.value instanceof HTMLElement) {
@@ -71,7 +79,7 @@ watch(scrollTextContainer, (newVal, oldVal)=> {
 }, {deep: true})
 
 const searchMovie = (author, movie) => {
-    window.open(`https://google.com/search?q=${author}+${movie}`, '_blank')
+    // window.open(`https://google.com/search?q=${author}+${movie}`, '_blank')
 }
 
 watch(countdown, (newVal) => {

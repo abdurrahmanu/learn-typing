@@ -1,5 +1,5 @@
 <template>
-    <div v-if="!hasCompletedSession && !alphabets && !dictionaryMode && !gameMode" class="bg-transparent rounded-md  w-[90%] m-auto max-w-fit ring-1" :class="secTheme">
+    <div v-if="!hasCompletedSession && !alphabets && !dictionaryMode && !gameMode" class="bg-transparent rounded-md  w-[90%] m-auto max-w-fit ring-1 ring-green-400">
         <div class="text-[12px] items-center font-mono p-[1px] flex max-w-[1000px] justify-center flex-wrap relative">
             <div class="p-1" v-for="(optionArr, key, listIndex) in option" :key="listIndex">          
                 <div 
@@ -52,24 +52,19 @@ import {customizeStore} from '../store/customizeStore.js'
 import {storeToRefs} from 'pinia'
 import { mainStore } from '../store/mainStore.js';
 import {fetchWord} from '../composables/UseDictionary.js'
+import {themeStore}  from '../store/themeStore'
+
+const theme_ = themeStore()
+const {theme } = storeToRefs(theme_)
 
 const store = mainStore()
-const {alphabets, alphabetsMode, hasCompletedSession, theme, secondaryTheme, dictionaryMode, searchWord, searchFieldIsFocused, dictionaryData, gameMode, searchInputEl} = storeToRefs(store)
+const {alphabets, alphabetsMode, hasCompletedSession, dictionaryMode, searchWord, searchFieldIsFocused, dictionaryData, gameMode, searchInputEl} = storeToRefs(store)
 const {switchNext, resetToDefault, generateText} = store
 
 const customize = customizeStore()
 const { allOptions, configs, customizers, disableOption, next} = storeToRefs(customize)
 const {useConfig} = customize
 const optionsTooltip = ['length', 'words', 'test-type', 'format', 'test-type', 'test-type']
-
-const secTheme = computed(() => {
-  return secondaryTheme.value === 'green' ? 'ring-green-500' :
-            secondaryTheme.value === 'blue' ? 'ring-blue-500' :
-            secondaryTheme.value === 'yellow' ? 'ring-yellow-500' :
-            secondaryTheme.value === 'red' ? 'ring-red-500' :
-            secondaryTheme.value === 'teal' ? 'ring-teal-500' :
-            secondaryTheme.value === 'pink' ? 'ring-pink-300' : 'ring-black'
-})
 
 const {
     'text-length' : textLength,
@@ -126,10 +121,12 @@ const changeMode = (mode) => {
 
 async function fetchWordDefinitions(word) {
   if (word) {
-    const {data} = await fetchWord(word)
-    dictionaryData.value = data.value
-    resetToDefault()
-    generateText(customizers.value)
+    await fetchWord(word).then( async (data) => {      
+      dictionaryData.value = await data.value
+      resetToDefault()
+      generateText(customizers.value)
+      console.log(data.value);
+    })
   }
 }
 

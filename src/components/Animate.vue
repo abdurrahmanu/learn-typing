@@ -21,9 +21,13 @@
 import {ref, onMounted} from 'vue'
 import {mainStore} from '../store/mainStore'
 import { storeToRefs } from 'pinia';
+import {themeStore}  from '../store/themeStore'
+
+const theme_ = themeStore()
+const {theme, appTheme } = storeToRefs(theme_)
 
 const main = mainStore()
-const {pauseTyping, theme} = storeToRefs(main)
+const {pauseTyping} = storeToRefs(main)
 
 const secondAnimation = ref(true)
 const boxesContainer = ref(null)

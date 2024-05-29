@@ -97,7 +97,6 @@ export const customizeStore = defineStore('customizeStore', () => {
         if (mode === 'author-quotes') {
             if (onlyMovieQuotes.value) onlyMovieQuotes.value = false
             if (option) {
-                console.log('object');
                 customizers.value['movie-quotes'] = false
             }
             customizers.value['text-length'] = 'auto'

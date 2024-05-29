@@ -8,7 +8,11 @@
 <script setup>
 import { storeToRefs } from 'pinia';
 import { mainStore } from '../store/mainStore';
+import {themeStore}  from '../store/themeStore'
+
+const theme_ = themeStore()
+const {theme } = storeToRefs(theme_)
 
 const store = mainStore()
-const {completionLevel, theme} = storeToRefs(store)
+const {completionLevel} = storeToRefs(store)
 </script>

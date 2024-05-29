@@ -22,7 +22,7 @@
             </div>
         </div>
     </div>
-    <p class="text-xl text-center">USER TYPING HISTORY PAGE...</p>
+    <p class="text-xl text-center">HISTORY</p>
 </template>
 
 <script setup>

@@ -35,6 +35,16 @@
                     <div @click="saveNewCustomText" class="py-1 m-auto text-center border rounded-r-full px-7 w-fit border-slate-600 hover:bg-green-500 hover:text-white">SAVE</div>
                 </div>
             </div>
+
+            <div v-if="Object.keys(customTexts).length">
+                <div v-for="(text, key, index) in customTexts" :key="index" class="flex items-center justify-between px-2 py-1 hover:opacity-95">
+                    <div>                        
+                        <div>{{ key }}</div>
+                        <div>{{ text }}</div>
+                    </div>
+                    <p>delete</p>
+                </div>
+            </div>
         </div>
 </template>
 
@@ -42,6 +52,11 @@
 import {ref, watchEffect} from 'vue'
 import {storeToRefs} from 'pinia';
 import {mainStore} from '../../store/mainStore';
+import {themeStore}  from '../../store/themeStore'
+
+const theme_ = themeStore()
+const {theme, appTheme } = storeToRefs(theme_)
+
 
 const inputError = ref(false)
 const textAreaPlaceholder = ref('Input custom text')
@@ -52,7 +67,7 @@ const textSaved = ref(false)
 const customTextTitle = ref('')
 const main = mainStore()
 const textAreaValueStore = ref('')
-const { howToUseCustomText,  customTexts, useCustomText, theme, appTheme} = storeToRefs(main)
+const { howToUseCustomText,  customTexts, useCustomText} = storeToRefs(main)
 
 const startSavingCustomText = () => {
     if (!textValue.value.length) {
