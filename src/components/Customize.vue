@@ -1,5 +1,5 @@
 <template>
-    <div v-if="!hasCompletedSession && !alphabets && !dictionaryMode && !gameMode" class="bg-transparent rounded-md  w-[90%] m-auto max-w-fit ring-1 ring-green-400">
+    <div v-if="!hasCompletedSession && !alphabetsMode_ && !dictionaryMode_" class="bg-transparent rounded-md  w-[90%] m-auto max-w-fit ring-1 ring-green-400">
         <div class="text-[12px] items-center font-mono p-[1px] flex max-w-[1000px] justify-center flex-wrap relative">
             <div class="p-1" v-for="(optionArr, key, listIndex) in option" :key="listIndex">          
                 <div 
@@ -20,46 +20,46 @@
         </div>
     </div>
 
-    <div v-if="!hasCompletedSession && alphabets && !dictionaryMode" class="flex flex-wrap justify-center gap-3 pt-10 text-sm">
-          <div :class="[alphabetsMode.uppercase ? 'bg-neutral-500' : '']" @click="changeMode('uppercase')" class="px-3 py-1 uppercase border rounded-md border-slate-600 w-fit">uppercase</div>
-          <div :class="[alphabetsMode.customCase ? 'bg-neutral-500' : '']" @click="changeMode('customCase')" class="px-3 py-1 border rounded-md hover:font-medium border-slate-600 w-fit">cUstoMCaSE</div>
-          <div :class="[alphabetsMode.spaced ? 'bg-neutral-500' : '']" @click="changeMode('spaced')" class="px-3 py-1 uppercase border rounded-md hover:font-medium border-slate-600 w-fit">spaced</div>
-          <div :class="[alphabetsMode.backwards ? 'bg-neutral-500' : '']" @click="changeMode('backwards')" class="px-3 py-1 uppercase border rounded-md hover:font-medium border-slate-600 w-fit">backwards</div>
-          <div :class="[alphabetsMode.random ? 'bg-neutral-500' : '']" @click="changeMode('random')" class="px-3 py-1 uppercase border rounded-md hover:font-medium border-slate-600 w-fit">random</div>
+    <div v-if="!hasCompletedSession && alphabetsMode_ && !dictionaryMode_" class="flex flex-wrap justify-center gap-3 pt-10 text-sm">
+          <div :class="[alphabetsConfig.uppercase ? 'bg-neutral-500' : '']" @click="changeMode('uppercase')" class="px-3 py-1 uppercase border rounded-md border-slate-600 w-fit">uppercase</div>
+          <div :class="[alphabetsConfig.customCase ? 'bg-neutral-500' : '']" @click="changeMode('customCase')" class="px-3 py-1 border rounded-md hover:font-medium border-slate-600 w-fit">cUstoMCaSE</div>
+          <div :class="[alphabetsConfig.spaced ? 'bg-neutral-500' : '']" @click="changeMode('spaced')" class="px-3 py-1 uppercase border rounded-md hover:font-medium border-slate-600 w-fit">spaced</div>
+          <div :class="[alphabetsConfig.backwards ? 'bg-neutral-500' : '']" @click="changeMode('backwards')" class="px-3 py-1 uppercase border rounded-md hover:font-medium border-slate-600 w-fit">backwards</div>
+          <div :class="[alphabetsConfig.random ? 'bg-neutral-500' : '']" @click="changeMode('random')" class="px-3 py-1 uppercase border rounded-md hover:font-medium border-slate-600 w-fit">random</div>
       </div>
 
-      <div v-if="dictionaryMode" class="text-center">
+      <div v-if="dictionaryMode_" class="text-center">
         DICTIONARY WORDS
         <div class="py-4 text-center">
-          <input :class="[theme === 'neutral' ? 'text-slate-300 caret-slate-400 placeholder:text-neutral-600' : 'text-slate-700 caret-slate-800 placeholder:text-slate-500']" @keyup.enter="fetchWordDefinitions(searchWord)" @focus="searchFieldIsFocused = true" @blur="searchFieldIsFocused = false" ref="searchInputEl" type="text" v-model="searchWord" class="px-1 py-[3px] text-xs max-w-[400px] outline-none border-b border-b-green-600 bg-transparent w-[80%]" placeholder="Type in a word to search definition">
+          <input name="dictionary" :class="[theme === 'neutral' ? 'text-slate-300 caret-slate-400 placeholder:text-neutral-600' : 'text-slate-700 caret-slate-800 placeholder:text-slate-500']" @keyup.enter="fetchWordDefinitions(searchWord)" @focus="searchFieldIsFocused = true" @blur="searchFieldIsFocused = false" ref="searchInputEl" type="text" v-model="searchWord" class="px-1 py-[3px] text-sm max-w-[400px] outline-none border-b border-b-green-600 bg-transparent w-[80%]" placeholder="Search word definition">
           <button  @click="fetchWordDefinitions(searchWord)" class="px-2 py-1 text-xs text-white bg-green-800 rounded-md rounded-l-none hover:bg-green-600">Search</button>
         </div>
-      </div>
-
-      <div v-if="gameMode">
-        <div class="flex justify-center py-3 space-x-2">
-          <div  @click="" class="px-3 py-1 uppercase border rounded-md hover:font-medium border-slate-600 w-fit">GAME</div>
-        </div>
-          <div class="py-10 text-xl text-center">
-            COMING SOON...
-          </div>
       </div>
 </template>
 
 <script setup>
-import { ref, watch, computed, onMounted } from 'vue'
+import { ref, watch } from 'vue'
 import {customizeStore} from '../store/customizeStore.js'
 import {storeToRefs} from 'pinia'
 import { mainStore } from '../store/mainStore.js';
 import {fetchWord} from '../composables/UseDictionary.js'
 import {themeStore}  from '../store/themeStore'
+import {alphabetsStore}  from '../store/alphabetsModeStore';
+import {dictionaryStore}  from '../store/dictionaryModeStore';
+import {test} from '../composables/test'
+
+const alphabets_ = alphabetsStore()
+const { alphabetsMode_, alphabetsConfig } = storeToRefs(alphabets_)
+
+const dictionary = dictionaryStore()
+const { dictionaryMode_, dictionaryData, searchWord, searchFieldIsFocused } = storeToRefs(dictionary)
 
 const theme_ = themeStore()
 const {theme } = storeToRefs(theme_)
 
 const store = mainStore()
-const {alphabets, alphabetsMode, hasCompletedSession, dictionaryMode, searchWord, searchFieldIsFocused, dictionaryData, gameMode, searchInputEl} = storeToRefs(store)
-const {switchNext, resetToDefault, generateText} = store
+const { hasCompletedSession} = storeToRefs(store)
+const {switchNext} = store
 
 const customize = customizeStore()
 const { allOptions, configs, customizers, disableOption, next} = storeToRefs(customize)
@@ -90,43 +90,39 @@ const mouseLeave = (index) => hoverIndex.value = null
 
 const changeMode = (mode) => {
     if (mode === 'uppercase') {
-      if (alphabetsMode.value.customCase && !alphabetsMode.value.uppercase) alphabetsMode.value.customCase = false
-      alphabetsMode.value.uppercase = !alphabetsMode.value.uppercase
+      if (alphabetsConfig.value.customCase && !alphabetsConfig.value.uppercase) alphabetsConfig.value.customCase = false
+      alphabetsConfig.value.uppercase = !alphabetsConfig.value.uppercase
     }
 
     if (mode === 'customCase') {
-      if (alphabetsMode.value.uppercase && !alphabetsMode.value.customCase) alphabetsMode.value.uppercase = false
-      alphabetsMode.value.customCase = !alphabetsMode.value.customCase
+      if (alphabetsConfig.value.uppercase && !alphabetsConfig.value.customCase) alphabetsConfig.value.uppercase = false
+      alphabetsConfig.value.customCase = !alphabetsConfig.value.customCase
     }
   
     
       if (mode === 'spaced') {
-        alphabetsMode.value.spaced = !alphabetsMode.value.spaced
+        alphabetsConfig.value.spaced = !alphabetsConfig.value.spaced
       }
 
       if (mode === 'backwards') {
-        if (alphabetsMode.value.random && !alphabetsMode.value.backwards) alphabetsMode.value.random = false
-        alphabetsMode.value.backwards = !alphabetsMode.value.backwards
+        if (alphabetsConfig.value.random && !alphabetsConfig.value.backwards) alphabetsConfig.value.random = false
+        alphabetsConfig.value.backwards = !alphabetsConfig.value.backwards
       }
       
     if (mode === 'random') {
-      if (alphabetsMode.value.backwards && !alphabetsMode.value.random) alphabetsMode.value.backwards = false
-      alphabetsMode.value.random = !alphabetsMode.value.random
+      if (alphabetsConfig.value.backwards && !alphabetsConfig.value.random) alphabetsConfig.value.backwards = false
+      alphabetsConfig.value.random = !alphabetsConfig.value.random
     } 
 
-    localStorage.setItem('alphabets-mode', JSON.stringify(alphabetsMode.value))
-    resetToDefault()
-    generateText(customizers.value)
+    localStorage.setItem('alphabets-mode', JSON.stringify(alphabetsConfig.value))
+    switchNext(customizers.value, null, test().res.value)
 }  
 
 async function fetchWordDefinitions(word) {
   if (word) {
-    await fetchWord(word).then( async (data) => {      
-      dictionaryData.value = await data.value
-      resetToDefault()
-      generateText(customizers.value)
-      console.log(data.value);
-    })
+    const {data} = await fetchWord(word)
+    dictionaryData.value = data.value
+    switchNext(customizers.value, null, test().res.value)
   }
 }
 
@@ -140,7 +136,7 @@ const changeConfig = (key, option) => {
 watch(next, (newVal) => {
   if (newVal) {
     setTimeout(() => {      
-      switchNext(customizers.value)
+      switchNext(customizers.value, null, test().res.value)
       next.value = !next.value
     }, 100);
   }

@@ -10,7 +10,7 @@
         <SwitchModes v-if="!hasCompletedSession && route.name === 'home'" />
     </div>
     <Theme />
-    <HideElements @click="hideElements = !hideElements" v-if="route.name === 'home' && !gameMode" />
+    <HideElements @click="hideElements = !hideElements" v-if="route.name === 'home'" />
     <Cookies />
     <About />
   </div>
@@ -33,6 +33,14 @@ import {useRoute} from 'vue-router'
 import {pagesStore}  from './store/pagesStore'
 import {themeStore}  from './store/themeStore'
 import {fontStore}  from './store/fontStore'
+import {alphabetsStore}  from './store/alphabetsModeStore';
+import {dictionaryStore}  from './store/dictionaryModeStore';
+
+const alphabets_ = alphabetsStore()
+const { alphabetsMode_, alphabetsConfig, alphabetsCombination, useAlphabetCombination } = storeToRefs(alphabets_)
+
+const dictionary = dictionaryStore()
+const { dictionaryMode_ } = storeToRefs(dictionary)
 
 const theme_ = themeStore()
 const {theme, appTheme } = storeToRefs(theme_)
@@ -42,7 +50,7 @@ const {font } = storeToRefs(font_)
 
 const route = useRoute()
 const main = mainStore()
-const {alphabets, alphabetsMode, containerHeight, enableBackSpace, customTexts, hasCompletedSession, alphabetsCombination, useAlphabetCombination, gameMode, dictionaryMode} = storeToRefs(main)
+const { containerHeight, enableBackSpace, customTexts, hasCompletedSession, mode} = storeToRefs(main)
 
 const customize = customizeStore()
 const {hideElements, customizers, disableOption } = storeToRefs(customize)
@@ -75,7 +83,8 @@ onBeforeMount(() => {
 
   if (localStorage.getItem('dorayi-typing-mode')) {
     if (localStorage.getItem('dorayi-typing-mode') === 'alphabets') {
-      alphabets.value = true
+      mode.value = 'alphabets'
+      alphabetsMode_.value = true
       currentPage.value = 1
       if (localStorage.getItem('dorayi-typing-use-alphabets-combination') === 'true') {
         useAlphabetCombination.value = true
@@ -87,21 +96,18 @@ onBeforeMount(() => {
 
     else if (localStorage.getItem('dorayi-typing-mode') === 'dictionary') {
       currentPage.value = 2
-      dictionaryMode.value = true
-    }
-
-    else if (localStorage.getItem('dorayi-typing-mode') === 'game') {
-      currentPage.value = 3
-      gameMode.value = true
+      dictionaryMode_.value = true
+      mode.value = 'dictionary'
     }
 
     else {
-      alphabets.value = false
+      alphabetsMode_.value = false
       currentPage.value = 0
+      mode.value = 'auto'
     }
 }
 
-  if (localStorage.getItem('alphabets-mode')) alphabetsMode.value = JSON.parse(localStorage.getItem('alphabets-mode'))
+  if (localStorage.getItem('alphabets-mode')) alphabetsConfig.value = JSON.parse(localStorage.getItem('alphabets-mode'))
 
   if (localStorage.getItem('dorayi-typing-preferred-config')) {
     let saved = JSON.parse(localStorage.getItem('dorayi-typing-preferred-config'))

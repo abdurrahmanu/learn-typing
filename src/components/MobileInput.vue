@@ -1,5 +1,6 @@
 <template>
     <input
+        name="mobile"
         v-if="getMobileOS()"
         v-model="playerInput"
         ref="inputEl"

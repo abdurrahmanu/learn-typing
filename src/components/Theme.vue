@@ -25,6 +25,7 @@ const toggleTheme = (color) => {
     }
 }
 
+
 const colors = [
     'neutral',
     'white',
