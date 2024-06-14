@@ -3,7 +3,7 @@
         <div class="absolute top-0 left-0 flex items-center justify-between w-full px-5 py-2 pl-3 pr-2">
             <div class="flex items-center gap-3">
                 <user/>
-                <div class="font-mono text-xl font-bold cursor-default md:text-2xl">DORAYI TYPING</div>
+                <div class="font-mono text-xl font-bold cursor-default md:text-2xl">KEYS-HUB</div>
             </div>
             <div class="flex gap-2 rounded-full w-fit">
                 <settings v-if="route.name === 'home'" @click="toggleSettings" class="h-7" />
@@ -23,7 +23,6 @@ import {themeStore}  from '../store/themeStore'
 
 const theme_ = themeStore()
 const {theme, appTheme } = storeToRefs(theme_)
-
 
 const route = useRoute()
 const store = mainStore()

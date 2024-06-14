@@ -1,5 +1,5 @@
 <template>
-    <!-- <div class="relative flex gap-2 py-5 m-auto w-fit h-fit">
+    <div class="relative flex gap-2 py-5 m-auto w-fit h-fit">
         <div id="eyeright" class="relative transition-all duration-500 moon">
             <span ref="rightEyeBall" class="eyeball">
                 <span class="eyelid"></span>
@@ -10,7 +10,7 @@
                 <span class="eyelid"></span>
             </span>
         </div>
-    </div> -->
+    </div>
 </template>
 
 <script setup>
@@ -71,6 +71,18 @@ const mouseX = ref(0)
 //     }
 // })
 </script>
+
+firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      // User is signed in, see docs for a list of available properties
+      // https://firebase.google.com/docs/reference/js/v8/firebase.User
+      var uid = user.uid;
+      // ...
+    } else {
+      // User is signed out
+      // ...
+    }
+  });
 
 <style>
 :root {

@@ -168,7 +168,7 @@ export const mainStore = defineStore('mainStore', () => {
         completionLevel.value = ((playerInputLength.value) / containerText.value.length) * 100     
     }
 
-    const sessionComplete = () => {
+    const sessionComplete = async () => {
         hasCompletedSession.value = true
         if (timedTyping.value) {
             clearInterval(timerID.value)

@@ -1,7 +1,7 @@
 <template>
     <div class="py-4 pb-0">
-        <div class="flex justify-center mx-auto max-w-[600px] rounded-md w-[90%] items-center gap-2 border px-2 py-1">           
-            <div class="text-[12px] whitespace-nowrap">FONT SIZE</div> 
+        <div class="flex justify-center mx-auto max-w-[600px] rounded-md w-[90%] items-center gap-2 px-2 py-1">           
+            <div class="text-[12px] whitespace-nowrap">TEST FONT</div> 
             <input  name="range" type="range" class="w-full h-1 bg-green-600 appearance-none" v-model="range"/>
             <div class="min-w-[40px] text-center text-xs px-4">{{ fontSize }}px</div>
         </div>

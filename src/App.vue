@@ -7,7 +7,7 @@
       <div v-if="route.name == 'home' || route.name == 'result'" class="pt-5">
           <Restart />
         </div>
-        <SwitchModes v-if="!hasCompletedSession && route.name === 'home'" />
+        <SwitchModes v-if="!hasCompletedSession && route.name === 'home' && !hideElements" />
     </div>
     <Theme />
     <HideElements @click="hideElements = !hideElements" v-if="route.name === 'home'" />
@@ -33,14 +33,32 @@ import {useRoute} from 'vue-router'
 import {pagesStore}  from './store/pagesStore'
 import {themeStore}  from './store/themeStore'
 import {fontStore}  from './store/fontStore'
+import { authStore } from './store/authStore';
 import {alphabetsStore}  from './store/alphabetsModeStore';
-import {dictionaryStore}  from './store/dictionaryModeStore';
+import {app, db} from './firebase.js';
+import {getAuth, onAuthStateChanged} from 'firebase/auth'
+import { doc, getDoc} from 'firebase/firestore'
+
+const auth = getAuth()
+
+const auth_ = authStore()
+const {isAuthenticated, userID, userData } = storeToRefs(auth_)
+
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    console.log('object');
+    userID.value = user.uid;
+    isAuthenticated.value = true
+    await getDoc(doc(db, 'users', userID.value)).then(data => {
+      userData.value = data
+  })
+  } else {
+    isAuthenticated.value = false
+  }
+});
 
 const alphabets_ = alphabetsStore()
 const { alphabetsMode_, alphabetsConfig, alphabetsCombination, useAlphabetCombination } = storeToRefs(alphabets_)
-
-const dictionary = dictionaryStore()
-const { dictionaryMode_ } = storeToRefs(dictionary)
 
 const theme_ = themeStore()
 const {theme, appTheme } = storeToRefs(theme_)
@@ -93,12 +111,6 @@ onBeforeMount(() => {
         }
       }
     } 
-
-    else if (localStorage.getItem('dorayi-typing-mode') === 'dictionary') {
-      currentPage.value = 2
-      dictionaryMode_.value = true
-      mode.value = 'dictionary'
-    }
 
     else {
       alphabetsMode_.value = false

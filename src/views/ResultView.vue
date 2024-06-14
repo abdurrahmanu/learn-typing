@@ -28,19 +28,17 @@
         <div v-if="beatCountdown" class="text-green-700 uppercase">You beat the time, you left {{ remainingTime() }}</div>
         <div v-if="timedTyping && !beatCountdown" class="text-red-500">You were unable to beat the time</div>
         <!-- <Bar :data="chartData" class="w-[600px] max-w-[90%] bg-neutral-700 m-auto relative p-2"/> -->
-        <div class="py-16 font-mono text-2xl uppercase">
-            GRAPH COMING SOON...
-        </div>
     </div>
 </template>
 
 <script setup>
-import {ref} from 'vue'
+import {ref, onMounted} from 'vue'
 // import {Bar} from 'vue-chartjs'
 // import {Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale} from 'chart.js'
 import {storeToRefs} from 'pinia'
 import {mainStore} from '../store/mainStore'
 import {themeStore}  from '../store/themeStore'
+import { setDoc, getDoc, doc} from 'firebase/firestore'
 
 const theme_ = themeStore()
 const {theme, appTheme } = storeToRefs(theme_)
@@ -78,4 +76,12 @@ const errorRatioLevel = () => {
     return (resultData.value.wrongCount / resultData.value.containerText.length) * 100 < 10
     }
 }
+
+onMounted( async () => {
+    // await setDoc(doc(db, "users", userID.value), {
+    //     username: formData.value.username,
+    //     email: formData.value.email,
+    //     data: ['asdfasfa']
+    // })
+})
 </script>

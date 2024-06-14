@@ -2,7 +2,6 @@ import { ref } from 'vue'
 import { englishWords } from '../../data/englishWords.js';
 import { useCustomizeFormat } from './customizers/useCustomizeFormat';
 import { customizeStore } from '../store/customizeStore.js';
-import { mainStore } from '../store/mainStore.js';
 import authoredQuotes from '../../data/quotes.json'
 
 export function  UseGetQuotes (config, customText) {

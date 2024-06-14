@@ -1,7 +1,7 @@
 <template>
     <div class="m-auto max-w-[1300px] lg:flex pt-1"> 
       <div class="w-[100%] mx-auto flex-none">      
-        <Customize v-if="dictionaryMode || !hideElements" />
+        <Customize v-if="!hideElements" />
         <Text />
       </div>
       <Settings />
@@ -20,7 +20,7 @@ import { useRouter } from 'vue-router';
 
 const router = useRouter()
 const store = mainStore()
-const { hasCompletedSession, dictionaryMode, playerInput} = storeToRefs(store)
+const { hasCompletedSession, playerInput} = storeToRefs(store)
 
 const customize = customizeStore()
 const { hideElements } = storeToRefs(customize)

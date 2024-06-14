@@ -3,8 +3,6 @@ import { ref } from 'vue'
 export function useCustomizeFormat(args, text) {
     const customizeFormatRes = ref(text);
     let punctuations = [',', '.', ':', ';', '-', "'", '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '=', '[', ']', '{', '}', '|', "\\", '"', '<', '>', '/', '?']
-
-    
     
     // Custom Random Camel Case
     if (args[4]) {

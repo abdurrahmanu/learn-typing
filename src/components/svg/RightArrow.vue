@@ -9,9 +9,9 @@ import {computed} from 'vue'
 import { storeToRefs } from 'pinia';
 import {themeStore}  from '../../store/themeStore'
 
+const hoverBg = 'gray'
 const theme_ = themeStore()
 const {theme } = storeToRefs(theme_)
-
 
 const fill = computed(() => {
     return theme.value === 'neutral' ? '#fff' : '#000'

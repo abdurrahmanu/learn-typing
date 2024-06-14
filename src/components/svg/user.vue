@@ -1,6 +1,6 @@
 <template>
-	<div ref="menuEl" class="relative h-fit">		
-		<div @click="toggleSidebar = !toggleSidebar" :class="[toggleSidebar ? 'rounded-t-md shadow-sm shadow-black' : '']" class="px-1 py-2 transition-all duration-100 w-7">
+	<div ref="menuEl" class="relative h-fit w-fit">		
+		<div @click="toggleSidebar = !toggleSidebar" :class="[toggleSidebar ? 'rounded-t-md shadow-sm shadow-black' : 'hover:border-white']" class="px-1 py-2 transition-all duration-100 border border-transparent w-7">
 			<svg v-show="!toggleSidebar" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 				 viewBox="0 0 472.615 472.615" style="enable-background:new 0 0 472.615 472.615;" xml:space="preserve">
 			<g>
@@ -47,7 +47,7 @@
 			</g>
 			</svg>			
 			<p v-show="toggleSidebar" :class="[theme === 'neutral' ? 'hover:border-red-800 hover:text-red-500' : 'hover:border-red-600 hover:text-red-700']" class="text-[12px] text-center text-red-700 border border-transparent font-cursive"><span>X</span></p>
-		</div>
+			</div>
 		<div v-show="toggleSidebar" :class="[appTheme]" class="w-fit whitespace-nowrap absolute max-w-[200px] h-fit shadow-sm shadow-black z-[999999] top-[100%]">
 			<div>
 				<div @click="navigate(option), toggleSidebar = !toggleSidebar" class="flex items-center gap-2 px-5 py-3 text-sm cursor-pointer" :class="[theme === 'neutral' ? 'hover:bg-neutral-800' : 'hover:bg-slate-100']" v-for="(option, index) in options" :key="index">
@@ -60,12 +60,21 @@
 </template>
 
 <script setup>
-import {ref, onMounted} from 'vue'
+import {ref, onMounted, watchEffect} from 'vue'
 import {storeToRefs} from 'pinia'
-import {mainStore} from '../../store/mainStore'
 import {useRouter} from 'vue-router'
 import {pagesStore}  from '../../store/pagesStore'
 import {themeStore}  from '../../store/themeStore'
+import {authStore}  from '../../store/authStore'
+import { mainStore } from '../../store/mainStore'
+import { getAuth, signOut } from "firebase/auth";
+import {app, db} from '../../firebase.js'
+
+const auth = getAuth();
+
+const store = mainStore()
+const {hasCompletedSession} = storeToRefs(store)
+const {switchNext} = store
 
 const theme_ = themeStore()
 const {theme, appTheme, svgFill } = storeToRefs(theme_)
@@ -73,11 +82,15 @@ const {theme, appTheme, svgFill } = storeToRefs(theme_)
 const pages = pagesStore()
 const {toggleSidebar } = storeToRefs(pages)
 
+const auth_ = authStore()
+const {isAuthenticated } = storeToRefs(auth_)
+
 const router  = useRouter()
 
 const menuEl = ref(null)
-const images = ['keyboard.svg', 'keyboard.svg', 'keyboard.svg']
-const options = ['Home', 'Sign Up', 'My Progress']
+const options = ref([])
+const optionsOne = ref(['Home', 'Login'])
+const optionsTwo = ref(['Home', 'Progress', 'Account'])
 
 onMounted(() => {
 	window.addEventListener('click', event => {
@@ -87,18 +100,23 @@ onMounted(() => {
 	})
 })
 
+watchEffect(() => {
+	isAuthenticated.value ? options.value = optionsTwo.value : options.value = optionsOne.value
+})
+
 const navigate = (option) => {
-	if (option.toLowerCase() === 'my progress') {
+	if (option.toLowerCase() === 'progress') {
 		router.push({path: 'progress'})
 	} 
-	if (option.toLowerCase() === 'sign up') {
-		router.push({path: 'sign'})
+	if (option.toLowerCase() === 'login') {
+		router.push({path: 'auth'})
+	}
+	if (option.toLowerCase() === 'account') {
+		router.push({path: 'account'})
 	}
 	if (option.toLowerCase() === 'home') {
+		if (hasCompletedSession.value) switchNext()
 		router.push({path: '/'})
 	}
 }
 </script>
-
-<style scoped>
-</style>

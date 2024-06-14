@@ -1,5 +1,5 @@
 <template>
-    <div v-if="!hasCompletedSession && !alphabetsMode_ && !dictionaryMode_" class="bg-transparent rounded-md  w-[90%] m-auto max-w-fit ring-1 ring-green-400">
+    <div v-if="!hasCompletedSession && !alphabetsMode_" class="bg-transparent rounded-md  w-[90%] m-auto max-w-fit ring-1 ring-green-400">
         <div class="text-[12px] items-center font-mono p-[1px] flex max-w-[1000px] justify-center flex-wrap relative">
             <div class="p-1" v-for="(optionArr, key, listIndex) in option" :key="listIndex">          
                 <div 
@@ -20,7 +20,7 @@
         </div>
     </div>
 
-    <div v-if="!hasCompletedSession && alphabetsMode_ && !dictionaryMode_" class="flex flex-wrap justify-center gap-3 pt-10 text-sm">
+    <div v-if="!hasCompletedSession && alphabetsMode_" class="flex flex-wrap justify-center gap-3 pt-10 text-sm">
           <div :class="[alphabetsConfig.uppercase ? 'bg-neutral-500' : '']" @click="changeMode('uppercase')" class="px-3 py-1 uppercase border rounded-md border-slate-600 w-fit">uppercase</div>
           <div :class="[alphabetsConfig.customCase ? 'bg-neutral-500' : '']" @click="changeMode('customCase')" class="px-3 py-1 border rounded-md hover:font-medium border-slate-600 w-fit">cUstoMCaSE</div>
           <div :class="[alphabetsConfig.spaced ? 'bg-neutral-500' : '']" @click="changeMode('spaced')" class="px-3 py-1 uppercase border rounded-md hover:font-medium border-slate-600 w-fit">spaced</div>
@@ -28,13 +28,6 @@
           <div :class="[alphabetsConfig.random ? 'bg-neutral-500' : '']" @click="changeMode('random')" class="px-3 py-1 uppercase border rounded-md hover:font-medium border-slate-600 w-fit">random</div>
       </div>
 
-      <div v-if="dictionaryMode_" class="text-center">
-        DICTIONARY WORDS
-        <div class="py-4 text-center">
-          <input name="dictionary" :class="[theme === 'neutral' ? 'text-slate-300 caret-slate-400 placeholder:text-neutral-600' : 'text-slate-700 caret-slate-800 placeholder:text-slate-500']" @keyup.enter="fetchWordDefinitions(searchWord)" @focus="searchFieldIsFocused = true" @blur="searchFieldIsFocused = false" ref="searchInputEl" type="text" v-model="searchWord" class="px-1 py-[3px] text-sm max-w-[400px] outline-none border-b border-b-green-600 bg-transparent w-[80%]" placeholder="Search word definition">
-          <button  @click="fetchWordDefinitions(searchWord)" class="px-2 py-1 text-xs text-white bg-green-800 rounded-md rounded-l-none hover:bg-green-600">Search</button>
-        </div>
-      </div>
 </template>
 
 <script setup>
@@ -42,17 +35,12 @@ import { ref, watch } from 'vue'
 import {customizeStore} from '../store/customizeStore.js'
 import {storeToRefs} from 'pinia'
 import { mainStore } from '../store/mainStore.js';
-import {fetchWord} from '../composables/UseDictionary.js'
 import {themeStore}  from '../store/themeStore'
 import {alphabetsStore}  from '../store/alphabetsModeStore';
-import {dictionaryStore}  from '../store/dictionaryModeStore';
 import {test} from '../composables/test'
 
 const alphabets_ = alphabetsStore()
 const { alphabetsMode_, alphabetsConfig } = storeToRefs(alphabets_)
-
-const dictionary = dictionaryStore()
-const { dictionaryMode_, dictionaryData, searchWord, searchFieldIsFocused } = storeToRefs(dictionary)
 
 const theme_ = themeStore()
 const {theme } = storeToRefs(theme_)
@@ -121,7 +109,6 @@ const changeMode = (mode) => {
 async function fetchWordDefinitions(word) {
   if (word) {
     const {data} = await fetchWord(word)
-    dictionaryData.value = data.value
     switchNext(customizers.value, null, test().res.value)
   }
 }

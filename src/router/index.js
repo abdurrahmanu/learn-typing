@@ -2,7 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import ResultView from '../views/ResultView.vue'
 import UserProgressView from '../views/UserProgressView.vue'
-import SignView from '../views/SignView.vue'
+import AuthView from '../views/AuthView.vue'
+import AccountView from '../views/AccountView.vue'
 
 const routes = [
     {
@@ -21,9 +22,14 @@ const routes = [
       component: UserProgressView,
     },
     {
-      path: '/sign',
-      name: 'sign',
-      component: SignView,
+      path: '/auth',
+      name: 'auth',
+      component: AuthView,
+    },
+    {
+      path: '/account',
+      name: 'account',
+      component: AccountView,
     }
   ]
 
