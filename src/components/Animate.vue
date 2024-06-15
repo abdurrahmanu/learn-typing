@@ -4,7 +4,6 @@
         <div :style="{'width' : boxWidth, 'height': boxHeight}" :class="[theme === 'neutral' ? 'bg-neutral-600' : 'bg-slate-300']" class=" box"></div>
         </div>
     </div>
-
     <!-- <div ref="loader" v-show="animateLoader" class="h-[100dvh] relative bg-neutral-700 selection:bg-none">
         <div ref="laptop" class="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[195px] m-auto transition-opacity duration-1000">
         <div class="glow w-full relative top-[100px] z-[-3] animate-pulse"></div>
@@ -24,7 +23,7 @@ import { storeToRefs } from 'pinia';
 import {themeStore}  from '../store/themeStore'
 
 const theme_ = themeStore()
-const {theme, appTheme } = storeToRefs(theme_)
+const {theme, } = storeToRefs(theme_)
 
 const main = mainStore()
 const {pauseTyping} = storeToRefs(main)

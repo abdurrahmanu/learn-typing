@@ -35,16 +35,6 @@
                     <div @click="saveNewCustomText" class="py-1 m-auto text-center border rounded-r-full px-7 w-fit border-slate-600 hover:bg-green-500 hover:text-white">SAVE</div>
                 </div>
             </div>
-
-            <div v-if="Object.keys(customTexts).length">
-                <div v-for="(text, key, index) in customTexts" :key="index" class="flex items-center justify-between px-2 py-1 hover:opacity-95">
-                    <div>                        
-                        <div>{{ key }}</div>
-                        <div>{{ text }}</div>
-                    </div>
-                    <p>delete</p>
-                </div>
-            </div>
         </div>
 </template>
 

@@ -15,6 +15,7 @@
 import {storeToRefs} from 'pinia';
 import {customizeStore} from '../../store/customizeStore';
 import { mainStore } from '../../store/mainStore';
+import { getMobileOS } from '../../composables/getMobileOS';
 
 const custom = customizeStore()
 const { customizers} = storeToRefs(custom)
@@ -22,5 +23,4 @@ const {customize} = custom
 
 const main = mainStore()
 const {enableBackSpace} = storeToRefs(main)
-const {getMobileOS} = main
 </script>

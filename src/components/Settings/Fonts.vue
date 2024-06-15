@@ -21,7 +21,6 @@ import { customizeStore } from '../../store/customizeStore';
 import { storeToRefs } from 'pinia';
 import { countdownStore } from '../../store/countdownStore'
 import { fontStore } from '../../store/fontStore'
-import {test} from '../../composables/test'
 
 const font_ = fontStore()
 const { font, range} = storeToRefs(font_)
@@ -44,7 +43,7 @@ watch(fontSize, (newVal) => {
     font.value = newVal
     if (playerInput.value.length) {        
         if (timedTyping.value) clearCounter()
-        switchNext(customizers.value, 'restart', test().res.value)
+        switchNext(customizers.value, 'restart' )
     }
 })
 </script>

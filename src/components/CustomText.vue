@@ -15,7 +15,6 @@ import { ref, watch} from 'vue';
 import {storeToRefs} from 'pinia'
 import { customizeStore } from '../store/customizeStore';
 import {mainStore} from '../store/mainStore'
-import {test} from '../composables/test'
 
 const toggleSelect = ref(false)
 const store = mainStore()
@@ -28,7 +27,7 @@ const { customizers } = storeToRefs(customize)
 const startUsingCustomText =  (text) => {
     storedTextForRepeat.value = text
     toggleSelect.value = !toggleSelect.value
-    switchNext(customizers.value, null, test().res.value)
+    switchNext(customizers.value)
 }
 </script>
 

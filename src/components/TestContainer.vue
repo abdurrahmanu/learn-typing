@@ -1,7 +1,7 @@
 <template>
     <div :class="[hideElements ? 'pt-10' : 'pt-0']" class="w-[90%] min-h-[150px] space-y-[3px] relative transition-none  max-w-[900px] m-auto">
         <MobileInput />
-        <div :class="[alphabetsMode_ ? 'px-2 py-1 max-w-[300px]' : 'max-w-[600px]', hideElements ? 'text-center' : 'pt-6']"  class="flex justify-between m-auto mb-10 scale-[80%]">
+        <div :class="[alphabetsMode_ ? 'px-2 py-1 max-w-[300px]' : 'max-w-[600px]', hideElements ? 'text-center' : 'pt-6']"  class="flex justify-between m-auto mb-5 scale-[80%]">
             <Clock/>
             <TextAlign 
             v-if="!getMobileOS() && !alphabetsMode_"
@@ -21,7 +21,7 @@
             </div>
             <p v-if="movie.name" :class="[theme === 'neutral' ? 'text-white' : 'text-black']" class="pt-5 text-xs italic text-right text-slate-500 whitespace-nowrap">{{movie.quoteAuthor}} - {{ movie.name }}</p>
             <p  v-if="authoredQuote.author" class="text-xs italic text-right text-slate-500">{{authoredQuote.author}}</p>
-            <div v-if="!hideElements" class="flex items-center py-3 m-auto  w-[90%] space-x-2 mt-10">
+            <div v-if="!hideElements" class="flex items-center py-3 m-auto  w-[90%] space-x-2 mt-5">
                 <RangeInput />
                 <repeat class="w-5" v-if="!alphabetsMode_" @click="enableRepeat = !enableRepeat" />
             </div>
@@ -31,7 +31,7 @@
 
 <script setup>
 import { onMounted, ref, watch } from 'vue';
-import CustomText from './CustomText.vue'
+import { getMobileOS } from '../composables/getMobileOS';
 import repeat from './svg/repeat.vue';
 import MobileInput from'./MobileInput.vue'
 import TextAlign from './TextAlign.vue'
@@ -46,14 +46,17 @@ import { countdownStore } from '../store/countdownStore';
 import { fontStore } from '../store/fontStore';
 import { themeStore } from '../store/themeStore';
 import {alphabetsStore}  from '../store/alphabetsModeStore';
+import { generateTest } from '../composables/generateTest';
+import {managePlayerInput} from '../composables/managePlayerInput'
+import {mobileInputEvent} from '../composables/mobileInputEvent'
+import {inputEvent} from '../composables/inputEvent'
 
 const alphabets_ = alphabetsStore()
 const { alphabetsMode_ } = storeToRefs(alphabets_)
-const {generateAlphabetsTest} = alphabets_
 
 const store = mainStore()
-const { containerText, previousPlayerInput, resultData, focus, containerRef, containerHeight, movie, beatCountdown, enableRepeat, playerInputLength, playerInput, authoredQuote, scrollTextContainer, inputEl} = storeToRefs(store)
-const {generateText, getMobileOS, playerInputTyping, managePlayerInput, sessionComplete, playerTyping} = store
+const { containerText, previousPlayerInput, resultData, containerRef, containerHeight, movie, beatCountdown, enableRepeat, playerInputLength, playerInput, authoredQuote, scrollTextContainer, inputEl} = storeToRefs(store)
+const { sessionComplete} = store
 const textPosition = ref('left')
 const customize = customizeStore()
 const { customizers, hideElements} = storeToRefs(customize)
@@ -98,17 +101,16 @@ watch(playerInput, (newVal, oldVal) => {
 })
 
 onMounted(() => {
-    if (!containerText.value) generateText(customizers.value, null)
+    if (!containerText.value) generateTest(customizers.value, null)
         if (getMobileOS()) {
             inputEl.value.focus()
-            inputEl.value.addEventListener('input', playerInputTyping)
-            window.addEventListener('keydown', playerInputTyping)
+            inputEl.value.addEventListener('input', mobileInputEvent)
+            window.addEventListener('keydown', mobileInputEvent)
         }
         else {
-            window.addEventListener('keypress', playerTyping)
-            window.addEventListener('keydown', playerTyping)
+            window.addEventListener('keypress', inputEvent)
+            window.addEventListener('keydown', inputEvent)
         }
-    
 })
 </script>
 

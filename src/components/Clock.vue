@@ -33,7 +33,6 @@ import {storeToRefs} from 'pinia'
 import {mainStore} from '../store/mainStore'
 import { customizeStore} from '../store/customizeStore'
 import { countdownStore } from '../store/countdownStore'
-import {test} from '../composables/test'
 
 const count = countdownStore()
 const {countdown} = storeToRefs(count)
@@ -49,7 +48,7 @@ const {customizers} = storeToRefs(customize)
 const selectCountDown = (count) => {
     savedCountdown.value = count
     countdown.value = count
-    switchNext(customizers.value, null, test().res.value)
+    switchNext(customizers.value )
 }
 
 const timer = () => {
@@ -58,7 +57,7 @@ const timer = () => {
     if (beginCountdown.value) {
         clearInterval(timerID.value)
     }
-    switchNext(customizers.value, null, test().res.value)
+    switchNext(customizers.value )
 }
 
 watch(countdown, (newVal) => {

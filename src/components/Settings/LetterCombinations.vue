@@ -24,7 +24,6 @@ import {storeToRefs} from 'pinia';
 import {mainStore} from '../../store/mainStore'
 import { customizeStore } from '../../store/customizeStore';
 import {alphabetsStore}  from '../../store/alphabetsModeStore';
-import {test} from '../../composables/test'
 
 const alphabets_ = alphabetsStore()
 const { alphabetsCombination, useAlphabetCombination } = storeToRefs(alphabets_)
@@ -44,7 +43,7 @@ const toggle = () => {
         localStorage.setItem('dorayi-typing-use-alphabets-combination', 'false')
     }
     if (alphabetsCombination.value.length > 1) {
-        switchNext(customizers.value, null, test().res.value)
+        switchNext(customizers.value  )
     }
 }
 
@@ -63,7 +62,7 @@ const useCombination = () => {
     else {
         if (useAlphabetCombination.value) {
             localStorage.setItem('dorayi-typing-alphabet-combination', JSON.stringify(alphabetsCombination.value))
-            switchNext(customizers.value, null, test().res.value)
+            switchNext(customizers.value )
         }
     }
 }

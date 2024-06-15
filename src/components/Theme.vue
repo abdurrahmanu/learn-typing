@@ -10,7 +10,7 @@ import { storeToRefs } from 'pinia';
 import {themeStore}  from '../store/themeStore'
 
 const theme_ = themeStore()
-const {theme, appTheme } = storeToRefs(theme_)
+const {theme, } = storeToRefs(theme_)
 
 const openBackgrounds = ref(false)
 const bgContainer = ref(null)

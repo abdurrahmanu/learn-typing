@@ -18,13 +18,13 @@ import { mainStore } from '../store/mainStore';
 import { customizeStore } from '../store/customizeStore';
 import { useRouter } from 'vue-router';
 import { countdownStore } from '../store/countdownStore'
-import {test} from '../composables/test'
+import { getMobileOS } from '../composables/getMobileOS';
 
 const router = useRouter()
 const count = countdownStore()
 const {clearCounter} = count
 const store = mainStore()
-const {switchNext, getMobileOS} = store
+const {switchNext} = store
 const {hasCompletedSession, timedTyping, playerInputLength} = storeToRefs(store)
 
 const customize = customizeStore()
@@ -37,7 +37,7 @@ window.addEventListener('keydown', event=> {
 
 const restart = () => {
     if (timedTyping.value) clearCounter()
-    switchNext(customizers.value, 'restart', test().res.value)
+    switchNext(customizers.value, 'restart' )
 }
 
 const next = () => {
@@ -45,6 +45,6 @@ const next = () => {
         if (hasCompletedSession.value) {
             router.push('/')
         }
-        switchNext(customizers.value, null, test().res.value)
+        switchNext(customizers.value )
 }
 </script>

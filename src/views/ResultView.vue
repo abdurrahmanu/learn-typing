@@ -38,15 +38,20 @@ import {ref, onMounted} from 'vue'
 import {storeToRefs} from 'pinia'
 import {mainStore} from '../store/mainStore'
 import {themeStore}  from '../store/themeStore'
-import { setDoc, getDoc, doc} from 'firebase/firestore'
+import { setDoc, getDoc, doc, updateDoc} from 'firebase/firestore'
+import {db} from '../firebase'
+import {authStore} from '../store/authStore'
+
+const auth_ = authStore()
+const { userID } = storeToRefs(auth_)
 
 const theme_ = themeStore()
-const {theme, appTheme } = storeToRefs(theme_)
+const { appTheme } = storeToRefs(theme_)
 
 // ChartJS.register( Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
 const store = mainStore()
-const {resultData, alphabetsInputTime, beatCountdown, timedTyping, savedCountdown} = storeToRefs(store)
+const {resultData, beatCountdown, timedTyping, savedCountdown} = storeToRefs(store)
 
 // const chartData = ref({
 //     labels: Object.keys(alphabetsInputTime.value).reverse(),
@@ -78,10 +83,8 @@ const errorRatioLevel = () => {
 }
 
 onMounted( async () => {
-    // await setDoc(doc(db, "users", userID.value), {
-    //     username: formData.value.username,
-    //     email: formData.value.email,
-    //     data: ['asdfasfa']
+    // await updateDoc(doc(db, "users", userID.value), {
+    //     data: ['asdadfasdf']
     // })
 })
 </script>

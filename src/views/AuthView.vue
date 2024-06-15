@@ -21,7 +21,7 @@
                 <div class="text-center ">
                     <button :class="[formValidity ? 'hover:border-green-500 hover:text-green-500' : 'hover:border-red-500 hover:text-red-400 cursor-not-allowed']" @mouseover="checkValidity" @submit="submitForm" class="flex items-center gap-3 px-10 py-1 m-auto font-mono border border-black rounded-full md:px-20 hover:bg-neutral-700">
                         <span>{{ signUp ? 'CREATE' : 'LOGIN'}}</span>
-                        <Spinner v-if="validate" /> 
+                        <div v-if="validate" class="animate-spin inline-block border-[6px] border-green-500 border-current border-t-transparent rounded-full" role="status" aria-label="loading"></div>
                     </button>
                     <p v-if="res.error || res.success" :class="[res.error ? 'text-red-500' : 'text-green-500' ]" class="py-1">{{ res.message }}</p>
                     <p v-if="!signUp" class="py-2 text-sm center text- hover:underline text-slate-500" @click="reset">Forgot Password</p>
@@ -38,10 +38,8 @@ import {themeStore}  from '../store/themeStore'
 import {authStore} from '../store/authStore'
 import {mainStore} from '../store/mainStore'
 import { customizeStore } from '../store/customizeStore'
-import {app, db}  from '../firebase.js';
+import {db}  from '../firebase.js';
 import {useRouter} from 'vue-router'
-import Spinner from '../components/Spinner.vue'
-import {test} from '../composables/test'
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, sendEmailVerification } from "firebase/auth";
 import { setDoc, getDoc, doc} from 'firebase/firestore'
 
@@ -54,7 +52,6 @@ const auth_ = authStore()
 const {isAuthenticated, userID, userData } = storeToRefs(auth_)
 
 const store = mainStore()
-const {} = storeToRefs(store)
 const {switchNext} = store
 
 const theme_ = themeStore()
@@ -71,7 +68,6 @@ const res = ref({
     message: ''
 })
 
-
 const formData = ref({
     username: '',
     email: '',
@@ -79,6 +75,7 @@ const formData = ref({
 })
 
 const redirect = () => {
+    switchNext(customizers.value, 'restart')
     router.push({path: '/'})
 }
 
@@ -159,7 +156,7 @@ const submitForm = async () => {
                 userID.value = userCredentials.user.uid
                 isAuthenticated.value = true
                 validate.value = false
-                switchNext(customizers.value, null, test().res.value)
+                switchNext(customizers.value,  )
                 router.push('/')
                 await getDoc(doc(db, "users", userID.value)).then((data) => userData.value = data)
             })

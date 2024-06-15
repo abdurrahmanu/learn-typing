@@ -27,7 +27,6 @@ export const themeStore = defineStore('themeStore', () => {
         if (theme.value === 'white') return 'black '
     })
 
-
     return {
         theme,
         appTheme,

@@ -1,6 +1,7 @@
 import {defineStore} from 'pinia'
 import {ref, computed} from 'vue'
-import {UseGetQuotes} from '../composables/UseGetQuotes'
+import {generateTest} from '../composables/generateTest'
+import {getMobileOS} from '../composables/getMobileOS'
 
 export const mainStore = defineStore('mainStore', () => {
     const inputEl = ref(null)
@@ -27,7 +28,7 @@ export const mainStore = defineStore('mainStore', () => {
     const timePaused = ref(0)
     const beginCountdown = ref(false)
 
-    // On-typing states
+    // On-type states
     const pauseTyping = ref(true)
     const completionLevel = ref(0) // test completion percentage
     const playerInput = ref('') // player current input
@@ -62,55 +63,6 @@ export const mainStore = defineStore('mainStore', () => {
         }
     })
 
-    const generateText = async (config, restart, test) => {
-        if (test) containerText.value = test
-
-        // if (howToUseCustomText.value === 'use both system and custom') {
-        //     let custom = Object.values(customTexts.value)
-        //     containerText.value = UseGetQuotes(config, custom).res.value
-        //     return
-        // }
-        // if (useCustomText.value && howToUseCustomText.value === 'select text using options' && options) {
-        //     containerText.value = storedTextForRepeat.value
-        //     return
-        // }
-        // if (howToUseCustomText.value === 'use only custom') {
-        //     let texts = Object.values(customTexts.value)
-        //     let length = Object.keys(customTexts.value).length - 1
-        //     let index = Math.round(Math.random() * length)
-        //     containerText.value = texts[index]
-        //     return
-        // }
-
-        if (enableRepeat.value || restart ) {
-            containerText.value = storedTextForRepeat.value
-        }
-        else if (!test) {
-            let quote = UseGetQuotes(config).res.value
-            if (typeof quote === 'object') {  
-                if (!quote[2]) {
-                    containerText.value = quote[1]
-                    authoredQuote.value = {
-                        author: quote[0]
-                    }
-                }
-                else {
-                    containerText.value = quote[2]
-                    movie.value = {
-                        name : quote[0],
-                        quoteAuthor: quote[1]
-                    }
-                }
-            } 
-            else {
-                movie.value = {}
-                authoredQuote.value = {}
-                containerText.value = quote
-            }
-        }
-        storedTextForRepeat.value = containerText.value
-    }
-
     const resetToDefault = () => {
         if (timedTyping.value) {
             clearInterval(timerID.value)
@@ -133,41 +85,6 @@ export const mainStore = defineStore('mainStore', () => {
         playerInput.value = ''
     }
 
-    const managePlayerInput = () =>{
-        if (getMobileOS()) playerLastInput.value = playerInput.value[playerInput.value.length - 1]
-
-        if (!playerInput.value) {
-            if (previousPlayerInput.value === containerText.value[0]) correctCount.value--
-            else wrongCount.value--
-        }
-        else {
-            if (previousPlayerInput.value.length > playerInput.value.length) {
-                if (containerText.value[previousPlayerInput.value.length - 1] === previousPlayerInput.value[previousPlayerInput.value.length - 1]) correctCount.value--
-                else wrongCount.value--
-            }
-            else {
-                if (getMobileOS()) {
-                    if (playerInput.value[playerInput.value.length - 1] === containerText.value[playerInput.value.length - 1]) {
-                        correctCount.value ++
-                    }
-                    else {
-                        wrongCount.value++
-                    }
-                } else {
-                    if (playerLastInput.value === containerText.value[playerInput.value.length - 1]) {
-                        correctCount.value ++
-                    }
-                    else {
-                        wrongCount.value++
-                    }
-                }
-            }
-        }
-    
-        playerInputLength.value = playerInput.value.length
-        completionLevel.value = ((playerInputLength.value) / containerText.value.length) * 100     
-    }
-
     const sessionComplete = async () => {
         hasCompletedSession.value = true
         if (timedTyping.value) {
@@ -187,91 +104,17 @@ export const mainStore = defineStore('mainStore', () => {
         }
     }
 
-    const playerTyping = (e) => {
-        if (focus.value) return
-        if (e.key === 'Enter' && !enterKey.value) return
-        if (pauseTyping.value) return
-        if (e.type === 'keydown' && e.key === 'Backspace') {
-            if (!enableBackSpace.value) return
-            if (playerInputLength.value === 0) return
-            backspaceIsPressed.value = true
-            playerInputLength.value--
-            playerInput.value = playerInput.value.slice(0, -1)
-            playerLastInput.value = playerInput.value[playerInput.value.length - 1]
-        }
-        if (e.type === 'keydown') return
-        if (e.type === 'keypress')  backspaceIsPressed.value = false   
-        let eventSelector = e.key || e.data
-        if (e.key === 'Enter' && !enterKey.value) return 
-        playerInputLength.value++
-        
-        if (playerInputLength.value === 1)  {
-            if (timedTyping.value) {
-                beatCountdown.value = false
-                beginCountdown.value = true
-            }
-            startTime.value = performance.now();
-        } 
-        if (e.key === 'Enter' && e.type === 'keypress' && enterKey.value) playerLastInput.value = ' '
-        else  playerLastInput.value = eventSelector
-        playerInput.value += playerLastInput.value
-        if (playerInputLength.value === containerText.value.length) {
-            if (timedTyping.value) beatCountdown.value = true
-            sessionComplete()
-        }
-    }
-
-    const playerInputTyping = (e) => {
-        if (focus.value) return
-        if (e.key === 'Enter' && !enterKey.value) return
-        if (pauseTyping.value) return
-        if (e.inputType === 'deleteContentBackward') {
-            if (!enableBackSpace.value) return
-            if (playerInputLength.value === 0) return
-            backspaceIsPressed.value = true
-        }
-        if (e.inputType === 'deleteContentBackward') return
-        backspaceIsPressed.value = false
-        if (playerInputLength.value === 1)  {
-            if (timedTyping.value) {
-                beatCountdown.value = false
-                beginCountdown.value = true
-            }
-            startTime.value = performance.now();
-        } 
-
-        if (e.key === 'Enter' && enterKey.value)  playerInput.value += ' '
-        if (playerInput.value.length === containerText.value.length) {
-            if (timedTyping.value) beatCountdown.value = true
-            sessionComplete()
-        }
-    }
-
-    const switchNext = (config, restart, test) => {
+    const switchNext = (config, restart) => {
         resetToDefault()
-        generateText(config, restart, test)
-    }
-
-    function getMobileOS() {
-        let userAgent = navigator.userAgent || navigator.vendor || window.opera;
-        let regex = /Mobi|Android|webOS|iPhone|iPad|iPod|Blackberry|IEMobile|Opera Mini/i.test(userAgent) && !window.MSStream
-        if (regex || ('ontouchstart' in window || navigator.maxTouchPoints > 0)) {
-            return 'mobile'
-        }
-        return '';
+        generateTest(config, restart)
     }
 
     return {
-        getMobileOS,
         resetToDefault,
-        generateText,
         sessionComplete,
-        playerTyping,
         switchNext,
-        playerInputTyping,
-        managePlayerInput,
+        
         resultData,
-
         inputEl,
         focus,
 

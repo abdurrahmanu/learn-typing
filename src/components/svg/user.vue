@@ -68,7 +68,6 @@ import {themeStore}  from '../../store/themeStore'
 import {authStore}  from '../../store/authStore'
 import { mainStore } from '../../store/mainStore'
 import { getAuth, signOut } from "firebase/auth";
-import {app, db} from '../../firebase.js'
 
 const auth = getAuth();
 
@@ -88,9 +87,7 @@ const {isAuthenticated } = storeToRefs(auth_)
 const router  = useRouter()
 
 const menuEl = ref(null)
-const options = ref([])
-const optionsOne = ref(['Home', 'Login'])
-const optionsTwo = ref(['Home', 'Progress', 'Account'])
+const options = ref(['Home'])
 
 onMounted(() => {
 	window.addEventListener('click', event => {
@@ -101,13 +98,14 @@ onMounted(() => {
 })
 
 watchEffect(() => {
-	isAuthenticated.value ? options.value = optionsTwo.value : options.value = optionsOne.value
+	if (isAuthenticated.value) {
+		options.value.push('Account')
+	} else {
+		options.value.push('Login')
+	}
 })
 
 const navigate = (option) => {
-	if (option.toLowerCase() === 'progress') {
-		router.push({path: 'progress'})
-	} 
 	if (option.toLowerCase() === 'login') {
 		router.push({path: 'auth'})
 	}

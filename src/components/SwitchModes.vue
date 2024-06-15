@@ -14,7 +14,6 @@ import { customizeStore } from '../store/customizeStore';
 import Pagination from './Settings/Pagination.vue';
 import {pagesStore}  from '../store/pagesStore';
 import {alphabetsStore}  from '../store/alphabetsModeStore';
-import {test} from '../composables/test'
 
 const alphabets_ = alphabetsStore()
 const { alphabetsMode_ } = storeToRefs(alphabets_)
@@ -23,7 +22,7 @@ const pages = ['TEST MODE', 'ALPHABETS MODE']
 const modes = ['test', 'alphabets']
 
 const store = mainStore()
-const { movie, authoredQuote, containerText, mode} = storeToRefs(store)
+const { movie, authoredQuote, mode} = storeToRefs(store)
 const {switchNext} = store
 
 const customize = customizeStore()
@@ -34,7 +33,7 @@ const {currentPage } = storeToRefs(pages_)
 
 const toggleMode = (type) => {
     if (type === 'alphabets') {
-        mode.value = mode
+        mode.value = 'alphabets'
         alphabetsMode_.value = true
         movie.value = {}
         authoredQuote.value = {}
@@ -46,7 +45,7 @@ const toggleMode = (type) => {
         localStorage.setItem('dorayi-typing-mode', 'test')
     }
 
-    switchNext(customizers.value, null, test().res.value)
+    switchNext(customizers.value )
 }
 
 watch(currentPage, (newVal, oldVal) => {

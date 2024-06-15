@@ -12,8 +12,8 @@
 <script setup>
 import { storeToRefs } from 'pinia';
 import { mainStore } from '../store/mainStore';
+import { getMobileOS } from '../composables/getMobileOS';
 
 const store = mainStore()
 const {playerInput, containerText, inputEl} = storeToRefs(store)
-const {getMobileOS} = store
 </script>

@@ -1,5 +1,5 @@
 <template>
-    <div class="flex justify-center mx-auto text-xs scale-90 opacity-50 cursor-pointer gap-7 w-fit">
+    <div class="flex justify-center mx-auto text-xs scale-90 opacity-50 cursor-pointer gap-3 w-fit">
         <div @click="$emit('align', 'left'), position = 'left'" class="m-auto scale-75 w-fit">
             <alignLeft :position="position === 'left'"/>
         </div>

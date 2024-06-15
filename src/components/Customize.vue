@@ -27,7 +27,6 @@
           <div :class="[alphabetsConfig.backwards ? 'bg-neutral-500' : '']" @click="changeMode('backwards')" class="px-3 py-1 uppercase border rounded-md hover:font-medium border-slate-600 w-fit">backwards</div>
           <div :class="[alphabetsConfig.random ? 'bg-neutral-500' : '']" @click="changeMode('random')" class="px-3 py-1 uppercase border rounded-md hover:font-medium border-slate-600 w-fit">random</div>
       </div>
-
 </template>
 
 <script setup>
@@ -37,13 +36,9 @@ import {storeToRefs} from 'pinia'
 import { mainStore } from '../store/mainStore.js';
 import {themeStore}  from '../store/themeStore'
 import {alphabetsStore}  from '../store/alphabetsModeStore';
-import {test} from '../composables/test'
 
 const alphabets_ = alphabetsStore()
 const { alphabetsMode_, alphabetsConfig } = storeToRefs(alphabets_)
-
-const theme_ = themeStore()
-const {theme } = storeToRefs(theme_)
 
 const store = mainStore()
 const { hasCompletedSession} = storeToRefs(store)
@@ -103,13 +98,13 @@ const changeMode = (mode) => {
     } 
 
     localStorage.setItem('alphabets-mode', JSON.stringify(alphabetsConfig.value))
-    switchNext(customizers.value, null, test().res.value)
+    switchNext(customizers.value )
 }  
 
 async function fetchWordDefinitions(word) {
   if (word) {
     const {data} = await fetchWord(word)
-    switchNext(customizers.value, null, test().res.value)
+    switchNext(customizers.value )
   }
 }
 
@@ -123,7 +118,7 @@ const changeConfig = (key, option) => {
 watch(next, (newVal) => {
   if (newVal) {
     setTimeout(() => {      
-      switchNext(customizers.value, null, test().res.value)
+      switchNext(customizers.value)
       next.value = !next.value
     }, 100);
   }
