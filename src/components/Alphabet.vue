@@ -21,8 +21,10 @@ const {font } = storeToRefs(font_)
 const store = mainStore()
 const { playerInputLength, containerRef, scrollTextContainer, enterKey, scrollDistance, backspaceIsPressed, containerHeight } = storeToRefs(store)
 const currentAlphabet = ref(null)
+
 const customize = customizeStore()
-const {customizers} = storeToRefs(customize)
+const {customizers, caretType} = storeToRefs(customize)
+
 const emit = defineEmits(['equal', 'unequal'])
 const props = defineProps({
     alphabet: String,
@@ -100,14 +102,16 @@ const equalStyle = computed(() => {
 })
 
 const currentIndexStyle = computed(() => {
-    let text = theme.value === 'neutral' ? ' border border-zinc-700 text-white' : ' bg-transparent border border-black text-neutral-900' 
-    return  props.currentIndex ? text : ''
+    let text = theme.value === 'neutral' ? 'border text-white' : 'bg-transparent text-neutral-900' 
+    let caret = caretType.value === 'border' ? 'border border-zinc-700' : caretType.value === 'caret' ? 'border-transparent border-l-zinc-700' : caretType.value === 'underline' ? 'border-transparent border-b-blue-600' : ''
+    return  props.currentIndex ? text + ' ' + caret : ''
 })
 
 const mainStyle = computed(() => {
     let text = theme.value === 'neutral' ? 'text-slate-400' : 'text-zinc-500'
     return props.index > playerInputLength.value ? text : ''
 })
+
 
 // watch(font, (newVal) => {
 //     if (props.currentIndex) {

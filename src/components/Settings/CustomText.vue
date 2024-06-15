@@ -1,6 +1,6 @@
 <template>
-        <div class="px-1 pb-8 border-t border-neutral-900">
-            <div class="flex justify-between w-full p-1 border border-transparent rounded-sm hover:border-neutral-300 ">
+        <div :class="[theme === 'neutral' ? 'hover:bg-neutral-700' : 'hover:bg-slate-100']" class="py-2 pl-5">
+            <div class="flex justify-between w-full p-1 border border-transparent rounded-sm  ">
                 <div @click="Object.keys(customTexts).length === 0 ? '' : useCustomText = !useCustomText"  class="flex gap-4">
                     <!-- <input :disabled="Object.keys(customTexts).length === 0" :checked="useCustomText"  type="checkbox" name="" id=""> -->
                     <input name="custom-text" type="checkbox" disabled id="">
@@ -43,6 +43,7 @@ import {ref, watchEffect} from 'vue'
 import {storeToRefs} from 'pinia';
 import {mainStore} from '../../store/mainStore';
 import {themeStore}  from '../../store/themeStore'
+
 
 const theme_ = themeStore()
 const {theme, appTheme } = storeToRefs(theme_)

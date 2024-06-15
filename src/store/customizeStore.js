@@ -8,10 +8,12 @@ export const customizeStore = defineStore('customizeStore', () => {
     const next = ref(false)
     const onlyMovieQuotes = ref(false)
     const onlyAuthoredQuotes = ref(false)
+    const caretType = ref('border')
 
     const customizers = ref({
         'text-length': 'auto',
         'words-type': 'most-used', 
+        'caret': 'border',
         'test-type': 'random-text',
         'include-caps': '',
         'include-punctuation': '',
@@ -117,6 +119,7 @@ export const customizeStore = defineStore('customizeStore', () => {
         disableOption,
         onlyMovieQuotes,
         configs,
+        caretType,
         showMoreSettings,
         customizers,
         allOptions,

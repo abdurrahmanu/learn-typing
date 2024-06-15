@@ -1,13 +1,13 @@
 <template>
     <div v-if="!hasCompletedSession && !alphabetsMode_" class="bg-transparent rounded-md  w-[90%] m-auto max-w-fit ring-1 ring-green-400">
-        <div class="text-[12px] items-center font-mono p-[1px] flex max-w-[1000px] justify-center flex-wrap relative">
+        <div class="text-[12px] items-center font-mono p-1 flex max-w-[1000px] justify-center flex-wrap relative">
             <div class="p-1" v-for="(optionArr, key, listIndex) in option" :key="listIndex">          
                 <div 
-                :class="[hoverIndex === listIndex ? 'border-zinc-400' : 'border-transparent']" class="relative flex gap-2 py-[2px] border rounded-lg cursor-pointer"
+                :class="[hoverIndex === listIndex ? 'border-zinc-400' : 'border-transparent']" class="relative flex gap-2 py-[2px] px-1 border rounded-lg cursor-pointer"
                 @mouseenter="mouseEnter(listIndex)"
                 @mouseleave="mouseLeave(listIndex)" >
                     <div 
-                    class="px-[5px] hover:scale-110 rounded-md" 
+                    class="px-[5px] hover:scale-105 rounded-md" 
                     :class="[disableOption[key] ? 'opacity-50 cursor-not-allowed' : '', customizers[key] === option && !disableOption[key]  ? 'text-green-400 bg-neutral-900' : '']"
                     @click="changeConfig(option, key)" 
                     v-for="(option, index) in optionArr" 
@@ -21,11 +21,11 @@
     </div>
 
     <div v-if="!hasCompletedSession && alphabetsMode_" class="flex flex-wrap justify-center gap-3 pt-10 text-sm">
-          <div :class="[alphabetsConfig.uppercase ? 'bg-neutral-500' : '']" @click="changeMode('uppercase')" class="px-3 py-1 uppercase border rounded-md border-slate-600 w-fit">uppercase</div>
-          <div :class="[alphabetsConfig.customCase ? 'bg-neutral-500' : '']" @click="changeMode('customCase')" class="px-3 py-1 border rounded-md hover:font-medium border-slate-600 w-fit">cUstoMCaSE</div>
-          <div :class="[alphabetsConfig.spaced ? 'bg-neutral-500' : '']" @click="changeMode('spaced')" class="px-3 py-1 uppercase border rounded-md hover:font-medium border-slate-600 w-fit">spaced</div>
-          <div :class="[alphabetsConfig.backwards ? 'bg-neutral-500' : '']" @click="changeMode('backwards')" class="px-3 py-1 uppercase border rounded-md hover:font-medium border-slate-600 w-fit">backwards</div>
-          <div :class="[alphabetsConfig.random ? 'bg-neutral-500' : '']" @click="changeMode('random')" class="px-3 py-1 uppercase border rounded-md hover:font-medium border-slate-600 w-fit">random</div>
+          <div :class="[alphabetsConfig.uppercase ? 'bg-neutral-500' : '']" @click="changeMode('uppercase')" class="px-3 py-1 uppercase border hover:border-green-500 rounded-md border-slate-600 w-fit">uppercase</div>
+          <div :class="[alphabetsConfig.customCase ? 'bg-neutral-500' : '']" @click="changeMode('customCase')" class="px-3 py-1 border hover:border-green-500 rounded-md border-slate-600 w-fit">cUstoMCaSE</div>
+          <div :class="[alphabetsConfig.spaced ? 'bg-neutral-500' : '']" @click="changeMode('spaced')" class="px-3 py-1 uppercase border hover:border-green-500 rounded-md border-slate-600 w-fit">spaced</div>
+          <div :class="[alphabetsConfig.backwards ? 'bg-neutral-500' : '']" @click="changeMode('backwards')" class="px-3 py-1 uppercase border hover:border-green-500 rounded-md border-slate-600 w-fit">backwards</div>
+          <div :class="[alphabetsConfig.random ? 'bg-neutral-500' : '']" @click="changeMode('random')" class="px-3 py-1 uppercase border hover:border-green-500 rounded-md border-slate-600 w-fit">random</div>
       </div>
 </template>
 
@@ -34,7 +34,6 @@ import { ref, watch } from 'vue'
 import {customizeStore} from '../store/customizeStore.js'
 import {storeToRefs} from 'pinia'
 import { mainStore } from '../store/mainStore.js';
-import {themeStore}  from '../store/themeStore'
 import {alphabetsStore}  from '../store/alphabetsModeStore';
 
 const alphabets_ = alphabetsStore()
@@ -100,13 +99,6 @@ const changeMode = (mode) => {
     localStorage.setItem('alphabets-mode', JSON.stringify(alphabetsConfig.value))
     switchNext(customizers.value )
 }  
-
-async function fetchWordDefinitions(word) {
-  if (word) {
-    const {data} = await fetchWord(word)
-    switchNext(customizers.value )
-  }
-}
 
 const changeConfig = (key, option) => {
   if (!disableOption.value[option]) {

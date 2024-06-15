@@ -1,17 +1,13 @@
 <template>
-    <div class="py-4 pb-0">
-        <div class="flex justify-center mx-auto max-w-[600px] rounded-md w-[90%] items-center gap-2 px-2 py-1">           
-            <div class="text-[12px] whitespace-nowrap">TEST FONT</div> 
-            <input  name="range" type="range" class="w-full h-1 bg-green-600 appearance-none" v-model="range"/>
-            <div class="min-w-[40px] text-center text-xs px-4">{{ fontSize }}px</div>
+    <div :class="[theme === 'neutral' ? 'hover:bg-neutral-700' : 'hover:bg-slate-100']" class="flex max-w-[600px] items-center gap-2 py-2 pl-5">           
+        <div class="w-[90%]">
+            <div class="flex justify-between items-center">
+                <div class="text-sm whitespace-nowrap font-medium">TEST FONT</div> 
+                <div class="min-w-[40px] text-center text-sm font-mono text-green-500">{{ fontSize }}px</div>
+            </div>
+            <input  name="range" type="range" class="w-full h-1" v-model="range"/>
         </div>
-        <!-- <div class="px-3 pt-3 pl-3 text-center">
-            <p class="text-lg font-bold">FONTS</p>
-            <p :class="[]" class="py-1 hover:bg-neutral-800 amiri">The quick brown fox jumps over the lazy dog </p>
-            <p :class="[]" class="py-1 hover:bg-neutral-800 exo">The quick brown fox jumps over the lazy dog </p>
-            <p :class="[]" class="py-1 hover:bg-neutral-800 roboto">The quick brown fox jumps over the lazy dog </p>
-        </div> -->
-    </div>
+    </div> 
 </template>
 
 <script setup>
@@ -21,6 +17,10 @@ import { customizeStore } from '../../store/customizeStore';
 import { storeToRefs } from 'pinia';
 import { countdownStore } from '../../store/countdownStore'
 import { fontStore } from '../../store/fontStore'
+import { themeStore } from '../../store/themeStore';
+
+const theme_ = themeStore()
+const {theme} = theme_
 
 const font_ = fontStore()
 const { font, range} = storeToRefs(font_)

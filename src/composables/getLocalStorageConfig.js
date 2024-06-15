@@ -16,7 +16,7 @@ export const localStorageConfig = async (config, restart) => {
     const { enableBackSpace, customTexts, mode} = storeToRefs(main)
 
     const customize = customizeStore()
-    const { customizers, disableOption } = storeToRefs(customize)
+    const { customizers, disableOption, caretType } = storeToRefs(customize)
 
     const pages = pagesStore()
     const {currentPage } = storeToRefs(pages)
@@ -41,6 +41,10 @@ export const localStorageConfig = async (config, restart) => {
     
         if (localStorage.getItem('custom-text') ) {
         customTexts.value = JSON.parse(localStorage.getItem('custom-text'))
+        }
+
+        if (localStorage.getItem('dorayi-typing-preferred-caret')) {
+            caretType.value = localStorage.getItem('dorayi-typing-preferred-caret')
         }
     
         if (localStorage.getItem('dorayi-typing-mode')) {

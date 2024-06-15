@@ -1,8 +1,8 @@
 <template>
-    <div class="p-3 px-1 border-t border-neutral-900 ">
-        <div @click="toggle" class="flex w-full p-1 space-x-4 border border-transparent rounded-sm hover:border-neutral-300">
+    <div :class="[theme === 'neutral' ? 'hover:bg-neutral-700' : 'hover:bg-slate-100']" class="py-2 pl-5">
+        <div @click="toggle" class="flex w-full p-1 space-x-4 border border-transparent rounded-sm ">
             <input :checked="useAlphabetCombination"  type="checkbox" name="letter-combination" id="id">
-            <p for="id">Letter Combinations</p>
+            <p for="id" class="font-medium">Letter Combinations</p>
         </div>
         <div class="px-4">
             <p>This test randomly repeats alphabets you select, Maximum selection of five alphabets</p>
@@ -24,11 +24,15 @@ import {storeToRefs} from 'pinia';
 import {mainStore} from '../../store/mainStore'
 import { customizeStore } from '../../store/customizeStore';
 import {alphabetsStore}  from '../../store/alphabetsModeStore';
+import { themeStore } from '../../store/themeStore';
+
+const theme_ = themeStore()
+const {theme} = theme_
 
 const alphabets_ = alphabetsStore()
 const { alphabetsCombination, useAlphabetCombination } = storeToRefs(alphabets_)
 
-const alphabets = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+const alphabets = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '.', ',', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '!', '@', '#', '$', '%', '^', '&', '(', ')', '_', '-', '+', '=', '{', '}', '[', ']', '|', '|', '<', '>', '?', '/']
 const store = mainStore()
 const {switchNext} = store
 
