@@ -62,7 +62,7 @@ export function useCustomizeFormat(args, text) {
             customizeFormatRes.value = ''
             for (let index = 0; index < newText.length; index++) {
                 if (newText[index] === ' ' && index % 5 === 0) {
-                    customizeFormatRes.value += punctuations[Math.round(Math.random() * 10)] + ' '
+                    customizeFormatRes.value += punctuations[Math.ceil(Math.random() * 10) - 1] + ' '
                 } else customizeFormatRes.value += newText[index]
             }
         }

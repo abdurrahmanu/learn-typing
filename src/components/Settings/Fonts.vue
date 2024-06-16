@@ -1,9 +1,9 @@
 <template>
-    <div :class="[theme === 'neutral' ? 'hover:bg-neutral-700' : 'hover:bg-slate-100']" class="flex max-w-[600px] items-center gap-2 py-2 pl-5">           
+    <div :class="[theme === 'neutral' ? 'hover:bg-neutral-700' : 'hover:bg-slate-100']" class="flex max-w-[600px] items-center gap-2 py-4 pl-5">           
         <div class="w-[90%]">
             <div class="flex justify-between items-center">
                 <div class="text-sm whitespace-nowrap font-medium">TEST FONT</div> 
-                <div class="min-w-[40px] text-center text-sm font-mono text-green-500">{{ fontSize }}px</div>
+                <div class="min-w-[40px] text-center text-sm font-mono">{{ fontSize }}px</div>
             </div>
             <input  name="range" type="range" class="w-full h-1" v-model="range"/>
         </div>

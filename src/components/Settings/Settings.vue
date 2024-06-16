@@ -5,12 +5,12 @@
             <div v-if="!alphabetsMode_" class="overflow-y-auto" :class="[showMoreSettings ? 'fixed top-0 right-0 bottom-0 h-[100dvh] max-w-[550px] w-fit z-[9999]' : '', appTheme ]">
                 <div class="relative leading-5 text-[15px]" :class="[theme === 'neutral' ? 'text-slate-400' : 'text-slate-800']">
                     <Header />
-                    <Caret />
-                    <Fonts />
                     <MovieQuotes />
                     <AuthoredQoutes />
                     <BlindMode />
                     <BackSpace />
+                    <Caret />
+                    <Fonts />
                     <Countdown />
                     <AllCaps />
                     <CustomCamelCase />
@@ -21,11 +21,11 @@
                 <div class="overflow-y-auto" :class="[showMoreSettings ? 'fixed top-0 right-0 bottom-0 h-[100dvh] max-w-[500px] w-fit z-[9999]' : '', appTheme ]">
                     <div class="relative leading-5 text-[15px]" :class="[theme === 'neutral' ? 'text-slate-400' : 'text-slate-800']">
                         <Header />
-                        <Caret />
-                        <Fonts />
                         <BlindMode />
                         <BackSpace />
                         <Countdown />
+                        <Caret />
+                        <Fonts />
                         <LetterCombinations />
                     </div>
                 </div>

@@ -1,9 +1,9 @@
 <template>
         <div :class="[theme === 'neutral' ? 'hover:bg-neutral-700' : 'hover:bg-slate-100']" class="py-2 pl-5">
-            <div @click="customize" class="flex justify-between w-full p-1 border border-transparent rounded-sm ">
-                <div class="flex gap-4">
+            <div class="flex justify-between w-full p-1 border border-transparent rounded-sm ">
+                <div @click="customize"  class="flex gap-4 w-fit">
                     <input name="blind" :checked="customizers['blind-mode']"  type="checkbox" id="">
-                    <p class="font-medium">Blind mode</p>
+                    <p class="font-medium w-fit">Blind mode</p>
                 </div>
             </div>
             <p class="px-3">Type while fully trusting your muscle memory. </p>

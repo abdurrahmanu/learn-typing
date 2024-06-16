@@ -1,5 +1,5 @@
 <template>
-    <div v-if="!hasCompletedSession && !alphabetsMode_" class="bg-transparent rounded-md  w-[90%] m-auto max-w-fit ring-1 ring-green-400">
+    <div v-if="!hasCompletedSession && !alphabetsMode_" class="bg-transparent rounded-md  w-[90%] m-auto max-w-fit ring-1 ring-green-600 xl:ring-0 relative lg:z-[3]">
         <div class="text-[12px] items-center font-mono p-1 flex max-w-[1000px] justify-center flex-wrap relative">
             <div class="p-1" v-for="(optionArr, key, listIndex) in option" :key="listIndex">          
                 <div 
@@ -20,12 +20,12 @@
         </div>
     </div>
 
-    <div v-if="!hasCompletedSession && alphabetsMode_" class="flex flex-wrap justify-center gap-3 pt-10 text-sm">
-          <div :class="[alphabetsConfig.uppercase ? 'bg-neutral-500' : '']" @click="changeMode('uppercase')" class="px-3 py-1 uppercase border hover:border-green-500 rounded-md border-slate-600 w-fit">uppercase</div>
-          <div :class="[alphabetsConfig.customCase ? 'bg-neutral-500' : '']" @click="changeMode('customCase')" class="px-3 py-1 border hover:border-green-500 rounded-md border-slate-600 w-fit">cUstoMCaSE</div>
-          <div :class="[alphabetsConfig.spaced ? 'bg-neutral-500' : '']" @click="changeMode('spaced')" class="px-3 py-1 uppercase border hover:border-green-500 rounded-md border-slate-600 w-fit">spaced</div>
-          <div :class="[alphabetsConfig.backwards ? 'bg-neutral-500' : '']" @click="changeMode('backwards')" class="px-3 py-1 uppercase border hover:border-green-500 rounded-md border-slate-600 w-fit">backwards</div>
-          <div :class="[alphabetsConfig.random ? 'bg-neutral-500' : '']" @click="changeMode('random')" class="px-3 py-1 uppercase border hover:border-green-500 rounded-md border-slate-600 w-fit">random</div>
+    <div v-if="!hasCompletedSession && alphabetsMode_" class="flex flex-wrap justify-center gap-3 text-sm w-fit rounded-md px-5 py-2 m-auto lg:z-[3] relative">
+          <div :class="[alphabetsConfig.uppercase ? 'border-green-500 text-green-500' : 'border-slate-600']" @click="changeMode('uppercase')" class="px-3 py-1 uppercase border hover:border-green-500 rounded-md w-fit">uppercase</div>
+          <div :class="[alphabetsConfig.customCase ? 'border-green-500 text-green-500' : 'border-slate-600']" @click="changeMode('customCase')" class="px-3 py-1 border hover:border-green-500 rounded-md w-fit">cUstoMCaSE</div>
+          <div :class="[alphabetsConfig.spaced ? 'border-green-500 text-green-500' : 'border-slate-600']" @click="changeMode('spaced')" class="px-3 py-1 uppercase border hover:border-green-500 rounded-md w-fit">spaced</div>
+          <div :class="[alphabetsConfig.backwards ? 'border-green-500 text-green-500' : 'border-slate-600']" @click="changeMode('backwards')" class="px-3 py-1 uppercase border hover:border-green-500 rounded-md w-fit">backwards</div>
+          <div :class="[alphabetsConfig.random ? 'border-green-500 text-green-500' : 'border-slate-600']" @click="changeMode('random')" class="px-3 py-1 uppercase border hover:border-green-500 rounded-md w-fit">random</div>
       </div>
 </template>
 

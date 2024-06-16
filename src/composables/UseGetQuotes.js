@@ -104,8 +104,8 @@ export function  UseGetQuotes (config, customText) {
             let ChooseBetweenCustomAndSystemText = Math.round(Math.random() * 1000)
             if ( customText && (ChooseBetweenCustomAndSystemText % 2 === 0 && ChooseBetweenCustomAndSystemText < 320)) {
                 words.value = [...customText]
-                let length = words.value.length - 1
-                let index = Math.round(Math.random() * length)
+                let length = words.value.length
+                let index = Math.ceil(Math.random() * length) - 1
                 res.value = words.value[index]
             }
             else {
@@ -124,7 +124,7 @@ export function  UseGetQuotes (config, customText) {
                     for (let index = 0; index < length; index++) {
                         if (index == 0) {
                             let random = Math.ceil(Math.random() * words.value.length) - 1
-                            let word = words.value[random]               
+                            let word = words.value[random]          
                             res.value += word
                         } else {
                             let random = Math.ceil(Math.random() * words.value.length) - 1

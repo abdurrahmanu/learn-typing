@@ -1,15 +1,15 @@
 <template>
     <div :class="[theme === 'neutral' ? 'hover:bg-neutral-700' : 'hover:bg-slate-100']" class="py-2 pl-5 pb-10">
-        <div @click="toggle" class="flex w-full p-1 space-x-4 border border-transparent rounded-sm ">
+        <div @click="toggle" class="flex w-full p-1 space-x-4 border border-transparent rounded-sm">
             <input :disabled="!(alphabetsCombination.length > 1)" :checked="useAlphabetCombination"  type="checkbox" name="letter-combination" id="id">
-            <p for="id" class="font-medium">Letter Combinations</p>
+            <p for="id" class="font-medium w-fit">Letter Combinations</p>
         </div>
         <div class="px-4 pb-1">
             <p>**This test randomly repeats alphabets you select, Maximum selection of six entries and minimum of two</p>
         </div>
         <div class="text-xl font-mono px-2 text-center min-h-[30px]">{{ alphabetsCombination.join('') }}</div>
-        <div class="flex flex-wrap items-center justify-center px-3 py-2 space-x-1 space-y-1">
-            <span class="p-1 py-0 rounded-md border border-neutral-700 text-lg inline-block min-w-[20px] text-center hover:text-slate-500" @click="addSelection(alphabet)" :class="[alphabetsCombination.includes(alphabet) ? 'bg-neutral-400 text-black' : ''] " v-for="(alphabet, index) in alphabets" :key="index">{{ alphabet }}</span>
+        <div class="flex flex-wrap items-center justify-center px-3 py-2 space-x-1">
+            <span class="p-1 py-0 rounded-md border text-lg inline-block min-w-[20px] text-center hover:text-slate-500 m-1" @click="addSelection(alphabet)" :class="[alphabetsCombination.includes(alphabet) ? 'text-green-500 border-green-500' : 'border-neutral-800'] " v-for="(alphabet, index) in alphabets" :key="index">{{ alphabet }}</span>
         </div>
     </div>
 

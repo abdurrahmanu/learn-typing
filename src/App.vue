@@ -2,6 +2,10 @@
   <div 
   :class="[appTheme]" 
   class="font-light selection:bg-none home">
+    <DropdownNav />
+    <Toast :toggle="capsIsOn" right>
+      CAPSLOCK IS ON
+    </Toast>
     <Animate />
     <div class="min-h-[100dvh]">
       <Header />
@@ -24,6 +28,8 @@
 <script setup>
 import {onBeforeMount, onMounted, watch} from 'vue'
 import Header from './components/Header.vue'
+import Toast from './components/Toast.vue'
+import DropdownNav from './components/DropdownNav.vue';
 import SwitchModes from './components/SwitchModes.vue';
 import Restart from './components/Restart.vue';
 import Animate from './components/Animate.vue';
@@ -46,6 +52,19 @@ const auth = getAuth()
 const auth_ = authStore()
 const {isAuthenticated, userID, userData } = storeToRefs(auth_)
 
+const theme_ = themeStore()
+const { appTheme } = storeToRefs(theme_)
+
+const font_ = fontStore()
+const {font } = storeToRefs(font_)
+
+const route = useRoute()
+const main = mainStore()
+const { containerHeight, hasCompletedSession, capsIsOn} = storeToRefs(main)
+
+const customize = customizeStore()
+const {hideElements } = storeToRefs(customize)
+
 onAuthStateChanged(auth, async (user) => {
   if (user) {
     userID.value = user.uid;
@@ -57,19 +76,6 @@ onAuthStateChanged(auth, async (user) => {
     isAuthenticated.value = false
   }
 });
-
-const theme_ = themeStore()
-const { appTheme } = storeToRefs(theme_)
-
-const font_ = fontStore()
-const {font } = storeToRefs(font_)
-
-const route = useRoute()
-const main = mainStore()
-const { containerHeight, hasCompletedSession} = storeToRefs(main)
-
-const customize = customizeStore()
-const {hideElements } = storeToRefs(customize)
 
 
 onBeforeMount(() => localStorageConfig())
@@ -90,7 +96,19 @@ const height = () => {
   document.body.removeChild(div)
 }
 
-onMounted(() => height())
+window.addEventListener('keydown', event => {
+  // if (event.key === 'CapsLock') {
+  //   if (event.getModifierState("CapsLock")) {
+  //     capsIsOn.value = true
+  //   } else {
+  //     capsIsOn.value = false
+  //   }
+  // }
+})
+
+onMounted(() => {
+  height()
+})
 watch(font, (newVal) => height() )
 </script>
 

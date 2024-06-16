@@ -9,8 +9,8 @@
             :textPosition="textPosition" />
             <Blind />
         </div>
-        <div v-if="containerText" class="transition-all duration-100 relative mx-auto max-w-[600px] w-full">
-            <div ref="containerRef" @click="getMobileOS() ? inputEl.focus() : ''" :style="{'max-height' : containerHeight + 'px', 'font-size': font + 'px'}" :class="[ customizers['no-space'] ? 'break-words' : '', alphabetsMode_ ? 'text-center break-words': 'text-left', !alphabetsMode_ && textPosition=== 'center' ? 'text-center' : !alphabetsMode_ && textPosition=== 'right' ? 'text-right' : 'text-left'] " class="overflow-y-auto scroll-smooth noscrollbar leading-[1.4] h-fit py-[1px]">
+        <div v-if="containerText" class="transition-all duration-100 relative mx-auto max-w-[700px] w-full">
+            <div ref="containerRef" @click="getMobileOS() ? inputEl.focus() : ''" :style="{'height' : containerHeight + 'px', 'font-size': font + 'px'}" :class="[ customizers['no-space'] ? 'break-words' : '', alphabetsMode_ ? 'text-center break-words': 'text-left', !alphabetsMode_ && textPosition=== 'center' ? 'text-center' : !alphabetsMode_ && textPosition=== 'right' ? 'text-right' : 'text-left'] " class="overflow-y-auto scroll-smooth noscrollbar leading-[1.4] h-fit py-[1px] ring-[1px] ring-green-800 ring-opacity-20">
                 <Alphabet
                 v-for="(alphabet, index) in containerText"
                 :index="index"
@@ -21,7 +21,7 @@
             </div>
             <p v-if="movie.name" :class="[theme === 'neutral' ? 'text-white' : 'text-black']" class="pt-5 text-xs italic text-right text-slate-500 whitespace-nowrap">{{movie.quoteAuthor}} - {{ movie.name }}</p>
             <p  v-if="authoredQuote.author" class="text-xs italic text-right text-slate-500">{{authoredQuote.author}}</p>
-            <div v-if="!hideElements" class="flex items-center py-3 m-auto  w-[90%] space-x-2 mt-5">
+            <div v-if="!hideElements" class="flex items-center py-3 max-w-[700px] space-x-2" :class="[]">
                 <RangeInput />
                 <repeat class="w-5" v-if="!alphabetsMode_" @click="enableRepeat = !enableRepeat" />
             </div>

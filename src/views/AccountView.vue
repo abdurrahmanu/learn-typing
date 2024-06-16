@@ -1,7 +1,9 @@
 <template>
-    <UserProgress />
-    <div @click="logout" class="w-fit px-6 py-1 bg-blue-500 m-auto">
-        logout
+    <div class="xl:pt-20 pt-32">
+        <!-- <UserProgress /> -->
+        <div @click="logout" class="w-fit px-10 py-1 bg-red-500 rounded-full m-auto text-white hover:ring">
+            LOGOUT
+        </div>
     </div>
 </template>
 

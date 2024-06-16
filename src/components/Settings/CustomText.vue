@@ -1,7 +1,7 @@
 <template>
         <div :class="[theme === 'neutral' ? 'hover:bg-neutral-700' : 'hover:bg-slate-100']" class="py-2 pl-5">
             <div class="flex justify-between w-full p-1 border border-transparent rounded-sm  ">
-                <div @click="Object.keys(customTexts).length === 0 ? '' : useCustomText = !useCustomText"  class="flex gap-4">
+                <div @click="Object.keys(customTexts).length === 0 ? '' : useCustomText = !useCustomText"  class="flex gap-4 w-fit">
                     <!-- <input :disabled="Object.keys(customTexts).length === 0" :checked="useCustomText"  type="checkbox" name="" id=""> -->
                     <input name="custom-text" type="checkbox" disabled id="">
                     <p>Custom text</p><span class="text-sm text-red-400">incomplete</span>

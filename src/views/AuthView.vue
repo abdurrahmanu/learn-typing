@@ -1,5 +1,5 @@
 <template>
-    <div :class="[appTheme]" class="flex flex-col items-center pt-10 space-y-2 font-cursive">        
+    <div :class="[appTheme]" class="flex flex-col items-center pt-10 space-y-2 font-cursive xl:pt-20">        
         <div class="flex gap-2 py-5 font-mono max-w-fit">
             <p @click="signUp = false" :class="[!signUp ? 'border-green-400' : '']" class="px-4 border rounded-sm">LOGIN</p>
             <p @click="signUp = true" :class="[signUp ? 'border-green-500' : '']" class="px-4 border rounded-sm">CREATE ACCOUNT</p>

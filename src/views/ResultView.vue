@@ -1,5 +1,5 @@
 <template>
-    <div :class="appTheme" class="min-h-[200px] text-center">
+    <div :class="appTheme" class="min-h-[200px] text-center xl:pt-20">
         <p class="py-3 font-mono text-2xl text-center text-slate-500">STATISTICS</p>
         <div class="w-fit p-[1px] hover:bg-gradient-to-tr transition-all duration-500rounded-md m-auto">            
             <div class="flex justify-center p-3 m-auto font-mono border border-transparent rounded-md w-fit hover:border-zinc-600">

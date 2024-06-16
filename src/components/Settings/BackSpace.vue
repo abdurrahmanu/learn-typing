@@ -1,9 +1,9 @@
 <template>
     <div :class="[theme === 'neutral' ? 'hover:bg-neutral-700' : 'hover:bg-slate-100']" class="py-2 pl-5">
-        <div @click="customize('backspace', !customizers['backspace']), enableBackSpace = customizers['backspace']" class="flex justify-between w-full p-1 border border-transparent rounded-sm ">
-            <div class="flex gap-4">
+        <div class="flex justify-between w-full p-1 border border-transparent rounded-sm ">
+            <div @click="customize('backspace', !customizers['backspace']), enableBackSpace = customizers['backspace']" class="flex gap-4 w-fit">
                 <input name="backspace" :disabled="getMobileOS() ? true : false" :checked="getMobileOS() ? true :customizers['backspace']"  type="checkbox">
-                <p class="font-medium">Backspace</p>
+                <p class="font-medium w-fit">Backspace</p>
             </div>
         </div>
         <p v-if="getMobileOS()"  class="px-3">**Cannot be disabled on Mobile devices</p>
