@@ -2,9 +2,9 @@
     <div class="relative">
         <div class="peer">
             <playTimer v-if="!timedTyping" @click="timer" class="h-7" />
-            <div v-if="timedTyping && !beginCountdown" class="flex items-center font-mono w-fit">  
+            <div v-if="timedTyping && !beginCountdown" class="flex items-center font-mono w-fit gap-4">  
                     <playTimer @click="timer" class="h-7" />
-                    <div class="flex text-xs border border-black h-fit">
+                    <div class="flex text-xs border border-black h-fit scale-125">
                         <div class="px-2 border-r border-r-black w-fit" :class="[savedCountdown === 10 ? 'text-green-700 bg-white font-black' : '']" @click="selectCountDown(10)">10s</div>
                         <div class="px-2 border-r border-r-black w-fit" :class="[savedCountdown === 20 ? 'text-green-700 bg-white font-black' : '']" @click="selectCountDown(20)">20s</div>
                         <div class="px-2 border-l border-l-black w-fit" :class="[savedCountdown === 30 ? 'text-green-700 bg-white font-black' : '']" @click="selectCountDown(30)">30s</div>

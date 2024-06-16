@@ -14,7 +14,7 @@ export const customizeStore = defineStore('customizeStore', () => {
         'text-length': 'auto',
         'words-type': 'most-used', 
         'caret': 'border',
-        'test-type': 'random-text',
+        'test-type': 'random-words',
         'include-caps': '',
         'include-punctuation': '',
         'include-numbers': '',
@@ -39,7 +39,7 @@ export const customizeStore = defineStore('customizeStore', () => {
     const allOptions = ref({
         'text-length' : ['auto', 10, 20, 30],
         'words-type' : ['most-used', 'less-used', 'rarely-used'],
-        'test-type' : ['quotes', 'random-text'],
+        'test-type' : ['quotes', 'random-words'],
         'include-caps' : ['caps'],
         'include-punctuations' : ['punctuations'],
         'include-numbers' : ['numbers'],
@@ -62,7 +62,7 @@ export const customizeStore = defineStore('customizeStore', () => {
         let selection = configs.value[1]
         let group = configs.value[0]
 
-        if ((typeof configs.value[1] === 'number' && configs.value[0] === 'text-length' ) || configs.value[1] === 'random-text') {
+        if ((typeof configs.value[1] === 'number' && configs.value[0] === 'text-length' ) || configs.value[1] === 'random-words') {
             customizers.value['movie-quotes'] = false
             customizers.value['author-quotes'] = false
         }

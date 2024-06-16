@@ -3,7 +3,6 @@ import { getMobileOS } from "./getMobileOS";
 import { storeToRefs } from 'pinia';
 
 export const managePlayerInput = () => {
-
     const store = mainStore()
     const { containerText, playerInputLength, playerInput, playerLastInput, previousPlayerInput, correctCount, wrongCount, completionLevel} = storeToRefs(store)
 

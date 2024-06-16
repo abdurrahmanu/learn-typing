@@ -1,7 +1,7 @@
 <template>
     <Transition name="slide-in-side-nav" appear mode="in-out"> 
         <div ref="menuEl"  v-show="toggleSidebar" class="absolute top-[50px] z-[1] left-0 h-fit w-fit shadow-sm shadow-black" :class="[appTheme]">
-            <div @click="navigate(option), toggleSidebar = !toggleSidebar" class="flex items-center gap-2 px-10 py-3 text-sm cursor-pointer" :class="[theme === 'neutral' ? 'hover:bg-neutral-800' : 'hover:bg-slate-100']" v-for="(option, index) in options" :key="index">
+            <div @click="navigate(option), toggleSidebar = !toggleSidebar" class="flex items-center gap-2 px-10 py-3 text-sm cursor-pointer" :class="[theme === 'neutral' ? 'hover:bg-neutral-800' : 'hover:bg-slate-100', ]" v-for="(option, index) in options" :key="index">
                 <span>{{ option }}</span>
             </div>
         </div>
@@ -9,9 +9,9 @@
 </template>
 
 <script setup>
-import {ref, onMounted, watchEffect} from 'vue'
+import {ref, onMounted, watchEffect, computed} from 'vue'
 import {storeToRefs} from 'pinia'
-import {useRouter} from 'vue-router'
+import {useRouter, useRoute} from 'vue-router'
 import {pagesStore}  from '../store/pagesStore'
 import {themeStore}  from '../store/themeStore'
 import {authStore}  from '../store/authStore'
@@ -35,6 +35,7 @@ const auth_ = authStore()
 const {isAuthenticated } = storeToRefs(auth_)
 
 const router  = useRouter()
+const route  = useRoute()
 
 const options = ref(['Home', 'Login'])
 
