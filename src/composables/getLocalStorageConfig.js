@@ -50,6 +50,7 @@ export const localStorageConfig = async (config, restart) => {
         if (localStorage.getItem('dorayi-typing-fontsize')) {
             font.value = +localStorage.getItem('dorayi-typing-fontsize')
             range.value = (font.value - 16) / 0.16
+          }
         
 
         if (localStorage.getItem('dorayi-typing-preferred-caret')) {
