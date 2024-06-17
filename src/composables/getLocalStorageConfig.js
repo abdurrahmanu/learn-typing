@@ -11,7 +11,7 @@ export const localStorageConfig = async (config, restart) => {
     const { alphabetsMode_, alphabetsConfig, alphabetsCombination, useAlphabetCombination } = storeToRefs(alphabets_)
 
     const font_ = fontStore()
-    const {font} = storeToRefs(font_)
+    const {font, range} = storeToRefs(font_)
  
     const theme_ = themeStore()
     const {theme } = storeToRefs(theme_)
@@ -44,12 +44,13 @@ export const localStorageConfig = async (config, restart) => {
         }
     
         if (localStorage.getItem('custom-text') ) {
-        customTexts.value = JSON.parse(localStorage.getItem('custom-text'))
+             customTexts.value = JSON.parse(localStorage.getItem('custom-text'))
         }
 
         if (localStorage.getItem('dorayi-typing-fontsize')) {
-       font.value = +localStorage.getItem('dorayi-typing-fontsize')
-        }
+            font.value = +localStorage.getItem('dorayi-typing-fontsize')
+            range.value = (font.value - 16) / 0.16
+        
 
         if (localStorage.getItem('dorayi-typing-preferred-caret')) {
             caretType.value = localStorage.getItem('dorayi-typing-preferred-caret')
