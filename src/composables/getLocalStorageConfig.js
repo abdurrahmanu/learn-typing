@@ -43,6 +43,10 @@ export const localStorageConfig = async (config, restart) => {
         customTexts.value = JSON.parse(localStorage.getItem('custom-text'))
         }
 
+        if (localStorage.getItem('dorayi-typing-fontsize')) {
+       font.value = localStorage.getItem('dorayi-typing-fontsize')
+}
+
         if (localStorage.getItem('dorayi-typing-preferred-caret')) {
             caretType.value = localStorage.getItem('dorayi-typing-preferred-caret')
         }
