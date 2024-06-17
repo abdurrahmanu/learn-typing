@@ -3,12 +3,16 @@ import { storeToRefs } from 'pinia';
 import { customizeStore } from '../store/customizeStore';
 import {pagesStore}  from '../store/pagesStore'
 import {themeStore}  from '../store/themeStore'
+import {fontStore} from '../store/fontStore'
 import {alphabetsStore}  from '../store/alphabetsModeStore';
 
 export const localStorageConfig = async (config, restart) => {
     const alphabets_ = alphabetsStore()
     const { alphabetsMode_, alphabetsConfig, alphabetsCombination, useAlphabetCombination } = storeToRefs(alphabets_)
 
+    const font_ = fontStore()
+    const {font} = storeToRefs(font_)
+ 
     const theme_ = themeStore()
     const {theme } = storeToRefs(theme_)
 
@@ -44,8 +48,8 @@ export const localStorageConfig = async (config, restart) => {
         }
 
         if (localStorage.getItem('dorayi-typing-fontsize')) {
-       font.value = localStorage.getItem('dorayi-typing-fontsize')
-}
+       font.value = +localStorage.getItem('dorayi-typing-fontsize')
+        }
 
         if (localStorage.getItem('dorayi-typing-preferred-caret')) {
             caretType.value = localStorage.getItem('dorayi-typing-preferred-caret')
