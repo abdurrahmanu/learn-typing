@@ -41,6 +41,7 @@ const fontSize = computed(() => {
 
 watch(fontSize, (newVal) => {
     font.value = newVal
+    localStorage.setItem('dorayi-typing-fontsize', font.value)
     if (playerInput.value.length) {        
         if (timedTyping.value) clearCounter()
         switchNext(customizers.value, 'restart' )
