@@ -52,17 +52,10 @@ const provider = new GoogleAuthProvider();
 //         });
 // }
 
-const customize = customizeStore()
-const {customizers} = storeToRefs(customize)
-
-const store = mainStore()
-const {switchNext} = store
-
 const theme_ = themeStore()
 const { appTheme } = storeToRefs(theme_)
 
 const signUp = ref(false)
-const router = useRouter()
 
 watch(signUp, (newVal) => {
         formData.value = {
