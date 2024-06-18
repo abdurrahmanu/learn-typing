@@ -1,5 +1,5 @@
 <template>
-    <div @click="hideElements = !hideElements"  v-if="!hasCompletedSession && route.name === 'home'" :class="[appTheme]" class="fixed bottom-3 group whitespace-nowrap left-4 text-xs bg-neutral-900 border rounded-md px-2 py-[2px] transition-all duration-100 border-neutral-700 items-center space-x-1">
+    <div @click="hideElements = !hideElements"  v-if="!hasCompletedSession && route.name === 'home'" :class="[appTheme]" class="absolute bottom-3 group whitespace-nowrap left-4 text-xs bg-neutral-900 border rounded-md px-2 py-[2px] transition-all duration-100 border-neutral-700 items-center space-x-1">
         <span class="hidden group-hover:inline">{{!hideElements ? 'HIDE' : 'SHOW'}} ELEMENTS</span>
         <RightArrow class="inline w-4 h-fit" />
         </div>

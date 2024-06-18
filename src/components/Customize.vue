@@ -1,5 +1,5 @@
 <template>
-    <div v-if="!hasCompletedSession && !alphabetsMode_" class="bg-transparent rounded-md  w-[90%] m-auto max-w-fit ring-1 ring-green-600 xl:ring-0 relative lg:z-[3]">
+    <div v-if="!hasCompletedSession && !alphabetsMode_" class="bg-transparent rounded-md  w-[90%] m-auto max-w-fit ring-1 ring-green-600 xl:ring-0 relative xl:z-[3]">
         <div class="text-[12px] items-center font-mono p-1 flex max-w-[1000px] justify-center flex-wrap relative">
             <div class="p-1" v-for="(optionArr, key, listIndex) in option" :key="listIndex">          
                 <div 

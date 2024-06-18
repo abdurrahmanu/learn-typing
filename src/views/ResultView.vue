@@ -38,7 +38,7 @@ import {ref, onMounted} from 'vue'
 import {storeToRefs} from 'pinia'
 import {mainStore} from '../store/mainStore'
 import {themeStore}  from '../store/themeStore'
-import { setDoc, getDoc, doc, updateDoc} from 'firebase/firestore'
+import { setDoc, doc, updateDoc} from 'firebase/firestore'
 import {db} from '../firebase'
 import {authStore} from '../store/authStore'
 
@@ -82,9 +82,31 @@ const errorRatioLevel = () => {
     }
 }
 
-onMounted( async () => {
-    // await updateDoc(doc(db, "users", userID.value), {
-    //     data: ['asdadfasdf']
-    // })
-})
+// onMounted( async () => {
+//     if (userID.value) {
+//         await setDoc(doc(db, "users", userID.value), resultData.value);
+//     }
+// })
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

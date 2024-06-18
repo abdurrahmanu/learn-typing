@@ -1,7 +1,7 @@
 <template>
     <Transition name="slide-in-side-nav" appear mode="in-out"> 
-        <div ref="menuEl"  v-show="toggleSidebar" class="absolute top-[50px] z-[1] left-0 h-fit w-fit shadow-sm shadow-black" :class="[appTheme]">
-            <div @click="navigate(option), toggleSidebar = !toggleSidebar" class="flex items-center gap-2 px-10 py-3 text-sm cursor-pointer" :class="[theme === 'dark' ? 'hover:bg-neutral-800' : 'hover:bg-slate-100', ]" v-for="(option, index) in options" :key="index">
+        <div ref="menuEl"  v-show="toggleNavbar" class="absolute top-[50px] z-[1] left-0 h-fit w-fit shadow-sm shadow-black" :class="[appTheme]">
+            <div @click="navigate(option), toggleNavbar = !toggleNavbar" class="flex items-center gap-2 px-10 py-3 text-sm cursor-pointer" :class="[theme === 'dark' ? 'hover:bg-neutral-800' : 'hover:bg-slate-100', ]" v-for="(option, index) in options" :key="index">
                 <span>{{ option }}</span>
             </div>
         </div>
@@ -29,7 +29,7 @@ const theme_ = themeStore()
 const {theme, appTheme } = storeToRefs(theme_)
 
 const pages = pagesStore()
-const {toggleSidebar } = storeToRefs(pages)
+const {toggleNavbar } = storeToRefs(pages)
 
 const auth_ = authStore()
 const {isAuthenticated } = storeToRefs(auth_)
@@ -42,7 +42,7 @@ const options = ref(['Home', 'Login'])
 onMounted(() => {
     window.addEventListener('click', (event) => {
         if (!menuEl.value.contains(event.target) && event.target !== userEl.value && !userEl.value.contains(event.target)) {
-            toggleSidebar.value = false
+            toggleNavbar.value = false
         }
     })
 })

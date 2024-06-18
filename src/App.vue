@@ -1,16 +1,18 @@
 <template>
-  <div :class="[appTheme]" class="font-light selection:bg-none home">
-    <div class="min-h-[100dvh]">
-      <Header />
-      <RouterView />
-      <Restart />
-      <SwitchModes  />
-      </div>
-      <Theme />
-      <HideElements />
+  <div :class="[appTheme]">
+    <div :class="[appTheme]" class="font-light selection:bg-none home max-w-[1300px] m-auto relative min-h-[100dvh]">
+      <div class="min-h-[100dvh]">
+        <Header />
+        <RouterView />
+        <Restart />
+        <SwitchModes  />
+        </div>
+        <Theme />
+        <HideElements />
+        <Toast :toggle="capsIsOn" right text="CAPSLOCK IS ON" />
+        <Animate />
       <DropdownNav />
-      <Toast :toggle="capsIsOn" right text="CAPSLOCK IS ON" />
-      <Animate />
+        </div>
   </div>
 </template>
 
@@ -35,6 +37,7 @@ import { doc, getDoc} from 'firebase/firestore'
 import {localStorageConfig} from './composables/getLocalStorageConfig'
 
 const auth = getAuth()
+
 const auth_ = authStore()
 const {isAuthenticated, userID, userData } = storeToRefs(auth_)
 
@@ -52,7 +55,11 @@ onAuthStateChanged(auth, async (user) => {
     userID.value = user.uid;
     isAuthenticated.value = true
     await getDoc(doc(db, 'users', userID.value)).then(data => userData.value = data )
-  } else isAuthenticated.value = false
+  } else {
+    isAuthenticated.value = false
+    userID.value = undefined
+    userData.value = {}
+  }
 });
 
 const height = () => {

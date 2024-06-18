@@ -1,7 +1,7 @@
 <template>
-    <nav :class="[appTheme]" class="sticky top-0 mx-auto flex items-center justify-between py-2 pl-3 pr-2 h-[50px] shadow-sm shadow-black max-w-[1300px] mb-3 z-[2] xl:fixed xl:w-full xl:left-[50%] xl:translate-x-[-50%]">
+    <nav :class="[appTheme]" class="sticky top-0 mx-auto flex items-center justify-between py-2 pl-3 pr-2 h-[50px] shadow-sm shadow-black max-w-[1300px] mb-3 xl:fixed xl:w-full xl:left-[50%] xl:translate-x-[-50%] z-[2]">
         <div class="flex items-center gap-3">
-            <user @click="toggleSidebar = !toggleSidebar"/>
+            <user @click="toggleNavbar = !toggleNavbar"/>
             <div class="font-mono text-xl font-bold cursor-default md:text-2xl">KEYS-HUB</div>
         </div>
         <div class="flex gap-2 rounded-full w-fit">
@@ -21,7 +21,7 @@ import {useRoute} from 'vue-router'
 import {themeStore}  from '../store/themeStore'
 
 const pages = pagesStore()
-const {toggleSidebar } = storeToRefs(pages)
+const {toggleNavbar } = storeToRefs(pages)
 
 const theme_ = themeStore()
 const { appTheme } = storeToRefs(theme_)

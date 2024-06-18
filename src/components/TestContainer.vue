@@ -1,7 +1,7 @@
 <template>
     <div :class="[hideElements ? 'pt-10' : 'pt-0']" class="w-[90%] min-h-[150px] space-y-[3px] relative transition-none  max-w-[900px] m-auto">
         <MobileInput />
-        <div :class="[alphabetsMode_ ? 'px-2 py-1 max-w-[300px]' : 'max-w-[600px]', hideElements ? 'text-center' : 'pt-6']"  class="flex justify-between m-auto mb-5 scale-[80%]">
+        <div :class="[alphabetsMode_ ? 'px-2 py-1 max-w-[300px]' : 'max-w-[600px]', hideElements ? 'text-center' : 'pt-6']"  class="flex justify-between m-auto mb-5 scale-[80%] xl:pt-10">
             <Clock/>
             <TextAlign 
             v-if="!getMobileOS() && !alphabetsMode_"

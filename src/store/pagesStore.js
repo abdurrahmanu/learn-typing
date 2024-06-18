@@ -3,11 +3,11 @@ import {ref} from 'vue'
 
 export const pagesStore = defineStore('pagesStore', () => {
     const currentPage = ref(0)
-    const toggleSidebar = ref(false)
+    const toggleNavbar = ref(false)
 
     return {
         currentPage,
-        toggleSidebar,
+        toggleNavbar,
     }
 })
 
