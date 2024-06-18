@@ -1,5 +1,5 @@
 <template>
-    <div :class="[theme === 'neutral' ? 'hover:bg-neutral-700' : 'hover:bg-slate-100']" class="py-2 pl-5 pb-10">
+    <div :class="[theme === 'dark' ? 'hover:bg-neutral-700' : 'hover:bg-slate-100']" class="py-2 pl-5 pb-10">
         <div @click="toggle" class="flex w-full p-1 space-x-4 border border-transparent rounded-sm">
             <input :disabled="!(alphabetsCombination.length > 1)" :checked="useAlphabetCombination"  type="checkbox" name="letter-combination" id="id">
             <p for="id" class="font-medium w-fit">Letter Combinations</p>
@@ -16,7 +16,7 @@
 </template>
 
 <script setup>
-import {watch} from 'vue'
+import {watch, ref} from 'vue'
 import {storeToRefs} from 'pinia';
 import {mainStore} from '../../store/mainStore'
 import { customizeStore } from '../../store/customizeStore';
@@ -25,6 +25,7 @@ import { themeStore } from '../../store/themeStore';
 
 const theme_ = themeStore()
 const {theme} = theme_
+const localStorageSettings = ref(JSON.parse(localStorage.getItem('dorayi-typing')))
 
 const alphabets_ = alphabetsStore()
 const { alphabetsCombination, useAlphabetCombination } = storeToRefs(alphabets_)
@@ -43,10 +44,12 @@ const toggle = () => {
     }
 
     if (useAlphabetCombination.value && alphabetsCombination.value.length > 1) {
-        localStorage.setItem('dorayi-typing-use-alphabets-combination', 'true')
-        localStorage.setItem('dorayi-typing-alphabet-combination', JSON.stringify(alphabetsCombination.value))
+        localStorageSettings.value.alphabets.combo = true
+        localStorageSettings.value.alphabets.combination = alphabetsCombination.value
+        localStorage.setItem('dorayi-typing', JSON.stringify(localStorageSettings.value))
     } else {
-        localStorage.setItem('dorayi-typing-use-alphabets-combination', 'false')
+        localStorageSettings.value.alphabets.combo = false
+        localStorage.setItem('dorayi-typing', JSON.stringify(localStorageSettings.value))
     }
 }
 
@@ -68,11 +71,13 @@ watch(alphabetsCombination, (newVal) => {
     }
     
     if (useAlphabetCombination.value && newVal.length > 1) {
-        localStorage.setItem('dorayi-typing-use-alphabets-combination', 'true')
-        localStorage.setItem('dorayi-typing-alphabet-combination', JSON.stringify(alphabetsCombination.value))
+        localStorageSettings.value.alphabets.combo = true
+        localStorageSettings.value.alphabets.combination = alphabetsCombination.value
+        localStorage.setItem('dorayi-typing', JSON.stringify(localStorageSettings.value))
         switchNext(customizers.value)
     } else {
-        localStorage.setItem('dorayi-typing-use-alphabets-combination', 'false')
+        localStorageSettings.value.alphabets.combo = false
+        localStorage.setItem('dorayi-typing', JSON.stringify(localStorageSettings.value))
     }
 }, {deep: true})
 </script>

@@ -14,6 +14,6 @@ const theme_ = themeStore()
 const {theme } = storeToRefs(theme_)
 
 const fill = computed(() => {
-    return theme.value === 'neutral' ? '#fff' : '#000'
+    return theme.value === 'dark' ? '#fff' : '#000'
 })
 </script>

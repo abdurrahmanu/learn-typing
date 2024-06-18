@@ -97,13 +97,6 @@ export const mainStore = defineStore('mainStore', () => {
         } else {
             totalTime.value = (performance.now() - startTime.value).toFixed(0) / 1000
         }
-        if (localStorage.getItem('dorayi-typing-result')) {
-            const res = ref(JSON.parse(localStorage.getItem('dorayi-typing-result')))
-            res.value.push(resultData.value)
-            localStorage.setItem('dorayi-typing-result', JSON.stringify(res.value))
-        } else {
-        localStorage.setItem('dorayi-typing-result', JSON.stringify([resultData.value]))
-        }
     }
 
     const switchNext = (config, restart) => {

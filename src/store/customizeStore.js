@@ -9,6 +9,7 @@ export const customizeStore = defineStore('customizeStore', () => {
     const onlyMovieQuotes = ref(false)
     const onlyAuthoredQuotes = ref(false)
     const caretType = ref('border')
+    const localStorageSettings = ref(JSON.parse(localStorage.getItem('dorayi-typing')))
 
     const customizers = ref({
         'text-length': 'auto',
@@ -78,7 +79,8 @@ export const customizeStore = defineStore('customizeStore', () => {
             disableOption.value['include-numbers'] = false
         }
 
-        localStorage.setItem('dorayi-typing-preferred-config', JSON.stringify([customizers.value, disableOption.value]))
+        localStorageSettings.value.config = [customizers.value, disableOption.value]
+        localStorage.setItem('dorayi-typing', JSON.stringify(localStorageSettings.value))
         next.value = true
     }
 
@@ -111,7 +113,8 @@ export const customizeStore = defineStore('customizeStore', () => {
 
         if (!option && option !== false) customizers.value[mode] = boolean
         
-        localStorage.setItem('dorayi-typing-preferred-config', JSON.stringify([customizers.value, disableOption.value]))
+        localStorageSettings.value.config = [customizers.value, disableOption.value]
+        localStorage.setItem('dorayi-typing', JSON.stringify(localStorageSettings.value))     
         next.value = true
     }
 

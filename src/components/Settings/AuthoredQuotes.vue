@@ -1,5 +1,5 @@
 <template>
-    <div :class="[theme === 'neutral' ? 'hover:bg-neutral-700' : 'hover:bg-slate-100']" class="py-2 pl-5">
+    <div :class="[theme === 'dark' ? 'hover:bg-neutral-700' : 'hover:bg-slate-100']" class="py-2 pl-5">
         <div  class="flex justify-between w-full p-1 border border-transparent rounded-sm ">
             <div @click="customize('author-quotes', !customizers['author-quotes'])" class="flex gap-4 w-fit">
                 <input name="authored" :checked="customizers['author-quotes']" type="checkbox">

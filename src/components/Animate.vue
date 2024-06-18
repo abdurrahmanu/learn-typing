@@ -1,7 +1,7 @@
 <template>
     <div  v-show="secondAnimation"  ref="boxesContainer" class="absolute w-full h-[100vdh] left-0 top-0 flex flex-wrap bg-transparent">
         <div v-for="(box, index) in numberOfBoxes" :key="index" class="w-fit h-fit z-[20] box-container">
-        <div :style="{'width' : boxWidth, 'height': boxHeight}" :class="[theme === 'neutral' ? 'bg-neutral-600' : 'bg-slate-300']" class=" box"></div>
+        <div :style="{'width' : boxWidth, 'height': boxHeight}" :class="[theme === 'dark' ? 'bg-neutral-600' : 'bg-slate-300']" class=" box"></div>
         </div>
     </div>
     <!-- <div ref="loader" v-show="animateLoader" class="h-[100dvh] relative bg-neutral-700 selection:bg-none">

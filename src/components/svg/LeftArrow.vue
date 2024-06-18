@@ -15,6 +15,6 @@ const {theme } = storeToRefs(theme_)
 
 
 const fill = computed(() => {
-    return theme.value === 'neutral' ? '#e8e7e7' : '#373636'
+    return theme.value === 'dark' ? '#e8e7e7' : '#373636'
 })
 </script>

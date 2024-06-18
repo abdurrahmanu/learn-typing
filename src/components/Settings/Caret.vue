@@ -1,5 +1,5 @@
 <template>
-    <div :class="[theme === 'neutral' ? 'hover:bg-neutral-700' : 'hover:bg-slate-100']" class="py-4 pl-5 flex items-center flex-wrap gap-5">
+    <div :class="[theme === 'dark' ? 'hover:bg-neutral-700' : 'hover:bg-slate-100']" class="py-4 pl-5 flex items-center flex-wrap gap-5">
         <div class="py-2 font-medium text-sm">CARET</div>
         <div class="space-x-3 flex">
             <div @click="caretType = 'border'" class="flex border px-5 rounded-md py-1 gap-2" :class="[caretType === 'border' ? 'border-green-500' : 'border-slate-500']">
@@ -16,7 +16,7 @@
 </template>
 
 <script setup>
-import {watch} from 'vue'
+import {watch, ref} from 'vue'
 import {storeToRefs} from 'pinia'
 import {customizeStore} from '../../store/customizeStore'
 import { themeStore } from '../../store/themeStore';
@@ -27,7 +27,10 @@ const {theme} = theme_
 const store = customizeStore()
 const { caretType} = storeToRefs(store)
 
+const localStorageSettings = ref(JSON.parse(localStorage.getItem('dorayi-typing')))
+
 watch(caretType, (newVal) => {
-    localStorage.setItem('dorayi-typing-preferred-caret', caretType.value)
+    localStorageSettings.value.caret = newVal
+    localStorage.setItem('dorayi-typing', JSON.stringify(localStorageSettings.value))
 })
 </script>

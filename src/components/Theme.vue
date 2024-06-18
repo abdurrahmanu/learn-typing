@@ -10,24 +10,26 @@ import { storeToRefs } from 'pinia';
 import {themeStore}  from '../store/themeStore'
 
 const theme_ = themeStore()
-const {theme, } = storeToRefs(theme_)
+const {theme } = storeToRefs(theme_)
 
 const openBackgrounds = ref(false)
 const bgContainer = ref(null)
 
+const localStorageSettings = ref(JSON.parse(localStorage.getItem('dorayi-typing')))
+
 const toggleTheme = (color) => {
     theme.value = color
     openBackgrounds.value = !openBackgrounds.value
-    if (theme.value === 'neutral') {
-        localStorage.setItem('dorayi-typing-theme', 'dark')
-    }  else {
-        localStorage.setItem('dorayi-typing-theme', 'white')
+    if (theme.value === 'dark') {
+        localStorageSettings.value.theme ='dark'
+        }  else {
+            localStorageSettings.value.theme ='white'
     }
+    localStorage.setItem('dorayi-typing', JSON.stringify(localStorageSettings.value))
 }
 
-
 const colors = [
-    'neutral',
+    'dark',
     'white',
     // 'stone',
     // 'blue',

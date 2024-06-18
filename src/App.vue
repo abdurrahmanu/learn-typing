@@ -1,27 +1,16 @@
 <template>
-  <div 
-  :class="[appTheme]" 
-  class="font-light selection:bg-none home">
-    <DropdownNav />
-    <Toast :toggle="capsIsOn" right>
-      CAPSLOCK IS ON
-    </Toast>
-    <Animate />
+  <div :class="[appTheme]" class="font-light selection:bg-none home">
     <div class="min-h-[100dvh]">
       <Header />
       <RouterView />
-      <div 
-      class="pt-5" 
-      v-if="route.name == 'home' || route.name == 'result'">
-          <Restart />
-        </div>
-        <SwitchModes 
-        v-if="!hasCompletedSession && route.name === 'home' && !hideElements" />
-    </div>
-    <Theme />
-    <HideElements 
-    @click="hideElements = !hideElements" 
-    v-if="route.name === 'home'" />
+      <Restart />
+      <SwitchModes  />
+      </div>
+      <Theme />
+      <HideElements />
+      <DropdownNav />
+      <Toast :toggle="capsIsOn" right text="CAPSLOCK IS ON" />
+      <Animate />
   </div>
 </template>
 
@@ -37,8 +26,6 @@ import Theme from './components/Theme.vue';
 import HideElements from './components/HideElements.vue'
 import {mainStore} from './store/mainStore'
 import { storeToRefs } from 'pinia';
-import { customizeStore } from './store/customizeStore';
-import {useRoute} from 'vue-router'
 import {themeStore}  from './store/themeStore'
 import {fontStore}  from './store/fontStore'
 import { authStore } from './store/authStore';
@@ -48,7 +35,6 @@ import { doc, getDoc} from 'firebase/firestore'
 import {localStorageConfig} from './composables/getLocalStorageConfig'
 
 const auth = getAuth()
-
 const auth_ = authStore()
 const {isAuthenticated, userID, userData } = storeToRefs(auth_)
 
@@ -58,27 +44,16 @@ const { appTheme } = storeToRefs(theme_)
 const font_ = fontStore()
 const {font } = storeToRefs(font_)
 
-const route = useRoute()
 const main = mainStore()
-const { containerHeight, hasCompletedSession, capsIsOn} = storeToRefs(main)
-
-const customize = customizeStore()
-const {hideElements } = storeToRefs(customize)
+const { containerHeight, capsIsOn} = storeToRefs(main)
 
 onAuthStateChanged(auth, async (user) => {
   if (user) {
     userID.value = user.uid;
     isAuthenticated.value = true
-    await getDoc(doc(db, 'users', userID.value)).then(data => {
-      userData.value = data
-  })
-  } else {
-    isAuthenticated.value = false
-  }
+    await getDoc(doc(db, 'users', userID.value)).then(data => userData.value = data )
+  } else isAuthenticated.value = false
 });
-
-
-onBeforeMount(() => localStorageConfig())
 
 const height = () => {
   const div = document.createElement("div");
@@ -106,10 +81,9 @@ window.addEventListener('keydown', event => {
   // }
 })
 
-onMounted(() => {
-  height()
-})
+onMounted(() => height())
 watch(font, (newVal) => height() )
+onBeforeMount(() => localStorageConfig())
 </script>
 
 <style scoped>

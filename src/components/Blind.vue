@@ -8,6 +8,7 @@
 </template>
 
 <script setup>
+import {ref} from 'vue'
 import closedEye from './svg/closedEye.vue';
 import openEye from './svg/openEye.vue';
 import { customizeStore } from '../store/customizeStore';
@@ -15,10 +16,11 @@ import { storeToRefs } from 'pinia';
 
 const custom = customizeStore()
 const { customizers, disableOption} = storeToRefs(custom)
+const localStorageSettings = ref(JSON.parse(localStorage.getItem('dorayi-typing')))
 
 const customize = () => {
     customizers.value['blind-mode'] = !customizers.value['blind-mode']
-
-    localStorage.setItem('dorayi-typing-preferred-config', JSON.stringify([customizers.value, disableOption.value]))
+    localStorageSettings.value.config = [customizers.value, disableOption.value]
+    localStorage.setItem('dorayi-typing', JSON.stringify(localStorageSettings.value))
 }
 </script>

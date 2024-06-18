@@ -1,3 +1,4 @@
+import {ref} from 'vue'
 import { mainStore } from "../store/mainStore"
 import { storeToRefs } from 'pinia';
 import { customizeStore } from '../store/customizeStore';
@@ -6,84 +7,88 @@ import {themeStore}  from '../store/themeStore'
 import {fontStore} from '../store/fontStore'
 import {alphabetsStore}  from '../store/alphabetsModeStore';
 
-export const localStorageConfig = async (config, restart) => {
+export const localStorageConfig = async () => {
     const alphabets_ = alphabetsStore()
-    const { alphabetsMode_, alphabetsConfig, alphabetsCombination, useAlphabetCombination } = storeToRefs(alphabets_)
+    const { alphabetsMode_, alphabetsCombination, useAlphabetCombination } = storeToRefs(alphabets_)
 
     const font_ = fontStore()
     const {font, range} = storeToRefs(font_)
- 
+
     const theme_ = themeStore()
     const {theme } = storeToRefs(theme_)
 
     const main = mainStore()
-    const { enableBackSpace, customTexts, mode} = storeToRefs(main)
+    const { enableBackSpace, mode} = storeToRefs(main)
 
     const customize = customizeStore()
-    const { customizers, disableOption, caretType } = storeToRefs(customize)
+    const { customizers, disableOption, caretType, hideElements } = storeToRefs(customize)
 
     const pages = pagesStore()
     const {currentPage } = storeToRefs(pages)
 
-        if (!localStorage.getItem('dorayi-typing-theme')) {
-        if (localStorage.getItem('theme')) {
-            theme.value = 'neutral'
-            localStorage.setItem('dorayi-typing-theme', 'dark')
-        } else {
-            theme.value = 'white'
-            localStorage.setItem('dorayi-typing-theme', 'white')
-        }
-        } else {
-        if (localStorage.getItem('dorayi-typing-theme') === 'dark') {
-            theme.value = 'neutral'
-            localStorage.setItem('dorayi-typing-theme', 'dark')
-        } else {
-            theme.value = 'white'
-            localStorage.setItem('dorayi-typing-theme', 'white')
-        }
-        }
-    
-        if (localStorage.getItem('custom-text') ) {
-             customTexts.value = JSON.parse(localStorage.getItem('custom-text'))
-        }
-
-        if (localStorage.getItem('dorayi-typing-fontsize')) {
-            font.value = +localStorage.getItem('dorayi-typing-fontsize')
-            range.value = (font.value - 16) / 0.16
-          }
+    if (localStorage.getItem('dorayi-typing')) {
+        const localStorageSettings = ref(JSON.parse(localStorage.getItem('dorayi-typing')))
         
+        if (localStorageSettings.value.theme) {
+            theme.value = localStorageSettings.value.theme
+        } else {
+            theme.value  = 'white'
+            localStorageSettings.value.theme = theme.value
+        }
+    
+        if (localStorageSettings.value.fontsize) {
+            font.value = localStorageSettings.value.fontsize 
+            range.value = (font.value - 16) / 0.16
+        }
 
-        if (localStorage.getItem('dorayi-typing-preferred-caret')) {
-            caretType.value = localStorage.getItem('dorayi-typing-preferred-caret')
+        if (localStorageSettings.value.caret) {
+            caretType.value = localStorageSettings.value.caret
         }
-    
-        if (localStorage.getItem('dorayi-typing-mode')) {
-        if (localStorage.getItem('dorayi-typing-mode') === 'alphabets') {
-            mode.value = 'alphabets'
-            alphabetsMode_.value = true
-            currentPage.value = 1
-            if (localStorage.getItem('dorayi-typing-use-alphabets-combination') === 'true') {
+
+        if (localStorageSettings.value.mode) {
+            mode.value = localStorageSettings.value.mode
+            if (mode.value === 'alphabets') {
+                alphabetsMode_.value = true
+                currentPage.value = 1
+            }
+            else {
+                alphabetsMode_.value = false
+                currentPage.value = 0
+            }
+        }
+
+        if (localStorageSettings.value.alphabets.combo) {
             useAlphabetCombination.value = true
-            if (localStorage.getItem('dorayi-typing-alphabet-combination')) {
-                alphabetsCombination.value = JSON.parse(localStorage.getItem('dorayi-typing-alphabet-combination'))
-            }
-            }
-        } 
-    
-        else {
-            alphabetsMode_.value = false
-            currentPage.value = 0
-            mode.value = 'auto'
+            alphabetsCombination.value = localStorageSettings.value.alphabets.combination || []
         }
+
+        if (localStorageSettings.value.hide) {
+            hideElements.value = true
+        }
+        
+        if (localStorageSettings.value.config && localStorageSettings.value.config.length) {
+            customizers.value = localStorageSettings.value.config[0]
+            disableOption.value = localStorageSettings.value.config[1] 
+        } else {
+            localStorageSettings.value.config = [customizers.value, disableOption.value]
+            enableBackSpace.value = customizers.value['backspace']
+        }
+    } 
+    
+    else {
+        let dorayiTyping = {
+            config: [customizers.value, disableOption.value],
+            caret: 'border',
+            theme: 'dark',
+            mode: mode.value,
+            hide: false,
+            fontsize: font.value,
+            alphabets: {
+                combo: false,
+                combination: [],
+                mode: ''
+            }
+        }
+        localStorage.setItem('dorayi-typing', JSON.stringify(dorayiTyping))
     }
-    
-        if (localStorage.getItem('alphabets-mode')) alphabetsConfig.value = JSON.parse(localStorage.getItem('alphabets-mode'))
-    
-        if (localStorage.getItem('dorayi-typing-preferred-config')) {
-        let saved = JSON.parse(localStorage.getItem('dorayi-typing-preferred-config'))
-        customizers.value = saved[0]
-        disableOption.value = saved[1]
-        } 
-        else localStorage.setItem('dorayi-typing-preferred-config', JSON.stringify([customizers.value, disableOption.value]))
-        enableBackSpace.value = customizers.value['backspace']
 }

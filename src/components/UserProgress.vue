@@ -28,7 +28,6 @@
 <script setup>
 import {ref} from 'vue'
 
-const allResults = JSON.parse(localStorage.getItem('dorayi-typing-result')).slice(0, 20)
 const selected = ref({})
 const wpm = allResults.map(result => {
     return result.WPM

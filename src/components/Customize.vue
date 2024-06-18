@@ -96,7 +96,9 @@ const changeMode = (mode) => {
       alphabetsConfig.value.random = !alphabetsConfig.value.random
     } 
 
-    localStorage.setItem('alphabets-mode', JSON.stringify(alphabetsConfig.value))
+    const localStorageSettings = ref(JSON.parse(localStorage.getItem('dorayi-typing')))
+    localStorageSettings.value.alphabets.mode = alphabetsConfig.value
+    localStorage.setItem('dorayi-typing', JSON.stringify(localStorageSettings.value))
     switchNext(customizers.value )
 }  
 

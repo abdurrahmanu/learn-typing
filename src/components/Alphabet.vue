@@ -95,20 +95,20 @@ onMounted(() => {
 
 const equalStyle = computed(() => {
     if (!customizers.value['blind-mode']) {
-        let correctText = theme.value === 'neutral' ? 'text-green-300' : 'text-green-500'
-        let wrongText = theme.value === 'neutral' ? 'text-red-500' : theme.value !== 'neutral' && props.index < playerInputLength.value  ? 'text-red-600' : ''
+        let correctText = theme.value === 'dark' ? 'text-green-300' : 'text-green-500'
+        let wrongText = theme.value === 'dark' ? 'text-red-500' : theme.value !== 'dark' && props.index < playerInputLength.value  ? 'text-red-600' : ''
         return props.equality ? correctText : wrongText
     }
 })
 
 const currentIndexStyle = computed(() => {
-    let text = theme.value === 'neutral' ? 'border text-white' : 'bg-transparent text-neutral-900' 
+    let text = theme.value === 'dark' ? 'border text-white' : 'bg-transparent text-neutral-900' 
     let caret = caretType.value === 'border' ? 'border border-zinc-700' : caretType.value === 'caret' ? 'border-transparent border-l-zinc-600' : caretType.value === 'underline' ? 'border-transparent border-b-blue-600' : ''
     return  props.currentIndex ? text + ' ' + caret : ''
 })
 
 const mainStyle = computed(() => {
-    let text = theme.value === 'neutral' ? 'text-slate-400' : 'text-zinc-500'
+    let text = theme.value === 'dark' ? 'text-slate-400' : 'text-zinc-500'
     return props.index > playerInputLength.value ? text : ''
 })
 

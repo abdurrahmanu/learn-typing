@@ -19,7 +19,7 @@
                 :equality="playerInput[index] === alphabet"
                 :alphabet="alphabet"/>
             </div>
-            <p v-if="movie.name" :class="[theme === 'neutral' ? 'text-white' : 'text-black']" class="pt-5 text-xs italic text-right text-slate-500 whitespace-nowrap">{{movie.quoteAuthor}} - {{ movie.name }}</p>
+            <p v-if="movie.name" :class="[theme === 'dark' ? 'text-white' : 'text-black']" class="pt-5 text-xs italic text-right text-slate-500 whitespace-nowrap">{{movie.quoteAuthor}} - {{ movie.name }}</p>
             <p  v-if="authoredQuote.author" class="text-xs italic text-right text-slate-500">{{authoredQuote.author}}</p>
             <div v-if="!hideElements" class="flex items-center py-3 max-w-[700px] space-x-2" :class="[]">
                 <RangeInput />

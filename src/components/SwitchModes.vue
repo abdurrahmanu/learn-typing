@@ -1,5 +1,5 @@
 <template>
-    <div class="py-6 pt-4 m-auto w-fit h-fit">
+    <div v-if="!hasCompletedSession && route.name === 'home' && !hideElements" class="py-6 pt-4 m-auto w-fit h-fit">
             <Pagination 
             @page="currentPage = $event" 
             :pages-array="pages" />
@@ -14,6 +14,9 @@ import { customizeStore } from '../store/customizeStore';
 import Pagination from './Settings/Pagination.vue';
 import {pagesStore}  from '../store/pagesStore';
 import {alphabetsStore}  from '../store/alphabetsModeStore';
+import {useRoute} from 'vue-router'
+
+const route = useRoute()
 
 const alphabets_ = alphabetsStore()
 const { alphabetsMode_ } = storeToRefs(alphabets_)
@@ -22,14 +25,16 @@ const pages = ['TEST MODE', 'ALPHABETS MODE']
 const modes = ['test', 'alphabets']
 
 const store = mainStore()
-const { movie, authoredQuote, mode} = storeToRefs(store)
+const { movie, authoredQuote, mode, hasCompletedSession} = storeToRefs(store)
 const {switchNext} = store
 
 const customize = customizeStore()
-const { customizers} = storeToRefs(customize)
+const { customizers, hideElements} = storeToRefs(customize)
 
 const pages_ = pagesStore()
 const {currentPage } = storeToRefs(pages_)
+
+const localStorageSettings = ref(JSON.parse(localStorage.getItem('dorayi-typing')))
 
 const toggleMode = (type) => {
     if (type === 'alphabets') {
@@ -37,15 +42,15 @@ const toggleMode = (type) => {
         alphabetsMode_.value = true
         movie.value = {}
         authoredQuote.value = {}
-        localStorage.setItem('dorayi-typing-mode', 'alphabets')
     } 
     else {
         mode.value = 'auto'
         alphabetsMode_.value = false
-        localStorage.setItem('dorayi-typing-mode', 'test')
-    }
-
-    switchNext(customizers.value )
+        }
+        
+        localStorageSettings.value.mode = mode.value
+        localStorage.setItem('dorayi-typing', JSON.stringify(localStorageSettings.value))
+        switchNext(customizers.value )
 }
 
 watch(currentPage, (newVal, oldVal) => {
