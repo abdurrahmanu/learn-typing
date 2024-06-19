@@ -1,7 +1,7 @@
 <template>
-    <div class="flex items-center m-auto rounded-md p-[2px] w-fit text-black text-xs py-4">
-        <LeftArrow @click="prev" :class="[hasPrev ? 'cursor-pointer' : 'opacity-40 cursor-not-allowed']" class="w-9 h-fit" />
-        <div class="px-3 py-1 text-sm text-green-500 transition-all duration-100 rounded-md cursor-pointer bg-neutral-700 w-fit">{{ pagesArray[currentPage] }}</div>
+    <div class="flex items-center m-auto rounded-md w-fit text-black text-xs">
+        <LeftArrow @click="prev" :class="[hasPrev ? 'cursor-pointer' : 'opacity-10 cursor-not-allowed']" class="w-9 h-fit" />
+        <div class="px-3 py-1 text-sm text-blue-700 transition-all border border-transparent hover:border-blue-700 duration-100 rounded-md cursor-pointer w-fit">{{ pagesArray[currentPage] }}</div>
         <RightArrow @click="next" :class="[hasNext ? 'cursor-pointer' : 'opacity-40 cursor-not-allowed']" class="w-9 h-fit" />
     </div>
 </template>

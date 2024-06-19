@@ -1,15 +1,7 @@
 <template>
-    <div :class="[hideElements ? 'pt-10' : 'pt-0']" class="w-[90%] min-h-[150px] space-y-[3px] relative transition-none  max-w-[900px] m-auto">
+    <div class="w-[90%] min-h-[150px] space-y-[3px] relative transition-none  max-w-[900px] m-auto xl:pt-10" :class="[hideElements ? 'pt-3 xl:pt-24' : 'pt-0']">
         <MobileInput />
-        <div :class="[alphabetsMode_ ? 'px-2 py-1 max-w-[300px]' : 'max-w-[600px]', hideElements ? 'text-center' : 'pt-6']"  class="flex justify-between m-auto mb-5 scale-[80%] xl:pt-10">
-            <Clock/>
-            <TextAlign 
-            v-if="!getMobileOS() && !alphabetsMode_"
-            @align="textPosition = $event" 
-            :textPosition="textPosition" />
-            <Blind />
-        </div>
-        <div v-if="containerText" class="transition-all duration-100 relative mx-auto max-w-[700px] w-full">
+        <div v-if="containerText" class="transition-all duration-100 relative mx-auto max-w-[700px] w-full py-6">
             <div ref="containerRef" @click="getMobileOS() ? inputEl.focus() : ''" :style="{'height' : containerHeight + 'px', 'font-size': font + 'px'}" :class="[ customizers['no-space'] ? 'break-words' : '', alphabetsMode_ ? 'text-center break-words': 'text-left', !alphabetsMode_ && textPosition=== 'center' ? 'text-center' : !alphabetsMode_ && textPosition=== 'right' ? 'text-right' : 'text-left'] " class="overflow-y-auto scroll-smooth noscrollbar leading-[1.4] h-fit py-[1px] ring-[1px] ring-green-800 ring-opacity-20">
                 <Alphabet
                 v-for="(alphabet, index) in containerText"
@@ -19,11 +11,9 @@
                 :equality="playerInput[index] === alphabet"
                 :alphabet="alphabet"/>
             </div>
-            <p v-if="movie.name" :class="[theme === 'dark' ? 'text-white' : 'text-black']" class="pt-5 text-xs italic text-right text-slate-500 whitespace-nowrap">{{movie.quoteAuthor}} - {{ movie.name }}</p>
-            <p  v-if="authoredQuote.author" class="text-xs italic text-right text-slate-500">{{authoredQuote.author}}</p>
-            <div v-if="!hideElements" class="flex items-center py-3 max-w-[700px] space-x-2" :class="[]">
-                <RangeInput />
-                <repeat class="w-5" v-if="!alphabetsMode_" @click="enableRepeat = !enableRepeat" />
+            <div class="min-h-[16px] font-medium">
+                <p v-show="movie.name" :class="[theme === 'dark' ? 'text-white' : 'text-black']" class="pt-5 text-xs italic text-right text-slate-500 whitespace-nowrap">{{movie.quoteAuthor}} - {{ movie.name }}</p>
+                <p  v-show="authoredQuote.author" class="text-xs italic text-right text-slate-500">{{authoredQuote.author}}</p>
             </div>
         </div>
     </div>
@@ -32,13 +22,8 @@
 <script setup>
 import { onMounted, ref, watch } from 'vue';
 import { getMobileOS } from '../composables/getMobileOS';
-import repeat from './svg/repeat.vue';
 import MobileInput from'./MobileInput.vue'
-import TextAlign from './TextAlign.vue'
-import Blind from './Blind.vue';
-import Clock from './Clock.vue'
 import Alphabet from './Alphabet.vue'
-import RangeInput from './RangeInput.vue'
 import {storeToRefs} from 'pinia'
 import { customizeStore } from '../store/customizeStore';
 import {mainStore} from '../store/mainStore'
@@ -55,9 +40,8 @@ const alphabets_ = alphabetsStore()
 const { alphabetsMode_ } = storeToRefs(alphabets_)
 
 const store = mainStore()
-const { containerText, previousPlayerInput, resultData, containerRef, containerHeight, movie, beatCountdown, enableRepeat, playerInputLength, playerInput, authoredQuote, scrollTextContainer, inputEl} = storeToRefs(store)
+const { containerText, previousPlayerInput, textPosition, resultData, containerRef, containerHeight, movie, beatCountdown, playerInputLength, playerInput, authoredQuote, scrollTextContainer, inputEl} = storeToRefs(store)
 const { sessionComplete} = store
-const textPosition = ref('left')
 const customize = customizeStore()
 const { customizers, hideElements} = storeToRefs(customize)
 

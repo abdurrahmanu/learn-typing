@@ -59,7 +59,7 @@ onMounted(() => {
                     //     'slide-down-scale-up'
                     // ]
                     // let randomAnimation = Math.round(Math.random() * types.length - 1)
-                    animationName.value = 'slide-right-scale-down'
+                    animationName.value = 'slide-down-scale-down'
                 }
             }
         }

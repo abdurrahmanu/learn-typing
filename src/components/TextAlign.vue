@@ -1,25 +1,29 @@
 <template>
-    <div class="flex justify-center mx-auto text-xs scale-90 opacity-50 cursor-pointer gap-3 w-fit">
-        <div @click="$emit('align', 'left'), position = 'left'" class="m-auto scale-75 w-fit">
-            <alignLeft :position="position === 'left'"/>
+    <div  v-if="!getMobileOS() && !alphabetsMode_" class="flex justify-center mx-auto text-xs cursor-pointer gap-3 w-fit max-[400px]:hidden">
+        <div @click="textPosition = 'left'">
+            <alignLeft :position="textPosition === 'left'" class="w-5" />
         </div>
-        <div  @click="$emit('align', 'center'), position = 'center'" class="m-auto scale-75 w-fit">
-            <alignMiddle :position="position === 'center'"/>
+        <div  @click="textPosition = 'center'">
+            <alignMiddle :position="textPosition === 'center'" class="w-5"/>
         </div>
-        <div @click="$emit('align', 'right'), position = 'right'" class="m-auto scale-75 w-fit">
-            <alignRight :position="position === 'right'" />
+        <div @click="textPosition = 'right'">
+            <alignRight :position="textPosition === 'right'" class="w-5"/>
         </div>
     </div>
 </template>
 
 <script setup>
-import {ref} from 'vue'
 import alignLeft from './svg/alignLeft.vue';
 import alignMiddle from './svg/alignMiddle.vue';
 import alignRight from './svg/alignRight.vue';
+import {storeToRefs} from 'pinia'
+import {alphabetsStore}  from '../store/alphabetsModeStore'
+import { getMobileOS } from '../composables/getMobileOS';
+import { mainStore } from '../store/mainStore';
 
-const position = ref('left')
-const props = defineProps({
-    textPosition: String,
-})
+const store = mainStore()
+const {textPosition} = storeToRefs(store)
+
+const alphabets = alphabetsStore()
+const {alphabetsMode_ } = storeToRefs(alphabets)
 </script>

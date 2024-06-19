@@ -3,7 +3,7 @@
         <div  class="font-mono text-right flex justify-between px-2 w-full border-r border-r-zinc-700 shadow-sm shadow-black items-center gap-4">
             <div class=" text-lg font-mono p-2">SETTINGS</div>
             <div class="p-[2px] text-white font-bold font-mono text-lg" @click="toggleSettings">
-                <img src="/cancel.svg" class="w-7" alt="">
+                <p class="font-mono w-fit hover:text-red-500">X</p>
             </div>
         </div>
     </div>

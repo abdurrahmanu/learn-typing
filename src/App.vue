@@ -1,5 +1,5 @@
 <template>
-  <div :class="[appTheme]">
+  <div :class="[theme === 'dark' ? 'bg-neutral-800' : 'bg-slate-300']">
     <div :class="[appTheme]" class="font-light selection:bg-none home max-w-[1300px] m-auto relative min-h-[100dvh]">
       <div class="min-h-[100dvh]">
         <Header />
@@ -14,6 +14,7 @@
       <DropdownNav />
         </div>
   </div>
+
 </template>
 
 <script setup>
@@ -42,13 +43,13 @@ const auth_ = authStore()
 const {isAuthenticated, userID, userData } = storeToRefs(auth_)
 
 const theme_ = themeStore()
-const { appTheme } = storeToRefs(theme_)
+const { appTheme, theme } = storeToRefs(theme_)
 
 const font_ = fontStore()
 const {font } = storeToRefs(font_)
 
 const main = mainStore()
-const { containerHeight, capsIsOn} = storeToRefs(main)
+const { containerHeight, capsIsOn } = storeToRefs(main)
 
 onAuthStateChanged(auth, async (user) => {
   if (user) {

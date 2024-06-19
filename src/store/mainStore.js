@@ -8,6 +8,7 @@ export const mainStore = defineStore('mainStore', () => {
     const userEl = ref(null)
     const focus = ref(false)
     const mode = ref('auto')
+    const textPosition = ref('left')
     const capsIsOn = ref(false)
 
     //Test container
@@ -114,6 +115,7 @@ export const mainStore = defineStore('mainStore', () => {
         inputEl,
         userEl,
         focus,
+        textPosition,
 
         containerRef,
         containerHeight,

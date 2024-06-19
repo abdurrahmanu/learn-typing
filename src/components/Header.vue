@@ -1,41 +1,40 @@
 <template>
-    <nav :class="[appTheme]" class="sticky top-0 mx-auto flex items-center justify-between py-2 pl-3 pr-2 h-[50px] shadow-sm shadow-black max-w-[1300px] mb-3 xl:fixed xl:w-full xl:left-[50%] xl:translate-x-[-50%] z-[2]">
-        <div class="flex items-center gap-3">
-            <user @click="toggleNavbar = !toggleNavbar"/>
-            <div class="font-mono text-xl font-bold cursor-default md:text-2xl">KEYS-HUB</div>
-        </div>
-        <div class="flex gap-2 rounded-full w-fit">
-            <settings v-if="route.name === 'home'" @click="toggleSettings" class="h-7" />
-        </div>
+    <nav :class="[appTheme]" class="sticky top-0 mx-auto flex items-center justify-between py-2 pl-3 pr-2 h-[50px] max-w-[1300px] lg:mb-6 mb-3 xl:fixed xl:w-full xl:left-[50%] xl:translate-x-[-50%] z-[2]">
+            <div class="font-mono font-medium cursor-default w-fit h-fit relative hover:animate-pulse"><span class="absolute top-0 left-[50%] translate-x-[-50%] text-xs font-bold">KEY</span><keyboard class="w-7"/></div>
+            <div class="flex gap-4 rounded-full w-fit items-center">
+                <div v-if="route.name === 'home'"class="flex items-center gap-4">
+                    <Clock />
+                    <Blind />
+                    <repeat class="w-4"/>
+                    <TextAlign  />
+                </div>
+                <div class="font-black font-serif text-xl hover:text-green-400 rounded-full cursor-pointer">i</div>
+                <settings class="w-5" />
+                <user class="w-4" />
+            </div>
+        <CompletionRange v-if="hideElements" />
     </nav>
 </template>
 
 <script setup>
+import keyboard from './svg/keyboard.vue'
 import user from './svg/user.vue'
 import settings from './svg/settings.vue';
+import TextAlign from './TextAlign.vue';
+import repeat from './svg/repeat.vue';
+import Blind from './Blind.vue'
+import Clock from './Clock.vue'
+import CompletionRange from './CompletionRange.vue';
 import {storeToRefs} from 'pinia'
-import { pagesStore } from '../store/pagesStore';
-import {customizeStore} from '../store/customizeStore'
-import { mainStore } from '../store/mainStore';
-import {useRoute} from 'vue-router'
 import {themeStore}  from '../store/themeStore'
+import { customizeStore } from '../store/customizeStore';
+import {useRoute} from 'vue-router'
 
-const pages = pagesStore()
-const {toggleNavbar } = storeToRefs(pages)
+const route = useRoute()
 
 const theme_ = themeStore()
 const { appTheme } = storeToRefs(theme_)
 
-const route = useRoute()
-const store = mainStore()
-const { pauseTyping} = storeToRefs(store)
-
-const main = customizeStore()
-const { showMoreSettings} = storeToRefs(main)
-
-const toggleSettings = () => {
-    showMoreSettings.value = !showMoreSettings.value
-    if (showMoreSettings.value) pauseTyping.value = true
-    else pauseTyping.value = false
-}
+const customize = customizeStore()
+const { hideElements } = storeToRefs(customize)
 </script>
