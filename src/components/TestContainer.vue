@@ -1,8 +1,9 @@
 <template>
-    <div class="w-[90%] min-h-[150px] space-y-[3px] relative transition-none  max-w-[900px] m-auto xl:pt-10" :class="[hideElements ? 'pt-3 xl:pt-24' : 'pt-0']">
+    <main class="w-[90%] min-h-[150px] space-y-[3px] relative transition-none  max-w-[900px] m-auto xl:pt-10" :class="[hideElements ? 'pt-3 xl:pt-24' : 'pt-0']">
         <MobileInput />
         <div v-if="containerText" class="transition-all duration-100 relative mx-auto max-w-[700px] w-full py-6">
-            <div ref="containerRef" @click="getMobileOS() ? inputEl.focus() : ''" :style="{'height' : containerHeight + 'px', 'font-size': font + 'px'}" :class="[ customizers['no-space'] ? 'break-words' : '', alphabetsMode_ ? 'text-center break-words': 'text-left', !alphabetsMode_ && textPosition=== 'center' ? 'text-center' : !alphabetsMode_ && textPosition=== 'right' ? 'text-right' : 'text-left'] " class="overflow-y-auto scroll-smooth noscrollbar leading-[1.4] h-fit py-[1px] ring-[1px] ring-green-800 ring-opacity-20">
+            <div aria-describedby="full-text" ref="containerRef" @click="getMobileOS() ? inputEl.focus() : ''" :style="{'height' : containerHeight + 'px', 'font-size': font + 'px'}" :class="[ customizers['no-space'] ? 'break-words' : '', alphabetsMode_ ? 'text-center break-words': 'text-left', !alphabetsMode_ && textPosition=== 'center' ? 'text-center' : !alphabetsMode_ && textPosition=== 'right' ? 'text-right' : 'text-left'] " class="overflow-y-auto scroll-smooth noscrollbar leading-[1.4] h-fit py-[1px] ring-[1px] ring-green-800 ring-opacity-20">
+                <p id="full-text" class="hidden">{{ containerText }}</p>
                 <Alphabet
                 v-for="(alphabet, index) in containerText"
                 :index="index"
@@ -16,7 +17,7 @@
                 <p  v-show="authoredQuote.author" class="text-xs italic text-right text-slate-500">{{authoredQuote.author}}</p>
             </div>
         </div>
-    </div>
+    </main>
 </template>
 
 <script setup>

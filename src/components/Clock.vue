@@ -12,9 +12,9 @@
                 <pauseTimer @click="timer" class="h-7" />
             </div>
             <playTimer v-if="!timedTyping" @click="timer" class="w-5" />
-            <div v-if="timedTyping && !beginCountdown" class="flex items-center font-mono w-fit gap-1">  
+            <div v-if="timedTyping && !beginCountdown" class="flex items-center font-mono w-fit gap-1 relative">  
                     <playTimer @click="timer" class="w-5" />
-                    <div class="flex text-xs border border-black h-fit scale-105">
+                    <div class="flex text-xs border border-black h-fit scale-105 max-[410px]:absolute max-[410px]:top-[calc(100%_+_2px)] max-[410px]:left-[50%] max-[410px]:translate-x-[-50%]">
                         <div class="px-2 border-r border-r-black w-fit" :class="[savedCountdown === 10 ? 'text-green-700 bg-white font-black' : '']" @click="selectCountDown(10)">10s</div>
                         <div class="px-2 border-r border-r-black w-fit" :class="[savedCountdown === 20 ? 'text-green-700 bg-white font-black' : '']" @click="selectCountDown(20)">20s</div>
                         <div class="px-2 border-l border-l-black w-fit" :class="[savedCountdown === 30 ? 'text-green-700 bg-white font-black' : '']" @click="selectCountDown(30)">30s</div>

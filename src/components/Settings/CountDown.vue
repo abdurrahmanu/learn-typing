@@ -3,7 +3,7 @@
             <div class="flex justify-between w-full p-1 border border-transparent rounded-sm  ">
                 <div @click="timedTyping = !timedTyping" class="flex gap-4 w-fit">
                     <input name="countdown" :checked="timedTyping" type="checkbox">
-                    <p class="font-medium w-fit">Countdown Typing</p>
+                    <label class="font-medium w-fit">Countdown Typing</label>
                 </div>
             </div>
             <p class="px-3">Play with countdown, tests automatically end at the end of countdown, untyped alphabets are considered as errors</p>

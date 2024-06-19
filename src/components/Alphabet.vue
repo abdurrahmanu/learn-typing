@@ -1,5 +1,5 @@
 <template>
-    <div ref="currentAlphabet" :class="[customizers['no-space'] ? '' : 'whitespace-pre-wrap']" class="relative inline ">
+    <div aria-hidden="true" ref="currentAlphabet" :class="[customizers['no-space'] ? '' : 'whitespace-pre-wrap']" class="relative inline ">
         <span  :class="[equalStyle, currentIndexStyle, mainStyle, !currentIndex ? 'border-transparent' : '']" class="border" >{{ alphabet }} </span>
     </div>
 </template> 

@@ -1,5 +1,5 @@
 <template>
-    <div  v-if="!getMobileOS() && !alphabetsMode_" class="flex justify-center mx-auto text-xs cursor-pointer gap-3 w-fit max-[400px]:hidden">
+    <div  v-if="!getMobileOS() && !alphabetsMode_" class="flex justify-center mx-auto text-xs cursor-pointer gap-3 w-fit max-[500px]:hidden">
         <div @click="textPosition = 'left'">
             <alignLeft :position="textPosition === 'left'" class="w-5" />
         </div>

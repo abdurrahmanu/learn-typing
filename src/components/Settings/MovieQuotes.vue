@@ -3,7 +3,7 @@
         <div class="flex justify-between w-full p-1 border border-transparent rounded-sm ">
             <div @click="customize('movie-quotes', !customizers['movie-quotes'])"  class="flex gap-4 w-fit">
                 <input name="movie" :checked="customizers['movie-quotes']" type="checkbox">
-                <p class="font-medium w-fit">Movie quotes</p>
+                <label class="font-medium w-fit">Movie quotes</label>
             </div>
         </div>
         <p class="px-2">**This is only available for quotes mode with auto-length. On-select, it automatically enables both modes</p>

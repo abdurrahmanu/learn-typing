@@ -1,7 +1,7 @@
 <template>
     <div :class="appTheme" class="min-h-[200px] text-center xl:pt-20">
         <p class="py-3 font-mono text-2xl text-center text-slate-500">STATISTICS</p>
-        <div class="w-fit p-[1px] hover:bg-gradient-to-tr transition-all duration-500rounded-md m-auto">            
+        <div class="w-fit p-[1px] hover:bg-gradient-to-tr transition-all duration-500rounded-md m-auto py-5">            
             <div class="flex justify-center p-3 m-auto font-mono border border-transparent rounded-md w-fit hover:border-zinc-600">
                 <div class="relative px-4 text-center border-r border-r-teal-700">
                     <div :class="[accuracy() > 85 ? 'bg-green-500' : 'bg-red-400']" class="w-[10px] absolute bottom-0 right-0 h-[10px]"></div>
@@ -15,7 +15,7 @@
                 <div class="relative px-4 text-center border-r border-r-teal-700">
                     <div :class="[resultData.WPM > 50 ? 'bg-green-500' : 'bg-red-400']" class="w-[10px] absolute bottom-0 right-0 h-[10px]"></div>
                     <div class="text-xs">WPM</div>
-                    <div class="">{{ resultData.WPM }}</div>
+                    <div class="">{{ (resultData.WPM * (accuracy() / 100)).toFixed(0) }}</div>
                 </div>
                 <div class="relative px-4 border-r border-r-teal-700"> 
                     <div :class="[errorRatioLevel() ? 'bg-green-500' : 'bg-red-400']" class="w-[10px] absolute bottom-0 right-0 h-[10px]"></div>

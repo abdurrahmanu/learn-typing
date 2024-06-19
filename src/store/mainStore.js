@@ -62,7 +62,8 @@ export const mainStore = defineStore('mainStore', () => {
             characters: containerText.value.length,
             totalTime: totalTime.value.toFixed(2),
             testType: timedTyping.value ? 'Countdown mode ' + savedCountdown.value + 's' : '',
-            WPM: Math.round( (((containerText.value.length - wrongCount.value) / 5)) / (totalTime.value/60))
+            WPM: Math.round( (((containerText.value.length - wrongCount.value) / 5)) / (totalTime.value/60)),
+            s: Math.round( (containerText.value.length / 5) / (totalTime.value/60))
         }
     })
 

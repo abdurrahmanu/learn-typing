@@ -2,7 +2,7 @@
     <div :class="[theme === 'dark' ? 'hover:bg-neutral-700' : 'hover:bg-slate-100']" class="py-2 pl-5 pb-10">
         <div @click="toggle" class="flex w-full p-1 space-x-4 border border-transparent rounded-sm">
             <input :disabled="!(alphabetsCombination.length > 1)" :checked="useAlphabetCombination"  type="checkbox" name="letter-combination" id="id">
-            <p for="id" class="font-medium w-fit">Letter Combinations</p>
+            <label for="id" class="font-medium w-fit">Letter Combinations</label>
         </div>
         <div class="px-4 pb-1">
             <p>**This test randomly repeats alphabets you select, Maximum selection of six entries and minimum of two</p>

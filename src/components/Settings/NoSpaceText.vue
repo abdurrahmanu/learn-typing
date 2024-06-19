@@ -3,7 +3,7 @@
         <div class="flex justify-between w-full p-1 border border-transparent rounded-sm  ">
             <div @click="customize('no-space', !customizers['no-space'])" class="flex gap-4 w-fit">
                 <input name="nospace" :checked="customizers['no-space']" type="checkbox">
-                <p class="font-medium w-fit">NoSpace</p>
+                <label class="font-medium w-fit">NoSpace</label>
             </div>
         </div>
         <p class="px-3">All white spaces are cleared between words</p>

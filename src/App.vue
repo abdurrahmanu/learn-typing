@@ -1,20 +1,19 @@
 <template>
-  <div :class="[theme === 'dark' ? 'bg-neutral-800' : 'bg-slate-300']">
-    <div :class="[appTheme]" class="font-light selection:bg-none home max-w-[1300px] m-auto relative min-h-[100dvh]">
-      <div class="min-h-[100dvh]">
-        <Header />
+  <div :class="[appTheme]" class="font-light selection:bg-none home max-w-[1300px] m-auto relative min-h-[100dvh] container">
+    <div class="min-h-[100dvh]">
+      <Header />
+      <main>
         <RouterView />
         <Restart />
-        <SwitchModes  />
-        </div>
-        <Theme />
-        <HideElements />
-        <Toast :toggle="capsIsOn" right text="CAPSLOCK IS ON" />
-        <Animate />
-      <DropdownNav />
-        </div>
-  </div>
-
+        <SwitchModes />
+      </main>
+      </div>
+      <Theme />
+      <HideElements />
+      <Toast :toggle="capsIsOn" right text="CAPSLOCK IS ON" />
+      <Animate />
+    <DropdownNav />
+    </div>
 </template>
 
 <script setup>

@@ -3,15 +3,12 @@ import { storeToRefs } from 'pinia';
 
 export const mobileInputEvent = (e) => {
         const store = mainStore()
-        const { containerText, beatCountdown, pauseTyping, playerInputLength, playerInput, enableBackSpace, backspaceIsPressed, playerLastInput, beginCountdown, startTime, enterKey, timedTyping, focus} = storeToRefs(store)
+        const { containerText, beatCountdown, pauseTyping, playerInputLength, wrongCount, playerInput, enableBackSpace, backspaceIsPressed, playerLastInput, beginCountdown, startTime, enterKey, timedTyping, focus} = storeToRefs(store)
         const { sessionComplete } = store
 
-    if (focus.value) return
-    if (e.key === 'Enter' && !enterKey.value) return
-    if (pauseTyping.value) return
+    if (focus.value || (e.key === 'Enter' && !enterKey.value) || pauseTyping.value) return
     if (e.inputType === 'deleteContentBackward') {
-        if (!enableBackSpace.value) return
-        if (playerInputLength.value === 0) return
+        if (!enableBackSpace.value || playerInputLength.value === 0 || wrongCount.value === 0) return
         backspaceIsPressed.value = true
     }
     if (e.inputType === 'deleteContentBackward') return

@@ -1,7 +1,7 @@
 <template>
-    <div class="flex items-center m-auto rounded-md w-fit text-black text-xs">
+    <div :class="[appTheme]" class="flex items-center m-auto rounded-md w-fit text-black text-xs">
         <LeftArrow @click="prev" :class="[hasPrev ? 'cursor-pointer' : 'opacity-10 cursor-not-allowed']" class="w-9 h-fit" />
-        <div class="px-3 py-1 text-sm text-blue-700 transition-all border border-transparent hover:border-blue-700 duration-100 rounded-md cursor-pointer w-fit">{{ pagesArray[currentPage] }}</div>
+        <div class="px-3 py-1 text-sm transition-all duration-100 font-mono rounded-md cursor-pointer w-fit font-medium">{{ pagesArray[currentPage] }}</div>
         <RightArrow @click="next" :class="[hasNext ? 'cursor-pointer' : 'opacity-40 cursor-not-allowed']" class="w-9 h-fit" />
     </div>
 </template>
@@ -12,10 +12,14 @@ import { storeToRefs } from 'pinia';
 import LeftArrow from '../svg/LeftArrow.vue';
 import RightArrow from '../svg/RightArrow.vue';
 import {pagesStore}  from '../../store/pagesStore'
+import { themeStore } from '../../store/themeStore';
 
 const pages = pagesStore()
 const {currentPage } = storeToRefs(pages)
 const emit = defineEmits(['page'])
+
+const theme_ = themeStore()
+const {appTheme} = storeToRefs(theme_)
 
 const props = defineProps({
     pagesArray: {
