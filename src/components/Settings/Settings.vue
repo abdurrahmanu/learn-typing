@@ -9,12 +9,13 @@
                     <AuthoredQoutes />
                     <BlindMode />
                     <BackSpace />
-                    <Caret />
-                    <Fonts />
                     <Countdown />
                     <AllCaps />
                     <CustomCamelCase />
                     <NoSpaceText />
+                    <Fonts />
+                    <Caret />
+                    <!-- <Reset /> -->
                 </div>
             </div>
             <div v-if="alphabetsMode_">
@@ -27,6 +28,7 @@
                         <Caret />
                         <Fonts />
                         <LetterCombinations />
+                        <!-- <Reset /> -->
                     </div>
                 </div>
             </div>
@@ -36,6 +38,7 @@
 
 <script setup>
 import Caret from './Caret.vue'
+import Reset from './Reset.vue'
 import Fonts from './Fonts.vue'
 import AuthoredQoutes from './AuthoredQuotes.vue'
 import Header from './Header.vue'
@@ -43,7 +46,6 @@ import AllCaps from './AllCaps.vue'
 import CustomCamelCase from './CustomCamelCase.vue'
 import NoSpaceText from './NoSpaceText.vue'
 import BlindMode from './BlindMode.vue'
-import CustomText from './CustomText.vue'
 import BackSpace from './BackSpace.vue';
 import Countdown from './CountDown.vue';
 import MovieQuotes from './MovieQuotes.vue'

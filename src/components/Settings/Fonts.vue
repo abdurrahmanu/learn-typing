@@ -1,5 +1,5 @@
 <template>
-    <div :class="[theme === 'dark' ? 'hover:bg-neutral-700' : 'hover:bg-slate-100']" class="flex max-w-[600px] items-center gap-2 py-4 pl-5">           
+    <div :class="[theme === 'dark' ? 'hover:bg-neutral-700' : 'hover:bg-slate-100']" class="flex items-center gap-2 py-4 pl-5">           
         <div class="w-[90%]">
             <div class="flex justify-between items-center">
                 <div class="text-sm whitespace-nowrap font-medium">TEST FONT</div> 
