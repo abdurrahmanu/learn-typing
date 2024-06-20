@@ -1,12 +1,12 @@
 <template>
-  <div ref="containerEl" :class="[!hasCompletedSession && !alphabetsMode_ ? 'xl:right-[130px]' : '']" class="py-[3px] m-auto rounded-md w-fit relative max-w-[90%] bg-inherit xl:z-[3]">
+  <div ref="containerEl" :class="[!hasCompletedSession && !alphabetsMode_ ? 'xl:right-[130px]' : '']" class="py-[3px] m-auto rounded-md w-fit relative max-w-[90%] bg-inherit xl:z-[3] font-mono">
     <div :style="{'width': completionLevel + '%'}" :class="[theme === 'dark' ? 'bg-green-200 after:bg-green-400' : 'bg-green-600 after:bg-green-600', !completionLevel || playerInput.length < 4 ? 'after:w-0 after:hidden' : 'after:w-[15px] after:right-0 after:absolute after:top-0 after:bottom-0 after:blur-[5px]']" class="absolute left-0 bottom-0 top-0 m-auto rounded-md max-[460px]:hidden" v-if="isBlindMode" ></div>
     <div :style="{'width': completionLevel + '%'}" class="absolute left-0 bottom-0 top-0 m-auto rounded-md max-[460px]:hidden flex" v-else>
         <div v-show="index <= playerInput.length - 1" :class="[playerInput[index] === alphabet && index <= playerInput.length - 1 ? 'bg-green-500 after:bg-green-500' : 'bg-red-500 after:bg-red-500', index === 0 ? 'rounded-l-md' : '', index === playerInput.length - 1 ? 'after:w-[15px] after:right-0 after:top-0 after:bottom-0 after:blur-[5px]' : 'after:w-0 after:hidden', !completionLevel || index < 3 ? 'after:hidden' : 'after:absolute']" class="h-[100%]" :style="{'width': singleDivWidth + 'px'}" v-for="(alphabet, index) in containerText" :key="index"></div>
     </div>
 
     <div v-if="!hasCompletedSession && !alphabetsMode_" :class="[appTheme]" class="rounded-md m-auto max-w-fit ring-1 ring-green-600 xl:ring-0 relative">
-        <div class="text-[12px] items-center font-mono p-1 flex max-w-[1000px] justify-center flex-wrap relative">
+        <div class="text-[12px] items-center p-1 flex max-w-[1000px] justify-center flex-wrap relative">
             <div class="p-1" v-for="(optionArr, key, listIndex) in option" :key="listIndex">          
                 <div 
                 :class="[hoverIndex === listIndex ? 'border-zinc-400' : 'border-transparent']" class="relative flex gap-2 py-[2px] px-1 border rounded-lg cursor-pointer flex-wrap justify-center"
@@ -26,7 +26,7 @@
         </div>
     </div>
 
-    <div v-if="!hasCompletedSession && alphabetsMode_" :class="[appTheme]" class="rounded-md  w-[90%] min-w-fit m-auto max-w-fit ring-1 ring-green-600 xl:ring-0 relative flex gap-1 py-1 px-2 font-normal text-[12px] flex-wrap justify-center font-mono border border-transparent hover:border-zinc-500 group">
+    <div v-if="!hasCompletedSession && alphabetsMode_" :class="[appTheme]" class="rounded-md  w-[90%] min-w-fit m-auto max-w-fit ring-1 ring-green-600 xl:ring-0 relative flex gap-1 py-1 px-2 font-normal text-[12px] flex-wrap justify-center group">
           <div :class="[alphabetsConfig.uppercase ? 'text-green-500' : '']" @click="changeMode('uppercase')" class="px-[5px] hover:scale-105 rounded-md">uppercase</div>
           <div :class="[alphabetsConfig.customCase ? 'text-green-500' : '']" @click="changeMode('customCase')" class="px-[5px] hover:scale-105 rounded-md">randomcase</div>
           <div :class="[alphabetsConfig.spaced ? 'text-green-500' : '']" @click="changeMode('spaced')" class="px-[5px] hover:scale-105 rounded-md">space</div>

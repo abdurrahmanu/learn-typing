@@ -8,7 +8,6 @@
         <SwitchModes />
         </main>
         </div>
-      <div class="flex" ref="el"></div>
       <Theme />
       <HideElements />
       <Toast :toggle="capsIsOn" right text="CAPSLOCK IS ON" />
