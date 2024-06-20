@@ -4,7 +4,7 @@ import { useCustomizeFormat } from './customizers/useCustomizeFormat';
 import { customizeStore } from '../store/customizeStore.js';
 import authoredQuotes from '../../data/quotes.json'
 
-export function  UseGetQuotes (config, customText) {
+export async function UseGetQuotes (config, customText) {
     const res = ref('')
     const {mostUsed, mediumUsed, rarelyUsed, numbers, quotesWithoutAuthors, movieQuotes} = englishWords()
     const movieQuotesAndAuthoredQuotes = config['movie-quotes'] && config['author-quotes']
@@ -119,7 +119,6 @@ export function  UseGetQuotes (config, customText) {
                     if (config['words-type'] === 'less-used') words.value = [...mediumUsed, ...mostUsed]
                     if (config['words-type'] === 'rarely-used') words.value = [...rarelyUsed, ...mostUsed, ...mediumUsed]
                 }
-    
                 if (length) {
                     for (let index = 0; index < length; index++) {
                         if (index == 0) {
@@ -134,7 +133,7 @@ export function  UseGetQuotes (config, customText) {
                     }
                 }
                 else {
-                    for (let index = 0; index < Math.round(Math.random() * 40) + 10; index++) {
+                    for (let index = 0; index < Math.round(Math.random() * 50) + 10; index++) {
                         if (index == 0) {
                             res.value += words.value[Math.ceil(Math.random() * words.value.length) - 1]
                         } else {
@@ -145,7 +144,6 @@ export function  UseGetQuotes (config, customText) {
             }
         }
     }
-
     function customizers () {
         if (typeof res.value === 'object') {
             if (movieQuotesAndAuthoredQuotes) {
@@ -172,5 +170,5 @@ export function  UseGetQuotes (config, customText) {
     else  generateText()
     customizers()
 
-    return { res }
+    return res.value
 };

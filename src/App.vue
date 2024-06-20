@@ -6,8 +6,9 @@
         <RouterView />
         <Restart />
         <SwitchModes />
-      </main>
-      </div>
+        </main>
+        </div>
+      <div class="flex" ref="el"></div>
       <Theme />
       <HideElements />
       <Toast :toggle="capsIsOn" right text="CAPSLOCK IS ON" />
@@ -17,7 +18,7 @@
 </template>
 
 <script setup>
-import {onBeforeMount, onMounted, watch} from 'vue'
+import {onBeforeMount, onMounted, watch, ref, watchEffect} from 'vue'
 import Header from './components/Header.vue'
 import Toast from './components/Toast.vue'
 import DropdownNav from './components/DropdownNav.vue';

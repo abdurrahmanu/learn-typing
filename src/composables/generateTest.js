@@ -11,29 +11,30 @@ export const generateTest = async (config, restart) => {
         containerText.value = storedTextForRepeat.value
         }
 
-        
     else if (mode.value === 'auto') {
-        let quote = UseGetQuotes(config).res.value
-        if (typeof quote === 'object') {  
-            if (!quote[2]) {
-                containerText.value = quote[1]
-                authoredQuote.value = {
-                    author: quote[0]
+        await UseGetQuotes(config).then( quote => {
+            if (typeof quote === 'object') {  
+                if (!quote[2]) {
+                    containerText.value = quote[1]
+                    console.log(containerText.value);
+                    authoredQuote.value = {
+                        author: quote[0]
+                    }
                 }
-            }
+                else {
+                    containerText.value = quote[2]
+                    movie.value = {
+                        name : quote[0],
+                        quoteAuthor: quote[1]
+                    }
+                }
+            } 
             else {
-                containerText.value = quote[2]
-                movie.value = {
-                    name : quote[0],
-                    quoteAuthor: quote[1]
+                movie.value = {}
+                authoredQuote.value = {}
+                containerText.value = quote
                 }
-            }
-        } 
-        else {
-            movie.value = {}
-            authoredQuote.value = {}
-            containerText.value = quote
-            }
+        })
     }
 
     else if (mode.value === 'alphabets') {

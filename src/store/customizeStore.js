@@ -39,7 +39,7 @@ export const customizeStore = defineStore('customizeStore', () => {
     })
 
     const allOptions = ref({
-        'text-length' : ['auto', 10, 20, 30],
+        'text-length' : ['auto', 10, 20, 30, 50],
         'words-type' : ['most-used', 'less-used', 'rarely-used'],
         'test-type' : ['quotes', 'random-words'],
         'include-caps' : ['caps'],
@@ -136,7 +136,3 @@ export const customizeStore = defineStore('customizeStore', () => {
         customize,
     }
 })
-
-
-
-
