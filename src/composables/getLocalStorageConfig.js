@@ -21,7 +21,7 @@ export const localStorageConfig = async () => {
     const { enableBackSpace, mode} = storeToRefs(main)
 
     const customize = customizeStore()
-    const { customizers, disableOption, caretType, hideElements } = storeToRefs(customize)
+    const { customizers, disableOption, caretType, hideElements, isBlindMode } = storeToRefs(customize)
 
     const pages = pagesStore()
     const {currentPage } = storeToRefs(pages)
@@ -65,6 +65,8 @@ export const localStorageConfig = async () => {
         if (localStorageSettings.value.hide) {
             hideElements.value = true
         }
+
+        isBlindMode.value = localStorageSettings.value.config[0]['blind-mode']
         
         if (localStorageSettings.value.config && localStorageSettings.value.config.length) {
             customizers.value = localStorageSettings.value.config[0]

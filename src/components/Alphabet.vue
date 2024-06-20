@@ -102,8 +102,8 @@ const equalStyle = computed(() => {
 })
 
 const currentIndexStyle = computed(() => {
-    let text = theme.value === 'dark' ? 'border text-white' : 'bg-transparent text-neutral-900' 
-    let caret = caretType.value === 'border' ? 'border border-zinc-700' : caretType.value === 'caret' ? 'border-transparent border-l-zinc-600' : caretType.value === 'underline' ? 'border-transparent border-b-blue-600' : ''
+    let text = theme.value === 'dark' ? 'border text-slate-400' : 'bg-transparent text-neutral-900' 
+    let caret = caretType.value === 'border' ? 'border border-zinc-500' : caretType.value === 'caret' ? 'border-transparent border-l-zinc-600' : caretType.value === 'underline' ? 'border-transparent border-b-blue-600' : ''
     return  props.currentIndex ? text + ' ' + caret : ''
 })
 

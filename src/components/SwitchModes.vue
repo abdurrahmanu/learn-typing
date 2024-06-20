@@ -1,5 +1,5 @@
 <template>
-    <div v-if="!hasCompletedSession && route.name === 'home' && !hideElements" class="py-6 pt-4 m-auto w-fit h-fit">
+    <div v-if="!hasCompletedSession && route.name === 'home' && !hideElements" class="py-6 m-auto w-fit h-fit">
             <Pagination 
             @page="currentPage = $event" 
             :pages-array="pages" />

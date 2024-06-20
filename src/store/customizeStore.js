@@ -9,6 +9,7 @@ export const customizeStore = defineStore('customizeStore', () => {
     const onlyMovieQuotes = ref(false)
     const onlyAuthoredQuotes = ref(false)
     const caretType = ref('border')
+    const isBlindMode = ref(false)
     const localStorageSettings = ref(JSON.parse(localStorage.getItem('dorayi-typing')))
 
     const customizers = ref({
@@ -129,6 +130,7 @@ export const customizeStore = defineStore('customizeStore', () => {
         hideElements,
         next,
         onlyAuthoredQuotes,
+        isBlindMode,
         changeConfiguration,
         useConfig, 
         customize,

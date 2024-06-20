@@ -15,11 +15,12 @@ import { customizeStore } from '../store/customizeStore';
 import { storeToRefs } from 'pinia';
 
 const custom = customizeStore()
-const { customizers, disableOption} = storeToRefs(custom)
+const { customizers, disableOption, isBlindMode} = storeToRefs(custom)
 const localStorageSettings = ref(JSON.parse(localStorage.getItem('dorayi-typing')))
 
 const customize = () => {
     customizers.value['blind-mode'] = !customizers.value['blind-mode']
+    isBlindMode.value = customizers.value['blind-mode']
     localStorageSettings.value.config = [customizers.value, disableOption.value]
     localStorage.setItem('dorayi-typing', JSON.stringify(localStorageSettings.value))
 }

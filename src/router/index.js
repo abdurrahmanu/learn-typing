@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import ResultView from '../views/ResultView.vue'
 import AuthView from '../views/AuthView.vue'
 import AccountView from '../views/AccountView.vue'
+import AboutView from '../views/AboutView.vue'
 
 const routes = [
     {
@@ -24,6 +25,11 @@ const routes = [
       path: '/account',
       name: 'account',
       component: AccountView,
+    },
+    {
+      path: '/about',
+      name: 'about',
+      component: AboutView
     }
   ]
 

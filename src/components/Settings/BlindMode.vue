@@ -21,12 +21,13 @@ const theme_ = themeStore()
 const {theme} = theme_
 
 const store = customizeStore()
-const { customizers, disableOption } = storeToRefs(store)
+const { customizers, disableOption, isBlindMode} = storeToRefs(store)
 
 const localStorageSettings = ref(JSON.parse(localStorage.getItem('dorayi-typing')))
 
 const customize = () => {
     customizers.value['blind-mode'] = !customizers.value['blind-mode']
+    isBlindMode.value = customizers.value['blind-mode']
     localStorageSettings.value.config = [customizers.value, disableOption.value]
     localStorage.setItem('dorayi-typing', JSON.stringify(localStorageSettings.value))
 }
