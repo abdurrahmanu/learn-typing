@@ -13,24 +13,20 @@
 <script setup>
 import {ref, computed, watch} from 'vue'
 import { mainStore } from '../../store/mainStore';
-import { customizeStore } from '../../store/customizeStore';
 import { storeToRefs } from 'pinia';
 import { countdownStore } from '../../store/countdownStore'
-import { fontStore } from '../../store/fontStore'
+import { customizeStore } from '../../store/customizeStore'
 import { themeStore } from '../../store/themeStore';
 
 const theme_ = themeStore()
 const {theme} = theme_
-
-const font_ = fontStore()
-const { font, range} = storeToRefs(font_)
 
 const store = mainStore()
 const {timedTyping, playerInput} = storeToRefs(store)
 const {switchNext} = store
 
 const customize = customizeStore()
-const { customizers} = storeToRefs(customize)
+const { customizers, font, range} = storeToRefs(customize)
 
 const count = countdownStore()
 const {clearCounter} = count

@@ -12,7 +12,6 @@
       <HideElements />
       <Toast :toggle="capsIsOn" right text="CAPSLOCK IS ON" />
       <Animate />
-    <DropdownNav />
     </div>
 </template>
 
@@ -20,7 +19,6 @@
 import {onBeforeMount, onMounted, watch, ref, watchEffect} from 'vue'
 import Header from './components/Header.vue'
 import Toast from './components/Toast.vue'
-import DropdownNav from './components/DropdownNav.vue';
 import SwitchModes from './components/SwitchModes.vue';
 import Restart from './components/Restart.vue';
 import Animate from './components/Animate.vue';
@@ -29,26 +27,29 @@ import HideElements from './components/HideElements.vue'
 import {mainStore} from './store/mainStore'
 import { storeToRefs } from 'pinia';
 import {themeStore}  from './store/themeStore'
-import {fontStore}  from './store/fontStore'
+import {customizeStore}  from './store/customizeStore'
 import { authStore } from './store/authStore';
 import {db} from './firebase.js';
 import {getAuth, onAuthStateChanged} from 'firebase/auth'
 import { doc, getDoc} from 'firebase/firestore'
+import { useRoute } from 'vue-router';
 import {localStorageConfig} from './composables/getLocalStorageConfig'
 
+const route = useRoute()
 const auth = getAuth()
 
 const auth_ = authStore()
 const {isAuthenticated, userID, userData } = storeToRefs(auth_)
 
 const theme_ = themeStore()
-const { appTheme, theme } = storeToRefs(theme_)
+const { appTheme } = storeToRefs(theme_)
 
-const font_ = fontStore()
-const {font } = storeToRefs(font_)
+const customize = customizeStore()
+const {font } = storeToRefs(customize)
 
 const main = mainStore()
 const { containerHeight, capsIsOn } = storeToRefs(main)
+
 
 onAuthStateChanged(auth, async (user) => {
   if (user) {

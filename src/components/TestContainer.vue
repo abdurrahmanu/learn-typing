@@ -26,10 +26,9 @@ import { getMobileOS } from '../composables/getMobileOS';
 import MobileInput from'./MobileInput.vue'
 import Alphabet from './Alphabet.vue'
 import {storeToRefs} from 'pinia'
-import { customizeStore } from '../store/customizeStore';
 import {mainStore} from '../store/mainStore'
 import { countdownStore } from '../store/countdownStore';
-import { fontStore } from '../store/fontStore';
+import { customizeStore } from '../store/customizeStore';
 import { themeStore } from '../store/themeStore';
 import {alphabetsStore}  from '../store/alphabetsModeStore';
 import { generateTest } from '../composables/generateTest';
@@ -43,17 +42,15 @@ const { alphabetsMode_ } = storeToRefs(alphabets_)
 const store = mainStore()
 const { containerText, previousPlayerInput, textPosition, resultData, containerRef, containerHeight, movie, beatCountdown, playerInputLength, playerInput, authoredQuote, scrollTextContainer, inputEl} = storeToRefs(store)
 const { sessionComplete} = store
+
 const customize = customizeStore()
-const { customizers, hideElements} = storeToRefs(customize)
+const { customizers, hideElements, font} = storeToRefs(customize)
 
 const theme_ = themeStore()
 const {theme} = storeToRefs(theme_)
 
 const count = countdownStore()
 const {countdown} = storeToRefs(count)
-
-const font_ = fontStore()
-const {font} = storeToRefs(font_)
 
 watch(scrollTextContainer, (newVal, oldVal)=> {
     if (containerRef.value instanceof HTMLElement) {

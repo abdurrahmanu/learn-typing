@@ -1,18 +1,14 @@
 import {ref} from 'vue'
 import { mainStore } from "../store/mainStore"
 import { storeToRefs } from 'pinia';
-import { customizeStore } from '../store/customizeStore';
 import {pagesStore}  from '../store/pagesStore'
 import {themeStore}  from '../store/themeStore'
-import {fontStore} from '../store/fontStore'
+import {customizeStore} from '../store/customizeStore'
 import {alphabetsStore}  from '../store/alphabetsModeStore';
 
 export const localStorageConfig = async () => {
     const alphabets_ = alphabetsStore()
     const { alphabetsMode_, alphabetsCombination, useAlphabetCombination } = storeToRefs(alphabets_)
-
-    const font_ = fontStore()
-    const {font, range} = storeToRefs(font_)
 
     const theme_ = themeStore()
     const {theme } = storeToRefs(theme_)
@@ -21,7 +17,7 @@ export const localStorageConfig = async () => {
     const { enableBackSpace, mode} = storeToRefs(main)
 
     const customize = customizeStore()
-    const { customizers, disableOption, caretType, hideElements, isBlindMode } = storeToRefs(customize)
+    const { customizers, disableOption, caretType, hideElements, isBlindMode, font, range } = storeToRefs(customize)
 
     const pages = pagesStore()
     const {currentPage } = storeToRefs(pages)

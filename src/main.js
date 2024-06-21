@@ -22,7 +22,9 @@ router.beforeEach((to, from) => {
     }
     if (from.name === 'result' && store.hasCompletedSession) {
         store.switchNext(customize.customizers)
+        return
     }
+    store.currentRoute = to.name
 })
 
 app.mount('#app')

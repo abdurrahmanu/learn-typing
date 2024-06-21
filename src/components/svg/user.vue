@@ -1,5 +1,5 @@
 <template>
-	<div @click="toggleNavbar = !toggleNavbar" ref="userEl">		
+	<div>		
 		<svg  version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 			viewBox="0 0 472.615 472.615" style="enable-background:new 0 0 472.615 472.615;" xml:space="preserve">
 		<g>
@@ -49,17 +49,8 @@
 </template>
 
 <script setup>
-import {onMounted} from 'vue'
 import {storeToRefs} from 'pinia'
 import {themeStore}  from '../../store/themeStore'
-import { mainStore } from '../../store/mainStore';
-import { pagesStore } from '../../store/pagesStore';
-
-const pages = pagesStore()
-const {toggleNavbar } = storeToRefs(pages)
-
-const main = mainStore()
-const {userEl} = storeToRefs(main)
 
 const theme_ = themeStore()
 const { svgFill } = storeToRefs(theme_)

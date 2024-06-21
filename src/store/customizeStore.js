@@ -10,6 +10,8 @@ export const customizeStore = defineStore('customizeStore', () => {
     const onlyAuthoredQuotes = ref(false)
     const caretType = ref('border')
     const isBlindMode = ref(false)
+    const font = ref(20)
+    const range = ref((font.value - 16) / 0.16)
     const localStorageSettings = ref(JSON.parse(localStorage.getItem('dorayi-typing')))
 
     const customizers = ref({
@@ -134,5 +136,7 @@ export const customizeStore = defineStore('customizeStore', () => {
         changeConfiguration,
         useConfig, 
         customize,
+        font, 
+        range,
     }
 })

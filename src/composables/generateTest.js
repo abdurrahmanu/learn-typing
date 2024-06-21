@@ -16,7 +16,6 @@ export const generateTest = async (config, restart) => {
             if (typeof quote === 'object') {  
                 if (!quote[2]) {
                     containerText.value = quote[1]
-                    console.log(containerText.value);
                     authoredQuote.value = {
                         author: quote[0]
                     }

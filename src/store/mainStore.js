@@ -6,10 +6,12 @@ import {getMobileOS} from '../composables/getMobileOS'
 export const mainStore = defineStore('mainStore', () => {
     const inputEl = ref(null)
     const userEl = ref(null)
+    const homeEl = ref(null)
     const focus = ref(false)
     const mode = ref('auto')
     const textPosition = ref('left')
     const capsIsOn = ref(false)
+    const currentRoute = ref(null)
 
     //Test container
     const containerRef = ref(null)
@@ -115,8 +117,10 @@ export const mainStore = defineStore('mainStore', () => {
         resultData,
         inputEl,
         userEl,
+        homeEl,
         focus,
         textPosition,
+        currentRoute,
 
         containerRef,
         containerHeight,

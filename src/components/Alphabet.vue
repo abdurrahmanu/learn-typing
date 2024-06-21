@@ -8,22 +8,18 @@
 import { defineProps, computed, watchEffect, ref, onMounted, watch } from 'vue';
 import {storeToRefs} from 'pinia'
 import {mainStore} from '../store/mainStore'
-import { customizeStore } from '../store/customizeStore';
 import {themeStore}  from '../store/themeStore'
-import {fontStore}  from '../store/fontStore'
+import {customizeStore}  from '../store/customizeStore'
 
 const theme_ = themeStore()
 const {theme } = storeToRefs(theme_)
-
-const font_ = fontStore()
-const {font } = storeToRefs(font_)
 
 const store = mainStore()
 const { playerInputLength, containerRef, scrollTextContainer, enterKey, scrollDistance, backspaceIsPressed, containerHeight } = storeToRefs(store)
 const currentAlphabet = ref(null)
 
 const customize = customizeStore()
-const {customizers, caretType} = storeToRefs(customize)
+const {customizers, caretType, font} = storeToRefs(customize)
 
 const emit = defineEmits(['equal', 'unequal'])
 const props = defineProps({
