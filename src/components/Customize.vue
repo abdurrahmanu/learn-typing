@@ -1,8 +1,8 @@
 <template>
   <div ref="containerEl" :class="[!hasCompletedSession && !alphabetsMode_ ? 'xl:right-[130px]' : '']" class="py-[3px] m-auto rounded-md w-fit relative max-w-[90%] bg-inherit xl:z-[3] font-mono">
-    <div :style="{'width': completionLevel + '%'}" :class="[theme === 'dark' ? 'bg-green-200 after:bg-green-400' : 'bg-green-600 after:bg-green-600', !completionLevel || playerInput.length < 4 ? 'after:w-0 after:hidden' : 'after:w-[70%] after:right-0 after:absolute after:top-0 after:bottom-0 after:blur-[5px]']" class="absolute left-0 bottom-0 top-0 m-auto rounded-md max-[460px]:hidden" v-if="isBlindMode" ></div>
+    <div :style="{'width': completionLevel + '%'}" :class="[theme === 'dark' ? 'bg-green-200 after:bg-green-400' : 'bg-green-600 after:bg-green-600', !completionLevel || playerInput.length < 2 ? 'after:w-0 after:hidden' : 'after:w-[3%] after:right-0 after:absolute after:top-0 after:bottom-0 after:blur-[5px]']" class="absolute left-0 bottom-0 top-0 m-auto rounded-md max-[460px]:hidden" v-if="blind" ></div>
     <div :style="{'width': completionLevel + '%'}" class="absolute left-0 bottom-0 top-0 m-auto rounded-md max-[460px]:hidden flex" v-else>
-        <div v-show="index <= playerInput.length - 1" :class="[playerInput[index] === alphabet && index <= playerInput.length - 1 ? 'bg-green-500 after:bg-green-500' : 'bg-red-500 after:bg-red-500', index === 0 ? 'rounded-l-md' : '', index === playerInput.length - 1 ? 'after:w-[70%] after:right-0 after:top-0 after:bottom-0 after:blur-[5px]' : 'after:w-0 after:hidden', !completionLevel || index < 3 ? 'after:hidden' : 'after:absolute']" class="h-[100%] relative" :style="{'width': singleDivWidth + 'px'}" v-for="(alphabet, index) in containerText" :key="index"></div>
+        <div v-show="index <= playerInput.length - 1" :class="[playerInput[index] === alphabet && index <= playerInput.length - 1 ? 'bg-green-500 after:bg-green-500' : 'bg-red-500 after:bg-red-500', index === 0 ? 'rounded-l-md' : '', index === playerInput.length - 1 ? 'after:w-[70%] after:right-0 after:top-0 after:bottom-0 after:blur-[5px]' : 'after:w-0 after:hidden', !completionLevel || index < 2 ? 'after:hidden' : 'after:absolute']" class="h-[100%] relative" :style="{'width': singleDivWidth + 'px'}" v-for="(alphabet, index) in containerText" :key="index"></div>
     </div>
 
     <div v-if="!hasCompletedSession && !alphabetsMode_" :class="[appTheme]" class="rounded-md m-auto max-w-fit ring-1 ring-green-600 xl:ring-0 relative">
@@ -59,7 +59,7 @@ const { hasCompletedSession, completionLevel, containerText, playerInput} = stor
 const {switchNext} = store
 
 const customize = customizeStore()
-const { allOptions, configs, customizers, disableOption, next, isBlindMode} = storeToRefs(customize)
+const { allOptions, configs, customizers, disableOption, blind} = storeToRefs(customize)
 const {useConfig} = customize
 const optionsTooltip = ['length', 'words', 'test-type', 'format', 'test-type', 'test-type']
 
@@ -133,14 +133,5 @@ const changeConfig = (key, option) => {
     useConfig()
   } 
 }
-
-watch(next, (newVal) => {
-  if (newVal) {
-    setTimeout(() => {      
-      switchNext(customizers.value)
-      next.value = !next.value
-    }, 100);
-  }
-})
 </script>
 

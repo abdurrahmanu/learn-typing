@@ -1,7 +1,7 @@
 <template>
     <div :class="[theme === 'dark' ? 'hover:bg-neutral-700' : 'hover:bg-slate-100']" class="py-2 pl-5">
         <div  class="flex justify-between w-full p-1 border border-transparent rounded-sm  ">
-            <div @click="customize('custom-camel-case', !customizers['custom-camel-case'])" class="flex gap-4 w-fit">
+            <div @click="customizers['custom-camel-case'] = !customizers['custom-camel-case'], customize('custom-camel-case', customizers['custom-camel-case'])" class="flex gap-4 w-fit">
                 <input name="camelcase" :checked="customizers['custom-camel-case']" type="checkbox">
                 <label class="font-medium w-fit">CusTOm cAMeL caSE</label>
             </div>

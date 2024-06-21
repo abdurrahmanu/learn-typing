@@ -1,7 +1,7 @@
 <template>
     <div @click="customize" class="relative">
         <div class="flex w-fit peer">
-            <closedEye v-if="customizers['blind-mode']" class="w-5" />
+            <closedEye v-if="blind" class="w-5" />
             <openEye v-else class="w-5" />
         </div>
     </div>
@@ -15,13 +15,12 @@ import { customizeStore } from '../store/customizeStore';
 import { storeToRefs } from 'pinia';
 
 const custom = customizeStore()
-const { customizers, disableOption, isBlindMode} = storeToRefs(custom)
+const {blind} = storeToRefs(custom)
 const localStorageSettings = ref(JSON.parse(localStorage.getItem('dorayi-typing')))
 
 const customize = () => {
-    customizers.value['blind-mode'] = !customizers.value['blind-mode']
-    isBlindMode.value = customizers.value['blind-mode']
-    localStorageSettings.value.config = [customizers.value, disableOption.value]
+    blind.value = !blind.value
+    localStorageSettings.value.blind = blind.value
     localStorage.setItem('dorayi-typing', JSON.stringify(localStorageSettings.value))
 }
 </script>

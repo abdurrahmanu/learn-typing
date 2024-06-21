@@ -2,7 +2,7 @@ import {defineStore} from 'pinia'
 import {ref, computed} from 'vue'
 
 export const themeStore = defineStore('themeStore', () => {
-    const theme = ref('dark')
+    const theme = ref(window.matchMedia("(prefers-color-scheme: dark)").matches ?  'dark' : 'white')
     const appTheme = computed(() => {
         if (theme.value === 'stone') return 'bg-stone-600 text-black'
         if (theme.value === 'blue') return 'bg-blue-400 text-neutral-600'

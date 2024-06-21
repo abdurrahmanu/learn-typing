@@ -1,6 +1,6 @@
 <template>
     <div :class="[appTheme]" class="pt-40 font-cursive w-fit gap-10 m-auto text-sm">        
-        <p class="px-10 py-1 border hover:border-slate-700 rounded-md flex items-center gap-3" @click="createAccount"><google /> SIGN IN WITH GOOGLE</p>
+        <p :class="[theme === 'dark' ? 'border-slate-300 hover:bg-slate-100 hover:text-black' : 'border-neutral-800 hover:text-white hover:bg-neutral-700']" class="px-10 py-1 border rounded-md flex items-center gap-3 font-medium" @click="createAccount"><google /> SIGN IN WITH GOOGLE</p>
     </div>
 </template>
 
@@ -11,7 +11,6 @@ import {themeStore}  from '../store/themeStore'
 import {authStore} from '../store/authStore'
 import google from '../components/svg/google.vue'
 import {mainStore} from '../store/mainStore'
-import { customizeStore } from '../store/customizeStore'
 import {db}  from '../firebase.js';
 import {useRouter} from 'vue-router'
 import { GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, getAuth } from 'firebase/auth'
@@ -53,7 +52,7 @@ const provider = new GoogleAuthProvider();
 // }
 
 const theme_ = themeStore()
-const { appTheme } = storeToRefs(theme_)
+const { appTheme, theme } = storeToRefs(theme_)
 
 const signUp = ref(false)
 

@@ -1,16 +1,16 @@
 <template>
     <div :class="[appTheme]" class="flex items-center m-auto rounded-md w-fit text-black text-xs">
-        <LeftArrow @click="prev" :class="[hasPrev ? 'cursor-pointer' : 'opacity-10 cursor-not-allowed']" class="w-9 h-fit" />
-        <div class="px-3 py-1 text-sm transition-all duration-100 font-mono rounded-md cursor-pointer w-fit font-medium">{{ pagesArray[currentPage] }}</div>
-        <RightArrow @click="next" :class="[hasNext ? 'cursor-pointer' : 'opacity-40 cursor-not-allowed']" class="w-9 h-fit" />
+        <leftArrow @click="prev" :class="[hasPrev ? 'cursor-pointer' : 'opacity-10 cursor-not-allowed']" />
+        <div class="px-3 transition-all duration-100 font-mono rounded-md cursor-pointer w-fit font-medium">{{ pagesArray[currentPage] }}</div>
+        <rightArrow @click="next" :class="[hasNext ? 'cursor-pointer' : 'opacity-40 cursor-not-allowed']"  />
     </div>
 </template>
 
 <script setup>
 import { ref, onMounted, computed, watch } from 'vue';
 import { storeToRefs } from 'pinia';
-import LeftArrow from '../svg/LeftArrow.vue';
-import RightArrow from '../svg/RightArrow.vue';
+import LeftArrow from '../svg/leftArrow.vue';
+import RightArrow from '../svg/rightArrow.vue';
 import {pagesStore}  from '../../store/pagesStore'
 import { themeStore } from '../../store/themeStore';
 

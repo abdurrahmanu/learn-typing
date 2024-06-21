@@ -14,73 +14,51 @@ export const localStorageConfig = async () => {
     const {theme } = storeToRefs(theme_)
 
     const main = mainStore()
-    const { enableBackSpace, mode} = storeToRefs(main)
+    const { mode} = storeToRefs(main)
 
     const customize = customizeStore()
-    const { customizers, disableOption, caretType, hideElements, isBlindMode, font, range } = storeToRefs(customize)
+    const { customizers, disableOption, caretType, hideElements, font, range, blind, backspace } = storeToRefs(customize)
 
     const pages = pagesStore()
     const {currentPage } = storeToRefs(pages)
 
     if (localStorage.getItem('dorayi-typing')) {
         const localStorageSettings = ref(JSON.parse(localStorage.getItem('dorayi-typing')))
-        
-        if (localStorageSettings.value.theme) {
-            theme.value = localStorageSettings.value.theme
-        } else {
-            theme.value  = 'white'
-            localStorageSettings.value.theme = theme.value
-        }
-    
-        if (localStorageSettings.value.fontsize) {
-            font.value = localStorageSettings.value.fontsize 
-            range.value = (font.value - 16) / 0.16
-        }
-
-        if (localStorageSettings.value.caret) {
-            caretType.value = localStorageSettings.value.caret
-        }
-
-        if (localStorageSettings.value.mode) {
-            mode.value = localStorageSettings.value.mode
-            if (mode.value === 'alphabets') {
-                alphabetsMode_.value = true
-                currentPage.value = 1
+        theme.value = localStorageSettings.value.theme
+        font.value = localStorageSettings.value.fontsize 
+        range.value = (font.value - 16) / 0.16
+        hideElements.value = localStorageSettings.value.hide
+        caretType.value = localStorageSettings.value.caret
+        blind.value = localStorageSettings.value.blind
+        backspace.value = localStorageSettings.value.backspace
+        customizers.value = localStorageSettings.value.config[0]
+        disableOption.value = localStorageSettings.value.config[1] 
+        mode.value = localStorageSettings.value.mode
+        if (mode.value === 'alphabets') {
+            alphabetsMode_.value = true
+            currentPage.value = 1
             }
             else {
                 alphabetsMode_.value = false
-                currentPage.value = 0
-            }
+            currentPage.value = 0
         }
-
+        
         if (localStorageSettings.value.alphabets.combo) {
             useAlphabetCombination.value = true
             alphabetsCombination.value = localStorageSettings.value.alphabets.combination || []
         }
-
-        if (localStorageSettings.value.hide) {
-            hideElements.value = true
-        }
-
-        isBlindMode.value = localStorageSettings.value.config[0]['blind-mode']
-        
-        if (localStorageSettings.value.config && localStorageSettings.value.config.length) {
-            customizers.value = localStorageSettings.value.config[0]
-            disableOption.value = localStorageSettings.value.config[1] 
-        } else {
-            localStorageSettings.value.config = [customizers.value, disableOption.value]
-            enableBackSpace.value = customizers.value['backspace']
-        }
     } 
-    
+
     else {
         let dorayiTyping = {
             config: [customizers.value, disableOption.value],
             caret: 'border',
-            theme: 'dark',
-            mode: mode.value,
+            theme: window.matchMedia("(prefers-color-scheme: dark)").matches ?  'dark' : 'white',
+            backspace: true,
+            blind: false,
+            mode: 'auto',
             hide: false,
-            fontsize: font.value,
+            fontsize: 20,
             alphabets: {
                 combo: false,
                 combination: [],

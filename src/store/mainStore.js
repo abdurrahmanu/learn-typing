@@ -22,7 +22,6 @@ export const mainStore = defineStore('mainStore', () => {
 
     //keys states
     const enterKey = ref(false)
-    const enableBackSpace = ref(true)
     const backspaceIsPressed = ref(false)
 
     // Time states
@@ -129,7 +128,6 @@ export const mainStore = defineStore('mainStore', () => {
         containerText ,
 
         enterKey,
-        enableBackSpace,
         backspaceIsPressed,
 
         timedTyping,

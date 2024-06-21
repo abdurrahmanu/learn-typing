@@ -10,6 +10,7 @@ import {storeToRefs} from 'pinia'
 import {mainStore} from '../store/mainStore'
 import {themeStore}  from '../store/themeStore'
 import {customizeStore}  from '../store/customizeStore'
+import Blind from './Blind.vue';
 
 const theme_ = themeStore()
 const {theme } = storeToRefs(theme_)
@@ -19,7 +20,7 @@ const { playerInputLength, containerRef, scrollTextContainer, enterKey, scrollDi
 const currentAlphabet = ref(null)
 
 const customize = customizeStore()
-const {customizers, caretType, font} = storeToRefs(customize)
+const {customizers, caretType, font, blind} = storeToRefs(customize)
 
 const emit = defineEmits(['equal', 'unequal'])
 const props = defineProps({
@@ -90,7 +91,7 @@ onMounted(() => {
 })
 
 const equalStyle = computed(() => {
-    if (!customizers.value['blind-mode']) {
+    if (!blind.value) {
         let correctText = theme.value === 'dark' ? 'text-green-300' : 'text-green-500'
         let wrongText = theme.value === 'dark' ? 'text-red-500' : theme.value !== 'dark' && props.index < playerInputLength.value  ? 'text-red-600' : ''
         return props.equality ? correctText : wrongText

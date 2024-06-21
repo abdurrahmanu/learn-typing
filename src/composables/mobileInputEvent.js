@@ -1,14 +1,18 @@
 import { mainStore } from "../store/mainStore"
+import { customizeStore } from "../store/customizeStore";
 import { storeToRefs } from 'pinia';
 
 export const mobileInputEvent = (e) => {
         const store = mainStore()
-        const { containerText, beatCountdown, pauseTyping, playerInputLength, wrongCount, playerInput, enableBackSpace, backspaceIsPressed, playerLastInput, beginCountdown, startTime, enterKey, timedTyping, focus} = storeToRefs(store)
+        const { containerText, beatCountdown, pauseTyping, playerInputLength, wrongCount, playerInput, backspaceIsPressed, playerLastInput, beginCountdown, startTime, enterKey, timedTyping, focus} = storeToRefs(store)
         const { sessionComplete } = store
+
+        const customize = customizeStore()
+        const {backspace} = storeToRefs(customize)
 
     if (focus.value || (e.key === 'Enter' && !enterKey.value) || pauseTyping.value) return
     if (e.inputType === 'deleteContentBackward') {
-        if (!enableBackSpace.value || playerInputLength.value === 0 || wrongCount.value === 0) return
+        if (!backspace.value || playerInputLength.value === 0 || wrongCount.value === 0) return
         backspaceIsPressed.value = true
     }
     if (e.inputType === 'deleteContentBackward') return

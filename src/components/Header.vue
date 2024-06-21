@@ -1,19 +1,41 @@
 <template>
-    <header :class="[appTheme]" class="sticky top-0 mx-auto flex items-center justify-between py-2 pl-3 pr-2 h-[50px] max-w-[1300px] lg:mb-6 mb-3 xl:fixed xl:w-full xl:left-[50%] xl:translate-x-[-50%] z-[2]">
+    <header :class="[appTheme]" class="sticky top-0 mx-auto flex items-center justify-between py-2 pl-3 pr-2 h-[50px] max-w-[1300px] lg:mb-6 mb-3 xl:fixed xl:w-full xl:left-[50%] xl:translate-x-[-50%] z-[2] text-[11px] uppercase font-medium">
         <Logo />
         <div class="flex gap-4 rounded-full w-fit items-center">
             <div v-if="route.name === 'home'"class="flex items-center gap-4">
-                <Clock />
-                <Blind />
-                <repeat class="w-4"/>
-                <TextAlign  />
+                <div class="w-fit relative">
+                    <Clock class="peer" />
+                    <div class="absolute z-5 left-[50%] translate-x-[-50%] bottom-[-100%] rounded-full whitespace-nowrap peer-hover:block hidden pt-1">countdown</div>
+                </div>
+                <div class="w-fit relative">
+                    <TextAlign  class="peer"/>
+                    <div class="absolute z-5 left-[50%] translate-x-[-50%] bottom-[-100%] rounded-full whitespace-nowrap peer-hover:block hidden">text align</div>
+                </div>
+                <div class="w-fit relative">
+                    <Blind  class="peer"/>
+                    <div class="absolute z-5 left-[50%] translate-x-[-50%] bottom-[-100%] rounded-full whitespace-nowrap peer-hover:block hidden">view</div>
+                </div>
+                <div class="w-fit relative">
+                    <repeat class="w-4 peer"/>
+                    <div class="absolute z-5 left-[50%] translate-x-[-50%] bottom-[-120%] rounded-full whitespace-nowrap peer-hover:block hidden">repeat</div>
+                </div>
             </div>
-            <div @click="routeToPage('about')" v-if="route.name !== 'about'" :class="route.name === 'about' ? 'text-green-500' : ''" class="font-black font-serif text-xl hover:text-green-400 rounded-full cursor-pointer">i</div>
-            <user @click="routeToPage('auth')"  v-if="route.name !== 'auth'" class="w-4" />
-            <home @click="routeToPage('home')" v-if="route.name !== 'home'" class="w-4" />
-            <settings class="w-5" />
+            <div class="w-fit relative" v-if="route.name !== 'about'">
+                <div @click="routeToPage('about')" :class="route.name === 'about' ? 'text-green-500' : ''" class="font-black font-serif hover:text-green-400 rounded-full cursor-pointer peer text-base lowercase pt-[2px] leading-[20px]">i</div>
+                <div class="absolute z-5 left-[50%] translate-x-[-50%] bottom-[-100%] rounded-full whitespace-nowrap peer-hover:block hidden">about</div>
+            </div>
+            <div class="w-fit relative"  v-if="route.name !== 'auth'">                
+                <user @click="routeToPage('auth')" class="w-4 peer" />
+                <div class="absolute z-5 left-[50%] translate-x-[-50%] bottom-[-120%] rounded-full whitespace-nowrap peer-hover:block hidden">account</div>
+            </div>
+            <div class="w-fit relative" v-if="route.name !== 'home'" >                
+                <home @click="routeToPage('home')" class="w-4 peer" />
+            </div>
+            <div class="w-fit relative">
+                <settings class="w-5 peer" />
+            </div>
         </div>
-        <CompletionRange :class="[hideElements ? 'block' : 'hidden max-[460px]:block']" v-if="isBlindMode" />
+        <CompletionRange :class="[hideElements ? 'block' : 'hidden max-[460px]:block']" v-if="blind" />
         <CompletionRangeWithErrors :class="[hideElements ? 'block' : 'hidden max-[460px]:block']" v-else/>
     </header>
 </template>
@@ -41,7 +63,7 @@ const theme_ = themeStore()
 const { appTheme } = storeToRefs(theme_)
 
 const customize = customizeStore()
-const { hideElements, isBlindMode } = storeToRefs(customize)
+const { hideElements, blind } = storeToRefs(customize)
 
 const routeToPage = (route) => {
     router.push({name: route})

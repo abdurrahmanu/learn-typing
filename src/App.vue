@@ -24,12 +24,12 @@ import Restart from './components/Restart.vue';
 import Animate from './components/Animate.vue';
 import Theme from './components/Theme.vue';
 import HideElements from './components/HideElements.vue'
-import {mainStore} from './store/mainStore'
 import { storeToRefs } from 'pinia';
 import {themeStore}  from './store/themeStore'
 import {customizeStore}  from './store/customizeStore'
 import { authStore } from './store/authStore';
 import {db} from './firebase.js';
+import { mainStore } from './store/mainStore';
 import {getAuth, onAuthStateChanged} from 'firebase/auth'
 import { doc, getDoc} from 'firebase/firestore'
 import { useRoute } from 'vue-router';
@@ -38,6 +38,7 @@ import {localStorageConfig} from './composables/getLocalStorageConfig'
 const route = useRoute()
 const auth = getAuth()
 
+
 const auth_ = authStore()
 const {isAuthenticated, userID, userData } = storeToRefs(auth_)
 
@@ -45,11 +46,16 @@ const theme_ = themeStore()
 const { appTheme } = storeToRefs(theme_)
 
 const customize = customizeStore()
-const {font } = storeToRefs(customize)
+const {font, customizers } = storeToRefs(customize)
 
 const main = mainStore()
 const { containerHeight, capsIsOn } = storeToRefs(main)
+const { switchNext} = main
 
+watch(customizers, (newVal) => {
+  if (newVal) {
+      switchNext(newVal)
+  }}, {deep : true})
 
 onAuthStateChanged(auth, async (user) => {
   if (user) {
@@ -134,4 +140,18 @@ onBeforeMount(() => localStorageConfig())
 .box-container {
   perspective: 1000px
 }
+
+/* @media (prefers-color-scheme: light) {
+  .head {
+    background: #e20707;
+    color: #333;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .head {
+    background: #170ebf;
+    color: #FFF;
+  }
+} */
 </style>
