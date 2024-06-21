@@ -13,7 +13,6 @@ import {themeStore}  from '../../store/themeStore'
 const theme_ = themeStore()
 const {theme } = storeToRefs(theme_)
 
-
 const fill = computed(() => {
     return theme.value === 'dark' ? '#e8e7e7' : '#373636'
 })
