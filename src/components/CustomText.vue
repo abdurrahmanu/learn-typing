@@ -18,14 +18,14 @@ import {mainStore} from '../store/mainStore'
 
 const toggleSelect = ref(false)
 const store = mainStore()
-const {  howToUseCustomText, useCustomText, customTexts, storedTextForRepeat} = storeToRefs(store)
+const {  howToUseCustomText, useCustomText, customTexts, storedTest} = storeToRefs(store)
 const { switchNext } = store
 
 const customize = customizeStore()
 const { customizers } = storeToRefs(customize)
 
 const startUsingCustomText =  (text) => {
-    storedTextForRepeat.value = text
+    storedTest.value = text
     toggleSelect.value = !toggleSelect.value
     switchNext(customizers.value)
 }

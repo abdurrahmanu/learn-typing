@@ -5,9 +5,29 @@
 <script setup>
 import {storeToRefs} from 'pinia'
 import {themeStore} from '../../store/themeStore'
+import { customizeStore } from '../../store/customizeStore';
 import {ref} from 'vue'
 
 const hoverbg = ref('')
 const theme_ = themeStore()
 const { svgFill } = storeToRefs(theme_)
+
+const customize = customizeStore()
+const {blind} = storeToRefs(customize)
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -8,15 +8,15 @@
 
 <script setup>
 import {ref, onMounted} from 'vue'
-import {mainStore} from '../store/mainStore'
+import {customizeStore} from '../store/customizeStore'
 import { storeToRefs } from 'pinia';
 import {themeStore}  from '../store/themeStore'
 
 const theme_ = themeStore()
 const {theme, } = storeToRefs(theme_)
 
-const main = mainStore()
-const {pauseTyping} = storeToRefs(main)
+const customize = customizeStore()
+const {pauseTyping} = storeToRefs(customize)
 
 const animation = ref(true)
 const boxesContainer = ref(null)

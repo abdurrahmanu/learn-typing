@@ -2,6 +2,8 @@ import {defineStore} from 'pinia'
 import {ref} from 'vue'
 
 export const customizeStore = defineStore('customizeStore', () => {
+    const mode = ref('auto')
+    const pauseTyping = ref(true)
     const configs = ref([])
     const showMoreSettings = ref(false)
     const hideElements = ref(false)
@@ -9,6 +11,8 @@ export const customizeStore = defineStore('customizeStore', () => {
     const onlyAuthoredQuotes = ref(false)
     const caretType = ref('border')
     const backspace = ref(false)
+    const repeat = ref(false)
+    const textPosition = ref('left')
     const blind = ref(false)
     const font = ref(20)
     const range = ref((font.value - 16) / 0.16)
@@ -89,7 +93,6 @@ export const customizeStore = defineStore('customizeStore', () => {
         if (boolean && mode === 'custom-camel-case') customizers.value['all-caps'] = false
 
         if (mode === 'author-quotes' || mode === 'movie-quotes') {
-            console.log('object');
             customizers.value['text-length'] = 'auto'
             customizers.value['test-type'] = 'quotes'
             if (mode === 'author-quotes' && onlyMovieQuotes.value) onlyMovieQuotes.value = false 
@@ -117,5 +120,9 @@ export const customizeStore = defineStore('customizeStore', () => {
         customize,
         font, 
         range,
+        repeat,
+        mode,
+        textPosition,
+        pauseTyping
     }
 })

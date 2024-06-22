@@ -1,17 +1,11 @@
 import {defineStore} from 'pinia'
 import {ref, computed} from 'vue'
 import {generateTest} from '../composables/generateTest'
-import {getMobileOS} from '../composables/getMobileOS'
 
 export const mainStore = defineStore('mainStore', () => {
     const inputEl = ref(null)
-    const userEl = ref(null)
-    const homeEl = ref(null)
     const focus = ref(false)
-    const mode = ref('auto')
-    const textPosition = ref('left')
     const capsIsOn = ref(false)
-    const currentRoute = ref(null)
 
     //Test container
     const containerRef = ref(null)
@@ -33,7 +27,6 @@ export const mainStore = defineStore('mainStore', () => {
     const beginCountdown = ref(false)
 
     // On-type states
-    const pauseTyping = ref(true)
     const completionLevel = ref(0) // test completion percentage
     const playerInput = ref('') // player current input
     const previousPlayerInput = ref('')
@@ -46,8 +39,7 @@ export const mainStore = defineStore('mainStore', () => {
     const beatCountdown = ref(null)
     const savedCountdown = ref(10) // default countdown || set countdown
     const useCustomText = ref(false) // user custom text
-    const enableRepeat = ref(false) // repeat a test
-    const storedTextForRepeat = ref('') // test to repeat
+    const storedTest = ref('') // test to repeat
     const howToUseCustomText = ref('select text using options')
 
     // Tests data for different modes 
@@ -62,9 +54,7 @@ export const mainStore = defineStore('mainStore', () => {
             containerText: containerText.value,
             characters: containerText.value.length,
             totalTime: totalTime.value.toFixed(2),
-            testType: timedTyping.value ? 'Countdown mode ' + savedCountdown.value + 's' : '',
             WPM: Math.round( (((containerText.value.length - wrongCount.value) / 5)) / (totalTime.value/60)),
-            s: Math.round( (containerText.value.length / 5) / (totalTime.value/60))
         }
     })
 
@@ -115,11 +105,7 @@ export const mainStore = defineStore('mainStore', () => {
         capsIsOn,
         resultData,
         inputEl,
-        userEl,
-        homeEl,
         focus,
-        textPosition,
-        currentRoute,
 
         containerRef,
         containerHeight,
@@ -136,7 +122,6 @@ export const mainStore = defineStore('mainStore', () => {
         timerID,
         timePaused,
 
-        pauseTyping,
         completionLevel,
         playerInput,
         playerLastInput,
@@ -150,11 +135,9 @@ export const mainStore = defineStore('mainStore', () => {
         beatCountdown,
         savedCountdown,
         useCustomText,
-        enableRepeat,
-        storedTextForRepeat,
+        storedTest,
         howToUseCustomText,
 
-        mode,
         movie,
         customTexts,
         authoredQuote,

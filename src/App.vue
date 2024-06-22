@@ -1,5 +1,5 @@
 <template>
-  <div :class="[appTheme]" class="font-light selection:bg-none home max-w-[1300px] m-auto relative min-h-[100dvh] container">
+  <div :class="[appTheme]" class="font-light selection:bg-none home max-w-[1300px] m-auto relative min-h-[100dvh] container overflow-y-auto scroll-smooth noscrollbar">
     <div class="min-h-[100dvh]">
       <Header />
       <main>
@@ -154,4 +154,13 @@ onBeforeMount(() => localStorageConfig())
     color: #FFF;
   }
 } */
+
+.noscrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none
+}
 </style>

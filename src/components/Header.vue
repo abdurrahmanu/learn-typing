@@ -1,37 +1,37 @@
 <template>
     <header :class="[appTheme]" class="sticky top-0 mx-auto flex items-center justify-between py-2 pl-3 pr-2 h-[50px] max-w-[1300px] lg:mb-6 mb-3 xl:fixed xl:w-full xl:left-[50%] xl:translate-x-[-50%] z-[2] text-[11px] uppercase font-medium">
         <Logo />
-        <div class="flex gap-4 rounded-full w-fit items-center">
+        <div class="flex items-center gap-4 rounded-full w-fit">
             <div v-if="route.name === 'home'"class="flex items-center gap-4">
-                <div class="w-fit relative">
+                <div class="relative w-fit">
                     <Clock class="peer" />
                     <div class="absolute z-5 left-[50%] translate-x-[-50%] bottom-[-100%] rounded-full whitespace-nowrap peer-hover:block hidden pt-1">countdown</div>
                 </div>
-                <div class="w-fit relative">
+                <div class="relative w-fit" v-if="!alphabetsMode_">
                     <TextAlign  class="peer"/>
                     <div class="absolute z-5 left-[50%] translate-x-[-50%] bottom-[-100%] rounded-full whitespace-nowrap peer-hover:block hidden">text align</div>
                 </div>
-                <div class="w-fit relative">
+                <div class="relative w-fit">
                     <Blind  class="peer"/>
                     <div class="absolute z-5 left-[50%] translate-x-[-50%] bottom-[-100%] rounded-full whitespace-nowrap peer-hover:block hidden">view</div>
                 </div>
-                <div class="w-fit relative">
+                <div class="relative w-fit" v-if="!alphabetsMode_" >
                     <repeat class="w-4 peer"/>
                     <div class="absolute z-5 left-[50%] translate-x-[-50%] bottom-[-120%] rounded-full whitespace-nowrap peer-hover:block hidden">repeat</div>
                 </div>
             </div>
-            <div class="w-fit relative" v-if="route.name !== 'about'">
+            <div class="relative w-fit" v-if="route.name !== 'about'">
                 <div @click="routeToPage('about')" :class="route.name === 'about' ? 'text-green-500' : ''" class="font-black font-serif hover:text-green-400 rounded-full cursor-pointer peer text-base lowercase pt-[2px] leading-[20px]">i</div>
                 <div class="absolute z-5 left-[50%] translate-x-[-50%] bottom-[-100%] rounded-full whitespace-nowrap peer-hover:block hidden">about</div>
             </div>
-            <div class="w-fit relative"  v-if="route.name !== 'auth'">                
+            <div class="relative w-fit"  v-if="route.name !== 'auth'">                
                 <user @click="routeToPage('auth')" class="w-4 peer" />
                 <div class="absolute z-5 left-[50%] translate-x-[-50%] bottom-[-120%] rounded-full whitespace-nowrap peer-hover:block hidden">account</div>
             </div>
-            <div class="w-fit relative" v-if="route.name !== 'home'" >                
+            <div class="relative w-fit" v-if="route.name !== 'home'" >                
                 <home @click="routeToPage('home')" class="w-4 peer" />
             </div>
-            <div class="w-fit relative">
+            <div class="relative w-fit" v-if="route.name === 'home'" >
                 <settings class="w-5 peer" />
             </div>
         </div>
@@ -55,12 +55,17 @@ import {storeToRefs} from 'pinia'
 import {themeStore}  from '../store/themeStore'
 import { customizeStore } from '../store/customizeStore';
 import {useRoute, useRouter} from 'vue-router'
+import { alphabetsMode } from '../composables/alphabetsMode';
+import { alphabetsStore } from '../store/alphabetsModeStore';
 
 const route = useRoute()
 const router = useRouter()
 
 const theme_ = themeStore()
 const { appTheme } = storeToRefs(theme_)
+
+const alphabets = alphabetsStore()
+const {alphabetsMode_} = storeToRefs(alphabets)
 
 const customize = customizeStore()
 const { hideElements, blind } = storeToRefs(customize)

@@ -24,7 +24,6 @@ router.beforeEach((to, from) => {
         store.switchNext(customize.customizers)
         return
     }
-    store.currentRoute = to.name
 })
 
 app.mount('#app')

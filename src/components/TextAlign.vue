@@ -19,10 +19,10 @@ import alignRight from './svg/alignRight.vue';
 import {storeToRefs} from 'pinia'
 import {alphabetsStore}  from '../store/alphabetsModeStore'
 import { getMobileOS } from '../composables/getMobileOS';
-import { mainStore } from '../store/mainStore';
+import { customizeStore } from '../store/customizeStore';
 
-const store = mainStore()
-const {textPosition} = storeToRefs(store)
+const customize = customizeStore()
+const {textPosition} = storeToRefs(customize)
 
 const alphabets = alphabetsStore()
 const {alphabetsMode_ } = storeToRefs(alphabets)

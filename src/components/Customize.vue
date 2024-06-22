@@ -5,7 +5,7 @@
         <div v-show="index <= playerInput.length - 1" :class="[playerInput[index] === alphabet && index <= playerInput.length - 1 ? 'bg-green-500 after:bg-green-500' : 'bg-red-500 after:bg-red-500', index === 0 ? 'rounded-l-md' : '', index === playerInput.length - 1 ? 'after:w-[70%] after:right-0 after:top-0 after:bottom-0 after:blur-[5px]' : 'after:w-0 after:hidden', !completionLevel || index < 2 ? 'after:hidden' : 'after:absolute']" class="h-[100%] relative" :style="{'width': singleDivWidth + 'px'}" v-for="(alphabet, index) in containerText" :key="index"></div>
     </div>
 
-    <div v-if="!hasCompletedSession && !alphabetsMode_" :class="[appTheme]" class="rounded-md m-auto max-w-fit ring-1 ring-green-600 xl:ring-0 relative">
+    <div v-if="!hasCompletedSession && !alphabetsMode_" :class="[appTheme]" class="relative m-auto rounded-md max-w-fit ring-1 ring-green-600 xl:ring-0">
         <div class="text-[12px] items-center p-1 flex max-w-[1000px] justify-center flex-wrap relative">
             <div class="p-1" v-for="(optionArr, key, listIndex) in option" :key="listIndex">          
                 <div 
@@ -26,7 +26,7 @@
         </div>
     </div>
 
-    <div v-if="!hasCompletedSession && alphabetsMode_" :class="[appTheme]" class="rounded-md  w-[90%] min-w-fit m-auto max-w-fit ring-1 ring-green-600 xl:ring-0 relative flex gap-1 py-1 px-2 font-normal text-[12px] flex-wrap justify-center group">
+    <div v-if="!hasCompletedSession && alphabetsMode_" :class="[appTheme]" class="rounded-md  w-[90%] min-w-fit m-auto max-w-fit ring-1 ring-green-600 xl:ring-0 relative flex gap-2 py-2 px-3 font-normal text-[13px] flex-wrap justify-center group">
           <div :class="[alphabetsConfig.uppercase ? 'text-green-500' : '']" @click="changeMode('uppercase')" class="px-[5px] hover:scale-105 rounded-md">uppercase</div>
           <div :class="[alphabetsConfig.customCase ? 'text-green-500' : '']" @click="changeMode('customCase')" class="px-[5px] hover:scale-105 rounded-md">randomcase</div>
           <div :class="[alphabetsConfig.spaced ? 'text-green-500' : '']" @click="changeMode('spaced')" class="px-[5px] hover:scale-105 rounded-md">space</div>

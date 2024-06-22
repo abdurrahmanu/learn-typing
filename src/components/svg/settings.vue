@@ -7,18 +7,14 @@
 <script setup>
 import {storeToRefs} from 'pinia'
 import {themeStore} from '../../store/themeStore'
-import { mainStore } from '../../store/mainStore';
 import { customizeStore } from '../../store/customizeStore';
 import {useRoute} from 'vue-router'
 import {ref} from 'vue'
 
 const hoverbg = ref('')
 const route = useRoute()
-const main = customizeStore()
-const { showMoreSettings} = storeToRefs(main)
-
-const store = mainStore()
-const { pauseTyping} = storeToRefs(store)
+const customize = customizeStore()
+const { showMoreSettings, pauseTyping} = storeToRefs(customize)
 
 const theme_ = themeStore()
 const { svgFill } = storeToRefs(theme_)

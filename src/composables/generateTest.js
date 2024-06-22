@@ -1,14 +1,18 @@
 import { mainStore } from "../store/mainStore"
+import {customizeStore} from '../store/customizeStore'
 import { storeToRefs } from "pinia"
 import { UseGetQuotes } from "./UseGetQuotes"
 import {alphabetsMode} from './alphabetsMode'
 
 export const generateTest = async (config, restart) => {
     const main = mainStore()
-    const {containerText, storedTextForRepeat, movie, authoredQuote, enableRepeat, mode} = storeToRefs(main)
+    const {containerText, storedTest, movie, authoredQuote} = storeToRefs(main)
 
-    if (enableRepeat.value || restart ) {
-        containerText.value = storedTextForRepeat.value
+    const customize = customizeStore()
+    const {repeat, mode} = storeToRefs(customize)
+
+    if (repeat.value || restart ) {
+        containerText.value = storedTest.value
         }
 
     else if (mode.value === 'auto') {
@@ -40,5 +44,5 @@ export const generateTest = async (config, restart) => {
         containerText.value = alphabetsMode()
     }
     
-    storedTextForRepeat.value = containerText.value
+    storedTest.value = containerText.value
 }

@@ -2,10 +2,13 @@ import { ref } from 'vue'
 import { englishWords } from '../../data/englishWords.js';
 import { useCustomizeFormat } from './customizers/useCustomizeFormat';
 import { customizeStore } from '../store/customizeStore.js';
+import { mainStore } from '../store/mainStore.js';
 import authoredQuotes from '../../data/quotes.json'
 
 export async function UseGetQuotes (config, customText) {
     const res = ref('')
+    const isMovieQuote = ref(false)
+    const isAuthoredQuote = ref(false)
     const {mostUsed, mediumUsed, rarelyUsed, numbers, quotesWithoutAuthors, movieQuotes} = englishWords()
     const movieQuotesAndAuthoredQuotes = config['movie-quotes'] && config['author-quotes']
 
@@ -93,6 +96,8 @@ export async function UseGetQuotes (config, customText) {
                         let choice = Math.ceil(Math.random() * 3) - 1
                         let tests = [movieTest.value, authoredTest.value, normalTest.value]
                         res.value = tests[choice]
+                        choice === 0 ? isMovieQuote.value = true : choice === 1 ? isAuthoredQuote.value = true : ''
+
                     } else {
                         res.value = authoredTest.value || movieTest.value || normalTest.value
                     }
@@ -144,9 +149,11 @@ export async function UseGetQuotes (config, customText) {
             }
         }
     }
+    
     function customizers () {
         if (typeof res.value === 'object') {
             if (movieQuotesAndAuthoredQuotes) {
+                isMovieQuote.value ? mainStore().authoredQuote = {} : isAuthoredQuote.value ? mainStore().movie = {} : ''
                 if (res.value[2]) {
                     res.value = [res.value[0], res.value[1], useCustomizeFormat([config['include-numbers'], config['include-punctuations'], config['include-caps'], config['all-caps'], config['custom-camel-case'], config['no-space'], config['test-type']],  res.value[2]).customizeFormatRes.value]
                 } else {
@@ -154,9 +161,11 @@ export async function UseGetQuotes (config, customText) {
                 }
             } else {
                 if (customizeStore().customizers['author-quotes']) {
+                    mainStore().movie = {}
                     res.value = [res.value[0], useCustomizeFormat([config['include-numbers'], config['include-punctuations'], config['include-caps'], config['all-caps'], config['custom-camel-case'], config['no-space'], config['test-type']],  res.value[1]).customizeFormatRes.value]
                 } 
                 else if (customizeStore().customizers['movie-quotes']) {
+                    mainStore().authoredQuote.value = {}
                     res.value = [res.value[0], res.value[1], useCustomizeFormat([config['include-numbers'], config['include-punctuations'], config['include-caps'], config['all-caps'], config['custom-camel-case'], config['no-space'], config['test-type']],  res.value[2]).customizeFormatRes.value]
                 }
             }

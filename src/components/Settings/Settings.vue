@@ -63,11 +63,8 @@ const { alphabetsMode_, } = storeToRefs(alphabets_)
 const theme_ = themeStore()
 const {theme, appTheme } = storeToRefs(theme_)
 
-const store = mainStore()
-const { pauseTyping} = storeToRefs(store)
-
 const customize = customizeStore()
-const {showMoreSettings} = storeToRefs(customize)
+const {showMoreSettings, pauseTyping} = storeToRefs(customize)
 
 const toggleSettings = () => {
     showMoreSettings.value = !showMoreSettings.value

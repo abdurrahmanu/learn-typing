@@ -3,7 +3,7 @@
         <div class="w-[500px] overflow-auto max-w-[90%] h-[250px] border border-neutral-700 m-auto relative bg-slate-200">
             <!-- <div  class="absolute bottom-0 w-[2px]" v-for="(sessionWpm, index) in wpm" :key="index" :style="{height: sessionWpm + 3 + 'px', 'margin-left' : 20 * index + 'px'}">
                 <span v-if="hovered === index" class="absolute top-[-15px] text-black text-xs whitespace-nowrap z-[9]">{{ sessionWpm }} wpm</span>
-                <span @mouseover="hover(index)" @mouseleave="blur(index)" :class="[sessionWpm < 50 ? 'bg-red-500' : 'bg-green-500']" class="p-[3px] absolute top-0 rounded-full left-[50%] translate-x-[-50%]"></span>
+                <span hover(index)" @mouseleave="blur(index)" :class="[sessionWpm < 50 ? 'bg-red-500' : 'bg-green-500']" class="p-[3px] absolute top-0 rounded-full left-[50%] translate-x-[-50%]"></span>
             </div> -->
         </div>
         <div class="max-h-[300px] m-auto w-fit">

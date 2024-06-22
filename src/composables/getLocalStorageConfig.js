@@ -13,11 +13,8 @@ export const localStorageConfig = async () => {
     const theme_ = themeStore()
     const {theme } = storeToRefs(theme_)
 
-    const main = mainStore()
-    const { mode} = storeToRefs(main)
-
     const customize = customizeStore()
-    const { customizers, disableOption, caretType, hideElements, font, range, blind, backspace } = storeToRefs(customize)
+    const { customizers, disableOption, caretType, mode, hideElements, font, range, blind, backspace } = storeToRefs(customize)
 
     const pages = pagesStore()
     const {currentPage } = storeToRefs(pages)

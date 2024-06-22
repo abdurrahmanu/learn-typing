@@ -1,7 +1,7 @@
 <template>
     <div class=" sticky z-[99999] top-[0] bg-neutral-800 text-slate-200">
-        <div  class="font-mono text-right flex justify-between px-2 w-full border-r border-r-zinc-700 shadow-sm shadow-black items-center gap-4">
-            <div class=" text-lg font-mono p-2">SETTINGS</div>
+        <div  class="flex items-center justify-between w-full gap-4 px-2 font-mono text-right border-r shadow-sm border-r-zinc-700 shadow-black">
+            <div class="p-2 font-mono text-lg ">SETTINGS</div>
             <div class="p-[2px] text-white font-bold font-mono text-lg" @click="toggleSettings">
                 <p class="font-mono w-fit hover:text-red-500">X</p>
             </div>
@@ -10,15 +10,14 @@
 </template>
 
 <script setup>
-import {customizeStore} from '../../store/customizeStore';
 import {storeToRefs} from 'pinia'
-import { mainStore } from '../../store/mainStore';
+import { customizeStore } from '../../store/customizeStore';
 
 const custom = customizeStore()
 const { showMoreSettings } = storeToRefs(custom)
 
-const main = mainStore()
-const {pauseTyping} = storeToRefs(main)
+const customize = customizeStore()
+const {pauseTyping} = storeToRefs(customize)
 
 const toggleSettings = () => {
     showMoreSettings.value = !showMoreSettings.value

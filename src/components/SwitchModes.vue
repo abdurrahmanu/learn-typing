@@ -25,11 +25,11 @@ const pages = ['TEST MODE', 'ALPHABETS MODE']
 const modes = ['test', 'alphabets']
 
 const store = mainStore()
-const { movie, authoredQuote, mode, hasCompletedSession} = storeToRefs(store)
+const { movie, authoredQuote, hasCompletedSession} = storeToRefs(store)
 const {switchNext} = store
 
 const customize = customizeStore()
-const { customizers, hideElements} = storeToRefs(customize)
+const { customizers, hideElements, mode} = storeToRefs(customize)
 
 const pages_ = pagesStore()
 const {currentPage } = storeToRefs(pages_)
@@ -42,18 +42,15 @@ const toggleMode = (type) => {
         alphabetsMode_.value = true
         movie.value = {}
         authoredQuote.value = {}
-    } 
+    }
     else {
         mode.value = 'auto'
         alphabetsMode_.value = false
-        }
-        
-        localStorageSettings.value.mode = mode.value
-        localStorage.setItem('dorayi-typing', JSON.stringify(localStorageSettings.value))
-        switchNext(customizers.value )
+    }        
+    localStorageSettings.value.mode = mode.value
+    localStorage.setItem('dorayi-typing', JSON.stringify(localStorageSettings.value))
+    switchNext(customizers.value )
 }
 
-watch(currentPage, (newVal, oldVal) => {
-    toggleMode(modes[newVal])
-})
+watch(currentPage, (newVal, oldVal) => toggleMode(modes[newVal]))
 </script>

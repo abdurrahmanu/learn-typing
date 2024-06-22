@@ -4,11 +4,11 @@ import { storeToRefs } from 'pinia';
 
 export const inputEvent = (e) => {
         const store = mainStore()
-        const { containerText, beatCountdown, pauseTyping, playerInputLength, playerInput, wrongCount, backspaceIsPressed, playerLastInput, beginCountdown, startTime, enterKey, timedTyping, focus} = storeToRefs(store)
+        const { containerText, beatCountdown, playerInputLength, playerInput, wrongCount, backspaceIsPressed, playerLastInput, beginCountdown, startTime, enterKey, timedTyping, focus} = storeToRefs(store)
         const { sessionComplete } = store
 
         const customize = customizeStore()
-        const {backspace} = storeToRefs(customize)
+        const {backspace, pauseTyping} = storeToRefs(customize)
 
         if (focus.value || (e.key === 'Enter' && !enterKey.value) || pauseTyping.value) return
         if (e.type === 'keydown' && e.key === 'Backspace') {
