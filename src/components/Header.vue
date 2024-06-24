@@ -7,7 +7,7 @@
                     <Clock class="peer" />
                     <div class="absolute z-5 left-[50%] translate-x-[-50%] bottom-[-100%] rounded-full whitespace-nowrap peer-hover:block hidden pt-1">countdown</div>
                 </div>
-                <div class="relative w-fit" v-if="!alphabetsMode_">
+                <div class="relative w-fit" v-if="!alphabetsMode_ && !isMobileOS()">
                     <TextAlign  class="peer"/>
                     <div class="absolute z-5 left-[50%] translate-x-[-50%] bottom-[-100%] rounded-full whitespace-nowrap peer-hover:block hidden">text align</div>
                 </div>
@@ -57,6 +57,7 @@ import { customizeStore } from '../store/customizeStore';
 import {useRoute, useRouter} from 'vue-router'
 import { alphabetsMode } from '../composables/alphabetsMode';
 import { alphabetsStore } from '../store/alphabetsModeStore';
+import { isMobileOS } from '../composables/isMobileOS';
 
 const route = useRoute()
 const router = useRouter()

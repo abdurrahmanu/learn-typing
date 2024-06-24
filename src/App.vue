@@ -38,7 +38,6 @@ import {localStorageConfig} from './composables/getLocalStorageConfig'
 const route = useRoute()
 const auth = getAuth()
 
-
 const auth_ = authStore()
 const {isAuthenticated, userID, userData } = storeToRefs(auth_)
 

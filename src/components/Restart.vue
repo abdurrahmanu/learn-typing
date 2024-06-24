@@ -1,6 +1,6 @@
 <template>
         <div v-if="route.name == 'home' || route.name == 'result'" class="pt-24 text-sm transition-all duration-100">
-            <div v-if="getMobileOS()" class="m-auto space-y-2 text-base w-fit text-slate-500">
+            <div v-if="isMobileOS()" class="m-auto space-y-2 text-base w-fit text-slate-500">
                 <div v-if="!hasCompletedSession && playerInputLength" @click="restart" class="p-1 m-auto text-center border rounded-md w-fit border-neutral-600">RESTART</div>
                 <div @click="next" class="p-1 m-auto text-center border rounded-md w-fit border-neutral-600">NEXT</div>
             </div>
@@ -17,7 +17,7 @@ import { mainStore } from '../store/mainStore';
 import { customizeStore } from '../store/customizeStore';
 import { useRouter, useRoute } from 'vue-router';
 import { countdownStore } from '../store/countdownStore'
-import { getMobileOS } from '../composables/getMobileOS';
+import { isMobileOS } from '../composables/isMobileOS';
 
 const route = useRoute()
 const router = useRouter()

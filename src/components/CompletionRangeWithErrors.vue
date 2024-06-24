@@ -1,5 +1,5 @@
 <template>
-    <div ref="rangeEl" v-show="!hasCompletedSession && completionLevel" :class="[getMobileOS() ? '' : '']" class="w-full max-w-[700px] absolute top-[100%] left-[50%] translate-x-[-50%]">
+    <div ref="rangeEl" v-show="!hasCompletedSession && completionLevel" :class="[isMobileOS() ? '' : '']" class="w-full max-w-[700px] absolute top-[100%] left-[50%] translate-x-[-50%]">
         <div :style="{'width': completionLevel + '%'}" class="flex">
             <div v-show="index <= playerInput.length - 1" :class="[playerInput[index] === alphabet && index <= playerInput.length - 1 ? 'bg-green-500' : 'bg-red-500', ]" class="h-[3px]" :style="{'width': singleDivWidth + 'px'}" v-for="(alphabet, index) in containerText" :key="index"></div>
         </div>
@@ -10,7 +10,7 @@
 import {ref, onMounted, watchEffect, computed} from 'vue'
 import { mainStore } from '../store/mainStore';
 import { storeToRefs } from 'pinia';
-import { getMobileOS } from '../composables/getMobileOS';
+import { isMobileOS } from '../composables/isMobileOS';
 
 const rangeEl = ref(null)
 const singleDivWidth = ref(0)

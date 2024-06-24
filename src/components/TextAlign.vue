@@ -1,5 +1,5 @@
 <template>
-    <div  v-if="!getMobileOS() && !alphabetsMode_" class="flex justify-center mx-auto text-xs cursor-pointer gap-3 w-fit max-[500px]:hidden">
+    <div class="flex justify-center mx-auto text-xs cursor-pointer gap-3 w-fit max-[500px]:hidden">
         <div @click="textPosition = 'left'">
             <alignLeft :position="textPosition === 'left'" class="w-5" />
         </div>
@@ -17,13 +17,8 @@ import alignLeft from './svg/alignLeft.vue';
 import alignMiddle from './svg/alignMiddle.vue';
 import alignRight from './svg/alignRight.vue';
 import {storeToRefs} from 'pinia'
-import {alphabetsStore}  from '../store/alphabetsModeStore'
-import { getMobileOS } from '../composables/getMobileOS';
 import { customizeStore } from '../store/customizeStore';
 
 const customize = customizeStore()
 const {textPosition} = storeToRefs(customize)
-
-const alphabets = alphabetsStore()
-const {alphabetsMode_ } = storeToRefs(alphabets)
 </script>

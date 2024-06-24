@@ -1,7 +1,7 @@
 <template>
     <input
         name="mobile"
-        v-if="getMobileOS()"
+        v-if="isMobileOS()"
         v-model="playerInput"
         ref="inputEl"
         type="text" 
@@ -12,7 +12,7 @@
 <script setup>
 import { storeToRefs } from 'pinia';
 import { mainStore } from '../store/mainStore';
-import { getMobileOS } from '../composables/getMobileOS';
+import { isMobileOS } from '../composables/isMobileOS';
 
 const store = mainStore()
 const {playerInput, containerText, inputEl} = storeToRefs(store)

@@ -2,7 +2,7 @@
     <main class="w-[90%] min-h-[150px] space-y-[3px] relative transition-none  max-w-[900px] m-auto xl:pt-10" :class="[hideElements ? 'pt-5 xl:pt-24' : 'pt-3']">
         <MobileInput />
         <div v-if="containerText" class="transition-all duration-100 relative mx-auto max-w-[700px] w-full py-6">
-            <div aria-describedby="full-text" ref="containerRef" @click="getMobileOS() ? inputEl.focus() : ''" :style="{'height' : containerHeight + 'px', 'font-size': font + 'px'}" :class="[ customizers['no-space'] ? 'break-words' : '', alphabetsMode_ ? 'text-center break-words': 'text-left', !alphabetsMode_ && textPosition=== 'center' ? 'text-center' : !alphabetsMode_ && textPosition=== 'right' ? 'text-right' : 'text-left', ] " class="overflow-y-auto scroll-smooth noscrollbar leading-[1.4] h-fit py-[1px]  ring-opacity-20">
+            <div aria-describedby="full-text" ref="containerRef" @click="isMobileOS() ? inputEl.focus() : ''" :style="{'height' : containerHeight + 'px', 'font-size': font + 'px'}" :class="[ customizers['no-space'] ? 'break-words' : '', alphabetsMode_ ? 'text-center break-words': 'text-left', !alphabetsMode_ && textPosition=== 'center' ? 'text-center' : !alphabetsMode_ && textPosition=== 'right' ? 'text-right' : 'text-left', ] " class="overflow-y-auto scroll-smooth noscrollbar leading-[1.4] h-fit py-[1px]  ring-opacity-20">
                 <p id="full-text" class="hidden">{{ containerText }}</p>
                 <Alphabet
                 v-for="(alphabet, index) in containerText"
@@ -22,7 +22,7 @@
 
 <script setup>
 import { onMounted, ref, watch, watchEffect } from 'vue';
-import { getMobileOS } from '../composables/getMobileOS';
+import { isMobileOS } from '../composables/isMobileOS';
 import MobileInput from'./MobileInput.vue'
 import Alphabet from './Alphabet.vue'
 import {storeToRefs} from 'pinia'
@@ -84,7 +84,7 @@ watch(playerInput, (newVal, oldVal) => {
 
 onMounted(() => {
     if (!containerText.value) generateTest(customizers.value, null)
-        if (getMobileOS()) {
+        if (isMobileOS()) {
             inputEl.value.focus()
             inputEl.value.addEventListener('input', mobileInputEvent)
             window.addEventListener('keydown', mobileInputEvent)

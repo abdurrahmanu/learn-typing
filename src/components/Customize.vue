@@ -32,7 +32,7 @@
           <div :class="[alphabetsConfig.spaced ? 'text-green-500' : '']" @click="changeMode('spaced')" class="px-[5px] hover:scale-105 rounded-md">space</div>
           <div :class="[alphabetsConfig.backwards ? 'text-green-500' : '']" @click="changeMode('backwards')" class="px-[5px] hover:scale-105 rounded-md">reverse</div>
           <div :class="[alphabetsConfig.random ? 'text-green-500' : '']" @click="changeMode('random')" class="px-[5px] hover:scale-105 rounded-md">random</div>
-          <div class="absolute left-0 text-black bottom-[-100%] shadow-sm shadow-slate-500 px-[6px] bg-neutral-100 rounded-full whitespace-nowrap group-hover:block hidden">alphabets</div>
+          <div class="absolute left-0 text-black bottom-[-65%] shadow-sm shadow-slate-500 px-[6px] bg-neutral-100 rounded-full whitespace-nowrap group-hover:block hidden">alphabets</div>
     </div>
   </div>
 </template>

@@ -1,8 +1,8 @@
 <template>
-    <div @click="hideElements = !hideElements"  v-if="!hasCompletedSession && route.name === 'home'" :class="[appTheme]" class="absolute bottom-3 group whitespace-nowrap left-4 text-xs bg-neutral-900 border rounded-md px-2 py-[2px] transition-all duration-100 border-neutral-700 items-center space-x-1">
-        <span class="hidden group-hover:inline">{{!hideElements ? 'HIDE' : 'SHOW'}} ELEMENTS</span>
-        <span class="pl-2 font-mono font-bold">></span>
-        </div>
+    <div @click="hideElements = !hideElements"  v-if="!hasCompletedSession && route.name === 'home'" :class="[appTheme]" class="absolute flex items-center px-2 py-1 text-xs transition-all duration-100 border rounded-md bottom-3 group whitespace-nowrap left-4 bg-neutral-900 border-neutral-700">
+        <span class="hidden pr-2 font-medium group-hover:inline">{{!hideElements ? 'HIDE' : 'SHOW'}} ELEMENTS</span>
+        <greaterThan class="w-3" />
+    </div>
 </template>
 
 <script setup>
@@ -11,6 +11,7 @@ import { storeToRefs } from 'pinia';
 import { customizeStore } from '../store/customizeStore';
 import {mainStore} from '../store/mainStore'
 import {themeStore}  from '../store/themeStore'
+import greaterThan from './svg/greaterThan.vue'
 import {useRoute} from 'vue-router'
 
 const route = useRoute()

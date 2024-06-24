@@ -25,10 +25,12 @@
             </div>
             <div class="pt-3">{{ testType }}</div>
         </div>
-        <div v-if="beatCountdown" class="text-green-700 uppercase">You beat the time, you left {{ remainingTime() }}</div>
-        <div v-if="timedTyping && !beatCountdown" class="text-red-500 uppercase">You were unable to beat the time</div>
-        <div v-if="timedTyping" class="text-center uppercase">{{ beatCountdown && accuracy() > 85 && (resultData.WPM * (accuracy() / 100)).toFixed(0) > 60 && errorRatioLevel() ? 'you passed the test' : 'you failed the test' }}</div>
-        <div v-else class="text-center uppercase">{{accuracy() > 90 && (resultData.WPM * (accuracy() / 100)).toFixed(0) > 50 && errorRatioLevel() ? 'you passed the test' : 'you failed the test'  }}</div>
+        <div class="space-y-1">            
+            <div v-if="beatCountdown" class="text-green-700 uppercase">You beat the time, you left {{ remainingTime() }}<span class="lowercase">s</span></div>
+            <div v-if="timedTyping && !beatCountdown" class="text-red-500 uppercase">You were unable to beat the time</div>
+            <div v-if="timedTyping" :class="[testDetailsForTimedTyping ? 'text-green-700' : 'text-red-400']" class="text-center uppercase">{{ testDetailsForTimedTyping ? 'you passed the test' : 'you failed the test'}}</div>
+            <div v-else  :class="[testDetails ? 'text-green-700' : 'text-red-400']" class="text-center uppercase">{{ testDetails ? 'you passed the test' : 'you failed the test' }}</div>
+        </div>
         
         <!-- <Bar :data="chartData" class="w-[600px] max-w-[90%] bg-neutral-700 m-auto relative p-2"/> -->
     </div>
@@ -56,6 +58,7 @@ const theme_ = themeStore()
 const { appTheme } = storeToRefs(theme_)
 
 // ChartJS.register( Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
+
 
 const store = mainStore()
 const {resultData, beatCountdown, timedTyping, savedCountdown} = storeToRefs(store)
@@ -104,6 +107,15 @@ const errorRatioLevel = () => {
     return (resultData.value.wrongCount / resultData.value.containerText.length) * 100 < 10
     }
 }
+
+const testDetails  = computed(() => {
+    return accuracy() > 90 && (resultData.value.WPM * (accuracy() / 100)).toFixed(0) > 50 && errorRatioLevel() ? true : false
+})
+
+const testDetailsForTimedTyping = computed(() => {
+    return beatCountdown.value && accuracy() > 85 && (resultData.value.WPM * (accuracy() / 100)).toFixed(0) > 60 && errorRatioLevel() ? true : false
+})
+
 
 // onMounted( async () => {
 //     if (userID.value) {

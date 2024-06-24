@@ -1,12 +1,12 @@
 import { mainStore } from "../store/mainStore"
-import { getMobileOS } from "./getMobileOS";
+import { isMobileOS } from "./isMobileOS";
 import { storeToRefs } from 'pinia';
 
 export const managePlayerInput = () => {
     const store = mainStore()
     const { containerText, playerInputLength, playerInput, playerLastInput, previousPlayerInput, correctCount, wrongCount, completionLevel} = storeToRefs(store)
 
-    if (getMobileOS()) playerLastInput.value = playerInput.value[playerInput.value.length - 1]
+    if (isMobileOS()) playerLastInput.value = playerInput.value[playerInput.value.length - 1]
 
     if (!playerInput.value) {
         if (previousPlayerInput.value === containerText.value[0]) correctCount.value--
@@ -18,7 +18,7 @@ export const managePlayerInput = () => {
             else wrongCount.value--
         }
         else {
-            if (getMobileOS()) {
+            if (isMobileOS()) {
                 if (playerInput.value[playerInput.value.length - 1] === containerText.value[playerInput.value.length - 1]) {
                     correctCount.value ++
                 }

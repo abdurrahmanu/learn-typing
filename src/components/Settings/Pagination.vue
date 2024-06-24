@@ -1,8 +1,8 @@
 <template>
     <div :class="[appTheme]" class="flex items-center m-auto text-xs text-black rounded-md w-fit">
-        <div @click="prev" class="font-mono text-2xl font-bold hover:text-green-500" :class="[hasPrev ? 'cursor-pointer' : 'opacity-40 cursor-not-allowed']" >&lt;</div>
+        <previous  @click="prevMode" :class="[hasPrev ? 'cursor-pointer' : 'opacity-40 cursor-not-allowed']" class="w-4 h-4" />
         <div class="px-3 font-mono font-medium transition-all duration-100 rounded-md cursor-pointer w-fit">{{ pagesArray[currentPage] }}</div>
-        <div @click="next" class="font-mono text-2xl font-bold hover:text-green-500" :class="[hasNext ? 'cursor-pointer' : 'opacity-40 cursor-not-allowed']" >&gt;</div>
+        <next @click="nextMode" class="w-4 h-4" :class="[hasNext ? 'cursor-pointer' : 'opacity-40 cursor-not-allowed']" />
     </div>
 </template>
 
@@ -11,6 +11,8 @@ import { ref, onMounted, computed, watch } from 'vue';
 import { storeToRefs } from 'pinia';
 import {pagesStore}  from '../../store/pagesStore'
 import { themeStore } from '../../store/themeStore';
+import next from '../svg/next.vue';
+import previous from '../svg/previous.vue';
 
 const pages = pagesStore()
 const {currentPage } = storeToRefs(pages)
@@ -32,12 +34,12 @@ const positionPage = (pageNumber, page) => {
 const hasNext = computed(() =>  props.pagesArray[currentPage.value + 1])
 const hasPrev = computed(() => props.pagesArray[currentPage.value - 1])
 
-const next = () => {   
+const nextMode = () => {   
     if (hasNext.value) currentPage.value++
     else return
 }
 
-const prev = () => {
+const prevMode = () => {
     if (hasPrev.value) currentPage.value--
     else return
 }
