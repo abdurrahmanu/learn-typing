@@ -10,7 +10,6 @@ import {storeToRefs} from 'pinia'
 import {mainStore} from '../store/mainStore'
 import {themeStore}  from '../store/themeStore'
 import {customizeStore}  from '../store/customizeStore'
-import Blind from './Blind.vue';
 
 const theme_ = themeStore()
 const {theme } = storeToRefs(theme_)
@@ -99,7 +98,7 @@ const equalStyle = computed(() => {
 })
 
 const currentIndexStyle = computed(() => {
-    let text = theme.value === 'dark' ? 'border text-slate-400' : 'bg-transparent text-neutral-900' 
+    let text = theme.value === 'dark' ? 'text-slate-400' : 'bg-transparent text-neutral-900' 
     let caret = caretType.value === 'border' ? 'border border-zinc-500' : caretType.value === 'caret' ? 'border-transparent border-l-zinc-600' : caretType.value === 'underline' ? 'border-transparent border-b-blue-600' : ''
     return  props.currentIndex ? text + ' ' + caret : ''
 })
@@ -108,7 +107,6 @@ const mainStyle = computed(() => {
     let text = theme.value === 'dark' ? 'text-slate-400' : 'text-zinc-500'
     return props.index > playerInputLength.value ? text : ''
 })
-
 
 // watch(font, (newVal) => {
 //     if (props.currentIndex) {
@@ -133,9 +131,3 @@ const mainStyle = computed(() => {
             //     })
             // } 
 </script>
-
-<style scoped>
-.v-enter-active, .v-leave-active {
-    transition: all 1s ease-in-out;
-}
-</style>

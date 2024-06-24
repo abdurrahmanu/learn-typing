@@ -1,5 +1,5 @@
 <template>
-    <div :class="[appTheme]" class="flex items-center m-auto text-xs text-black rounded-md w-fit">
+    <div :class="[appTheme]" class="flex items-center m-auto text-black rounded-md w-fit">
         <previous  @click="prevMode" :class="[hasPrev ? 'cursor-pointer' : 'opacity-40 cursor-not-allowed']" class="w-4 h-4" />
         <div class="px-3 font-mono font-medium transition-all duration-100 rounded-md cursor-pointer w-fit">{{ pagesArray[currentPage] }}</div>
         <next @click="nextMode" class="w-4 h-4" :class="[hasNext ? 'cursor-pointer' : 'opacity-40 cursor-not-allowed']" />

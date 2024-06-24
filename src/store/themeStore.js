@@ -11,7 +11,7 @@ export const themeStore = defineStore('themeStore', () => {
         if (theme.value === 'sky') return 'bg-sky-400 text-zinc-900'
         if (theme.value === 'fuschia') return 'bg-fuschia-600 text-black'
         if (theme.value === 'emerald') return 'bg-emerald-400 text-black'
-        if (theme.value === 'dark') return 'bg-neutral-900 text-slate-200'
+        if (theme.value === 'dark') return 'bg-neutral-900 text-slate-300'
         if (theme.value === 'white') return 'bg-slate-200 text-neutral-700'
     })
 

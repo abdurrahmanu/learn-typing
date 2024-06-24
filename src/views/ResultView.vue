@@ -26,10 +26,10 @@
             <div class="pt-3">{{ testType }}</div>
         </div>
         <div class="space-y-1">            
-            <div v-if="beatCountdown" class="text-green-700 uppercase">You beat the time, you left {{ remainingTime() }}<span class="lowercase">s</span></div>
-            <div v-if="timedTyping && !beatCountdown" class="text-red-500 uppercase">You were unable to beat the time</div>
             <div v-if="timedTyping" :class="[testDetailsForTimedTyping ? 'text-green-700' : 'text-red-400']" class="text-center uppercase">{{ testDetailsForTimedTyping ? 'you passed the test' : 'you failed the test'}}</div>
             <div v-else  :class="[testDetails ? 'text-green-700' : 'text-red-400']" class="text-center uppercase">{{ testDetails ? 'you passed the test' : 'you failed the test' }}</div>
+            <div v-if="beatCountdown" class="text-green-700 uppercase">You beat the time, you left {{ remainingTime() }}<span class="lowercase">s</span></div>
+            <div v-if="timedTyping && !beatCountdown" class="text-red-500 uppercase">You were unable to beat the time</div>
         </div>
         
         <!-- <Bar :data="chartData" class="w-[600px] max-w-[90%] bg-neutral-700 m-auto relative p-2"/> -->

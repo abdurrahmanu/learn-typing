@@ -7,7 +7,7 @@
                     <Clock class="peer" />
                     <div class="absolute z-5 left-[50%] translate-x-[-50%] bottom-[-100%] rounded-full whitespace-nowrap peer-hover:block hidden pt-1">countdown</div>
                 </div>
-                <div class="relative w-fit" v-if="!alphabetsMode_ && !isMobileOS()">
+                <div class="relative hidden w-fit min-[500px]:block" v-if="!alphabetsMode_ && !isMobileOS()">
                     <TextAlign  class="peer"/>
                     <div class="absolute z-5 left-[50%] translate-x-[-50%] bottom-[-100%] rounded-full whitespace-nowrap peer-hover:block hidden">text align</div>
                 </div>
@@ -21,8 +21,8 @@
                 </div>
             </div>
             <div class="relative w-fit" v-if="route.name !== 'about'">
-                <div @click="routeToPage('about')" :class="route.name === 'about' ? 'text-green-500' : ''" class="font-black font-serif hover:text-green-400 rounded-full cursor-pointer peer text-base lowercase pt-[2px] leading-[20px]">i</div>
-                <div class="absolute z-5 left-[50%] translate-x-[-50%] bottom-[-100%] rounded-full whitespace-nowrap peer-hover:block hidden">about</div>
+                <about @click="routeToPage('about')" class="w-4 peer" />
+            <div class="absolute z-5 left-[50%] translate-x-[-50%] bottom-[-100%] rounded-full whitespace-nowrap peer-hover:block hidden">about</div>
             </div>
             <div class="relative w-fit"  v-if="route.name !== 'auth'">                
                 <user @click="routeToPage('auth')" class="w-4 peer" />
@@ -47,6 +47,7 @@ import home from './svg/home.vue'
 import settings from './svg/settings.vue';
 import TextAlign from './TextAlign.vue';
 import repeat from './svg/repeat.vue';
+import about from './svg/about.vue'
 import Blind from './Blind.vue'
 import Clock from './Clock.vue'
 import CompletionRangeWithErrors from './CompletionRangeWithErrors.vue';
