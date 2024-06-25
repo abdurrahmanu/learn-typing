@@ -3,10 +3,7 @@ import {ref, computed} from 'vue'
 import {generateTest} from '../composables/generateTest'
 
 export const mainStore = defineStore('mainStore', () => {
-    const inputEl = ref(null)
-    const focus = ref(false)
-    const capsIsOn = ref(false)
-
+    
     //Test container
     const containerRef = ref(null)
     const containerHeight = ref(0)
@@ -17,6 +14,9 @@ export const mainStore = defineStore('mainStore', () => {
     //keys states
     const enterKey = ref(false)
     const backspaceIsPressed = ref(false)
+    const inputEl = ref(null)
+    const focus = ref(false)
+    const capsIsOn = ref(false)
 
     // Time states
     const timedTyping = ref(false)
@@ -42,10 +42,10 @@ export const mainStore = defineStore('mainStore', () => {
     const storedTest = ref('') // test to repeat
     const howToUseCustomText = ref('select text using options')
 
-    // Tests data for different modes 
-    const movie = ref({}) // Data for quotes mode && movie quotes
-    const customTexts = ref({}) // Data for custom quotes
-    const authoredQuote = ref({}) // Data for quotes mode && authored quotes
+    // data for quotes 
+    const movie = ref({})
+    const customTexts = ref({}) 
+    const authoredQuote = ref({})
 
     const resultData = computed(() => {
         return {

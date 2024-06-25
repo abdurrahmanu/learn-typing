@@ -56,17 +56,17 @@ watch(customizers, (newVal) => {
       switchNext(newVal)
   }}, {deep : true})
 
-onAuthStateChanged(auth, async (user) => {
-  if (user) {
-    userID.value = user.uid;
-    isAuthenticated.value = true
-    await getDoc(doc(db, 'users', userID.value)).then(data => userData.value = data )
-  } else {
-    isAuthenticated.value = false
-    userID.value = undefined
-    userData.value = {}
-  }
-});
+// onAuthStateChanged(auth, async (user) => {
+//   if (user) {
+//     userID.value = user.uid;
+//     isAuthenticated.value = true
+//     await getDoc(doc(db, 'users', userID.value)).then(data => userData.value = data )
+//   } else {
+//     isAuthenticated.value = false
+//     userID.value = undefined
+//     userData.value = {}
+//   }
+// });
 
 const height = () => {
   const div = document.createElement("div");

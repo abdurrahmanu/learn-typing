@@ -1,6 +1,6 @@
 <template>
-    <header :class="[appTheme]" class="sticky top-0 mx-auto flex items-center justify-between py-2 pl-3 pr-2 h-[50px] max-w-[1300px] lg:mb-6 mb-3 xl:fixed xl:w-full xl:left-[50%] xl:translate-x-[-50%] z-[2] text-[11px] uppercase font-medium">
-        <Logo />
+    <header class="sticky top-0 mx-auto flex items-center justify-between pl-3 pr-2 max-w-[1300px] lg:mb-6 mb-3 xl:fixed xl:w-full xl:left-[50%] xl:translate-x-[-50%] z-[2] text-[11px] uppercase font-medium h-[50px] py-2">
+        <Logo class="flex" />
         <div class="flex items-center gap-4 rounded-full w-fit">
             <div v-if="route.name === 'home'"class="flex items-center gap-4">
                 <div class="relative w-fit">
@@ -56,12 +56,15 @@ import {storeToRefs} from 'pinia'
 import {themeStore}  from '../store/themeStore'
 import { customizeStore } from '../store/customizeStore';
 import {useRoute, useRouter} from 'vue-router'
-import { alphabetsMode } from '../composables/alphabetsMode';
-import { alphabetsStore } from '../store/alphabetsModeStore';
 import { isMobileOS } from '../composables/isMobileOS';
+import { alphabetsStore } from '../store/alphabetsModeStore';
+import { mainStore } from '../store/mainStore';
 
 const route = useRoute()
 const router = useRouter()
+
+const main = mainStore()
+const {focus} = storeToRefs(main)
 
 const theme_ = themeStore()
 const { appTheme } = storeToRefs(theme_)

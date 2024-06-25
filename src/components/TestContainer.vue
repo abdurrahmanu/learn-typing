@@ -1,12 +1,11 @@
 <template>
-    <main class="w-[90%] min-h-[150px] space-y-[3px] relative transition-none  max-w-[900px] m-auto xl:pt-10" :class="[hideElements ? 'pt-5 xl:pt-24' : 'pt-3']">
-        <div class="relative m-auto w-fit">            
-            <Restart v-if="!hasCompletedSession && playerInputLength" @click="restart" class="w-6 peer"/>
-            <!-- <div class="absolute left-[50%] translate-x-[-50%] top-[80%] whitespace-nowrap peer-hover:block hidden text-xs font-medium">RESTART</div> -->
+    <main class="w-[90%] min-h-[150px] space-y-[2px] relative transition-none  max-w-[900px] m-auto xl:pt-10" :class="[hideElements ? 'pt-4 xl:pt-24' : 'pt-1']">
+        <div :class="[isMobileOS() ? 'flex' : 'block']" class="relative h-fit min-h-[25px]">            
+            <MobileInput />
+            <Restart v-if="!hasCompletedSession && playerInputLength" @click="restart" class="absolute w-6 left-[50%] translate-x-[-50%]"/>
         </div>
-        <MobileInput />
-        <div v-if="containerText" class="transition-all duration-100 relative mx-auto max-w-[700px] w-full py-1">
-            <div aria-describedby="full-text" ref="containerRef" @click="isMobileOS() ? inputEl.focus() : ''" :style="{'height' : containerHeight + 'px', 'font-size': font + 'px'}" :class="[ customizers['no-space'] ? 'break-words' : '', alphabetsMode_ ? 'text-center break-words': 'text-left', !alphabetsMode_ && textPosition=== 'center' ? 'text-center' : !alphabetsMode_ && textPosition=== 'right' ? 'text-right' : 'text-left', ] " class="overflow-y-auto scroll-smooth noscrollbar leading-[1.4] h-fit py-[1px]  ring-opacity-20">
+        <div v-if="containerText" class="transition-all duration-100 relative mx-auto max-w-[700px] w-full">
+            <div aria-describedby="full-text" ref="containerRef"  :style="{'height' : containerHeight + 'px', 'font-size': font + 'px'}" :class="[ customizers['no-space'] ? 'break-words' : '', alphabetsMode_ ? 'text-center break-words': 'text-left', !alphabetsMode_ && textPosition=== 'center' ? 'text-center' : !alphabetsMode_ && textPosition=== 'right' ? 'text-right' : 'text-left', ] " class="overflow-y-auto scroll-smooth noscrollbar leading-[1.4] h-fit py-[1px]  ring-opacity-20">
                 <p id="full-text" class="hidden">{{ containerText }}</p>
                 <Alphabet
                 v-for="(alphabet, index) in containerText"
@@ -45,7 +44,7 @@ const alphabets_ = alphabetsStore()
 const { alphabetsMode_ } = storeToRefs(alphabets_)
 
 const store = mainStore()
-const { containerText, previousPlayerInput, timedTyping, hasCompletedSession, resultData, containerRef, containerHeight, movie, beatCountdown, playerInputLength, playerInput, authoredQuote, scrollTextContainer, inputEl} = storeToRefs(store)
+const { containerText, previousPlayerInput, timedTyping, hasCompletedSession, focus, resultData, containerRef, containerHeight, movie, beatCountdown, playerInputLength, playerInput, authoredQuote, scrollTextContainer, inputEl} = storeToRefs(store)
 const { sessionComplete, switchNext} = store
 
 const customize = customizeStore()
@@ -93,30 +92,26 @@ onMounted(() => {
     if (!containerText.value) generateTest(customizers.value, null)
         if (isMobileOS()) {
             inputEl.value.focus()
+            focus.value = true
             inputEl.value.addEventListener('input', mobileInputEvent)
             window.addEventListener('keydown', mobileInputEvent)
+            window.addEventListener('click', event => {
+                if (containerRef.value instanceof HTMLElement) {                    
+                    if (event.srcElement !== containerRef.value && !containerRef.value.contains(event.srcElement)) {
+                        inputEl.value.blur()
+                        focus.value = false
+                    } else {
+                        if (event.srcElement === restartEl.value) console.log('object');
+                        inputEl.value.focus()
+                        focus.value = true
+                    }
+                }
+            })
         }
         else {
             window.addEventListener('keypress', inputEvent)
             window.addEventListener('keydown', inputEvent)
         }
-})
-
-const el = ref(null)
-const fragment = ref(document.createDocumentFragment())
-
-onMounted(() => {
-    watchEffect(() => {
-        for (let index = 0; index <= containerText.value.length; index++) {
-            const alpha = `<span  class="border"> ${containerText.value[index]} </span>`  
-            let div = ref(document.createElement('div'))
-            div.value.innerHTML = alpha
-            fragment.value.appendChild(div.value);
-        }
-
-        // el.value.appendChild(fragment.value)
-        // console.log(el.value);
-    })
 })
 </script>
 

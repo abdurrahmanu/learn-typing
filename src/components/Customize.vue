@@ -1,5 +1,5 @@
 <template>
-  <div ref="containerEl" :class="[!hasCompletedSession && !alphabetsMode_ ? 'xl:right-[130px]' : '']" class="py-1 m-auto rounded-md w-fit relative max-w-[90%] bg-inherit xl:z-[3] font-mono">
+  <div ref="containerEl" :class="[!hasCompletedSession && !alphabetsMode_ ? 'xl:right-[130px]' : '', isMobileOS() && focus ? 'hidden' : 'block']" class="py-1 m-auto rounded-md w-fit relative max-w-[90%] bg-inherit xl:z-[3] font-mono">
     <div :style="{'width': completionLevel + '%'}" :class="[theme === 'dark' ? 'bg-green-200 after:bg-green-400' : 'bg-green-600 after:bg-green-600', !completionLevel || playerInput.length < 2 ? 'after:w-0 after:hidden' : 'after:w-[3%] after:right-0 after:absolute after:top-0 after:bottom-0 after:blur-[5px]']" class="absolute left-0 bottom-0 top-0 m-auto rounded-md max-[460px]:hidden" v-if="blind" ></div>
     <div :style="{'width': completionLevel + '%'}" class="absolute left-0 bottom-0 top-0 m-auto rounded-md max-[460px]:hidden flex" v-else>
         <div v-show="index <= playerInput.length - 1" :class="[ index === 0 ? 'rounded-l-[10px]' : '' ,playerInput[index] === alphabet && index <= playerInput.length - 1 ? 'bg-green-500 after:bg-green-500' : 'bg-red-500 after:bg-red-500', index === playerInput.length - 1 ? 'after:w-[100%] after:right-0 after:top-0 after:bottom-0 after:blur-[5px]' : 'after:w-0 after:hidden', !completionLevel || index < 2 ? 'after:hidden' : 'after:absolute']" class="h-[100%] relative" :style="{'width': singleDivWidth + 'px'}" v-for="(alphabet, index) in containerText" :key="index"></div>
@@ -45,6 +45,7 @@ import {storeToRefs} from 'pinia'
 import { mainStore } from '../store/mainStore.js';
 import {alphabetsStore}  from '../store/alphabetsModeStore';
 import { themeStore } from '../store/themeStore';
+import { isMobileOS } from '../composables/isMobileOS';
 
 const containerEl = ref(null)
 const singleDivWidth = ref(0)
@@ -56,7 +57,7 @@ const alphabets_ = alphabetsStore()
 const { alphabetsMode_, alphabetsConfig } = storeToRefs(alphabets_)
 
 const store = mainStore()
-const { hasCompletedSession, completionLevel, containerText, playerInput} = storeToRefs(store)
+const { hasCompletedSession, completionLevel, containerText, playerInput, focus} = storeToRefs(store)
 const {switchNext} = store
 
 const customize = customizeStore()

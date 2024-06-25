@@ -1,6 +1,6 @@
 <template>
-    <div :class="[appTheme]" class="pt-40 font-cursive w-fit gap-10 m-auto text-sm">        
-        <p :class="[theme === 'dark' ? 'border-slate-300 hover:bg-slate-100 hover:text-black' : 'border-neutral-800 hover:text-white hover:bg-neutral-700']" class="px-10 py-1 border rounded-md flex items-center gap-3 font-medium" @click="createAccount"><google /> SIGN IN WITH GOOGLE</p>
+    <div :class="[appTheme]" class="gap-10 pt-40 m-auto text-sm font-cursive w-fit">        
+        <p :class="[theme === 'dark' ? 'border-slate-300 hover:bg-slate-100 hover:text-black' : 'border-neutral-800 hover:text-white hover:bg-neutral-700']" class="flex items-center gap-3 px-10 py-1 font-medium border rounded-md"><google /> SIGN IN WITH GOOGLE</p>
     </div>
 </template>
 
@@ -20,7 +20,7 @@ const auth_ = authStore()
 const {isAuthenticated, userID, userData } = storeToRefs(auth_)
 
 const auth = getAuth()
-const provider = new GoogleAuthProvider();
+// const provider = new GoogleAuthProvider();
 
 // const createAccount = () => {
 //     provider.addScope('https://www.googleapis.com/auth/user.emails.read');

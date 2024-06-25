@@ -6,7 +6,7 @@ import {alphabetsMode} from './alphabetsMode'
 
 export const generateTest = async (config, restart) => {
     const main = mainStore()
-    const {containerText, storedTest, movie, authoredQuote} = storeToRefs(main)
+    const {containerText, storedTest, movie, authoredQuote, inputEl} = storeToRefs(main)
 
     const customize = customizeStore()
     const {repeat, mode} = storeToRefs(customize)
