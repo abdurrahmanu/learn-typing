@@ -1,5 +1,5 @@
 <template>
-    <div class="max-w-[800px] m-auto min-h-[calc(100dvh_-_75px)] overflow-y-auto">
+    <div class="max-w-[800px] m-auto min-h-[calc(100dvh_-_75px)] overflow-y-auto pt-6">
         <div class="pt-10 m-auto font-mono font-normal w-fit">
             <div class="relative m-auto font-mono font-medium cursor-default w-fit h-fit">
                     <span class="absolute top-0 left-[50%] translate-x-[-50%] text-sm font-bold"><span class="hover:text-red-500">K</span><span class="hover:text-green-500">E</span><span class="hover:text-blue-500">Y</span></span>

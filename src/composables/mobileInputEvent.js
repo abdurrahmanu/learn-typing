@@ -4,12 +4,13 @@ import { storeToRefs } from 'pinia';
 
 export const mobileInputEvent = (e) => {
         const store = mainStore()
-        const { containerText, beatCountdown, hasCompletedSession, playerInputLength, wrongCount, playerInput, backspaceIsPressed, beginCountdown, startTime, enterKey, timedTyping, focus} = storeToRefs(store)
+        const { containerText, beatCountdown, hasCompletedSession, route, playerInputLength, wrongCount, playerInput, backspaceIsPressed, beginCountdown, startTime, enterKey, timedTyping, focus} = storeToRefs(store)
         const { sessionComplete } = store
 
         const customize = customizeStore()
         const {backspace, pauseTyping} = storeToRefs(customize)
 
+    if (route.value !== 'home') return
     if (!focus.value || (e.key === 'Enter' && !enterKey.value) || pauseTyping.value || hasCompletedSession.value) return
     if (e.inputType === 'deleteContentBackward') {
         if (!backspace.value || playerInputLength.value === 0 || wrongCount.value === 0) return

@@ -24,6 +24,7 @@ router.beforeEach((to, from) => {
         store.switchNext(customize.customizers)
         return
     }
+    store.route = to.name
 })
 
 app.mount('#app')

@@ -39,7 +39,9 @@ import { generateTest } from '../composables/generateTest';
 import {managePlayerInput} from '../composables/managePlayerInput'
 import {mobileInputEvent} from '../composables/mobileInputEvent'
 import {inputEvent} from '../composables/inputEvent'
+import { useRoute } from 'vue-router';
 
+const route = useRoute()
 const alphabets_ = alphabetsStore()
 const { alphabetsMode_ } = storeToRefs(alphabets_)
 
@@ -90,6 +92,7 @@ watch(playerInput, (newVal, oldVal) => {
 
 onMounted(() => {
     if (!containerText.value) generateTest(customizers.value, null)
+    if (route.name === 'home') {
         if (isMobileOS()) {
             focus.value = true
             inputEl.value.focus()
@@ -111,6 +114,7 @@ onMounted(() => {
             window.addEventListener('keypress', inputEvent)
             window.addEventListener('keydown', inputEvent)
         }
+    }
 })
 </script>
 

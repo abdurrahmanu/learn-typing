@@ -3,7 +3,8 @@ import {ref, computed} from 'vue'
 import {generateTest} from '../composables/generateTest'
 
 export const mainStore = defineStore('mainStore', () => {
-    
+    const route = ref(null)
+
     //Test container
     const testContainerEl = ref(null)
     const containerHeight = ref(0)
@@ -104,6 +105,7 @@ export const mainStore = defineStore('mainStore', () => {
         sessionComplete,
         switchNext,
         
+        route,
         capsIsOn,
         resultData,
         inputEl,
