@@ -15,7 +15,7 @@ const theme_ = themeStore()
 const {theme } = storeToRefs(theme_)
 
 const store = mainStore()
-const { playerInputLength, containerRef, scrollTextContainer, enterKey, scrollDistance, backspaceIsPressed, containerHeight } = storeToRefs(store)
+const { playerInputLength, testContainerEl, scrollTextContainer, enterKey, scrollDistance, backspaceIsPressed, containerHeight } = storeToRefs(store)
 const currentAlphabet = ref(null)
 
 const customize = customizeStore()
@@ -41,12 +41,12 @@ onMounted(() => {
     watchEffect(() => {
         if (props.currentIndex) {
             if (currentAlphabet.value) {       
-                    const parentScrollHeight = containerRef.value.scrollHeight
-                    const parentHeight = containerRef.value.getBoundingClientRect().height
+                    const parentScrollHeight = testContainerEl.value.scrollHeight
+                    const parentHeight = testContainerEl.value.getBoundingClientRect().height
                     const caretTopOffset = currentAlphabet.value.getBoundingClientRect().top
-                    const parentTopOffset = containerRef.value.getBoundingClientRect().top
+                    const parentTopOffset = testContainerEl.value.getBoundingClientRect().top
                     const caretBottomOffset = currentAlphabet.value.getBoundingClientRect().bottom
-                    const parentBottomOffset = containerRef.value.getBoundingClientRect().bottom
+                    const parentBottomOffset = testContainerEl.value.getBoundingClientRect().bottom
                     const lineHeight = currentAlphabet.value.getBoundingClientRect().bottom - currentAlphabet.value.getBoundingClientRect().top
                     const prevSiblingBottomOffset = props.index > 0 ? currentAlphabet.value.previousElementSibling.getBoundingClientRect().bottom : 0
                     const nextSiblingTopOffset = props.index > 0 && currentAlphabet.value.nextElementSibling ? currentAlphabet.value.nextElementSibling.getBoundingClientRect().top : 0
@@ -58,12 +58,12 @@ onMounted(() => {
 
                     if ((!(parentBottomOffset - prevSiblingBottomOffset <= lineHeight) && parentBottomOffset - caretBottomOffset <= lineHeight && scrollDistance.value < parentScrollHeight)) {
                         if (!backspaceIsPressed.value) {     
-                            if (containerRef.value.scrollTop + parentHeight === parentScrollHeight) return
+                            if (testContainerEl.value.scrollTop + parentHeight === parentScrollHeight) return
                             else {
-                                if (parentScrollHeight - containerRef.value.scrollTop > parentHeight) {          
+                                if (parentScrollHeight - testContainerEl.value.scrollTop > parentHeight) {          
                                     scrollDistance.value += containerHeight.value - font.value - (font.value * 0.4)
                                 } else {
-                                    scrollDistance.value += parentScrollHeight - containerRef.value.scrollTop
+                                    scrollDistance.value += parentScrollHeight - testContainerEl.value.scrollTop
                                 }
                                 scrollTextContainer.value = {
                                     top: scrollDistance.value
@@ -74,7 +74,7 @@ onMounted(() => {
 
                     if (caretTopOffset < parentTopOffset && props.index > 0 && nextSiblingTopOffset !== caretTopOffset) {    
                         if (backspaceIsPressed.value) {
-                            if (containerRef.value.scrollTop <= parentHeight) {
+                            if (testContainerEl.value.scrollTop <= parentHeight) {
                                 scrollDistance.value = 0
                             } else {
                                 scrollDistance.value -= ((containerHeight.value / 3) * 2)
@@ -111,22 +111,22 @@ const mainStyle = computed(() => {
 // watch(font, (newVal) => {
 //     if (props.currentIndex) {
 //         const caretBottomOffset = currentAlphabet.value.getBoundingClientRect().bottom
-//         const parentBottomOffset = containerRef.value.getBoundingClientRect().bottom
+//         const parentBottomOffset = testContainerEl.value.getBoundingClientRect().bottom
 
 //         scrollTextContainer.value = {
-//             top: containerRef.value.scrollTop - (parentBottomOffset - caretBottomOffset) + +font.value + (+font.value * 0.4)
+//             top: testContainerEl.value.scrollTop - (parentBottomOffset - caretBottomOffset) + +font.value + (+font.value * 0.4)
 //         }
 //     }
 // })
 
             // if (currentAlphabet.value.getBoundingClientRect().top < parentTopOffset) {
-            //     containerRef.value.scrollTo({
+            //     testContainerEl.value.scrollTo({
             //         top: -parentTopOffset
             //     })
             // }
 
             // if (currentAlphabet.value.getBoundingClientRect().bottom > parentBottomOffset) {
-            //     containerRef.value.scrollTo({
+            //     testContainerEl.value.scrollTo({
             //         top: parentBottomOffset
             //     })
             // } 

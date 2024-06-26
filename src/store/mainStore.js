@@ -5,7 +5,7 @@ import {generateTest} from '../composables/generateTest'
 export const mainStore = defineStore('mainStore', () => {
     
     //Test container
-    const containerRef = ref(null)
+    const testContainerEl = ref(null)
     const containerHeight = ref(0)
     const scrollDistance = ref(0) // Container scroll Y axis
     const scrollTextContainer = ref({}) // Scroll top distance {top: number}
@@ -15,6 +15,8 @@ export const mainStore = defineStore('mainStore', () => {
     const enterKey = ref(false)
     const backspaceIsPressed = ref(false)
     const inputEl = ref(null)
+    const restartEl = ref(null)
+    const restartSvgEl = ref(null)
     const focus = ref(false)
     const capsIsOn = ref(false)
 
@@ -105,9 +107,11 @@ export const mainStore = defineStore('mainStore', () => {
         capsIsOn,
         resultData,
         inputEl,
+        restartEl,
+        restartSvgEl,
         focus,
 
-        containerRef,
+        testContainerEl,
         containerHeight,
         scrollDistance,
         scrollTextContainer,
