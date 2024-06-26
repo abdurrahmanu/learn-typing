@@ -11,7 +11,6 @@ import { storeToRefs } from 'pinia';
 import { customizeStore } from '../store/customizeStore';
 import {mainStore} from '../store/mainStore'
 import {themeStore}  from '../store/themeStore'
-import greaterThan from './svg/greaterThan.vue'
 import {useRoute} from 'vue-router'
 import next from './svg/next.vue';
 
