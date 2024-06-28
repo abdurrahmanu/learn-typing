@@ -97,7 +97,6 @@ onMounted(() => {
             focus.value = true
             inputEl.value.focus()
             inputEl.value.addEventListener('input', mobileInputEvent)
-            window.addEventListener('keydown', mobileInputEvent)
             window.addEventListener('click', event => {
                 if (testContainerEl.value instanceof HTMLElement) {                    
                     if (event.srcElement !== testContainerEl.value && !testContainerEl.value.contains(event.srcElement) && event.srcElement !== restartEl.value && !restartEl.value.contains(event.srcElement) && event.srcElement !== restartSvgEl.value) {

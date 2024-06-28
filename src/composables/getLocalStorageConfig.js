@@ -1,5 +1,4 @@
 import {ref} from 'vue'
-import { mainStore } from "../store/mainStore"
 import { storeToRefs } from 'pinia';
 import {pagesStore}  from '../store/pagesStore'
 import {themeStore}  from '../store/themeStore'
@@ -55,7 +54,7 @@ export const localStorageConfig = async () => {
             blind: false,
             mode: 'auto',
             hide: false,
-            fontsize: 20,
+            fontsize: 30,
             alphabets: {
                 combo: false,
                 combination: [],

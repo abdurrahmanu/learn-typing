@@ -20,10 +20,11 @@ router.beforeEach((to, from) => {
     if (to.name === 'result' && !store.hasCompletedSession || to.name === 'progress' && !auth.isAuthenticated) {
         return {name: 'home'}
     }
+    
     if (from.name === 'result' && store.hasCompletedSession) {
         store.switchNext(customize.customizers)
-        return
     }
+
     store.route = to.name
 })
 

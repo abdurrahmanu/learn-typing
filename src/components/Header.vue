@@ -1,5 +1,5 @@
 <template>
-    <header class="sticky top-0 mx-auto flex items-center justify-between pl-3 pr-2 max-w-[1300px] lg:mb-6 mb-3 xl:fixed xl:w-full text-[11px] uppercase font-medium h-[50px] py-2 xl:z-[1]">
+    <header class="sticky top-0 mx-auto flex items-center justify-between pl-3 pr-2 max-w-[1300px] lg:mb-6 mb-3 xl:fixed xl:w-full text-[11px] uppercase font-medium h-[50px] py-2 xl:z-[1] hover:shadow-sm hover:shadow-neutral-300">
         <Logo class="flex" />
         <div class="flex items-center gap-4 w-fit">
             <div v-if="route.name === 'home'"class="flex items-center gap-4">
@@ -48,12 +48,12 @@ import home from './svg/home.vue'
 import settings from './svg/settings.vue';
 import TextAlign from './TextAlign.vue';
 import repeat from './svg/repeat.vue';
-import about from './svg/about.vue'
-import Blind from './Blind.vue'
-import Clock from './Clock.vue'
+import about from './svg/about.vue';
+import Blind from './Blind.vue';
+import Clock from './Clock.vue';
 import CompletionRangeWithErrors from './CompletionRangeWithErrors.vue';
 import CompletionRange from './CompletionRange.vue';
-import {storeToRefs} from 'pinia'
+import {storeToRefs} from 'pinia';
 import { customizeStore } from '../store/customizeStore';
 import {useRoute, useRouter} from 'vue-router'
 import { isMobileOS } from '../composables/isMobileOS';

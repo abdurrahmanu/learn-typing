@@ -3,18 +3,19 @@ import { customizeStore } from "../store/customizeStore";
 import { storeToRefs } from 'pinia';
 
 export const inputEvent = (e) => {
-        const store = mainStore()
-        const { containerText, beatCountdown, playerInputLength, route,  playerInput, wrongCount, backspaceIsPressed, playerLastInput, beginCountdown, startTime, enterKey, timedTyping} = storeToRefs(store)
-        const { sessionComplete } = store
+    const store = mainStore()
+    const { containerText, beatCountdown, playerInputLength, route,  playerInput, wrongCount, backspaceIsPressed, playerLastInput, beginCountdown, startTime, enterKey, timedTyping} = storeToRefs(store)
+    const { sessionComplete } = store
 
-        const customize = customizeStore()
-        const {backspace, pauseTyping} = storeToRefs(customize)
+    const customize = customizeStore()
+    const {backspace, pauseTyping} = storeToRefs(customize)
 
+        if (e.type === 'keydown' && e.key === 'Backspace') backspaceIsPressed.value = true
+        else backspaceIsPressed.value = false
         if (route.value !== 'home') return
         if ((e.key === 'Enter' && !enterKey.value) || pauseTyping.value) return
         if (e.type === 'keydown' && e.key === 'Backspace') {
             if (!backspace.value || playerInputLength.value === 0 || wrongCount.value === 0) return
-            backspaceIsPressed.value = true
             playerInputLength.value--
             playerInput.value = playerInput.value.slice(0, -1)
             playerLastInput.value = playerInput.value[playerInput.value.length - 1]
@@ -39,4 +40,4 @@ export const inputEvent = (e) => {
             if (timedTyping.value) beatCountdown.value = true
             sessionComplete()
         }
-    }
+}
