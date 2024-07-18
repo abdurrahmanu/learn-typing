@@ -3,6 +3,8 @@ import {ref} from 'vue'
 
 export const customizeStore = defineStore('customizeStore', () => {
     const mode = ref('auto')
+    const selectedCustomTest = ref('')
+    const customTestModal = ref(false)
     const pauseTyping = ref(true)
     const configs = ref([])
     const showMoreSettings = ref(false)
@@ -47,7 +49,7 @@ export const customizeStore = defineStore('customizeStore', () => {
     const allOptions = ref({
         'text-length' : ['auto', 10, 20, 30, 50],
         'words-type' : ['most-used', 'less-used', 'rarely-used'],
-        'test-type' : ['quotes', 'random-words'],
+        'test-type' : ['quotes', 'random-words', 'custom-test'],
         'include-caps' : ['caps'],
         'include-punctuations' : ['punctuations'],
         'include-numbers' : ['numbers'],
@@ -123,6 +125,8 @@ export const customizeStore = defineStore('customizeStore', () => {
         repeat,
         mode,
         textPosition,
-        pauseTyping
+        pauseTyping,
+        customTestModal,
+        selectedCustomTest,
     }
 })

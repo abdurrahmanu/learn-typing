@@ -4,6 +4,7 @@ import {pagesStore}  from '../store/pagesStore'
 import {themeStore}  from '../store/themeStore'
 import {customizeStore} from '../store/customizeStore'
 import {alphabetsStore}  from '../store/alphabetsModeStore';
+import { mainStore } from '../store/mainStore';
 
 export const localStorageConfig = async () => {
     const alphabets_ = alphabetsStore()
@@ -11,6 +12,9 @@ export const localStorageConfig = async () => {
 
     const theme_ = themeStore()
     const {theme } = storeToRefs(theme_)
+
+    const main = mainStore()
+    const {customTests} = storeToRefs(main)
 
     const customize = customizeStore()
     const { customizers, disableOption, caretType, mode, hideElements, font, range, blind, backspace } = storeToRefs(customize)
@@ -30,15 +34,15 @@ export const localStorageConfig = async () => {
         customizers.value = localStorageSettings.value.config[0]
         disableOption.value = localStorageSettings.value.config[1] 
         mode.value = localStorageSettings.value.mode
+        customTests.value = localStorageSettings.value.customTests
         if (mode.value === 'alphabets') {
             alphabetsMode_.value = true
             currentPage.value = 1
-            }
-            else {
-                alphabetsMode_.value = false
-            currentPage.value = 0
         }
-        
+        else {
+                alphabetsMode_.value = false
+                currentPage.value = 0
+        }
         if (localStorageSettings.value.alphabets.combo) {
             useAlphabetCombination.value = true
             alphabetsCombination.value = localStorageSettings.value.alphabets.combination || []
@@ -47,6 +51,7 @@ export const localStorageConfig = async () => {
 
     else {
         let dorayiTyping = {
+            customTests: {'demo': 'This is a custom test, you can add your own tests by pressing the plus icon. This demo test cannot be deleted'},
             config: [customizers.value, disableOption.value],
             caret: 'border',
             theme: window.matchMedia("(prefers-color-scheme: dark)").matches ?  'dark' : 'white',

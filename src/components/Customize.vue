@@ -1,11 +1,11 @@
 <template>
-  <div ref="containerEl" :class="[!hasCompletedSession && !alphabetsMode_ ? 'xl:right-[130px]' : '', isMobileOS() && focus ? 'hidden' : 'block']" class="py-1 m-auto rounded-md w-fit relative max-w-[90%] bg-inherit xl:z-[3] font-mono">
+  <div ref="containerEl" :class="[!hasCompletedSession && !alphabetsMode_ ? 'min-[1350px]:right-[140px]' : '', isMobileOS() && focus ? 'hidden' : 'block']" class="py-1 m-auto rounded-md w-fit relative max-w-[90%] bg-inherit min-[1350px]:z-[3] font-mono">
     <div :style="{'width': completionLevel + '%'}" :class="[theme === 'dark' ? 'bg-green-200 after:bg-green-400' : 'bg-green-600 after:bg-green-600', !completionLevel || playerInput.length < 2 ? 'after:w-0 after:hidden' : 'after:w-[3%] after:right-0 after:absolute after:top-0 after:bottom-0 after:blur-[5px]']" class="absolute left-0 bottom-0 top-0 m-auto rounded-md max-[460px]:hidden" v-if="blind" ></div>
     <div :style="{'width': completionLevel + '%'}" class="absolute left-0 bottom-0 top-0 m-auto rounded-md max-[460px]:hidden flex" v-else>
         <div v-show="index <= playerInput.length - 1" :class="[ index === 0 ? 'rounded-l-[10px]' : '' ,playerInput[index] === alphabet && index <= playerInput.length - 1 ? 'bg-green-500 after:bg-green-500' : 'bg-red-500 after:bg-red-500', index === playerInput.length - 1 ? 'after:w-[100%] after:right-0 after:top-0 after:bottom-0 after:blur-[5px]' : 'after:w-0 after:hidden', !completionLevel || index < 2 ? 'after:hidden' : 'after:absolute']" class="h-[100%] relative" :style="{'width': singleDivWidth + 'px'}" v-for="(alphabet, index) in containerText" :key="index"></div>
     </div>
 
-    <div v-if="!hasCompletedSession && !alphabetsMode_" :class="[appTheme]" class="relative m-auto rounded-md max-w-fit ring-1 ring-green-600 xl:ring-0">
+    <div v-if="!hasCompletedSession && !alphabetsMode_" :class="[appTheme]" class="relative m-auto rounded-md max-w-fit ring-1 ring-green-600 min-[1350px]:ring-0">
         <div class="text-[12px] items-center p-1 flex max-w-[1000px] justify-center flex-wrap relative">
             <div class="p-1" v-for="(optionArr, key, listIndex) in option" :key="listIndex">          
                 <div 
@@ -14,18 +14,19 @@
                 @mouseleave="mouseLeave(listIndex)" >
                     <div 
                     class="px-[5px] hover:scale-105 rounded-md whitespace-nowrap" 
-                    :class="[disableOption[key] ? 'opacity-50 cursor-not-allowed' : '', customizers[key] === option && !disableOption[key]  ? 'text-green-500' : '']"
+                    :class="[disableOption[key] ? 'opacity-50 cursor-not-allowed' : '', customizers[key] === option && !disableOption[key]  ? 'text-green-500' : '', option === 'custom-test']"
                     @click="changeConfig(option, key)" 
                     v-for="(option, index) in optionArr" 
                     :key="index">
-                        {{ option }} 
+                        {{ option }}
                     </div>
                     <div v-if="listIndex === hoverIndex" class="absolute z-10 left-0 text-black bottom-[-100%] shadow-sm shadow-slate-500 px-[6px] bg-neutral-100 rounded-full whitespace-nowrap">{{optionsTooltip[listIndex]}}</div>
                 </div>
             </div>
         </div>
     </div>
-    <div v-if="!hasCompletedSession && alphabetsMode_" :class="[appTheme]" class="rounded-md w-[90%] min-w-fit m-auto max-w-fit ring-1 ring-green-600 xl:ring-0 relative py-3 px-10 font-normal text-[12px] group">
+    
+    <div v-if="!hasCompletedSession && alphabetsMode_" :class="[appTheme]" class="rounded-md w-[90%] min-w-fit m-auto max-w-fit ring-1 ring-green-600 min-[1350px]:ring-0 relative py-3 px-10 font-normal text-[12px] group">
       <div class="flex flex-wrap items-center justify-center gap-[8px] rounded-md min-w-fit m-auto max-w-fit hover:ring-[1px] hover:ring-slate-500 group p-[2px] relative">        
         <div :class="[alphabetsConfig.uppercase ? 'text-green-500' : '']" @click="changeMode('uppercase')" class="px-[5px] hover:scale-105 rounded-md">uppercase</div>
         <div :class="[alphabetsConfig.customCase ? 'text-green-500' : '']" @click="changeMode('customCase')" class="px-[5px] hover:scale-105 rounded-md">randomcase</div>
@@ -57,7 +58,7 @@ const alphabets_ = alphabetsStore()
 const { alphabetsMode_, alphabetsConfig } = storeToRefs(alphabets_)
 
 const store = mainStore()
-const { hasCompletedSession, completionLevel, containerText, playerInput, focus} = storeToRefs(store)
+const { hasCompletedSession, completionLevel, containerText, playerInput, focus, customTests} = storeToRefs(store)
 const {switchNext} = store
 
 const customize = customizeStore()
@@ -97,7 +98,7 @@ const hoverIndex = ref(null)
 const mouseEnter = (index) => hoverIndex.value = index
 const mouseLeave = (index) => hoverIndex.value = null
 
-const changeMode = (mode) => {
+const changeMode = (mode) => {  
     if (mode === 'uppercase') {
       if (alphabetsConfig.value.customCase && !alphabetsConfig.value.uppercase) alphabetsConfig.value.customCase = false
       alphabetsConfig.value.uppercase = !alphabetsConfig.value.uppercase
@@ -107,8 +108,7 @@ const changeMode = (mode) => {
       if (alphabetsConfig.value.uppercase && !alphabetsConfig.value.customCase) alphabetsConfig.value.uppercase = false
       alphabetsConfig.value.customCase = !alphabetsConfig.value.customCase
     }
-  
-    
+
       if (mode === 'spaced') {
         alphabetsConfig.value.spaced = !alphabetsConfig.value.spaced
       }

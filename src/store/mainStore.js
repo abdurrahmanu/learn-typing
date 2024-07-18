@@ -47,7 +47,9 @@ export const mainStore = defineStore('mainStore', () => {
 
     // data for quotes 
     const movie = ref({})
-    const customTexts = ref({}) 
+    const customTests = ref({
+        'demo': 'This is a custom test, you can add your own tests by pressing the plus icon. This particular demo cannot be deleted'
+    }) 
     const authoredQuote = ref({})
 
     const resultData = computed(() => {
@@ -145,7 +147,7 @@ export const mainStore = defineStore('mainStore', () => {
         howToUseCustomText,
 
         movie,
-        customTexts,
+        customTests,
         authoredQuote,
     }
 })

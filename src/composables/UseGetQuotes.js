@@ -14,96 +14,102 @@ export async function UseGetQuotes (config, customText) {
 
     function generateText(length) {
         if (config['test-type'] === 'quotes') {
-            if (customText) {
-                let quotes = [...customText, ...quotesWithoutAuthors.value.ten, ...quotesWithoutAuthors.value.twenty, ...quotesWithoutAuthors.value.thirty, ...quotesWithoutAuthors.value.fourty]
+            if (config['text-length'] === 10) {
+                let quotes = [...quotesWithoutAuthors.value.ten]
+                let quote = ref(quotes[Math.ceil(Math.random() * quotes.length) - 1])
+                res.value = quote.value
+                return
+            } 
+            
+            else if (config['text-length'] === 20) {
+                let quotes = [...quotesWithoutAuthors.value.twenty]
+                let quote = ref(quotes[Math.ceil(Math.random() * quotes.length) - 1])
+                res.value = quote.value
+                return
+            } 
+            
+            else if (config['text-length'] === 30) {
+                let quotes = [...quotesWithoutAuthors.value.thirty]
+                let quote = ref(quotes[Math.ceil(Math.random() * quotes.length) - 1])
+                res.value = quote.value
+                return
+            } 
+
+            else if  (config['text-length'] === 40) {
+                let quotes = [...quotesWithoutAuthors.value.fourty]
                 let quote = ref(quotes[Math.ceil(Math.random() * quotes.length) - 1])
                 res.value = quote.value
                 return
             }
+
             else {
-                if (config['text-length'] === 10) {
-                    let quotes = [...quotesWithoutAuthors.value.ten]
-                    let quote = ref(quotes[Math.ceil(Math.random() * quotes.length) - 1])
-                    res.value = quote.value
-                    return
-                } 
-                
-                else if (config['text-length'] === 20) {
-                    let quotes = [...quotesWithoutAuthors.value.twenty]
-                    let quote = ref(quotes[Math.ceil(Math.random() * quotes.length) - 1])
-                    res.value = quote.value
-                    return
-                } 
-                
-                else if (config['text-length'] === 30) {
-                    let quotes = [...quotesWithoutAuthors.value.thirty]
-                    let quote = ref(quotes[Math.ceil(Math.random() * quotes.length) - 1])
-                    res.value = quote.value
-                    return
-                } 
-                
-                else if  (config['text-length'] === 40) {
-                    let quotes = [...quotesWithoutAuthors.value.fourty]
-                    let quote = ref(quotes[Math.ceil(Math.random() * quotes.length) - 1])
-                    res.value = quote.value
-                    return
-                }
-                else {
-                    let choice = movieQuotesAndAuthoredQuotes ? true : Math.round(Math.random() * 1)
-                    let quotes = [...quotesWithoutAuthors.value.ten, ...quotesWithoutAuthors.value.twenty, ...quotesWithoutAuthors.value.thirty, ...quotesWithoutAuthors.value.fourty]
-                    let quote = ref(quotes[Math.ceil(Math.random() * quotes.length) - 1])
-                    res.value = quote.value
-                    const authoredTest = ref()
-                    const movieTest = ref()
-                    const normalTest = ref(res.value)
+                let choice = movieQuotesAndAuthoredQuotes ? true : Math.round(Math.random() * 1)
+                let quotes = [...quotesWithoutAuthors.value.ten, ...quotesWithoutAuthors.value.twenty, ...quotesWithoutAuthors.value.thirty, ...quotesWithoutAuthors.value.fourty]
+                let quote = ref(quotes[Math.ceil(Math.random() * quotes.length) - 1])
+                res.value = quote.value
+                const authoredTest = ref()
+                const movieTest = ref()
+                const normalTest = ref(res.value)
 
-                    if (config['author-quotes']) {
-                        let quoteIndex = Math.ceil(Math.random() * authoredQuotes.length)  - 1
-                        let quote = authoredQuotes[quoteIndex]
+                if (config['author-quotes']) {
+                    let quoteIndex = Math.ceil(Math.random() * authoredQuotes.length)  - 1
+                    let quote = authoredQuotes[quoteIndex]
 
-                        if (customizeStore().onlyAuthoredQuotes) {
-                            authoredTest.value = [quote.author, quote.quote]
-                        } else {
-                            if (choice) authoredTest.value = [quote.author, quote.quote]
-                        }
-                    }
-
-                    if (config['movie-quotes']) {
-                        let movies = [
-                            movieQuotes['The Hobbit'].quotes,
-                            movieQuotes['Pirates of the Caribbean'].quotes,
-                            movieQuotes['Harry Potter'].quotes,
-                            movieQuotes['The Lord of the Rings'].quotes,
-                            movieQuotes['Legend of the Seeker'].quotes,
-                            movieQuotes['Star Wars'].quotes,
-                            movieQuotes['Indiana Jones and the Raiders of the Lost Ark'].quotes,
-                            movieQuotes['Jurassic Park'].quotes,
-                        ]
-                        let movieIndex = Math.ceil(Math.random() * movies.length) - 1
-                        let movieName = Object.keys(movieQuotes)[movieIndex]
-                        let quotes = movies[movieIndex]
-                        let quoteIndex = Math.ceil(Math.random() * quotes.length)  - 1
-                        let quote = quotes[quoteIndex]
-
-                        if (customizeStore().onlyMovieQuotes) {
-                            movieTest.value = [movieName, quote.author, quote.quote]
-                        } else {
-                            if (choice) movieTest.value = [movieName, quote.author, quote.quote]
-                        }
-                    }
-
-                    if (movieQuotesAndAuthoredQuotes) {
-                        let choice = Math.ceil(Math.random() * 3) - 1
-                        let tests = [movieTest.value, authoredTest.value, normalTest.value]
-                        res.value = tests[choice]
-                        choice === 0 ? isMovieQuote.value = true : choice === 1 ? isAuthoredQuote.value = true : ''
-
+                    if (customizeStore().onlyAuthoredQuotes) {
+                        authoredTest.value = [quote.author, quote.quote]
                     } else {
-                        res.value = authoredTest.value || movieTest.value || normalTest.value
+                        if (choice) authoredTest.value = [quote.author, quote.quote]
                     }
+                }
+
+                if (config['movie-quotes']) {
+                    let movies = [
+                        movieQuotes['The Hobbit'].quotes,
+                        movieQuotes['Pirates of the Caribbean'].quotes,
+                        movieQuotes['Harry Potter'].quotes,
+                        movieQuotes['The Lord of the Rings'].quotes,
+                        movieQuotes['Legend of the Seeker'].quotes,
+                        movieQuotes['Star Wars'].quotes,
+                        movieQuotes['Indiana Jones and the Raiders of the Lost Ark'].quotes,
+                        movieQuotes['Jurassic Park'].quotes,
+                    ]
+                    let movieIndex = Math.ceil(Math.random() * movies.length) - 1
+                    let movieName = Object.keys(movieQuotes)[movieIndex]
+                    let quotes = movies[movieIndex]
+                    let quoteIndex = Math.ceil(Math.random() * quotes.length)  - 1
+                    let quote = quotes[quoteIndex]
+
+                    if (customizeStore().onlyMovieQuotes) {
+                        movieTest.value = [movieName, quote.author, quote.quote]
+                    } else {
+                        if (choice) movieTest.value = [movieName, quote.author, quote.quote]
+                    }
+                }
+
+                if (movieQuotesAndAuthoredQuotes) {
+                    let choice = Math.ceil(Math.random() * 3) - 1
+                    let tests = [movieTest.value, authoredTest.value, normalTest.value]
+                    res.value = tests[choice]
+                    choice === 0 ? isMovieQuote.value = true : choice === 1 ? isAuthoredQuote.value = true : ''
+
+                } else {
+                    res.value = authoredTest.value || movieTest.value || normalTest.value
                 }
             }
         }
+
+        else if (config['test-type'] === 'custom-test')  {
+            if (customizeStore().selectedCustomTest) {
+                res.value = mainStore().customTests[customizeStore().selectedCustomTest]
+                customizeStore().selectedCustomTest = ''
+            } else {
+                let customTests = mainStore().customTests
+                let quotes = Object.values(customTests)
+                let quote = ref(quotes[Math.ceil(Math.random() * quotes.length) - 1])
+                res.value = quote.value
+            }
+        }
+
         else {
             const words = ref([])
             let ChooseBetweenCustomAndSystemText = Math.round(Math.random() * 1000)

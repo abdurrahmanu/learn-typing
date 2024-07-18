@@ -1,5 +1,5 @@
 <template>
-  <div :class="[appTheme]" class="font-light selection:bg-none home max-w-[1300px] m-auto relative min-h-[100dvh] container overflow-y-auto scroll-smooth noscrollbar">
+  <div :class="[appTheme]" class="font-light selection:bg-none home max-w-[1500px] m-auto relative min-h-[100dvh] container overflow-y-auto scroll-smooth noscrollbar">
     <div class="min-h-[100dvh]">
       <Header />
       <main>
@@ -8,6 +8,7 @@
         <SwitchModes />
         </main>
         </div>
+      <CustomTestModal />
       <Theme />
       <HideElements />
       <Toast :toggle="capsIsOn" right text="CAPSLOCK IS ON" />
@@ -34,6 +35,7 @@ import {getAuth, onAuthStateChanged} from 'firebase/auth'
 import { doc, getDoc} from 'firebase/firestore'
 import { useRoute } from 'vue-router';
 import {localStorageConfig} from './composables/getLocalStorageConfig'
+import CustomTestModal from './components/CustomTestModal.vue';
 
 const route = useRoute()
 const auth = getAuth()

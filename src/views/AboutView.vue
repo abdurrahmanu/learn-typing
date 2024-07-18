@@ -7,10 +7,9 @@
                 </div>
             <p class="pt-3 m-auto text-center w-fit">IS A TYPING APP CREATED BY AHMED ABDULRAHMAN</p>
             <div class="justify-center flex max-w-[700px] gap-5 m-auto py-5 pt-10 flex-wrap text-sm">
-                <div class="px-2 py-[1px] border-gray-500 border rounded-sm transition-all duration-100 hover:shadow-md hover:border-green-500 flex items-center gap-2"><github class="w-4" /> GITHUB</div>
-                <div class="px-2 py-[1px] border-gray-500 border rounded-sm transition-all duration-100 hover:shadow-md hover:border-green-500 flex items-center gap-2"><linkedin class="w-6" /> LINKEDIN</div>
-                <div class="px-2 py-[1px] border-gray-500 border rounded-sm transition-all duration-100 hover:shadow-md hover:border-green-500 flex items-center gap-2"><email class="w-4" /> EMAIL</div>
-                <div class="px-2 py-[1px] border-gray-500 border rounded-sm transition-all duration-100 hover:shadow-md hover:border-green-500 flex items-center gap-2"><resume class="w-4" /> RESUME</div>
+                <div @click="name='github', go('github')" class="px-2 py-[1px] border-gray-500 border rounded-sm transition-all duration-100 hover:shadow-md hover:border-green-500 flex items-center gap-2"><github class="w-4" /> GITHUB</div>
+                <div @click="name='linkedin', go('linkedin')" class="px-2 py-[1px] border-gray-500 border rounded-sm transition-all duration-100 hover:shadow-md hover:border-green-500 flex items-center gap-2"><linkedin class="w-6" /> LINKEDIN</div>
+                <div @click="name='email', go('email')" class="px-2 py-[1px] border-gray-500 border rounded-sm transition-all duration-100 hover:shadow-md hover:border-green-500 flex items-center gap-2"><email class="w-4" /> EMAIL</div>
             </div>
         </div>
         <div class="m-auto font-normal w-fit">
@@ -19,12 +18,44 @@
             <p class="pb-5 text-center underline">CONTRIBUTORS</p>
         </div>
     </div>
+    <!-- <Push @false="toggle = false" @go="newTab = true" :toggle="toggle" v-if="toggle">
+        <PopUp @toggle="newTab = $event" :site="siteName" />
+    </Push> -->
 </template>
 
 <script setup>
+import {ref, watch} from 'vue'
 import board from '../components/svg/board.vue';
-import resume from '../components/svg/resume.vue';
 import email from '../components/svg/email.vue';
 import linkedin from '../components/svg/linkedin.vue';
 import github from '../components/svg/github.vue';
+import PopUp from '../components/PopUp.vue';
+import Push from '../components/Push.vue';
+
+const siteName = ref('')
+const toggle = ref(false)
+const newTab = ref(false)
+const name = ref('')
+
+const go = () => {
+    siteName.value = name.value
+    toggle.value = true
+}
+
+watch(newTab, (newVal) => {
+    if (newVal) {
+        if (name.value === 'email') {
+            window.open(`mailto:ahmedabdulrahman103@gmail.com`)
+        }
+        if (name.value === 'github') {
+            window.open('https://github.com/abdurrahmanu', '_blank')
+        }
+        if (name.value === 'linkedin') {
+            window.open('https://linkedin.com/abdurrahmanu', '_blank')
+        }
+    } 
+    else {
+        toggle.value = false
+    }
+})
 </script>
