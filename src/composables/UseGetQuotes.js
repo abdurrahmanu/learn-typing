@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 import { englishWords } from '../../data/englishWords.js';
-import { useCustomizeFormat } from './customizers/useCustomizeFormat';
+import { useCustomizeFormat } from './useCustomizeFormat.js';
 import { customizeStore } from '../store/customizeStore.js';
 import { mainStore } from '../store/mainStore.js';
 import authoredQuotes from '../../data/quotes.json'
@@ -12,7 +12,7 @@ export async function UseGetQuotes (config, customText) {
     const {mostUsed, mediumUsed, rarelyUsed, numbers, quotesWithoutAuthors, movieQuotes} = englishWords()
     const movieQuotesAndAuthoredQuotes = config['movie-quotes'] && config['author-quotes']
 
-    function generateText(length) {
+    function generateTest(length) {
         if (config['test-type'] === 'quotes') {
             if (config['text-length'] === 10) {
                 let quotes = [...quotesWithoutAuthors.value.ten]
@@ -161,28 +161,28 @@ export async function UseGetQuotes (config, customText) {
             if (movieQuotesAndAuthoredQuotes) {
                 isMovieQuote.value ? mainStore().authoredQuote = {} : isAuthoredQuote.value ? mainStore().movie = {} : ''
                 if (res.value[2]) {
-                    res.value = [res.value[0], res.value[1], useCustomizeFormat([config['include-numbers'], config['include-punctuations'], config['include-caps'], config['all-caps'], config['custom-camel-case'], config['no-space'], config['test-type']],  res.value[2]).customizeFormatRes.value]
+                    res.value = [res.value[0], res.value[1], useCustomizeFormat([config['include-numbers'], config['include-punctuations'], config['include-caps'], config['all-caps'], config['custom-camel-case'], config['no-space'], config['test-type']],  res.value[2]).res.value]
                 } else {
-                    res.value = [res.value[0], useCustomizeFormat([config['include-numbers'], config['include-punctuations'], config['include-caps'], config['all-caps'], config['custom-camel-case'], config['no-space'], config['test-type']],  res.value[1]).customizeFormatRes.value]
+                    res.value = [res.value[0], useCustomizeFormat([config['include-numbers'], config['include-punctuations'], config['include-caps'], config['all-caps'], config['custom-camel-case'], config['no-space'], config['test-type']],  res.value[1]).res.value]
                 }
             } else {
                 if (customizeStore().customizers['author-quotes']) {
                     mainStore().movie = {}
-                    res.value = [res.value[0], useCustomizeFormat([config['include-numbers'], config['include-punctuations'], config['include-caps'], config['all-caps'], config['custom-camel-case'], config['no-space'], config['test-type']],  res.value[1]).customizeFormatRes.value]
+                    res.value = [res.value[0], useCustomizeFormat([config['include-numbers'], config['include-punctuations'], config['include-caps'], config['all-caps'], config['custom-camel-case'], config['no-space'], config['test-type']],  res.value[1]).res.value]
                 } 
                 else if (customizeStore().customizers['movie-quotes']) {
                     mainStore().authoredQuote.value = {}
-                    res.value = [res.value[0], res.value[1], useCustomizeFormat([config['include-numbers'], config['include-punctuations'], config['include-caps'], config['all-caps'], config['custom-camel-case'], config['no-space'], config['test-type']],  res.value[2]).customizeFormatRes.value]
+                    res.value = [res.value[0], res.value[1], useCustomizeFormat([config['include-numbers'], config['include-punctuations'], config['include-caps'], config['all-caps'], config['custom-camel-case'], config['no-space'], config['test-type']],  res.value[2]).res.value]
                 }
             }
         } else {
-            res.value = useCustomizeFormat([config['include-numbers'], config['include-punctuations'], config['include-caps'], config['all-caps'], config['custom-camel-case'], config['no-space'], config['test-type']],  res.value).customizeFormatRes.value
+            res.value = useCustomizeFormat([config['include-numbers'], config['include-punctuations'], config['include-caps'], config['all-caps'], config['custom-camel-case'], config['no-space'], config['test-type']],  res.value).res.value
         }
     }
 
-    // generate text with new config and customize
-    if (config['text-length'] !== 'auto') generateText(+config['text-length'])
-    else  generateText()
+    // generate test with new config and customize
+    if (config['text-length'] !== 'auto') generateTest(+config['text-length'])
+    else  generateTest()
     customizers()
 
     return res.value
