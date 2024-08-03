@@ -66,6 +66,7 @@ const startSavingCustomText = () => {
         textAreaPlaceholder.value = 'You cannot add an empty field'
         return
     }
+    
     if (textValue.value.length < 10) {
         textValue.value = ''
         textAreaPlaceholder.value = 'Custom test should be at least 10 letters long'
