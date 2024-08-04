@@ -7,7 +7,7 @@
         <Restart />
         <SwitchModes />
         </main>
-        </div>
+      </div>
       <CustomTestModal />
       <Theme />
       <HideElements />

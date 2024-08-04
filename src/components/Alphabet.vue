@@ -55,8 +55,9 @@ onMounted(() => {
                     if (nextSiblingBottomOffset > caretBottomOffset) enterKey.value = true
                     else enterKey.value = false
 
+                    
 
-                    if ((!(parentBottomOffset - prevSiblingBottomOffset <= lineHeight) && parentBottomOffset - caretBottomOffset <= lineHeight && scrollDistance.value < parentScrollHeight)) {
+                    if (!(parentBottomOffset - prevSiblingBottomOffset <= lineHeight) && parentBottomOffset - caretBottomOffset <= lineHeight && scrollDistance.value < parentScrollHeight) {
                         if (!backspaceIsPressed.value) {     
                             if (testContainerEl.value.scrollTop + parentHeight === parentScrollHeight) return
                             else {

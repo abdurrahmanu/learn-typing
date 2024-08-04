@@ -154,8 +154,16 @@ export async function UseGetQuotes (config, customText) {
                 }
             }
         }
+
+        // convert line break /\n/ to space character
+        const temp = res.value
+        res.value = ''
+        for (let index = 0; index < temp.length; index++) {
+            if (temp[index].match(/\n/)) res.value += ' '
+            else res.value += temp[index]
+        }
     }
-    
+
     function customizers () {
         if (typeof res.value === 'object') {
             if (movieQuotesAndAuthoredQuotes) {

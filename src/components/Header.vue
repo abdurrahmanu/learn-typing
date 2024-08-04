@@ -1,8 +1,8 @@
 <template>
-    <header class="sticky top-0 mx-auto flex items-center justify-between pl-3 pr-2 max-w-[1500px] lg:mb-6 mb-3 min-[1350px]:fixed min-[1350px]:w-full text-[11px] uppercase font-medium h-[50px] py-2 min-[1350px]:z-[1]">
+    <header class="sticky top-0 mx-auto flex items-center justify-between pl-3 pr-2 max-w-[1500px] lg:mb-6 mb-3 min-[1350px]:fixed min-[1350px]:w-full text-[11px] uppercase font-medium h-[50px] py-2 " :class="[hideElements ? 'z-[1]' : '']">
         <Logo class="flex" />
-        <div class="flex items-center gap-4 w-fit absolute" :class="[!hideElements ? 'min-[1350px]:right-3 min-[1350px]:translate-x-0 right-[50%] translate-x-[50%]' : 'left-[50%] translate-x-[-50%]']">
-            <div v-if="route.name === 'home'"class="flex items-center gap-4 text-[9px]">
+        <div class="absolute flex items-center gap-4 w-fit" :class="[!hideElements ? 'min-[1350px]:right-3 min-[1350px]:translate-x-0 right-[50%] translate-x-[50%]' : 'left-[50%] translate-x-[-50%]']">
+            <div v-if="route.name === 'home'" class="flex items-center gap-4 text-[9px] ">
                 <div class="relative w-fit">
                     <Clock class="peer" />
                     <div class="absolute z-5 left-[50%] translate-x-[-50%] bottom-[-100%] rounded-full whitespace-nowrap peer-hover:block hidden pt-1">countdown</div>
@@ -27,10 +27,10 @@
             <div class="relative w-fit" v-if="route.name !== 'home'" >                
                 <home @click="routeToPage('home')" class="w-4 peer" />
             </div>
-            <div class="relative w-fit"  v-if="route.name !== 'auth'">                
+            <!-- <div class="relative w-fit"  v-if="route.name !== 'auth'">                
                 <user @click="routeToPage('auth')" class="w-4 peer" />
                 <div class="absolute z-5 left-[50%] translate-x-[-50%] bottom-[-120%] rounded-full whitespace-nowrap peer-hover:block hidden">account</div>
-            </div>
+            </div> -->
             <div class="relative w-fit" v-if="route.name !== 'about'">
                 <about @click="routeToPage('about')" class="w-4 peer" />
                 <div class="absolute z-5 left-[50%] translate-x-[-50%] bottom-[-100%] rounded-full whitespace-nowrap peer-hover:block hidden">about</div>
@@ -38,7 +38,7 @@
             <div class="relative w-fit" v-if="route.name === 'home'" >
                 <settings class="w-5 peer" />
             </div>
-            <!-- <select name="" id="" class="text-black outline-none border-none uppercase text-center">
+            <!-- <select name="" id="" class="text-center text-black uppercase border-none outline-none">
                 <option value="test">Test mode</option>
                 <option value="alphabet">Alphabet Mode</option>
             </select> -->

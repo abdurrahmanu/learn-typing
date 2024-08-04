@@ -6,6 +6,10 @@ export const inputEvent = (e) => {
     const store = mainStore()
     const { containerText, beatCountdown, playerInputLength, route,  playerInput, wrongCount, backspaceIsPressed, playerLastInput, beginCountdown, startTime, enterKey, timedTyping} = storeToRefs(store)
     const { sessionComplete } = store
+    
+    // if (e.key.match(/\n/)) {
+    //     return
+    // }
 
     const customize = customizeStore()
     const {backspace, pauseTyping} = storeToRefs(customize)

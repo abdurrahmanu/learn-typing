@@ -24,7 +24,12 @@
             <div class="max-h-[calc(100dvh_-_50dvh)] overflow-y-auto h-fit p-1">
                 <div class="relative overflow-y-auto space-y-[5px]">                
                     <div v-for="(test, name, index) in customTests" :key="index" class="p-1 border hover:shadow-sm" :class="[theme === 'dark' ? 'border-neutral-700' : 'border-slate-400']">
-                        <div class="text-xs font-medium uppercase">{{ name }} <span @click="use(name)" class="px-3 bg-green-600 rounded-full py-[1px] hover:bg-green-700 ml-1">use</span> <span v-if="index !== 0" @click="del(name)" class="px-3 py-[1px] bg-red-400 rounded-full hover:bg-red-500">delete</span></div>
+                        <div class="space-x-1 text-xs font-medium uppercase"> 
+                            <span>{{ name }}</span> 
+                            <span @click="use(name)" class="px-3 bg-green-600 rounded-full py-[1px] hover:bg-green-700 ml-1">use</span> 
+                            <span v-if="index !== 0" @click="del(name)" class="px-3 py-[1px] bg-red-400 rounded-full hover:bg-red-500">delete</span>
+                            <span v-if="index !== 0" @click="edit(name)" class="px-3 py-[1px] bg-blue-500 rounded-full hover:bg-blue-700">edit</span>
+                        </div>
                         <div class="test-[10px]">{{ test }}</div>
                     </div>
                 </div>
@@ -124,5 +129,9 @@ const use = (name) => {
     switchNext(customizers.value)
     customTestModal.value = false
     pauseTyping.value = false
+}
+
+const edit = (name) => {
+    
 }
 </script>
