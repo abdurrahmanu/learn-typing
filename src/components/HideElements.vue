@@ -1,6 +1,6 @@
 <template>
     <div @click="hideElements = !hideElements"  v-if="!hasCompletedSession && route.name === 'home'" :class="[appTheme]" class="absolute flex items-center px-2 py-2 text-xs transition-all duration-100 border rounded-md bottom-3 group whitespace-nowrap left-4 bg-neutral-900 border-neutral-700">
-        <span class="hidden pr-2 font-medium group-hover:inline">{{!hideElements ? 'HIDE' : 'SHOW'}} ELEMENTS</span>
+        <span class="hidden pr-2 text-[10px] font-medium group-hover:inline">{{!hideElements ? 'HIDE' : 'SHOW'}} ELEMENTS</span>
         <next class="w-2" />
     </div>
 </template>
