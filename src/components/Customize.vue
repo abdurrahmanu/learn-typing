@@ -58,7 +58,7 @@ const alphabets_ = alphabetsStore()
 const { alphabetsMode_, alphabetsConfig } = storeToRefs(alphabets_)
 
 const store = mainStore()
-const { hasCompletedSession, completionLevel, containerText, playerInput, focus, customTests} = storeToRefs(store)
+const { hasCompletedSession, completionLevel, containerText, playerInput, focus} = storeToRefs(store)
 const {switchNext} = store
 
 const customize = customizeStore()

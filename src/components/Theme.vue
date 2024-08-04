@@ -19,38 +19,29 @@ const localStorageSettings = ref(JSON.parse(localStorage.getItem('dorayi-typing'
 
 const toggleTheme = (color) => {
     theme.value = color
+
     openBackgrounds.value = !openBackgrounds.value
     if (theme.value === 'dark') {
         localStorageSettings.value.theme ='dark'
+        bg.value = ['bg-neutral-900', 'bg-white']
+        colors.value = ['dark', 'white']
         }  else {
             localStorageSettings.value.theme ='white'
-    }
-    localStorage.setItem('dorayi-typing', JSON.stringify(localStorageSettings.value))
+            bg.value = ['bg-white', 'bg-neutral-900']
+            colors.value = ['white', 'dark']
+        }
+        localStorage.setItem('dorayi-typing', JSON.stringify(localStorageSettings.value))
 }
 
-const colors = [
+const colors = ref([
     'dark',
     'white',
-    // 'stone',
-    // 'blue',
-    // 'lime',
-    // 'teal',
-    // 'sky',
-    // 'fuschia',
-    // 'emerald',
-]
+])
 
-const bg = [
+const bg = ref([
     'bg-neutral-900',
     'bg-white',
-    // 'bg-stone-600',
-    // 'bg-blue-400',
-    // 'bg-lime-300',
-    // 'bg-teal-700',
-    // 'bg-sky-400',
-    // 'bg-fuschia-600',
-    // 'bg-emerald-400',
-]
+])
 
 onMounted(() => {
     window.addEventListener('click', (event) => {

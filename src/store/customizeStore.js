@@ -81,6 +81,8 @@ export const customizeStore = defineStore('customizeStore', () => {
         if (customizers.value['test-type'] === 'quotes') {
             disableOption.value['words-type'] = true
             disableOption.value['include-numbers'] = true
+        } else if (customizers.value['test-type'] === 'custom-test') {
+            disableOption.value['words-type'] = true
         } else {
             disableOption.value['words-type'] = false
             disableOption.value['include-numbers'] = false
