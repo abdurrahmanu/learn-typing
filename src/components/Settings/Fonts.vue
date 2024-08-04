@@ -1,8 +1,8 @@
 <template>
     <div :class="[theme === 'dark' ? 'hover:bg-neutral-700' : 'hover:bg-slate-100']" class="flex items-center gap-2 py-4 pl-5">           
         <div class="w-[90%]">
-            <div class="flex justify-between items-center">
-                <div class="text-sm whitespace-nowrap font-medium">TEST FONT</div> 
+            <div class="flex items-center justify-between">
+                <div class="text-sm font-medium whitespace-nowrap">TEST FONT</div> 
                 <div class="min-w-[40px] text-center text-sm font-mono">{{ fontSize }}px</div>
             </div>
             <input  name="range" type="range" class="w-full h-1" v-model="range"/>
@@ -34,7 +34,7 @@ const {clearCounter} = count
 const localStorageSettings = ref(JSON.parse(localStorage.getItem('dorayi-typing')))
 
 const fontSize = computed(() => {
-    return range.value <= 1 ? 16 : (16 + (range.value * 0.16)).toFixed(2)
+    return range.value <= 1 ? 16 : (30 + (range.value * 0.16)).toFixed(2)
 })
 
 watch(fontSize, (newVal) => {
