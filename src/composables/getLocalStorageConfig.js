@@ -25,7 +25,6 @@ export const localStorageConfig = async () => {
     if (localStorage.getItem('dorayi-typing')) {
         const localStorageSettings = ref(JSON.parse(localStorage.getItem('dorayi-typing')))
 
-        console.log(localStorageSettings.value.theme);
         let dorayiTyping = {
             customTests: localStorageSettings.value.customTests ||  {'demo': 'This is a custom test, you can add your own tests by pressing the plus icon. This demo test cannot be deleted'},
             config:  [ localStorageSettings.value.config[0] || customizers.value, localStorageSettings.value.config[1] || disableOption.value],
@@ -35,7 +34,7 @@ export const localStorageConfig = async () => {
             blind: localStorageSettings.value.blind || false,
             mode: localStorageSettings.value.mode || 'auto',
             hide: localStorageSettings.value.hide || false,
-            fontsize: localStorageSettings.value.fontsize || 30,
+            fontsize: localStorageSettings.value.fontsize || 32,
             alphabets: {
                 combo: localStorageSettings.value.alphabets.combo || false,
                 combination: localStorageSettings.value.alphabets.combination ||  [],
@@ -48,7 +47,7 @@ export const localStorageConfig = async () => {
 
         theme.value = localStorageSettings.value.theme
         font.value = localStorageSettings.value.fontsize 
-        range.value = (font.value - 16) / 0.16
+        range.value = (font.value - 16) / 0.26
         hideElements.value = localStorageSettings.value.hide
         caretType.value = localStorageSettings.value.caret
         blind.value = localStorageSettings.value.blind
@@ -81,7 +80,7 @@ export const localStorageConfig = async () => {
             blind: false,
             mode: 'auto',
             hide: false,
-            fontsize: 30,
+            fontsize: 32,
             alphabets: {
                 combo: false,
                 combination: [],

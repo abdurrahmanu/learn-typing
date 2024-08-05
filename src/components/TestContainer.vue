@@ -1,11 +1,11 @@
 <template>
-    <main class="w-[90%] min-h-[150px] space-y-[2px] relative transition-none  max-w-[900px] m-auto xl:pt-10 " :class="[hideElements ? 'pt-4 xl:pt-24' : 'pt-1']">
+    <main class="w-[90%] min-h-[150px] space-y-[2px] relative transition-none  max-w-[900px] m-auto xl:pt-10" :class="[hideElements ? 'pt-4 xl:pt-24' : 'pt-1']">
         <div :class="[isMobileOS() ? 'flex' : 'block']" class="relative h-fit min-h-[25px]">            
             <MobileInput />
             <Restart v-show="!hasCompletedSession && playerInputLength" @click="restart" class="absolute w-6 left-[50%] translate-x-[-50%]"/>
         </div>
         <div v-if="containerText" class="transition-all duration-100 relative mx-auto max-w-[700px] w-full">
-            <div aria-describedby="full-text" ref="testContainerEl"  :style="{'height' : containerHeight + 'px', 'font-size': font + 'px'}" :class="[ customizers['no-space'] ? 'break-words' : '', alphabetsMode_ ? 'text-center break-words': 'text-left', !alphabetsMode_ && textPosition=== 'center' ? 'text-center' : !alphabetsMode_ && textPosition=== 'right' ? 'text-right' : 'text-left', ] " class="overflow-y-auto scroll-smooth noscrollbar leading-[1.4] h-fit py-[1px]  ring-opacity-20">
+            <div aria-describedby="full-text" ref="testContainerEl"  :style="{'height' : containerHeight + 'px', 'font-size': font + 'px'}" :class="[ customizers['no-space'] ? 'break-words' : '', alphabetsMode_ ? 'text-center break-words': 'text-left', !alphabetsMode_ && textPosition=== 'center' ? 'text-center' : !alphabetsMode_ && textPosition=== 'right' ? 'text-right' : 'text-left', ] " class="overflow-y-auto scroll-smooth noscrollbar leading-[1.4] h-fit py-[1px] outline-none">
                 <p id="full-text" class="hidden">{{ containerText }}</p>
                 <Alphabet
                 v-for="(alphabet, index) in containerText"
@@ -114,7 +114,25 @@ onMounted(() => {
             window.addEventListener('keydown', inputEvent)
         }
     }
+    
+    testContainerEl.value.addEventListener('keydown', preventKeyBoardScroll, false);
+    testContainerEl.value.addEventListener('touchmove', preventScroll, {passive: false});
+    testContainerEl.value.addEventListener('wheel', preventScroll, {passive: false});
 })
+
+const preventKeyBoardScroll = (e) => {
+        var keys = [38, 40];
+        if (keys.includes(e.keyCode)) {
+            e.preventDefault();
+            return false;
+        }
+}
+
+const preventScroll = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    return false;
+}
 </script>
 
 <style scoped>

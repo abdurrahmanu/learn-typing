@@ -16,7 +16,7 @@ export const customizeStore = defineStore('customizeStore', () => {
     const repeat = ref(false)
     const textPosition = ref('left')
     const blind = ref(false)
-    const font = ref(30)
+    const font = ref(32)
     const range = ref((font.value - 16) / 0.16)
     const localStorageSettings = ref(JSON.parse(localStorage.getItem('dorayi-typing')))
 

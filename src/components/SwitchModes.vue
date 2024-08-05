@@ -15,6 +15,7 @@ import Pagination from './Settings/Pagination.vue';
 import {pagesStore}  from '../store/pagesStore';
 import {alphabetsStore}  from '../store/alphabetsModeStore';
 import {useRoute} from 'vue-router'
+import Repeat from './svg/repeat.vue';
 
 const route = useRoute()
 
@@ -29,7 +30,7 @@ const { movie, authoredQuote, hasCompletedSession} = storeToRefs(store)
 const {switchNext} = store
 
 const customize = customizeStore()
-const { customizers, hideElements, mode} = storeToRefs(customize)
+const { customizers, hideElements, mode, repeat} = storeToRefs(customize)
 
 const pages_ = pagesStore()
 const {currentPage } = storeToRefs(pages_)
@@ -37,6 +38,7 @@ const {currentPage } = storeToRefs(pages_)
 const localStorageSettings = ref(JSON.parse(localStorage.getItem('dorayi-typing')))
 
 const toggleMode = (type) => {
+    repeat.value = false
     if (type === 'alphabets') {
         mode.value = 'alphabets'
         alphabetsMode_.value = true

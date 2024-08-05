@@ -13,7 +13,7 @@ export const generateTest = async (config, restart) => {
 
     if (repeat.value || restart ) {
         containerText.value = storedTest.value
-        }
+    }
 
     else if (mode.value === 'auto') {
         await UseGetQuotes(config).then( quote => {

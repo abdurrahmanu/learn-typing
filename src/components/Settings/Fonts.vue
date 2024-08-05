@@ -34,7 +34,7 @@ const {clearCounter} = count
 const localStorageSettings = ref(JSON.parse(localStorage.getItem('dorayi-typing')))
 
 const fontSize = computed(() => {
-    return range.value <= 1 ? 16 : (30 + (range.value * 0.16)).toFixed(2)
+    return range.value <= 1 ? 16 : (16 + (range.value * 0.26)).toFixed(2)
 })
 
 watch(fontSize, (newVal) => {
