@@ -391,7 +391,7 @@ export function englishWords() {
             "Ask and it will be given to you, search, and you will find, knock and the door will be opened for you.",
             "Few things can help an individual more than to place responsibility on him, and to let him know that you trust him.",
             "We can easily forgive a child who is afraid of the dark, the real tragedy of life is when men are afraid of the light.",
-            "You cannot fall if you do not climb. But ther no joy in living your whole life on the ground.",
+            "You cannot fall if you do not climb. But there is no joy in living your whole life on the ground.",
             "If you want your children to turn out well, spend twice as much time with them, and half as much money.",
             "The function of education is to teach one to think intensively and to think critically. Intelligence plus character - that is the goal of true education.",
             "Success is not the key to happiness. Happiness is the key to success. If you love what you are doing, you will be successful.",
