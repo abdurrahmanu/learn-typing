@@ -110,24 +110,20 @@ const cancel = () => {
 }
 
 const del= (name) => {
-    if (localStorage.getItem('dorayi-typing')) {        
-        const localStorageSettings = ref(JSON.parse(localStorage.getItem('dorayi-typing')))
-        delete localStorageSettings.value.customTests[name]
-        localStorage.setItem('dorayi-typing', JSON.stringify(localStorageSettings.value))
-    }
+    const localStorageSettings = ref(JSON.parse(localStorage.getItem('dorayi-typing')))
+    delete localStorageSettings.value.customTests[name]
+    localStorage.setItem('dorayi-typing', JSON.stringify(localStorageSettings.value))
     delete customTests.value[name]
     switchNext(customizers.value)
 }
 
 const use = (name) => {
     if (repeat.value) return
-    if (localStorage.getItem('dorayi-typing')) {        
-        const localStorageSettings = ref(JSON.parse(localStorage.getItem('dorayi-typing')))
-        if (customizers.value['test-type'] !== 'custom-test') {
-            customizers.value['test-type'] = 'custom-test'
-            localStorageSettings.value.config[0]['test-type'] = 'custom-test'
-            localStorage.setItem('dorayi-typing', JSON.stringify(localStorageSettings.value))
-        }
+    const localStorageSettings = ref(JSON.parse(localStorage.getItem('dorayi-typing')))
+    if (customizers.value['test-type'] !== 'custom-test') {
+        customizers.value['test-type'] = 'custom-test'
+        localStorageSettings.value.config[0]['test-type'] = 'custom-test'
+        localStorage.setItem('dorayi-typing', JSON.stringify(localStorageSettings.value))
     }
     selectedCustomTest.value = name
     switchNext(customizers.value)
