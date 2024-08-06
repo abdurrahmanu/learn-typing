@@ -6,10 +6,6 @@ export const inputEvent = (e) => {
     const store = mainStore()
     const { containerText, beatCountdown, playerInputLength, route,  playerInput, wrongCount, backspaceIsPressed, playerLastInput, beginCountdown, startTime, enterKey, timedTyping} = storeToRefs(store)
     const { sessionComplete } = store
-    
-    // if (e.key.match(/\n/)) {
-    //     return
-    // }
 
     const customize = customizeStore()
     const {backspace, pauseTyping} = storeToRefs(customize)
@@ -29,7 +25,6 @@ export const inputEvent = (e) => {
         let eventSelector = e.key || e.data
         if (e.key === 'Enter' && !enterKey.value) return 
         playerInputLength.value++
-        
         if (playerInputLength.value === 1)  {
             if (timedTyping.value) {
                 beatCountdown.value = false
@@ -37,7 +32,11 @@ export const inputEvent = (e) => {
             }
             startTime.value = performance.now();
         } 
-        if (e.key === 'Enter' && e.type === 'keypress' && enterKey.value) playerLastInput.value = ' '
+
+        if ((e.key === 'Enter' && e.type === 'keypress' && enterKey.value) || e.key === ' ') {
+            if (e.key === ' ') e.preventDefault()
+            playerLastInput.value = ' '
+        }
         else  playerLastInput.value = eventSelector
         playerInput.value += playerLastInput.value
         if (playerInputLength.value === containerText.value.length) {

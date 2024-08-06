@@ -42,7 +42,7 @@ onMounted(() => {
         if (props.animate) {
             if (countDownElement.value instanceof HTMLElement) {
                 if (props.animationType) {
-                    animationName.value = props.animationType.split(' ').join('-')
+                    animationName.value = props.animationType.split().join('-')
                 } else {
                     // const types = [
                     //     'slide-down',

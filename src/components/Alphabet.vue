@@ -1,5 +1,5 @@
 <template>
-    <div aria-hidden="true" ref="currentAlphabet" :class="[customizers['no-space'] ? '' : 'whitespace-pre-wrap']" class="relative inline ">
+    <div aria-hidden="true" ref="currentAlphabet" :class="[customizers['no-space'] ? '' : 'whitespace-pre-wrap']" class="relative inline">
         <span  :class="[equalStyle, currentIndexStyle, mainStyle, !currentIndex ? 'border-transparent' : '']" class="border" >{{ alphabet }} </span>
     </div>
 </template> 
@@ -40,57 +40,54 @@ window.addEventListener('input', event => {
 onMounted(() => {
     watchEffect(() => {
         if (props.currentIndex) {
-            if (currentAlphabet.value) {       
-                    const parentScrollHeight = testContainerEl.value.scrollHeight
-                    const parentHeight = testContainerEl.value.getBoundingClientRect().height
-                    const caretTopOffset = currentAlphabet.value.getBoundingClientRect().top
-                    const parentTopOffset = testContainerEl.value.getBoundingClientRect().top
-                    const caretBottomOffset = currentAlphabet.value.getBoundingClientRect().bottom
-                    const parentBottomOffset = testContainerEl.value.getBoundingClientRect().bottom
-                    const lineHeight = currentAlphabet.value.getBoundingClientRect().bottom - currentAlphabet.value.getBoundingClientRect().top
-                    const prevSiblingBottomOffset = props.index > 0 ? currentAlphabet.value.previousElementSibling.getBoundingClientRect().bottom : 0
-                    const nextSiblingTopOffset = props.index > 0 && currentAlphabet.value.nextElementSibling ? currentAlphabet.value.nextElementSibling.getBoundingClientRect().top : 0
-                    const nextSiblingBottomOffset = props.index > 0 && currentAlphabet.value.nextElementSibling ? currentAlphabet.value.nextElementSibling.getBoundingClientRect().bottom : 0
-
-                    if (nextSiblingBottomOffset > caretBottomOffset) enterKey.value = true
-                    else enterKey.value = false         
-
-                    if (!(parentBottomOffset - prevSiblingBottomOffset <= lineHeight) && parentBottomOffset - caretBottomOffset <= lineHeight && scrollDistance.value < parentScrollHeight) {
-                        let a = !(parentBottomOffset - prevSiblingBottomOffset <= lineHeight) 
-                        let b = parentBottomOffset - caretBottomOffset <= lineHeight
-                        let c = scrollDistance.value < parentScrollHeight
-                    
-                        if (!backspaceIsPressed.value) {     
-                            if (testContainerEl.value.scrollTop + parentHeight === parentScrollHeight) return
-                            else {
-                                if (parentScrollHeight - testContainerEl.value.scrollTop > parentHeight) {          
-                                    scrollDistance.value += containerHeight.value - font.value - (font.value * 0.4)
-                                } else {
-                                    scrollDistance.value += parentScrollHeight - testContainerEl.value.scrollTop
-                                }
-                                scrollTextContainer.value = {
-                                    top: scrollDistance.value
-                                }
-                            }
-                        }
-                    }
-
-                    if (caretTopOffset < parentTopOffset && props.index > 0 && nextSiblingTopOffset !== caretTopOffset) {    
-                        if (backspaceIsPressed.value) {
-                            if (testContainerEl.value.scrollTop <= parentHeight) {
-                                scrollDistance.value = 0
+            if (currentAlphabet.value) {     
+                const parentScrollHeight = testContainerEl.value.scrollHeight
+                const parentHeight = testContainerEl.value.getBoundingClientRect().height
+                const caretTopOffset = currentAlphabet.value.getBoundingClientRect().top
+                const parentTopOffset = testContainerEl.value.getBoundingClientRect().top
+                const caretBottomOffset = currentAlphabet.value.getBoundingClientRect().bottom
+                const parentBottomOffset = testContainerEl.value.getBoundingClientRect().bottom
+                const lineHeight = currentAlphabet.value.getBoundingClientRect().bottom - currentAlphabet.value.getBoundingClientRect().top
+                const prevSiblingBottomOffset = props.index > 0 ? currentAlphabet.value.previousElementSibling.getBoundingClientRect().bottom : 0
+                const nextSiblingTopOffset = props.index > 0 && currentAlphabet.value.nextElementSibling ? currentAlphabet.value.nextElementSibling.getBoundingClientRect().top : 0
+                const nextSiblingBottomOffset = props.index > 0 && currentAlphabet.value.nextElementSibling ? currentAlphabet.value.nextElementSibling.getBoundingClientRect().bottom : 0
+                
+                if (nextSiblingBottomOffset > caretBottomOffset) enterKey.value = true
+                else enterKey.value = false         
+                
+                if (!(parentBottomOffset - prevSiblingBottomOffset <= lineHeight) && parentBottomOffset - caretBottomOffset <= lineHeight && scrollDistance.value < parentScrollHeight) {
+                    if (!backspaceIsPressed.value) {     
+                        if (testContainerEl.value.scrollTop + parentHeight === parentScrollHeight) return
+                        else {
+                            if (parentScrollHeight - testContainerEl.value.scrollTop > parentHeight) {          
+                                scrollDistance.value += containerHeight.value - font.value - (font.value * 0.4)
                             } else {
-                                scrollDistance.value -= ((containerHeight.value / 3) * 2)
+                                scrollDistance.value += parentScrollHeight - testContainerEl.value.scrollTop
                             }
-                                scrollTextContainer.value = {
+                            scrollTextContainer.value = {
                                 top: scrollDistance.value
                             }
                         }
                     }
+                }
+
+                if (caretTopOffset < parentTopOffset && props.index > 0 && nextSiblingTopOffset !== caretTopOffset) {   
+                    if (backspaceIsPressed.value) {
+                        if (testContainerEl.value.scrollTop <= parentHeight) {
+                            scrollDistance.value = 0
+                        } else {
+                            scrollDistance.value -= ((containerHeight.value / 3) * 2)
+                        }
+                            scrollTextContainer.value = {
+                            top: scrollDistance.value
+                        }
+                    }
+                }
             }
         }
     })
 })
+
 
 const equalStyle = computed(() => {
     if (!blind.value) {

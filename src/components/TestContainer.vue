@@ -70,13 +70,14 @@ watch(scrollTextContainer, (newVal, oldVal)=> {
             testContainerEl.value.scrollTo({
                 top: newVal.top
             })
+            
         } else {
             testContainerEl.value.scrollTo({
                 top: 0
             })
         }
     }
-}, {deep: true})
+    }, {deep: true})
 
 watch(countdown, (newVal) => {
     if (newVal === 0 && resultData.value.totalTime) {
@@ -102,7 +103,6 @@ onMounted(() => {
             preventScroll()
         }
     }, {passive: false})
-    
 
     window.addEventListener('wheel', event => {
         if (event.target === testContainerEl.value) {
@@ -136,8 +136,7 @@ onMounted(() => {
 })
 
 const preventKeyBoardScroll = (e) => {
-        var keys = [38, 40];
-        if (keys.includes(e.keyCode)) {
+        if ([38, 40].includes(e.keyCode)) {
             e.preventDefault();
             return false;
         }
