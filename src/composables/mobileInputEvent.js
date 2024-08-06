@@ -4,7 +4,7 @@ import { storeToRefs } from 'pinia';
 
 export const mobileInputEvent = (e) => {
     const store = mainStore()
-    const { containerText, beatCountdown, hasCompletedSession, route, playerInputLength, playerLastInput, wrongCount, playerInput, backspaceIsPressed, beginCountdown, startTime, enterKey, timedTyping, focus} = storeToRefs(store)
+    const { containerText, beatCountdown, hasCompletedSession, route, playerInputLength, playerInput, backspaceIsPressed, beginCountdown, startTime, enterKey, timedTyping, focus} = storeToRefs(store)
     const { sessionComplete } = store
     
     const customize = customizeStore()
@@ -21,10 +21,6 @@ export const mobileInputEvent = (e) => {
         }
         startTime.value = performance.now();
     } 
-
-    // if ((e.inputType === 'deleteContentBackward' && wrongCount.value) || !backspace.value) {
-    //     playerInput.value += playerLastInput.value
-    // }
 
     if (e.key === 'Enter' && enterKey.value)  playerInput.value += ' '
     if (playerInput.value.length === containerText.value.length) {

@@ -70,6 +70,9 @@ export const mainStore = defineStore('mainStore', () => {
         }
         if (beatCountdown.value && timedTyping.value) beatCountdown.value = false
         else beatCountdown.value = null
+        playerLastInput.value = ''
+        playerInput.value = ''
+        previousPlayerInput.value = ''
         scrollDistance.value = 0
         scrollTextContainer.value = {}
         hasCompletedSession.value = false
@@ -80,9 +83,7 @@ export const mainStore = defineStore('mainStore', () => {
         correctCount.value = 0
         wrongCount.value = 0
         containerText.value = ''
-        playerLastInput.value = ''
         playerInputLength.value = 0
-        playerInput.value = ''
     }
 
     const sessionComplete = async () => {
