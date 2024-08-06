@@ -2,7 +2,7 @@
     <div :class="[theme === 'dark' ? 'hover:bg-neutral-700' : 'hover:bg-slate-100']" class="flex items-center gap-2 py-4 pl-5">           
         <div class="w-[90%]">
             <div class="flex items-center justify-between">
-                <div class="text-sm font-medium whitespace-nowrap">TEST FONT</div> 
+                <div class="text-sm font-medium whitespace-nowrap">FONT SIZE</div> 
                 <div class="min-w-[40px] text-center text-sm font-mono">{{ fontSize }}px</div>
             </div>
             <input  name="range" type="range" class="w-full h-1" v-model="range"/>

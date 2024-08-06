@@ -20,6 +20,8 @@ export const mainStore = defineStore('mainStore', () => {
     const restartSvgEl = ref(null)
     const focus = ref(false)
     const capsIsOn = ref(false)
+    const allSpacesIndex = ref([])
+    const spaceCount = ref(0)
 
     // Time states
     const timedTyping = ref(false)
@@ -83,7 +85,9 @@ export const mainStore = defineStore('mainStore', () => {
         correctCount.value = 0
         wrongCount.value = 0
         containerText.value = ''
+        allSpacesIndex.value = []
         playerInputLength.value = 0
+        spaceCount.value = 0
     }
 
     const sessionComplete = async () => {
@@ -140,6 +144,8 @@ export const mainStore = defineStore('mainStore', () => {
         hasCompletedSession,
         correctCount,
         wrongCount,
+        allSpacesIndex,
+        spaceCount,
 
         beatCountdown,
         savedCountdown,

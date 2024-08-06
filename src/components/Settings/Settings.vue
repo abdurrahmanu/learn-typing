@@ -5,6 +5,10 @@
             <div v-if="!alphabetsMode_" class="overflow-y-auto outline-none" :class="[showMoreSettings ? 'fixed top-0 right-0 bottom-0 h-[100dvh] max-w-[700px] w-fit z-[9999]' : '', appTheme ]">
                 <div class="relative leading-5 text-[15px]" :class="[theme === 'dark' ? 'text-slate-400' : 'text-slate-800']">
                     <Header />
+                    <Fonts />
+                    <Caret />
+                    <TestBackground />
+                    <BlurTest />
                     <MovieQuotes />
                     <AuthoredQoutes />
                     <BlindMode />
@@ -13,20 +17,20 @@
                     <AllCaps />
                     <CustomCamelCase />
                     <NoSpaceText />
-                    <Fonts />
-                    <Caret />
                 </div>
             </div>
             <div v-if="alphabetsMode_">
                 <div class="overflow-y-auto outline-none" :class="[showMoreSettings ? 'fixed top-0 right-0 bottom-0 h-[100dvh] max-w-[700px] w-fit z-[9999]' : '', appTheme ]">
                     <div class="relative leading-5 text-[15px]" :class="[theme === 'dark' ? 'text-slate-400' : 'text-slate-800']">
                         <Header />
+                        <Caret />
+                        <Fonts />
+                        <TestBackground />
+                        <BlurTest />
                         <LetterCombinations />
                         <BlindMode />
                         <BackSpace />
                         <Countdown />
-                        <Caret />
-                        <Fonts />
                     </div>
                 </div>
             </div>
@@ -54,6 +58,8 @@ import {customizeStore} from '../../store/customizeStore'
 import {themeStore}  from '../../store/themeStore'
 import {alphabetsStore}  from '../../store/alphabetsModeStore';
 import { isMobileOS } from '../../composables/isMobileOS'
+import TestBackground from './TestBackground.vue'
+import BlurTest from './BlurTest.vue'
 
 const alphabets_ = alphabetsStore()
 const { alphabetsMode_, } = storeToRefs(alphabets_)

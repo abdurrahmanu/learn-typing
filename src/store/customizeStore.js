@@ -3,6 +3,7 @@ import {ref} from 'vue'
 
 export const customizeStore = defineStore('customizeStore', () => {
     const mode = ref('auto')
+    const testBackground = ref('transparent')
     const selectedCustomTest = ref('')
     const customTestModal = ref(false)
     const pauseTyping = ref(true)
@@ -35,6 +36,7 @@ export const customizeStore = defineStore('customizeStore', () => {
         'no-space': false,
         'movie-quotes': false,
         'author-quotes': false,
+        'blur': false
     })
 
     const disableOption = ref({
@@ -106,6 +108,7 @@ export const customizeStore = defineStore('customizeStore', () => {
 
         localStorageSettings.value.config = [customizers.value, disableOption.value]
         localStorage.setItem('dorayi-typing', JSON.stringify(localStorageSettings.value))     
+        console.log(mode, boolean);
     }
 
     return {
@@ -131,5 +134,6 @@ export const customizeStore = defineStore('customizeStore', () => {
         pauseTyping,
         customTestModal,
         selectedCustomTest,
+        testBackground,
     }
 })

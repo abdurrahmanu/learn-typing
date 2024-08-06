@@ -193,5 +193,9 @@ export async function UseGetQuotes (config, customText) {
     else  generateTest()
     customizers()
 
+    for (let index = 0; index < res.value.length; index++) {
+        if (res.value[index] === ' ') mainStore().allSpacesIndex.push(index)
+    }
+
     return res.value
 };

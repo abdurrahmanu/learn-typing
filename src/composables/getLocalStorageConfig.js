@@ -11,7 +11,7 @@ export const localStorageConfig = async () => {
     const { alphabetsMode_, alphabetsCombination, useAlphabetCombination } = storeToRefs(alphabets_)
 
     const theme_ = themeStore()
-    const {theme } = storeToRefs(theme_)
+    const {theme, testBackgroundColor } = storeToRefs(theme_)
 
     const main = mainStore()
     const {customTests} = storeToRefs(main)
@@ -35,6 +35,7 @@ export const localStorageConfig = async () => {
             mode: localStorageSettings.value.mode || 'auto',
             hide: localStorageSettings.value.hide || false,
             fontsize: localStorageSettings.value.fontsize || 32,
+            testBackground: localStorageSettings.value.testBackground || 'transparent',
             alphabets: {
                 combo: localStorageSettings.value.alphabets.combo || false,
                 combination: localStorageSettings.value.alphabets.combination ||  [],
@@ -45,6 +46,7 @@ export const localStorageConfig = async () => {
         localStorageSettings.value = dorayiTyping
         localStorage.setItem('dorayi-typing', JSON.stringify(localStorageSettings.value))
 
+        testBackgroundColor.value = localStorageSettings.value.testBackground
         theme.value = localStorageSettings.value.theme
         font.value = localStorageSettings.value.fontsize 
         range.value = (font.value - 16) / 0.26
@@ -81,6 +83,7 @@ export const localStorageConfig = async () => {
             mode: 'auto',
             hide: false,
             fontsize: 32,
+            testBackground: 'transparent',
             alphabets: {
                 combo: false,
                 combination: [],

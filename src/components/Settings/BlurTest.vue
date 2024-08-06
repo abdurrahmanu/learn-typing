@@ -1,12 +1,12 @@
 <template>
     <div :class="[theme === 'dark' ? 'hover:bg-neutral-700' : 'hover:bg-slate-100']" class="py-2 pl-5">
         <div  class="flex justify-between w-full p-1 border border-transparent rounded-sm ">
-            <div @click="customizers['all-caps'] = !customizers['all-caps'], customize('all-caps', customizers['all-caps'])" class="flex gap-4 w-fit">
-                <input name="caps" :checked="customizers['all-caps']" type="checkbox">
-                <label class="font-medium w-fit">All Caps</label>
+            <div @click="customizers['blur'] = !customizers['blur'], customize('blur', customizers['blur'])" class="flex gap-4 w-fit">
+                <input name="caps" :checked="customizers['blur']" type="checkbox">
+                <label class="font-medium w-fit">Blur test</label>
             </div>
         </div>
-        <p class="px-3">All tests will be converted to CAPS</p>
+        <p class="px-3">Only typed and current words will not be blurred</p>
     </div>
 </template>
 

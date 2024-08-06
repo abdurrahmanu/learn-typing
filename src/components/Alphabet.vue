@@ -1,6 +1,6 @@
 <template>
-    <div aria-hidden="true" ref="currentAlphabet" :class="[customizers['no-space'] ? '' : 'whitespace-pre-wrap']" class="relative inline">
-        <span  :class="[equalStyle, currentIndexStyle, mainStyle, !currentIndex ? 'border-transparent' : '']" class="border" >{{ alphabet }} </span>
+    <div aria-hidden="true" ref="currentAlphabet" :class="[customizers['no-space'] ? '' : 'whitespace-pre-wrap', testBackgroundComputed ]" class="relative inline">
+        <span  :class="[equalStyle, currentIndexStyle, mainStyle, !currentIndex ? 'border-transparent' : '', customizers['blur'] &&  index < allSpacesIndex[spaceCount + 1] && index > allSpacesIndex[spaceCount] ? 'blur-[2px]' : '', customizers['blur'] && index > allSpacesIndex[spaceCount + 1] ? 'blur-[7px]' : '',]" class="border" >{{ alphabet }} </span>
     </div>
 </template> 
 
@@ -12,14 +12,14 @@ import {themeStore}  from '../store/themeStore'
 import {customizeStore}  from '../store/customizeStore'
 
 const theme_ = themeStore()
-const {theme } = storeToRefs(theme_)
+const {theme, testBackgroundComputed } = storeToRefs(theme_)
 
 const store = mainStore()
-const { playerInputLength, testContainerEl, scrollTextContainer, enterKey, scrollDistance, backspaceIsPressed, containerHeight } = storeToRefs(store)
+const { playerInputLength, testContainerEl, allSpacesIndex, spaceCount, scrollTextContainer, enterKey, scrollDistance, backspaceIsPressed, containerHeight } = storeToRefs(store)
 const currentAlphabet = ref(null)
 
 const customize = customizeStore()
-const {customizers, caretType, font, blind} = storeToRefs(customize)
+const {customizers, caretType, font, blind, testBackground} = storeToRefs(customize)
 
 const emit = defineEmits(['equal', 'unequal'])
 const props = defineProps({
@@ -41,6 +41,7 @@ onMounted(() => {
     watchEffect(() => {
         if (props.currentIndex) {
             if (currentAlphabet.value) {     
+                if (props.alphabet === ' ') spaceCount.value++
                 const parentScrollHeight = testContainerEl.value.scrollHeight
                 const parentHeight = testContainerEl.value.getBoundingClientRect().height
                 const caretTopOffset = currentAlphabet.value.getBoundingClientRect().top
@@ -87,7 +88,6 @@ onMounted(() => {
         }
     })
 })
-
 
 const equalStyle = computed(() => {
     if (!blind.value) {
