@@ -4,6 +4,7 @@ import {ref} from 'vue'
 export const alphabetsStore = defineStore('alphabetsStore', () => {
     const containerText = ref('')
     const alphabetsMode_ = ref(false)
+    const shiftKey = ref(false)
     const useAlphabetCombination = ref(false)
     const alphabetsCombination = ref([]) // Alphabets combination for typing
     const alphabetsConfig = ref({ // Alphabets mode config
@@ -21,7 +22,8 @@ export const alphabetsStore = defineStore('alphabetsStore', () => {
 
         if (useAlphabetCombination.value && alphabetsCombination.value) {
             containerText.value = ''
-            for (let index = 1; index < 60; index++) {
+            let length = alphabetsCombination.value.length > 8 ? 78 : alphabetsCombination.value.length > 6 ? 66 : 60
+            for (let index = 1; index < length; index++) {
                 let random = Math.ceil(Math.random()  * alphabetsCombination.value.length) - 1
                 if (index % 6 === 0) containerText.value += ' '
                 else containerText.value += alphabetsCombination.value[random]
@@ -83,5 +85,6 @@ export const alphabetsStore = defineStore('alphabetsStore', () => {
         containerText,
         alphabetsConfig,
         alphabetsMode_,
+        shiftKey,
     }
 })

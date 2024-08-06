@@ -1,16 +1,24 @@
 <template>
-    <div :class="[theme === 'dark' ? 'hover:bg-neutral-700' : 'hover:bg-slate-100']" class="py-2 pl-5 pb-10">
+    <div :class="[theme === 'dark' ? 'hover:bg-neutral-700' : 'hover:bg-slate-100']" class="py-1 pl-5">
         <div @click="toggle" class="flex w-full p-1 space-x-4 border border-transparent rounded-sm">
             <input :disabled="!(alphabetsCombination.length > 1)" :checked="useAlphabetCombination"  type="checkbox" name="letter-combination" id="id">
             <label for="id" class="font-medium w-fit">Letter Combinations</label>
         </div>
-        <div class="px-4 pb-1">
-            <p>**This test randomly repeats alphabets you select, Maximum selection of six entries and minimum of two</p>
+        <div class="px-4">
+            <p>**Randomly repeats and shuffles your selection. Select a minimum of two entries or maximum of ten entries then click the checkbox.</p>
+            <div @click="shiftKey = !shiftKey" class="flex m-auto my-1 space-x-2 w-fit">
+                <input :checked="shiftKey" type="checkbox" name="shiftkey" id="shiftkey">
+                <label for="shiftkey" class="font-medium">Shift Key</label>
+            </div>
         </div>
-        <div class="text-xl font-mono px-2 text-center min-h-[30px]">{{ alphabetsCombination.join('') }}</div>
-        <div class="flex flex-wrap items-center justify-center px-3 py-2 space-x-1">
-            <span class="p-1 py-0 rounded-md border text-lg inline-block min-w-[20px] text-center hover:text-slate-500 m-1" @click="addSelection(alphabet)" :class="[alphabetsCombination.includes(alphabet) ? 'text-green-500 border-green-500' : 'border-neutral-800'] " v-for="(alphabet, index) in alphabets" :key="index">{{ alphabet }}</span>
+
+        <div class="relative m-auto h-fit w-fit">            
+            <p class="absolute font-semibold opacity-30 blur-[1px] whitespace-nowrap text-[50px] top-[50%] translate-x-[-50%] left-[50%] translate-y-[-50%] z-[-1]">QWERTY KEYBOARD</p>
+            <div v-for="(line, index) in shiftKey ? entries[0] : entries[1]" class="flex justify-center z-[3]">
+                <div @click="addSelection(entry)"  v-for="(entry, index) in line" :key="index" :class="[alphabetsCombination.includes(entry) ? ' border-sky-400' : 'border-neutral-600'] " class="p-1 py-0 rounded-md border text-lg inline-block min-w-[20px] text-center m-1">{{ entry }}</div>
+            </div>
         </div>
+        <div class="font-mono text-lg font-thin px-2 text-center min-h-[30px]">{{ alphabetsCombination.join('') }}</div>
     </div>
 
 </template>
@@ -28,9 +36,24 @@ const {theme} = theme_
 const localStorageSettings = ref(JSON.parse(localStorage.getItem('dorayi-typing')))
 
 const alphabets_ = alphabetsStore()
-const { alphabetsCombination, useAlphabetCombination } = storeToRefs(alphabets_)
+const { alphabetsCombination, useAlphabetCombination, shiftKey } = storeToRefs(alphabets_)
 
-const alphabets = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '.', ',', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '!', '@', '#', '$', '%', '^', '&', '(', ')', '_', '-', '+', '=', '{', '}', '[', ']', '|', '|', '<', '>', '?', '/']
+const capsQwertyKeyboard = [
+    ['~', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+'],
+    ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '{', '}', '|'],
+    ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ':', '"'],
+    ['Z', 'X', 'C', 'V', 'B', 'N', 'M', '<', '>', '?']
+]
+
+const qwertyKeyboard = [
+    ['`', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '='],
+    ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\'],
+    ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "'"],
+    ['z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/']
+]
+
+const entries = [capsQwertyKeyboard, qwertyKeyboard]
+
 const store = mainStore()
 const {switchNext} = store
 
@@ -59,7 +82,7 @@ const addSelection = (alphabet) => {
         alphabetsCombination.value.splice(index, 1)
         return
     }
-    if (alphabetsCombination.value.length === 6) return
+    if (alphabetsCombination.value.length === 10) return
     alphabetsCombination.value.push(alphabet)
 }
 

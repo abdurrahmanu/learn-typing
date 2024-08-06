@@ -2,7 +2,7 @@
     <Transition name="slide" appear mode="in-out">
         <div :class="{'z-[999]' : !(showMoreSettings && !isMobileOS())}" class="fixed top-0 bottom-0 right-0 left-0 z-[99] font-sans font-light" v-if="showMoreSettings">
             <div @click="toggleSettings" class="opacity-40 absolute bg-black w-full top-0 bottom-0 right-0 left-0 z-[999]"></div>
-            <div v-if="!alphabetsMode_" class="overflow-y-auto" :class="[showMoreSettings ? 'fixed top-0 right-0 bottom-0 h-[100dvh] max-w-[700px] w-fit z-[9999]' : '', appTheme ]">
+            <div v-if="!alphabetsMode_" class="overflow-y-auto outline-none" :class="[showMoreSettings ? 'fixed top-0 right-0 bottom-0 h-[100dvh] max-w-[700px] w-fit z-[9999]' : '', appTheme ]">
                 <div class="relative leading-5 text-[15px]" :class="[theme === 'dark' ? 'text-slate-400' : 'text-slate-800']">
                     <Header />
                     <MovieQuotes />
@@ -15,20 +15,18 @@
                     <NoSpaceText />
                     <Fonts />
                     <Caret />
-                    <!-- <Reset /> -->
                 </div>
             </div>
             <div v-if="alphabetsMode_">
-                <div class="overflow-y-auto" :class="[showMoreSettings ? 'fixed top-0 right-0 bottom-0 h-[100dvh] max-w-[700px] w-fit z-[9999]' : '', appTheme ]">
+                <div class="overflow-y-auto outline-none" :class="[showMoreSettings ? 'fixed top-0 right-0 bottom-0 h-[100dvh] max-w-[700px] w-fit z-[9999]' : '', appTheme ]">
                     <div class="relative leading-5 text-[15px]" :class="[theme === 'dark' ? 'text-slate-400' : 'text-slate-800']">
                         <Header />
+                        <LetterCombinations />
                         <BlindMode />
                         <BackSpace />
                         <Countdown />
                         <Caret />
                         <Fonts />
-                        <LetterCombinations />
-                        <!-- <Reset /> -->
                     </div>
                 </div>
             </div>

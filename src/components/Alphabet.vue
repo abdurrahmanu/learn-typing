@@ -53,11 +53,13 @@ onMounted(() => {
                     const nextSiblingBottomOffset = props.index > 0 && currentAlphabet.value.nextElementSibling ? currentAlphabet.value.nextElementSibling.getBoundingClientRect().bottom : 0
 
                     if (nextSiblingBottomOffset > caretBottomOffset) enterKey.value = true
-                    else enterKey.value = false
-
-                    
+                    else enterKey.value = false         
 
                     if (!(parentBottomOffset - prevSiblingBottomOffset <= lineHeight) && parentBottomOffset - caretBottomOffset <= lineHeight && scrollDistance.value < parentScrollHeight) {
+                        let a = !(parentBottomOffset - prevSiblingBottomOffset <= lineHeight) 
+                        let b = parentBottomOffset - caretBottomOffset <= lineHeight
+                        let c = scrollDistance.value < parentScrollHeight
+                    
                         if (!backspaceIsPressed.value) {     
                             if (testContainerEl.value.scrollTop + parentHeight === parentScrollHeight) return
                             else {
@@ -108,27 +110,4 @@ const mainStyle = computed(() => {
     let text = theme.value === 'dark' ? 'text-slate-400' : 'text-zinc-500'
     return props.index > playerInputLength.value ? text : ''
 })
-
-// watch(font, (newVal) => {
-//     if (props.currentIndex) {
-//         const caretBottomOffset = currentAlphabet.value.getBoundingClientRect().bottom
-//         const parentBottomOffset = testContainerEl.value.getBoundingClientRect().bottom
-
-//         scrollTextContainer.value = {
-//             top: testContainerEl.value.scrollTop - (parentBottomOffset - caretBottomOffset) + +font.value + (+font.value * 0.4)
-//         }
-//     }
-// })
-
-            // if (currentAlphabet.value.getBoundingClientRect().top < parentTopOffset) {
-            //     testContainerEl.value.scrollTo({
-            //         top: -parentTopOffset
-            //     })
-            // }
-
-            // if (currentAlphabet.value.getBoundingClientRect().bottom > parentBottomOffset) {
-            //     testContainerEl.value.scrollTo({
-            //         top: parentBottomOffset
-            //     })
-            // } 
 </script>

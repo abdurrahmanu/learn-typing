@@ -57,7 +57,7 @@ export function useCustomizeFormat(args, text) {
     }
     else {
         if (args[6] === 'random-words') {
-            let punctuations = [',', '.', '.', '.', '.', ',', ',', '?', '!']
+            let punctuations = [',', '.', ';', '.', '.', '.', ',', ',', '?', '!']
             let newText = res.value
             res.value = ''
             for (let index = 0; index < newText.length; index++) {

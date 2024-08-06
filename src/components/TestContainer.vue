@@ -91,6 +91,25 @@ watch(playerInput, (newVal, oldVal) => {
 })
 
 onMounted(() => {
+    window.addEventListener('keydown', event => {
+        if (event.target === testContainerEl.value) {
+            preventKeyBoardScroll(event)
+        }
+    }, false)
+
+    window.addEventListener('touchmove', event => {
+        if (event.target === testContainerEl.value) {
+            preventScroll()
+        }
+    }, {passive: false})
+    
+
+    window.addEventListener('wheel', event => {
+        if (event.target === testContainerEl.value) {
+            preventScroll()
+        }
+    }, {passive: false})
+    
     if (!containerText.value) generateTest(customizers.value, null)
     if (route.name === 'home') {
         if (isMobileOS()) {
@@ -114,10 +133,6 @@ onMounted(() => {
             window.addEventListener('keydown', inputEvent)
         }
     }
-    
-    testContainerEl.value.addEventListener('keydown', preventKeyBoardScroll, false);
-    testContainerEl.value.addEventListener('touchmove', preventScroll, {passive: false});
-    testContainerEl.value.addEventListener('wheel', preventScroll, {passive: false});
 })
 
 const preventKeyBoardScroll = (e) => {
