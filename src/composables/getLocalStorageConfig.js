@@ -35,7 +35,7 @@ export const localStorageConfig = async () => {
             mode: localStorageSettings.value.mode || 'auto',
             hide: localStorageSettings.value.hide || false,
             fontsize: localStorageSettings.value.fontsize || 32,
-            testBackground: localStorageSettings.value.testBackground || 'transparent',
+            testBackground: 'transparent',
             alphabets: {
                 combo: localStorageSettings.value.alphabets.combo || false,
                 combination: localStorageSettings.value.alphabets.combination ||  [],

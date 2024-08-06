@@ -108,7 +108,6 @@ export const customizeStore = defineStore('customizeStore', () => {
 
         localStorageSettings.value.config = [customizers.value, disableOption.value]
         localStorage.setItem('dorayi-typing', JSON.stringify(localStorageSettings.value))     
-        console.log(mode, boolean);
     }
 
     return {

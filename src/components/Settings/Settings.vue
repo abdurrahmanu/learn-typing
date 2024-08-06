@@ -7,7 +7,7 @@
                     <Header />
                     <Fonts />
                     <Caret />
-                    <TestBackground />
+                    <!-- <TestBackground /> -->
                     <BlurTest />
                     <MovieQuotes />
                     <AuthoredQoutes />
@@ -25,7 +25,7 @@
                         <Header />
                         <Caret />
                         <Fonts />
-                        <TestBackground />
+                        <!-- <TestBackground /> -->
                         <BlurTest />
                         <LetterCombinations />
                         <BlindMode />

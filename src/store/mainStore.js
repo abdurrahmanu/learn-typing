@@ -50,7 +50,7 @@ export const mainStore = defineStore('mainStore', () => {
     // data for quotes 
     const movie = ref({})
     const customTests = ref({
-        'demo': 'This is a custom test, you can add your own test, use the plus icon. This particular demo cannot be deleted'
+        'demo': 'This is a custom test, you can add your own test, use the plus icon. This particular demo cannot be deleted.'
     }) 
     const authoredQuote = ref({})
 
