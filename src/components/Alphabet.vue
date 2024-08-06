@@ -1,11 +1,11 @@
 <template>
     <div aria-hidden="true" ref="currentAlphabet" :class="[customizers['no-space'] ? '' : 'whitespace-pre-wrap', testBackgroundComputed ]" class="relative inline">
-        <span  :class="[equalStyle, currentIndexStyle, mainStyle, !currentIndex ? 'border-transparent' : '', customizers['blur'] &&  index < allSpacesIndex[spaceCount + 1] && index > allSpacesIndex[spaceCount] ? 'blur-[2px]' : '', customizers['blur'] && index > allSpacesIndex[spaceCount + 1] ? 'blur-[7px]' : '',]" class="border" >{{ alphabet }} </span>
+        <span  :class="[equalStyle, currentIndexStyle, mainStyle, !currentIndex ? 'border-transparent' : '', pulseStyle], blurStyle" class="border" >{{ alphabet }} </span>
     </div>
 </template> 
 
 <script setup>
-import { defineProps, computed, watchEffect, ref, onMounted, watch } from 'vue';
+import { defineProps, computed, watchEffect, ref, onMounted } from 'vue';
 import {storeToRefs} from 'pinia'
 import {mainStore} from '../store/mainStore'
 import {themeStore}  from '../store/themeStore'
@@ -19,7 +19,7 @@ const { playerInputLength, testContainerEl, allSpacesIndex, spaceCount, scrollTe
 const currentAlphabet = ref(null)
 
 const customize = customizeStore()
-const {customizers, caretType, font, blind, testBackground} = storeToRefs(customize)
+const {customizers, caretType, font, blind} = storeToRefs(customize)
 
 const emit = defineEmits(['equal', 'unequal'])
 const props = defineProps({
@@ -40,8 +40,12 @@ window.addEventListener('input', event => {
 onMounted(() => {
     watchEffect(() => {
         if (props.currentIndex) {
+            if (!backspaceIsPressed.value && props.currentIndex && props.alphabet === ' ') spaceCount.value = allSpacesIndex.value.indexOf(props.index)
+            if (backspaceIsPressed.value && props.currentIndex && props.alphabet === ' ') spaceCount.value = allSpacesIndex.value.indexOf(props.index)
+
+            console.log(spaceCount.value);
+            
             if (currentAlphabet.value) {     
-                if (props.alphabet === ' ') spaceCount.value++
                 const parentScrollHeight = testContainerEl.value.scrollHeight
                 const parentHeight = testContainerEl.value.getBoundingClientRect().height
                 const caretTopOffset = currentAlphabet.value.getBoundingClientRect().top
@@ -53,6 +57,9 @@ onMounted(() => {
                 const nextSiblingTopOffset = props.index > 0 && currentAlphabet.value.nextElementSibling ? currentAlphabet.value.nextElementSibling.getBoundingClientRect().top : 0
                 const nextSiblingBottomOffset = props.index > 0 && currentAlphabet.value.nextElementSibling ? currentAlphabet.value.nextElementSibling.getBoundingClientRect().bottom : 0
                 
+
+                console.log(spaceCount.value);
+
                 if (nextSiblingBottomOffset > caretBottomOffset) enterKey.value = true
                 else enterKey.value = false         
                 
@@ -107,4 +114,35 @@ const mainStyle = computed(() => {
     let text = theme.value === 'dark' ? 'text-slate-400' : 'text-zinc-500'
     return props.index > playerInputLength.value ? text : ''
 })
+
+const blurStyle = computed(() => {
+    return [customizers.value['blur'] &&  props.index < allSpacesIndex.value[spaceCount.value + 1] && props.index > allSpacesIndex.value[spaceCount.value + 1] ? 'blur-[2px]' : '', customizers.value['blur'] && props.index > allSpacesIndex.value[spaceCount.value + 1] ? 'blur-[7px]' : '']
+})
+
+const pulseStyle = computed(() => {
+    return customizers.value['pulse'] && ((props.index < allSpacesIndex.value[spaceCount.value] && props.index > allSpacesIndex.value[spaceCount.value]) || (spaceCount.value === 0 && props.index <= allSpacesIndex.value[0]) ) ? 'pulse' : ''
+})
 </script>
+
+<!-- ||(props.index >= allSpacesIndex.value[allSpacesIndex.value.length - 1]  -->
+
+
+<style scoped>
+.pulse {
+    transition: all 2s ease;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 60%
+    }
+    50% {
+        opacity: 10%;
+    }
+    100% {
+        opacity: 60%;
+    }
+}
+
+</style>

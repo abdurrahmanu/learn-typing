@@ -87,7 +87,6 @@ watch(countdown, (newVal) => {
 })
 
 watch(playerInput, (newVal, oldVal) => {
-    if (newVal === '') return
     previousPlayerInput.value = oldVal
     managePlayerInput()
 })

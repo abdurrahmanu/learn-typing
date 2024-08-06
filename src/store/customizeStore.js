@@ -36,7 +36,8 @@ export const customizeStore = defineStore('customizeStore', () => {
         'no-space': false,
         'movie-quotes': false,
         'author-quotes': false,
-        'blur': false
+        'blur': false,
+        'pulse': false,
     })
 
     const disableOption = ref({

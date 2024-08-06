@@ -22,6 +22,7 @@ export const mainStore = defineStore('mainStore', () => {
     const capsIsOn = ref(false)
     const allSpacesIndex = ref([])
     const spaceCount = ref(0)
+    const pulseAnimate = ref(false)
 
     // Time states
     const timedTyping = ref(false)
@@ -146,6 +147,7 @@ export const mainStore = defineStore('mainStore', () => {
         wrongCount,
         allSpacesIndex,
         spaceCount,
+        pulseAnimate,
 
         beatCountdown,
         savedCountdown,
