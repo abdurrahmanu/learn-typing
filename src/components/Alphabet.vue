@@ -1,6 +1,6 @@
 <template>
     <div aria-hidden="true" ref="currentAlphabet" :class="[customizers['no-space'] ? '' : 'whitespace-pre-wrap', testBackgroundComputed ]" class="relative inline">
-        <span  :class="[equalStyle, currentIndexStyle, mainStyle, !currentIndex ? 'border-transparent' : '', pulseStyle], blurStyle" class="border" >{{ alphabet }} </span>
+        <span  :class="[equalStyle, currentIndexStyle, mainStyle, !currentIndex ? 'border-transparent' : '', pulseStyle, blurStyle]" class="transition-opacity duration-75 border" >{{ alphabet }} </span>
     </div>
 </template> 
 
@@ -40,10 +40,13 @@ window.addEventListener('input', event => {
 onMounted(() => {
     watchEffect(() => {
         if (props.currentIndex) {
-            if (!backspaceIsPressed.value && props.currentIndex && props.alphabet === ' ') spaceCount.value = allSpacesIndex.value.indexOf(props.index)
-            if (backspaceIsPressed.value && props.currentIndex && props.alphabet === ' ') spaceCount.value = allSpacesIndex.value.indexOf(props.index)
-
-            console.log(spaceCount.value);
+            if (!backspaceIsPressed.value && props.alphabet === ' ')  {
+                spaceCount.value = allSpacesIndex.value.indexOf(props.index) + 1
+            }
+            
+            if (backspaceIsPressed.value && props.alphabet === ' ')  {
+                spaceCount.value = allSpacesIndex.value.indexOf(props.index) + 1
+            }
             
             if (currentAlphabet.value) {     
                 const parentScrollHeight = testContainerEl.value.scrollHeight
@@ -57,9 +60,6 @@ onMounted(() => {
                 const nextSiblingTopOffset = props.index > 0 && currentAlphabet.value.nextElementSibling ? currentAlphabet.value.nextElementSibling.getBoundingClientRect().top : 0
                 const nextSiblingBottomOffset = props.index > 0 && currentAlphabet.value.nextElementSibling ? currentAlphabet.value.nextElementSibling.getBoundingClientRect().bottom : 0
                 
-
-                console.log(spaceCount.value);
-
                 if (nextSiblingBottomOffset > caretBottomOffset) enterKey.value = true
                 else enterKey.value = false         
                 
@@ -116,15 +116,13 @@ const mainStyle = computed(() => {
 })
 
 const blurStyle = computed(() => {
-    return [customizers.value['blur'] &&  props.index < allSpacesIndex.value[spaceCount.value + 1] && props.index > allSpacesIndex.value[spaceCount.value + 1] ? 'blur-[2px]' : '', customizers.value['blur'] && props.index > allSpacesIndex.value[spaceCount.value + 1] ? 'blur-[7px]' : '']
+    return [customizers.value['blur']] && allSpacesIndex.value[spaceCount.value + 1] && props.index > allSpacesIndex.value[spaceCount.value + 1] ? 'blur-[7px]' : props.index > allSpacesIndex.value[spaceCount.value] ? 'blur-[2px]' : ''
 })
 
 const pulseStyle = computed(() => {
-    return customizers.value['pulse'] && ((props.index < allSpacesIndex.value[spaceCount.value] && props.index > allSpacesIndex.value[spaceCount.value]) || (spaceCount.value === 0 && props.index <= allSpacesIndex.value[0]) ) ? 'pulse' : ''
+    return customizers.value['pulse'] && (spaceCount.value === 0 && props.index < allSpacesIndex.value[0]) || (allSpacesIndex.value[spaceCount.value - 1] && props.index > allSpacesIndex.value[spaceCount.value -1] && props.index < allSpacesIndex.value[spaceCount.value]) || (props.index > allSpacesIndex.value[allSpacesIndex.value.length - 1] && spaceCount.value === allSpacesIndex.value.length) ? 'pulse' : ''
 })
 </script>
-
-<!-- ||(props.index >= allSpacesIndex.value[allSpacesIndex.value.length - 1]  -->
 
 
 <style scoped>
@@ -135,13 +133,13 @@ const pulseStyle = computed(() => {
 
 @keyframes pulse {
     0% {
-        opacity: 60%
+        opacity: 50%
     }
     50% {
-        opacity: 10%;
+        opacity: 5%;
     }
     100% {
-        opacity: 60%;
+        opacity: 50%;
     }
 }
 

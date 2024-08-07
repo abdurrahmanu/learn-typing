@@ -14,7 +14,8 @@ export const inputEvent = (e) => {
     if (route.value !== 'home') return
     if (e.key === 'Backspace' && !playerInput.value.length) return
     if ((e.key === 'Enter' && !enterKey.value) || pauseTyping.value) return
-    if (e.key === 'Backspace' && wrongCount.value === 0 || !backspace.value) return
+    if (e.key === 'Backspace' && !wrongCount.value || !backspace.value) return
+    
     if (e.key === 'Backspace') {
         backspaceIsPressed.value = true
         playerInputLength.value--
