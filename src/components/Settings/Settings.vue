@@ -9,7 +9,6 @@
                     <Caret />
                     <!-- <TestBackground /> -->
                     <BlurTest />
-                    <PulseAnimateTest />
                     <MovieQuotes />
                     <AuthoredQoutes />
                     <BlindMode />
@@ -28,7 +27,6 @@
                         <Fonts />
                         <!-- <TestBackground /> -->
                         <BlurTest />
-                        <PulseAnimateTest />
                         <LetterCombinations />
                         <BlindMode />
                         <BackSpace />
@@ -62,7 +60,6 @@ import {alphabetsStore}  from '../../store/alphabetsModeStore';
 import { isMobileOS } from '../../composables/isMobileOS'
 import TestBackground from './TestBackground.vue'
 import BlurTest from './BlurTest.vue'
-import PulseAnimateTest from './PulseAnimateTest.vue'
 
 const alphabets_ = alphabetsStore()
 const { alphabetsMode_, } = storeToRefs(alphabets_)

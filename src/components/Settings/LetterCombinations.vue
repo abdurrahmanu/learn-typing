@@ -13,7 +13,7 @@
         </div>
 
         <div class="relative m-auto h-fit w-fit">            
-            <p class="absolute font-semibold opacity-30 blur-[1px] whitespace-nowrap text-[50px] top-[50%] translate-x-[-50%] left-[50%] translate-y-[-50%] z-[-1]">QWERTY KEYBOARD</p>
+            <!-- <p class="absolute font-semibold w-full opacity-30 blur-[1px] whitespace-nowrap text-[50px] top-[50%] translate-x-[-50%] left-[50%] translate-y-[-50%] z-[-1]">QWERTY KEYBOARD</p> -->
             <div v-for="(line, index) in shiftKey ? entries[0] : entries[1]" class="flex justify-center z-[3]">
                 <div @click="addSelection(entry)"  v-for="(entry, index) in line" :key="index" :class="[alphabetsCombination.includes(entry) ? ' border-sky-400' : 'border-neutral-600'] " class="p-1 py-0 rounded-md border text-lg inline-block min-w-[20px] text-center m-1">{{ entry }}</div>
             </div>

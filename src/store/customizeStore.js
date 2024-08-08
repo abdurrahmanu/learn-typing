@@ -37,7 +37,6 @@ export const customizeStore = defineStore('customizeStore', () => {
         'movie-quotes': false,
         'author-quotes': false,
         'blur': false,
-        'pulse': false,
         'scatter': true
     })
 

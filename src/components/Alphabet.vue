@@ -128,8 +128,12 @@ const blurStyle = computed(() => {
 })
 
 const pulseStyle = computed(() => {
-    if (customizers.value['pulse']) {        
+    if (caretType.value === 'word-pulse') {        
         return (spaceCount.value === 0 && props.index < allSpacesIndex.value[0]) || (allSpacesIndex.value[spaceCount.value - 1] && props.index > allSpacesIndex.value[spaceCount.value -1] && props.index < allSpacesIndex.value[spaceCount.value]) || (props.index > allSpacesIndex.value[allSpacesIndex.value.length - 1] && spaceCount.value === allSpacesIndex.value.length) ? 'pulse' : ''
+    }
+
+    else if (caretType.value === 'pulse') {
+        return props.currentIndex ? 'pulse' : ''
     }
 })
 

@@ -1,15 +1,21 @@
 <template>
-    <div :class="[theme === 'dark' ? 'hover:bg-neutral-700' : 'hover:bg-slate-100']" class="py-4 pl-5 flex items-center flex-wrap gap-5">
-        <div class="py-2 font-medium text-sm">CARET</div>
-        <div class="space-x-3 flex">
-            <div @click="caretType = 'border'" class="flex border px-5 rounded-md py-1 gap-2" :class="[caretType === 'border' ? 'border-green-500' : 'border-slate-500']">
-                <p class="w-fit border border-slate-400">A</p>
+    <div :class="[theme === 'dark' ? 'hover:bg-neutral-700' : 'hover:bg-slate-100']" class="flex flex-wrap items-center py-4 pl-5 gap-x-3 gap-y-1">
+        <div class="text-sm font-medium">CARET</div>
+        <div class="flex flex-wrap gap-x-2 gap-y-1">
+            <div @click="caretType = 'border'" class="flex px-5 py-1 border rounded-md" :class="[caretType === 'border' ? 'border-green-500' : 'border-slate-500']">
+                <p class="border w-fit border-slate-400">A</p>
             </div>
-            <div @click="caretType = 'caret'" class="flex border px-5 rounded-md py-1 gap-2" :class="[caretType === 'caret' ? 'border-green-500' : 'border-slate-500']">
-                <p class="w-fit border border-transparent border-l-slate-500 ">A</p>
+            <div @click="caretType = 'caret'" class="flex px-5 py-1 border rounded-md" :class="[caretType === 'caret' ? 'border-green-500' : 'border-slate-500']">
+                <p class="border border-transparent w-fit border-l-slate-500 ">A</p>
             </div>
-            <div @click="caretType = 'underline'" class="flex border px-5 rounded-md py-1 gap-2" :class="[caretType === 'underline' ? 'border-green-500' : 'border-slate-500']">
-                <p class="w-fit border border-transparent border-b-blue-500">A</p>
+            <div @click="caretType = 'underline'" class="flex px-5 py-1 border rounded-md" :class="[caretType === 'underline' ? 'border-green-500' : 'border-slate-500']">
+                <p class="border border-transparent w-fit border-b-blue-500">A</p>
+            </div>
+            <div @click="caretType = 'pulse'" class="flex px-5 py-1 border rounded-md" :class="[caretType === 'pulse' ? 'border-green-500' : 'border-slate-500']">
+                <p class="w-fit pulse">A</p>
+            </div>
+            <div @click="caretType = 'word-pulse'" class="flex px-5 py-1 border rounded-md" :class="[caretType === 'word-pulse' ? 'border-green-500' : 'border-slate-500']">
+                <p class="w-fit pulse">word</p>
             </div>
         </div>
     </div>
@@ -34,3 +40,23 @@ watch(caretType, (newVal) => {
     localStorage.setItem('dorayi-typing', JSON.stringify(localStorageSettings.value))
 })
 </script>
+
+<style scoped>
+.pulse {
+    transition: all 2s ease;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 80%
+    }
+    50% {
+        opacity: 30%;
+    }
+    100% {
+        opacity: 80%;
+    }
+}
+
+</style>
