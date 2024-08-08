@@ -23,6 +23,7 @@ export const mainStore = defineStore('mainStore', () => {
     const allSpacesIndex = ref([])
     const spaceCount = ref(0)
     const pulseAnimate = ref(false)
+    const currentWordArray = ref([])
 
     // Time states
     const timedTyping = ref(false)
@@ -148,6 +149,7 @@ export const mainStore = defineStore('mainStore', () => {
         allSpacesIndex,
         spaceCount,
         pulseAnimate,
+        currentWordArray,
 
         beatCountdown,
         savedCountdown,

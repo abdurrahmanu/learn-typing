@@ -38,6 +38,7 @@ export const customizeStore = defineStore('customizeStore', () => {
         'author-quotes': false,
         'blur': false,
         'pulse': false,
+        'scatter': true
     })
 
     const disableOption = ref({

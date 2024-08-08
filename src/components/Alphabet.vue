@@ -1,11 +1,11 @@
 <template>
-    <div aria-hidden="true" ref="currentAlphabet" :class="[customizers['no-space'] ? '' : 'whitespace-pre-wrap', testBackgroundComputed ]" class="relative inline">
-        <span  :class="[equalStyle, currentIndexStyle, mainStyle, !currentIndex ? 'border-transparent' : '', pulseStyle, blurStyle]" class="transition-opacity duration-75 border" >{{ alphabet }} </span>
+    <div aria-hidden="true" ref="currentAlphabet" :class="[customizers['no-space'] ? '' : 'whitespace-pre-wrap', testBackgroundComputed , alphabet === ' ' && customizers['pulse'] ? 'pulse' : '']" class="relative inline">
+        <span  :class="[equalStyle, currentIndexStyle, mainStyle, !currentIndex ? 'border-transparent' : '', pulseStyle, blurStyle, scatterStyle]" class="transition-opacity duration-75 border" >{{ alphabet }} </span>
     </div>
 </template> 
 
 <script setup>
-import { defineProps, computed, watchEffect, ref, onMounted } from 'vue';
+import { defineProps, computed, watchEffect, ref, onMounted, watch } from 'vue';
 import {storeToRefs} from 'pinia'
 import {mainStore} from '../store/mainStore'
 import {themeStore}  from '../store/themeStore'
@@ -15,7 +15,7 @@ const theme_ = themeStore()
 const {theme, testBackgroundComputed } = storeToRefs(theme_)
 
 const store = mainStore()
-const { playerInputLength, testContainerEl, allSpacesIndex, spaceCount, scrollTextContainer, enterKey, scrollDistance, backspaceIsPressed, containerHeight } = storeToRefs(store)
+const { playerInputLength, testContainerEl, currentWordArray, allSpacesIndex, spaceCount, scrollTextContainer, enterKey, scrollDistance, backspaceIsPressed, containerHeight } = storeToRefs(store)
 const currentAlphabet = ref(null)
 
 const customize = customizeStore()
@@ -40,6 +40,12 @@ window.addEventListener('input', event => {
 onMounted(() => {
     watchEffect(() => {
         if (props.currentIndex) {
+            if (props.alphabet === ' ') currentWordArray.value = []
+            
+            // if ((allSpacesIndex.value[spaceCount.value - 1] && props.index > allSpacesIndex.value[spaceCount.value -1] && props.index < allSpacesIndex.value[spaceCount.value])) {
+            //     currentWordArray.value.push(props.alphabet)
+            // }            
+            
             if (!backspaceIsPressed.value && props.alphabet === ' ')  {
                 spaceCount.value = allSpacesIndex.value.indexOf(props.index) + 1
             }
@@ -47,7 +53,7 @@ onMounted(() => {
             if (backspaceIsPressed.value && props.alphabet === ' ')  {
                 spaceCount.value = allSpacesIndex.value.indexOf(props.index) + 1
             }
-            
+
             if (currentAlphabet.value) {     
                 const parentScrollHeight = testContainerEl.value.scrollHeight
                 const parentHeight = testContainerEl.value.getBoundingClientRect().height
@@ -116,14 +122,24 @@ const mainStyle = computed(() => {
 })
 
 const blurStyle = computed(() => {
-    return [customizers.value['blur']] && allSpacesIndex.value[spaceCount.value + 1] && props.index > allSpacesIndex.value[spaceCount.value + 1] ? 'blur-[7px]' : props.index > allSpacesIndex.value[spaceCount.value] ? 'blur-[2px]' : ''
+    if (customizers.value['blur']) {        
+        return allSpacesIndex.value[spaceCount.value + 1] && props.index > allSpacesIndex.value[spaceCount.value + 1] ? 'blur-[7px]' : props.index > allSpacesIndex.value[spaceCount.value] ? 'blur-[2px]' : ''
+    }
 })
 
 const pulseStyle = computed(() => {
-    return customizers.value['pulse'] && (spaceCount.value === 0 && props.index < allSpacesIndex.value[0]) || (allSpacesIndex.value[spaceCount.value - 1] && props.index > allSpacesIndex.value[spaceCount.value -1] && props.index < allSpacesIndex.value[spaceCount.value]) || (props.index > allSpacesIndex.value[allSpacesIndex.value.length - 1] && spaceCount.value === allSpacesIndex.value.length) ? 'pulse' : ''
+    if (customizers.value['pulse']) {        
+        return (spaceCount.value === 0 && props.index < allSpacesIndex.value[0]) || (allSpacesIndex.value[spaceCount.value - 1] && props.index > allSpacesIndex.value[spaceCount.value -1] && props.index < allSpacesIndex.value[spaceCount.value]) || (props.index > allSpacesIndex.value[allSpacesIndex.value.length - 1] && spaceCount.value === allSpacesIndex.value.length) ? 'pulse' : ''
+    }
+})
+
+const scatterStyle = computed(() => {
+    return ''
+    // if (customizers.value['scatter']) {       
+    //     return currentWordArray.value.includes(props.index) ? 'animate-bounce' : ''
+    // }
 })
 </script>
-
 
 <style scoped>
 .pulse {

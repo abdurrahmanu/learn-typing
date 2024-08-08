@@ -46,7 +46,7 @@ const alphabets_ = alphabetsStore()
 const { alphabetsMode_ } = storeToRefs(alphabets_)
 
 const store = mainStore()
-const { containerText, previousPlayerInput, timedTyping, hasCompletedSession, focus, resultData, testContainerEl, containerHeight, movie, beatCountdown, playerInputLength, playerInput, authoredQuote, scrollTextContainer, restartSvgEl, restartEl, inputEl} = storeToRefs(store)
+const { containerText, previousPlayerInput, currentWordArray, timedTyping, hasCompletedSession, focus, resultData, testContainerEl, containerHeight, movie, beatCountdown, playerInputLength, playerInput, authoredQuote, scrollTextContainer, restartSvgEl, restartEl, inputEl} = storeToRefs(store)
 const { sessionComplete, switchNext} = store
 
 const customize = customizeStore()
@@ -89,6 +89,10 @@ watch(countdown, (newVal) => {
 watch(playerInput, (newVal, oldVal) => {
     previousPlayerInput.value = oldVal
     managePlayerInput()
+})
+
+watch(currentWordArray, newVal => {
+    console.log(newVal);
 })
 
 onMounted(() => {
