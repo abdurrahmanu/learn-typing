@@ -31,12 +31,12 @@
                 <user @click="routeToPage('auth')" class="w-4 peer" />
                 <div class="absolute z-5 left-[50%] translate-x-[-50%] bottom-[-120%] rounded-full whitespace-nowrap peer-hover:block hidden">account</div>
             </div> -->
-            <div class="relative w-fit" v-if="route.name !== 'about'">
-                <about @click="routeToPage('about')" class="w-4 peer" />
-                <div class="absolute z-5 left-[50%] translate-x-[-50%] bottom-[-100%] rounded-full whitespace-nowrap peer-hover:block hidden">about</div>
-            </div>
             <div class="relative w-fit" v-if="route.name === 'home'" >
                 <settings class="w-5 peer" />
+            </div>
+            <div class="relative w-fit" v-if="route.name !== 'about'">
+                <about @click="routeToPage('about')" class="w-[15px] peer" />
+                <div class="absolute z-5 left-[50%] translate-x-[-50%] bottom-[-110%] rounded-full whitespace-nowrap peer-hover:block hidden">about</div>
             </div>
             <!-- <select name="" id="" class="text-center text-black uppercase border-none outline-none">
                 <option value="test">Test mode</option>

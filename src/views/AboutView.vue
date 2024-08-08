@@ -1,5 +1,5 @@
 <template>
-    <div class="max-w-[800px] m-auto min-h-[calc(100dvh_-_75px)] overflow-y-auto pt-6">
+    <div class="max-w-[800px] m-auto min-h-[calc(100dvh_-_78px)] overflow-y-auto pt-6">
         <div class="pt-10 m-auto font-mono font-normal w-fit">
             <div class="relative m-auto font-mono font-medium cursor-default w-fit h-fit">
                     <span class="absolute top-0 left-[50%] translate-x-[-50%] text-sm font-bold"><span class="hover:text-red-500">K</span><span class="hover:text-green-500">E</span><span class="hover:text-blue-500">Y</span></span>
@@ -7,20 +7,20 @@
                 </div>
             <p class="pt-3 m-auto text-center w-fit">IS A TYPING APP CREATED BY AHMED ABDULRAHMAN</p>
             <div class="justify-center flex max-w-[700px] gap-5 m-auto py-5 pt-10 flex-wrap text-sm">
-                <div @click="name='github', go('github')" class="px-2 py-[1px] border-gray-500 border rounded-sm transition-all duration-100 hover:shadow-md hover:border-green-500 flex items-center gap-2"><github class="w-4" /> GITHUB</div>
-                <div @click="name='linkedin', go('linkedin')" class="px-2 py-[1px] border-gray-500 border rounded-sm transition-all duration-100 hover:shadow-md hover:border-green-500 flex items-center gap-2"><linkedin class="w-6" /> LINKEDIN</div>
-                <div @click="name='email', go('email')" class="px-2 py-[1px] border-gray-500 border rounded-sm transition-all duration-100 hover:shadow-md hover:border-green-500 flex items-center gap-2"><email class="w-4" /> EMAIL</div>
+                <div @click="name='github'" class="px-2 py-[1px] border-gray-500 border rounded-sm transition-all duration-100 hover:shadow-md hover:border-green-500 flex items-center gap-2"><github class="w-4" /> GITHUB</div>
+                <div @click="name='linkedin'" class="px-2 py-[1px] border-gray-500 border rounded-sm transition-all duration-100 hover:shadow-md hover:border-green-500 flex items-center gap-2"><linkedin class="w-6" /> LINKEDIN</div>
+                <div @click="name='email'" class="px-2 py-[1px] border-gray-500 border rounded-sm transition-all duration-100 hover:shadow-md hover:border-green-500 flex items-center gap-2"><email class="w-4" /> EMAIL</div>
             </div>
         </div>
         <div class="m-auto font-normal w-fit">
-            <p class="pb-5 text-center underline">CREDITS</p>
+            <p class="pb-2 text-center underline">CREDITS</p>
+            <p class="pb-6 text-center">Ahmed Abdulrahman</p>
             <p class="pb-5 text-center underline">SUPPORTERS</p>
+            <p class="pb-6 text-center">---</p>
             <p class="pb-5 text-center underline">CONTRIBUTORS</p>
+            <p class="text-center">---</p>
         </div>
     </div>
-    <!-- <Push @false="toggle = false" @go="newTab = true" :toggle="toggle" v-if="toggle">
-        <PopUp @toggle="newTab = $event" :site="siteName" />
-    </Push> -->
 </template>
 
 <script setup>
@@ -29,29 +29,20 @@ import board from '../components/svg/board.vue';
 import email from '../components/svg/email.vue';
 import linkedin from '../components/svg/linkedin.vue';
 import github from '../components/svg/github.vue';
-import PopUp from '../components/PopUp.vue';
-import Push from '../components/Push.vue';
 
-const siteName = ref('')
 const toggle = ref(false)
-const newTab = ref(false)
 const name = ref('')
 
-const go = () => {
-    siteName.value = name.value
-    toggle.value = true
-}
-
-watch(newTab, (newVal) => {
+watch(name, (newVal) => {
     if (newVal) {
-        if (name.value === 'email') {
+        if (newVal === 'email') {
             window.open(`mailto:ahmedabdulrahman103@gmail.com`)
         }
-        if (name.value === 'github') {
+        if (newVal === 'github') {
             window.open('https://github.com/abdurrahmanu', '_blank')
         }
-        if (name.value === 'linkedin') {
-            window.open('https://linkedin.com/abdurrahmanu', '_blank')
+        if (newVal === 'linkedin') {
+            window.open('https://linkedin.com/ahmed-abdulrahman-dorayi', '_blank')
         }
     } 
     else {

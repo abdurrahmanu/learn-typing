@@ -26,7 +26,7 @@ export const localStorageConfig = async () => {
         const localStorageSettings = ref(JSON.parse(localStorage.getItem('dorayi-typing')))
 
         let dorayiTyping = {
-            customTests: localStorageSettings.value.customTests ||  {'demo': 'This is a custom test, you can add your own tests by pressing the plus icon. This demo test cannot be deleted'},
+            customTests: localStorageSettings.value.customTests ||  customTests.value,
             config:  [ localStorageSettings.value.config[0] || customizers.value, localStorageSettings.value.config[1] || disableOption.value],
             caret: localStorageSettings.value.caret || 'border',
             theme: localStorageSettings.value.theme || 'dark',

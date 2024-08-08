@@ -3,7 +3,7 @@
             <div class="flex justify-between w-full p-1 border border-transparent rounded-sm ">
                 <div @click="customize"  class="flex gap-4 w-fit">
                     <input name="blind" :checked="blind"  type="checkbox" id="">
-                    <label class="font-medium w-fit">Blind mode</label>
+                    <label class="font-medium w-fit">Blind mode <span class="px-3 text-white uppercase font-mono rounded-full py-[1px] text-[12px] bg-yellow-800 ml-1">hard</span></label>
                 </div>
             </div>
             <p class="px-3">Type while fully trusting your muscle memory. </p>

@@ -1,6 +1,6 @@
 <template>
-    <div aria-hidden="true" ref="currentAlphabet" :class="[customizers['no-space'] ? '' : 'whitespace-pre-wrap', testBackgroundComputed , alphabet === ' ' && customizers['pulse'] ? 'pulse' : '']" class="relative inline">
-        <span  :class="[equalStyle, currentIndexStyle, mainStyle, !currentIndex ? 'border-transparent' : '', pulseStyle, blurStyle, scatterStyle]" class="transition-opacity duration-75 border" >{{ alphabet }} </span>
+    <div aria-hidden="true" ref="currentAlphabet" :class="[customizers['no-space'] ? '' : 'whitespace-pre-wrap', alphabet === ' ' && customizers['pulse'] ? 'pulse' : '']" class="relative inline">
+        <span  :class="[equalStyle, currentIndexStyle, mainStyle, !currentIndex ? 'border-transparent' : '', pulseStyle, blurStyle]" class="transition-opacity duration-75 border" >{{ alphabet }} </span>
     </div>
 </template> 
 
@@ -112,7 +112,7 @@ const equalStyle = computed(() => {
 
 const currentIndexStyle = computed(() => {
     let text = theme.value === 'dark' ? 'text-slate-400' : 'bg-transparent text-neutral-900' 
-    let caret = caretType.value === 'border' ? 'border border-zinc-500' : caretType.value === 'caret' ? 'border-transparent border-l-zinc-600' : caretType.value === 'underline' ? 'border-transparent border-b-blue-600' : ''
+    let caret = caretType.value === 'border' ? 'border border-zinc-500' : caretType.value === 'caret' ? 'border-transparent border-l-zinc-600' : caretType.value === 'underline' ? 'border-transparent border-b-blue-600' : caretType.value === 'pulse' ? 'pulse' : ''
     return  props.currentIndex ? text + ' ' + caret : ''
 })
 
@@ -131,17 +131,6 @@ const pulseStyle = computed(() => {
     if (caretType.value === 'word-pulse') {        
         return (spaceCount.value === 0 && props.index < allSpacesIndex.value[0]) || (allSpacesIndex.value[spaceCount.value - 1] && props.index > allSpacesIndex.value[spaceCount.value -1] && props.index < allSpacesIndex.value[spaceCount.value]) || (props.index > allSpacesIndex.value[allSpacesIndex.value.length - 1] && spaceCount.value === allSpacesIndex.value.length) ? 'pulse' : ''
     }
-
-    else if (caretType.value === 'pulse') {
-        return props.currentIndex ? 'pulse' : ''
-    }
-})
-
-const scatterStyle = computed(() => {
-    return ''
-    // if (customizers.value['scatter']) {       
-    //     return currentWordArray.value.includes(props.index) ? 'animate-bounce' : ''
-    // }
 })
 </script>
 
@@ -153,13 +142,13 @@ const scatterStyle = computed(() => {
 
 @keyframes pulse {
     0% {
-        opacity: 50%
+        opacity: 70%
     }
     50% {
-        opacity: 5%;
+        opacity: 30%;
     }
     100% {
-        opacity: 50%;
+        opacity: 70%;
     }
 }
 
