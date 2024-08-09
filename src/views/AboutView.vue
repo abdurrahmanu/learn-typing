@@ -1,6 +1,5 @@
 <template>
     <div class="max-w-[800px] m-auto min-h-[calc(100dvh_-_78px)] overflow-y-auto pt-6 relative">
-        <p>HELP</p>
         <p></p>
         <div class="m-auto w-fit top-[15px] relative">                
             <Logo />
