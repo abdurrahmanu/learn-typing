@@ -1,8 +1,8 @@
 <template>
-    <div :class="[theme === 'dark' ? 'hover:bg-neutral-700' : 'hover:bg-slate-100']" class="py-1 pl-5">
+    <div :class="[theme === 'dark' ? 'hover:bg-neutral-800' : 'hover:bg-slate-100']" class="py-1 pl-5">
         <div @click="toggle" class="flex w-full p-1 space-x-4 border border-transparent rounded-sm">
             <input :disabled="!(alphabetsCombination.length > 1)" :checked="useAlphabetCombination"  type="checkbox" name="letter-combination" id="id">
-            <label for="id" class="font-medium w-fit">Letter Combinations <span class="px-3 text-white uppercase font-mono rounded-full py-[1px] text-[12px] bg-lime-600 ml-1">easy</span></label>
+            <label for="id" class="font-medium w-fit">Letter Combinations <span class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-lime-600 ml-1">easy</span></label>
         </div>
         <div class="px-4">
             <p>**Randomly repeats and shuffles your selection. Select a minimum of two entries or maximum of ten entries then click the checkbox.</p>

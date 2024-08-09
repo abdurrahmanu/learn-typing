@@ -5,7 +5,7 @@
         <div class="m-auto w-fit top-[15px] relative">                
             <Logo />
         </div>
-        <p class="text-center text-[50px] leading-0 opacity-90 blur-[1px]">KiB<span class="text-black px-[2px]">o</span>ard</p>
+        <p class="text-center text-[50px] leading-0 opacity-90 blur-[1px]">KiBoard</p>
         <div class="m-auto font-mono font-normal w-fit z-[-1]">
             <p class="pt-3 m-auto text-center w-fit">IS A TYPING APP CREATED BY AHMED ABDULRAHMAN</p>
             <div class="justify-center flex max-w-[700px] gap-5 m-auto py-5 pt-7 flex-wrap text-sm">
@@ -16,7 +16,7 @@
         </div>
         <div class="m-auto font-normal w-fit">
             <p class="pb-2 text-center underline">CREDITS</p>
-            <p class="pb-6 font-mono text-center">Ahmed Abdulrahman</p>
+            <p @click="name='portfolio'" class="pb-6 font-mono text-center hover:underline">Ahmed Abdulrahman</p>
             <p class="pb-5 text-center underline">SUPPORTERS</p>
             <p class="pb-6 text-center">---</p>
             <p class="pb-5 text-center underline">CONTRIBUTORS</p>
@@ -28,7 +28,6 @@
 <script setup>
 import {ref, watch} from 'vue'
 import Logo from '../components/Logo.vue'
-import board from '../components/svg/board.vue';
 import email from '../components/svg/email.vue';
 import linkedin from '../components/svg/linkedin.vue';
 import github from '../components/svg/github.vue';
@@ -46,6 +45,9 @@ watch(name, (newVal) => {
         }
         if (newVal === 'linkedin') {
             window.open('https://linkedin.com/ahmed-abdulrahman-dorayi', '_blank')
+        }
+        if (newVal === 'portfolio') {
+            window.open('https://abduldorayi.netlify.app')
         }
     } 
     else {

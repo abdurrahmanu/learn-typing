@@ -17,7 +17,7 @@
 </template>
 
 <script setup>
-import {onBeforeMount, onMounted, watch} from 'vue'
+import {onBeforeMount, onMounted, watch, ref} from 'vue'
 import Header from './components/Header.vue'
 import Toast from './components/Toast.vue'
 import SwitchModes from './components/SwitchModes.vue';

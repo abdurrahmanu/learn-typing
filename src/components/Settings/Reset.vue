@@ -1,5 +1,5 @@
 <template>
-    <div :class="[theme === 'dark' ? 'hover:bg-neutral-700' : 'hover:bg-slate-100']" class="pb-6 pt-4">
+    <div :class="[theme === 'dark' ? 'hover:bg-neutral-800' : 'hover:bg-slate-100']" class="pb-6 pt-4">
         <p class="font-medium pl-5">Reset</p>
         <div class="pl-5 space-y-2 w-fit flex items-center gap-3">
             <p>This action will reset all your saved settings</p>

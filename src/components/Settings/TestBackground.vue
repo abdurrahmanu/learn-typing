@@ -1,5 +1,5 @@
 <template>
-    <div :class="[theme === 'dark' ? 'hover:bg-neutral-700' : 'hover:bg-slate-100']" class="flex flex-wrap items-center px-4 py-4 space-x-2">
+    <div :class="[theme === 'dark' ? 'hover:bg-neutral-800' : 'hover:bg-slate-100']" class="flex flex-wrap items-center px-4 py-4 space-x-2">
         <div class="pr-4 text-sm font-medium whitespace-nowrap">TEST BACKGROUND</div>
         <div :class="[testBackgroundColor === 'green' ? 'border-black' : 'border-transparent', theme === 'white' ?  'bg-green-200' : 'bg-green-900 text-white']" @click="testBackgroundColor = 'green'" class="px-2 py-1 border-2 rounded-md">Green</div>
         <div :class="[testBackgroundColor === 'gray' ? 'border-black' : 'border-transparent', theme === 'white' ?  'bg-slate-300' : 'text-white bg-neutral-800']" @click="testBackgroundColor = 'gray'" class="px-2 py-1 border-2 rounded-md">Gray</div>

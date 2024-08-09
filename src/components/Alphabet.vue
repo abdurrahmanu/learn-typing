@@ -1,6 +1,6 @@
 <template>
-    <div aria-hidden="true" ref="currentAlphabet" :class="[customizers['no-space'] ? '' : 'whitespace-pre-wrap', alphabet === ' ' && customizers['pulse'] ? 'pulse' : '']" class="relative inline">
-        <span  :class="[equalStyle, currentIndexStyle, mainStyle, !currentIndex ? 'border-transparent' : '', pulseStyle, blurStyle]" class="transition-opacity duration-75 border" >{{ alphabet }} </span>
+    <div aria-hidden="true" ref="currentAlphabet" :class="[customizers['no-space'] ? '' : 'whitespace-pre-wrap']" class="relative inline">
+        <span  :class="[equalStyle, currentIndexStyle, mainStyle, !currentIndex ? 'border-transparent' : '', pulseStyle, blurStyle, (caretType === 'pulse' || caretType === 'word-pulse') && alphabet === ' ' ? 'opacity-20' : '']" class="transition-opacity duration-75 border" >{{ alphabet }} </span>
     </div>
 </template> 
 
@@ -15,7 +15,7 @@ const theme_ = themeStore()
 const {theme, testBackgroundComputed } = storeToRefs(theme_)
 
 const store = mainStore()
-const { playerInputLength, testContainerEl, currentWordArray, allSpacesIndex, spaceCount, scrollTextContainer, enterKey, scrollDistance, backspaceIsPressed, containerHeight } = storeToRefs(store)
+const { playerInputLength, testContainerEl, allSpacesIndex, spaceCount, scrollTextContainer, enterKey, scrollDistance, backspaceIsPressed, containerHeight } = storeToRefs(store)
 const currentAlphabet = ref(null)
 
 const customize = customizeStore()
@@ -40,11 +40,6 @@ window.addEventListener('input', event => {
 onMounted(() => {
     watchEffect(() => {
         if (props.currentIndex) {
-            if (props.alphabet === ' ') currentWordArray.value = []
-            
-            // if ((allSpacesIndex.value[spaceCount.value - 1] && props.index > allSpacesIndex.value[spaceCount.value -1] && props.index < allSpacesIndex.value[spaceCount.value])) {
-            //     currentWordArray.value.push(props.alphabet)
-            // }            
             
             if (!backspaceIsPressed.value && props.alphabet === ' ')  {
                 spaceCount.value = allSpacesIndex.value.indexOf(props.index) + 1
@@ -112,7 +107,7 @@ const equalStyle = computed(() => {
 
 const currentIndexStyle = computed(() => {
     let text = theme.value === 'dark' ? 'text-slate-400' : 'bg-transparent text-neutral-900' 
-    let caret = caretType.value === 'border' ? 'border border-zinc-500' : caretType.value === 'caret' ? 'border-transparent border-l-zinc-600' : caretType.value === 'underline' ? 'border-transparent border-b-blue-600' : caretType.value === 'pulse' ? 'pulse' : ''
+    let caret = caretType.value === 'border' ? 'border border-green-500' : caretType.value === 'caret' ? 'border-transparent border-l-zinc-600' : caretType.value === 'underline' ? 'border-transparent border-b-blue-600' : caretType.value === 'pulse' && props.alphabet !== ' ' ? 'pulse border-transparent' : ''
     return  props.currentIndex ? text + ' ' + caret : ''
 })
 
@@ -129,7 +124,7 @@ const blurStyle = computed(() => {
 
 const pulseStyle = computed(() => {
     if (caretType.value === 'word-pulse') {        
-        return (spaceCount.value === 0 && props.index < allSpacesIndex.value[0]) || (allSpacesIndex.value[spaceCount.value - 1] && props.index > allSpacesIndex.value[spaceCount.value -1] && props.index < allSpacesIndex.value[spaceCount.value]) || (props.index > allSpacesIndex.value[allSpacesIndex.value.length - 1] && spaceCount.value === allSpacesIndex.value.length) ? 'pulse' : ''
+        return (spaceCount.value === 0 && props.index < allSpacesIndex.value[0]) || (allSpacesIndex.value[spaceCount.value - 1] && props.index > allSpacesIndex.value[spaceCount.value -1] && props.index < allSpacesIndex.value[spaceCount.value]) || (props.index > allSpacesIndex.value[allSpacesIndex.value.length - 1] && spaceCount.value === allSpacesIndex.value.length) ? 'pulse border-transparent' : ''
     }
 })
 </script>
