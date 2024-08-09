@@ -12,7 +12,7 @@ import {themeStore}  from '../store/themeStore'
 import {customizeStore}  from '../store/customizeStore'
 
 const theme_ = themeStore()
-const {theme, testBackgroundComputed } = storeToRefs(theme_)
+const {theme } = storeToRefs(theme_)
 
 const store = mainStore()
 const { playerInputLength, testContainerEl, allSpacesIndex, spaceCount, scrollTextContainer, enterKey, scrollDistance, backspaceIsPressed, containerHeight } = storeToRefs(store)

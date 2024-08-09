@@ -11,7 +11,7 @@ export const localStorageConfig = async () => {
     const { alphabetsMode_, alphabetsCombination, useAlphabetCombination } = storeToRefs(alphabets_)
 
     const theme_ = themeStore()
-    const {theme, testBackgroundColor } = storeToRefs(theme_)
+    const {theme } = storeToRefs(theme_)
 
     const main = mainStore()
     const {customTests} = storeToRefs(main)
@@ -46,7 +46,6 @@ export const localStorageConfig = async () => {
         localStorageSettings.value = dorayiTyping
         localStorage.setItem('dorayi-typing', JSON.stringify(localStorageSettings.value))
 
-        testBackgroundColor.value = localStorageSettings.value.testBackground
         theme.value = localStorageSettings.value.theme
         font.value = localStorageSettings.value.fontsize 
         range.value = (font.value - 16) / 0.26

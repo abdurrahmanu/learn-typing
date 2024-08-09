@@ -3,7 +3,7 @@ import {ref} from 'vue'
 
 export const customizeStore = defineStore('customizeStore', () => {
     const mode = ref('auto')
-    const testBackground = ref('transparent')
+    const testType_ = ref('random-words')
     const selectedCustomTest = ref('')
     const customTestModal = ref(false)
     const pauseTyping = ref(true)
@@ -38,7 +38,6 @@ export const customizeStore = defineStore('customizeStore', () => {
         'movie-quotes': false,
         'author-quotes': false,
         'blur': false,
-        'scatter': true
     })
 
     const disableOption = ref({
@@ -59,7 +58,7 @@ export const customizeStore = defineStore('customizeStore', () => {
         'include-numbers' : ['numbers'],
         'all-caps' : ['all caps'],
         'custom-camel-case' : ['custom camel case'],
-        'no-space' : ['no space']
+        'no-space' : ['no space'],
     })
 
     const changeConfiguration = (group, selection) => {
@@ -73,6 +72,7 @@ export const customizeStore = defineStore('customizeStore', () => {
         let currentTextLength = customizers.value['text-length']
         let selection = configs.value[1]
         let group = configs.value[0]
+        testType_.value = customizers.value['test-type']
 
         if ((typeof configs.value[1] === 'number' && configs.value[0] === 'text-length' ) || configs.value[1] === 'random-words') {
             customizers.value['movie-quotes'] = false
@@ -136,6 +136,6 @@ export const customizeStore = defineStore('customizeStore', () => {
         pauseTyping,
         customTestModal,
         selectedCustomTest,
-        testBackground,
+        testType_,
     }
 })

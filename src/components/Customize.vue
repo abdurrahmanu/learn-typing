@@ -62,7 +62,7 @@ const { hasCompletedSession, completionLevel, containerText, playerInput, focus}
 const {switchNext} = store
 
 const customize = customizeStore()
-const { allOptions, configs, customizers, disableOption, blind} = storeToRefs(customize)
+const { allOptions, configs, customizers, testType_, disableOption, blind} = storeToRefs(customize)
 const {useConfig} = customize
 const optionsTooltip = ['length', 'words', 'test-type', 'format', 'test-type', 'test-type']
 
