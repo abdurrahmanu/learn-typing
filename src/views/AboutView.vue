@@ -1,12 +1,14 @@
 <template>
-    <div class="max-w-[800px] m-auto min-h-[calc(100dvh_-_78px)] overflow-y-auto pt-6">
-        <div class="pt-10 m-auto font-mono font-normal w-fit">
-            <div class="relative m-auto font-mono font-medium cursor-default w-fit h-fit">
-                    <span class="absolute top-0 left-[50%] translate-x-[-50%] text-sm font-bold"><span class="hover:text-red-500">K</span><span class="hover:text-green-500">E</span><span class="hover:text-blue-500">Y</span></span>
-                    <board class="w-9"/>
-                </div>
+    <div class="max-w-[800px] m-auto min-h-[calc(100dvh_-_78px)] overflow-y-auto pt-6 relative">
+        <p>HELP</p>
+        <p></p>
+        <div class="m-auto w-fit top-[15px] relative">                
+            <Logo />
+        </div>
+        <p class="text-center text-[50px] leading-0 opacity-90 blur-[1px]">KiB<span class="text-black px-[2px]">o</span>ard</p>
+        <div class="m-auto font-mono font-normal w-fit z-[-1]">
             <p class="pt-3 m-auto text-center w-fit">IS A TYPING APP CREATED BY AHMED ABDULRAHMAN</p>
-            <div class="justify-center flex max-w-[700px] gap-5 m-auto py-5 pt-10 flex-wrap text-sm">
+            <div class="justify-center flex max-w-[700px] gap-5 m-auto py-5 pt-7 flex-wrap text-sm">
                 <div @click="name='github'" class="px-2 py-[1px] border-gray-500 border rounded-sm transition-all duration-100 hover:shadow-md hover:border-green-500 flex items-center gap-2"><github class="w-4" /> GITHUB</div>
                 <div @click="name='linkedin'" class="px-2 py-[1px] border-gray-500 border rounded-sm transition-all duration-100 hover:shadow-md hover:border-green-500 flex items-center gap-2"><linkedin class="w-6" /> LINKEDIN</div>
                 <div @click="name='email'" class="px-2 py-[1px] border-gray-500 border rounded-sm transition-all duration-100 hover:shadow-md hover:border-green-500 flex items-center gap-2"><email class="w-4" /> EMAIL</div>
@@ -14,7 +16,7 @@
         </div>
         <div class="m-auto font-normal w-fit">
             <p class="pb-2 text-center underline">CREDITS</p>
-            <p class="pb-6 text-center">Ahmed Abdulrahman</p>
+            <p class="pb-6 font-mono text-center">Ahmed Abdulrahman</p>
             <p class="pb-5 text-center underline">SUPPORTERS</p>
             <p class="pb-6 text-center">---</p>
             <p class="pb-5 text-center underline">CONTRIBUTORS</p>
@@ -25,6 +27,7 @@
 
 <script setup>
 import {ref, watch} from 'vue'
+import Logo from '../components/Logo.vue'
 import board from '../components/svg/board.vue';
 import email from '../components/svg/email.vue';
 import linkedin from '../components/svg/linkedin.vue';

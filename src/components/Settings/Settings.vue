@@ -7,7 +7,7 @@
                     <Header />
                     <Fonts />
                     <Caret />
-                    <!-- <TestBackground /> -->
+                    <Difficulty />
                     <BlurTest />
                     <MovieQuotes />
                     <AuthoredQoutes />
@@ -25,7 +25,7 @@
                         <Header />
                         <Caret />
                         <Fonts />
-                        <!-- <TestBackground /> -->
+                        <Difficulty />
                         <BlurTest />
                         <LetterCombinations />
                         <BlindMode />
@@ -58,8 +58,8 @@ import {customizeStore} from '../../store/customizeStore'
 import {themeStore}  from '../../store/themeStore'
 import {alphabetsStore}  from '../../store/alphabetsModeStore';
 import { isMobileOS } from '../../composables/isMobileOS'
-import TestBackground from './TestBackground.vue'
 import BlurTest from './BlurTest.vue'
+import Difficulty from './Difficulty.vue'
 
 const alphabets_ = alphabetsStore()
 const { alphabetsMode_, } = storeToRefs(alphabets_)

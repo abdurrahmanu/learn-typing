@@ -17,7 +17,7 @@ export const localStorageConfig = async () => {
     const {customTests} = storeToRefs(main)
 
     const customize = customizeStore()
-    const { customizers, disableOption, caretType, mode, hideElements, font, range, blind, backspace } = storeToRefs(customize)
+    const { customizers, disableOption, caretType, difficulty, mode, hideElements, font, range, blind, backspace } = storeToRefs(customize)
 
     const pages = pagesStore()
     const {currentPage } = storeToRefs(pages)
@@ -26,6 +26,7 @@ export const localStorageConfig = async () => {
         const localStorageSettings = ref(JSON.parse(localStorage.getItem('dorayi-typing')))
 
         let dorayiTyping = {
+            difficulty: localStorageSettings.value.difficulty || difficulty.value,
             customTests: localStorageSettings.value.customTests ||  customTests.value,
             config:  [ localStorageSettings.value.config[0] || customizers.value, localStorageSettings.value.config[1] || disableOption.value],
             caret: localStorageSettings.value.caret || 'border',
@@ -35,14 +36,13 @@ export const localStorageConfig = async () => {
             mode: localStorageSettings.value.mode || 'auto',
             hide: localStorageSettings.value.hide || false,
             fontsize: localStorageSettings.value.fontsize || 32,
-            testBackground: 'transparent',
             alphabets: {
                 combo: localStorageSettings.value.alphabets.combo || false,
                 combination: localStorageSettings.value.alphabets.combination ||  [],
                 mode: localStorageSettings.value.alphabets.mode || ''
             }
         }
-
+        
         localStorageSettings.value = dorayiTyping
         localStorage.setItem('dorayi-typing', JSON.stringify(localStorageSettings.value))
 
@@ -53,6 +53,7 @@ export const localStorageConfig = async () => {
         hideElements.value = localStorageSettings.value.hide
         caretType.value = localStorageSettings.value.caret
         blind.value = localStorageSettings.value.blind
+        difficulty.value = localStorageSettings.value.difficulty
         backspace.value = localStorageSettings.value.backspace
         customizers.value = localStorageSettings.value.config[0]
         disableOption.value = localStorageSettings.value.config[1] 
@@ -74,6 +75,7 @@ export const localStorageConfig = async () => {
 
     else {
         let dorayiTyping = {
+            difficulty: 'free',
             customTests: {'demo': 'This is a custom test, you can add your own tests by pressing the plus icon. This demo test cannot be deleted'},
             config: [customizers.value, disableOption.value],
             caret: 'border',
@@ -83,7 +85,6 @@ export const localStorageConfig = async () => {
             mode: 'auto',
             hide: false,
             fontsize: 32,
-            testBackground: 'transparent',
             alphabets: {
                 combo: false,
                 combination: [],

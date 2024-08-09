@@ -36,7 +36,7 @@
             </div>
             <div class="relative w-fit" v-if="route.name !== 'about'">
                 <about @click="routeToPage('about')" class="w-[15px] peer" />
-                <div class="absolute z-5 left-[50%] translate-x-[-50%] bottom-[-110%] rounded-full whitespace-nowrap peer-hover:block hidden">about</div>
+                <div class="text-[9px] absolute z-5 left-[50%] translate-x-[-50%] bottom-[-150%] rounded-full whitespace-nowrap peer-hover:block hidden">about</div>
             </div>
             <!-- <select name="" id="" class="text-center text-black uppercase border-none outline-none">
                 <option value="test">Test mode</option>
