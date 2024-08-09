@@ -107,7 +107,7 @@ const equalStyle = computed(() => {
 
 const currentIndexStyle = computed(() => {
     let text = theme.value === 'dark' ? 'text-slate-400' : 'bg-transparent text-neutral-900' 
-    let caret = caretType.value === 'border' ? 'border border-green-500' : caretType.value === 'caret' ? 'border-transparent border-l-zinc-600' : caretType.value === 'underline' ? 'border-transparent border-b-blue-600' : caretType.value === 'pulse' && props.alphabet !== ' ' ? 'pulse border-transparent' : ''
+    let caret = caretType.value === 'border' ? 'border border-slate-500' : caretType.value === 'caret' ? 'border-transparent border-l-zinc-600' : caretType.value === 'underline' ? 'border-transparent border-b-blue-600' : caretType.value === 'pulse' && props.alphabet !== ' ' ? 'pulse border-transparent' : ''
     return  props.currentIndex ? text + ' ' + caret : ''
 })
 
