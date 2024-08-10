@@ -3,9 +3,9 @@
         <p class="py-3 font-mono text-2xl text-center text-slate-500">STATISTICS</p>
         <div class="flex py-1 m-auto gap-x-2 w-fit text-slate-300">            
             <div class="relative">                        
-                        <div class="px-3 m-auto text-xs uppercase rounded-full peer bg-slate-600 w-fit">{{testType}}</div>
-                        <div class="absolute rounded-md top-[115%] left-[50%] translate-x-[-50%] z-[1] text-left p-1 hidden peer-hover:block shadow-sm shadow-black bg-slate-600 max-w-[300px] text-[13px] min-w-[195px]">
-                            There are two modes
+                        <div class="px-3 m-auto text-xs uppercase rounded-full peer bg-slate-800 w-fit">{{testType}}</div>
+                        <div class="absolute rounded-md top-[115%] left-[50%] translate-x-[-50%] z-[1] text-left p-1 hidden peer-hover:block shadow-sm shadow-black bg-slate-800 max-w-[300px] text-[13px] min-w-[195px]">
+                            <p class="font-medium underline">TWO MODES</p>
                             <p>* Test mode - quotes, random words and custom tests.</p>
                             <p>* Alphabet mode - Aphabets and letter combination mode</p>
                         </div>
@@ -27,8 +27,8 @@
                     <div :class="[accuracy() > 85 ? 'bg-green-500' : 'bg-red-400']" class="w-[10px] absolute bottom-0 right-0 h-[10px]"></div>
                     <div class="relative">                        
                         <div class="px-2 text-xs border border-transparent rounded-full peer hover:border-black">ACCURACY</div>
-                        <div class="absolute rounded-md top-[115%] left-[50%] translate-x-[-50%] z-[1] text-left p-1 hidden peer-hover:block shadow-sm shadow-black bg-neutral-800 min-w-[185px] text-[13px] max-w-[300px] text-slate-400">
-                            <p>Accuracy: The percentage of correctly typed characters out of the total number of characters.</p>
+                        <div class="absolute rounded-md top-[115%] left-[0%] z-[1] text-left p-1 hidden peer-hover:block shadow-sm shadow-black bg-neutral-800 min-w-[185px] text-[13px] max-w-[300px] text-slate-400">
+                            <p>The percentage of correctly typed characters out of the total number of characters.</p>
                         </div>
                     </div>
                     <div class="">{{ accuracy() }}%</div>
@@ -37,7 +37,7 @@
                     <div class="relative">                        
                         <div class="px-2 text-xs border border-transparent rounded-full peer hover:border-black">TIME</div>
                         <div class="absolute rounded-md top-[115%] left-[50%] translate-x-[-50%] z-[1] text-left p-1 hidden peer-hover:block shadow-sm shadow-black bg-neutral-800 min-w-[185px] text-[13px] max-w-[300px] text-slate-400">
-                            <p>Time: The total time taken to complete the typing test.</p>
+                            <p>The total time taken to complete the typing test.</p>
                         </div>
                     </div>
                     <div class="">{{ resultData.totalTime }}s</div>
@@ -47,7 +47,7 @@
                     <div class="relative">                        
                         <div class="px-2 text-xs border border-transparent rounded-full peer hover:border-black">WPM</div>
                         <div class="absolute rounded-md top-[115%] left-[50%] translate-x-[-50%] z-[1] text-left p-1 hidden peer-hover:block shadow-sm shadow-black bg-neutral-800 min-w-[185px] text-[13px] max-w-[300px] text-slate-400">
-                            <p>WPM (Words Per Minute): The number of words typed correctly per minute. One word is defined as five characters.</p>
+                            <p>Words Per Minute is the number of words typed correctly per minute. One word is defined as five characters.</p>
                         </div>
                     </div>
                     <div class="">{{ (resultData.WPM * (accuracy() / 100)).toFixed(0) }}</div>
@@ -56,11 +56,11 @@
                     <div :class="[errorRatioLevel() ? 'bg-green-500' : 'bg-red-400']" class="w-[10px] absolute bottom-0 right-0 h-[10px]"></div>
                     <div class="relative">                        
                         <div class="px-2 text-xs border border-transparent rounded-full peer hover:border-black">ERROR RATIO</div>
-                        <div class="absolute rounded-md top-[115%] left-[50%] translate-x-[-50%] z-[1] text-left p-1 hidden peer-hover:block shadow-sm shadow-black bg-neutral-800 min-w-[185px] text-[13px] max-w-[300px] text-slate-400">
-                            <p>Error Ratio: The number of incorrectly typed characters / total number of characters</p>
+                        <div class="absolute rounded-md top-[115%] right-[0%] z-[1] text-left p-1 hidden peer-hover:block shadow-sm shadow-black bg-neutral-800 min-w-[185px] text-[13px] max-w-[300px] text-slate-400">
+                            <p>Incorrectly typed characters / Total number of characters</p>
                         </div>
                     </div>
-                    <div class="">{{ errorRatio() }}<span class="text-[11px] font-cursive font-bold"> letters</span></div>
+                    <div class="">{{ errorRatio() }}<span class="text-[11px] font-cursive font-bold"></span></div>
                 </div>
             </div>
         </div>
