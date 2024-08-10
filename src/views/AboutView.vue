@@ -42,7 +42,7 @@ watch(name, (newVal) => {
             window.open('https://github.com/abdurrahmanu', '_blank')
         }
         if (newVal === 'linkedin') {
-            window.open('https://linkedin.com/ahmed-abdulrahman-dorayi', '_blank')
+            window.open('https://linkedin.com/in/ahmed-abdulrahman-dorayi', '_blank')
         }
         if (newVal === 'portfolio') {
             window.open('https://abduldorayi.netlify.app')
