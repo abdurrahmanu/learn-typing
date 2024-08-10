@@ -124,15 +124,32 @@ const blurStyle = computed(() => {
 
 const pulseStyle = computed(() => {
     if (caretType.value === 'word-pulse') {        
-        return (spaceCount.value === 0 && props.index < allSpacesIndex.value[0]) || (allSpacesIndex.value[spaceCount.value - 1] && props.index > allSpacesIndex.value[spaceCount.value -1] && props.index < allSpacesIndex.value[spaceCount.value]) || (props.index > allSpacesIndex.value[allSpacesIndex.value.length - 1] && spaceCount.value === allSpacesIndex.value.length) ? 'pulse border-transparent' : ''
+        return (spaceCount.value === 0 && props.index < allSpacesIndex.value[0]) || (allSpacesIndex.value[spaceCount.value - 1] && props.index > allSpacesIndex.value[spaceCount.value -1] && props.index < allSpacesIndex.value[spaceCount.value]) || (props.index > allSpacesIndex.value[allSpacesIndex.value.length - 1] && spaceCount.value === allSpacesIndex.value.length) ? 'word-pulse border-transparent' : ''
     }
 })
 </script>
 
 <style scoped>
-.pulse {
+.word-pulse {
     transition: all 2s ease;
-    animation: pulse 2s infinite;
+    animation: wordpulse 2s infinite;
+}
+
+@keyframes wordpulse {
+    0% {
+        opacity: 70%
+    }
+    50% {
+        opacity: 20%;
+    }
+    100% {
+        opacity: 70%;
+    }
+}
+
+.pulse {
+    transition: all 1.5s ease;
+    animation: pulse 1.5s infinite;
 }
 
 @keyframes pulse {
@@ -140,7 +157,7 @@ const pulseStyle = computed(() => {
         opacity: 70%
     }
     50% {
-        opacity: 30%;
+        opacity: 15%;
     }
     100% {
         opacity: 70%;

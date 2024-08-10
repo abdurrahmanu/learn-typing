@@ -1,6 +1,19 @@
 <template>
-    <div :class="appTheme" class="min-h-[200px] text-center xl:pt-20">
+    <div :class="appTheme" class="min-h-[200px] text-center xl:pt-20 cursor-default">
         <p class="py-3 font-mono text-2xl text-center text-slate-500">STATISTICS</p>
+        <div class="flex py-1 m-auto gap-x-2 w-fit text-slate-300">            
+            <div class="px-3 m-auto text-xs uppercase rounded-full bg-slate-600 w-fit">{{ testType }}</div>
+            <div class="relative w-fit">                
+                <div class="relative px-3 m-auto text-xs uppercase rounded-full cursor-pointer w-fit peer"  :class="[difficulty === 'beginner' ? 'bg-blue-500' : difficulty === 'amateur' ? 'bg-green-500' : difficulty === 'expert' ? 'bg-amber-700' : '']">{{ difficulty }}</div>
+                <div :class="[difficulty === 'beginner' ? 'bg-blue-500' : difficulty === 'amateur' ? 'bg-green-500' : difficulty === 'expert' ? 'bg-amber-700' : '']" class="absolute rounded-md top-[115%] right-0 z-[1] text-left p-1 px-2 hidden peer-hover:block shadow-sm shadow-black">
+                    <p class="font-mono font-bold underline uppercase">TO PASS {{ difficulty }} TEST</p>
+                    <p class="whitespace-nowrap">* Accuracy more than - {{  difficulty === 'beginner' ? '70%' : difficulty === 'amateur' ? '80%' : difficulty === 'expert' ? '95%' : '' }} </p>
+                    <p class="whitespace-nowrap">* Words Per Minute (WPM) more than - {{ difficulty === 'beginner' ? '50' : difficulty === 'amateur' ? '65' : difficulty === 'expert' ? '85' : '' }} </p>
+                    <p class="whitespace-nowrap">* Error Percentage less than - {{  difficulty === 'beginner' ? '30%' : difficulty === 'amateur' ? '20%' : difficulty === 'expert' ? '10%' : '' }} </p>
+                    <p>* Beat Countdown</p>
+                </div>
+            </div>
+        </div>
         <div class="w-fit p-[1px] hover:bg-gradient-to-tr transition-all duration-500rounded-md m-auto py-3">            
             <div class="flex justify-center p-3 m-auto font-mono border border-transparent rounded-md w-fit hover:border-zinc-600">
                 <div class="relative px-4 text-center border-r border-r-teal-700">
@@ -23,23 +36,18 @@
                     <div class="">{{ errorRatio() }}<span class="text-[11px] font-cursive font-bold"> letters</span></div>
                 </div>
             </div>
-            <div class="pt-3">{{ testType }}</div>
         </div>
         <div class="space-y-1 font-mono text-lg">            
-            <div v-if="timedTyping" :class="[testDetailsForTimedTyping ? 'text-green-700' : 'text-red-400']" class="text-center uppercase">{{ testDetailsForTimedTyping ? 'you passed the test' : 'you failed the test'}}</div>
-            <div v-else  :class="[testDetails ? 'text-green-700' : 'text-red-400']" class="text-center uppercase">{{ testDetails ? 'you passed the test' : 'you failed the test' }}</div>
+            <div v-if="timedTyping" :class="[timedTypingTestResult === 'you passed the test' ? 'text-green-700' : 'text-red-400']" class="text-center uppercase">{{ timedTypingTestResult }}</div>
+            <div v-else  :class="[testResult === 'you passed the test' ? 'text-green-700' : 'text-red-400']" class="text-center uppercase">{{ testResult }}</div>
             <div v-if="beatCountdown" class="py-2 text-green-700 uppercase">You beat the time, you left {{ remainingTime() }}<span class="lowercase">s</span></div>
             <div v-if="timedTyping && !beatCountdown" class="py-2 text-red-500 uppercase">You were unable to beat the time</div>
         </div>
-        
-        <!-- <Bar :data="chartData" class="w-[600px] max-w-[90%] bg-neutral-700 m-auto relative p-2"/> -->
     </div>
 </template>
 
 <script setup>
 import {ref, onMounted, computed} from 'vue'
-// import {Bar} from 'vue-chartjs'
-// import {Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale} from 'chart.js'
 import {storeToRefs} from 'pinia'
 import {mainStore} from '../store/mainStore'
 import {themeStore}  from '../store/themeStore'
@@ -52,21 +60,13 @@ const auth_ = authStore()
 const { userID } = storeToRefs(auth_)
 
 const customize = customizeStore()
-const {mode} = storeToRefs(customize)
+const {mode, difficulty} = storeToRefs(customize)
 
 const theme_ = themeStore()
 const { appTheme } = storeToRefs(theme_)
 
-// ChartJS.register( Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
-
-
 const store = mainStore()
 const {resultData, beatCountdown, timedTyping, savedCountdown} = storeToRefs(store)
-
-// const chartData = ref({
-//     labels: Object.keys(alphabetsInputTime.value).reverse(),
-//     datasets: [ {data: Object.values(alphabetsInputTime.value), label: 'SESSION RESULT', borderWidth: 1, borderColor: '#69e869', color: '#97a3b8'} ]
-// })
 
 const remainingTime = () => {
     return (savedCountdown.value - resultData.value.totalTime).toFixed(2)
@@ -102,26 +102,51 @@ const errorRatio = () => {
 
 const errorRatioLevel = () => {
     if (timedTyping.value && !beatCountdown.value) {
-        return ((resultData.value.wrongCount) + (resultData.value.containerText.length - resultData.value.correctCount) / (resultData.value.containerText.length)) * 100 < 10
-    } else {        
-    return (resultData.value.wrongCount / resultData.value.containerText.length) * 100 < 10
+        if (difficulty.value === 'beginner') {
+            return ((resultData.value.wrongCount) + (resultData.value.containerText.length - resultData.value.correctCount) / (resultData.value.containerText.length)) * 100 < 30
+        }
+        if (difficulty.value === 'amateur') {
+            return ((resultData.value.wrongCount) + (resultData.value.containerText.length - resultData.value.correctCount) / (resultData.value.containerText.length)) * 100 < 20
+        }
+        if (difficulty.value === 'expert') {
+            return ((resultData.value.wrongCount) + (resultData.value.containerText.length - resultData.value.correctCount) / (resultData.value.containerText.length)) * 100 < 10
+        }
+    } else {     
+        if (difficulty.value === 'beginner') {
+            return (resultData.value.wrongCount / resultData.value.containerText.length) * 100 < 30
+        }   
+        if (difficulty.value === 'amateur') {
+            return (resultData.value.wrongCount / resultData.value.containerText.length) * 100 < 20
+        }
+        if (difficulty.value === 'expert') {
+            return (resultData.value.wrongCount / resultData.value.containerText.length) * 100 < 10
+        }
     }
 }
 
-const testDetails  = computed(() => {
-    return accuracy() > 90 && (resultData.value.WPM * (accuracy() / 100)).toFixed(0) > 50 && errorRatioLevel() ? true : false
+const testResult  = computed(() => {
+    if (difficulty.value === 'beginner') {        
+        return accuracy() > 70 && (resultData.value.WPM * (accuracy() / 100)).toFixed(0) > 50 && errorRatioLevel() ? 'you passed the test' : 'you failed the test'
+    } 
+    else if (difficulty.value === 'amateur') {
+        return accuracy() > 80 && (resultData.value.WPM * (accuracy() / 100)).toFixed(0) > 65 && errorRatioLevel() ? 'you passed the test' : 'you failed the test'
+    } 
+    else if (difficulty.value === 'expert') {
+        return accuracy() > 95 && (resultData.value.WPM * (accuracy() / 100)).toFixed(0) > 85 && errorRatioLevel() ? 'you passed the test' : 'you failed the test'
+    }
 })
 
-const testDetailsForTimedTyping = computed(() => {
-    return beatCountdown.value && accuracy() > 85 && (resultData.value.WPM * (accuracy() / 100)).toFixed(0) > 60 && errorRatioLevel() ? true : false
+const timedTypingTestResult = computed(() => {
+    if (difficulty.value === 'beginner') {        
+        return  beatCountdown.value && accuracy() > 70 && (resultData.value.WPM * (accuracy() / 100)).toFixed(0) > 50 && errorRatioLevel() ? 'you passed the test' : 'you failed the test'
+    } 
+    else if (difficulty.value === 'amateur') {
+        return  beatCountdown.value && accuracy() > 80 && (resultData.value.WPM * (accuracy() / 100)).toFixed(0) > 65 && errorRatioLevel() ? 'you passed the test' : 'you failed the test'
+    } 
+    else if (difficulty.value === 'expert') {
+        return  beatCountdown.value && accuracy() > 95 && (resultData.value.WPM * (accuracy() / 100)).toFixed(0) > 85 && errorRatioLevel() ? 'you passed the test' : 'you failed the test'
+    }
 })
-
-
-// onMounted( async () => {
-//     if (userID.value) {
-//         await setDoc(doc(db, "users", userID.value), resultData.value);
-//     }
-// })
 </script>
 
 

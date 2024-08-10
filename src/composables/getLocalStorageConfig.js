@@ -74,7 +74,7 @@ export const localStorageConfig = async () => {
 
     else {
         let dorayiTyping = {
-            difficulty: 'free',
+            difficulty: 'beginner',
             customTests: {'demo': 'This is a custom test, you can add your own tests by pressing the plus icon. This demo test cannot be deleted'},
             config: [customizers.value, disableOption.value],
             caret: 'border',

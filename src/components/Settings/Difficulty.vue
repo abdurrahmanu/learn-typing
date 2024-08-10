@@ -1,18 +1,15 @@
 <template>
 <div :class="[appTheme, theme === 'dark' ? 'hover:bg-neutral-800' : 'hover:bg-slate-100']" class="flex flex-wrap items-center py-4 pl-5 gap-x-3 gap-y-1">
         <p class="text-sm font-medium">DIFFICULTY</p>        
-        <div  :class="[theme === 'dark' ? 'text-slate-300' : 'text-slate-300']" class="flex flex-wrap gap-x-2 gap-y-1">
-            <div @click="difficulty = 'free'" class="flex px-3 py-1 border rounded-md" :class="[difficulty === 'free' ? 'border-green-500' : 'border-slate-500', theme === 'white' ? 'text-slate-600' : '']">
-                <p class="w-fit">Free</p>
+        <div class="flex flex-wrap gap-x-2 gap-y-1">
+            <div @click="difficulty = 'beginner'" class="flex px-3 py-1 border rounded-md" :class="[difficulty === 'beginner' ? 'border-green-500' : 'border-slate-500']">
+                <p class="w-fit">Beginner</p>
             </div>
-            <div @click="difficulty = 'easy'" class="flex px-3 py-1 border rounded-md" :class="[difficulty === 'easy' ? 'border-green-500' : 'border-slate-500']">
-                <p class="w-fit">Easy</p>
+            <div @click="difficulty = 'amateur'" class="flex px-3 py-1 border rounded-md" :class="[difficulty === 'amateur' ? 'border-green-500' : 'border-slate-500']">
+                <p class="w-fit">Amateur</p>
             </div>
-            <div @click="difficulty = 'medium'" class="flex px-3 py-1 border rounded-md" :class="[difficulty === 'medium' ? 'border-green-500' : 'border-slate-500']">
-                <p class="w-fit">Medium</p>
-            </div>
-            <div @click="difficulty = 'hard'" class="flex px-3 py-1 border rounded-md" :class="[difficulty === 'hard' ? 'border-green-500' : 'border-slate-500']">
-                <p class=" w-fit pulse">Hard</p>
+            <div @click="difficulty = 'expert'" class="flex px-3 py-1 border rounded-md" :class="[difficulty === 'expert' ? 'border-green-500' : 'border-slate-500']">
+                <p class=" w-fit pulse">Expert</p>
             </div>
     </div>
     </div>

@@ -13,7 +13,7 @@ export const customizeStore = defineStore('customizeStore', () => {
     const onlyMovieQuotes = ref(false)
     const onlyAuthoredQuotes = ref(false)
     const caretType = ref('border')
-    const difficulty = ref('free')
+    const difficulty = ref('beginner')
     const backspace = ref(false)
     const repeat = ref(false)
     const textPosition = ref('left')

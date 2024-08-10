@@ -1,5 +1,5 @@
 <template>
-    <header class="sticky top-0 mx-auto flex items-center justify-between pl-3 pr-2 max-w-[1500px] lg:mb-6 mb-3 min-[1350px]:fixed min-[1350px]:w-full text-[11px] uppercase font-medium h-[50px] py-2 " :class="[hideElements ? 'z-[1]' : '']">
+    <header class="sticky mx-auto flex items-center justify-between pl-3 pr-2 max-w-[1500px] lg:mb-6 mb-3 min-[1350px]:fixed min-[1350px]:w-full text-[11px] uppercase font-medium h-[40px] pb-2 " :class="[hideElements ? 'z-[1]' : '']">
         <Logo class="flex" />
         <div class="absolute flex items-center gap-4 w-fit" :class="[!hideElements ? 'min-[1350px]:right-3 min-[1350px]:translate-x-0 right-[50%] translate-x-[50%]' : 'left-[50%] translate-x-[-50%]']">
             <div v-if="route.name === 'home'" class="flex items-center gap-4 text-[9px] ">

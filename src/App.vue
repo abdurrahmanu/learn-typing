@@ -99,37 +99,6 @@ window.addEventListener('keydown', event => {
 onMounted(() => height())
 watch(font, (newVal) => height() )
 onBeforeMount(() => localStorageConfig())
-
-watch(difficulty, newVal => {
-  const localStorageSettings = ref(JSON.parse(localStorage.getItem('dorayi-typing')))
-  if (newVal === 'free') {
-    customizers.value['blind-mode'] = false
-    customizers.value['blur'] = false
-    customizers.value['custom-camel-case'] = false
-    customizers.value['no-space'] = false
-  } 
-
-  else if (newVal === 'medium') {
-    customizers.value['blind-mode'] = true
-    customizers.value['blur'] = true
-    customizers.value['custom-camel-case'] = false
-    customizers.value['no-space'] = false
-  } 
-  
-  else if (newVal === 'hard') {
-    customizers.value['blind-mode'] = true
-    customizers.value['blur'] = true
-    customizers.value['custom-camel-case'] = true
-    customizers.value['no-space'] = true
-  }
-  
-  // localStorageSettings.value
-  // localStorageSettings.value
-  // localStorageSettings.value
-  // localStorageSettings.value
-
-  localStorage.setItem('dorayi-typing', JSON.stringify(localStorageSettings.value))
-})
 </script>
 
 <style scoped>
