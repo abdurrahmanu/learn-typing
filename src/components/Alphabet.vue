@@ -1,6 +1,6 @@
 <template>
     <div aria-hidden="true" ref="currentAlphabet" :class="[customizers['no-space'] ? '' : 'whitespace-pre-wrap']" class="relative inline">
-        <span  :class="[equalStyle, currentIndexStyle, mainStyle, !currentIndex ? 'border-transparent' : '', pulseStyle, blurStyle, (caretType === 'pulse' || caretType === 'word-pulse') && alphabet === ' ' ? 'opacity-20' : '']" class="transition-opacity duration-75 border" >{{ alphabet }} </span>
+        <span  :class="[equalStyle, (isMobileOS() && focus) || !isMobileOS() ? currentIndexStyle : '', mainStyle, !currentIndex ? 'border-transparent' : '', pulseStyle, blurStyle, (caretType === 'pulse' || caretType === 'word-pulse') && alphabet === ' ' ? 'opacity-20' : '']" class="transition-opacity duration-75 border" >{{ alphabet }} </span>
     </div>
 </template> 
 
@@ -10,12 +10,13 @@ import {storeToRefs} from 'pinia'
 import {mainStore} from '../store/mainStore'
 import {themeStore}  from '../store/themeStore'
 import {customizeStore}  from '../store/customizeStore'
+import { isMobileOS } from '../composables/isMobileOS';
 
 const theme_ = themeStore()
 const {theme } = storeToRefs(theme_)
 
 const store = mainStore()
-const { playerInputLength, testContainerEl, allSpacesIndex, spaceCount, scrollTextContainer, enterKey, scrollDistance, backspaceIsPressed, containerHeight } = storeToRefs(store)
+const { playerInputLength, focus, testContainerEl, allSpacesIndex, spaceCount, scrollTextContainer, enterKey, scrollDistance, backspaceIsPressed, containerHeight } = storeToRefs(store)
 const currentAlphabet = ref(null)
 
 const customize = customizeStore()

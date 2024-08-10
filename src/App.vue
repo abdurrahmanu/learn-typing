@@ -1,6 +1,6 @@
 <template>
   <div :class="[appTheme]" class="font-light selection:bg-none home max-w-[1500px] m-auto relative min-h-[100dvh] container overflow-y-auto scroll-smooth noscrollbar">
-    <div :class="[focus && isMobileOS() ? 'pt-10' : '']" class="min-h-[100dvh]">
+    <div class="min-h-[100dvh]">
       <Header />
       <main>
         <RouterView />

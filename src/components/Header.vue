@@ -1,7 +1,7 @@
 <template>
-    <header v-if="!focus" class="sticky mx-auto flex items-center justify-between pl-3 pr-2 max-w-[1500px] lg:mb-6 mb-3 min-[1350px]:fixed min-[1350px]:w-full text-[11px] uppercase font-medium h-[50px] pb-2 z-[1]" :class="[!hideElements ? '' : '']">
-        <Logo class="flex" />
-        <div class="absolute flex items-center gap-4 w-fit" :class="[!hideElements ? 'min-[1350px]:right-3 min-[1350px]:translate-x-0 right-[50%] translate-x-[50%]' : 'left-[50%] translate-x-[-50%]']">
+    <header class="sticky mx-auto flex items-center justify-between pl-3 pr-2 max-w-[1500px] lg:mb-6 mb-3 min-[1350px]:fixed min-[1350px]:w-full text-[11px] uppercase font-medium h-[50px] pb-2 z-[1]" :class="[!hideElements ? '' : '', focus ? 'h-0 p-0 mb-0' : '']">
+        <Logo v-if="!focus" class="flex" />
+        <div v-if="!focus" class="absolute flex items-center gap-4 w-fit" :class="[!hideElements ? 'min-[1350px]:right-3 min-[1350px]:translate-x-0 right-[50%] translate-x-[50%]' : 'left-[50%] translate-x-[-50%]']">
             <div v-if="route.name === 'home'" class="flex items-center gap-4 text-[9px] ">
                 <div class="relative w-fit">
                     <Clock class="peer" />
@@ -42,8 +42,6 @@
                 <option value="test">Test mode</option>
                 <option value="alphabet">Alphabet Mode</option>
             </select> -->
-        </div>
-        <div>
         </div>
         <div :class="[!hideElements ? 'min-[1350px]:hidden' : '']" class="hidden min-[500px]:block"></div>
         <CompletionRange :class="[hideElements ? 'block' : 'hidden max-[460px]:block']" v-if="blind" />

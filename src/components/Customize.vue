@@ -6,7 +6,7 @@
     </div>
 
     <div v-if="!hasCompletedSession && !alphabetsMode_" :class="[appTheme]" class="relative m-auto rounded-md max-w-fit ring-1 ring-green-500 min-[1350px]:ring-0">
-      <div class="absolute right-[-3px] top-[-3px] z-[1] hover:text-red-500 text-slate-200 font-black h-5 w-5 rounded-full flex items-center justify-center bg-neutral-600 text-center min-[1350px]:top-[50%] min-[1350px]:translate-y-[-50%] min-[1350px]:right-[-14px]" @click="hideElements = !hideElements">X</div>
+      <div class="absolute right-[-5px] top-[-5px] z-[2] hover:text-red-500 text-slate-200 font-black h-5 w-5 rounded-full flex items-center justify-center bg-neutral-600 text-center min-[1350px]:top-[50%] min-[1350px]:translate-y-[-50%] min-[1350px]:right-[-14px] cursor-pointer" @click="hideElements = !hideElements">X</div>
         <div class=" items-center p-1 flex max-w-[1000px] justify-center flex-wrap relative z-[1]">
             <div class="p-1" v-for="(optionArr, key, listIndex) in option" :key="listIndex">          
                 <div 
@@ -27,11 +27,11 @@
         </div>
     </div>
     
-    <div v-if="!hasCompletedSession && alphabetsMode_" :class="[appTheme]" class="rounded-md w-[90%] min-w-fit m-auto max-w-fit ring-1 ring-green-600 min-[1350px]:ring-0 relative py-3 px-10  group">
-      <div class="absolute right-[-3px] top-[-3px] z-[1] hover:text-red-500  text-slate-200 font-black h-5 w-5 rounded-full flex items-center justify-center bg-neutral-600 text-center min-[1350px]:top-[50%] min-[1350px]:translate-y-[-50%] min-[1350px]:right-[-6px]" @click="hideElements = !hideElements">X</div>
+    <div v-if="!hasCompletedSession && alphabetsMode_" :class="[appTheme]" class="rounded-md w-[90%] min-w-fit m-auto max-w-fit ring-1 ring-green-600 min-[1350px]:ring-0 relative py-3 px-10">
+      <div class="absolute right-[-3px] top-[-3px] z-[1] hover:text-red-500  text-slate-200 font-black h-5 w-5 rounded-full flex items-center justify-center bg-neutral-600 text-center min-[1350px]:top-[50%] min-[1350px]:translate-y-[-50%] min-[1350px]:right-[-6px] cursor-pointer" @click="hideElements = !hideElements">X</div>
       <div class="flex flex-wrap items-center justify-center gap-[8px] rounded-md min-w-fit m-auto max-w-fit hover:ring-[1px] hover:ring-slate-500 group p-[2px] relative z-[1]">        
         <div :class="[alphabetsConfig.uppercase ? 'text-green-500' : '']" @click="changeMode('uppercase')" class="px-[5px] hover:scale-105 rounded-md">uppercase</div>
-        <div :class="[alphabetsConfig.customCase ? 'text-green-500' : '']" @click="changeMode('customCase')" class="px-[5px] hover:scale-105 rounded-md">randomcase</div>
+        <div :class="[alphabetsConfig.customCase ? 'text-green-500' : '']" @click="changeMode('customCase')" class="px-[5px] hover:scale-105 rounded-md">random-case</div>
         <div :class="[alphabetsConfig.spaced ? 'text-green-500' : '']" @click="changeMode('spaced')" class="px-[5px] hover:scale-105 rounded-md">space</div>
         <div :class="[alphabetsConfig.backwards ? 'text-green-500' : '']" @click="changeMode('backwards')" class="px-[5px] hover:scale-105 rounded-md">reverse</div>
         <div :class="[alphabetsConfig.random ? 'text-green-500' : '']" @click="changeMode('random')" class="px-[5px] hover:scale-105 rounded-md">random</div>
@@ -64,7 +64,7 @@ const { hasCompletedSession, completionLevel, containerText, playerInput, focus}
 const {switchNext} = store
 
 const customize = customizeStore()
-const { allOptions, configs, customizers, testType_, disableOption, blind, hideElements} = storeToRefs(customize)
+const { allOptions, configs, customizers, testType_, disableOption, blind, repeat, hideElements} = storeToRefs(customize)
 const {useConfig} = customize
 const optionsTooltip = ['length', 'words', 'test-type', 'format', 'test-type', 'test-type']
 
@@ -132,10 +132,13 @@ const changeMode = (mode) => {
 }  
 
 const changeConfig = (key, option) => {
+  console.log(customizers.value['test-type']);
+  if (option === 'test-type' && key !== customizers.value['test-type'] && repeat.value) repeat.value = false
+  
   if (!disableOption.value[option]) {
     configs.value = [option, key]
     useConfig()
-  } 
+  }
 }
 </script>
 

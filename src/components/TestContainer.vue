@@ -1,6 +1,6 @@
 <template>
     <main class="w-[90%] min-h-[150px] space-y-[2px] relative transition-none  max-w-[900px] m-auto" :class="[!hideElements ? 'min-[1350px]:pt-10' : 'min-[1350px]:pt-16']">
-        <div :class="[isMobileOS() ? 'flex' : 'block']" class="relative h-fit min-h-[25px]">            
+        <div :class="[isMobileOS() ? 'flex' : 'block']" class="relative h-fit min-h-[30px] ">            
             <MobileInput />
             <Restart v-show="!hasCompletedSession && playerInputLength" @click="restart" class="absolute w-6 left-[50%] translate-x-[-50%] py-2"/>
         </div>
