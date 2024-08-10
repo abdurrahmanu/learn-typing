@@ -6,7 +6,7 @@
                         <div class="px-3 m-auto text-xs uppercase rounded-full peer bg-slate-600 w-fit">{{testType}}</div>
                         <div class="absolute rounded-md top-[115%] left-[50%] translate-x-[-50%] z-[1] text-left p-1 hidden peer-hover:block shadow-sm shadow-black bg-slate-600 max-w-[300px] text-[13px] min-w-[195px]">
                             There are two modes
-                            <p>* Test mode - includes quotes, random words and custom tests.</p>
+                            <p>* Test mode - quotes, random words and custom tests.</p>
                             <p>* Alphabet mode - Aphabets and letter combination mode</p>
                         </div>
                     </div>
@@ -37,7 +37,7 @@
                     <div class="relative">                        
                         <div class="px-2 text-xs border border-transparent rounded-full peer hover:border-black">TIME</div>
                         <div class="absolute rounded-md top-[115%] left-[50%] translate-x-[-50%] z-[1] text-left p-1 hidden peer-hover:block shadow-sm shadow-black bg-neutral-800 min-w-[185px] text-[13px] max-w-[300px] text-slate-400">
-                            <p>Time: The total time taken to complete the typing test. It measures how quickly you finish the test.</p>
+                            <p>Time: The total time taken to complete the typing test.</p>
                         </div>
                     </div>
                     <div class="">{{ resultData.totalTime }}s</div>
@@ -47,7 +47,7 @@
                     <div class="relative">                        
                         <div class="px-2 text-xs border border-transparent rounded-full peer hover:border-black">WPM</div>
                         <div class="absolute rounded-md top-[115%] left-[50%] translate-x-[-50%] z-[1] text-left p-1 hidden peer-hover:block shadow-sm shadow-black bg-neutral-800 min-w-[185px] text-[13px] max-w-[300px] text-slate-400">
-                            <p>WPM (Words Per Minute): The number of words typed correctly per minute. It measures your typing speed. One word is typically defined as five characters.</p>
+                            <p>WPM (Words Per Minute): The number of words typed correctly per minute. One word is defined as five characters.</p>
                         </div>
                     </div>
                     <div class="">{{ (resultData.WPM * (accuracy() / 100)).toFixed(0) }}</div>
@@ -57,7 +57,7 @@
                     <div class="relative">                        
                         <div class="px-2 text-xs border border-transparent rounded-full peer hover:border-black">ERROR RATIO</div>
                         <div class="absolute rounded-md top-[115%] left-[50%] translate-x-[-50%] z-[1] text-left p-1 hidden peer-hover:block shadow-sm shadow-black bg-neutral-800 min-w-[185px] text-[13px] max-w-[300px] text-slate-400">
-                            <p>Error Ratio: The number of errors (incorrectly typed characters) divided by the total number of characters typed. It measures the frequency of mistakes.</p>
+                            <p>Error Ratio: The number of incorrectly typed characters / total number of characters</p>
                         </div>
                     </div>
                     <div class="">{{ errorRatio() }}<span class="text-[11px] font-cursive font-bold"> letters</span></div>
