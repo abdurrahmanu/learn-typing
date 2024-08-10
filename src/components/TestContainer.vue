@@ -1,8 +1,8 @@
 <template>
-    <main class="w-[90%] min-h-[150px] space-y-[2px] relative transition-none  max-w-[900px] m-auto xl:pt-10" :class="[hideElements ? 'pt-4 xl:pt-24' : 'pt-1']">
+    <main class="w-[90%] min-h-[150px] space-y-[2px] relative transition-none  max-w-[900px] m-auto" :class="[!hideElements ? 'min-[1350px]:pt-10' : 'min-[1350px]:pt-16']">
         <div :class="[isMobileOS() ? 'flex' : 'block']" class="relative h-fit min-h-[25px]">            
             <MobileInput />
-            <Restart v-show="!hasCompletedSession && playerInputLength" @click="restart" class="absolute w-6 left-[50%] translate-x-[-50%]"/>
+            <Restart v-show="!hasCompletedSession && playerInputLength" @click="restart" class="absolute w-6 left-[50%] translate-x-[-50%] py-2"/>
         </div>
         <div v-if="containerText" class="transition-all duration-100 relative mx-auto max-w-[700px] w-full">
             <div aria-d

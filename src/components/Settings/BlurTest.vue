@@ -6,7 +6,7 @@
                 <label class="text-sm font-medium w-fit">Blur test <span class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-yellow-800 ml-1">medium</span> </label>
             </div>
         </div>
-        <p class="px-3">Only typed and current words will not be blurred out</p>
+        <p class="px-3 font-[400]">Only typed and current words will not be blurred out</p>
     </div>
 </template>
 

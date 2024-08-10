@@ -6,7 +6,7 @@
                     <label class="text-sm font-medium w-fit">Countdown Typing </label> <!-- <span class="px-3 text-white uppercase font-mono rounded-full py-[1px] text-[12px] bg-yellow-800 ml-1">medium</span> -->
                 </div>
             </div>
-            <p class="px-3">Play with countdown, tests automatically end at the end of countdown, untyped alphabets are considered as errors</p>
+            <p class="px-3 font-[400]">Play with countdown, tests automatically end at the end of countdown, untyped alphabets are considered as errors</p>
         </div>
 </template>
 

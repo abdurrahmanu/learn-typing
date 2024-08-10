@@ -6,7 +6,7 @@
                 <label class="text-sm font-medium w-fit">Authored quotes</label>
             </div>
         </div>
-        <p class="px-2">**This is only available for quotes mode with auto-length. On-select, it automatically enables both modes</p>
+        <p class="px-2 font-[400]">**This is only available for quotes mode with auto-length. On-select, it automatically enables both modes</p>
         <div v-if="customizers['author-quotes']"class="p-2">
             <div class="py-1 space-x-2 w-fit">      
                 <input id="mix-authored" :value="false" @click="setQuotes(false)" v-model="onlyAuthoredQuotes" class="w-7" type="radio"></input>

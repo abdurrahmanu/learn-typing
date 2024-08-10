@@ -6,7 +6,7 @@
                     <label class="text-sm font-medium w-fit">Blind mode <span class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-yellow-800 ml-1">medium</span></label>
                 </div>
             </div>
-            <p class="px-3">Type while fully trusting your muscle memory. </p>
+            <p class="px-3 font-[400]">Type while fully trusting your muscle memory. </p>
         </div>
 </template>
 

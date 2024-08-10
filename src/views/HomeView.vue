@@ -1,7 +1,7 @@
 <template>
     <div class="m-auto max-w-[1500px] lg:flex pt-1"> 
-      <div class="w-[100%] mx-auto flex-none relative">   
-        <div @click="hideElements = !hideElements" v-if="hideElements && !focus" class="p-1 font-light text-slate-500 px-2 border border-slate-500 z-[1] whitespace-nowrap uppercase w-fit m-auto text-xs hover:border-green-400">{{ 'show config' }}</div>   
+      <div class="w-[100%] mx-auto flex-none">   
+        <div @click="hideElements = !hideElements" v-if="hideElements && !focus" :class="!hideElements ? '' : ''" class="p-1 px-2 m-auto text-xs font-light uppercase border text-slate-500 border-slate-500 whitespace-nowrap w-fit hover:border-green-400 min-[1350px]:top-[60px] relative z-[1]">{{ 'show config' }}</div>   
         <Customize v-if="!hideElements" />
         <TestContainer />
       </div>

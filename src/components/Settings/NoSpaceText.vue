@@ -6,7 +6,7 @@
                 <label class="text-sm font-medium w-fit">NoSpace <span class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-teal-800 ml-1">hard</span></label>
             </div>
         </div>
-        <p class="px-3">All white spaces are cleared between words</p>
+        <p class="px-3 font-[400]">All white spaces are cleared between words</p>
     </div>
 </template>
 

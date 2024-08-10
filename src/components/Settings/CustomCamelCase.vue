@@ -6,7 +6,7 @@
                 <label class="text-sm font-medium w-fit">CusTOm cAMeL caSE <span class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-teal-800 ml-1">hard</span></label>
             </div>
         </div>
-        <p class="px-3">Randomize the location of Caps and lowercase letters in tests</p>
+        <p class="px-3 font-[400]">Randomize the location of Caps and lowercase letters in tests</p>
     </div>
 </template>
 

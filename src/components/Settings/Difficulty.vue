@@ -1,7 +1,7 @@
 <template>
 <div :class="[appTheme, theme === 'dark' ? 'hover:bg-neutral-800' : 'hover:bg-slate-100']" class="flex flex-wrap items-center py-4 pl-5 gap-x-3 gap-y-1">
         <p class="text-xs font-medium">DIFFICULTY</p>        
-        <div class="flex flex-wrap gap-x-2 gap-y-1">
+        <div class="flex flex-wrap gap-x-2 gap-y-1 font-[400]">
             <div @click="difficulty = 'beginner'" class="flex px-3 py-1 border rounded-md" :class="[difficulty === 'beginner' ? 'border-green-500' : 'border-slate-500']">
                 <p class="w-fit">Beginner</p>
             </div>

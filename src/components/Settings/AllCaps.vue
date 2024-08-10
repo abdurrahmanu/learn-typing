@@ -6,7 +6,7 @@
                 <label class="text-sm font-medium w-fit">All Caps</label>
             </div>
         </div>
-        <p class="px-3">All tests will be converted to CAPS</p>
+        <p class="px-3 font-[400]">All tests will be converted to CAPS</p>
     </div>
 </template>
 

@@ -4,7 +4,7 @@
             <input :disabled="!(alphabetsCombination.length > 1)" :checked="useAlphabetCombination"  type="checkbox" name="letter-combination" id="id">
             <label for="id" class="text-sm font-medium w-fit">Letter Combinations <span class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-lime-600 ml-1">easy</span></label>
         </div>
-        <div class="px-4">
+        <div class="px-4 font-[400]">
             <p>**Randomly repeats and shuffles your selection. Select a minimum of two entries or maximum of ten entries then click the checkbox.</p>
             <div @click="shiftKey = !shiftKey" class="flex m-auto my-1 space-x-2 w-fit">
                 <input :checked="shiftKey" type="checkbox" name="shiftkey" id="shiftkey">
