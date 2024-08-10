@@ -20,7 +20,7 @@ export const customizeStore = defineStore('customizeStore', () => {
     const blind = ref(false)
     const font = ref(32)
     const range = ref((font.value - 16) / 0.16)
-    const localStorageSettings = ref(JSON.parse(localStorage.getItem('dorayi-typing')))
+    const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
 
     const customizers = ref({
         'text-length': 'auto',
@@ -94,7 +94,7 @@ export const customizeStore = defineStore('customizeStore', () => {
         }
 
         localStorageSettings.value.config = [customizers.value, disableOption.value]
-        localStorage.setItem('dorayi-typing', JSON.stringify(localStorageSettings.value))
+        localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
     }
 
     const customize = (mode, boolean) => {
@@ -109,7 +109,7 @@ export const customizeStore = defineStore('customizeStore', () => {
         }
 
         localStorageSettings.value.config = [customizers.value, disableOption.value]
-        localStorage.setItem('dorayi-typing', JSON.stringify(localStorageSettings.value))     
+        localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))     
     }
 
     return {

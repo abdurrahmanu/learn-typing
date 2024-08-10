@@ -16,11 +16,11 @@ import { storeToRefs } from 'pinia';
 
 const custom = customizeStore()
 const {blind} = storeToRefs(custom)
-const localStorageSettings = ref(JSON.parse(localStorage.getItem('dorayi-typing')))
+const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
 
 const customize = () => {
     blind.value = !blind.value
     localStorageSettings.value.blind = blind.value
-    localStorage.setItem('dorayi-typing', JSON.stringify(localStorageSettings.value))
+    localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
 }
 </script>

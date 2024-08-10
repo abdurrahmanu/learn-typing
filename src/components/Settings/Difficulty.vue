@@ -27,10 +27,10 @@ const {theme, appTheme} = theme_
 const store = customizeStore()
 const { difficulty } = storeToRefs(store)
 
-const localStorageSettings = ref(JSON.parse(localStorage.getItem('dorayi-typing')))
+const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
 
 watch(difficulty, (newVal) => {
     localStorageSettings.value.difficulty = newVal
-    localStorage.setItem('dorayi-typing', JSON.stringify(localStorageSettings.value))
+    localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
 })
 </script>

@@ -33,11 +33,11 @@ const {theme} = theme_
 const store = customizeStore()
 const { caretType} = storeToRefs(store)
 
-const localStorageSettings = ref(JSON.parse(localStorage.getItem('dorayi-typing')))
+const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
 
 watch(caretType, (newVal) => {
     localStorageSettings.value.caret = newVal
-    localStorage.setItem('dorayi-typing', JSON.stringify(localStorageSettings.value))
+    localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
 })
 </script>
 

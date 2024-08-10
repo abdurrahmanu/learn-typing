@@ -33,7 +33,6 @@ import {storeToRefs} from 'pinia'
 import {mainStore} from '../store/mainStore'
 import { customizeStore} from '../store/customizeStore'
 import { countdownStore } from '../store/countdownStore'
-import HideElements from './HideElements.vue'
 
 const count = countdownStore()
 const {countdown} = storeToRefs(count)

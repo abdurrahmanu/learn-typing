@@ -87,7 +87,7 @@ const startSavingCustomText = () => {
 }
 
 const saveNewCustomText = () => {
-    const localStorageSettings = ref(JSON.parse(localStorage.getItem('dorayi-typing')))
+    const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
     if (!customTestTitle.value.length) {
         titlePlaceholder.value = 'Must add title'
         return
@@ -95,7 +95,7 @@ const saveNewCustomText = () => {
 
     customTests.value[customTestTitle.value] = textAreaValueStore.value.trim()
     localStorageSettings.value.customTests[customTestTitle.value] = textAreaValueStore.value.trim()
-    localStorage.setItem('dorayi-typing', JSON.stringify(localStorageSettings.value))
+    localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
     textSaved.value = true
     customTestTitle.value = ''
     textAreaValueStore.value = ''
@@ -113,20 +113,20 @@ const cancel = () => {
 }
 
 const del= (name) => {
-    const localStorageSettings = ref(JSON.parse(localStorage.getItem('dorayi-typing')))
+    const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
     delete localStorageSettings.value.customTests[name]
-    localStorage.setItem('dorayi-typing', JSON.stringify(localStorageSettings.value))
+    localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
     delete customTests.value[name]
     switchNext(customizers.value)
 }
 
 const use = (name) => {
     if (repeat.value) return
-    const localStorageSettings = ref(JSON.parse(localStorage.getItem('dorayi-typing')))
+    const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
     if (customizers.value['test-type'] !== 'custom-test') {
         customizers.value['test-type'] = 'custom-test'
         localStorageSettings.value.config[0]['test-type'] = 'custom-test'
-        localStorage.setItem('dorayi-typing', JSON.stringify(localStorageSettings.value))
+        localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
     }
     selectedCustomTest.value = name
     switchNext(customizers.value)

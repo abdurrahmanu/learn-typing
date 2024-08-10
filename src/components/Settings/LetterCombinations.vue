@@ -33,7 +33,7 @@ import { themeStore } from '../../store/themeStore';
 
 const theme_ = themeStore()
 const {theme} = theme_
-const localStorageSettings = ref(JSON.parse(localStorage.getItem('dorayi-typing')))
+const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
 
 const alphabets_ = alphabetsStore()
 const { alphabetsCombination, useAlphabetCombination, shiftKey } = storeToRefs(alphabets_)
@@ -69,10 +69,10 @@ const toggle = () => {
     if (useAlphabetCombination.value && alphabetsCombination.value.length > 1) {
         localStorageSettings.value.alphabets.combo = true
         localStorageSettings.value.alphabets.combination = alphabetsCombination.value
-        localStorage.setItem('dorayi-typing', JSON.stringify(localStorageSettings.value))
+        localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
     } else {
         localStorageSettings.value.alphabets.combo = false
-        localStorage.setItem('dorayi-typing', JSON.stringify(localStorageSettings.value))
+        localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
     }
 }
 
@@ -96,11 +96,11 @@ watch(alphabetsCombination, (newVal) => {
     if (useAlphabetCombination.value && newVal.length > 1) {
         localStorageSettings.value.alphabets.combo = true
         localStorageSettings.value.alphabets.combination = alphabetsCombination.value
-        localStorage.setItem('dorayi-typing', JSON.stringify(localStorageSettings.value))
+        localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
         switchNext(customizers.value)
     } else {
         localStorageSettings.value.alphabets.combo = false
-        localStorage.setItem('dorayi-typing', JSON.stringify(localStorageSettings.value))
+        localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
     }
 }, {deep: true})
 </script>

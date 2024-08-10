@@ -22,8 +22,8 @@ export const localStorageConfig = async () => {
     const pages = pagesStore()
     const {currentPage } = storeToRefs(pages)
 
-    if (localStorage.getItem('dorayi-typing')) {
-        const localStorageSettings = ref(JSON.parse(localStorage.getItem('dorayi-typing')))
+    if (localStorage.getItem('kiboard')) {
+        const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
 
         let dorayiTyping = {
             difficulty: localStorageSettings.value.difficulty || difficulty.value,
@@ -44,7 +44,7 @@ export const localStorageConfig = async () => {
         }
         
         localStorageSettings.value = dorayiTyping
-        localStorage.setItem('dorayi-typing', JSON.stringify(localStorageSettings.value))
+        localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
 
         theme.value = localStorageSettings.value.theme
         font.value = localStorageSettings.value.fontsize 
@@ -91,6 +91,6 @@ export const localStorageConfig = async () => {
             }
         }
 
-        localStorage.setItem('dorayi-typing', JSON.stringify(dorayiTyping))
+        localStorage.setItem('kiboard', JSON.stringify(dorayiTyping))
     }
 }

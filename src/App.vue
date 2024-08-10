@@ -5,15 +5,12 @@
       <main>
         <RouterView />
         <Restart />
-        <SwitchModes />
-        </main>
-      </div>
-      <CustomTestModal />
-      <Theme />
-      <HideElements />
-      <Toast :toggle="capsIsOn" right text="CAPSLOCK IS ON" />
-      <Animate />
+      </main>
     </div>
+    <SwitchModes />
+    <Theme />
+    <Animate />
+  </div>
 </template>
 
 <script setup>
@@ -24,7 +21,6 @@ import SwitchModes from './components/SwitchModes.vue';
 import Restart from './components/Restart.vue';
 import Animate from './components/Animate.vue';
 import Theme from './components/Theme.vue';
-import HideElements from './components/HideElements.vue'
 import { storeToRefs } from 'pinia';
 import {themeStore}  from './store/themeStore'
 import {customizeStore}  from './store/customizeStore'

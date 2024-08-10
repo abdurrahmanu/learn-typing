@@ -1,13 +1,10 @@
 <template>
     <div class="m-auto max-w-[1500px] lg:flex pt-1"> 
-      <div class="w-[100%] mx-auto flex-none relative">      
+      <div class="w-[100%] mx-auto flex-none relative">   
+        <div @click="hideElements = !hideElements" v-if="hideElements && !focus" class="p-1 font-light text-slate-500 px-2 border border-slate-500 z-[1] whitespace-nowrap uppercase w-fit m-auto text-xs hover:border-green-400">{{ 'show config' }}</div>   
         <Customize v-if="!hideElements" />
         <TestContainer />
       </div>
-      <!-- <div class="absolute top-[80%] w-full bg-red-300">
-        <p class="absolute px-3 font-black border border-slate-800 shadow-sm shadow-black -rotate-12 w-fit hover:shadow-none left-[30%] z-[1]">HELP</p>
-        <p class="absolute px-3 font-black border border-slate-800 shadow-sm shadow-black rotate-[26deg] w-fit hover:shadow-none top-[15%] left-[10%] z-[1]">DEMO</p>
-      </div> -->
       <Settings />
     </div>
 </template>
@@ -24,7 +21,7 @@ import { useRouter } from 'vue-router';
 
 const router = useRouter()
 const store = mainStore()
-const { hasCompletedSession} = storeToRefs(store)
+const { hasCompletedSession, focus} = storeToRefs(store)
 
 const customize = customizeStore()
 const { hideElements } = storeToRefs(customize)
@@ -35,4 +32,14 @@ watch(hasCompletedSession, (newVal) => {
 }, {deep: true})
 
 window.addEventListener('resize', () => screenWidth.value = window.innerWidth )
+
+watch(hideElements, newVal => {
+  const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
+  localStorageSettings.value.hide = newVal
+  localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
+})
+
+watch(focus, newVal => {
+  if (newVal) hideElements.value = true
+})
 </script>

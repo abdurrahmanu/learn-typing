@@ -28,12 +28,12 @@ const {backspace, customizers} = storeToRefs(custom)
 const main = mainStore()
 const {switchNext} = main
 
-const localStorageSettings = ref(JSON.parse(localStorage.getItem('dorayi-typing')))
+const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
 
 const customize = () => {
     backspace.value = !backspace.value
     localStorageSettings.value.backspace = backspace.value
     switchNext(customizers.value, 'restart')
-    localStorage.setItem('dorayi-typing', JSON.stringify(localStorageSettings.value))
+    localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
 }
 </script>

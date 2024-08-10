@@ -6,6 +6,7 @@
     </div>
 
     <div v-if="!hasCompletedSession && !alphabetsMode_" :class="[appTheme]" class="relative m-auto rounded-md max-w-fit ring-1 ring-green-600 min-[1350px]:ring-0">
+      <div class="absolute right-[3px] top-[-1px] z-[1] text-sm hover:text-red-500" @click="hideElements = !hideElements">X</div>
         <div class="text-[12px] items-center p-1 flex max-w-[1000px] justify-center flex-wrap relative">
             <div class="p-1" v-for="(optionArr, key, listIndex) in option" :key="listIndex">          
                 <div 
@@ -27,6 +28,7 @@
     </div>
     
     <div v-if="!hasCompletedSession && alphabetsMode_" :class="[appTheme]" class="rounded-md w-[90%] min-w-fit m-auto max-w-fit ring-1 ring-green-600 min-[1350px]:ring-0 relative py-3 px-10 font-normal text-[12px] group">
+      <div class="absolute right-[3px] top-[-1px] z-[1] text-sm hover:text-red-500" @click="hideElements = !hideElements">X</div>
       <div class="flex flex-wrap items-center justify-center gap-[8px] rounded-md min-w-fit m-auto max-w-fit hover:ring-[1px] hover:ring-slate-500 group p-[2px] relative">        
         <div :class="[alphabetsConfig.uppercase ? 'text-green-500' : '']" @click="changeMode('uppercase')" class="px-[5px] hover:scale-105 rounded-md">uppercase</div>
         <div :class="[alphabetsConfig.customCase ? 'text-green-500' : '']" @click="changeMode('customCase')" class="px-[5px] hover:scale-105 rounded-md">randomcase</div>
@@ -62,7 +64,7 @@ const { hasCompletedSession, completionLevel, containerText, playerInput, focus}
 const {switchNext} = store
 
 const customize = customizeStore()
-const { allOptions, configs, customizers, testType_, disableOption, blind} = storeToRefs(customize)
+const { allOptions, configs, customizers, testType_, disableOption, blind, hideElements} = storeToRefs(customize)
 const {useConfig} = customize
 const optionsTooltip = ['length', 'words', 'test-type', 'format', 'test-type', 'test-type']
 
@@ -123,9 +125,9 @@ const changeMode = (mode) => {
       alphabetsConfig.value.random = !alphabetsConfig.value.random
     } 
 
-    const localStorageSettings = ref(JSON.parse(localStorage.getItem('dorayi-typing')))
+    const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
     localStorageSettings.value.alphabets.mode = alphabetsConfig.value
-    localStorage.setItem('dorayi-typing', JSON.stringify(localStorageSettings.value))
+    localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
     switchNext(customizers.value )
 }  
 

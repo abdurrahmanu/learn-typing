@@ -16,7 +16,7 @@ const theme_ = themeStore()
 const {theme} = theme_
 
 const clearSettings = () => {
-    localStorage.removeItem('dorayi-typing')
+    localStorage.removeItem('kiboard')
     localStorageConfig()
 }
 </script>

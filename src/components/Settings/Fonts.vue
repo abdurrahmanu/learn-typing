@@ -31,7 +31,7 @@ const { customizers, font, range} = storeToRefs(customize)
 const count = countdownStore()
 const {clearCounter} = count
 
-const localStorageSettings = ref(JSON.parse(localStorage.getItem('dorayi-typing')))
+const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
 
 const fontSize = computed(() => {
     return range.value <= 1 ? 16 : (16 + (range.value * 0.26)).toFixed(2)
@@ -40,7 +40,7 @@ const fontSize = computed(() => {
 watch(fontSize, (newVal) => {
     font.value = newVal
     localStorageSettings.value.fontsize = newVal
-    localStorage.setItem('dorayi-typing', JSON.stringify(localStorageSettings.value))
+    localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
     if (playerInput.value.length) {        
         if (timedTyping.value) clearCounter()
         switchNext(customizers.value, 'restart' )
