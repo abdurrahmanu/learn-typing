@@ -1,6 +1,6 @@
 <template>
   <div :class="[appTheme]" class="font-light selection:bg-none home max-w-[1500px] m-auto relative min-h-[100dvh] container overflow-y-auto scroll-smooth noscrollbar">
-    <div class="min-h-[100dvh]">
+    <div :class="[focus && isMobileOS() ? 'pt-10' : '']" class="min-h-[100dvh]">
       <Header />
       <main>
         <RouterView />
@@ -36,6 +36,7 @@ import { doc, getDoc} from 'firebase/firestore'
 import { useRoute } from 'vue-router';
 import {localStorageConfig} from './composables/getLocalStorageConfig'
 import CustomTestModal from './components/CustomTestModal.vue';
+import { isMobileOS } from './composables/isMobileOS';
 
 const route = useRoute()
 const auth = getAuth()
@@ -50,7 +51,7 @@ const customize = customizeStore()
 const {font, customizers, difficulty } = storeToRefs(customize)
 
 const main = mainStore()
-const { containerHeight, capsIsOn } = storeToRefs(main)
+const { containerHeight, capsIsOn, focus } = storeToRefs(main)
 const { switchNext} = main
 
 watch(customizers, (newVal) => {
