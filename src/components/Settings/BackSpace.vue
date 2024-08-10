@@ -3,7 +3,7 @@
         <div class="flex justify-between w-full p-1 border border-transparent rounded-sm ">
             <div @click="customize" class="flex gap-4 w-fit">
                 <input name="backspace" :disabled="isMobileOS() ? true : false" :checked="isMobileOS() ? true : backspace"  type="checkbox">
-                <label class="font-medium w-fit">Backspace <span class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-lime-600 ml-1">easy</span></label>
+                <label class="text-sm font-medium w-fit">Backspace <span class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-lime-600 ml-1">easy</span></label>
             </div>
         </div>
         <p v-if="isMobileOS()"  class="px-3">**Cannot be disabled on Mobile devices</p>

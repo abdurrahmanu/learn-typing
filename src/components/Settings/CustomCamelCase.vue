@@ -3,7 +3,7 @@
         <div  class="flex justify-between w-full p-1 border border-transparent rounded-sm ">
             <div @click="customizers['custom-camel-case'] = !customizers['custom-camel-case'], customize('custom-camel-case', customizers['custom-camel-case'])" class="flex gap-4 w-fit">
                 <input name="camelcase" :checked="customizers['custom-camel-case']" type="checkbox">
-                <label class="font-medium w-fit">CusTOm cAMeL caSE <span class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-teal-800 ml-1">hard</span></label>
+                <label class="text-sm font-medium w-fit">CusTOm cAMeL caSE <span class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-teal-800 ml-1">hard</span></label>
             </div>
         </div>
         <p class="px-3">Randomize the location of Caps and lowercase letters in tests</p>
