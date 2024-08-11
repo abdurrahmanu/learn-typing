@@ -1,5 +1,5 @@
 <template>
-    <div class="m-auto max-w-[1500px] lg:flex pt-1"> 
+    <div :class="[focus && isMobileOS() ? 'pt-10' : 'pt-1']" class="m-auto max-w-[1500px] lg:flex"> 
       <div class="w-[100%] mx-auto flex-none">   
         <div @click="hideElements = !hideElements" v-if="hideElements && !focus" :class="!hideElements ? '' : ''" class="p-1 px-2 cursor-pointer font-[500] rounded-md m-auto text-xs uppercase border text-slate-500 border-slate-500 whitespace-nowrap w-fit hover:border-green-400 min-[1350px]:top-[60px] relative z-[1]">{{ 'show config' }}</div>   
         <Customize v-if="!hideElements" />
@@ -18,6 +18,7 @@ import { mainStore } from '../store/mainStore';
 import { storeToRefs } from 'pinia';
 import { customizeStore } from '../store/customizeStore';
 import { useRouter } from 'vue-router';
+import { isMobileOS } from '../composables/isMobileOS';
 
 const router = useRouter()
 const store = mainStore()
