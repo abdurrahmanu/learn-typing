@@ -1,7 +1,7 @@
 <template>
   <div :class="[appTheme]" class="font-light selection:bg-none home max-w-[1500px] m-auto relative min-h-[100dvh] container overflow-y-auto scroll-smooth noscrollbar">
     <div class="min-h-[100dvh]">
-      <Header />
+      <Header/>
       <main>
         <RouterView />
         <Restart />
@@ -28,6 +28,8 @@ import { mainStore } from './store/mainStore';
 import { useRoute } from 'vue-router';
 import {localStorageConfig} from './composables/getLocalStorageConfig'
 import CustomTestModal from './components/CustomTestModal.vue';
+import Clock from './components/Clock.vue';
+import { isMobileOS } from './composables/isMobileOS';
 
 const route = useRoute()
 
@@ -38,7 +40,7 @@ const customize = customizeStore()
 const {font, customizers } = storeToRefs(customize)
 
 const main = mainStore()
-const { containerHeight, capsIsOn, focus } = storeToRefs(main)
+const { containerHeight, timedTyping, beginCountdown } = storeToRefs(main)
 const { switchNext} = main
 
 watch(customizers, (newVal) => {
@@ -105,7 +107,7 @@ onBeforeMount(() => localStorageConfig())
 } */
 
 .settings-font {
-  font-family: 'Exo', sans-serif;
+  font-family: 'Exo', monospace;
 }
 
 /* .home {

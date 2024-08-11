@@ -1,4 +1,5 @@
 import { mainStore } from "../store/mainStore"
+import { countdownStore } from "../store/countdownStore"
 import {customizeStore} from '../store/customizeStore'
 import { storeToRefs } from "pinia"
 import { UseGetQuotes } from "./UseGetQuotes"
@@ -6,10 +7,15 @@ import {alphabetsMode} from './alphabetsMode'
 
 export const generateTest = async (config, restart) => {
     const main = mainStore()
-    const {containerText, storedTest, movie, authoredQuote, allSpacesIndex} = storeToRefs(main)
+    const {containerText, storedTest, timedTyping, movie, authoredQuote, savedCountdown, allSpacesIndex} = storeToRefs(main)
+
+    const count = countdownStore()
+    const {countdown} = storeToRefs(count)
 
     const customize = customizeStore()
     const {repeat, mode} = storeToRefs(customize)
+
+    if (timedTyping.value) countdown.value = savedCountdown.value
 
     if (repeat.value || restart ) {
         containerText.value = storedTest.value

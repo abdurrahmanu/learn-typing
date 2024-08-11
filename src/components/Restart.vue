@@ -21,7 +21,7 @@ const count = countdownStore()
 const {clearCounter} = count
 const store = mainStore()
 const {switchNext} = store
-const {hasCompletedSession, timedTyping, restartEl, containerText} = storeToRefs(store)
+const {hasCompletedSession, savedCountdown, timedTyping, restartEl, containerText} = storeToRefs(store)
 
 const customize = customizeStore()
 const { customizers} = storeToRefs(customize)

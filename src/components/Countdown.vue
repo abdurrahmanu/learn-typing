@@ -16,7 +16,6 @@ import {themeStore}  from '../store/themeStore'
 const theme_ = themeStore()
 const {theme, appTheme } = storeToRefs(theme_)
 
-
 const main = mainStore()
 const { savedCountdown} = storeToRefs(main)
 

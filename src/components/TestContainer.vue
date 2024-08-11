@@ -2,17 +2,17 @@
     <main class="w-[90%] min-h-[150px] space-y-[2px] relative transition-none  max-w-[900px] m-auto" :class="[!hideElements ? 'min-[1350px]:pt-10' : 'min-[1350px]:pt-16']">
         <div :class="[isMobileOS() ? 'flex' : 'block']" class="relative h-fit min-h-[30px]  max-w-[1500px] m-auto py-1">            
             <MobileInput />
-            <div class="w-fit h-fit"> 
-                <Restart v-show="!hasCompletedSession && playerInputLength" @click="restart" class="absolute w-6 left-[50%] translate-x-[-50%] py-2"/>
-            </div>
             <Countdown 
-                class="absolute right-0"
-                v-show="timedTyping && beginCountdown && isMobileOS() && start" 
+                v-show="isMobileOS() && focus && timedTyping"
+                class="absolute left-0"
                 :length="countdown" 
                 :start="beginCountdown" 
                 :cancel="timedTyping"
                 :animate="true"
                 :interval="1000" />
+            <div class="w-fit h-fit"> 
+                <Restart v-show="!hasCompletedSession && playerInputLength" @click="restart" class="absolute w-6 left-[50%] translate-x-[-50%] py-2"/>
+            </div>
         </div>
         <div v-if="containerText" class="transition-all duration-100 relative mx-auto max-w-[700px] w-full">
             <div aria-d
@@ -60,7 +60,7 @@ const alphabets_ = alphabetsStore()
 const { alphabetsMode_ } = storeToRefs(alphabets_)
 
 const store = mainStore()
-const { containerText, mobileBackspace, wrongCount, previousPlayerInput, beginCountdown, timedTyping, hasCompletedSession, focus, resultData, testContainerEl, containerHeight, movie, beatCountdown, playerInputLength, playerInput, authoredQuote, scrollTextContainer, restartSvgEl, restartEl, inputEl} = storeToRefs(store)
+const { containerText, mobileBackspace, wrongCount, previousPlayerInput, savedCountdown, beginCountdown, timedTyping, hasCompletedSession, focus, resultData, testContainerEl, containerHeight, movie, beatCountdown, playerInputLength, playerInput, authoredQuote, scrollTextContainer, restartSvgEl, restartEl, inputEl} = storeToRefs(store)
 const { sessionComplete, switchNext} = store
 
 const customize = customizeStore()
