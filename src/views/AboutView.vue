@@ -45,7 +45,7 @@ watch(name, (newVal) => {
             window.open('https://linkedin.com/in/ahmed-abdulrahman-dorayi', '_blank')
         }
         if (newVal === 'portfolio') {
-            window.open('https://abduldorayi.netlify.app')
+            // window.open('https://abduldorayi.netlify.app')
         }
     } 
     else {

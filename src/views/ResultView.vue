@@ -24,7 +24,8 @@
         <div class="w-fit p-[1px] hover:bg-gradient-to-tr transition-all duration-500rounded-md m-auto py-3">            
             <div class="flex justify-center p-3 m-auto border border-transparent rounded-md w-fit hover:border-zinc-600">
                 <div class="relative px-2 text-center border-r border-r-teal-700">
-                    <div :class="[accuracy() > 85 ? 'bg-green-500' : 'bg-red-400']" class="w-[10px] absolute bottom-0 right-0 h-[10px]"></div>
+                    <pass v-if="accuracyBasedOnLevels" class="absolute bottom-0 right-[2px] w-3" />
+                    <fail v-else class="absolute bottom-0 right-[2px] w-3" />
                     <div class="relative">                        
                         <div class="px-2 text-xs border border-transparent rounded-full peer hover:border-black">ACCURACY</div>
                         <div class="absolute rounded-md top-[115%] left-[0%] z-[1] text-left p-1 hidden peer-hover:block shadow-sm shadow-black bg-neutral-800 min-w-[185px] text-[13px] max-w-[300px] text-slate-400">
@@ -43,7 +44,8 @@
                     <div class="">{{ resultData.totalTime }}s</div>
                 </div>
                 <div class="relative px-2 text-center border-r border-r-teal-700">
-                    <div :class="[resultData.WPM > 50 ? 'bg-green-500' : 'bg-red-400']" class="w-[10px] absolute bottom-0 right-0 h-[10px]"></div>
+                    <pass v-if="wpmBasedOnLevels" class="absolute bottom-0 right-[2px] w-3" />
+                    <fail v-else class="absolute bottom-0 right-[2px] w-3" />
                     <div class="relative">                        
                         <div class="px-2 text-xs border border-transparent rounded-full peer hover:border-black">WPM</div>
                         <div class="absolute rounded-md top-[115%] left-[50%] translate-x-[-50%] z-[1] text-left p-1 hidden peer-hover:block shadow-sm shadow-black bg-neutral-800 min-w-[185px] text-[13px] max-w-[300px] text-slate-400">
@@ -53,7 +55,8 @@
                     <div class="">{{ (resultData.WPM * (accuracy() / 100)).toFixed(0) }}</div>
                 </div>
                 <div class="relative px-2 border-r border-r-teal-700"> 
-                    <div :class="[errorRatioLevel() ? 'bg-green-500' : 'bg-red-400']" class="w-[10px] absolute bottom-0 right-0 h-[10px]"></div>
+                    <pass v-if="ErrorRatioBasedOnLevels" class="absolute bottom-0 right-[2px] w-3" />
+                    <fail v-else class="absolute bottom-0 right-[2px] w-3" />
                     <div class="relative">                        
                         <div class="px-2 text-xs border border-transparent rounded-full peer hover:border-black">ERROR RATIO</div>
                         <div class="absolute rounded-md top-[115%] right-[0%] z-[1] text-left p-1 hidden peer-hover:block shadow-sm shadow-black bg-neutral-800 min-w-[185px] text-[13px] max-w-[300px] text-slate-400">
@@ -80,6 +83,8 @@ import {mainStore} from '../store/mainStore'
 import {themeStore}  from '../store/themeStore'
 import {authStore} from '../store/authStore'
 import { customizeStore } from '../store/customizeStore'
+import pass from '../components/svg/pass.vue'
+import fail from '../components/svg/fail.vue'
 
 const auth_ = authStore()
 const { userID } = storeToRefs(auth_)
@@ -148,6 +153,46 @@ const errorRatioLevel = () => {
         }
     }
 }
+
+const accuracyBasedOnLevels = computed(() => {
+    if (difficulty.value === 'beginner') {
+        return accuracy() > 70 ? true : false
+    }
+    else if (difficulty.value === 'amateur') {
+        return accuracy() > 80 ? true : false
+    }
+    else if (difficulty.value === 'expert') {
+        return accuracy() > 95 ? true : false
+    }
+})
+
+const wpmBasedOnLevels = computed(() => {
+    if (timedTyping.value) {
+        if (difficulty.value === 'beginner') {
+        return beatCountdown.value && (resultData.value.WPM * (accuracy() / 100)).toFixed(0) > 50 ? true : false
+        }
+        else if (difficulty.value === 'amateur') {
+            return beatCountdown.value && (resultData.value.WPM * (accuracy() / 100)).toFixed(0) > 65 ? true : false
+        }
+        else if (difficulty.value === 'expert') {
+            return beatCountdown.value && (resultData.value.WPM * (accuracy() / 100)).toFixed(0) > 85 ? true : false
+        }
+    } else {        
+        if (difficulty.value === 'beginner') {
+            return (resultData.value.WPM * (accuracy() / 100)).toFixed(0) > 50 ? true : false
+        }
+        else if (difficulty.value === 'amateur') {
+            return (resultData.value.WPM * (accuracy() / 100)).toFixed(0) > 65 ? true : false
+        }
+        else if (difficulty.value === 'expert') {
+            return (resultData.value.WPM * (accuracy() / 100)).toFixed(0) > 85 ? true : false
+        }
+    }
+})
+
+const ErrorRatioBasedOnLevels = computed(() => {
+    return errorRatioLevel() ? true : false
+})
 
 const testResult  = computed(() => {
     if (difficulty.value === 'beginner') {        

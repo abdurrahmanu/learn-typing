@@ -37,7 +37,6 @@ const auth = getAuth()
 //                     email: user.email,
 //                 }
 //             });
-//             console.log(user);
 //             router.push({path: '/'})
 //         }).catch((error) => {
 //             // Handle Errors here.

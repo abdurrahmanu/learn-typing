@@ -1,11 +1,11 @@
 <template>
   <div ref="containerEl" :class="[!hasCompletedSession && !alphabetsMode_ ? 'min-[1350px]:right-[140px]' : '', isMobileOS() && focus ? 'hidden' : 'block']" class="m-auto rounded-md w-fit relative max-w-[90%] bg-inherit  font-[600]  text-[12px] config">
-    <div :style="{'width': completionLevel + '%'}" :class="[theme === 'dark' ? 'bg-green-400 after:bg-green-400' : 'bg-green-600 after:bg-green-600', !completionLevel || playerInput.length < 2 ? 'after:w-0 after:hidden' : 'after:w-[3%] after:right-0 after:absolute after:top-0 after:bottom-0 after:blur-[5px]']" class="absolute left-0 bottom-[3px] top-[3px] m-auto rounded-md max-[460px]:hidden p-1" v-if="blind" ></div>
+    <div :style="{'width': completionLevel + '%'}" :class="[!playerInput.length ? 'h-0' : '', theme === 'dark' ? 'bg-green-400 after:bg-green-400' : 'bg-green-600 after:bg-green-600', !completionLevel || playerInput.length < 2 ? 'after:w-0 after:hidden' : 'after:w-[3%] after:right-0 after:absolute after:top-0 after:bottom-0 after:blur-[5px]']" class="absolute left-0 bottom-[-3px] top-[-3px] m-auto rounded-md max-[460px]:hidden p-1" v-if="blind" ></div>
     <div :style="{'width': completionLevel + '%'}" class="absolute left-0 bottom-[-3px] top-[-3px] m-auto rounded-md max-[460px]:hidden flex" v-else>
         <div v-show="index <= playerInput.length - 1" :class="[ index === 0 ? 'rounded-l-[10px]' : '' ,playerInput[index] === alphabet && index <= playerInput.length - 1 ? 'bg-green-500 after:bg-green-500' : 'bg-red-500 after:bg-red-500', index === playerInput.length - 1 ? 'after:w-[100%] after:right-0 after:top-0 after:bottom-0 after:blur-[5px]' : 'after:w-0 after:hidden', !completionLevel || index < 2 ? 'after:hidden' : 'after:absolute']" class="h-[100%] relative" :style="{'width': singleDivWidth + 'px'}" v-for="(alphabet, index) in containerText" :key="index"></div>
     </div>
 
-    <div v-if="!hasCompletedSession && !alphabetsMode_" :class="[appTheme]" class="relative m-auto rounded-md max-w-fit ring-1 ring-green-500 min-[1350px]:ring-0">
+    <div v-if="!hasCompletedSession && !alphabetsMode_" :class="[appTheme]" class="relative m-auto rounded-md max-w-fit ring-1 ring-green-400 min-[1350px]:ring-0">
       <div class="absolute right-[-5px] top-[-5px] z-[2] hover:text-red-500 text-slate-200 font-black h-5 w-5 rounded-full flex items-center justify-center bg-neutral-600 text-center min-[1350px]:top-[50%] min-[1350px]:translate-y-[-50%] min-[1350px]:right-[-14px] cursor-pointer" @click="hideElements = !hideElements">X</div>
         <div class=" items-center p-1 flex max-w-[1000px] justify-center flex-wrap relative z-[1]">
             <div class="p-1" v-for="(optionArr, key, listIndex) in option" :key="listIndex">          
@@ -132,7 +132,6 @@ const changeMode = (mode) => {
 }  
 
 const changeConfig = (key, option) => {
-  console.log(customizers.value['test-type']);
   if (option === 'test-type' && key !== customizers.value['test-type'] && repeat.value) repeat.value = false
   
   if (!disableOption.value[option]) {
