@@ -67,7 +67,7 @@
                 </div>
             </div>
         </div>
-        <div class="space-y-1 text-sm">            
+        <div class="space-y-1 text-sm font-[400]">            
             <div v-if="timedTyping" :class="[timedTypingTestResult === 'you passed the test' ? 'text-green-700' : 'text-red-400']" class="text-center uppercase">{{ timedTypingTestResult }}</div>
             <div v-else  :class="[testResult === 'you passed the test' ? 'text-green-700' : 'text-red-400']" class="text-center uppercase">{{ testResult }}</div>
             <div v-if="beatCountdown" class="text-green-700 uppercase ">You beat the time, you left {{ remainingTime() }}<span class="lowercase">s</span></div>
