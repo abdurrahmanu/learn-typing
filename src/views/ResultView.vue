@@ -1,6 +1,6 @@
 <template>
     <div :class="appTheme" class="min-h-[200px] text-center xl:pt-20 cursor-default result">
-        <p class="py-3 text-2xl text-center text-slate-500">STATISTICS</p>
+        <p class="py-3 text-4xl text-center text-slate-500 stats">STATISTICS</p>
         <div class="flex py-1 m-auto gap-x-2 w-fit text-slate-300">            
             <div class="relative">                        
                         <div class="px-3 m-auto text-xs font-medium uppercase rounded-full peer bg-slate-800 w-fit">{{testType}}</div>
@@ -27,47 +27,47 @@
                     <pass v-if="accuracyBasedOnLevels" class="absolute bottom-0 right-[2px] w-3" />
                     <fail v-else class="absolute bottom-0 right-[2px] w-3" />
                     <div class="relative">                        
-                        <div class="px-2 text-xs border border-transparent rounded-full peer hover:border-black">ACCURACY</div>
+                        <div class="px-2 text-xs border border-transparent rounded-full peer hover:border-black font-[400]">ACCURACY</div>
                         <div class="absolute rounded-md top-[115%] left-[0%] z-[1] text-left p-1 hidden peer-hover:block shadow-sm shadow-black bg-neutral-800 min-w-[185px] text-[13px] max-w-[300px] text-slate-400">
                             <p>The percentage of correctly typed characters out of the total number of characters.</p>
                         </div>
                     </div>
-                    <div class="">{{ accuracy() }}%</div>
+                    <div class="config">{{ accuracy() }}%</div>
                 </div>
                 <div class="relative px-2 text-center border-r border-r-teal-700">
                     <div class="relative">                        
-                        <div class="px-2 text-xs border border-transparent rounded-full peer hover:border-black">TIME</div>
+                        <div class="px-2 text-xs border border-transparent rounded-full peer hover:border-black font-[400]">TIME</div>
                         <div class="absolute rounded-md top-[115%] left-[50%] translate-x-[-50%] z-[1] text-left p-1 hidden peer-hover:block shadow-sm shadow-black bg-neutral-800 min-w-[185px] text-[13px] max-w-[300px] text-slate-400">
                             <p>The total time taken to complete the typing test.</p>
                         </div>
                     </div>
-                    <div class="">{{ resultData.totalTime }}s</div>
+                    <div class="config">{{ resultData.totalTime }}s</div>
                 </div>
                 <div class="relative px-2 text-center border-r border-r-teal-700">
                     <pass v-if="wpmBasedOnLevels" class="absolute bottom-0 right-[2px] w-3" />
                     <fail v-else class="absolute bottom-0 right-[2px] w-3" />
                     <div class="relative">                        
-                        <div class="px-2 text-xs border border-transparent rounded-full peer hover:border-black">WPM</div>
+                        <div class="px-2 text-xs border border-transparent rounded-full peer hover:border-black font-[400]">WPM</div>
                         <div class="absolute rounded-md top-[115%] left-[50%] translate-x-[-50%] z-[1] text-left p-1 hidden peer-hover:block shadow-sm shadow-black bg-neutral-800 min-w-[185px] text-[13px] max-w-[300px] text-slate-400">
                             <p>Words Per Minute is the number of words typed correctly per minute. One word is defined as five characters.</p>
                         </div>
                     </div>
-                    <div class="">{{ (resultData.WPM * (accuracy() / 100)).toFixed(0) }}</div>
+                    <div class="config">{{ (resultData.WPM * (accuracy() / 100)).toFixed(0) }}</div>
                 </div>
                 <div class="relative px-2 border-r border-r-teal-700"> 
                     <pass v-if="ErrorRatioBasedOnLevels" class="absolute bottom-0 right-[2px] w-3" />
                     <fail v-else class="absolute bottom-0 right-[2px] w-3" />
                     <div class="relative">                        
-                        <div class="px-2 text-xs border border-transparent rounded-full peer hover:border-black">ERROR RATIO</div>
+                        <div class="px-2 text-xs border border-transparent rounded-full peer hover:border-black font-[400]">ERROR RATIO</div>
                         <div class="absolute rounded-md top-[115%] right-[0%] z-[1] text-left p-1 hidden peer-hover:block shadow-sm shadow-black bg-neutral-800 min-w-[185px] text-[13px] max-w-[300px] text-slate-400">
                             <p>Incorrectly typed characters / Total number of characters</p>
                         </div>
                     </div>
-                    <div class="">{{ errorRatio() }}<span class="text-[11px] font-cursive font-bold"></span></div>
+                    <div class="config">{{ errorRatio() }}<span class="text-[11px] font-cursive font-bold"></span></div>
                 </div>
             </div>
         </div>
-        <div class="space-y-1 text-sm font-[400]">            
+        <div class="space-y-1 text-sm font-[400] roboto-font">            
             <div v-if="timedTyping" :class="[timedTypingTestResult === 'you passed the test' ? 'text-green-700' : 'text-red-400']" class="text-center uppercase">{{ timedTypingTestResult }}</div>
             <div v-else  :class="[testResult === 'you passed the test' ? 'text-green-700' : 'text-red-400']" class="text-center uppercase">{{ testResult }}</div>
             <div v-if="beatCountdown" class="text-green-700 uppercase ">You beat the time, you left {{ remainingTime() }}<span class="lowercase">s</span></div>
