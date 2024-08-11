@@ -1,15 +1,15 @@
 <template>
     <div class="relative">
         <div class="peer">
-            <div class="flex items-center gap-2" v-if="beginCountdown">
+            <div class="flex items-center" v-if="beginCountdown">
                 <Countdown 
-                v-show="timedTyping && beginCountdown && start" 
+                v-show="timedTyping && beginCountdown && start && false" 
                 :length="countdown" 
                 :start="beginCountdown" 
                 :cancel="timedTyping"
                 :animate="true"
                 :interval="1000" />
-                <pauseTimer @click="timer" class="h-7" />
+                <pauseTimer @click="timer" class="w-6" />
             </div>
             <playTimer v-if="!timedTyping" @click="timer" class="w-5" />
             <div v-if="timedTyping && !beginCountdown" class="relative flex items-center gap-1 w-fit">  
@@ -39,8 +39,8 @@ const {countdown, start} = storeToRefs(count)
 const {clearCounter} = count
 
 const store = mainStore()
-const {  timedTyping, beginCountdown, timerID, savedCountdown,} = storeToRefs(store)
-const {sessionComplete, switchNext} = store
+const {  timedTyping, beginCountdown, timerID, savedCountdown, hasCompletedSession} = storeToRefs(store)
+const {resetToDefault, sessionComplete, switchNext} = store
 
 const customize = customizeStore()
 const {customizers, hideElements} = storeToRefs(customize)
@@ -61,8 +61,7 @@ const timer = () => {
 }
 
 watch(countdown, (newVal) => {
-    if (newVal === 0) {
-        sessionComplete()
-    }
+    if (newVal === 0) clearInterval(timerID.value)
+    if (newVal === 0 && beginCountdown.value) sessionComplete()
 })
 </script>

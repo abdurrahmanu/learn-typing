@@ -19,16 +19,21 @@ import { storeToRefs } from 'pinia';
 import { customizeStore } from '../store/customizeStore';
 import { useRouter } from 'vue-router';
 import { isMobileOS } from '../composables/isMobileOS';
+import { countdownStore } from '../store/countdownStore'
+
+const count = countdownStore()
+const {clearCounter} = count
 
 const router = useRouter()
 const store = mainStore()
-const { hasCompletedSession, focus} = storeToRefs(store)
+const { hasCompletedSession, focus, timedTyping} = storeToRefs(store)
 
 const customize = customizeStore()
 const { hideElements } = storeToRefs(customize)
 const screenWidth = ref(window.innerWidth)
 
 watch(hasCompletedSession, (newVal) => {
+    if (timedTyping.value) clearCounter()
     if (newVal) router.push({path: 'result'})
 }, {deep: true})
 

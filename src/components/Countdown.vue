@@ -7,7 +7,7 @@
 </template>
 
 <script setup>
-import { ref, defineProps, defineEmits, onMounted, onBeforeMount } from 'vue';
+import { ref, defineProps, defineEmits, onMounted, onBeforeMount, watch } from 'vue';
 import { mainStore } from '../store/mainStore';
 import { storeToRefs } from 'pinia';
 import {countdownStore} from '../store/countdownStore'
@@ -58,7 +58,7 @@ onMounted(() => {
                     //     'slide-down-scale-up'
                     // ]
                     // let randomAnimation = Math.round(Math.random() * types.length - 1)
-                    animationName.value = 'slide-down-scale-down'
+                    animationName.value = 'slide-left'
                 }
             }
         }
@@ -77,7 +77,6 @@ onMounted(() => {
         }, props.interval)
     }
 })
-
 </script>
 
 <style scoped>
@@ -130,7 +129,6 @@ onMounted(() => {
 .slide-left-enter-from,
 .slide-right-leave-to {
     opacity: 0;
-    transform: translateX(-100%);
 }
 
 .slide-left-leave-to,

@@ -1,17 +1,17 @@
 <template>
     <main class="w-[90%] min-h-[150px] space-y-[2px] relative transition-none  max-w-[900px] m-auto" :class="[!hideElements ? 'min-[1350px]:pt-10' : 'min-[1350px]:pt-16']">
-        <div :class="[isMobileOS() ? 'flex' : 'block']" class="relative h-fit min-h-[30px]  max-w-[1500px] m-auto py-1">            
+        <div :class="[isMobileOS() ? 'flex' : 'block']" class="relative h-fit min-h-[30px] m-auto py-1  max-w-[700px]">            
             <MobileInput />
             <Countdown 
-                v-show="isMobileOS() && focus && timedTyping"
+                v-show="(isMobileOS() && focus && timedTyping) || timedTyping"
                 class="absolute left-0"
                 :length="countdown" 
                 :start="beginCountdown" 
                 :cancel="timedTyping"
                 :animate="true"
                 :interval="1000" />
-            <div class="pb-6 bg-red-300 w-fit h-fit"> 
-                <Restart v-show="!hasCompletedSession && playerInputLength" @click="restart" class="absolute w-6 left-[50%] translate-x-[-50%] py-2 "/>
+            <div class="w-fit h-fit"> 
+                <Restart v-show="!hasCompletedSession && playerInputLength" @click="restart" class="absolute w-6 left-[50%] translate-x-[-50%] "/>
             </div>
         </div>
         <div v-if="containerText" class="transition-all duration-100 relative mx-auto max-w-[700px] w-full">
@@ -92,13 +92,6 @@ watch(scrollTextContainer, (newVal, oldVal)=> {
         }
     }
     }, {deep: true})
-
-watch(countdown, (newVal) => {
-    if (newVal === 0 && resultData.value.totalTime) {
-        beatCountdown.value = false
-        sessionComplete()
-    }
-})
 
 watch(playerInput, (newVal, oldVal) => {
     if (mobileBackspace.value && wrongCount.value === 0) {

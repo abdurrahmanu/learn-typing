@@ -115,7 +115,7 @@ onBeforeMount(() => localStorageConfig())
 } */
 
 .home {
-  font-family: 'Roboto Mono', sans-serif;
+  font-family: 'Roboto Mono', monospace;
 }
 
 /* .settings-font {
