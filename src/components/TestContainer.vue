@@ -10,8 +10,8 @@
                 :cancel="timedTyping"
                 :animate="true"
                 :interval="1000" />
-            <div class="w-fit h-fit"> 
-                <Restart v-show="!hasCompletedSession && playerInputLength" @click="restart" class="absolute w-6 left-[50%] translate-x-[-50%] py-2"/>
+            <div class="pb-6 bg-red-300 w-fit h-fit"> 
+                <Restart v-show="!hasCompletedSession && playerInputLength" @click="restart" class="absolute w-6 left-[50%] translate-x-[-50%] py-2 "/>
             </div>
         </div>
         <div v-if="containerText" class="transition-all duration-100 relative mx-auto max-w-[700px] w-full">

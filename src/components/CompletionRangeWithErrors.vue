@@ -1,7 +1,7 @@
 <template>
-    <div ref="rangeEl" v-show="!hasCompletedSession && completionLevel" :class="[isMobileOS() ? '' : '']" class="w-full max-w-[700px] absolute top-[100%] left-[50%] translate-x-[-50%]">
+    <div ref="rangeEl" v-show="!hasCompletedSession && completionLevel" class="w-full max-w-[700px] absolute top-[100%] left-[50%] translate-x-[-50%]">
         <div :style="{'width': completionLevel + '%'}" class="flex">
-            <div v-show="index <= playerInput.length - 1" :class="[playerInput[index] === alphabet && index <= playerInput.length - 1 ? 'bg-green-500' : 'bg-red-500', ]" class="h-[5px]" :style="{'width': singleDivWidth + 'px'}" v-for="(alphabet, index) in containerText" :key="index"></div>
+            <div v-show="index <= playerInput.length - 1" :class="[isMobileOS() ? 'h-[5px]' : 'h-[3px]' ,playerInput[index] === alphabet && index <= playerInput.length - 1 ? 'bg-green-500' : 'bg-red-500', ]" :style="{'width': singleDivWidth + 'px'}" v-for="(alphabet, index) in containerText" :key="index"></div>
         </div>
     </div>
 </template>
