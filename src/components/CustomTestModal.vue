@@ -1,7 +1,7 @@
 <template>
     <div @click="customTestModal = !customTestModal, pauseTyping = false, textValue = ''" v-if="customTestModal && route.name === 'home'" class="fixed top-0 bottom-0 left-0 right-0 bg-black opacity-40"></div>
     <div v-if="customTestModal && route.name === 'home'" class="max-w-[500px] w-[95%] fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] rounded-md py-5 max-h-[calc(100dvh_-_20px)] text-[13px]" :class="[theme === 'dark' ? 'bg-neutral-800' : 'bg-slate-300 shadow-sm shadow-slate-500']">
-        <div @click="customTestModal = !customTestModal, pauseTyping = false, textValue = ''" class="absolute top-0 font-mono text-xl font-bold w-fit right-2 hover:text-red-500">x</div>
+        <div @click="customTestModal = !customTestModal, pauseTyping = false, textValue = ''" class="absolute top-0  text-xl font-bold w-fit right-2 hover:text-red-500">x</div>
         <div>            
             <div v-if="!saveCustomText" class="space-y-1 text-center">
                 <p class="py-2 font-medium">Add your preferred test, quote or story.</p>

@@ -1,8 +1,18 @@
 <template>
     <main class="w-[90%] min-h-[150px] space-y-[2px] relative transition-none  max-w-[900px] m-auto" :class="[!hideElements ? 'min-[1350px]:pt-10' : 'min-[1350px]:pt-16']">
-        <div :class="[isMobileOS() ? 'flex' : 'block']" class="relative h-fit min-h-[30px] ">            
+        <div :class="[isMobileOS() ? 'flex' : 'block']" class="relative h-fit min-h-[30px]  max-w-[1500px] m-auto py-1">            
             <MobileInput />
-            <Restart v-show="!hasCompletedSession && playerInputLength" @click="restart" class="absolute w-6 left-[50%] translate-x-[-50%] py-2"/>
+            <div class="w-fit h-fit"> 
+                <Restart v-show="!hasCompletedSession && playerInputLength" @click="restart" class="absolute w-6 left-[50%] translate-x-[-50%] py-2"/>
+            </div>
+            <Countdown 
+                class="absolute right-0"
+                v-show="timedTyping && beginCountdown && isMobileOS() && start" 
+                :length="countdown" 
+                :start="beginCountdown" 
+                :cancel="timedTyping"
+                :animate="true"
+                :interval="1000" />
         </div>
         <div v-if="containerText" class="transition-all duration-100 relative mx-auto max-w-[700px] w-full">
             <div aria-d
@@ -21,12 +31,15 @@
                 <p  v-show="authoredQuote.author" :class="[theme === 'dark' ? 'text-slate-400' : 'text-black']" class="text-xs italic text-right">{{authoredQuote.author}}</p>
             </div>
         </div>
+        <p class=" text-sm bg-transparent blur-[1px] w-fit whitespace-nowrap m-auto flex" v-if="isMobileOS() && !focus" ><span class="pr-1">click</span><upwardsFinger class="relative w-5 bottom-1" />test to focus cursor</p>               
     </main>
 </template>
 
 <script setup>
 import { onMounted, watch } from 'vue';
 import { isMobileOS } from '../composables/isMobileOS';
+import upwardsFinger from './svg/upwardsFinger.vue';
+import Countdown from './Countdown.vue';
 import MobileInput from'./MobileInput.vue'
 import Alphabet from './Alphabet.vue'
 import Restart from './svg/restart.vue'
@@ -47,7 +60,7 @@ const alphabets_ = alphabetsStore()
 const { alphabetsMode_ } = storeToRefs(alphabets_)
 
 const store = mainStore()
-const { containerText, previousPlayerInput, currentWordArray, timedTyping, hasCompletedSession, focus, resultData, testContainerEl, containerHeight, movie, beatCountdown, playerInputLength, playerInput, authoredQuote, scrollTextContainer, restartSvgEl, restartEl, inputEl} = storeToRefs(store)
+const { containerText, mobileBackspace, wrongCount, previousPlayerInput, beginCountdown, timedTyping, hasCompletedSession, focus, resultData, testContainerEl, containerHeight, movie, beatCountdown, playerInputLength, playerInput, authoredQuote, scrollTextContainer, restartSvgEl, restartEl, inputEl} = storeToRefs(store)
 const { sessionComplete, switchNext} = store
 
 const customize = customizeStore()
@@ -57,7 +70,7 @@ const theme_ = themeStore()
 const {theme} = storeToRefs(theme_)
 
 const count = countdownStore()
-const {countdown} = storeToRefs(count)
+const {countdown, start} = storeToRefs(count)
 const {clearCounter} = count
 
 const restart = async () => {
@@ -88,6 +101,11 @@ watch(countdown, (newVal) => {
 })
 
 watch(playerInput, (newVal, oldVal) => {
+    if (mobileBackspace.value && wrongCount.value === 0) {
+        playerInput.value = oldVal
+        mobileBackspace.value = false
+        return
+    }
     previousPlayerInput.value = oldVal
     managePlayerInput()
 })
@@ -100,14 +118,14 @@ onMounted(() => {
     }, false)
 
     window.addEventListener('touchmove', event => {
-        if (event.target === testContainerEl.value) {
-            preventScroll()
+        if (event.target === testContainerEl.value || testContainerEl.value.contains(event.srcElement)) {
+            preventScroll(event)
         }
     }, {passive: false})
 
     window.addEventListener('wheel', event => {
-        if (event.target === testContainerEl.value) {
-            preventScroll()
+        if (event.target === testContainerEl.value || testContainerEl.value.contains(event.srcElement)) {
+            preventScroll(event)
         }
     }, {passive: false})
     

@@ -4,7 +4,7 @@
             <Logo />
         </div>
         <p class="text-center text-[50px] leading-0 opacity-90 blur-[1px]">KiBoard</p>
-        <div class="m-auto font-mono font-normal w-fit z-[-1]">
+        <div class="m-auto  font-normal w-fit z-[-1]">
             <p class="pt-3 m-auto text-center w-fit">IS A TYPING APP CREATED BY AHMED ABDULRAHMAN</p>
             <div class="justify-center flex max-w-[700px] gap-5 m-auto py-5 pt-7 flex-wrap text-sm">
                 <div @click="name='github'" class="px-2 py-[1px] border-gray-500 border rounded-sm transition-all duration-100 hover:shadow-md hover:border-green-500 flex items-center gap-2"><github class="w-4" /> GITHUB</div>
@@ -14,7 +14,7 @@
         </div>
         <div class="m-auto font-normal w-fit">
             <p class="pb-2 text-center underline">CREDITS</p>
-            <p @click="name='portfolio'" class="pb-6 font-mono text-center hover:underline">Ahmed Abdulrahman</p>
+            <p @click="name='portfolio'" class="pb-6 text-center hover:underline">Ahmed Abdulrahman</p>
             <p class="pb-5 text-center underline">SUPPORTERS</p>
             <p class="pb-6 text-center">---</p>
             <p class="pb-5 text-center underline">CONTRIBUTORS</p>

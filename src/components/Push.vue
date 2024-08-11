@@ -8,7 +8,7 @@
                 <div v-if="topRigth" class="bg-red-500 h-[3px]  absolute right-0 w-[50%]"></div>
             </Transition>
         </div>
-        <div class="m-auto font-sans text-sm lg:text-base">
+        <div class="m-auto  text-sm lg:text-base">
             <slot />
         </div>
         <div>

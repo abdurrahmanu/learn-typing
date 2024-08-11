@@ -6,7 +6,7 @@
                 <label class="text-sm font-medium w-fit">Backspace <span class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-lime-600 ml-1">easy</span></label>
             </div>
         </div>
-        <p v-if="isMobileOS()"  class="px-3">**Cannot be disabled on Mobile devices</p>
+        <p v-if="isMobileOS()"  class="px-3 font-[400]">**Always enabled on mobile devices</p>
         <p  class="px-3 font-[400]">This enables or disables player ability to utilize the backspace key while typing.</p>
     </div>
 </template>

@@ -1,9 +1,9 @@
 <template>
     <div class=" sticky z-[99999] top-[0] bg-neutral-800 text-slate-200">
-        <div  class="flex items-center justify-between w-full gap-4 px-2 font-mono text-right border-r shadow-sm border-r-zinc-700 shadow-black">
-            <div class="p-2 font-mono text-lg ">SETTINGS</div>
-            <div class="p-[2px] text-white font-bold font-mono text-lg" @click="toggleSettings">
-                <p class="font-mono w-fit hover:text-red-500">X</p>
+        <div  class="flex items-center justify-between w-full gap-4 px-2  text-right border-r shadow-sm border-r-zinc-700 shadow-black">
+            <div class="p-2  text-lg ">SETTINGS</div>
+            <div class="p-[2px] text-white font-bold  text-lg" @click="toggleSettings">
+                <p class=" w-fit hover:text-red-500">X</p>
             </div>
         </div>
     </div>

@@ -15,7 +15,7 @@
                     <div>WRONG INPUTS- {{selected.wrongCount}}</div>
                     <div>WPM- {{ selected.WPM }}</div>
                     <div class="space-y-2">
-                        <div class="font-mono rounded-md w-fit whitespace-nowrap">{{selected.containerText.slice(0, 30)}}...<span class="text-xs border border-black rounded-full px-5 py-[2px] text-black">more</span></div>
+                        <div class=" rounded-md w-fit whitespace-nowrap">{{selected.containerText.slice(0, 30)}}...<span class="text-xs border border-black rounded-full px-5 py-[2px] text-black">more</span></div>
                         <div class="text-xs bg-blue-500 rounded-full px-5 py-[2px] w-fit text-white m-auto">REPLAY</div>
                     </div>
                 </div>

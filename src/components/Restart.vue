@@ -1,8 +1,8 @@
 <template>
-    <div class="w-full pt-4 h-fit">        
+    <div class="pt-4 mx-auto w-fit h-fit">        
         <div ref="restartEl" v-show="route.name == 'home' || route.name == 'result'" class="m-auto text-sm transition-all duration-100 text-slate-500">
             <div v-show="isMobileOS()" @click="next" class="p-1 m-auto text-base text-center border rounded-md w-fit border-neutral-600">NEXT</div>
-            <div v-show="!isMobileOS()" class="m-auto font-mono text-center cursor-default w-fit h-fit">Press <span @click="next" class="p-1 px-3 text-xs text-white rounded-md cursor-pointer bg-neutral-800 hover:bg-green-600">{{ hasCompletedSession ? 'Enter' : 'Esc' }}</span> for NEXT</div>
+            <div v-show="!isMobileOS()" class="m-auto text-center cursor-default w-fit h-fit">Press <span @click="next" class="p-1 px-3 text-xs text-white rounded-md cursor-pointer bg-neutral-800 hover:bg-green-600">{{ hasCompletedSession ? 'Enter' : 'Esc' }}</span> for NEXT</div>
         </div>
     </div>
 </template>

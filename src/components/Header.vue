@@ -1,5 +1,5 @@
 <template>
-    <header class="sticky mx-auto flex items-center justify-between pl-3 pr-2 max-w-[1500px] lg:mb-6 mb-3 min-[1350px]:fixed min-[1350px]:w-full text-[11px] uppercase font-medium h-[50px] pb-2 z-[1]" :class="[!hideElements ? '' : '', focus ? 'h-0 p-0 mb-0' : '']">
+    <header class="sticky mx-auto flex items-center justify-between pl-3 pr-2 max-w-[1500px] lg:mb-6 mb-3 min-[1350px]:fixed min-[1350px]:w-full text-[11px] uppercase font-medium z-[1]" :class="[focus && (hideElements && isMobileOS()) ? 'h-0 p-0 mb-0' : 'pb-2 h-[50px]']">
         <Logo v-if="!focus" class="flex" />
         <div v-if="!focus" class="absolute flex items-center gap-4 w-fit" :class="[!hideElements ? 'min-[1350px]:right-3 min-[1350px]:translate-x-0 right-[50%] translate-x-[50%]' : 'left-[50%] translate-x-[-50%]']">
             <div v-if="route.name === 'home'" class="flex items-center gap-4 text-[9px] ">
@@ -31,17 +31,9 @@
             <div class="relative w-fit" v-if="route.name !== 'home'" >                
                 <home @click="routeToPage('home')" class="w-4 peer" />
             </div>
-            <!-- <div class="relative w-fit"  v-if="route.name !== 'auth'">                
-                <user @click="routeToPage('auth')" class="w-4 peer" />
-                <div class="absolute z-5 left-[50%] translate-x-[-50%] bottom-[-120%] rounded-full whitespace-nowrap peer-hover:block hidden">account</div>
-            </div> -->
             <div class="relative w-fit" v-if="route.name === 'home'" >
                 <settings class="w-5 peer" />
             </div>
-            <!-- <select name="" id="" class="text-center text-black uppercase border-none outline-none">
-                <option value="test">Test mode</option>
-                <option value="alphabet">Alphabet Mode</option>
-            </select> -->
         </div>
         <div :class="[!hideElements ? 'min-[1350px]:hidden' : '']" class="hidden min-[500px]:block"></div>
         <CompletionRange :class="[hideElements ? 'block' : 'hidden max-[460px]:block']" v-if="blind" />
@@ -51,9 +43,7 @@
 
 <script setup>
 import Logo from './Logo.vue'
-import user from './svg/user.vue'
 import home from './svg/home.vue'
-import dropdown from './svg/dropdown.vue'
 import settings from './svg/settings.vue';
 import add from './svg/add.vue'
 import TextAlign from './TextAlign.vue';
@@ -77,7 +67,7 @@ const alphabets = alphabetsStore()
 const {alphabetsMode_} = storeToRefs(alphabets)
 
 const main = mainStore()
-const {focus} = storeToRefs(main)
+const {focus, route : route_} = storeToRefs(main)
 
 const customize = customizeStore()
 const { hideElements, blind, customTestModal, pauseTyping} = storeToRefs(customize)

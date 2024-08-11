@@ -7,6 +7,7 @@
         <Restart />
       </main>
     </div>
+    <CustomTestModal />
     <SwitchModes />
     <Theme />
     <Animate />
@@ -16,7 +17,6 @@
 <script setup>
 import {onBeforeMount, onMounted, watch, ref} from 'vue'
 import Header from './components/Header.vue'
-import Toast from './components/Toast.vue'
 import SwitchModes from './components/SwitchModes.vue';
 import Restart from './components/Restart.vue';
 import Animate from './components/Animate.vue';
@@ -24,27 +24,18 @@ import Theme from './components/Theme.vue';
 import { storeToRefs } from 'pinia';
 import {themeStore}  from './store/themeStore'
 import {customizeStore}  from './store/customizeStore'
-import { authStore } from './store/authStore';
-import {db} from './firebase.js';
 import { mainStore } from './store/mainStore';
-import {getAuth, onAuthStateChanged} from 'firebase/auth'
-import { doc, getDoc} from 'firebase/firestore'
 import { useRoute } from 'vue-router';
 import {localStorageConfig} from './composables/getLocalStorageConfig'
 import CustomTestModal from './components/CustomTestModal.vue';
-import { isMobileOS } from './composables/isMobileOS';
 
 const route = useRoute()
-const auth = getAuth()
-
-const auth_ = authStore()
-const {isAuthenticated, userID, userData } = storeToRefs(auth_)
 
 const theme_ = themeStore()
 const { appTheme } = storeToRefs(theme_)
 
 const customize = customizeStore()
-const {font, customizers, difficulty } = storeToRefs(customize)
+const {font, customizers } = storeToRefs(customize)
 
 const main = mainStore()
 const { containerHeight, capsIsOn, focus } = storeToRefs(main)
@@ -54,18 +45,6 @@ watch(customizers, (newVal) => {
   if (newVal) {
       switchNext(newVal)
   }}, {deep : true})
-
-// onAuthStateChanged(auth, async (user) => {
-//   if (user) {
-//     userID.value = user.uid;
-//     isAuthenticated.value = true
-//     await getDoc(doc(db, 'users', userID.value)).then(data => userData.value = data )
-//   } else {
-//     isAuthenticated.value = false
-//     userID.value = undefined
-//     userData.value = {}
-//   }
-// });
 
 const height = () => {
   const div = document.createElement("div");
@@ -83,43 +62,12 @@ const height = () => {
   document.body.removeChild(div)
 }
 
-window.addEventListener('keydown', event => {
-  // if (event.key === 'CapsLock') {
-  //   if (event.getModifierState("CapsLock")) {
-  //     capsIsOn.value = true
-  //   } else {
-  //     capsIsOn.value = false
-  //   }
-  // }
-})
-
 onMounted(() => height())
 watch(font, (newVal) => height() )
 onBeforeMount(() => localStorageConfig())
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Exo:ital,wght@0,100..900;1,100..900&family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Reddit+Mono:wght@200..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Shadows+Into+Light&display=swap');
-/* .home {
-  font-family: 'Exo', sans-serif;
-} */
-
-/* .home {
-  font-family: 'Roboto', sans-serif;
-} */
-
-/* .home {
-  font-family: 'Shadows+Into+Light', sans-serif;
-} */
-/* 
-.home {
-  font-family: 'Reddit', sans-serif
-} */
-
-/* .home {
-  font-family: 'Montserrat+Alternates, monospace'
-} */
-
 .screen-container {
   perspective: 660px;
 }
@@ -139,20 +87,6 @@ onBeforeMount(() => localStorageConfig())
   perspective: 1000px
 }
 
-/* @media (prefers-color-scheme: light) {
-  .head {
-    background: #e20707;
-    color: #333;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  .head {
-    background: #170ebf;
-    color: #FFF;
-  }
-} */
-
 .noscrollbar::-webkit-scrollbar {
     display: none;
 }
@@ -160,5 +94,37 @@ onBeforeMount(() => localStorageConfig())
 .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none
+}
+</style>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Exo:ital,wght@0,100..900;1,100..900&family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Reddit+Mono:wght@200..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Shadows+Into+Light&display=swap');
+
+/* .settings-font {
+  font-family: 'Amiri', sans-serif,
+} */
+
+.settings-font {
+  font-family: 'Exo', sans-serif;
+}
+
+/* .home {
+  font-family: 'Roboto Mono', monospace
+} */
+
+.home {
+  font-family: 'Roboto Mono', sans-serif;
+}
+
+/* .settings-font {
+  font-family: 'Reddit Mono', sans-serif
+} */
+
+/* .shadows-font {
+  font-family: 'Shadows Into Light', cursive;
+} */
+
+.config {
+  font-family: 'Montserrat Alternates', monospace;
 }
 </style>

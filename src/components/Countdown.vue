@@ -1,5 +1,5 @@
 <template>
-    <div v-if="start" :class="[theme === 'dark' ? 'text-slate-400' : 'text-black']" class="text-[18px] font-bold max-w-fit m-auto">
+    <div :class="[theme === 'dark' ? 'text-slate-400' : 'text-black']" class="text-[18px] font-bold max-w-fit m-auto">
         <Transition :name="animationName" mode="out-in">
             <div v-if="isNextCountDown" ref="countDownElement">{{ countdown }}</div>
         </Transition>

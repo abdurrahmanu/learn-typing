@@ -3,7 +3,7 @@
         <div class="w-[90%]">
             <div class="flex items-center justify-between">
                 <div class="text-xs font-medium whitespace-nowrap">FONT SIZE</div> 
-                <div class="min-w-[40px] text-center text-sm font-mono">{{ fontSize }}px</div>
+                <div class="min-w-[40px] text-center text-sm ">{{ fontSize }}px</div>
             </div>
             <input  name="range" type="range" class="w-full h-1" v-model="range"/>
         </div>

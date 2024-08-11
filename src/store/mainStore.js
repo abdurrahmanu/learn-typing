@@ -4,6 +4,7 @@ import {generateTest} from '../composables/generateTest'
 
 export const mainStore = defineStore('mainStore', () => {
     const route = ref(null)
+    const mobileBackspace = ref(false)
 
     //Test container
     const testContainerEl = ref(null)
@@ -160,6 +161,7 @@ export const mainStore = defineStore('mainStore', () => {
         movie,
         customTests,
         authoredQuote,
+        mobileBackspace,
     }
 })
 

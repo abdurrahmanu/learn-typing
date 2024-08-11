@@ -18,7 +18,7 @@
                 <div @click="addSelection(entry)"  v-for="(entry, index) in line" :key="index" :class="[alphabetsCombination.includes(entry) ? ' border-sky-400' : 'border-neutral-600'] " class="p-1 py-0 rounded-md border text-lg inline-block min-w-[20px] text-center m-1">{{ entry }}</div>
             </div>
         </div>
-        <div class="font-mono text-lg font-thin px-2 text-center min-h-[30px]">{{ alphabetsCombination.join('') }}</div>
+        <div class=" text-lg font-thin px-2 text-center min-h-[30px]">{{ alphabetsCombination.join('') }}</div>
     </div>
 
 </template>
