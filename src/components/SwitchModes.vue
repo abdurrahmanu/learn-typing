@@ -13,6 +13,7 @@ import { storeToRefs } from 'pinia';
 import { mainStore } from '../store/mainStore';
 import { customizeStore } from '../store/customizeStore';
 import {alphabetsStore}  from '../store/alphabetsModeStore';
+import { countdownStore } from '../store/countdownStore';
 import {useRoute} from 'vue-router'
 
 const route = useRoute()
@@ -20,8 +21,11 @@ const route = useRoute()
 const alphabets_ = alphabetsStore()
 const { alphabetsMode_ } = storeToRefs(alphabets_)
 
+const count = countdownStore()
+const {clearCounter} = count
+
 const store = mainStore()
-const { movie, authoredQuote, hasCompletedSession} = storeToRefs(store)
+const { movie, authoredQuote, hasCompletedSession, timedTyping} = storeToRefs(store)
 const {switchNext} = store
 
 const customize = customizeStore()
@@ -31,6 +35,7 @@ const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
 
 const toggleMode = (type) => {
     repeat.value = false
+    if (timedTyping.value) clearCounter()
     
     if (type === 'alphabets') {
         mode.value = 'alphabets'

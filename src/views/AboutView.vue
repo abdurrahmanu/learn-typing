@@ -3,27 +3,33 @@
         <div class="m-auto w-fit top-[15px] relative scale-125">                
             <Logo />
         </div>
-        <p class="text-center text-[50px] leading-0 opacity-90 blur-[1px]">KiBoard</p>
-        <div class="m-auto  font-normal w-fit z-[-1] text-sm border border-slate-500 p-1 border-x-0">
+        <p class="text-center text-[50px] leading-0 opacity-90 blur-[1px] roboto-mono exo-ital">KiBoard</p>
+        <div class="m-auto max-w-[400px] z-[-1] text-lg border border-slate-500 p-1 border-x-0 caveat font-black">
             <p class="m-auto text-center w-fit">A TYPING WEB APP DESIGNED AND DEVELOPED</p>
             <p class="m-auto text-center w-fit">BY</p>
-            <p class="m-auto font-semibold text-center w-fit">AHMED ABDULRAHMAN</p>
+            <p class="m-auto text-center w-fit">AHMED ABDULRAHMAN</p>
         </div>
-        <div>            
-            <p class="p-2 pb-1 text-center underline">CONTACT ME</p>
+        <div class="p-1 m-auto border-b border-slate-500 max-w-[400px]">  
+            <p class="p-2 pb-1 font-bold text-center underline">CONTACT ME</p>
             <div class="justify-center flex max-w-[700px] gap-5 m-auto py-5 pt-2 flex-wrap text-sm">
                 <!-- <div @click="name='github'" class="px-2 py-[1px] border-gray-500 border rounded-sm transition-all duration-100 hover:shadow-md hover:border-green-500 flex items-center gap-2"><github class="w-4" /> GITHUB</div>
                 <div @click="name='linkedin'" class="px-2 py-[1px] border-gray-500 border rounded-sm transition-all duration-100 hover:shadow-md hover:border-green-500 flex items-center gap-2"><linkedin class="w-6" /> LINKEDIN</div> -->
-                <div @click="name='email'" class="px-2 py-[1px] border-gray-500 border rounded-sm transition-all duration-100 hover:shadow-md hover:border-green-500 flex items-center gap-2"><email class="w-4" />EMAIL</div>
+                <div @click="name='email'" class="px-2 py-[1px] border-gray-500 border rounded-sm transition-all duration-100 hover:shadow-md hover:border-green-500 flex items-center gap-2 pacifico text-xs"><email class="w-4" />EMAIL</div>
             </div>
         </div>
-        <div class="m-auto text-sm font-normal w-fit">
-            <p class="pb-2 text-center underline">CREDITS</p>
-            <p @click="name='portfolio'" class="pb-6 text-center hover:underline">Ahmed Abdulrahman</p>
-            <p class="pb-5 text-center underline">SUPPORTERS</p>
-            <p class="pb-6 text-center">---</p>
-            <p class="pb-5 text-center underline">CONTRIBUTORS</p>
-            <p class="text-center">---</p>
+        <div class="flex flex-wrap justify-between py-4 m-auto text-sm font-normal min-w-fit max-w-[500px] gap-y-5">
+            <div class="m-auto w-fit min-w-[130px]">
+                <p class="font-bold text-center underline">SUPPORTERS</p>
+                <p class="text-center ">---</p>
+            </div>
+            <div class="m-auto w-fit min-w-[130px]">                
+                <p class="mb-1 font-bold text-center underline">CREDITS</p>
+                <p @click="name='portfolio'" class="text-base text-center hover:underline pacifico">Ahmed Abdulrahman</p>
+            </div>
+            <div class="m-auto w-fit min-w-[130px]">                
+                <p class="mb-1 font-bold text-center underline">CONTRIBUTORS</p>
+                <p class="text-center">---</p>
+            </div>
         </div>
     </div>
 </template>

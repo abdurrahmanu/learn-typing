@@ -34,7 +34,7 @@
                             <span v-if="index !== 0" @click="del(name)" class="px-3 text-white py-[1px] bg-red-500 rounded-full hover:bg-red-600">delete</span>
                             <span v-if="index !== 0" @click="edit(name)" class="px-3 text-white py-[1px] bg-blue-600 rounded-full hover:bg-blue-700">edit</span>
                         </div>
-                        <div class="test-[10px]">{{ test }}</div>
+                        <div class="test-[10px] font-[400] exo-ital">{{ test }}</div>
                     </div>
                 </div>
             </div>

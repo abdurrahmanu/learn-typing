@@ -8,9 +8,10 @@ export const inputEvent = (e) => {
     const { sessionComplete } = store
     
     const customize = customizeStore()
-    const {backspace, pauseTyping} = storeToRefs(customize)
+    const {backspace, pauseTyping, capslock} = storeToRefs(customize)
 
-    
+    if (e.getModifierState("CapsLock") && !capslock.value ) return
+
     if (e.key === 'Escape') return
     if (route.value !== 'home') return
     if (e.key === 'Backspace' && !backspace.value) return

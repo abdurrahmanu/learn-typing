@@ -16,12 +16,13 @@ export const localStorageConfig = async () => {
     const {customTests} = storeToRefs(main)
 
     const customize = customizeStore()
-    const { customizers, disableOption, caretType, difficulty, mode, hideElements, font, range, blind, backspace } = storeToRefs(customize)
+    const { customizers, disableOption, caretType, difficulty, mode, hideElements, font, range, blind, backspace, capslock } = storeToRefs(customize)
 
     if (localStorage.getItem('kiboard')) {
         const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
 
         let dorayiTyping = {
+            capslock: typeof(localStorageSettings.value.capslock) === 'boolean' ? localStorageSettings.value.capslock : capslock.value,
             difficulty: localStorageSettings.value.difficulty || difficulty.value,
             customTests: localStorageSettings.value.customTests ||  customTests.value,
             config:  [ localStorageSettings.value.config[0] || customizers.value, localStorageSettings.value.config[1] || disableOption.value],
@@ -52,12 +53,12 @@ export const localStorageConfig = async () => {
         customizers.value = localStorageSettings.value.config[0]
         disableOption.value = localStorageSettings.value.config[1] 
         mode.value = localStorageSettings.value.mode
+        capslock.value = localStorageSettings.value.capslock
         customTests.value = localStorageSettings.value.customTests
         if (mode.value === 'alphabets') alphabetsMode_.value = true
         else alphabetsMode_.value = false
         
         if (localStorageSettings.value.alphabets.combo) {
-            console.log('object');
             useAlphabetCombination.value = true
             alphabetsCombination.value = localStorageSettings.value.alphabets.combination || []
         }
@@ -66,6 +67,7 @@ export const localStorageConfig = async () => {
     else {
         let dorayiTyping = {
             difficulty: 'beginner',
+            capslock: true,
             customTests: {'demo': 'This is a custom test, you can add your own tests by pressing the plus icon. This demo test cannot be deleted'},
             config: [customizers.value, disableOption.value],
             caret: 'border',

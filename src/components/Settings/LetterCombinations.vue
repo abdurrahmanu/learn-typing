@@ -2,10 +2,14 @@
     <div :class="[theme === 'dark' ? 'hover:bg-neutral-800' : 'hover:bg-slate-100']" class="py-1 pl-5">
         <div @click="toggle" class="flex w-full p-1 space-x-4 border border-transparent rounded-sm">
             <input :disabled="!(alphabetsCombination.length > 1)" :checked="useAlphabetCombination"  type="checkbox" class="accent-green-500" name="letter-combination" id="id">
-            <label for="id" class="text-sm font-medium w-fit">Letter Combinations <span class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-lime-600 ml-1">easy</span></label>
+            <label for="id" class="text-sm font-medium w-fit"> 
+                <span>Characters Combinations</span>
+                <span v-if="useAlphabetCombination" class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-yellow-800 ml-1">medium</span>
+                <span v-else class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-lime-600 ml-1">easy</span>
+            </label>
         </div>
         <div class="px-4 font-[400]">
-            <p>Randomly repeats and shuffles your selection. Select a minimum of two entries or maximum of ten entries then click the checkbox.</p>
+            <p>Randomly repeats and shuffles your selection. Select a minimum of two entries or maximum of ten characters then click the checkbox.</p>
             <div @click="shiftKey = !shiftKey" class="flex m-auto my-1 space-x-2 w-fit">
                 <input :checked="shiftKey" type="checkbox" class="accent-green-500" name="shiftkey" id="shiftkey">
                 <label for="shiftkey" class="font-medium">Shift Key</label>

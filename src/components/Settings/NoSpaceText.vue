@@ -3,10 +3,14 @@
         <div class="flex justify-between w-full p-1 border border-transparent rounded-sm ">
             <div @click="customizers['no-space'] = !customizers['no-space'], customize('no-space', customizers['no-space'])" class="flex gap-4 w-fit">
                 <input name="nospace" :checked="customizers['no-space']" type="checkbox" class="accent-green-500">
-                <label class="text-sm font-medium w-fit">NoSpace <span class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-teal-800 ml-1">hard</span></label>
+                <label class="text-sm font-medium w-fit">
+                    <span>No space </span>
+                    <span v-if="customizers['no-space']" class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-teal-800 ml-1">hard</span>
+                    <span v-else class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-lime-600 ml-1">easy</span>
+                </label>
             </div>
         </div>
-        <p class="px-3 font-[400]">All white spaces are cleared between words</p>
+        <p class="px-3 font-[400]">All white spaces are cleared between words.</p>
     </div>
 </template>
 

@@ -32,7 +32,7 @@
                             <p>The percentage of correctly typed characters out of the total number of characters.</p>
                         </div>
                     </div>
-                    <div class="config">{{ accuracy() }}%</div>
+                    <div class="config font-[500]">{{ accuracy() }}%</div>
                 </div>
                 <div class="relative px-2 text-center border-r border-r-teal-700">
                     <div class="relative">                        
@@ -41,7 +41,7 @@
                             <p>The total time taken to complete the typing test.</p>
                         </div>
                     </div>
-                    <div class="config">{{ resultData.totalTime }}s</div>
+                    <div class="config font-[500]">{{ resultData.totalTime }}s</div>
                 </div>
                 <div class="relative px-2 text-center border-r border-r-teal-700">
                     <pass v-if="wpmBasedOnLevels" class="absolute bottom-0 right-[2px] w-3" />
@@ -52,7 +52,7 @@
                             <p>Words Per Minute is the number of words typed correctly per minute. One word is defined as five characters.</p>
                         </div>
                     </div>
-                    <div class="config">{{ (resultData.WPM * (accuracy() / 100)).toFixed(0) }}</div>
+                    <div class="config font-[500]">{{ (resultData.WPM * (accuracy() / 100)).toFixed(0) }}</div>
                 </div>
                 <div class="relative px-2 border-r border-r-teal-700"> 
                     <pass v-if="ErrorRatioBasedOnLevels" class="absolute bottom-0 right-[2px] w-3" />
@@ -63,15 +63,17 @@
                             <p>Incorrectly typed characters / Total number of characters</p>
                         </div>
                     </div>
-                    <div class="config">{{ errorRatio() }}<span class="text-[11px] font-cursive font-bold"></span></div>
+                    <div class="config font-[500]">{{ errorRatio() }}<span class="text-[11px] font-cursive font-bold"></span></div>
                 </div>
             </div>
         </div>
-        <div class="space-y-1 text-sm font-[400] roboto-font">            
-            <div v-if="timedTyping" :class="[timedTypingTestResult === 'you passed the test' ? 'text-green-700' : 'text-red-400']" class="text-center uppercase">{{ timedTypingTestResult }}</div>
-            <div v-else  :class="[testResult === 'you passed the test' ? 'text-green-700' : 'text-red-400']" class="text-center uppercase">{{ testResult }}</div>
-            <div v-if="beatCountdown" class="text-green-700 uppercase ">You beat the time, you left {{ remainingTime() }}<span class="lowercase">s</span></div>
-            <div v-if="timedTyping && !beatCountdown" class="text-red-400 uppercase ">You didn't beat the time</div>
+        <div class="space-y-1 text-lg font-[400] roboto-font py-4 border-y border-slate-500 w-fit m-auto caveat">            
+            <div v-if="timedTyping">                
+                <div v-if="beatCountdown" class="text-green-700 uppercase ">You beat the time, you had {{ remainingTime() }}<span class="lowercase">s</span> left</div>
+                <div v-else class="text-red-400 uppercase ">You failed to beat the time<span class="text-lg">&#128551;</span>
+                </div>
+            </div>
+            <div v-else  :class="[testResult === 'you passed the test' ? 'text-green-700' : 'text-red-400']" class="text-center uppercase">{{ testResult }}<span class="px-3 text-2xl">{{ testResult === 'you failed the test' ? '&#128551;' : '&#128526;' }}</span></div>
         </div>
     </div>
 </template>
@@ -203,18 +205,6 @@ const testResult  = computed(() => {
     } 
     else if (difficulty.value === 'expert') {
         return accuracy() > 95 && (resultData.value.WPM * (accuracy() / 100)).toFixed(0) > 85 && errorRatioLevel() ? 'you passed the test' : 'you failed the test'
-    }
-})
-
-const timedTypingTestResult = computed(() => {
-    if (difficulty.value === 'beginner') {        
-        return  beatCountdown.value && accuracy() > 70 && (resultData.value.WPM * (accuracy() / 100)).toFixed(0) > 50 && errorRatioLevel() ? 'you passed the test' : 'you failed the test'
-    } 
-    else if (difficulty.value === 'amateur') {
-        return  beatCountdown.value && accuracy() > 80 && (resultData.value.WPM * (accuracy() / 100)).toFixed(0) > 65 && errorRatioLevel() ? 'you passed the test' : 'you failed the test'
-    } 
-    else if (difficulty.value === 'expert') {
-        return  beatCountdown.value && accuracy() > 95 && (resultData.value.WPM * (accuracy() / 100)).toFixed(0) > 85 && errorRatioLevel() ? 'you passed the test' : 'you failed the test'
     }
 })
 </script>

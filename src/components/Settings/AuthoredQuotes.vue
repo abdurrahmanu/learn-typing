@@ -3,18 +3,18 @@
         <div  class="flex justify-between w-full p-1 border border-transparent rounded-sm">
             <div @click="customizers['author-quotes'] = !customizers['author-quotes'], customize('author-quotes', customizers['author-quotes'])" class="flex gap-4 w-fit">
                 <input name="authored" :checked="customizers['author-quotes']" type="checkbox" class="accent-green-500">
-                <label class="text-sm font-medium w-fit">Authored quotes</label>
+                <label class="text-sm font-medium w-fit">Quotes with Authors</label>
             </div>
         </div>
         <p class="px-2 font-[400]">This is only available for quotes mode with auto-length. On-select, it automatically enables both modes</p>
         <div v-if="customizers['author-quotes']"class="p-2 font-[400]">
-            <div class="py-1 space-x-2 w-fit">      
-                <input id="mix-authored" :value="false" @click="setQuotes(false)" v-model="onlyAuthoredQuotes" class="w-7 accent-green-500" type="radio"></input>
-                <label for="mix-authored">Authored quotes with Unauthored quotes</label>          
-            </div>
             <div class="py-1 space-x-2 w-fit">         
                 <input id="only-authored" :value="true" @click="setQuotes(true)" v-model="onlyAuthoredQuotes" class="w-7 accent-green-500" type="radio"></input>
-                <label for="only-authored">Only authored quotes</label>       
+                <label for="only-authored">Authored quotes only</label>       
+            </div>
+            <div class="py-1 space-x-2 w-fit">      
+                <input id="mix-authored" :value="false" @click="setQuotes(false)" v-model="onlyAuthoredQuotes" class="w-7 accent-green-500" type="radio"></input>
+                <label for="mix-authored">Authored quotes with other quotes</label>          
             </div>
         </div>
     </div>

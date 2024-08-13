@@ -8,15 +8,16 @@
                     <Fonts />
                     <Caret />
                     <Difficulty />
-                    <BlurTest />
-                    <MovieQuotes />
-                    <AuthoredQoutes />
-                    <BlindMode />
                     <BackSpace />
+                    <BlindMode />
+                    <BlurTest />
+                    <CapsLock />
                     <Countdown />
-                    <AllCaps />
                     <CustomCamelCase />
                     <NoSpaceText />
+                    <MovieQuotes />
+                    <AuthoredQoutes />
+                    <AllCaps />
                 </div>
             </div>
             <div v-if="alphabetsMode_">
@@ -26,11 +27,12 @@
                         <Fonts />
                         <Caret />
                         <Difficulty />
-                        <BlurTest />
-                        <LetterCombinations />
                         <BlindMode />
                         <BackSpace />
+                        <BlurTest />
+                        <CapsLock />
                         <Countdown />
+                        <LetterCombinations />
                     </div>
                 </div>
             </div>
@@ -60,6 +62,7 @@ import {alphabetsStore}  from '../../store/alphabetsModeStore';
 import { isMobileOS } from '../../composables/isMobileOS'
 import BlurTest from './BlurTest.vue'
 import Difficulty from './Difficulty.vue'
+import CapsLock from './CapsLock.vue'
 
 const alphabets_ = alphabetsStore()
 const { alphabetsMode_, } = storeToRefs(alphabets_)

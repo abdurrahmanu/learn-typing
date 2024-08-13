@@ -1,6 +1,6 @@
 <template>
     <main class="w-[90%] min-h-[150px] space-y-[2px] relative transition-none  max-w-[900px] m-auto" :class="[!hideElements ? 'min-[1350px]:pt-10' : 'min-[1350px]:pt-16']">
-        <div :class="[isMobileOS() ? 'flex' : 'block']" class="relative h-fit min-h-[30px] m-auto py-1  max-w-[700px]">            
+        <div :class="[isMobileOS() ? 'flex' : 'block', alphabetsMode_ && !useAlphabetCombination ? 'max-w-[450px]' : 'max-w-[700px]']" class="relative h-fit min-h-[30px] m-auto py-1">            
             <MobileInput />
             <Countdown 
                 v-show="(isMobileOS() && focus && timedTyping) || timedTyping"
@@ -57,14 +57,14 @@ import { useRoute } from 'vue-router';
 
 const route = useRoute()
 const alphabets_ = alphabetsStore()
-const { alphabetsMode_ } = storeToRefs(alphabets_)
+const { alphabetsMode_, useAlphabetCombination } = storeToRefs(alphabets_)
 
 const store = mainStore()
 const { containerText, mobileBackspace, wrongCount, previousPlayerInput, savedCountdown, beginCountdown, timedTyping, hasCompletedSession, focus, resultData, testContainerEl, containerHeight, movie, beatCountdown, playerInputLength, playerInput, authoredQuote, scrollTextContainer, restartSvgEl, restartEl, inputEl} = storeToRefs(store)
 const { sessionComplete, switchNext} = store
 
 const customize = customizeStore()
-const { customizers, hideElements, font, textPosition} = storeToRefs(customize)
+const { customizers, hideElements, font, textPosition,} = storeToRefs(customize)
 
 const theme_ = themeStore()
 const {theme} = storeToRefs(theme_)

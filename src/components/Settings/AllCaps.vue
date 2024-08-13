@@ -3,10 +3,15 @@
         <div  class="flex justify-between w-full p-1 border border-transparent rounded-sm ">
             <div @click="customizers['all-caps'] = !customizers['all-caps'], customize('all-caps', customizers['all-caps'])" class="flex gap-4 w-fit">
                 <input name="caps" :checked="customizers['all-caps']" type="checkbox" class="accent-green-500">
-                <label class="text-sm font-medium w-fit">All Caps</label>
+                <label class="text-sm font-medium w-fit">
+                    <span>Uppercase</span>
+                    <span v-if="customizers['all-caps'] && capslock" class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-teal-800 ml-1">hard</span>
+                    <span v-else-if="customizers['all-caps'] && !capslock" class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-yellow-800 ml-1">medium</span>
+                    <span v-else-if="!customizers['all-caps']" class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-lime-600 ml-1">easy</span>
+                </label>
             </div>
         </div>
-        <p class="px-3 font-[400]">All tests will be converted to CAPS</p>
+        <p class="px-3 font-[400]">All alphabets will be capitalized</p>
     </div>
 </template>
 
@@ -19,6 +24,6 @@ const theme_ = themeStore()
 const {theme} = theme_
 
 const store = customizeStore()
-const {customizers} = storeToRefs(store)
+const {customizers, capslock} = storeToRefs(store)
 const {customize} = store
 </script>

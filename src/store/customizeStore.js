@@ -16,11 +16,13 @@ export const customizeStore = defineStore('customizeStore', () => {
     const difficulty = ref('beginner')
     const backspace = ref(false)
     const repeat = ref(false)
+    const capslock = ref(true)
     const textPosition = ref('left')
     const blind = ref(false)
     const font = ref(32)
     const range = ref((font.value - 16) / 0.16)
     const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
+    const capsIsOn = ref(false)
 
     const customizers = ref({
         'text-length': 'auto',
@@ -137,5 +139,7 @@ export const customizeStore = defineStore('customizeStore', () => {
         customTestModal,
         selectedCustomTest,
         testType_,
+        capslock,
+        capsIsOn,
     }
 })

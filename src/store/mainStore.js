@@ -20,7 +20,6 @@ export const mainStore = defineStore('mainStore', () => {
     const restartEl = ref(null)
     const restartSvgEl = ref(null)
     const focus = ref(false)
-    const capsIsOn = ref(false)
     const allSpacesIndex = ref([])
     const spaceCount = ref(0)
     const pulseAnimate = ref(false)
@@ -116,7 +115,6 @@ export const mainStore = defineStore('mainStore', () => {
         switchNext,
         
         route,
-        capsIsOn,
         resultData,
         inputEl,
         restartEl,
