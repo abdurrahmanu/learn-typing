@@ -10,12 +10,14 @@ export const inputEvent = (e) => {
     const customize = customizeStore()
     const {backspace, pauseTyping} = storeToRefs(customize)
 
+    
     if (e.key === 'Escape') return
     if (route.value !== 'home') return
+    if (e.key === 'Backspace' && !backspace.value) return
+    if (e.key === 'Backspace' && !wrongCount.value) return
     if (e.key === 'Backspace' && !playerInput.value.length) return
     if ((e.key === 'Enter' && !enterKey.value) || pauseTyping.value) return
-    if (e.key === 'Backspace' && !wrongCount.value || !backspace.value) return
-    
+
     if (e.key === 'Backspace') {
         backspaceIsPressed.value = true
         playerInputLength.value--

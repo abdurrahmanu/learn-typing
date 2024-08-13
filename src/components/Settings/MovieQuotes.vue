@@ -2,18 +2,18 @@
     <div :class="[theme === 'dark' ? 'hover:bg-neutral-800' : 'hover:bg-slate-100']" class="py-2 pl-5">
         <div class="flex justify-between w-full p-1 border border-transparent rounded-sm ">
             <div @click="customizers['movie-quotes'] = !customizers['movie-quotes'], customize('movie-quotes', customizers['movie-quotes'])"  class="flex gap-4 w-fit">
-                <input name="movie" :checked="customizers['movie-quotes']" type="checkbox">
+                <input name="movie" :checked="customizers['movie-quotes']" type="checkbox" class="accent-green-500">
                 <label class="text-sm font-medium w-fit">Movie quotes</label>
             </div>
         </div>
-        <p class="px-2 font-[400]">**This is only available for quotes mode with auto-length. On-select, it automatically enables both modes</p>
-        <div v-if="customizers['movie-quotes']"class="p-2">
+        <p class="px-2 font-[400]">This is only available for quotes mode with auto-length. On-select, it automatically enables both modes</p>
+        <div v-if="customizers['movie-quotes']"class="p-2 font-[400]">
             <div class="py-1 space-x-2 w-fit">      
-                <input id="mix" :value="false" @click="setQoutes(false)" v-model="onlyMovieQuotes" class="w-7" type="radio"></input>
+                <input id="mix" :value="false" @click="setQoutes(false)" v-model="onlyMovieQuotes" class="w-7 accent-green-500" type="radio"></input>
                 <label for="mix">Movie quotes with normal quotes</label>          
             </div>
             <div class="py-1 space-x-2 w-fit">         
-                <input id="only" :value="true" @click="setQoutes(true)" v-model="onlyMovieQuotes" class="w-7" type="radio"></input>
+                <input id="only" :value="true" @click="setQoutes(true)" v-model="onlyMovieQuotes" class="w-7 accent-green-500" type="radio"></input>
                 <label for="only">Only movie quotes</label>       
             </div>
         </div>

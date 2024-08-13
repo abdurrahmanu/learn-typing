@@ -2,7 +2,7 @@
         <div :class="[theme === 'dark' ? 'hover:bg-neutral-800' : 'hover:bg-slate-100']" class="py-2 pl-5">
             <div class="flex justify-between w-full p-1 border border-transparent rounded-sm ">
                 <div @click="timedTyping = !timedTyping" class="flex gap-4 w-fit">
-                    <input name="countdown" :checked="timedTyping" type="checkbox">
+                    <input name="countdown" :checked="timedTyping" type="checkbox" class="accent-green-500">
                     <label class="text-sm font-medium w-fit">Countdown Typing </label> <!-- <span class="px-3 text-white uppercase  rounded-full py-[1px] text-[12px] bg-yellow-800 ml-1">medium</span> -->
                 </div>
             </div>

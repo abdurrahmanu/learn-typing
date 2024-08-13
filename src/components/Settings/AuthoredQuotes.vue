@@ -1,19 +1,19 @@
 <template>
     <div :class="[theme === 'dark' ? 'hover:bg-neutral-800' : 'hover:bg-slate-100']" class="py-2 pl-5">
-        <div  class="flex justify-between w-full p-1 border border-transparent rounded-sm ">
+        <div  class="flex justify-between w-full p-1 border border-transparent rounded-sm">
             <div @click="customizers['author-quotes'] = !customizers['author-quotes'], customize('author-quotes', customizers['author-quotes'])" class="flex gap-4 w-fit">
-                <input name="authored" :checked="customizers['author-quotes']" type="checkbox">
+                <input name="authored" :checked="customizers['author-quotes']" type="checkbox" class="accent-green-500">
                 <label class="text-sm font-medium w-fit">Authored quotes</label>
             </div>
         </div>
-        <p class="px-2 font-[400]">**This is only available for quotes mode with auto-length. On-select, it automatically enables both modes</p>
-        <div v-if="customizers['author-quotes']"class="p-2">
+        <p class="px-2 font-[400]">This is only available for quotes mode with auto-length. On-select, it automatically enables both modes</p>
+        <div v-if="customizers['author-quotes']"class="p-2 font-[400]">
             <div class="py-1 space-x-2 w-fit">      
-                <input id="mix-authored" :value="false" @click="setQuotes(false)" v-model="onlyAuthoredQuotes" class="w-7" type="radio"></input>
+                <input id="mix-authored" :value="false" @click="setQuotes(false)" v-model="onlyAuthoredQuotes" class="w-7 accent-green-500" type="radio"></input>
                 <label for="mix-authored">Authored quotes with Unauthored quotes</label>          
             </div>
             <div class="py-1 space-x-2 w-fit">         
-                <input id="only-authored" :value="true" @click="setQuotes(true)" v-model="onlyAuthoredQuotes" class="w-7" type="radio"></input>
+                <input id="only-authored" :value="true" @click="setQuotes(true)" v-model="onlyAuthoredQuotes" class="w-7 accent-green-500" type="radio"></input>
                 <label for="only-authored">Only authored quotes</label>       
             </div>
         </div>

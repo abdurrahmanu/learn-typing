@@ -119,7 +119,7 @@ const mainStyle = computed(() => {
 
 const blurStyle = computed(() => {
     if (customizers.value['blur']) {        
-        return allSpacesIndex.value[spaceCount.value + 1] && props.index > allSpacesIndex.value[spaceCount.value + 1] ? 'blur-[7px]' : props.index > allSpacesIndex.value[spaceCount.value] ? 'blur-[2px]' : ''
+        return allSpacesIndex.value[spaceCount.value + 1] && props.index > allSpacesIndex.value[spaceCount.value + 1] ? 'blur-[7px]' : props.index > allSpacesIndex.value[spaceCount.value] ? 'blur-[1px]' : ''
     }
 })
 

@@ -1,6 +1,5 @@
 import {ref} from 'vue'
 import { storeToRefs } from 'pinia';
-import {pagesStore}  from '../store/pagesStore'
 import {themeStore}  from '../store/themeStore'
 import {customizeStore} from '../store/customizeStore'
 import {alphabetsStore}  from '../store/alphabetsModeStore';
@@ -19,9 +18,6 @@ export const localStorageConfig = async () => {
     const customize = customizeStore()
     const { customizers, disableOption, caretType, difficulty, mode, hideElements, font, range, blind, backspace } = storeToRefs(customize)
 
-    const pages = pagesStore()
-    const {currentPage } = storeToRefs(pages)
-
     if (localStorage.getItem('kiboard')) {
         const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
 
@@ -30,8 +26,8 @@ export const localStorageConfig = async () => {
             customTests: localStorageSettings.value.customTests ||  customTests.value,
             config:  [ localStorageSettings.value.config[0] || customizers.value, localStorageSettings.value.config[1] || disableOption.value],
             caret: localStorageSettings.value.caret || 'border',
-            theme: localStorageSettings.value.theme || 'dark',
-            backspace: localStorageSettings.value.backspace || true,
+            theme: localStorageSettings.value.theme || 'light',
+            backspace: typeof(localStorageSettings.value.backspace) === 'boolean' ? localStorageSettings.value.backspace : true,
             blind: localStorageSettings.value.blind || false,
             mode: localStorageSettings.value.mode || 'auto',
             hide: localStorageSettings.value.hide || false,
@@ -39,10 +35,9 @@ export const localStorageConfig = async () => {
             alphabets: {
                 combo: localStorageSettings.value.alphabets.combo || false,
                 combination: localStorageSettings.value.alphabets.combination ||  [],
-                mode: localStorageSettings.value.alphabets.mode || ''
             }
         }
-        
+
         localStorageSettings.value = dorayiTyping
         localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
 
@@ -58,20 +53,16 @@ export const localStorageConfig = async () => {
         disableOption.value = localStorageSettings.value.config[1] 
         mode.value = localStorageSettings.value.mode
         customTests.value = localStorageSettings.value.customTests
-        if (mode.value === 'alphabets') {
-            alphabetsMode_.value = true
-            currentPage.value = 1
-        }
-        else {
-                alphabetsMode_.value = false
-                currentPage.value = 0
-        }
+        if (mode.value === 'alphabets') alphabetsMode_.value = true
+        else alphabetsMode_.value = false
+        
         if (localStorageSettings.value.alphabets.combo) {
+            console.log('object');
             useAlphabetCombination.value = true
             alphabetsCombination.value = localStorageSettings.value.alphabets.combination || []
         }
-    } 
-
+    }
+    
     else {
         let dorayiTyping = {
             difficulty: 'beginner',
@@ -87,7 +78,6 @@ export const localStorageConfig = async () => {
             alphabets: {
                 combo: false,
                 combination: [],
-                mode: ''
             }
         }
 

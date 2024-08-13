@@ -1,26 +1,26 @@
 <template>
     <div :class="[theme === 'dark' ? 'hover:bg-neutral-800' : 'hover:bg-slate-100']" class="py-1 pl-5">
         <div @click="toggle" class="flex w-full p-1 space-x-4 border border-transparent rounded-sm">
-            <input :disabled="!(alphabetsCombination.length > 1)" :checked="useAlphabetCombination"  type="checkbox" name="letter-combination" id="id">
+            <input :disabled="!(alphabetsCombination.length > 1)" :checked="useAlphabetCombination"  type="checkbox" class="accent-green-500" name="letter-combination" id="id">
             <label for="id" class="text-sm font-medium w-fit">Letter Combinations <span class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-lime-600 ml-1">easy</span></label>
         </div>
         <div class="px-4 font-[400]">
-            <p>**Randomly repeats and shuffles your selection. Select a minimum of two entries or maximum of ten entries then click the checkbox.</p>
+            <p>Randomly repeats and shuffles your selection. Select a minimum of two entries or maximum of ten entries then click the checkbox.</p>
             <div @click="shiftKey = !shiftKey" class="flex m-auto my-1 space-x-2 w-fit">
-                <input :checked="shiftKey" type="checkbox" name="shiftkey" id="shiftkey">
+                <input :checked="shiftKey" type="checkbox" class="accent-green-500" name="shiftkey" id="shiftkey">
                 <label for="shiftkey" class="font-medium">Shift Key</label>
             </div>
         </div>
 
         <div class="relative m-auto h-fit w-fit">            
-            <!-- <p class="absolute font-semibold w-full opacity-30 blur-[1px] whitespace-nowrap text-[50px] top-[50%] translate-x-[-50%] left-[50%] translate-y-[-50%] z-[-1]">QWERTY KEYBOARD</p> -->
             <div v-for="(line, index) in shiftKey ? entries[0] : entries[1]" class="flex justify-center z-[3]">
-                <div @click="addSelection(entry)"  v-for="(entry, index) in line" :key="index" :class="[alphabetsCombination.includes(entry) ? ' border-sky-400' : 'border-neutral-600'] " class="p-1 py-0 rounded-md border text-lg inline-block min-w-[20px] text-center m-1">{{ entry }}</div>
+                <div @click="addSelection(entry)"  v-for="(entry, index) in line" :key="index" :class="[alphabetsCombination.includes(entry) ? ' border-sky-400' : 'border-neutral-600'] " class="p-[2px] py-0 rounded-md border text-[15px] inline-block min-w-[20px] text-center m-[1px] font-medium">{{ entry }}</div>
             </div>
         </div>
-        <div class=" text-lg font-thin px-2 text-center min-h-[30px]">{{ alphabetsCombination.join('') }}</div>
+        <div class=" text-lg px-2 text-center min-h-[30px] font-bold">{{ alphabetsCombination.join('') }}</div>
     </div>
 
+<div></div>
 </template>
 
 <script setup>
@@ -103,4 +103,9 @@ watch(alphabetsCombination, (newVal) => {
         localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
     }
 }, {deep: true})
+
+watch(useAlphabetCombination, newVal => {
+    localStorageSettings.value.alphabets.combo = newVal
+    localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
+})
 </script>
