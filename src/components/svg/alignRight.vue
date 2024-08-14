@@ -20,5 +20,5 @@ const props = defineProps({
     position: Boolean
 })
 
-const bg = computed(() => props.position ? 'green' : theme.value === 'dark' && !props.position ? 'white' : theme.value !== 'dark'  && !props.position ? 'black' : '')
+const bg = computed(() => props.position ? 'green' : theme.value === 'dark' && !props.position ? '#737373' : theme.value !== 'dark'  && !props.position ? 'black' : '')
 </script>

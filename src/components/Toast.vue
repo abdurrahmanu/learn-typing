@@ -1,6 +1,6 @@
 <template>
     <Transition appear mode="in-out" :name="transitionType">
-        <div ref="toastEl" v-if="toast" class="fixed p-1 w-fit z-[4] bg-red-500 shadow-sm shadow-black text-white" :class="{'top-0 left-[50%] translate-x-[-50%]' : top, 'top-0 left-[0]' : left, 'top-[50px] right-[0]' : right, 'bottom-0 left-[50%] translate-x-[-50%]' : bottom}">
+        <div ref="toastEl" v-if="toggle" class="fixed p-1 w-fit z-[4] shadow-sm shadow-black" :class="{'top-0 left-[50%] translate-x-[-50%]' : top, 'top-0 left-[0]' : left, 'top-[50px] right-[0]' : right, 'bottom-0 left-[50%] translate-x-[-50%]' : bottom}">
             {{ text }}
         </div>
     </Transition>
@@ -9,7 +9,6 @@
 <script setup>
 import { watchEffect, ref } from 'vue';
 
-const toast = ref(false)
 const transitionType = ref('')
 const toastEl = ref(null)
 const props = defineProps({
@@ -50,19 +49,7 @@ watchEffect(() => {
     props.bottom ?  transitionType.value = 'bottom' : 
     transitionType.value = 'left'
 })
-
-watchEffect(() => {
-    if (props.toggle) {
-        toast.value = true
-        setTimeout(() => {
-            toast.value = false
-        }, 3000);
-    } else {
-        toast.value = false
-    }
-})
 </script>
-
 
 <style scoped>
 /* ENTER */

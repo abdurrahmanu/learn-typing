@@ -15,7 +15,7 @@
                 @mouseleave="mouseLeave(listIndex)" >
                     <div 
                     class="px-[5px] hover:scale-105 rounded-md whitespace-nowrap" 
-                    :class="[disableOption[key] ? 'opacity-50 cursor-not-allowed' : '', customizers[key] === option && !disableOption[key]  ? 'text-green-500' : '', option === 'custom-test']"
+                    :class="[disableOption[key] ? 'opacity-30 cursor-not-allowed' : '', customizers[key] === option && !disableOption[key]  ? 'text-green-500' : '', option === 'custom-test']"
                     @click="changeConfig(option, key)" 
                     v-for="(option, index) in optionArr" 
                     :key="index">

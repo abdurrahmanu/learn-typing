@@ -1,12 +1,12 @@
 <template>
     <div @click="customTestModal = !customTestModal, pauseTyping = false, textValue = ''" v-if="customTestModal && route.name === 'home'" class="fixed top-0 bottom-0 left-0 right-0 bg-black opacity-40 z-[3]"></div>
-    <div v-if="customTestModal && route.name === 'home'" class="max-w-[500px] w-[95%] fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] rounded-md py-5 max-h-[calc(100dvh_-_20px)] text-[13px] z-[3]" :class="[theme === 'dark' ? 'bg-neutral-800' : 'bg-slate-300 shadow-sm shadow-slate-500']">
+    <div v-if="customTestModal && route.name === 'home'" class="max-w-[500px] w-[95%] fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] rounded-md py-5 max-h-[calc(100dvh_-_20px)] text-[13px] z-[3]" :class="[theme === 'dark' ? '' : 'shadow-sm shadow-slate-500', appTheme]">
         <div @click="customTestModal = !customTestModal, pauseTyping = false, textValue = ''" class="absolute top-0 text-xl font-bold w-fit right-2 hover:text-red-500">x</div>
         <div>            
             <div v-if="!saveCustomText" class="space-y-1 text-center">
                 <p class="py-2 font-medium">Add your preferred test, quote or story.</p>
                 <div class="relative w-[90%] m-auto">  
-                    <p @click="textValue = ''" class="absolute top-0 right-0 px-2 py-[2px] uppercase text-[9px] text-white rounded-tr-md bg-red-500 hover:bg-red-600 font-medium">clear</p>                  
+                    <p @click="textValue = ''" class="absolute top-0 right-0 px-2 py-[2px] uppercase text-[9px] text-white rounded-tr-md bg-red-500 hover:bg-red-600 font-medium cursor-default">clear</p>                  
                     <textarea v-model="textValue" :class="[appTheme]" class="w-full h-40 p-2 pt-2 border rounded-md outline-none border-slate-500" :placeholder="textAreaPlaceholder" name="custom-textarea" />
                 </div>
                 <div @click="startSavingCustomText" class="py-[2px] m-auto text-center border rounded-full px-4 w-fit border-slate-600 hover:bg-green-800 hover:text-white font-medium">ADD TEST</div>
@@ -43,7 +43,7 @@
 </template>
 
 <script setup>
-import {ref} from 'vue'
+import {ref, watch} from 'vue'
 import {storeToRefs} from 'pinia';
 import {mainStore} from '../store/mainStore';
 import {themeStore}  from '../store/themeStore'

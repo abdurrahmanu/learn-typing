@@ -1,5 +1,5 @@
 <template>
-    <div :class="[theme === 'dark' ? 'hover:bg-neutral-800' : 'hover:bg-slate-100']" class="py-2 pl-5">
+    <div :class="[theme === 'dark' ? 'hover:bg-neutral-800' : 'hover:bg-zinc-200']" class="py-2 pl-5">
         <div class="flex justify-between w-full p-1 border border-transparent rounded-sm ">
             <div @click="customize" class="flex gap-4 w-fit">
                 <input name="capslock" type="checkbox" :checked="capslock" class="accent-green-500">
@@ -10,7 +10,7 @@
                 </label>
             </div>
         </div>
-        <p  class="px-3 font-[400]">Enable to use caps lock for uppercase letters. Disable to use <span class="px-3 text-xs text-white bg-blue-600 rounded-full">Shift</span> + <span class="px-3 text-xs text-white bg-blue-600 rounded-full">Key</span> combination for uppercase.</p>
+        <p  class="px-3 font-[400]">Enable to use caps lock for uppercase letters. Disable to use <span class="px-3 text-xs text-white bg-blue-800">Shift</span> + <span class="px-3 text-xs text-white bg-blue-800">Key</span> combination for uppercase.</p>
     </div>
 </template>
 

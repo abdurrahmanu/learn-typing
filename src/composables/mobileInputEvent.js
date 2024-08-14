@@ -8,7 +8,12 @@ export const mobileInputEvent = (e) => {
     const { sessionComplete } = store
     
     const customize = customizeStore()
-    const {backspace, pauseTyping} = storeToRefs(customize)
+    const {backspace, pauseTyping, capslock, capsIsOn} = storeToRefs(customize)
+
+    if (e.getModifierState("CapsLock") && !capslock.value) {
+        if (!capsIsOn.value) capsIsOn.value = true
+        return
+    }
 
     if (mobileBackspace.value) {
         mobileBackspace.value = false

@@ -1,5 +1,5 @@
 <template>
-    <div :class="[theme === 'dark' ? 'hover:bg-neutral-800' : 'hover:bg-slate-100']" class="py-1 pl-5">
+    <div :class="[theme === 'dark' ? 'hover:bg-neutral-800' : 'hover:bg-zinc-200']" class="py-1 pl-5">
         <div @click="toggle" class="flex w-full p-1 space-x-4 border border-transparent rounded-sm">
             <input :disabled="!(alphabetsCombination.length > 1)" :checked="useAlphabetCombination"  type="checkbox" class="accent-green-500" name="letter-combination" id="id">
             <label for="id" class="text-sm font-medium w-fit"> 

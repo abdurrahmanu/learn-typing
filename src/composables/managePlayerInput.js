@@ -1,10 +1,14 @@
 import { mainStore } from "../store/mainStore"
+import { customizeStore } from "../store/customizeStore";
 import { isMobileOS } from "./isMobileOS";
 import { storeToRefs } from 'pinia';
 
 export const managePlayerInput = () => {
     const store = mainStore()
-    const { containerText, mobileBackspace, playerInputLength, playerInput, route, playerLastInput, previousPlayerInput, correctCount, wrongCount, completionLevel} = storeToRefs(store)
+    const { containerText, playerInputLength, playerInput, route, playerLastInput, previousPlayerInput, correctCount, wrongCount, completionLevel} = storeToRefs(store)
+
+    const customize = customizeStore()
+    const {backspace, pauseTyping, capslock, capsIsOn} = storeToRefs(customize)
 
     if (route.value !== 'home') return
     if (isMobileOS()) playerLastInput.value = playerInput.value[playerInput.value.length - 1]

@@ -15,8 +15,7 @@
             </div>
         </div>
         <div v-if="containerText" class="transition-all duration-100 relative mx-auto max-w-[700px] w-full min-w-[300px]">
-            <div aria-d
-            escribedby="full-text" ref="testContainerEl"  :style="{'height' : containerHeight + 'px', 'font-size': font + 'px'}" :class="[ customizers['no-space'] ? 'break-words' : '', alphabetsMode_ ? 'text-center break-words': 'text-left', !alphabetsMode_ && textPosition=== 'center' ? 'text-center' : !alphabetsMode_ && textPosition=== 'right' ? 'text-right' : 'text-left', ] " class="overflow-y-auto scroll-smooth noscrollbar leading-[1.4] h-fit py-[1px] outline-none">
+            <div aria-describedby="full-text" ref="testContainerEl"  :style="{'height' : containerHeight + 'px', 'font-size': font + 'px'}" :class="[ customizers['no-space'] ? 'break-words' : '', alphabetsMode_ ? 'text-center break-words': 'text-left', !alphabetsMode_ && textPosition=== 'center' ? 'text-center' : !alphabetsMode_ && textPosition=== 'right' ? 'text-right' : 'text-left', ] " class="overflow-y-auto scroll-smooth noscrollbar leading-[1.4] h-fit py-[1px] outline-none">
                 <p id="full-text" class="hidden">{{ containerText }}</p>
                 <Alphabet
                 v-for="(alphabet, index) in containerText"
@@ -64,7 +63,7 @@ const { containerText, mobileBackspace, wrongCount, previousPlayerInput, savedCo
 const { sessionComplete, switchNext} = store
 
 const customize = customizeStore()
-const { customizers, hideElements, font, textPosition,} = storeToRefs(customize)
+const { customizers, hideElements, font, textPosition, capsIsOn} = storeToRefs(customize)
 
 const theme_ = themeStore()
 const {theme} = storeToRefs(theme_)

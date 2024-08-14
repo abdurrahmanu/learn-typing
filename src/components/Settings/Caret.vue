@@ -1,5 +1,5 @@
 <template>
-    <div :class="[theme === 'dark' ? 'hover:bg-neutral-800' : 'hover:bg-slate-100']" class="py-4 pl-5 gap-x-3 gap-y-1 font-[400]">
+    <div :class="[theme === 'dark' ? 'hover:bg-neutral-800' : 'hover:bg-zinc-200']" class="py-4 pl-5 gap-x-3 gap-y-1 font-[400]">
         <div class="py-1 text-xs font-medium">CARET</div>
         <div class="flex flex-wrap gap-x-2 gap-y-1">
             <div @click="caretType = 'border'" class="flex px-5 py-1 border rounded-md" :class="[caretType === 'border' ? 'border-green-500' : 'border-slate-500']">

@@ -1,5 +1,5 @@
 <template>
-    <div :class="[theme === 'dark' ? 'hover:bg-neutral-800' : 'hover:bg-slate-100']" class="py-2 pl-5">
+    <div :class="[theme === 'dark' ? 'hover:bg-neutral-800' : 'hover:bg-zinc-200']" class="py-2 pl-5">
         <div  class="flex justify-between w-full p-1 border border-transparent rounded-sm ">
             <div @click="customizers['all-caps'] = !customizers['all-caps'], customize('all-caps', customizers['all-caps'])" class="flex gap-4 w-fit">
                 <input name="caps" :checked="customizers['all-caps']" type="checkbox" class="accent-green-500">

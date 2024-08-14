@@ -11,6 +11,7 @@
     <SwitchModes />
     <Theme />
     <Animate />
+    <Toast left text="Caps lock is disabled" :toggle="capsIsOn" class="py-2 text-xs text-white bg-teal-900 px-7" /> <!-- CAPS LOCK TOAST -->
   </div>
 </template>
 
@@ -28,6 +29,7 @@ import { mainStore } from './store/mainStore';
 import { useRoute } from 'vue-router';
 import {localStorageConfig} from './composables/getLocalStorageConfig'
 import CustomTestModal from './components/CustomTestModal.vue';
+import Toast from './components/Toast.vue';
 
 const route = useRoute()
 
@@ -35,7 +37,7 @@ const theme_ = themeStore()
 const { appTheme } = storeToRefs(theme_)
 
 const customize = customizeStore()
-const {font, customizers } = storeToRefs(customize)
+const {font, customizers, capsIsOn } = storeToRefs(customize)
 
 const main = mainStore()
 const { containerHeight, timedTyping, beginCountdown } = storeToRefs(main)
@@ -65,6 +67,14 @@ const height = () => {
 onMounted(() => height())
 watch(font, (newVal) => height() )
 onBeforeMount(() => localStorageConfig())
+
+watch(capsIsOn, (newVal, oldVal) => {
+  if (newVal) {
+    setTimeout(() => {
+      capsIsOn.value = oldVal
+    }, 3000);
+  }
+})
 </script>
 
 <style scoped>
