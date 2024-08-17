@@ -12,6 +12,7 @@ export const mainStore = defineStore('mainStore', () => {
     const scrollDistance = ref(0) // Container scroll Y axis
     const scrollTextContainer = ref({}) // Scroll top distance {top: number}
     const containerText = ref('') // Test
+    const customLengthInput = ref(null)
 
     //keys states
     const enterKey = ref(false)
@@ -117,6 +118,7 @@ export const mainStore = defineStore('mainStore', () => {
         route,
         resultData,
         inputEl,
+        customLengthInput,
         restartEl,
         restartSvgEl,
         focus,

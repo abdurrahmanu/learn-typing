@@ -35,7 +35,7 @@ export async function UseGetQuotes (config, customText) {
                 return
             } 
 
-            else if  (config['text-length'] === 40) {
+            else if  (config['text-length'] > 30) {
                 let quotes = [...quotesWithoutAuthors.value.fourty]
                 let quote = ref(quotes[Math.ceil(Math.random() * quotes.length) - 1])
                 res.value = quote.value
@@ -99,6 +99,19 @@ export async function UseGetQuotes (config, customText) {
         }
 
         else if (config['test-type'] === 'custom-test')  {
+            // if (config['text-length'] === 10) {
+
+            // }
+            // if (config['text-length'] === 20) {
+
+            // }
+            // if (config['text-length'] === 30) {
+
+            // }
+            // if (config['text-length'] > 30) {
+
+            // }
+
             if (customizeStore().selectedCustomTest) {
                 res.value = mainStore().customTests[customizeStore().selectedCustomTest]
                 customizeStore().selectedCustomTest = ''
@@ -163,6 +176,8 @@ export async function UseGetQuotes (config, customText) {
                 if (temp[index].match(/\n/)) res.value += ' '
                 else res.value += temp[index]
             }
+            res.value.trimStart()
+            res.value.trimEnd()
         }
     }
 

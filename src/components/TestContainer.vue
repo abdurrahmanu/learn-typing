@@ -1,5 +1,5 @@
 <template>
-    <main class="w-[90%] min-h-[150px] space-y-[2px] relative transition-none  max-w-[900px] m-auto" :class="[!hideElements ? 'min-[1350px]:pt-10' : 'min-[1350px]:pt-16']">
+    <main class="w-[90%] min-h-[150px] space-y-[2px] relative transition-none  max-w-[900px] m-auto">
         <div :class="[isMobileOS() ? 'flex' : 'block', alphabetsMode_ && !useAlphabetCombination ? 'max-w-[450px]' : 'max-w-[700px]']" class="relative h-fit min-h-[30px] m-auto py-1">            
             <MobileInput />
             <Countdown 
@@ -15,7 +15,7 @@
             </div>
         </div>
         <div v-if="containerText" class="transition-all duration-100 relative mx-auto max-w-[700px] w-full min-w-[300px]">
-            <div aria-describedby="full-text" ref="testContainerEl"  :style="{'height' : containerHeight + 'px', 'font-size': font + 'px'}" :class="[ customizers['no-space'] ? 'break-words' : '', alphabetsMode_ ? 'text-center break-words': 'text-left', !alphabetsMode_ && textPosition=== 'center' ? 'text-center' : !alphabetsMode_ && textPosition=== 'right' ? 'text-right' : 'text-left', ] " class="overflow-y-auto scroll-smooth noscrollbar leading-[1.4] h-fit py-[1px] outline-none">
+            <div @blur="textIsFocused = false" @focus="textIsFocused = true" tabindex="0" ria-describedby="full-text" ref="testContainerEl"  :style="{'height' : containerHeight + 'px', 'font-size': font + 'px'}" :class="[ customizers['no-space'] || customizers['test-type'] === 'custom-test' ? 'break-words' : '', alphabetsMode_ ? 'text-center break-words': 'text-left', !alphabetsMode_ && textPosition=== 'center' ? 'text-center' : !alphabetsMode_ && textPosition=== 'right' ? 'text-right' : 'text-left'] " class="overflow-y-auto scroll-smooth noscrollbar leading-[1.4] h-fit py-[1px] outline-none">
                 <p id="full-text" class="hidden">{{ containerText }}</p>
                 <Alphabet
                 v-for="(alphabet, index) in containerText"
@@ -35,7 +35,7 @@
 </template>
 
 <script setup>
-import { onMounted, watch } from 'vue';
+import { onMounted, watch, ref } from 'vue';
 import { isMobileOS } from '../composables/isMobileOS';
 import upwardsFinger from './svg/upwardsFinger.vue';
 import Countdown from './Countdown.vue';
@@ -60,7 +60,7 @@ const { alphabetsMode_, useAlphabetCombination } = storeToRefs(alphabets_)
 
 const store = mainStore()
 const { containerText, mobileBackspace, wrongCount, previousPlayerInput, savedCountdown, beginCountdown, timedTyping, hasCompletedSession, focus, resultData, testContainerEl, containerHeight, movie, beatCountdown, playerInputLength, playerInput, authoredQuote, scrollTextContainer, restartSvgEl, restartEl, inputEl} = storeToRefs(store)
-const { sessionComplete, switchNext} = store
+const {switchNext} = store
 
 const customize = customizeStore()
 const { customizers, hideElements, font, textPosition, capsIsOn} = storeToRefs(customize)
@@ -69,8 +69,10 @@ const theme_ = themeStore()
 const {theme} = storeToRefs(theme_)
 
 const count = countdownStore()
-const {countdown, start} = storeToRefs(count)
+const {countdown} = storeToRefs(count)
 const {clearCounter} = count
+
+const textIsFocused = ref(false)
 
 const restart = async () => {
     if (timedTyping.value) clearCounter()
@@ -103,11 +105,9 @@ watch(playerInput, (newVal, oldVal) => {
 })
 
 onMounted(() => {
-    window.addEventListener('keydown', event => {
-        if (event.target === testContainerEl.value) {
-            preventKeyBoardScroll(event)
-        }
-    }, false)
+    document.addEventListener('keydown', event => {
+        if (textIsFocused.value) preventKeyBoardScroll(event)
+    })
 
     window.addEventListener('touchmove', event => {
         if (event.target === testContainerEl.value || testContainerEl.value.contains(event.srcElement)) {

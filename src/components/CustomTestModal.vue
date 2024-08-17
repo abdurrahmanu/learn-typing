@@ -4,10 +4,11 @@
         <div @click="customTestModal = !customTestModal, pauseTyping = false, textValue = ''" class="absolute top-0 text-xl font-bold w-fit right-2 hover:text-red-500">x</div>
         <div>            
             <div v-if="!saveCustomText" class="space-y-1 text-center">
-                <p class="py-2 font-medium">Add your preferred test, quote or story.</p>
+                <p class="font-medium">Add your preferred test, quote or story.</p>
+                <p class="text-red-600 font-[400]">Maximum of 250 words / 2000 characters</p>
                 <div class="relative w-[90%] m-auto">  
                     <p @click="textValue = ''" class="absolute top-0 right-0 px-2 py-[2px] uppercase text-[9px] text-white rounded-tr-md bg-red-500 hover:bg-red-600 font-medium cursor-default">clear</p>                  
-                    <textarea v-model="textValue" :class="[appTheme]" class="w-full h-40 p-2 pt-2 border rounded-md outline-none border-slate-500" :placeholder="textAreaPlaceholder" name="custom-textarea" />
+                    <textarea v-model="textValue" :class="[appTheme]" class="w-full h-40 p-2 pt-2 border rounded-md outline-none border-slate-500" :placeholder="textAreaPlaceholder" maxlength="2000" name="custom-textarea" />
                 </div>
                 <div @click="startSavingCustomText" class="py-[2px] m-auto text-center border rounded-full px-4 w-fit border-slate-600 hover:bg-green-800 hover:text-white font-medium">ADD TEST</div>
             </div>
@@ -32,7 +33,7 @@
                             <span>{{ name }}</span> 
                             <span @click="use(name)" class="px-3 text-white bg-green-700 rounded-full py-[1px] hover:bg-green-800 ml-1">use</span> 
                             <span v-if="index !== 0" @click="del(name)" class="px-3 text-white py-[1px] bg-red-500 rounded-full hover:bg-red-600">delete</span>
-                            <span v-if="index !== 0" @click="edit(name)" class="px-3 text-white py-[1px] bg-blue-600 rounded-full hover:bg-blue-700">edit</span>
+                            <!-- <span v-if="index !== 0" @click="edit(name)" class="px-3 text-white py-[1px] bg-blue-600 rounded-full hover:bg-blue-700">edit</span> -->
                         </div>
                         <div class="test-[10px] font-[400] exo-ital">{{ test }}</div>
                     </div>

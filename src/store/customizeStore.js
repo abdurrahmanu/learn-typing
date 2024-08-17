@@ -23,6 +23,8 @@ export const customizeStore = defineStore('customizeStore', () => {
     const range = ref((font.value - 16) / 0.16)
     const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
     const capsIsOn = ref(false)
+    const customTestLength = ref(200)
+    const useCustomLength = ref(false)
 
     const customizers = ref({
         'text-length': 'auto',
@@ -52,7 +54,7 @@ export const customizeStore = defineStore('customizeStore', () => {
     })
 
     const allOptions = ref({
-        'text-length' : ['auto', 10, 20, 30, 50],
+        'text-length' : ['auto', 10, 20, 30, 50, 100],
         'words-type' : ['most-used', 'less-used', 'rarely-used'],
         'test-type' : ['quotes', 'random-words', 'custom-test'],
         'include-caps' : ['caps'],
@@ -66,13 +68,33 @@ export const customizeStore = defineStore('customizeStore', () => {
     const changeConfiguration = (group, selection) => {
         if (customizers.value[group] === selection) customizers.value[group] = ''
         else customizers.value[group] = selection
+
+        if (customizers.value['test-type'] === 'quotes' || customizers.value['test-type'] === 'custom-test') {
+            disableOption.value['words-type'] = true
+            disableOption.value['include-numbers'] = true
+
+            if (customizers.value['test-type'] === 'custom-test') {
+                disableOption.value['text-length'] = true
+            }
+        }
+        
+        else if (customizers.value['test-type'] === 'random-words') {
+            disableOption.value['words-type'] = false
+            disableOption.value['include-numbers'] = false
+            disableOption.value['text-length'] = false
+        }
+        
+
+        const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
+        localStorageSettings.value.config = [customizers.value, disableOption.value]
+        localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
     }
 
     const useConfig = () => {
         let currentWordType = customizers.value['words-type']
         let currentTestType = customizers.value['test-type']
         let currentTextLength = customizers.value['text-length']
-        let selection = configs.value[1]
+        let selection = +configs.value[1] || configs.value[1]
         let group = configs.value[0]
         testType_.value = customizers.value['test-type']
 
@@ -82,21 +104,8 @@ export const customizeStore = defineStore('customizeStore', () => {
         }
 
         if (selection === currentWordType || selection === currentTestType || selection === currentTextLength) return
+
         changeConfiguration(group, selection)    
-
-        if (customizers.value['test-type'] === 'quotes') {
-            disableOption.value['words-type'] = true
-            disableOption.value['include-numbers'] = true
-        } else if (customizers.value['test-type'] === 'custom-test') {
-            disableOption.value['words-type'] = true
-            disableOption.value['include-numbers'] = true
-        } else {
-            disableOption.value['words-type'] = false
-            disableOption.value['include-numbers'] = false
-        }
-
-        localStorageSettings.value.config = [customizers.value, disableOption.value]
-        localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
     }
 
     const customize = (mode, boolean) => {
@@ -141,5 +150,7 @@ export const customizeStore = defineStore('customizeStore', () => {
         testType_,
         capslock,
         capsIsOn,
+        customTestLength,
+        useCustomLength,
     }
 })

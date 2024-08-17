@@ -40,13 +40,12 @@ const customize = customizeStore()
 const {font, customizers, capsIsOn } = storeToRefs(customize)
 
 const main = mainStore()
-const { containerHeight, timedTyping, beginCountdown } = storeToRefs(main)
+const { containerHeight } = storeToRefs(main)
 const { switchNext} = main
 
 watch(customizers, (newVal) => {
-  if (newVal) {
-      switchNext(newVal)
-  }}, {deep : true})
+  if (newVal) switchNext(newVal)
+}, {deep : true})
 
 const height = () => {
   const div = document.createElement("div");
