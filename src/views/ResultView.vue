@@ -1,5 +1,5 @@
 <template>
-    <div :class="appTheme" class="min-h-[200px] text-center xl:pt-20 cursor-default result">
+    <div :class="appTheme" class="min-h-[200px] text-center xl:pt-5 cursor-default result">
         <p class="py-3 text-4xl text-center text-slate-500 stats">STATISTICS</p>
         <div class="flex py-1 m-auto gap-x-2 w-fit text-slate-300">            
             <div class="relative">                        
