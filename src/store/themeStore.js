@@ -9,7 +9,7 @@ export const themeStore = defineStore('themeStore', () => {
     })
 
     const svgFill = computed(() => {
-        if (theme.value === 'dark') return '#737373'
+        if (theme.value === 'dark') return '#d4d4d4'
         if (theme.value === 'white') return 'black '
     })
 

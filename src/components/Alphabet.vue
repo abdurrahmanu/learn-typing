@@ -113,7 +113,7 @@ const currentIndexStyle = computed(() => {
 })
 
 const mainStyle = computed(() => {
-    let text = theme.value === 'dark' ? 'text-neutral-400' : 'text-zinc-500'
+    let text = theme.value === 'dark' ? 'text-slate-500' : 'text-zinc-500'
     return props.index > playerInputLength.value ? text : ''
 })
 
