@@ -6,7 +6,7 @@
                 <label class="text-sm font-medium w-fit">
                     <span>No space </span>
                     <span v-if="customizers['no-space']" class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-teal-800 ml-1">hard</span>
-                    <span v-else class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-lime-600 ml-1">easy</span>
+                    <span v-else class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-lime-800 ml-1">easy</span>
                 </label>
             </div>
         </div>

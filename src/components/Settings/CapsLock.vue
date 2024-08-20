@@ -5,7 +5,7 @@
                 <input name="capslock" type="checkbox" :checked="capslock" class="accent-green-500">
                 <label class="text-sm font-medium w-fit">
                     Caps lock 
-                    <span v-if="capslock" class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-lime-600 ml-1">easy</span>
+                    <span v-if="capslock" class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-lime-800 ml-1">easy</span>
                     <span v-else class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-yellow-800 ml-1">medium</span>
                 </label>
             </div>

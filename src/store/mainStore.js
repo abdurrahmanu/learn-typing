@@ -6,6 +6,8 @@ export const mainStore = defineStore('mainStore', () => {
     const route = ref(null)
     const mobileBackspace = ref(false)
 
+    const isGeneratingTest = ref(false)
+
     //Test container
     const testContainerEl = ref(null)
     const containerHeight = ref(0)
@@ -162,6 +164,7 @@ export const mainStore = defineStore('mainStore', () => {
         customTests,
         authoredQuote,
         mobileBackspace,
+        isGeneratingTest,
     }
 })
 

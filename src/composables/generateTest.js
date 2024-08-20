@@ -7,7 +7,7 @@ import {alphabetsMode} from './alphabetsMode'
 
 export const generateTest = async (config, restart) => {
     const main = mainStore()
-    const {containerText, storedTest, timedTyping, movie, authoredQuote, savedCountdown, allSpacesIndex} = storeToRefs(main)
+    const {containerText, storedTest, timedTyping, isGeneratingTest, movie, authoredQuote, savedCountdown, allSpacesIndex} = storeToRefs(main)
 
     const count = countdownStore()
     const {countdown} = storeToRefs(count)
@@ -16,6 +16,7 @@ export const generateTest = async (config, restart) => {
     const {repeat, mode} = storeToRefs(customize)
 
     if (timedTyping.value) countdown.value = savedCountdown.value
+    isGeneratingTest.value = true
 
     if (repeat.value || restart ) {
         containerText.value = storedTest.value

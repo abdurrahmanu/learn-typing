@@ -16,7 +16,7 @@ const theme_ = themeStore()
 const {theme } = storeToRefs(theme_)
 
 const store = mainStore()
-const { playerInputLength, focus, testContainerEl, allSpacesIndex, spaceCount, scrollTextContainer, enterKey, scrollDistance, backspaceIsPressed, containerHeight } = storeToRefs(store)
+const { playerInputLength, focus, testContainerEl, isGeneratingTest, allSpacesIndex, spaceCount, scrollTextContainer, enterKey, scrollDistance, backspaceIsPressed, containerHeight } = storeToRefs(store)
 const currentAlphabet = ref(null)
 
 const customize = customizeStore()
@@ -28,6 +28,7 @@ const props = defineProps({
     index: Number,
     currentIndex: Boolean,
     equality: Boolean,
+    lastIndex: Boolean
 })
 
 window.addEventListener('input', event => {
@@ -39,6 +40,8 @@ window.addEventListener('input', event => {
 })
 
 onMounted(() => {
+    if (props.lastIndex) isGeneratingTest.value = false
+
     watchEffect(() => {
         if (props.currentIndex) {
             

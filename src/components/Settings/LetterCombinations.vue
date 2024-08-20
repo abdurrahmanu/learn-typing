@@ -5,7 +5,7 @@
             <label for="id" class="text-sm font-medium w-fit"> 
                 <span>Characters Combinations</span>
                 <span v-if="useAlphabetCombination" class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-yellow-800 ml-1">medium</span>
-                <span v-else class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-lime-600 ml-1">easy</span>
+                <span v-else class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-lime-800 ml-1">easy</span>
             </label>
         </div>
         <div class="px-4 font-[400]">

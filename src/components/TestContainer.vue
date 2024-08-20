@@ -15,12 +15,14 @@
             </div>
         </div>
         <div v-if="containerText" class="transition-all duration-100 relative mx-auto max-w-[700px] w-full min-w-[300px]">
-            <div @blur="textIsFocused = false" @focus="textIsFocused = true" tabindex="0" ria-describedby="full-text" ref="testContainerEl"  :style="{'height' : containerHeight + 'px', 'font-size': font + 'px'}" :class="[ customizers['no-space'] || customizers['test-type'] === 'custom-test' ? 'break-words' : '', alphabetsMode_ ? 'text-center break-words': 'text-left', !alphabetsMode_ && textPosition=== 'center' ? 'text-center' : !alphabetsMode_ && textPosition=== 'right' ? 'text-right' : 'text-left'] " class="overflow-y-auto scroll-smooth noscrollbar leading-[1.4] h-fit py-[1px] outline-none">
+            <div v-if="isGeneratingTest" class="p-6 border border-t-0 border-black rounded-full animate-spin absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]"></div>
+            <div @blur="textIsFocused = false" @focus="textIsFocused = true" tabindex="0" ria-describedby="full-text" ref="testContainerEl"  :style="{'height' : containerHeight + 'px', 'font-size': font + 'px'}" :class="[isGeneratingTest ? 'blur-[10px] opacity-40' : 'blur-0 opacity-100', customizers['no-space'] || customizers['test-type'] === 'custom-test' ? 'break-words' : '', alphabetsMode_ ? 'text-center break-words': 'text-left', !alphabetsMode_ && textPosition=== 'center' ? 'text-center' : !alphabetsMode_ && textPosition=== 'right' ? 'text-right' : 'text-left'] " class="overflow-y-auto scroll-smooth noscrollbar leading-[1.4] h-fit py-[1px] outline-none">
                 <p id="full-text" class="hidden">{{ containerText }}</p>
                 <Alphabet
                 v-for="(alphabet, index) in containerText"
                 :index="index"
                 :key="index"
+                :lastIndex = 'index === containerText.length - 1'
                 :currentIndex ="playerInputLength === index" 
                 :equality="playerInput[index] === alphabet"
                 :alphabet="alphabet"/>
@@ -59,7 +61,7 @@ const alphabets_ = alphabetsStore()
 const { alphabetsMode_, useAlphabetCombination } = storeToRefs(alphabets_)
 
 const store = mainStore()
-const { containerText, mobileBackspace, wrongCount, previousPlayerInput, savedCountdown, beginCountdown, timedTyping, hasCompletedSession, focus, resultData, testContainerEl, containerHeight, movie, beatCountdown, playerInputLength, playerInput, authoredQuote, scrollTextContainer, restartSvgEl, restartEl, inputEl} = storeToRefs(store)
+const { containerText, mobileBackspace, isGeneratingTest, wrongCount, previousPlayerInput, savedCountdown, beginCountdown, timedTyping, hasCompletedSession, focus, resultData, testContainerEl, containerHeight, movie, beatCountdown, playerInputLength, playerInput, authoredQuote, scrollTextContainer, restartSvgEl, restartEl, inputEl} = storeToRefs(store)
 const {switchNext} = store
 
 const customize = customizeStore()

@@ -8,7 +8,7 @@
                         <PlayTimer v-if="timedTyping" class="inline-block w-5 mx-2" /> 
                         <PauseTimer v-if="!timedTyping" class="inline-block w-5 mx-2" />
                         <span v-if="timedTyping" class="px-3 text-white uppercase rounded-full text-[10px] bg-yellow-800 ml-1 py-[1px] relative bottom-[2px]">medium</span>
-                        <span v-else class="px-3 text-white uppercase rounded-full text-[10px] bg-lime-600 ml-1 py-[1px] relative bottom-[2px]">easy</span>
+                        <span v-else class="px-3 text-white uppercase rounded-full text-[10px] bg-lime-800 ml-1 py-[1px] relative bottom-[2px]">easy</span>
                     </label>
                 </div>
             </div>

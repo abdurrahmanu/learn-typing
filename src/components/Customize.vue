@@ -150,9 +150,9 @@ const changeConfig = (key, option) => {
 }
 
 watch(customTestLength, (newVal, oldVal) => {
-  if (newVal > 250) {
+  if (newVal > 150) {
     setTimeout(() => {      
-      customTestLength.value = '250'
+      customTestLength.value = '150'
     }, 1000);
   }
   let lastInput = newVal[newVal.length - 1]
