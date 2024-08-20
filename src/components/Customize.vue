@@ -15,17 +15,17 @@
                 @mouseleave="mouseLeave(listIndex)" >
                     <div 
                     class="px-[5px] hover:scale-105 rounded-md whitespace-nowrap" 
-                    :class="[disableOption[key] ? 'opacity-30 cursor-not-allowed' : '', customizers[key] === option && !disableOption[key]  ? 'text-green-500' : '', option === 'custom-test']"
+                    :class="[disableOption[key] ? 'opacity-30 cursor-not-allowed hidden' : '', customizers[key] === option && !disableOption[key]  ? 'text-green-500' : '', option === 'custom-test']"
                     @click="changeConfig(option, key)" 
                     v-for="(option, index) in optionArr" 
                     :key="index">
                         {{ option }}
                     </div>
-                    <div v-if="listIndex === 0" class="w-[90px] flex items-center h-fit rounded-r-md border" :class="[useCustomLength ? 'border-green-500' : 'border-neutral-500']">        
+                    <!-- <div v-if="listIndex === 0" class="w-[90px] flex items-center h-fit rounded-r-md border" :class="[useCustomLength ? 'border-green-500' : 'border-neutral-500']">        
                         <p v-if="customTestLength > 250" class="text-[10px] absolute top-[-20px] bg-green-300 right-0 text-red-500 border border-red-600 px-2 py-[1px]"><span class="font-bold">250</span> max</p>         
                       <input @focus="pauseTyping = true" @blur="pauseTyping = false" ref="customLengthInput" type="text" maxlength="3" v-model="customTestLength" class="w-full pl-1 bg-transparent border rounded-sm outline-none appearance-none" :class="[theme === 'dark' ? 'border-neutral-700' : 'border-slate-400', useCustomLength && !disableOption['text-length'] ? 'text-green-600' : '', disableOption['text-length'] ? 'opacity-30 cursor-not-allowed' : '']">
                       <p :class="[disableOption['text-length'] ? 'opacity-30 cursor-not-allowed' : '']" class="px-1 py-[1px] text-white uppercase bg-green-500 w-fit hover:bg-green-700 rounded-r-[5px]" @click="useCustomLength = true, changeConfig(customTestLength, 'text-length')">use</p>
-                    </div>
+                    </div> -->
                     <div v-if="listIndex === hoverIndex" class="absolute z-10 left-0 text-black top-[105%] shadow-sm shadow-slate-500 px-[6px] bg-neutral-100 rounded-full whitespace-nowrap text-xs font-normal">{{optionsTooltip[listIndex]}}</div>
                 </div>
             </div>
