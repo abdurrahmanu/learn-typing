@@ -11,7 +11,7 @@
                     </label>
                 </div>
             </div>
-            <p class="px-3 font-[400]">Type while fully trusting your muscle memory. </p>
+            <p class="px-3 font-[400]">Enable to type while fully trusting your muscle memory. </p>
         </div>
 </template>
 

@@ -7,16 +7,20 @@
         <Restart />
       </main>
     </div>
+    <div class="absolute bottom-2 right-[270px] w-fit rounded-full bg-neutral-500 p-2" v-if="route.name !== 'about'">
+      <about @click="routeToPage('about')" class="w-[11px]" />
+    </div>
     <CustomTestModal />
     <SwitchModes />
     <Theme />
     <Animate />
-    <Toast left text="Caps lock is disabled" :toggle="capsIsOn" class="py-2 text-xs text-white bg-teal-900 px-7" /> <!-- CAPS LOCK TOAST -->
+    <Toast left text="Caps lock is disabled, if you want to use it go to settings and enable it" :toggle="capsIsOn" class="py-2 text-xs text-red-300 bg-teal-900 px-7" /> <!-- CAPS LOCK TOAST -->
   </div>
 </template>
 
 <script setup>
 import {onBeforeMount, onMounted, watch, ref} from 'vue'
+import about from './components/svg/about.vue';
 import Header from './components/Header.vue'
 import SwitchModes from './components/SwitchModes.vue';
 import Restart from './components/Restart.vue';
@@ -26,12 +30,13 @@ import { storeToRefs } from 'pinia';
 import {themeStore}  from './store/themeStore'
 import {customizeStore}  from './store/customizeStore'
 import { mainStore } from './store/mainStore';
-import { useRoute } from 'vue-router';
 import {localStorageConfig} from './composables/getLocalStorageConfig'
 import CustomTestModal from './components/CustomTestModal.vue';
 import Toast from './components/Toast.vue';
+import {useRoute, useRouter} from 'vue-router'
 
 const route = useRoute()
+const router = useRouter()
 
 const theme_ = themeStore()
 const { appTheme } = storeToRefs(theme_)
@@ -42,6 +47,10 @@ const {font, customizers, capsIsOn } = storeToRefs(customize)
 const main = mainStore()
 const { containerHeight } = storeToRefs(main)
 const { switchNext} = main
+
+const routeToPage = (route) => {
+    router.push({name: route})
+}
 
 watch(customizers, (newVal) => {
   if (newVal) switchNext(newVal)
@@ -71,7 +80,7 @@ watch(capsIsOn, (newVal, oldVal) => {
   if (newVal) {
     setTimeout(() => {
       capsIsOn.value = oldVal
-    }, 3000);
+    }, 10000);
   }
 })
 </script>

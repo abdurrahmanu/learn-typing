@@ -5,7 +5,7 @@
         <div v-show="index <= playerInput.length - 1" :class="[ index === 0 ? 'rounded-l-[10px]' : '' ,playerInput[index] === alphabet && index <= playerInput.length - 1 ? 'bg-green-500 after:bg-green-500' : 'bg-red-500 after:bg-red-500', index === playerInput.length - 1 ? 'after:w-[100%] after:right-0 after:top-0 after:bottom-0 after:blur-[5px]' : 'after:w-0 after:hidden', !completionLevel || index < 2 ? 'after:hidden' : 'after:absolute']" class="h-[100%] relative" :style="{'width': singleDivWidth + 'px'}" v-for="(alphabet, index) in containerText" :key="index"></div>
     </div>
 
-    <div v-if="!hasCompletedSession && !alphabetsMode_" :class="[appTheme]" class="relative m-auto rounded-md max-w-fit ring-1 ring-green-400">
+    <div v-if="!hasCompletedSession && !alphabetsMode_" :class="[appTheme]" class="relative m-auto rounded-md max-w-fit ring-1 ring-green-500">
       <div class="absolute right-[-5px] top-[-5px] z-[2] hover:text-red-500 text-slate-200 font-black h-5 w-5 rounded-full flex items-center justify-center bg-neutral-600 text-center cursor-pointer" @click="hideElements = !hideElements">X</div>
         <div class=" items-center p-1 flex max-w-[1000px] justify-center flex-wrap relative z-[1]">
             <div class="flex items-center p-1" v-for="(optionArr, key, listIndex) in option" :key="listIndex">          
@@ -15,7 +15,7 @@
                 @mouseleave="mouseLeave(listIndex)" >
                     <div 
                     class="px-[5px] hover:scale-105 rounded-md whitespace-nowrap" 
-                    :class="[disableOption[key] ? 'opacity-30 cursor-not-allowed hidden' : '', customizers[key] === option && !disableOption[key]  ? 'text-green-500' : '', option === 'custom-test']"
+                    :class="[disableOption[key] ? 'opacity-30 cursor-not-allowed hidden' : '', customizers[key] === option && !disableOption[key]  ? 'text-green-600' : '', option === 'custom-test']"
                     @click="changeConfig(option, key)" 
                     v-for="(option, index) in optionArr" 
                     :key="index">
@@ -35,11 +35,11 @@
     <div v-if="!hasCompletedSession && alphabetsMode_" :class="[appTheme]" class="rounded-md w-[90%] min-w-fit m-auto max-w-fit ring-1 ring-green-600 relative py-3 px-10">
       <div class="absolute right-[-3px] top-[-3px] z-[1] hover:text-red-500  text-slate-200 font-black h-5 w-5 rounded-full flex items-center justify-center bg-neutral-600 text-center cursor-pointer" @click="hideElements = !hideElements">X</div>
       <div class="flex flex-wrap items-center justify-center gap-[8px] rounded-md min-w-fit m-auto max-w-fit hover:ring-[1px] hover:ring-slate-500 group p-[2px] relative z-[1]">        
-        <div :class="[alphabetsConfig.uppercase ? 'text-green-500' : '']" @click="changeMode('uppercase')" class="px-[5px] hover:scale-105 rounded-md">uppercase</div>
-        <div :class="[alphabetsConfig.customCase ? 'text-green-500' : '']" @click="changeMode('customCase')" class="px-[5px] hover:scale-105 rounded-md">random-case</div>
-        <div :class="[alphabetsConfig.spaced ? 'text-green-500' : '']" @click="changeMode('spaced')" class="px-[5px] hover:scale-105 rounded-md">space</div>
-        <div :class="[alphabetsConfig.backwards ? 'text-green-500' : '']" @click="changeMode('backwards')" class="px-[5px] hover:scale-105 rounded-md">reverse</div>
-        <div :class="[alphabetsConfig.random ? 'text-green-500' : '']" @click="changeMode('random')" class="px-[5px] hover:scale-105 rounded-md">random</div>
+        <div :class="[alphabetsConfig.uppercase ? 'text-green-600' : '']" @click="changeMode('uppercase')" class="px-[5px] hover:scale-105 rounded-md">uppercase</div>
+        <div :class="[alphabetsConfig.customCase ? 'text-green-600' : '']" @click="changeMode('customCase')" class="px-[5px] hover:scale-105 rounded-md">random-case</div>
+        <div :class="[alphabetsConfig.spaced ? 'text-green-600' : '']" @click="changeMode('spaced')" class="px-[5px] hover:scale-105 rounded-md">space</div>
+        <div :class="[alphabetsConfig.backwards ? 'text-green-600' : '']" @click="changeMode('backwards')" class="px-[5px] hover:scale-105 rounded-md">reverse</div>
+        <div :class="[alphabetsConfig.random ? 'text-green-600' : '']" @click="changeMode('random')" class="px-[5px] hover:scale-105 rounded-md">random</div>
         <div class="absolute left-0 text-black top-[115%] shadow-sm shadow-slate-500 px-[6px] bg-neutral-100 rounded-full whitespace-nowrap group-hover:block hidden text-xs font-normal">format</div>
       </div>
     </div>

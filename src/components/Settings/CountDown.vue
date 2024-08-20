@@ -12,7 +12,7 @@
                     </label>
                 </div>
             </div>
-            <p class="px-3 font-[400]">Tests automatically end at the end of countdown, untyped characters are considered as mistakes.</p>
+            <p class="px-3 font-[400]">Countdown tests automatically end at count zero (0), untyped characters are considered as mistakes.</p>
         </div>
 </template>
 

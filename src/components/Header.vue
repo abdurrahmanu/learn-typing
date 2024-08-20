@@ -16,9 +16,6 @@
                     <repeat class="w-4 peer"/>
                     <div class="absolute z-5 left-[50%] translate-x-[-50%] bottom-[-120%] rounded-full whitespace-nowrap peer-hover:block hidden">repeat</div>
                 </div>
-                <div class="relative w-fit" v-if="route.name !== 'about'">
-                    <about @click="routeToPage('about')" class="w-[15px] peer" />
-                </div>
                 <div class="relative w-fit" v-if="!alphabetsMode_" >
                     <add @click="customTestModal = true, pauseTyping = true" class="w-4 peer"/>
                 </div>

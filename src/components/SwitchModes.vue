@@ -1,8 +1,8 @@
 <template>
-    <div v-if="!hasCompletedSession && route.name === 'home'" class="absolute m-auto w-fit h-fit bottom-[10px] right-14 text-[10px]">
-            <div class="flex cursor-pointer">
-                <p @click="toggleMode('test')" class="px-3 py-1 font-[600] border rounded-l-lg" :class="[mode === 'auto' ? 'border-green-400 text-green-600' : 'border-slate-500 border-r-0']">TEST MODE</p>
-                <p @click="toggleMode('alphabets')" class="px-3 py-1 font-bold border rounded-r-lg" :class="[mode === 'alphabets' ? 'border-green-400 text-green-600' : 'border-slate-500 border-l-0']">ALPHABET MODE</p>
+    <div v-if="!hasCompletedSession && route.name === 'home'" class="absolute m-auto w-fit h-fit bottom-[10px] right-14">
+            <div class="flex text-xs font-medium cursor-pointer">
+                <p @click="toggleMode('test')" class="px-3 py-1 border rounded-l-lg" :class="[mode === 'auto' ? 'border-green-600 text-green-600' : 'border-slate-500 border-r-0']">TEST MODE</p>
+                <p @click="toggleMode('alphabets')" class="px-3 py-1 border rounded-r-lg" :class="[mode === 'alphabets' ? 'border-green-600 text-green-600' : 'border-slate-500 border-l-0']">ALPHABET MODE</p>
             </div>
     </div>
 </template>
