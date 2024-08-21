@@ -75,6 +75,8 @@ export const customizeStore = defineStore('customizeStore', () => {
 
             if (customizers.value['test-type'] === 'custom-test') {
                 disableOption.value['text-length'] = true
+            } else {
+                disableOption.value['text-length'] = false
             }
         }
         

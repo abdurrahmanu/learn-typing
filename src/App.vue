@@ -7,7 +7,7 @@
         <Restart />
       </main>
     </div>
-    <div class="absolute bottom-2 right-[270px] w-fit rounded-full bg-neutral-500 p-2" v-if="route.name !== 'about'">
+    <div class="absolute bottom-2 right-[240px] w-fit p-2" v-if="route.name !== 'about'">
       <about @click="routeToPage('about')" class="w-[11px]" />
     </div>
     <CustomTestModal />

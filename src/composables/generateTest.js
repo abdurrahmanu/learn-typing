@@ -1,9 +1,9 @@
 import { mainStore } from "../store/mainStore"
 import { countdownStore } from "../store/countdownStore"
 import {customizeStore} from '../store/customizeStore'
+import {alphabetsMode} from './alphabetsMode'
 import { storeToRefs } from "pinia"
 import { UseGetQuotes } from "./UseGetQuotes"
-import {alphabetsMode} from './alphabetsMode'
 
 export const generateTest = async (config, restart) => {
     const main = mainStore()
@@ -20,6 +20,7 @@ export const generateTest = async (config, restart) => {
 
     if (repeat.value || restart ) {
         containerText.value = storedTest.value
+        isGeneratingTest.value = false
     }
 
     else if (mode.value === 'auto') {
@@ -47,10 +48,8 @@ export const generateTest = async (config, restart) => {
         })
     }
 
-    else if (mode.value === 'alphabets') {
-        containerText.value = alphabetsMode()
-    }
-    
+    else if (mode.value === 'alphabets') containerText.value = alphabetsMode()
+
     for (let index = 0; index < containerText.value.length; index++) {
         if (containerText.value[index] === ' ') allSpacesIndex.value.push(index)
     }

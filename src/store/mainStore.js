@@ -77,6 +77,7 @@ export const mainStore = defineStore('mainStore', () => {
         }
         if (beatCountdown.value && timedTyping.value) beatCountdown.value = false
         else beatCountdown.value = null
+        isGeneratingTest.value = false
         playerLastInput.value = ''
         playerInput.value = ''
         previousPlayerInput.value = ''

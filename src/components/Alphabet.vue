@@ -40,7 +40,9 @@ window.addEventListener('input', event => {
 })
 
 onMounted(() => {
-    if (props.lastIndex) isGeneratingTest.value = false
+    if (props.lastIndex) {
+        isGeneratingTest.value = false
+    }
 
     watchEffect(() => {
         if (props.currentIndex) {

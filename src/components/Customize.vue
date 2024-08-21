@@ -71,7 +71,7 @@ const {switchNext} = store
 const customize = customizeStore()
 const { allOptions, configs, customizers, customTestLength, useCustomLength, pauseTyping, disableOption, blind, repeat, hideElements} = storeToRefs(customize)
 const {useConfig} = customize
-const optionsTooltip = ['length', 'words', 'test-type', 'format', 'test-type', 'test-type']
+const optionsTooltip = ['test-length', 'words-type', 'test-type', 'format', 'format', 'format']
 
 onMounted(() => {
     watchEffect(() => {
