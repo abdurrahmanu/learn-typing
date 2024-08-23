@@ -4,7 +4,7 @@
             <Logo />
         </div>
         <p class="text-center text-[50px] leading-0 opacity-90 blur-[1px] roboto-mono exo-ital">KiBoard</p>
-        <div class="m-auto max-w-[400px] z-[-1] text-lg border border-neutral-800 p-1 border-x-0 caveat font-black">
+        <div class="m-auto max-w-[400px] z-[-1] text-sm border border-neutral-800 p-1 border-x-0 caveat font-black">
             <p class="m-auto text-center w-fit">A TYPING WEB APP DESIGNED AND DEVELOPED</p>
             <p class="m-auto text-center w-fit">BY</p>
             <p class="m-auto text-center w-fit">AHMED ABDULRAHMAN</p>

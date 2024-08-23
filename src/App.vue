@@ -7,12 +7,14 @@
         <Restart />
       </main>
     </div>
-    <div class="absolute bottom-2 right-[240px] w-fit p-2" v-if="route.name !== 'about'">
-      <about @click="routeToPage('about')" class="w-[11px]" />
+    <div class="fixed flex items-center gap-2 bottom-2 right-2">      
+      <div class="self-end py-2 w-fit" v-if="route.name !== 'about'">
+        <about @click="routeToPage('about')" class="w-[11px]" />
+      </div>
+      <SwitchModes class="self-end mb-[2px]" />
+      <Theme class="self-end" />
     </div>
     <CustomTestModal />
-    <SwitchModes />
-    <Theme />
     <Animate />
     <Toast left text="Caps lock is disabled, if you want to use it go to settings and enable it" :toggle="capsIsOn" class="py-2 text-xs text-red-300 bg-teal-900 px-7" /> <!-- CAPS LOCK TOAST -->
   </div>

@@ -11,7 +11,7 @@
                     <BackSpace />
                     <BlindMode />
                     <BlurTest />
-                    <CapsLock />
+                    <CapsLock v-if="!isMobileOS()" />
                     <Countdown />
                     <CustomCamelCase />
                     <NoSpaceText />
@@ -30,7 +30,7 @@
                         <BlindMode />
                         <BackSpace />
                         <BlurTest />
-                        <CapsLock />
+                        <CapsLock v-if="!isMobileOS()" />
                         <Countdown />
                         <LetterCombinations />
                     </div>
@@ -42,7 +42,6 @@
 
 <script setup>
 import Caret from './Caret.vue'
-import Reset from './Reset.vue'
 import Fonts from './Fonts.vue'
 import AuthoredQoutes from './AuthoredQuotes.vue'
 import Header from './Header.vue'
