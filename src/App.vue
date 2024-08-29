@@ -9,14 +9,19 @@
     </div>
     <div class="fixed flex items-center gap-2 bottom-2 right-2">      
       <div class="self-end py-2 w-fit" v-if="route.name !== 'about'">
-        <about @click="routeToPage('about')" class="w-[11px]" />
+        <about 
+        class="w-[11px]" 
+        @click="routeToPage('about')" />
       </div>
       <SwitchModes class="self-end mb-[2px]" />
       <Theme class="self-end" />
     </div>
     <CustomTestModal />
     <Animate />
-    <Toast left text="Caps lock is disabled, if you want to use it go to settings and enable it" :toggle="capsIsOn" class="py-2 text-xs text-red-300 bg-teal-900 px-7" /> <!-- CAPS LOCK TOAST -->
+    <CapsLockToast 
+    top 
+    :toggle="toggleCapsToast" 
+    text="CapsLock is disabled, you can off your CapsLock or go to settings to enable it's usage." />
   </div>
 </template>
 
@@ -35,7 +40,7 @@ import {customizeStore}  from './store/customizeStore'
 import { mainStore } from './store/mainStore';
 import {localStorageConfig} from './composables/getLocalStorageConfig'
 import CustomTestModal from './components/CustomTestModal.vue';
-import Toast from './components/Toast.vue';
+import CapsLockToast from './components/Toast.vue';
 import {useRoute, useRouter} from 'vue-router'
 
 const route = useRoute()
@@ -45,7 +50,7 @@ const theme_ = themeStore()
 const { appTheme } = storeToRefs(theme_)
 
 const customize = customizeStore()
-const {font, customizers, capsIsOn } = storeToRefs(customize)
+const {font, customizers, toggleCapsToast } = storeToRefs(customize)
 
 const main = mainStore()
 const { containerHeight } = storeToRefs(main)
@@ -79,11 +84,11 @@ onMounted(() => height())
 watch(font, (newVal) => height() )
 onBeforeMount(() => localStorageConfig())
 
-watch(capsIsOn, (newVal, oldVal) => {
+watch(toggleCapsToast, (newVal, oldVal) => {
   if (newVal) {
     setTimeout(() => {
-      capsIsOn.value = oldVal
-    }, 10000);
+      toggleCapsToast.value = oldVal
+    }, 5000);
   }
 })
 </script>

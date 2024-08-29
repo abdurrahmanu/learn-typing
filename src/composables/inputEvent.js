@@ -8,11 +8,16 @@ export const inputEvent = (e) => {
     const { sessionComplete } = store
     
     const customize = customizeStore()
-    const {backspace, pauseTyping, capslock, capsIsOn} = storeToRefs(customize)
+    const {backspace, pauseTyping, toggleCapsToast, capslock} = storeToRefs(customize)
 
-
-    if (e.getModifierState("CapsLock") && !capslock.value) {
-        if (!capsIsOn.value) capsIsOn.value = true
+    if (!capslock.value && !toggleCapsToast.value && e.key !== 'CapsLock' && e.getModifierState('CapsLock')) {
+        toggleCapsToast.value = true
+        console.log('object');
+    }
+    if (!capslock.value && e.getModifierState('CapsLock') && e.key !== 'CapsLock') return
+    if (e.key === 'CapsLock' && !capslock.value) {
+        if (e.getModifierState('CapsLock')) toggleCapsToast.value = true
+        else toggleCapsToast.value = false
         return
     }
 

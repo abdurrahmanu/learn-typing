@@ -19,7 +19,6 @@ import {ref} from 'vue'
 import {storeToRefs} from 'pinia';
 import {customizeStore} from '../../store/customizeStore';
 import { mainStore } from '../../store/mainStore';
-import { isMobileOS } from '../../composables/isMobileOS';
 import { themeStore } from '../../store/themeStore';
 
 const theme_ = themeStore()

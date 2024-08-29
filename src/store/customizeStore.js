@@ -23,7 +23,7 @@ export const customizeStore = defineStore('customizeStore', () => {
     const font = ref(32)
     const range = ref((font.value - 16) / 0.16)
     const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
-    const capsIsOn = ref(false)
+    const toggleCapsToast = ref(false)
     const customTestLength = ref(200)
     const useCustomLength = ref(false)
 
@@ -154,7 +154,7 @@ export const customizeStore = defineStore('customizeStore', () => {
         selectedCustomTest,
         testType_,
         capslock,
-        capsIsOn,
+        toggleCapsToast,
         customTestLength,
         useCustomLength,
     }
