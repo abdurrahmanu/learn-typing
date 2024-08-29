@@ -65,6 +65,7 @@ onMounted(() => {
 
         intervalID.value = setInterval(() => {
             if (props.animate) {
+                console.log('object');
                 isNextCountDown.value = false
                 timerID.value = setTimeout(() => {
                     isNextCountDown.value = true

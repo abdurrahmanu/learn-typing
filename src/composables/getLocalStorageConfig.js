@@ -16,19 +16,18 @@ export const localStorageConfig = async () => {
     const {customTests} = storeToRefs(main)
 
     const customize = customizeStore()
-    const { customizers, disableOption, caretType, difficulty, useCustomLength, mode, hideElements, font, range, blind, backspace, capslock } = storeToRefs(customize)
+    const { customizers, disableOption, caretType, difficulty, mode, hideElements, font, range, blind, backspace, capslock } = storeToRefs(customize)
 
     if (localStorage.getItem('kiboard')) {
         const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
 
-        let dorayiTyping = {
-            customLength: localStorageSettings.value.customLength || false,
+        let dorayiTypingObject = {
             capslock: typeof(localStorageSettings.value.capslock) === 'boolean' ? localStorageSettings.value.capslock : capslock.value,
             difficulty: localStorageSettings.value.difficulty || difficulty.value,
             customTests: localStorageSettings.value.customTests ||  customTests.value,
             config:  [ localStorageSettings.value.config[0] || customizers.value, localStorageSettings.value.config[1] || disableOption.value],
             caret: localStorageSettings.value.caret || 'border',
-            theme: localStorageSettings.value.theme || 'light',
+            theme: localStorageSettings.value.theme || 'white',
             backspace: typeof(localStorageSettings.value.backspace) === 'boolean' ? localStorageSettings.value.backspace : true,
             blind: localStorageSettings.value.blind || false,
             mode: localStorageSettings.value.mode || 'auto',
@@ -40,10 +39,9 @@ export const localStorageConfig = async () => {
             }
         }
 
-        localStorageSettings.value = dorayiTyping
+        localStorageSettings.value = dorayiTypingObject
         localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
 
-        useCustomLength.value = localStorageSettings.value.customLength
         theme.value = localStorageSettings.value.theme
         font.value = localStorageSettings.value.fontsize 
         range.value = (font.value - 16) / 0.26
@@ -67,7 +65,7 @@ export const localStorageConfig = async () => {
     }
     
     else {
-        let dorayiTyping = {
+        let dorayiTypingObject = {
             difficulty: 'beginner',
             capslock: true,
             customTests: {'demo': 'This is a custom test, you can add your own tests by pressing the plus icon. This demo test cannot be deleted'},
@@ -76,7 +74,6 @@ export const localStorageConfig = async () => {
             theme: window.matchMedia("(prefers-color-scheme: dark)").matches ?  'dark' : 'white',
             backspace: true,
             blind: false,
-            customLength: false,
             mode: 'auto',
             hide: false,
             fontsize: 32,
@@ -86,7 +83,6 @@ export const localStorageConfig = async () => {
             }
         }
 
-        localStorage.setItem('kiboard', JSON.stringify(dorayiTyping))
-        console.log(JSON.parse(localStorage.getItem('kiboard')))
+        localStorage.setItem('kiboard', JSON.stringify(dorayiTypingObject))
     }
 }

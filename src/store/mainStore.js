@@ -6,8 +6,6 @@ export const mainStore = defineStore('mainStore', () => {
     const route = ref(null)
     const mobileBackspace = ref(false)
 
-    const isGeneratingTest = ref(false)
-
     //Test container
     const testContainerEl = ref(null)
     const containerHeight = ref(0)
@@ -77,7 +75,6 @@ export const mainStore = defineStore('mainStore', () => {
         }
         if (beatCountdown.value && timedTyping.value) beatCountdown.value = false
         else beatCountdown.value = null
-        isGeneratingTest.value = false
         playerLastInput.value = ''
         playerInput.value = ''
         previousPlayerInput.value = ''
@@ -165,7 +162,6 @@ export const mainStore = defineStore('mainStore', () => {
         customTests,
         authoredQuote,
         mobileBackspace,
-        isGeneratingTest,
     }
 })
 

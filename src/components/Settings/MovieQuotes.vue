@@ -6,7 +6,7 @@
                 <label class="text-sm font-medium w-fit">Quotes from movies</label>
             </div>
         </div>
-        <p class="px-2 font-[400]">This is only available for quotes mode with auto-length. On-select, it automatically enables both modes</p>
+        <p class="px-2 font-[400]">When enabled, it activates quotes mode and uses auto length</p>
         <div v-if="customizers['movie-quotes']"class="p-2 font-[400]">
             <div class="py-1 space-x-2 w-fit">         
                 <input id="only" :value="true" @click="setQoutes(true)" v-model="onlyMovieQuotes" class="w-7 accent-green-500" type="radio"></input>

@@ -7,20 +7,18 @@ import { UseGetQuotes } from "./UseGetQuotes"
 
 export const generateTest = async (config, restart) => {
     const main = mainStore()
-    const {containerText, storedTest, timedTyping, isGeneratingTest, movie, authoredQuote, savedCountdown, allSpacesIndex} = storeToRefs(main)
+    const {containerText, storedTest, timedTyping, movie, authoredQuote, savedCountdown, allSpacesIndex} = storeToRefs(main)
 
     const count = countdownStore()
     const {countdown} = storeToRefs(count)
 
     const customize = customizeStore()
-    const {repeat, mode} = storeToRefs(customize)
+    const {repeat, mode, customizers} = storeToRefs(customize)
 
     if (timedTyping.value) countdown.value = savedCountdown.value
-    isGeneratingTest.value = true
 
     if (repeat.value || restart ) {
         containerText.value = storedTest.value
-        isGeneratingTest.value = false
     }
 
     else if (mode.value === 'auto') {

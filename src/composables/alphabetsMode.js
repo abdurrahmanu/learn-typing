@@ -8,9 +8,6 @@ export function alphabetsMode() {
     const alphabets_ = alphabetsStore()
     const { alphabetsMode_ , useAlphabetCombination, alphabetsCombination, containerText, alphabetsConfig, shiftKey } = storeToRefs(alphabets_)
 
-    const main = mainStore()
-    const { isGeneratingTest, } = storeToRefs(main)
-
     const generateAlphabetsTest = () => {
         const englishAlphabets = ref('abcdefghijklmnopqrstuvwxyz')
         containerText.value = englishAlphabets.value
@@ -69,8 +66,6 @@ export function alphabetsMode() {
             if (alphabetsConfig.value.backwards) {
                 containerText.value = containerText.value.split('').reverse().join('')
             }
-
-            isGeneratingTest.value = false
 
             return containerText.value
     }

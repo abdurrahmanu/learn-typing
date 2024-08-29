@@ -13,7 +13,7 @@
 import TestContainer from '../components/TestContainer.vue'
 import Settings from '../components/Settings/Settings.vue'
 import Customize from '../components/Customize.vue'
-import { ref, watch, onMounted } from 'vue';
+import { ref, watch } from 'vue';
 import { mainStore } from '../store/mainStore';
 import { storeToRefs } from 'pinia';
 import { customizeStore } from '../store/customizeStore';
@@ -45,7 +45,8 @@ watch(hideElements, newVal => {
   localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
 })
 
-watch(focus, newVal => {
+(focus, newVal => {
   if (newVal) hideElements.value = true
 })
+
 </script>

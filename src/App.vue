@@ -21,6 +21,7 @@
 </template>
 
 <script setup>
+import TestContainer from './components/TestContainer.vue';
 import {onBeforeMount, onMounted, watch, ref} from 'vue'
 import about from './components/svg/about.vue';
 import Header from './components/Header.vue'

@@ -3,7 +3,7 @@
         <div class="m-auto w-fit top-[15px] relative scale-125">                
             <Logo />
         </div>
-        <p class="text-center text-[50px] leading-0 opacity-90 blur-[1px] roboto-mono exo-ital">KiBoard</p>
+        <p class="text-center text-[30px] leading-0 opacity-90 blur-[1px] roboto-mono exo-ital pt-2">KiBoard</p>
         <div class="m-auto max-w-[400px] z-[-1] text-sm border border-neutral-800 p-1 border-x-0 caveat font-black">
             <p class="m-auto text-center w-fit">A TYPING WEB APP DESIGNED AND DEVELOPED</p>
             <p class="m-auto text-center w-fit">BY</p>
@@ -18,18 +18,18 @@
             </div>
         </div>
         <div class="flex flex-wrap justify-between py-4 m-auto text-sm font-normal min-w-fit max-w-[500px] gap-y-5">
-            <div class="m-auto w-fit min-w-[130px]">
+            <!-- <div class="m-auto w-fit min-w-[130px]">
                 <p class="font-bold text-center underline">SUPPORTERS</p>
                 <p class="text-center ">---</p>
-            </div>
+            </div> -->
             <div class="m-auto w-fit min-w-[130px]">                
                 <p class="mb-1 font-bold text-center underline">CREDITS</p>
                 <p @click="name='portfolio'" class="text-xl text-center hover:underline caveat">Ahmed Abdulrahman</p>
             </div>
-            <div class="m-auto w-fit min-w-[130px]">                
+            <!-- <div class="m-auto w-fit min-w-[130px]">                
                 <p class="mb-1 font-bold text-center underline">CONTRIBUTORS</p>
                 <p class="text-center">---</p>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>

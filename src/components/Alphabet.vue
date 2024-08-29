@@ -1,11 +1,11 @@
 <template>
     <div aria-hidden="true" ref="currentAlphabet" :class="[customizers['no-space'] ? '' : 'whitespace-pre-wrap']" class="relative inline">
-        <span  :class="[!focus && currentIndexStyle ? 'text-slate-500' : '', equalStyle, (isMobileOS() && focus) || !isMobileOS() ? currentIndexStyle : '', mainStyle, !currentIndex || isMobileOS() && !focus ? 'border-transparent' : '', pulseStyle, blurStyle, (caretType === 'pulse' || caretType === 'word-pulse') && alphabet === ' ' ? 'opacity-20' : '']" class="transition-opacity duration-75 border" >{{ alphabet }} </span>
+        <span  :class="[!focus && currentIndexStyle ? 'text-slate-500' : '', equalStyle, (isMobileOS() && focus) || !isMobileOS() ? currentIndexStyle : '', mainStyle, !currentIndex || isMobileOS() && !focus ? 'border-transparent' : '', pulseStyle, blurStyle, (caretType === 'pulse' || caretType === 'word-pulse') && alphabet === ' ' ? 'opacity-20' : '']" class="transition-opacity duration-75 border" >{{ alphabet }}</span>
     </div>
 </template> 
 
 <script setup>
-import { defineProps, computed, watchEffect, ref, onMounted, watch } from 'vue';
+import { defineProps, computed, watchEffect, ref, onMounted } from 'vue';
 import {storeToRefs} from 'pinia'
 import {mainStore} from '../store/mainStore'
 import {themeStore}  from '../store/themeStore'
@@ -16,7 +16,7 @@ const theme_ = themeStore()
 const {theme } = storeToRefs(theme_)
 
 const store = mainStore()
-const { playerInputLength, focus, testContainerEl, isGeneratingTest, allSpacesIndex, spaceCount, scrollTextContainer, enterKey, scrollDistance, backspaceIsPressed, containerHeight } = storeToRefs(store)
+const { playerInputLength, focus, testContainerEl, allSpacesIndex, spaceCount, scrollTextContainer, enterKey, scrollDistance, backspaceIsPressed, containerHeight } = storeToRefs(store)
 const currentAlphabet = ref(null)
 
 const customize = customizeStore()
@@ -40,19 +40,15 @@ window.addEventListener('input', event => {
 })
 
 onMounted(() => {
-    if (props.lastIndex) {
-        isGeneratingTest.value = false
-    }
-
     watchEffect(() => {
-        if (props.currentIndex) {
-            
+        if (props.currentIndex) {      
+    
             if (!backspaceIsPressed.value && props.alphabet === ' ')  {
-                spaceCount.value = allSpacesIndex.value.indexOf(props.index) + 1
+                spaceCount.value = allSpacesIndex.value.indexOf(props.index - 1) + 1
             }
             
             if (backspaceIsPressed.value && props.alphabet === ' ')  {
-                spaceCount.value = allSpacesIndex.value.indexOf(props.index) + 1
+                spaceCount.value = allSpacesIndex.value.indexOf(props.index - 1) + 1
             }
 
             if (currentAlphabet.value) {     

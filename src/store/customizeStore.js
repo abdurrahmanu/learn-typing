@@ -1,4 +1,5 @@
 import {defineStore} from 'pinia'
+import {isMobileOS} from '../composables/isMobileOS'
 import {ref} from 'vue'
 
 export const customizeStore = defineStore('customizeStore', () => {
@@ -54,7 +55,7 @@ export const customizeStore = defineStore('customizeStore', () => {
     })
 
     const allOptions = ref({
-        'text-length' : ['auto', 10, 20, 30, 50, 100],
+        'text-length' : isMobileOS() ? ['auto', 10, 20, 30 ] : ['auto', 10, 20, 30, 50,  100],
         'words-type' : ['most-used', 'less-used', 'rarely-used'],
         'test-type' : ['quotes', 'random-words', 'custom-test'],
         'include-caps' : ['caps'],
@@ -85,7 +86,6 @@ export const customizeStore = defineStore('customizeStore', () => {
             disableOption.value['include-numbers'] = false
             disableOption.value['text-length'] = false
         }
-        
 
         const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
         localStorageSettings.value.config = [customizers.value, disableOption.value]
@@ -99,6 +99,9 @@ export const customizeStore = defineStore('customizeStore', () => {
         let selection = +configs.value[1] || configs.value[1]
         let group = configs.value[0]
         testType_.value = customizers.value['test-type']
+
+        // if (customizers.value['test-type'] !== 'random-words') allOptions.value['text-length'] = ['auto', 10, 20, 30, 40]
+        // if (customizers.value['test-type'] === 'random-words') allOptions.value['text-length'] = ['auto', 10, 20, 30, 50,  100]
 
         if ((typeof configs.value[1] === 'number' && configs.value[0] === 'text-length' ) || configs.value[1] === 'random-words') {
             customizers.value['movie-quotes'] = false

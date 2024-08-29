@@ -10,7 +10,7 @@
                 </label>
             </div>
         </div>
-        <p class="px-3 font-[400]">Enable to remove spaces between words and type one long combination. e.g. thisisanexample</p>
+        <p class="px-3 font-[400]">Removes space between characters or words. e.g. thisisanexample</p>
     </div>
 </template>
 

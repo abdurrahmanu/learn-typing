@@ -11,7 +11,7 @@
             </div>
         </div>
         <p v-if="isMobileOS()"  class="px-3 font-[400]"><span class="text-red-600">**</span>Always enabled on mobile devices</p>
-        <p  class="px-3 font-[400]">This enables or disables player ability to utilize the backspace key while typing.</p>
+        <p  class="px-3 font-[400]">This enables or disables the backspace or delete key.</p>
     </div>
 </template>
 

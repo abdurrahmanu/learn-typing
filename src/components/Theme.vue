@@ -45,7 +45,7 @@ const bg = ref([
 
 onMounted(() => {
     window.addEventListener('click', (event) => {
-        if (!bgContainer.value.contains(event.target) && event.target !== bgContainer.value) {
+        if (bgContainer.value instanceof HTMLElement && !bgContainer.value.contains(event.target) && event.target !== bgContainer.value) {
         openBackgrounds.value = false
         }
     })

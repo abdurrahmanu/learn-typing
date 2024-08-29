@@ -4,7 +4,7 @@
             <div @click="customizers['custom-camel-case'] = !customizers['custom-camel-case'], customize('custom-camel-case', customizers['custom-camel-case'])" class="flex gap-4 w-fit">
                 <input name="camelcase" :checked="customizers['custom-camel-case']" type="checkbox" class="accent-green-500">
                 <label class="text-sm font-medium w-fit">
-                    <span>Custom camel case</span> 
+                    <span>Custom case</span> 
                     <span v-if="customizers['custom-camel-case']" class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-teal-800 ml-1">hard</span>
                     <span v-else class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-lime-800 ml-1">easy</span>
                 </label>
