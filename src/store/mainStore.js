@@ -45,7 +45,6 @@ export const mainStore = defineStore('mainStore', () => {
     const wrongCount = ref(0)
 
     const beatCountdown = ref(null)
-    const savedCountdown = ref(10) // default countdown || set countdown
     const useCustomText = ref(false) // user custom text
     const storedTest = ref('') // test to repeat
     const howToUseCustomText = ref('select text using options')
@@ -64,7 +63,7 @@ export const mainStore = defineStore('mainStore', () => {
             containerText: containerText.value,
             characters: containerText.value.length,
             totalTime: totalTime.value.toFixed(2),
-            WPM: Math.round( (((containerText.value.length - wrongCount.value) / 5)) / (totalTime.value/60)),
+            WPM: Math.round(  ((containerText.value.length / 5) - wrongCount.value) / (totalTime.value/60)),
         }
     })
 
@@ -98,11 +97,8 @@ export const mainStore = defineStore('mainStore', () => {
         if (timedTyping.value) {
             clearInterval(timerID.value)
             beginCountdown.value = false
-            if (!beatCountdown.value) totalTime.value = savedCountdown.value
-            else totalTime.value = (performance.now() - startTime.value).toFixed(0) / 1000
-        } else {
-            totalTime.value = (performance.now() - startTime.value).toFixed(0) / 1000
         }
+        totalTime.value = (performance.now() - startTime.value).toFixed(0) / 1000
     }
 
     const switchNext = (config, restart) => {
@@ -153,7 +149,6 @@ export const mainStore = defineStore('mainStore', () => {
         currentWordArray,
 
         beatCountdown,
-        savedCountdown,
         useCustomText,
         storedTest,
         howToUseCustomText,

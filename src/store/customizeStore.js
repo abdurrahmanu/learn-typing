@@ -100,9 +100,6 @@ export const customizeStore = defineStore('customizeStore', () => {
         let group = configs.value[0]
         testType_.value = customizers.value['test-type']
 
-        // if (customizers.value['test-type'] !== 'random-words') allOptions.value['text-length'] = ['auto', 10, 20, 30, 40]
-        // if (customizers.value['test-type'] === 'random-words') allOptions.value['text-length'] = ['auto', 10, 20, 30, 50,  100]
-
         if ((typeof configs.value[1] === 'number' && configs.value[0] === 'text-length' ) || configs.value[1] === 'random-words') {
             customizers.value['movie-quotes'] = false
             customizers.value['author-quotes'] = false

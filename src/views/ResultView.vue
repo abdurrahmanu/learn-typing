@@ -69,7 +69,7 @@
         </div>
         <div class="space-y-1 text-lg font-[400] roboto-font py-4 border-y border-slate-500 w-fit m-auto caveat">            
             <div v-if="timedTyping">                
-                <div v-if="beatCountdown" class="text-green-700 uppercase ">You beat the time, you had {{ remainingTime() }}<span class="lowercase">s</span> left</div>
+                <div v-if="beatCountdown" class="text-green-700 uppercase ">You beat the time <span class="px-2 text-lg">&#128526;</span> </div>
                 <div v-else class="text-red-400 uppercase ">You failed to beat the time<span class="text-lg">&#128551;</span>
                 </div>
             </div>
@@ -85,6 +85,7 @@ import {mainStore} from '../store/mainStore'
 import {themeStore}  from '../store/themeStore'
 import {authStore} from '../store/authStore'
 import { customizeStore } from '../store/customizeStore'
+import { countdownStore } from '../store/countdownStore'
 import pass from '../components/svg/pass.vue'
 import fail from '../components/svg/fail.vue'
 
@@ -98,11 +99,7 @@ const theme_ = themeStore()
 const { appTheme } = storeToRefs(theme_)
 
 const store = mainStore()
-const {resultData, beatCountdown, timedTyping, savedCountdown} = storeToRefs(store)
-
-const remainingTime = () => {
-    return (savedCountdown.value - resultData.value.totalTime).toFixed(2)
-}
+const {resultData, beatCountdown, timedTyping} = storeToRefs(store)
 
 const testType = computed(() => {
     if (timedTyping.value) {

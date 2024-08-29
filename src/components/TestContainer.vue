@@ -1,19 +1,19 @@
 <template>
     <main class="w-[90%] min-h-[150px] space-y-[2px] relative transition-none  max-w-[900px] m-auto">
-        <div :class="[isMobileOS() ? 'flex' : 'block', alphabetsMode_ && !useAlphabetCombination ? 'max-w-[450px]' : 'max-w-[700px]']" class="relative h-fit min-h-[30px] m-auto py-1">            
+        <div :class="[isMobileOS() ? 'flex' : 'block', alphabetsMode_ && !useAlphabetCombination ? 'max-w-[450px]' : 'max-w-[700px]']" class="relative h-fit min-h-[30px] m-auto py-1">      
             <MobileInput />
+
             <Countdown 
                 v-show="(isMobileOS() && focus && timedTyping) || timedTyping"
                 class="absolute left-0"
                 :length="countdown" 
-                :start="beginCountdown" 
-                :cancel="timedTyping"
-                :animate="true"
-                :interval="1000" />
+                :start="beginCountdown" />
+                
             <div class="w-fit h-fit"> 
                 <restart v-show="!hasCompletedSession && playerInputLength" @click="restartTest" class="absolute w-6 left-[50%] translate-x-[-50%] "/>
             </div>
         </div>
+        
         <div v-if="containerText" class="transition-all duration-100 relative mx-auto max-w-[700px] w-full min-w-[300px]">
             <div @blur="textIsFocused = false" @focus="textIsFocused = true" tabindex="0" ria-describedby="full-text" ref="testContainerEl"  :style="{'height' : containerHeight + 'px', 'font-size': font + 'px'}" :class="[ customizers['no-space'] || customizers['test-type'] === 'custom-test' ? 'break-words' : '', alphabetsMode_ ? 'text-center break-words': 'text-left', !alphabetsMode_ && textPosition=== 'center' ? 'text-center' : !alphabetsMode_ && textPosition=== 'right' ? 'text-right' : 'text-left'] " class="overflow-y-auto scroll-smooth noscrollbar leading-[1.4] h-fit py-[1px] outline-none">
                 <p id="full-text" class="hidden">{{ containerText }}</p>
@@ -26,8 +26,8 @@
                 :equality="playerInput[index - 1] === containerText[index - 1]"
                 :alphabet="containerText[index - 1]"/>
             </div>
-            <div class="min-h-[16px] font-medium" :class="[customizers['movie-quotes'] || customizers['author-quotes'] ? 'h-10' : '']">
-                <p v-show="movie.name" :class="[theme === 'dark' ? 'text-slate-400' : 'text-black']" class="pt-5 text-xs italic text-right whitespace-nowrap">{{movie.quoteAuthor}} - {{ movie.name }}</p>
+            <div class="min-h-[16px] font-medium text-right" :class="[customizers['movie-quotes'] || customizers['author-quotes'] ? 'h-10' : '']">
+                <p v-show="movie.name" :class="[theme === 'dark' ? 'text-slate-400' : 'text-black']" class="pt-5 text-xs italic text-right">{{movie.quoteAuthor}} - {{ movie.name }}</p>
                 <p  v-show="authoredQuote.author" :class="[theme === 'dark' ? 'text-slate-400' : 'text-black']" class="text-xs italic text-right">{{authoredQuote.author}}</p>
             </div>
         </div>
@@ -72,7 +72,7 @@ const theme_ = themeStore()
 const {theme} = storeToRefs(theme_)
 
 const count = countdownStore()
-const {countdown} = storeToRefs(count)
+const {countdown, textLength} = storeToRefs(count)
 const {clearCounter} = count
 
 const restartTest = async () => {
@@ -162,6 +162,7 @@ const preventScroll = (e) => {
     e.stopPropagation();
     return false;
 }
+
 </script>
 
 <style scoped>

@@ -4,8 +4,8 @@
             <Logo />
         </div>
         <p class="text-center text-[30px] leading-0 opacity-90 blur-[1px] roboto-mono exo-ital pt-2">KiBoard</p>
-        <div class="m-auto max-w-[400px] z-[-1] text-sm border border-neutral-800 p-1 border-x-0 caveat font-black">
-            <p class="m-auto text-center w-fit">A TYPING WEB APP DESIGNED AND DEVELOPED</p>
+        <div class="m-auto max-w-[400px] z-[-1] text-sm border border-neutral-800 p-1 border-x-0 settings-font">
+            <p class="m-auto text-center w-fit">DESIGNED AND DEVELOPED</p>
             <p class="m-auto text-center w-fit">BY</p>
             <p class="m-auto text-center w-fit">AHMED ABDULRAHMAN</p>
         </div>
@@ -24,7 +24,7 @@
             </div> -->
             <div class="m-auto w-fit min-w-[130px]">                
                 <p class="mb-1 font-bold text-center underline">CREDITS</p>
-                <p @click="name='portfolio'" class="text-xl text-center hover:underline caveat">Ahmed Abdulrahman</p>
+                <p @click="name='portfolio'" class="text-2xl text-center hover:underline caveat">Ahmed Abdulrahman</p>
             </div>
             <!-- <div class="m-auto w-fit min-w-[130px]">                
                 <p class="mb-1 font-bold text-center underline">CONTRIBUTORS</p>

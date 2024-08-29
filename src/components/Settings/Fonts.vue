@@ -22,7 +22,7 @@ const theme_ = themeStore()
 const {theme} = theme_
 
 const store = mainStore()
-const {timedTyping, playerInput, savedCountdown} = storeToRefs(store)
+const {timedTyping, playerInput} = storeToRefs(store)
 const {switchNext} = store
 
 const customize = customizeStore()

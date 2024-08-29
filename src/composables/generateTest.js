@@ -7,15 +7,13 @@ import { UseGetQuotes } from "./UseGetQuotes"
 
 export const generateTest = async (config, restart) => {
     const main = mainStore()
-    const {containerText, storedTest, timedTyping, movie, authoredQuote, savedCountdown, allSpacesIndex} = storeToRefs(main)
+    const {containerText, storedTest, movie, authoredQuote, allSpacesIndex} = storeToRefs(main)
 
     const count = countdownStore()
-    const {countdown} = storeToRefs(count)
+    const {textLength} = storeToRefs(count)
 
     const customize = customizeStore()
-    const {repeat, mode, customizers} = storeToRefs(customize)
-
-    if (timedTyping.value) countdown.value = savedCountdown.value
+    const {repeat, mode } = storeToRefs(customize)
 
     if (repeat.value || restart ) {
         containerText.value = storedTest.value
@@ -53,4 +51,5 @@ export const generateTest = async (config, restart) => {
     }
 
     storedTest.value = containerText.value
+    textLength.value = containerText.value.length
 }
