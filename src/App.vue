@@ -7,7 +7,7 @@
         <Restart />
       </main>
     </div>
-    <div class="fixed flex items-center gap-2 bottom-2 right-2">      
+    <div class="fixed flex items-center gap-3 bottom-2 right-2">      
       <div class="self-end py-2 w-fit" v-if="route.name !== 'about'">
         <about 
         class="w-[11px]" 
