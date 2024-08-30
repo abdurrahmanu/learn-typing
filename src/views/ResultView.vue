@@ -69,8 +69,10 @@
         </div>
         <div class="space-y-1 text-lg font-[400] roboto-font py-4 border-y border-slate-500 w-fit m-auto caveat">            
             <div v-if="timedTyping">                
-                <div v-if="beatCountdown" class="text-green-700 uppercase ">You beat the time <span class="px-2 text-lg">&#128526;</span> </div>
-                <div v-else class="text-red-400 uppercase ">You failed to beat the time<span class="text-lg">&#128551;</span>
+                <div v-if="beatCountdown && testResult === 'you passed the test'" class="text-green-700 uppercase ">You passed the test<span class="px-2 text-lg">&#128526;</span> </div>
+                <div v-else class="text-red-400 uppercase ">{{!beatCountdown ? 'You failed to beat the time' : 'You failed the test' }} <span class="text-lg">&#128551;</span></div>
+                <div v-if="level !== difficulty && beatCountdown && testResult === 'you passed the test' && (((difficulty === 'beginner' || difficulty === 'amateur') && level === 'expert') || (difficulty === 'beginner' && level === 'amateur'))" class="text-green-700 uppercase"> 
+                    {{ ((difficulty === 'beginner' || difficulty === 'amateur') && level === 'expert') || (difficulty === 'beginner' && level === 'amateur') ? 'Wow!!' : ''  }} As a {{difficulty}}, This is {{ level }} pace
                 </div>
             </div>
             <div v-else  :class="[testResult === 'you passed the test' ? 'text-green-700' : 'text-red-400']" class="text-center uppercase">{{ testResult }}<span class="px-3 text-2xl">{{ testResult === 'you failed the test' ? '&#128551;' : '&#128526;' }}</span></div>
@@ -83,14 +85,13 @@ import {ref, onMounted, computed} from 'vue'
 import {storeToRefs} from 'pinia'
 import {mainStore} from '../store/mainStore'
 import {themeStore}  from '../store/themeStore'
-import {authStore} from '../store/authStore'
 import { customizeStore } from '../store/customizeStore'
 import { countdownStore } from '../store/countdownStore'
 import pass from '../components/svg/pass.vue'
 import fail from '../components/svg/fail.vue'
 
-const auth_ = authStore()
-const { userID } = storeToRefs(auth_)
+const count = countdownStore()
+const {level}  = storeToRefs(count)
 
 const customize = customizeStore()
 const {mode, difficulty} = storeToRefs(customize)

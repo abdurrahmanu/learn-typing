@@ -21,7 +21,7 @@
     <CapsLockToast 
     top 
     :toggle="toggleCapsToast" 
-    text="CapsLock is disabled, you can off your CapsLock or go to settings to enable it's usage." />
+    text="CapsLock is on, you cannot use CapsLock while it's usage is disabled, go to settings to enable it." />
   </div>
 </template>
 
@@ -42,6 +42,7 @@ import {localStorageConfig} from './composables/getLocalStorageConfig'
 import CustomTestModal from './components/CustomTestModal.vue';
 import CapsLockToast from './components/Toast.vue';
 import {useRoute, useRouter} from 'vue-router'
+import { countdownStore } from './store/countdownStore';
 
 const route = useRoute()
 const router = useRouter()
@@ -53,14 +54,18 @@ const customize = customizeStore()
 const {font, customizers, toggleCapsToast } = storeToRefs(customize)
 
 const main = mainStore()
-const { containerHeight } = storeToRefs(main)
+const { containerHeight, timedTyping} = storeToRefs(main)
 const { switchNext} = main
+
+const count = countdownStore()
+const {clearCounter} = count
 
 const routeToPage = (route) => {
     router.push({name: route})
 }
 
 watch(customizers, (newVal) => {
+  if (timedTyping.value) clearCounter()
   if (newVal) switchNext(newVal)
 }, {deep : true})
 

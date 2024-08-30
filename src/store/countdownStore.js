@@ -8,7 +8,7 @@ export const countdownStore = defineStore('countdown', () => {
     const intervalID = ref(null)
     const start = ref(false)
     const textLength = ref()
-    const level = ref('easy')
+    const level = ref('beginner')
     const countdown = ref(0)
 
     const timeForBeginner = computed(() => {

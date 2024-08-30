@@ -1,7 +1,7 @@
 <template>
     <div class="fixed top-0 translate-x-[-50%] left-[50%] m-auto h-fit w-[90%] text-center perspective">
     <Transition appear mode="in-out" :name="transitionType">
-            <span ref="toastEl" v-if="toggle" class="p-1 w-fit z-[4] shadow-sm min-w-[300px] shadow-black py-2 text-xs text-red-600 bg-slate-300 px-4 font-[500] max-w-[500px] inline-block" :class="{'top-0' : top, 'top-0 left-0' : left, 'top-[50px] right-[0]' : right, 'bottom-0 left-[50%] translate-x-[-50%]' : bottom}">
+            <span ref="toastEl" v-if="toggle" class="p-1 w-fit z-[4] shadow-sm min-w-[300px] shadow-black py-2 text-xs text-red-400 bg-slate-300 px-1 font-[500] max-w-full inline-block" :class="{'top-0' : top, 'top-0 left-0' : left, 'top-[50px] right-[0]' : right, 'bottom-0 left-[50%] translate-x-[-50%]' : bottom}">
                 {{ text }}
             </span>
         </Transition>

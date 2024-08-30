@@ -1,7 +1,7 @@
 <template>
-    <header class="sticky mx-auto flex items-center justify-between pl-3 pr-2 max-w-[1500px] mb-3 text-[11px] uppercase font-medium min-w-[360px]" :class="[focus && isMobileOS() && route.name === 'home' ? 'h-0 p-0 mb-0' : 'h-[50px]']">
+    <header class="sticky mx-auto flex items-center justify-between pl-3 pr-2 max-w-[1500px] mb-3 text-[11px] uppercase font-medium min-w-[360px]" :class="[focus && isMobileOS() ? 'h-0 p-0 mb-0' : 'h-[50px]']">
         <Logo v-show="!focus" class="flex" />
-        <div v-show="(!focus && isMobileOS())  || route.name !== 'home'" class="absolute flex items-center gap-4 w-fit" :class="[!hideElements ? 'right-[50%] translate-x-[50%]' : 'left-[50%] translate-x-[-50%]']">
+        <div v-show="(!focus && isMobileOS()) || !isMobileOS()" class="absolute flex items-center gap-4 w-fit" :class="[!hideElements ? 'right-[50%] translate-x-[50%]' : 'left-[50%] translate-x-[-50%]']">
             <div v-show="route.name === 'home'" class="flex items-center gap-4 text-[9px]">
                 <div class="relative w-fit">
                     <Clock class="peer" />
