@@ -98,7 +98,7 @@ export async function UseGetQuotes (config, customText) {
             }
         }
 
-        else if (config['test-type'] === 'custom-test')  {
+        else if (config['test-type'] === 'custom')  {
             // if (config['text-length'] === 10) {
 
             // }
@@ -134,14 +134,14 @@ export async function UseGetQuotes (config, customText) {
             }
             else {
                 if (config['include-numbers'] === 'numbers') {
-                    if (config['words-type'] === 'most-used') words.value = [...mostUsed, ...numbers]
-                    if (config['words-type'] === 'less-used') words.value = [...mediumUsed, ...numbers]
-                    if (config['words-type'] === 'rarely-used') words.value =  [...rarelyUsed, ...numbers]
+                    if (config['words-type'] === 'frequent') words.value = [...mostUsed, ...numbers]
+                    if (config['words-type'] === 'common') words.value = [...mediumUsed, ...numbers]
+                    if (config['words-type'] === 'rare') words.value =  [...rarelyUsed, ...numbers]
                 }
                 else {                
-                    if (config['words-type'] === 'most-used') words.value = [...mostUsed]
-                    if (config['words-type'] === 'less-used') words.value = [...mediumUsed, ...mostUsed]
-                    if (config['words-type'] === 'rarely-used') words.value = [...rarelyUsed, ...mostUsed, ...mediumUsed]
+                    if (config['words-type'] === 'frequent') words.value = [...mostUsed]
+                    if (config['words-type'] === 'common') words.value = [...mediumUsed, ...mostUsed]
+                    if (config['words-type'] === 'rare') words.value = [...rarelyUsed, ...mostUsed, ...mediumUsed]
                 }
                 if (length) {
                     for (let index = 0; index < length; index++) {

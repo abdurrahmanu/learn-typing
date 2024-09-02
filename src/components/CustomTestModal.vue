@@ -15,7 +15,7 @@
             <div v-else class="pt-3 text-center">
                 <p v-if="textSaved" class="py-3 text-center text-green-600 uppercase">Added Successfully</p>
                 <div v-else class="space-y-4">                    
-                    <input name="custom-test-title" v-model="customTestTitle" type="text" :placeholder="titlePlaceholder" class="p-1 text-center bg-transparent border-b outline-none border-b-blue-500 placeholder:text-center">
+                    <input name="custom-title" v-model="customTestTitle" type="text" :placeholder="titlePlaceholder" class="p-1 text-center bg-transparent border-b outline-none border-b-blue-500 placeholder:text-center">
                     <div class="flex justify-center gap-2 m-auto font-medium w-fit">
                         <div @click="cancel" class="py-[2px] m-auto text-center border rounded-l-full px-4 w-fit border-slate-600 hover:bg-red-500 hover:text-white">CANCEL</div>
                         <div @click="saveNewCustomText" class="py-[2px] m-auto text-center border rounded-r-full px-4 w-fit border-slate-600 hover:bg-green-800 hover:text-white">SAVE</div>
@@ -31,8 +31,8 @@
                     <div v-for="(test, name, index) in customTests" :key="index" class="p-1 border hover:shadow-sm" :class="[theme === 'dark' ? 'border-neutral-700' : 'border-slate-400']">
                         <div class="space-x-1 text-xs font-medium uppercase"> 
                             <span>{{ name }}</span> 
-                            <span @click="use(name)" class="px-3 text-white bg-green-700 rounded-full py-[1px] hover:bg-green-800 ml-1">use</span> 
-                            <span v-if="index !== 0" @click="del(name)" class="px-3 text-white py-[1px] bg-red-500 rounded-full hover:bg-red-600">delete</span>
+                            <span @click="use(name)" class=" text-[10px] px-3 text-white bg-green-700 rounded-full py-[1px] hover:bg-green-800 ml-1">use</span> 
+                            <span v-if="index !== 0" @click="del(name)" class="px-1 text-white py-[1px] bg-red-500 rounded-full hover:bg-red-600 text-[10px]">delete</span>
                             <!-- <span v-if="index !== 0" @click="edit(name)" class="px-3 text-white py-[1px] bg-blue-600 rounded-full hover:bg-blue-700">edit</span> -->
                         </div>
                         <div class="text-[12px] font-[400] exo-ital max-h-[100px] overflow-y-auto">{{ test }}</div>
@@ -125,9 +125,9 @@ const del= (name) => {
 const use = (name) => {
     if (repeat.value) return
     const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
-    if (customizers.value['test-type'] !== 'custom-test') {
-        customizers.value['test-type'] = 'custom-test'
-        localStorageSettings.value.config[0]['test-type'] = 'custom-test'
+    if (customizers.value['test-type'] !== 'custom') {
+        customizers.value['test-type'] = 'custom'
+        localStorageSettings.value.config[0]['test-type'] = 'custom'
         localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
     }
     selectedCustomTest.value = name

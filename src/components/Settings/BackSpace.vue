@@ -10,8 +10,8 @@
                 </label>
             </div>
         </div>
-        <p v-if="isMobileOS()"  class="px-3 font-[400]"><span class="text-red-600">**</span>Always enabled on mobile devices</p>
-        <p v-else class="px-3 font-[400]">This enables or disables the backspace or delete key.</p>
+        <p v-if="isMobileOS()"  class="px-3 font-[400]">Cannot be disabled on mobile.</p>
+        <p v-else class="px-3 font-[400]">Toggle to enable Backspace or delete key.</p>
     </div>
 </template>
 

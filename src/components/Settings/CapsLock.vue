@@ -10,7 +10,7 @@
                 </label>
             </div>
         </div>
-        <p  class="px-3 font-[400]">Enable to use caps lock for uppercase letters. Disable to use <span class="px-3 text-xs text-white bg-blue-800">Shift</span> + <span class="px-3 text-xs text-white bg-blue-800">Key</span> combination for uppercase.</p>
+        <p  class="px-3 font-[400]">Toggle to enable CapsLock. Untoggle to use <span class="px-3 text-xs text-white bg-green-800 rounded-sm">Shift</span> + <span class="px-3 text-xs text-white bg-green-800 rounded-sm">Key</span> instead of CapsLock.</p>
     </div>
 </template>
 

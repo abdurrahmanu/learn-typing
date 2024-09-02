@@ -5,7 +5,7 @@
 </template> 
 
 <script setup>
-import { defineProps, computed, watchEffect, ref, onMounted } from 'vue';
+import { computed, watchEffect, ref, onMounted } from 'vue';
 import {storeToRefs} from 'pinia'
 import {mainStore} from '../store/mainStore'
 import {themeStore}  from '../store/themeStore'
@@ -102,7 +102,7 @@ onMounted(() => {
 const equalStyle = computed(() => {
     if (!blind.value) {
         let correctText = theme.value === 'dark' ? 'text-green-300' : 'text-green-500'
-        let wrongText = theme.value === 'dark' ? 'text-red-500' : theme.value !== 'dark' && props.index < playerInputLength.value  ? 'text-red-600' : ''
+        let wrongText = theme.value === 'dark' ? 'text-red-500' : theme.value !== 'dark' && props.index - 1 < playerInputLength.value  ? 'text-red-600' : ''
         return props.equality ? correctText : wrongText
     }
 })

@@ -15,7 +15,7 @@
                 @mouseleave="mouseLeave(listIndex)" >
                     <div 
                     class="px-[5px] hover:scale-105 rounded-md whitespace-nowrap" 
-                    :class="[disableOption[key] ? 'hide' : '', customizers[key] === option && !disableOption[key]  ? 'text-green-600' : '', option === 'custom-test']"
+                    :class="[disableOption[key] ? 'hide' : '', customizers[key] === option && !disableOption[key]  ? 'text-green-600' : '', option === 'custom']"
                     @click="changeConfig(option, key)" 
                     v-for="(option, index) in optionArr" 
                     :key="index">
@@ -66,7 +66,7 @@ const {switchNext} = store
 const customize = customizeStore()
 const { allOptions, configs, customizers, pauseTyping, disableOption, blind, repeat, hideElements} = storeToRefs(customize)
 const {useConfig} = customize
-const optionsTooltip = ['test-length', 'words-type', 'test-type', 'format', 'format', 'format']
+const optionsTooltip = ['words', 'words use', 'test type', 'format', 'format', 'format']
 
 onMounted(() => {
     watchEffect(() => {

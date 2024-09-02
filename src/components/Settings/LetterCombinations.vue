@@ -9,7 +9,7 @@
             </label>
         </div>
         <div class="px-4 font-[400]">
-            <p>Randomly repeats and shuffles your selection. Select a minimum of two entries or maximum of ten characters then click the checkbox.</p>
+            <p>Toggle to randomly repeat and shuffles your selection. A minimum of two characters and maximum of ten.</p>
             <div @click="shiftKey = !shiftKey" class="flex m-auto my-1 space-x-2 w-fit">
                 <input :checked="shiftKey" type="checkbox" class="accent-green-500" name="shiftkey" id="shiftkey">
                 <label for="shiftkey" class="font-medium">Shift Key</label>

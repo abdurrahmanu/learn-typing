@@ -4,7 +4,7 @@ import {ref} from 'vue'
 
 export const customizeStore = defineStore('customizeStore', () => {
     const mode = ref('auto')
-    const testType_ = ref('random-words')
+    const testType_ = ref('words')
     const selectedCustomTest = ref('')
     const customTestModal = ref(false)
     const pauseTyping = ref(true)
@@ -29,9 +29,9 @@ export const customizeStore = defineStore('customizeStore', () => {
 
     const customizers = ref({
         'text-length': 'auto',
-        'words-type': 'most-used', 
+        'words-type': 'frequent', 
         'caret': 'border',
-        'test-type': 'random-words',
+        'test-type': 'words',
         'include-caps': '',
         'include-punctuation': '',
         'include-numbers': '',
@@ -56,8 +56,8 @@ export const customizeStore = defineStore('customizeStore', () => {
 
     const allOptions = ref({
         'text-length' : isMobileOS() ? ['auto', 10, 20, 30 ] : ['auto', 10, 20, 30, 50,  100],
-        'words-type' : ['most-used', 'less-used', 'rarely-used'],
-        'test-type' : ['quotes', 'random-words', 'custom-test'],
+        'words-type' : ['frequent', 'common', 'rare'],
+        'test-type' : ['quotes', 'words', 'custom'],
         'include-caps' : ['caps'],
         'include-punctuations' : ['punctuations'],
         'include-numbers' : ['numbers'],
@@ -70,18 +70,18 @@ export const customizeStore = defineStore('customizeStore', () => {
         if (customizers.value[group] === selection) customizers.value[group] = ''
         else customizers.value[group] = selection
 
-        if (customizers.value['test-type'] === 'quotes' || customizers.value['test-type'] === 'custom-test') {
+        if (customizers.value['test-type'] === 'quotes' || customizers.value['test-type'] === 'custom') {
             disableOption.value['words-type'] = true
             disableOption.value['include-numbers'] = true
 
-            if (customizers.value['test-type'] === 'custom-test') {
+            if (customizers.value['test-type'] === 'custom') {
                 disableOption.value['text-length'] = true
             } else {
                 disableOption.value['text-length'] = false
             }
         }
         
-        else if (customizers.value['test-type'] === 'random-words') {
+        else if (customizers.value['test-type'] === 'words') {
             disableOption.value['words-type'] = false
             disableOption.value['include-numbers'] = false
             disableOption.value['text-length'] = false
@@ -100,7 +100,7 @@ export const customizeStore = defineStore('customizeStore', () => {
         let group = configs.value[0]
         testType_.value = customizers.value['test-type']
 
-        if ((typeof configs.value[1] === 'number' && configs.value[0] === 'text-length' ) || configs.value[1] === 'random-words') {
+        if ((typeof configs.value[1] === 'number' && configs.value[0] === 'text-length' ) || configs.value[1] === 'words') {
             customizers.value['movie-quotes'] = false
             customizers.value['author-quotes'] = false
         }

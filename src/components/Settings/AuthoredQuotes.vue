@@ -6,7 +6,7 @@
                 <label class="text-sm font-medium w-fit">Quotes with Authors</label>
             </div>
         </div>
-        <p class="px-2 font-[400]">When enabled, it activates quotes mode and uses auto length</p>
+        <p class="px-2 font-[400]">When toggled, it toggles quotes mode and auto length</p>
         <div v-if="customizers['author-quotes']"class="p-2 font-[400]">
             <div class="py-1 space-x-2 w-fit">         
                 <input id="only-authored" :value="true" @click="setQuotes(true)" v-model="onlyAuthoredQuotes" class="w-7 accent-green-500" type="radio"></input>

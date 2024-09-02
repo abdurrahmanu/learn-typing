@@ -11,7 +11,7 @@
                 </label>
             </div>
         </div>
-        <p class="px-3 font-[400]">All alphabets are capitalized</p>
+        <p class="px-3 font-[400]">Toggle to capitalize all alphabets</p>
     </div>
 </template>
 

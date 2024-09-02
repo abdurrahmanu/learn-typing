@@ -34,7 +34,7 @@ export function useCustomizeFormat(args, text) {
     if (!args.includes('caps') && !args[4] && !args[3]) {
         res.value = res.value.toLowerCase()
     } else {
-        if (args[6] === 'random-words') {
+        if (args[6] === 'words') {
             let newText = res.value
             res.value = ''
             for (let index = 0; index < newText.length; index++) {
@@ -56,7 +56,7 @@ export function useCustomizeFormat(args, text) {
         }
     }
     else {
-        if (args[6] === 'random-words') {
+        if (args[6] === 'words') {
             let punctuations = [',', '.', ';', '.', '.', '.', ',', ',', '?', '!']
             let newText = res.value
             res.value = ''

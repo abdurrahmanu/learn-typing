@@ -4,7 +4,7 @@
       <Header/>
       <main>
         <RouterView />
-        <Restart />
+        <Next />
       </main>
     </div>
     <div class="fixed flex items-center gap-3 bottom-2 right-2">      
@@ -21,17 +21,16 @@
     <CapsLockToast 
     top 
     :toggle="toggleCapsToast" 
-    text="CapsLock is on, you cannot use CapsLock while it's usage is disabled, go to settings to enable it." />
+    text="CapsLock is on, you cannot use it while it is disabled, enable in settings." />
   </div>
 </template>
 
 <script setup>
-import TestContainer from './components/TestContainer.vue';
 import {onBeforeMount, onMounted, watch, ref} from 'vue'
 import about from './components/svg/about.vue';
 import Header from './components/Header.vue'
 import SwitchModes from './components/SwitchModes.vue';
-import Restart from './components/Restart.vue';
+import Next from './components/Next.vue';
 import Animate from './components/Animate.vue';
 import Theme from './components/Theme.vue';
 import { storeToRefs } from 'pinia';
@@ -130,6 +129,7 @@ watch(toggleCapsToast, (newVal, oldVal) => {
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Caveat:wght@400..700&family=Exo:ital,wght@0,100..900;1,100..900&family=Itim&family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Pacifico&family=Reddit+Mono:wght@200..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Shadows+Into+Light&display=swap');
+
 
 .amiri-font {
   font-family: 'Amiri', sans-serif,

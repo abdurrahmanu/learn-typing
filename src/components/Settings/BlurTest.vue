@@ -10,7 +10,7 @@
                 </label>
             </div>
         </div>
-        <p class="px-3 font-[400]">Only already typed and current words will not be blurred out. Only works with space inbetween words.</p>
+        <p class="px-3 font-[400]">Toggle to blur out all words excluding the current and next words. Only works with spaced words.</p>
     </div>
 </template>
 

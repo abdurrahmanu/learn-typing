@@ -10,7 +10,7 @@
                 </label>
             </div>
         </div>
-        <p class="px-3 font-[400]">Randomize the location of Caps and lowercase letters in tests. eg. tHiS is An EXaMplE</p>
+        <p class="px-3 font-[400]">Toggle to randomize positons of uppercase and lowercase alphabets. eg. tHiS is An EXaMplE</p>
     </div>
 </template>
 
