@@ -1,6 +1,6 @@
 <template>
     <div aria-hidden="true" ref="currentAlphabet" :class="[customizers['no-space'] ? '' : 'whitespace-pre-wrap']" class="relative inline">
-        <span  :class="[!focus && currentIndexStyle ? 'text-slate-500' : '', equalStyle, (isMobileOS() && focus) || !isMobileOS() ? currentIndexStyle : '', mainStyle, !currentIndex || isMobileOS() && !focus ? 'border-transparent' : '', pulseStyle, blurStyle, (caretType === 'pulse' || caretType === 'word-pulse') && alphabet === ' ' ? 'opacity-20' : '']" class="transition-opacity duration-75 border" >{{ alphabet }}</span>
+        <span  :class="[space, !focus && currentIndexStyle ? 'text-slate-500' : '', equalStyle, (isMobileOS() && focus) || !isMobileOS() ? currentIndexStyle : '', mainStyle, !currentIndex || isMobileOS() && !focus ? 'border-transparent' : '', pulseStyle, blurStyle, (caretType === 'pulse' || caretType === 'word-pulse') && alphabet === ' ' ? 'opacity-100 animate-pulse' : '']" class="relative transition-opacity duration-75 border" >{{ alphabet }}</span>
     </div>
 </template> 
 
@@ -113,6 +113,10 @@ const currentIndexStyle = computed(() => {
     return  props.currentIndex ? text + ' ' + caret : ''
 })
 
+const space = computed(() => {
+    return (caretType.value === 'border' || caretType.value === 'pulse' || caretType.value === 'word-pulse') && props.currentIndex && props.alphabet === ' ' ? 'before:absolute before:top-0 before:bottom-0 before:w-[50%] before:max-w-[1px] before:left-[30%] before:bg-slate-500 border-transparent' : ''
+})
+
 const mainStyle = computed(() => {
     let text = theme.value === 'dark' ? 'text-slate-500' : 'text-zinc-500'
     return props.index > playerInputLength.value ? text : ''
@@ -156,7 +160,7 @@ const pulseStyle = computed(() => {
         opacity: 70%
     }
     50% {
-        opacity: 40%;
+        opacity: 45%;
     }
     100% {
         opacity: 70%;
@@ -173,7 +177,7 @@ const pulseStyle = computed(() => {
         opacity: 70%
     }
     50% {
-        opacity: 15%;
+        opacity: 40%;
     }
     100% {
         opacity: 70%;
