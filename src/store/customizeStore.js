@@ -5,14 +5,12 @@ import {ref} from 'vue'
 export const customizeStore = defineStore('customizeStore', () => {
     const mode = ref('auto')
     const testType_ = ref('words')
-    const selectedCustomTest = ref('')
+    const userSelectedTest = ref('')
     const customTestModal = ref(false)
     const pauseTyping = ref(true)
     const configs = ref([])
     const showMoreSettings = ref(false)
     const hideElements = ref(false)
-    const onlyMovieQuotes = ref(false)
-    const onlyAuthoredQuotes = ref(false)
     const caretType = ref('border')
     const difficulty = ref('beginner')
     const backspace = ref(false)
@@ -32,39 +30,37 @@ export const customizeStore = defineStore('customizeStore', () => {
         'words-type': 'frequent', 
         'caret': 'border',
         'test-type': 'words',
-        'include-caps': '',
-        'include-punctuation': '',
-        'include-numbers': '',
+        'caps': false,
+        'punctuation': false,
+        'numbers': false,
         'all-caps': false,
         'backspace': true,
         'blind-mode': false,
-        'custom-camel-case': false,
+        'camel-case': false,
         'no-space': false,
         'movie-quotes': false,
         'author-quotes': false,
         'blur': false,
     })
 
-    
-
     const disableOption = ref({
         'test-length' : false,
         'words-type': false, 
         'test-type': false,
-        'include-caps': false, 
-        'include-punctuations': false,
-        'include-numbers': false
+        'caps': false, 
+        'punctuation': false,
+        'numbers': false
     })
 
     const allOptions = ref({
         'test-length' : isMobileOS() ? ['auto', 10, 20, 30 ] : ['auto', 10, 20, 30, 50,  100],
         'words-type' : ['frequent', 'common', 'rare'],
         'test-type' : ['quotes', 'words', 'custom'],
-        'include-caps' : ['caps'],
-        'include-punctuations' : ['punctuations'],
-        'include-numbers' : ['numbers'],
+        'caps' : ['caps'],
+        'punctuation' : ['punctuations'],
+        'numbers' : ['numbers'],
         'all-caps' : ['all caps'],
-        'custom-camel-case' : ['custom camel case'],
+        'camel-case' : ['custom camel case'],
         'no-space' : ['no space'],
     })
 
@@ -74,7 +70,7 @@ export const customizeStore = defineStore('customizeStore', () => {
 
         if (customizers.value['test-type'] === 'quotes' || customizers.value['test-type'] === 'custom') {
             disableOption.value['words-type'] = true
-            disableOption.value['include-numbers'] = true
+            disableOption.value['numbers'] = true
 
             if (customizers.value['test-type'] === 'custom') {
                 disableOption.value['test-length'] = true
@@ -85,7 +81,7 @@ export const customizeStore = defineStore('customizeStore', () => {
         
         else if (customizers.value['test-type'] === 'words') {
             disableOption.value['words-type'] = false
-            disableOption.value['include-numbers'] = false
+            disableOption.value['numbers'] = false
             disableOption.value['test-length'] = false
         }
 
@@ -113,14 +109,12 @@ export const customizeStore = defineStore('customizeStore', () => {
     }
 
     const customize = (mode, boolean) => {
-        if (boolean && mode === 'all-caps') customizers.value['custom-camel-case'] = false
-        if (boolean && mode === 'custom-camel-case') customizers.value['all-caps'] = false
+        if (boolean && mode === 'all-caps') customizers.value['camel-case'] = false
+        if (boolean && mode === 'camel-case') customizers.value['all-caps'] = false
 
         if (mode === 'author-quotes' || mode === 'movie-quotes') {
             customizers.value['test-length'] = 'auto'
             customizers.value['test-type'] = 'quotes'
-            if (mode === 'author-quotes' && onlyMovieQuotes.value) onlyMovieQuotes.value = false 
-            if (mode === 'movie-quotes' && onlyAuthoredQuotes.value) onlyAuthoredQuotes.value = false 
         }
 
         localStorageSettings.value.config = [customizers.value, disableOption.value]
@@ -130,14 +124,12 @@ export const customizeStore = defineStore('customizeStore', () => {
     return {
         disableOption,
         difficulty,
-        onlyMovieQuotes,
         configs,
         caretType,
         showMoreSettings,
         customizers,
         allOptions,
         hideElements,
-        onlyAuthoredQuotes,
         backspace,
         blind,
         changeConfiguration,
@@ -150,7 +142,7 @@ export const customizeStore = defineStore('customizeStore', () => {
         textPosition,
         pauseTyping,
         customTestModal,
-        selectedCustomTest,
+        userSelectedTest,
         testType_,
         capslock,
         toggleCapsToast,

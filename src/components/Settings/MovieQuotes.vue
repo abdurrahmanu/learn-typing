@@ -7,16 +7,6 @@
             </div>
         </div>
         <p class="px-2 font-[400]">When toggled, it toggles quotes mode and auto length</p>
-        <div v-if="customizers['movie-quotes']"class="p-2 font-[400]">
-            <div class="py-1 space-x-2 w-fit">         
-                <input id="only" :value="true" @click="setQoutes(true)" v-model="onlyMovieQuotes" class="w-7 accent-green-500" type="radio"></input>
-                <label for="only">Movie quotes only</label>       
-            </div>
-            <div class="py-1 space-x-2 w-fit">      
-                <input id="mix" :value="false" @click="setQoutes(false)" v-model="onlyMovieQuotes" class="w-7 accent-green-500" type="radio"></input>
-                <label for="mix">Movie quotes with other quotes</label>          
-            </div>
-        </div>
     </div>
 </template>
 
@@ -24,24 +14,11 @@
 import {storeToRefs} from 'pinia'
 import {customizeStore} from '../../store/customizeStore'
 import { themeStore } from '../../store/themeStore';
-import {mainStore} from '../../store/mainStore'
-
-const main = mainStore()
-const {switchNext} = main
 
 const theme_ = themeStore()
 const {theme} = theme_
 
 const store = customizeStore()
-const {customizers, onlyMovieQuotes, onlyAuthoredQuotes} = storeToRefs(store)
+const {customizers} = storeToRefs(store)
 const {customize} = store
-
-const setQoutes = (boolean) => {
-    onlyAuthoredQuotes.value = false
-    if (boolean) {
-        onlyMovieQuotes.value = true
-        customizers.value['author-quotes'] = false
-    } else onlyMovieQuotes.value = false
-    switchNext(customizers.value)
-}
 </script>

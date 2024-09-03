@@ -4,7 +4,7 @@ export function useCustomizeFormat(args, text) {
     const res = ref(text);
     let punctuations = [',', '.', ':', ';', '-', "'", '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '=', '[', ']', '{', '}', '|', "\\", '"', '<', '>', '/', '?']
 
-    // Custom Random Camel Case
+    // Random Case
     if (args[4]) {
         res.value = ''
         for (let index = 0; index < text.length; index++) {
@@ -14,7 +14,7 @@ export function useCustomizeFormat(args, text) {
         }
     }
 
-    // No space text
+    // No space
     if (args[5]) {
         if (!args[1]) {
             let newText = res.value

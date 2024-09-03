@@ -54,7 +54,7 @@ import { useRoute } from 'vue-router';
 
 const route = useRoute()
 const customize = customizeStore()
-const {customTestModal, pauseTyping, customizers, selectedCustomTest, repeat} = storeToRefs(customize)
+const {customTestModal, pauseTyping, customizers, userSelectedTest, repeat} = storeToRefs(customize)
 
 const theme_ = themeStore()
 const {theme, appTheme } = storeToRefs(theme_)
@@ -130,7 +130,7 @@ const use = (name) => {
         localStorageSettings.value.config[0]['test-type'] = 'custom'
         localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
     }
-    selectedCustomTest.value = name
+    userSelectedTest.value = name
     switchNext(customizers.value)
     customTestModal.value = false
     pauseTyping.value = false

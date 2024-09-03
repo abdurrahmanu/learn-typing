@@ -42,7 +42,7 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted, watchEffect } from 'vue'
+import { ref, onMounted, watchEffect } from 'vue'
 import {customizeStore} from '../store/customizeStore.js'
 import {storeToRefs} from 'pinia'
 import { mainStore } from '../store/mainStore.js';
@@ -64,9 +64,9 @@ const { hasCompletedSession, completionLevel, containerText, playerInput, focus}
 const {switchNext} = store
 
 const customize = customizeStore()
-const { allOptions, configs, customizers, pauseTyping, disableOption, blind, repeat, hideElements} = storeToRefs(customize)
+const { allOptions, configs, customizers, disableOption, blind, repeat, hideElements} = storeToRefs(customize)
 const {useConfig} = customize
-const optionsTooltip = ['words', 'words use', 'test type', 'format', 'format', 'format']
+const optionsTooltip = ['words', 'words', 'type', 'format', 'format', 'format']
 
 onMounted(() => {
     watchEffect(() => {
@@ -82,18 +82,18 @@ const {
     'test-length' : textLength,
     'words-type':  wordType,
     'test-type': testType,
-    'include-caps': includeCaps,
-    'include-punctuations':  includePunctuations,
-    'include-numbers': includeNumbers
+    'caps': includeCaps,
+    'punctuation':  includePunctuations,
+    'numbers': includeNumbers
     } = allOptions.value
 
 const option = ref({
     'test-length' : textLength,
     'words-type': wordType, 
     'test-type': testType,
-    'include-caps': includeCaps, 
-    'include-punctuations': includePunctuations,
-    'include-numbers': includeNumbers
+    'caps': includeCaps, 
+    'punctuation': includePunctuations,
+    'numbers': includeNumbers
 })
 
 const hoverIndex = ref(null)

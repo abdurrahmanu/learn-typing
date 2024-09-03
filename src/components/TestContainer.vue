@@ -24,9 +24,9 @@
                 :equality="playerInput[index - 1] === containerText[index - 1]"
                 :alphabet="containerText[index - 1]"/>
             </div>
-            <div class="min-h-[16px] font-medium text-right" :class="[customizers['movie-quotes'] || customizers['author-quotes'] ? 'h-10' : '']">
-                <p v-show="movie.name" :class="[theme === 'dark' ? 'text-slate-400' : 'text-black']" class="pt-5 text-xs italic text-right">{{movie.quoteAuthor}} - {{ movie.name }}</p>
-                <p  v-show="authoredQuote.author" :class="[theme === 'dark' ? 'text-slate-400' : 'text-black']" class="text-xs italic text-right">{{authoredQuote.author}}</p>
+            <div class="min-h-[16px] text-right font-[600] pt-1">
+                <p v-if="quoteType === 'movie'" :class="[theme === 'dark' ? 'text-slate-400' : 'text-black']" class="text-xs italic text-right">{{movie.quoteAuthor}} - {{ movie.name }}</p>
+                <p  v-if="quoteType === 'author'" :class="[theme === 'dark' ? 'text-slate-400' : 'text-black']" class="text-xs italic text-right">{{authoredQuote.author}}</p>
             </div>
         </div>
         <p class=" text-sm bg-transparent blur-[1px] w-fit whitespace-nowrap m-auto flex" v-if="isMobileOS() && !focus" ><span class="pr-1">click</span><upwardsFinger class="relative w-5 bottom-1" />test to focus cursor</p>
@@ -60,7 +60,7 @@ const alphabets_ = alphabetsStore()
 const { alphabetsMode_, useAlphabetCombination } = storeToRefs(alphabets_)
 
 const store = mainStore()
-const { containerText, mobileBackspace, wrongCount, previousPlayerInput, beginCountdown, timedTyping, hasCompletedSession, focus, testContainerEl, containerHeight, movie, playerInputLength, playerInput, authoredQuote, scrollTextContainer, restartSvgEl, restartEl, inputEl} = storeToRefs(store)
+const { containerText, quoteType, mobileBackspace, wrongCount, previousPlayerInput, beginCountdown, timedTyping, hasCompletedSession, focus, testContainerEl, containerHeight, movie, playerInputLength, playerInput, authoredQuote, scrollTextContainer, restartSvgEl, restartEl, inputEl} = storeToRefs(store)
 const {switchNext} = store
 
 const customize = customizeStore()

@@ -398,7 +398,7 @@ export function englishWords() {
             "The only thing standing between you and your dream is the will to try and the belief that it is actually possible.",
             "Twenty years from now you will be more disappointed by the things that you didn't do than by the ones you did do.",
         ],
-        'fourty': [
+        'long': [
             "When one door of happiness closes, another opens; but often we look so long at the closed door that we do not see the one which has been opened for us."
         ],
     })
