@@ -44,6 +44,7 @@ export const customizeStore = defineStore('customizeStore', () => {
         'author-quotes': false,
         'blur': false,
     })
+    
 
     const disableOption = ref({
         'test-length' : false,
