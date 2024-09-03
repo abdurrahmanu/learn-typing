@@ -79,7 +79,7 @@ onMounted(() => {
 })
 
 const {
-    'text-length' : textLength,
+    'test-length' : textLength,
     'words-type':  wordType,
     'test-type': testType,
     'include-caps': includeCaps,
@@ -88,7 +88,7 @@ const {
     } = allOptions.value
 
 const option = ref({
-    'text-length' : textLength,
+    'test-length' : textLength,
     'words-type': wordType, 
     'test-type': testType,
     'include-caps': includeCaps, 

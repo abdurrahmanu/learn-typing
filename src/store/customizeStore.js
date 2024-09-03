@@ -28,7 +28,7 @@ export const customizeStore = defineStore('customizeStore', () => {
     const useCustomLength = ref(false)
 
     const customizers = ref({
-        'text-length': 'auto',
+        'test-length': 'auto',
         'words-type': 'frequent', 
         'caret': 'border',
         'test-type': 'words',
@@ -46,7 +46,7 @@ export const customizeStore = defineStore('customizeStore', () => {
     })
 
     const disableOption = ref({
-        'text-length' : false,
+        'test-length' : false,
         'words-type': false, 
         'test-type': false,
         'include-caps': false, 
@@ -55,7 +55,7 @@ export const customizeStore = defineStore('customizeStore', () => {
     })
 
     const allOptions = ref({
-        'text-length' : isMobileOS() ? ['auto', 10, 20, 30 ] : ['auto', 10, 20, 30, 50,  100],
+        'test-length' : isMobileOS() ? ['auto', 10, 20, 30 ] : ['auto', 10, 20, 30, 50,  100],
         'words-type' : ['frequent', 'common', 'rare'],
         'test-type' : ['quotes', 'words', 'custom'],
         'include-caps' : ['caps'],
@@ -75,16 +75,16 @@ export const customizeStore = defineStore('customizeStore', () => {
             disableOption.value['include-numbers'] = true
 
             if (customizers.value['test-type'] === 'custom') {
-                disableOption.value['text-length'] = true
+                disableOption.value['test-length'] = true
             } else {
-                disableOption.value['text-length'] = false
+                disableOption.value['test-length'] = false
             }
         }
         
         else if (customizers.value['test-type'] === 'words') {
             disableOption.value['words-type'] = false
             disableOption.value['include-numbers'] = false
-            disableOption.value['text-length'] = false
+            disableOption.value['test-length'] = false
         }
 
         const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
@@ -95,12 +95,12 @@ export const customizeStore = defineStore('customizeStore', () => {
     const useConfig = () => {
         let currentWordType = customizers.value['words-type']
         let currentTestType = customizers.value['test-type']
-        let currentTextLength = customizers.value['text-length']
+        let currentTextLength = customizers.value['test-length']
         let selection = +configs.value[1] || configs.value[1]
         let group = configs.value[0]
         testType_.value = customizers.value['test-type']
 
-        if ((typeof configs.value[1] === 'number' && configs.value[0] === 'text-length' ) || configs.value[1] === 'words') {
+        if ((typeof configs.value[1] === 'number' && configs.value[0] === 'test-length' ) || configs.value[1] === 'words') {
             customizers.value['movie-quotes'] = false
             customizers.value['author-quotes'] = false
         }
@@ -115,7 +115,7 @@ export const customizeStore = defineStore('customizeStore', () => {
         if (boolean && mode === 'custom-camel-case') customizers.value['all-caps'] = false
 
         if (mode === 'author-quotes' || mode === 'movie-quotes') {
-            customizers.value['text-length'] = 'auto'
+            customizers.value['test-length'] = 'auto'
             customizers.value['test-type'] = 'quotes'
             if (mode === 'author-quotes' && onlyMovieQuotes.value) onlyMovieQuotes.value = false 
             if (mode === 'movie-quotes' && onlyAuthoredQuotes.value) onlyAuthoredQuotes.value = false 

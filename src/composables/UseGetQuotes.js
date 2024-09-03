@@ -14,28 +14,28 @@ export async function UseGetQuotes (config, customText) {
 
     function generateTest(length) {
         if (config['test-type'] === 'quotes') {
-            if (config['text-length'] === 10) {
+            if (config['test-length'] === 10) {
                 let quotes = [...quotesWithoutAuthors.value.ten]
                 let quote = ref(quotes[Math.ceil(Math.random() * quotes.length) - 1])
                 res.value = quote.value
                 return
             } 
             
-            else if (config['text-length'] === 20) {
+            else if (config['test-length'] === 20) {
                 let quotes = [...quotesWithoutAuthors.value.twenty]
                 let quote = ref(quotes[Math.ceil(Math.random() * quotes.length) - 1])
                 res.value = quote.value
                 return
             } 
             
-            else if (config['text-length'] === 30) {
+            else if (config['test-length'] === 30) {
                 let quotes = [...quotesWithoutAuthors.value.thirty]
                 let quote = ref(quotes[Math.ceil(Math.random() * quotes.length) - 1])
                 res.value = quote.value
                 return
             } 
 
-            else if  (config['text-length'] > 30) {
+            else if  (config['test-length'] > 30) {
                 let quotes = [...quotesWithoutAuthors.value.fourty]
                 let quote = ref(quotes[Math.ceil(Math.random() * quotes.length) - 1])
                 res.value = quote.value
@@ -99,19 +99,6 @@ export async function UseGetQuotes (config, customText) {
         }
 
         else if (config['test-type'] === 'custom')  {
-            // if (config['text-length'] === 10) {
-
-            // }
-            // if (config['text-length'] === 20) {
-
-            // }
-            // if (config['text-length'] === 30) {
-
-            // }
-            // if (config['text-length'] > 30) {
-
-            // }
-
             if (customizeStore().selectedCustomTest) {
                 res.value = mainStore().customTests[customizeStore().selectedCustomTest]
                 customizeStore().selectedCustomTest = ''
@@ -168,6 +155,8 @@ export async function UseGetQuotes (config, customText) {
             }
         }
 
+        console.log(res.value);
+
         // convert line break /\n/ to space character
         if (typeof res.value === 'string') {
             const temp = res.value
@@ -206,7 +195,7 @@ export async function UseGetQuotes (config, customText) {
     }
 
     // generate test with new config and customize
-    if (config['text-length'] !== 'auto') generateTest(+config['text-length'])
+    if (config['test-length'] !== 'auto') generateTest(+config['test-length'])
     else  generateTest()
     customizers()
 

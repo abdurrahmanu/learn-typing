@@ -14,11 +14,11 @@
         @click="routeToPage('about')" />
       </div>
       <SwitchModes class="self-end mb-[2px]" />
-      <Theme class="self-end" />
+      <Theme class="self-end"/>
     </div>
     <CustomTestModal />
     <Animate />
-    <CapsLockToast 
+    <CapsLockToast
     top 
     :toggle="toggleCapsToast" 
     text="CapsLock is on, you cannot use it while it is disabled, enable in settings." />
