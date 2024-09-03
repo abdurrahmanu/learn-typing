@@ -16,6 +16,7 @@
                     <CustomCamelCase />
                     <NoSpaceText />
                     <MovieQuotes />
+                    <MustCorrectError />
                     <AuthoredQoutes />
                     <AllCaps />
                 </div>
@@ -33,6 +34,7 @@
                         <CapsLock v-if="!isMobileOS()" />
                         <Countdown />
                         <LetterCombinations />
+                        <MustCorrectError />
                     </div>
                 </div>
             </div>
@@ -61,6 +63,7 @@ import { isMobileOS } from '../../composables/isMobileOS'
 import BlurTest from './BlurTest.vue'
 import Difficulty from './Difficulty.vue'
 import CapsLock from './CapsLock.vue'
+import MustCorrectError from './MustCorrectError.vue'
 
 const alphabets_ = alphabetsStore()
 const { alphabetsMode_, } = storeToRefs(alphabets_)

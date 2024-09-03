@@ -26,6 +26,7 @@ export const customizeStore = defineStore('customizeStore', () => {
     const useCustomLength = ref(false)
 
     const customizers = ref({
+        'clear-error': false,
         'test-length': 'auto',
         'words-type': 'frequent', 
         'caret': 'border',
