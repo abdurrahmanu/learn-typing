@@ -35,3 +35,27 @@ export const managePlayerInput = () => {
     playerInputLength.value = playerInput.value.length
     completionLevel.value = ((playerInputLength.value) / containerText.value.length) * 100    
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
