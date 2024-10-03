@@ -160,7 +160,6 @@ const preventScroll = (e) => {
     e.stopPropagation();
     return false;
 }
-
 </script>
 
 <style scoped>

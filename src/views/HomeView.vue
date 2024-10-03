@@ -48,5 +48,4 @@ watch(hideElements, newVal => {
 watch(focus, newVal => {
   if (newVal) hideElements.value = true
 })
-
 </script>
