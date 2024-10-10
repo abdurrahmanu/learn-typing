@@ -41,7 +41,7 @@ export const localStorageConfig = async () => {
 
         localStorageSettings.value = dorayiTypingObject
         localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
-
+        
         theme.value = localStorageSettings.value.theme
         font.value = localStorageSettings.value.fontsize 
         range.value = (font.value - 16) / 0.26
@@ -82,7 +82,6 @@ export const localStorageConfig = async () => {
                 combination: [],
             }
         }
-
         localStorage.setItem('kiboard', JSON.stringify(dorayiTypingObject))
     }
 }

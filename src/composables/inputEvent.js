@@ -4,17 +4,15 @@ import { storeToRefs } from 'pinia';
 
 export const inputEvent = (e) => {
     const store = mainStore()
-    const { containerText, beatCountdown, playerInputLength, route, correctCount, hasCompletedSession,  playerInput, wrongCount, backspaceIsPressed, playerLastInput, beginCountdown, startTime, enterKey, timedTyping} = storeToRefs(store)
+    const { containerText, beatCountdown, playerInputLength, route,  playerInput, wrongCount, backspaceIsPressed, playerLastInput, beginCountdown, startTime, enterKey, timedTyping} = storeToRefs(store)
     const { sessionComplete } = store
     
     const customize = customizeStore()
-    const {backspace, pauseTyping, toggleCapsToast, capslock, customizers} = storeToRefs(customize)
+    const {backspace, pauseTyping, toggleCapsToast, capslock} = storeToRefs(customize)
 
     // if (customizers.value['clear-error'] && wrongCount.value && e.key !== 'BackSpace') return
 
-    if (!capslock.value && !toggleCapsToast.value && e.key !== 'CapsLock' && e.getModifierState('CapsLock')) {
-        toggleCapsToast.value = true
-    }
+    if (!capslock.value && !toggleCapsToast.value && e.key !== 'CapsLock' && e.getModifierState('CapsLock')) toggleCapsToast.value = true
     if (!capslock.value && e.getModifierState('CapsLock') && e.key !== 'CapsLock') return
     if (e.key === 'CapsLock' && !capslock.value) {
         if (e.getModifierState('CapsLock')) toggleCapsToast.value = true

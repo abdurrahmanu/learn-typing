@@ -7,7 +7,6 @@
                 class="absolute left-0"
                 :length="countdown" 
                 :start="beginCountdown" />
-                
             <div class="w-fit h-fit"> 
                 <restart v-show="!hasCompletedSession && playerInputLength" @click="restartTest" class="absolute w-6 left-[50%] translate-x-[-50%] "/>
             </div>
@@ -70,7 +69,7 @@ const theme_ = themeStore()
 const {theme} = storeToRefs(theme_)
 
 const count = countdownStore()
-const {countdown, textLength} = storeToRefs(count)
+const {countdown} = storeToRefs(count)
 const {clearCounter} = count
 
 const restartTest = async () => {

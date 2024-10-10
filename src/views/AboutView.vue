@@ -1,13 +1,13 @@
 <template>
-    <div class="max-w-[800px] m-auto min-h-[calc(100dvh_-_90px)] overflow-y-auto relative font-[400]">
+    <div class="max-w-[800px] m-auto min-h-[calc(100dvh_-_90px)] overflow-y-auto relative font-[400] space-y-4">
         <div class="m-auto w-fit top-[15px] relative scale-125">                
             <Logo />
         </div>
-        <p class="text-center text-[30px] leading-0 opacity-90 blur-[1px] roboto-mono exo-ital pt-2">KiBoard</p>
-        <div class="m-auto max-w-[400px] z-[-1] text-sm border border-neutral-800 p-1 border-x-0 settings-font">
+        <p class="text-center text-[30px] leading-0 opacity-95 blur-[1px] roboto-mono exo-ital pt-2">KiBoard</p>
+        <div class="m-auto max-w-[400px] z-[-1] text-sm border border-neutral-800 p-1 border-x-0 settings-font py-3">
             <p class="m-auto text-center w-fit">DESIGNED AND DEVELOPED</p>
             <p class="m-auto text-center w-fit">BY</p>
-            <p class="m-auto text-center w-fit">AHMED ABDULRAHMAN</p>
+            <p class="m-auto text-center w-fit font-bold">ABDULRAHMAN</p>
         </div>
         <div class="p-1 m-auto border-b border-neutral-800 max-w-[400px]">  
             <p class="p-2 pb-1 font-bold text-center underline">CONTACT ME</p>

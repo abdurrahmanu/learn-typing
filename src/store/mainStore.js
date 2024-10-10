@@ -111,7 +111,6 @@ export const mainStore = defineStore('mainStore', () => {
         resetToDefault,
         sessionComplete,
         switchNext,
-        
         quoteType,
         route,
         resultData,

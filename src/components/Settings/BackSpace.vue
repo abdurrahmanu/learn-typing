@@ -35,9 +35,10 @@ const {switchNext} = main
 const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
 
 const customize = () => {
+    if (isMobileOS()) return
     backspace.value = !backspace.value
     localStorageSettings.value.backspace = backspace.value
-    switchNext(customizers.value, 'restart')
     localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
+    switchNext(customizers.value)
 }
 </script>
