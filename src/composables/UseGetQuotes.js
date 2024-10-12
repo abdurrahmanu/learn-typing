@@ -10,8 +10,7 @@ export async function UseGetQuotes (config, customText) {
     const {mostUsed, mediumUsed, rarelyUsed, numbers, quotesWithoutAuthors, movieQuotes} = englishWords()
     const testType = config['test-type']
     const testLength = config['test-length']
-    let allMovies = [ movieQuotes['The Hobbit'].quotes, movieQuotes['Pirates of the Caribbean'].quotes, movieQuotes['Harry Potter'].quotes, movieQuotes['The Lord of the Rings'].quotes, movieQuotes['Legend of the Seeker'].quotes, movieQuotes['Star Wars'].quotes, movieQuotes['Indiana Jones and the Raiders of the Lost Ark'].quotes, movieQuotes['Jurassic Park'].quotes,
-    ]
+    let allMovies = [ movieQuotes['The Hobbit'].quotes, movieQuotes['Pirates of the Caribbean'].quotes, movieQuotes['Harry Potter'].quotes, movieQuotes['The Lord of the Rings'].quotes, movieQuotes['Legend of the Seeker'].quotes, movieQuotes['Star Wars'].quotes, movieQuotes['Indiana Jones and the Raiders of the Lost Ark'].quotes, movieQuotes['Jurassic Park'].quotes,]
     
     function generateTest() {
         if (testType === 'quotes') {

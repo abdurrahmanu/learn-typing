@@ -1,33 +1,36 @@
 <template>
   <div :class="[appTheme]" class="font-light selection:bg-none home max-w-[1500px] m-auto relative min-h-[100dvh] container overflow-y-auto scroll-smooth noscrollbar">
     <div class="min-h-[100dvh]">
-      <Header/>
-      <main>
+      <Header :class="[demo ? 'opacity-0 hidden' : '']" class="transition-all duration-300"/>
+      <main :class="[demo ? 'opacity-0 hidden' : '']" class="transition-all duration-300">
         <RouterView />
         <Next />
       </main>
+      <div v-if="isNewUser" click="demo = true, pauseTyping = true" :class="[demo ? 'hidden' : '']" class="mt-8 m-auto w-fit font-medium caveat hover:animate-none transition-all duration-500 ring-[1px] ring-green-500 px-5 py-1 rounded-full opacity-50 shadow-sm cursor-pointer hover:shadow-green-500 text-lg text-center sm:text-3xl md:text-4xl hover:shadow-md hover:opacity-100">START AS A NEWBIE</div>
+      <Teach />
     </div>
+
     <div class="fixed flex items-center gap-3 bottom-2 right-2">      
       <div class="self-end py-2 w-fit" v-if="route.name !== 'about'">
         <about 
-        class="w-[11px]" 
+        :class="[demo ? 'opacity-0 hidden' : '']"
+        class="w-[11px] transition-all duration-300" 
         @click="routeToPage('about')" />
       </div>
-      <SwitchModes class="self-end mb-[2px]" />
+      <SwitchModes :class="[demo ? 'opacity-0 hidden' : '']" class="self-end mb-[2px] transition-all duration-300" />
       <Theme class="self-end"/>
     </div>
+
     <CustomTestModal />
     <Animate />
-    <CapsLockToast
-    top 
-    :toggle="toggleCapsToast" 
-    text="CapsLock is on, you cannot use it while it is disabled, enable in settings." />
+    <CapsLockToast top :toggle="toggleCapsToast" text="CapsLock is on, you cannot use it while it is disabled, enable in settings." />
   </div>
 </template>
 
 <script setup>
 import {onBeforeMount, onMounted, watch, ref} from 'vue'
 import about from './components/svg/about.vue';
+import Teach from './components/Teach.vue';
 import Header from './components/Header.vue'
 import SwitchModes from './components/SwitchModes.vue';
 import Next from './components/Next.vue';
@@ -43,6 +46,7 @@ import CapsLockToast from './components/Toast.vue';
 import {useRoute, useRouter} from 'vue-router'
 import { countdownStore } from './store/countdownStore';
 
+const isNewUser = ref(!Object.keys(localStorage.getItem('kiboard')).length)
 const route = useRoute()
 const router = useRouter()
 
@@ -50,10 +54,10 @@ const theme_ = themeStore()
 const { appTheme } = storeToRefs(theme_)
 
 const customize = customizeStore()
-const {font, customizers, toggleCapsToast } = storeToRefs(customize)
+const {font, customizers, toggleCapsToast, pauseTyping } = storeToRefs(customize)
 
 const main = mainStore()
-const { containerHeight, timedTyping} = storeToRefs(main)
+const { containerHeight, timedTyping, demo} = storeToRefs(main)
 const { switchNext} = main
 
 const count = countdownStore()

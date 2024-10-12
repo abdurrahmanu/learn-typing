@@ -6,6 +6,7 @@ export const mainStore = defineStore('mainStore', () => {
     const route = ref(null)
     const mobileBackspace = ref(false)
     const quoteType = ref('')
+    const demo = ref(false)
 
     //Test container
     const testContainerEl = ref(null)
@@ -119,6 +120,7 @@ export const mainStore = defineStore('mainStore', () => {
         restartEl,
         restartSvgEl,
         focus,
+        demo,
 
         testContainerEl,
         containerHeight,

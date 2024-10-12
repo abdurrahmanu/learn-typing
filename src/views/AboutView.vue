@@ -7,8 +7,9 @@
         <div class="m-auto max-w-[400px] z-[-1] text-sm border border-neutral-800 p-1 border-x-0 settings-font py-3">
             <p class="m-auto text-center w-fit">DESIGNED AND DEVELOPED</p>
             <p class="m-auto text-center w-fit">BY</p>
-            <p class="m-auto text-center w-fit font-bold">ABDULRAHMAN</p>
+            <p class="m-auto font-bold text-center w-fit">ABDULRAHMAN</p>
         </div>
+        <div @click="demo = true, pauseTyping = true" :class="[demo ? 'hidden' : '']" class="mt-8 m-auto w-fit font-medium caveat hover:animate-none transition-all duration-500 ring-[1px] ring-green-500 px-5 py-1 rounded-full opacity-50 shadow-sm cursor-pointer hover:shadow-green-500 text-center hover:shadow-md hover:opacity-100">START AS A NEWBIE</div>
         <div class="p-1 m-auto border-b border-neutral-800 max-w-[400px]">  
             <p class="p-2 pb-1 font-bold text-center underline">CONTACT ME</p>
             <div class="justify-center flex max-w-[700px] gap-5 m-auto py-5 pt-2 flex-wrap text-sm">
@@ -40,9 +41,18 @@ import Logo from '../components/Logo.vue'
 import email from '../components/svg/email.vue';
 import linkedin from '../components/svg/linkedin.vue';
 import github from '../components/svg/github.vue';
+import { customizeStore } from '../store/customizeStore';
+import { mainStore } from '../store/mainStore';
+import { storeToRefs } from 'pinia';
 
 const toggle = ref(false)
 const name = ref('')
+
+const customize = customizeStore()
+const {pauseTyping } = storeToRefs(customize)
+
+const main = mainStore()
+const {demo} = storeToRefs(main)
 
 watch(name, (newVal) => {
     if (newVal) {
