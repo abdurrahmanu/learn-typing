@@ -35,6 +35,7 @@
         <div :class="[alphabetsConfig.spaced ? 'text-green-600' : '']" @click="changeMode('spaced')" class="px-[5px] hover:scale-105 rounded-md">space</div>
         <div :class="[alphabetsConfig.backwards ? 'text-green-600' : '']" @click="changeMode('backwards')" class="px-[5px] hover:scale-105 rounded-md">reverse</div>
         <div :class="[alphabetsConfig.random ? 'text-green-600' : '']" @click="changeMode('random')" class="px-[5px] hover:scale-105 rounded-md">random</div>
+        <div :class="[alphabetsConfig.demo ? 'text-green-600' : '']" @click="changeMode('demo')" class="px-[5px] hover:scale-105 rounded-md">keyboard-demo</div>
         <div class="absolute left-0 text-black top-[115%] shadow-sm shadow-slate-500 px-[6px] bg-neutral-100 rounded-full whitespace-nowrap group-hover:block hidden text-xs font-normal">format</div>
       </div>
     </div>
@@ -101,30 +102,34 @@ const mouseEnter = (index) => hoverIndex.value = index
 const mouseLeave = (index) => hoverIndex.value = null
 
 const changeMode = (mode) => {  
-  if (mode === 'uppercase') {
-    if (alphabetsConfig.value.customCase && !alphabetsConfig.value.uppercase) alphabetsConfig.value.customCase = false
-      alphabetsConfig.value.uppercase = !alphabetsConfig.value.uppercase
+if (mode === 'uppercase') {
+  if (alphabetsConfig.value.customCase && !alphabetsConfig.value.uppercase) alphabetsConfig.value.customCase = false
+    alphabetsConfig.value.uppercase = !alphabetsConfig.value.uppercase
+  }
+
+  if (mode === 'customCase') {
+    if (alphabetsConfig.value.uppercase && !alphabetsConfig.value.customCase) alphabetsConfig.value.uppercase = false
+    alphabetsConfig.value.customCase = !alphabetsConfig.value.customCase
+  }
+  
+  if (mode === 'spaced') {
+      alphabetsConfig.value.spaced = !alphabetsConfig.value.spaced
     }
 
-    if (mode === 'customCase') {
-      if (alphabetsConfig.value.uppercase && !alphabetsConfig.value.customCase) alphabetsConfig.value.uppercase = false
-      alphabetsConfig.value.customCase = !alphabetsConfig.value.customCase
+    if (mode === 'backwards') {
+      if (alphabetsConfig.value.random && !alphabetsConfig.value.backwards) alphabetsConfig.value.random = false
+      alphabetsConfig.value.backwards = !alphabetsConfig.value.backwards
     }
     
-    if (mode === 'spaced') {
-        alphabetsConfig.value.spaced = !alphabetsConfig.value.spaced
-      }
-
-      if (mode === 'backwards') {
-        if (alphabetsConfig.value.random && !alphabetsConfig.value.backwards) alphabetsConfig.value.random = false
-        alphabetsConfig.value.backwards = !alphabetsConfig.value.backwards
-      }
-      
-      if (mode === 'random') {
-        if (alphabetsConfig.value.backwards && !alphabetsConfig.value.random) alphabetsConfig.value.backwards = false
+    if (mode === 'random') {
+      if (alphabetsConfig.value.backwards && !alphabetsConfig.value.random) alphabetsConfig.value.backwards = false
       alphabetsConfig.value.random = !alphabetsConfig.value.random
     } 
-    
+  
+    if (mode === 'demo') {
+      alphabetsConfig.value.demo = !alphabetsConfig.value.demo
+    }
+      
     const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
     localStorageSettings.value.alphabets.mode = alphabetsConfig.value
     localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))

@@ -7,6 +7,7 @@ export const mainStore = defineStore('mainStore', () => {
     const mobileBackspace = ref(false)
     const quoteType = ref('')
     const demo = ref(false)
+    const keyboardMode = ref(false)
 
     //Test container
     const testContainerEl = ref(null)
@@ -121,6 +122,7 @@ export const mainStore = defineStore('mainStore', () => {
         restartSvgEl,
         focus,
         demo,
+        keyboardMode,
 
         testContainerEl,
         containerHeight,

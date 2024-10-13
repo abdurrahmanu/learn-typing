@@ -9,7 +9,7 @@
             <p class="m-auto text-center w-fit">BY</p>
             <p class="m-auto font-bold text-center w-fit">ABDULRAHMAN</p>
         </div>
-        <div @click="demo = true, pauseTyping = true" :class="[demo ? 'hidden' : '']" class="mt-8 m-auto w-fit font-medium caveat hover:animate-none transition-all duration-500 ring-[1px] ring-green-500 px-5 py-1 rounded-full opacity-50 shadow-sm cursor-pointer hover:shadow-green-500 text-center hover:shadow-md hover:opacity-100">START AS A NEWBIE</div>
+        <div @click="demo = true, pauseTyping = true" :class="[demo ? 'hidden' : '']" class="mt-8 m-auto w-fit font-medium caveat hover:animate-none transition-all duration-500 ring-[1px] ring-green-500 px-5 py-1 rounded-full opacity-50 shadow-sm cursor-pointer hover:shadow-green-500 text-center hover:shadow-md hover:opacity-100">DEMO</div>
         <div class="p-1 m-auto border-b border-neutral-800 max-w-[400px]">  
             <p class="p-2 pb-1 font-bold text-center underline">CONTACT ME</p>
             <div class="justify-center flex max-w-[700px] gap-5 m-auto py-5 pt-2 flex-wrap text-sm">

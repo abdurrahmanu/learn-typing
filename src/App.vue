@@ -6,8 +6,9 @@
         <RouterView />
         <Next />
       </main>
-      <div v-if="isNewUser" click="demo = true, pauseTyping = true" :class="[demo ? 'hidden' : '']" class="mt-8 m-auto w-fit font-medium caveat hover:animate-none transition-all duration-500 ring-[1px] ring-green-500 px-5 py-1 rounded-full opacity-50 shadow-sm cursor-pointer hover:shadow-green-500 text-lg text-center sm:text-3xl md:text-4xl hover:shadow-md hover:opacity-100">START AS A NEWBIE</div>
+      <div v-if="isNewUser" click="demo = true, pauseTyping = true" :class="[demo ? 'hidden' : '']" class="mt-8 m-auto w-fit font-medium caveat hover:animate-none transition-all duration-500 ring-[1px] ring-green-500 px-5 py-1 rounded-full opacity-50 shadow-sm cursor-pointer hover:shadow-green-500 text-lg text-center sm:text-3xl md:text-4xl hover:shadow-md hover:opacity-100">DEMO</div>
       <Teach />
+      <Keyboard />
     </div>
 
     <div class="fixed flex items-center gap-3 bottom-2 right-2">      
@@ -45,6 +46,7 @@ import CustomTestModal from './components/CustomTestModal.vue';
 import CapsLockToast from './components/Toast.vue';
 import {useRoute, useRouter} from 'vue-router'
 import { countdownStore } from './store/countdownStore';
+import Keyboard from './components/Keyboard.vue';
 
 const isNewUser = ref(!Object.keys(localStorage.getItem('kiboard')).length)
 const route = useRoute()

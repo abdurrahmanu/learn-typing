@@ -14,6 +14,7 @@ export const alphabetsStore = defineStore('alphabetsStore', () => {
         backwards: false,
         spaced: false,
         styled: false,
+        demo: false,
     })
 
     return {
