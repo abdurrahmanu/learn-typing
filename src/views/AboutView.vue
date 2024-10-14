@@ -1,37 +1,14 @@
 <template>
     <div class="max-w-[800px] m-auto min-h-[calc(100dvh_-_90px)] overflow-y-auto relative font-[400] space-y-4">
-        <div class="m-auto w-fit top-[15px] relative scale-125">                
-            <Logo />
-        </div>
-        <p class="text-center text-[30px] leading-0 opacity-95 blur-[1px] roboto-mono exo-ital pt-2">KiBoard</p>
-        <div class="m-auto max-w-[400px] z-[-1] text-sm border border-neutral-800 p-1 border-x-0 settings-font py-3">
-            <p class="m-auto text-center w-fit">DESIGNED AND DEVELOPED</p>
-            <p class="m-auto text-center w-fit">BY</p>
-            <p class="m-auto font-bold text-center w-fit">ABDULRAHMAN</p>
-        </div>
-        <div @click="demo = true, pauseTyping = true" :class="[demo ? 'hidden' : '']" class="mt-8 m-auto w-fit font-medium caveat hover:animate-none transition-all duration-500 ring-[1px] ring-green-500 px-5 py-1 rounded-full opacity-50 shadow-sm cursor-pointer hover:shadow-green-500 text-center hover:shadow-md hover:opacity-100">DEMO</div>
-        <div class="p-1 m-auto border-b border-neutral-800 max-w-[400px]">  
-            <p class="p-2 pb-1 font-bold text-center underline">CONTACT ME</p>
-            <div class="justify-center flex max-w-[700px] gap-5 m-auto py-5 pt-2 flex-wrap text-sm">
-                <!-- <div @click="name='github'" class="px-2 py-[1px] border-gray-500 border rounded-sm transition-all duration-100 hover:shadow-md hover:border-green-500 flex items-center gap-2"><github class="w-4" /> GITHUB</div>
-                <div @click="name='linkedin'" class="px-2 py-[1px] border-gray-500 border rounded-sm transition-all duration-100 hover:shadow-md hover:border-green-500 flex items-center gap-2"><linkedin class="w-6" /> LINKEDIN</div> -->
-                <div @click="name='email'" class="px-2 py-[1px] border-gray-500 border rounded-sm transition-all duration-100 hover:shadow-md hover:border-green-500 flex items-center gap-2 pacifico text-xs"><email class="w-4" />EMAIL</div>
+        <div class="p-3 mt-1 rounded-sm space-y-4 ring w-fit m-auto hover:ring-green-600 group">
+            <div class="m-auto w-fit top-[15px] relative scale-125">                
+                <Logo />
             </div>
+            <p class="text-center text-[30px] leading-0 opacity-95 roboto-mono exo-ital"><span class="group-hover:text-blue-500">Ki</span><span class="group-hover:text-green-500">Board</span></p>
         </div>
-        <div class="flex flex-wrap justify-between py-4 m-auto text-sm font-normal min-w-fit max-w-[500px] gap-y-5">
-            <!-- <div class="m-auto w-fit min-w-[130px]">
-                <p class="font-bold text-center underline">SUPPORTERS</p>
-                <p class="text-center ">---</p>
-            </div> -->
-            <div class="m-auto w-fit min-w-[130px]">                
-                <p class="mb-1 font-bold text-center underline">CREDITS</p>
-                <p @click="name='portfolio'" class="text-2xl text-center hover:underline caveat">Ahmed Abdulrahman</p>
-            </div>
-            <!-- <div class="m-auto w-fit min-w-[130px]">                
-                <p class="mb-1 font-bold text-center underline">CONTRIBUTORS</p>
-                <p class="text-center">---</p>
-            </div> -->
-        </div>
+        <p class="m-auto text-center w-fit exo hover: text-sm caveat">DESIGNED AND DEVELOPED BY AHMED ABDULRAHMAN</p>
+        <div @click="name='email'" class="px-2 py-[1px] border-gray-500 border rounded-sm transition-all duration-100 hover:shadow-md m-auto hover:border-green-500 flex items-center gap-2 pacifico text-xs w-fit hover:px-5"><email class="w-4" />EMAIL</div>
+        <div @click="demo = true, pauseTyping = true" :class="[demo ? 'hidden' : '']" class="mt-8 m-auto w-fit font-medium caveat hover:animate-none transition-all duration-500 hover:px-20 ring-[1px] ring-green-500 px-10 py-1 opacity-50 shadow-sm cursor-pointer hover:shadow-green-500 text-center hover:shadow-md hover:opacity-100">HELP</div>
     </div>
 </template>
 

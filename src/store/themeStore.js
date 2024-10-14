@@ -4,7 +4,7 @@ import {ref, computed} from 'vue'
 export const themeStore = defineStore('themeStore', () => {
     const theme = ref(window.matchMedia("(prefers-color-scheme: dark)").matches ?  'dark' : 'white')
     const appTheme = computed(() => {
-        if (theme.value === 'dark') return 'bg-neutral-900 text-neutral-400'
+        if (theme.value === 'dark') return 'bg-black text-neutral-400'
         if (theme.value === 'white') return 'bg-gray-300 text-neutral-700'
     })
 
@@ -25,7 +25,6 @@ export const themeStore = defineStore('themeStore', () => {
         theme,
         appTheme,
         svgFill,
-        
     }
 })
 

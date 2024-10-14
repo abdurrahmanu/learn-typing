@@ -2,13 +2,13 @@
 <div :class="[appTheme, theme === 'dark' ? 'hover:bg-neutral-800' : 'hover:bg-zinc-200']" class="py-4 pl-5 space-y-1">
         <p class="text-xs font-medium">DIFFICULTY</p>        
         <div class="flex flex-wrap gap-x-2 gap-y-1 font-[400] items-center">
-            <div @click="difficulty = 'beginner'" class="flex px-3 py-1 border rounded-md" :class="[difficulty === 'beginner' ? 'border-green-500' : 'border-slate-500']">
+            <div @click="difficulty = 'beginner'" class="flex px-3 py-1 border rounded-md" :class="[difficulty === 'beginner' ? 'bg-teal-700 border-transparent text-white' : 'border-slate-500']">
                 <p class="w-fit">Beginner</p>
             </div>
-            <div @click="difficulty = 'amateur'" class="flex px-3 py-1 border rounded-md" :class="[difficulty === 'amateur' ? 'border-green-500' : 'border-slate-500']">
+            <div @click="difficulty = 'amateur'" class="flex px-3 py-1 border rounded-md" :class="[difficulty === 'amateur' ? 'bg-green-500 border-transparent text-white' : 'border-slate-500']">
                 <p class="w-fit">Amateur</p>
             </div>
-            <div @click="difficulty = 'expert'" class="flex px-3 py-1 border rounded-md" :class="[difficulty === 'expert' ? 'border-green-500' : 'border-slate-500']">
+            <div @click="difficulty = 'expert'" class="flex px-3 py-1 border rounded-md" :class="[difficulty === 'expert' ? 'border-transparent bg-amber-700 text-white' : 'border-slate-500']">
                 <p class=" w-fit pulse">Expert</p>
             </div>
             <div class="flex gap-2 text-xs text-slate-300">

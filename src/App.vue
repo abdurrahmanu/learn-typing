@@ -6,18 +6,12 @@
         <RouterView />
         <Next />
       </main>
-      <div v-if="isNewUser" click="demo = true, pauseTyping = true" :class="[demo ? 'hidden' : '']" class="mt-8 m-auto w-fit font-medium caveat hover:animate-none transition-all duration-500 ring-[1px] ring-green-500 px-5 py-1 rounded-full opacity-50 shadow-sm cursor-pointer hover:shadow-green-500 text-lg text-center sm:text-3xl md:text-4xl hover:shadow-md hover:opacity-100">DEMO</div>
+      <div v-if="isNewUser && !isMobileOS()" click="demo = true, pauseTyping = true" :class="[demo ? 'hidden' : '']" class="mt-8 m-auto w-fit font-medium caveat hover:animate-none transition-all duration-500 ring-[1px] ring-green-500 px-5 py-1 rounded-full opacity-50 shadow-sm cursor-pointer hover:shadow-green-500 text-lg text-center sm:text-3xl md:text-4xl hover:shadow-md hover:opacity-100 hover:px-6">HELP</div>
       <Teach />
       <Keyboard />
     </div>
 
     <div class="fixed flex items-center gap-3 bottom-2 right-2">      
-      <div class="self-end py-2 w-fit" v-if="route.name !== 'about'">
-        <about 
-        :class="[demo ? 'opacity-0 hidden' : '']"
-        class="w-[11px] transition-all duration-300" 
-        @click="routeToPage('about')" />
-      </div>
       <SwitchModes :class="[demo ? 'opacity-0 hidden' : '']" class="self-end mb-[2px] transition-all duration-300" />
       <Theme class="self-end"/>
     </div>
@@ -175,6 +169,6 @@ watch(toggleCapsToast, (newVal, oldVal) => {
 }
 
 .config {
-  font-family: 'Montserrat Alternates', monospace;
+  font-family: 'Montserrat Alternates', cursive;
 }
 </style>
