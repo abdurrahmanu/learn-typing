@@ -100,7 +100,7 @@ const theme_ = themeStore()
 const { appTheme } = storeToRefs(theme_)
 
 const store = mainStore()
-const {resultData, beatCountdown, timedTyping} = storeToRefs(store)
+const {resultData, beatCountdown, timedTyping, wrongCount} = storeToRefs(store)
 
 const testType = computed(() => {
     if (timedTyping.value) {

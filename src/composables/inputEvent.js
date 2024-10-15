@@ -10,8 +10,6 @@ export const inputEvent = (e) => {
     const customize = customizeStore()
     const {backspace, pauseTyping, toggleCapsToast, capslock} = storeToRefs(customize)
 
-    // if (customizers.value['clear-error'] && wrongCount.value && e.key !== 'BackSpace') return
-
     if (!capslock.value && !toggleCapsToast.value && e.key !== 'CapsLock' && e.getModifierState('CapsLock')) toggleCapsToast.value = true
     if (!capslock.value && e.getModifierState('CapsLock') && e.key !== 'CapsLock') return
     if (e.key === 'CapsLock' && !capslock.value) {

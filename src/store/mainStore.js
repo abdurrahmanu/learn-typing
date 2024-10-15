@@ -8,6 +8,7 @@ export const mainStore = defineStore('mainStore', () => {
     const quoteType = ref('')
     const demo = ref(false)
     const keyboardMode = ref(false)
+    const goNext = ref(false)
 
     //Test container
     const testContainerEl = ref(null)
@@ -105,8 +106,10 @@ export const mainStore = defineStore('mainStore', () => {
     }
 
     const switchNext = (config, restart) => {
+        goNext.value = false
         resetToDefault()
         generateTest(config, restart)
+        goNext.value = true
     }
 
     return {
@@ -123,6 +126,7 @@ export const mainStore = defineStore('mainStore', () => {
         focus,
         demo,
         keyboardMode,
+        goNext,
 
         testContainerEl,
         containerHeight,

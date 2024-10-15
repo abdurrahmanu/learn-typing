@@ -11,23 +11,25 @@
                 <restart v-show="!hasCompletedSession && playerInputLength" @click="restartTest" class="absolute w-6 left-[50%] translate-x-[-50%] "/>
             </div>
         </div>
+        <Transition v-if="goNext" name="container">
         <div v-if="containerText" class="transition-all duration-100 relative mx-auto max-w-[700px] w-full min-w-[300px]">
-            <div @blur="textIsFocused = false" @focus="textIsFocused = true" tabindex="0" ria-describedby="full-text" ref="testContainerEl"  :style="{'height' : containerHeight + 'px', 'font-size': font + 'px'}" :class="[ customizers['no-space'] || customizers['test-type'] === 'custom' ? 'break-words' : '', alphabetsMode_ ? 'text-center break-words': 'text-left', !alphabetsMode_ && textPosition=== 'center' ? 'text-center' : !alphabetsMode_ && textPosition=== 'right' ? 'text-right' : 'text-left'] " class="overflow-y-auto overflow-x-hidden scroll-smooth leading-[1.4] h-fit py-[1px] outline-none after:absolute after:top-0 after:bottom-0 after:w-[4px] after:right-[0] after:z-[999] after:bg-transparent">
-                <p id="full-text" class="hidden">{{ containerText }}</p>
-                <Alphabet
-                v-for="index in containerText.length"
-                :index="index"
-                :key="index"
-                :lastIndex = 'index - 1 === containerText.length'
-                :currentIndex ="playerInputLength === index - 1" 
-                :equality="playerInput[index - 1] === containerText[index - 1]"
-                :alphabet="containerText[index - 1]"/>
+                <div @blur="textIsFocused = false" @focus="textIsFocused = true" tabindex="0" ria-describedby="full-text" ref="testContainerEl"  :style="{'height' : containerHeight + 'px', 'font-size': font + 'px'}" :class="[ customizers['no-space'] || customizers['test-type'] === 'custom' ? 'break-words' : '', alphabetsMode_ ? 'text-center break-words': 'text-left', !alphabetsMode_ && textPosition=== 'center' ? 'text-center' : !alphabetsMode_ && textPosition=== 'right' ? 'text-right' : 'text-left'] " class="overflow-y-auto overflow-x-hidden scroll-smooth leading-[1.4] h-fit py-[1px] outline-none after:absolute after:top-0 after:bottom-0 after:w-[4px] after:right-[0] after:z-[999] after:bg-transparent">
+                    <p id="full-text" class="hidden">{{ containerText }}</p>
+                    <Alphabet
+                    v-for="index in containerText.length"
+                    :index="index"
+                    :key="index"
+                    :lastIndex = 'index - 1 === containerText.length'
+                    :currentIndex ="playerInputLength === index - 1" 
+                    :equality="playerInput[index - 1] === containerText[index - 1]"
+                    :alphabet="containerText[index - 1]"/>
+                </div>
+                <div class="min-h-[16px] text-right font-[600] pt-1">
+                    <p v-if="quoteType === 'movie'" :class="[theme === 'dark' ? 'text-slate-400' : 'text-black']" class="text-xs italic text-right">{{movie.quoteAuthor}} - {{ movie.name }}</p>
+                    <p  v-if="quoteType === 'author'" :class="[theme === 'dark' ? 'text-slate-400' : 'text-black']" class="text-xs italic text-right">{{authoredQuote.author}}</p>
+                </div>
             </div>
-            <div class="min-h-[16px] text-right font-[600] pt-1">
-                <p v-if="quoteType === 'movie'" :class="[theme === 'dark' ? 'text-slate-400' : 'text-black']" class="text-xs italic text-right">{{movie.quoteAuthor}} - {{ movie.name }}</p>
-                <p  v-if="quoteType === 'author'" :class="[theme === 'dark' ? 'text-slate-400' : 'text-black']" class="text-xs italic text-right">{{authoredQuote.author}}</p>
-            </div>
-        </div>
+        </Transition>
         <p class=" text-sm bg-transparent blur-[1px] w-fit whitespace-nowrap m-auto flex" v-if="isMobileOS() && !focus" ><span class="pr-1">click</span><upwardsFinger class="relative w-5 bottom-1" />test to focus cursor</p>
     </main>
 </template>
@@ -59,7 +61,7 @@ const alphabets_ = alphabetsStore()
 const { alphabetsMode_, useAlphabetCombination } = storeToRefs(alphabets_)
 
 const store = mainStore()
-const { containerText, quoteType, mobileBackspace, wrongCount, previousPlayerInput, beginCountdown, timedTyping, hasCompletedSession, focus, testContainerEl, containerHeight, movie, playerInputLength, playerInput, authoredQuote, scrollTextContainer, restartSvgEl, restartEl, inputEl} = storeToRefs(store)
+const { containerText, quoteType, goNext, mobileBackspace, startTime, wrongCount, previousPlayerInput, beginCountdown, timedTyping, hasCompletedSession, focus, testContainerEl, containerHeight, movie, playerInputLength, playerInput, authoredQuote, scrollTextContainer, restartSvgEl, restartEl, inputEl} = storeToRefs(store)
 const {switchNext} = store
 
 const customize = customizeStore()
@@ -101,6 +103,7 @@ watch(playerInput, (newVal, oldVal) => {
         return
     }
     previousPlayerInput.value = oldVal
+    if (!startTime.value) return
     managePlayerInput()
 })
 
@@ -169,5 +172,15 @@ const preventScroll = (e) => {
 .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none
+}
+
+.container-enter-from {
+    transform: translateY(-10%)
+}
+
+.container-enter-active,
+.container-leave-active {
+    transition: all 0.1s ease;
+    opacity: .5
 }
 </style>

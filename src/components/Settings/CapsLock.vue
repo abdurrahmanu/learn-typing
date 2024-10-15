@@ -2,7 +2,7 @@
     <div :class="[theme === 'dark' ? 'hover:bg-neutral-800' : 'hover:bg-zinc-200']" class="py-2 pl-5">
         <div class="flex justify-between w-full p-1 border border-transparent rounded-sm ">
             <div @click="customize" class="flex gap-4 w-fit">
-                <input name="capslock" type="checkbox" :checked="capslock" class="accent-green-500">
+                <input name="capslock" type="checkbox" :checked="capslock" class="checked:accent-green-500 hover:accent-green-700">
                 <label class="text-sm font-medium w-fit">
                     Caps lock 
                     <span v-if="capslock" class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-lime-800 ml-1">easy</span>

@@ -1,7 +1,7 @@
 <template>
     <div :class="[theme === 'dark' ? 'hover:bg-neutral-800' : 'hover:bg-zinc-200']" class="py-1 pl-5">
         <div @click="toggle" class="flex w-full p-1 space-x-4 border border-transparent rounded-sm">
-            <input :disabled="!(alphabetsCombination.length > 1)" :checked="useAlphabetCombination"  type="checkbox" class="accent-green-500" name="letter-combination" id="id">
+            <input :disabled="!(alphabetsCombination.length > 1)" :checked="useAlphabetCombination"  type="checkbox" class="checked:accent-green-500 hover:accent-green-700" name="letter-combination" id="id">
             <label for="id" class="text-sm font-medium w-fit"> 
                 <span>Characters Combinations</span>
                 <span v-if="useAlphabetCombination" class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-yellow-800 ml-1">medium</span>
@@ -11,7 +11,7 @@
         <div class="px-4 font-[400]">
             <p>Toggle to randomly repeat and shuffles your selection. A minimum of two characters and maximum of ten.</p>
             <div @click="shiftKey = !shiftKey" class="flex m-auto my-1 space-x-2 w-fit">
-                <input :checked="shiftKey" type="checkbox" class="accent-green-500" name="shiftkey" id="shiftkey">
+                <input :checked="shiftKey" type="checkbox" class="checked:accent-green-500 hover:accent-green-700" name="shiftkey" id="shiftkey">
                 <label for="shiftkey" class="font-medium">Shift Key</label>
             </div>
         </div>

@@ -7,7 +7,7 @@ import { UseGetQuotes } from "./UseGetQuotes"
 
 export const generateTest = async (config, restart) => {
     const main = mainStore()
-    const {containerText, storedTest, movie, authoredQuote, allSpacesIndex} = storeToRefs(main)
+    const {containerText, storedTest, movie, authoredQuote, allSpacesIndex, wrongCount} = storeToRefs(main)
 
     const count = countdownStore()
     const {textLength} = storeToRefs(count)
