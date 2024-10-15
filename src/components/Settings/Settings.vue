@@ -5,7 +5,7 @@
             <div v-if="!alphabetsMode_" class="overflow-y-auto outline-none" :class="[showMoreSettings ? 'fixed top-0 right-0 bottom-0 h-[100dvh] max-w-[800px] w-fit z-[9999]' : '', appTheme ]">
                 <div class="relative leading-5 text-[15px]">
                     <Header />
-                    <div @click="demo = true, pauseTyping = true" :class="[demo ? 'hidden' : '']" class="mt-8 m-auto w-fit font-medium caveat hover:animate-none transition-all duration-500 hover:px-20 ring-[1px] ring-green-500 px-10 py-1 opacity-50 shadow-sm cursor-pointer hover:shadow-green-500 text-center hover:shadow-md hover:opacity-100 z-[1]">HELP</div>
+                    <div @click="demo = true, pauseTyping = true" :class="[demo ? 'hidden' : '']" class="my-3 m-auto w-fit font-medium caveat hover:animate-none transition-all duration-500 hover:px-20 ring-[1px] ring-green-500 px-10 py-1 opacity-50 shadow-sm cursor-pointer hover:shadow-green-500 text-center hover:shadow-md hover:opacity-100 z-[1]">HELP</div>
                     <Fonts />
                     <Caret />
                     <Difficulty />
@@ -26,7 +26,7 @@
                 <div class="overflow-y-auto outline-none" :class="[showMoreSettings ? 'fixed top-0 right-0 bottom-0 h-[100dvh] max-w-[800px] w-fit z-[9999]' : '', appTheme]">
                     <div class="relative leading-5 text-[15px]">
                         <Header />
-                        <div @click="demo = true, pauseTyping = true" :class="[demo ? 'hidden' : '']" class="mt-8 m-auto w-fit font-medium caveat hover:animate-none transition-all duration-500 hover:px-20 ring-[1px] ring-green-500 px-10 py-1 opacity-50 shadow-sm cursor-pointer hover:shadow-green-500 text-center hover:shadow-md hover:opacity-100 z-[1]">HELP</div>
+                        <div @click="demo = true, pauseTyping = true" :class="[demo ? 'hidden' : '']" class="my-3 m-auto w-fit font-medium caveat hover:animate-none transition-all duration-500 hover:px-20 ring-[1px] ring-green-500 px-10 py-1 opacity-50 shadow-sm cursor-pointer hover:shadow-green-500 text-center hover:shadow-md hover:opacity-100 z-[1]">HELP</div>
                         <Fonts />
                         <Caret />
                         <Difficulty />
@@ -36,7 +36,7 @@
                         <CapsLock v-if="!isMobileOS()" />
                         <Countdown />
                         <LetterCombinations />
-                        <MustCorrectError />
+                        <!-- <MustCorrectError /> -->
                     </div>
                 </div>
             </div>
