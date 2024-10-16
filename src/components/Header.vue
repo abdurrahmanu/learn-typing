@@ -1,5 +1,5 @@
 <template>
-    <header class="sticky mx-auto flex items-center justify-between pl-3 pr-2 max-w-[1500px] mb-3 text-[11px] uppercase font-medium min-w-[360px]" :class="[focus && isMobileOS() ? 'h-0 p-0 mb-0' : 'h-[50px]']">
+    <header class="sticky mx-auto flex items-center justify-between pl-3 pr-2 max-w-[1500px] mb-3 text-[11px] uppercase font-medium min-w-[360px]" :class="[focus && isMobileOS() ? 'h-0 p-0 mb-0' : 'h-[50px]', theme === 'dark' ? 'hover:bg-neutral-900' : 'hover:bg-zinc-200']">
         <Logo @click="routeToPage('about')" v-show="!focus" class="flex hover:ring-[1px] hover:ring-green-500 hover:shadow hover:shadow-black cursor-pointer" />
         <div v-show="(!focus && isMobileOS()) || !isMobileOS()" class="absolute flex items-center gap-4 w-fit" :class="[!hideElements ? 'right-[50%] translate-x-[50%]' : 'left-[50%] translate-x-[-50%]']">
             <div v-show="route.name === 'home'" class="flex items-center gap-4 text-[9px]">
@@ -49,12 +49,16 @@ import { mainStore } from '../store/mainStore';
 import {useRoute, useRouter} from 'vue-router'
 import { isMobileOS } from '../composables/isMobileOS';
 import { alphabetsStore } from '../store/alphabetsModeStore';
+import { themeStore } from '../store/themeStore';
 
 const route = useRoute()
 const router = useRouter()
 
 const alphabets = alphabetsStore()
 const {alphabetsMode_} = storeToRefs(alphabets)
+
+const theme_ = themeStore()
+const {theme} = storeToRefs(theme_)
 
 const main = mainStore()
 const {focus} = storeToRefs(main)

@@ -14,9 +14,10 @@ export const mobileInputEvent = (e) => {
         mobileBackspace.value = false
         return
     }
+
     
     e.inputType === 'deleteContentBackward' ? backspaceIsPressed.value = true : backspaceIsPressed.value = false
-
+    
     if (route.value !== 'home') return
     if (!focus.value || (e.key === 'Enter' && !enterKey.value) || pauseTyping.value || hasCompletedSession.value) return
     if (playerInputLength.value === 1)  {
@@ -26,7 +27,7 @@ export const mobileInputEvent = (e) => {
         }
         startTime.value = performance.now();
     } 
-
+    
     if (e.key === 'Enter' && enterKey.value)  playerInput.value += ' '
     if (playerInput.value.length === containerText.value.length) {
         if (timedTyping.value) beatCountdown.value = true

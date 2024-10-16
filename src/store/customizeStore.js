@@ -24,9 +24,11 @@ export const customizeStore = defineStore('customizeStore', () => {
     const toggleCapsToast = ref(false)
     const customTestLength = ref(200)
     const useCustomLength = ref(false)
+    const switchMode = ref(false)
+    const doubleEachWord = ref(false)
 
     const customizers = ref({
-        'clear-error': false,
+        'stop-on-error': false,
         'test-length': 'auto',
         'words-type': 'frequent', 
         'caret': 'border',
@@ -124,6 +126,7 @@ export const customizeStore = defineStore('customizeStore', () => {
 
     return {
         disableOption,
+        doubleEachWord,
         difficulty,
         configs,
         caretType,
@@ -132,6 +135,7 @@ export const customizeStore = defineStore('customizeStore', () => {
         allOptions,
         hideElements,
         backspace,
+        switchMode,
         blind,
         changeConfiguration,
         useConfig, 

@@ -16,12 +16,13 @@ export const localStorageConfig = async () => {
     const {customTests} = storeToRefs(main)
 
     const customize = customizeStore()
-    const { customizers, disableOption, caretType, difficulty, mode, hideElements, font, range, blind, backspace, capslock } = storeToRefs(customize)
+    const { customizers, doubleEachWord, disableOption, caretType, difficulty, mode, hideElements, font, range, blind, backspace, capslock } = storeToRefs(customize)
 
     if (localStorage.getItem('kiboard')) {
         const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
 
         let dorayiTypingObject = {
+            doubleEachWord: typeof(localStorageSettings.value.doubleEachWord) === 'boolean' ? localStorageSettings.value.doubleEachWord : doubleEachWord.value,
             capslock: typeof(localStorageSettings.value.capslock) === 'boolean' ? localStorageSettings.value.capslock : capslock.value,
             difficulty: localStorageSettings.value.difficulty || difficulty.value,
             customTests: localStorageSettings.value.customTests ||  customTests.value,
@@ -41,7 +42,7 @@ export const localStorageConfig = async () => {
 
         localStorageSettings.value = dorayiTypingObject
         localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
-        
+        doubleEachWord.value = localStorageSettings.value.doubleEachWord
         theme.value = localStorageSettings.value.theme
         font.value = localStorageSettings.value.fontsize 
         range.value = (font.value - 16) / 0.26
@@ -67,6 +68,7 @@ export const localStorageConfig = async () => {
     else {
         let dorayiTypingObject = {
             difficulty: 'beginner',
+            doubleEachWord: false,
             capslock: true,
             customTests: {'demo': 'This is a custom test, you can add your own tests by pressing the plus icon. This demo test cannot be deleted'},
             config: [customizers.value, disableOption.value],

@@ -9,8 +9,7 @@ export const managePlayerInput = () => {
 
     const customize = customizeStore()
     const {customizers} = storeToRefs(customize)
-
-    // if (customizers.value['clear-error'] && wrongCount.value) return
+    
     if (route.value !== 'home') return
     if (isMobileOS()) playerLastInput.value = playerInput.value[playerInput.value.length - 1]
 
@@ -32,7 +31,7 @@ export const managePlayerInput = () => {
     }
 
     playerInputLength.value = playerInput.value.length
-    completionLevel.value = ((playerInputLength.value) / containerText.value.length) * 100    
+    completionLevel.value = ((playerInputLength.value) / containerText.value.length) * 100   
 }
 
 

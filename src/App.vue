@@ -8,12 +8,13 @@
       </main>
       <Teach />
     </div>
-
+    <Settings />
+    
     <div class="fixed flex items-center gap-3 bottom-2 right-2">      
       <SwitchModes :class="[demo ? 'opacity-0 hidden' : '']" class="self-end mb-[2px] transition-all duration-300" />
       <Theme class="self-end"/>
     </div>
-
+    
     <CustomTestModal />
     <Animate />
     <CapsLockToast top :toggle="toggleCapsToast" text="CapsLock is on, you cannot use it while it is disabled, enable in settings." />
@@ -23,6 +24,7 @@
 <script setup>
 import {onBeforeMount, onMounted, watch, ref} from 'vue'
 import Teach from './components/Teach.vue';
+import Settings from './components/Settings/Settings.vue'
 import Header from './components/Header.vue'
 import SwitchModes from './components/SwitchModes.vue';
 import Next from './components/Next.vue';

@@ -3,17 +3,16 @@
         <div v-if="demo" class="relative py-2 mx-auto space-y-2 w-fit">
             <div class="flex justify-between font-bold">                
                 <div @click="demo = false, pauseTyping = false, showImage = false" class="uppercase text-sm  p-1 m-auto text-red-600 ring ring-transparent rounded-md shadow-sm exo shadow-transparent w-fit hover:ring-[1px] hover:ring-red-400">Go back</div>
-                <div @click="demo = false, pauseTyping = false, routeToPage('home')" class="uppercase text-sm top-1 p-1 m-auto text-green-600 ring ring-transparent rounded-md shadow-sm exo shadow-transparent w-fit hover:ring-[1px] hover:ring-green-400">Next</div>
             </div>
 
-            <div class="lg:flex">                
-                <div class="max-w-[600px] px-2 mx-auto lg:text-left text-center caveat font-normal lg:border-r w-[90%] text-sm leading-[2] lg:leading-[2.2] md:leading-[2.1] lg:text-base border-neutral-800">                
+            <div class="max-w-[1200px] m-auto lg:flex">                
+                <div class="max-w-[600px] lg:max-w-[40%] px-2 mx-auto lg:text-left text-center caveat font-normal lg:border-r w-[90%] leading-[2] lg:leading-[2.2] md:leading-[2.1] text-[14px] border-neutral-800">                
                     <p>You are here to learn <span class="text-green-700 underline hover:text-green-500">Touch-typing</span> (typing without looking at your keyboard). In this method, your fingers are trained to know and navigate the locations of all the keys on a keyboard all by themselves (muscle memory). It sounds like a Super power right? Your fingers assume  
                         <span @click="showDefaultFingerPositions = true" class="px-3 py-1 animate-pulse ring-[1px] ring-green-500 rounded-md hover:animate-none hover:bg-green-400 hover:text-black uppercase cursor-pointer whitespace-nowrap">default positions</span> 
                         <span>  and do not leave their positions. They go back and forth their initial positions while stroking other keys.  </span>
                         <span @click="" class="px-3 py-1 animate-pulse ring-[1px] ring-red-500 rounded-md hover:animate-none hover:bg-red-400 hover:text-black uppercase cursor-pointer">video</span>
                     </p>
-                    <div class="lg:block pt-2 text-xs text-black cursor-default lg:space-y-2 whitespace-nowrap opacity-80 hidden">
+                    <div class="hidden pt-2 text-xs text-black cursor-default lg:block lg:space-y-2 whitespace-nowrap opacity-80">
                         <div :class="[fingersKeys.normal.littleFinger.includes(keyToShow.trim()) || fingersKeys.shift.littleFinger.includes(keyToShow.trim()) ? 'ring-[2px] ring-green-800 animate-pulse' : '']" class="px-10 py-1 bg-red-400 w-fit">LITTLE FINGER / PINKY FINGER</div>
                         <div :class="[fingersKeys.normal.ringFinger.includes(keyToShow.trim()) || fingersKeys.shift.ringFinger.includes(keyToShow.trim()) ? 'ring-[2px] ring-green-800 animate-pulse' : '']" class="px-10 py-1 bg-yellow-500 w-fit">RING FINGER</div>
                         <div :class="[fingersKeys.normal.middleFinger.includes(keyToShow.trim()) || fingersKeys.shift.middleFinger.includes(keyToShow.trim()) ? 'ring-[2px] ring-green-800 animate-pulse' : '']" class="px-10 py-1 bg-orange-300 w-fit">MIDDLE FINGER</div>
@@ -22,31 +21,30 @@
                     </div>
                 </div>
                 
-                <div class="lg:max-w-[90%] m-auto w-fit pt-1 px-2 relative">                
+                <div class="relative px-2 pt-1 lg:m-l-0 m-auto  max-w-[90%] lg:w-[50%]">                
                     <div v-if="showDefaultFingerPositions && showImage" class="absolute top-0 bottom-0 left-0 right-0 bg-black z-[999] w-fit m-auto">
                         <p @click="showDefaultFingerPositions = false, showImage = false" class="absolute w-fit h-fit bottom-5 left-[50%] translate-x-[-50%] text-red-500 p-[1px] px-4 ring-[1px] ring-red-600 rounded-md hover:bg-red-600 hover:text-white">X</p>
                         <img class="" src="/keyboard.png" alt="">
                     </div>
-                    <div class="p-2 space-y-1 border border-black rounded-md h-fit w-fit bg-neutral-900 opacity-80">            
-                        <div v-for="(line, i) in qwertyKeyboard" class="flex justify-stretch relative w-full gap-[2px]">
-                            <div @click="showSingleFinger = true, keyToShow = entry" :class="[fingerBg(entry), keysWidth(entry), divisionLine(entry), showDefaultFingerPositions && defaultFingerPositions.includes(entry.toLowerCase()) ? 'ring-[2px] ring-green-400' : '']" v-for="(entry, j) in line" :key="j" class="relative px-2 py-1 text-xs font-medium text-black whitespace-pre border border-black rounded-md shadow-sm cursor-pointer md:px-3 shadow-black sm:text-sm hover:text-white flex-grow">
-                                <div v-if="doubleCharacterKeys[entry]" class="absolute text-[10px] top-[-2px] left-[2px]">{{ doubleCharacterKeys[entry] }}</div>
-                                <div v-if="entry === 'win'"> <img src="/windows.svg" class="w-5"></div>
-                                <div v-else>{{ entry }}</div>
+                    <div class="p-2 space-y-1 text-center border border-black rounded-md h-fit bg-neutral-900 opacity-80 lg:max-w-[90%] m-auto">            
+                        <div v-for="(line, i) in qwertyKeyboard" class="flex gap-[1px] max-w-[500px] w-[100%] m-auto">
+                            <div @click="showSingleFinger = true, keyToShow = entry" :class="[fingerBg(entry), keysWidth(entry), divisionLine(entry), showDefaultFingerPositions && defaultFingerPositions.includes(entry.toLowerCase()) ? 'ring-[2px] ring-green-400' : '']" v-for="(entry, j) in line" :key="j" class="relative flex-grow py-1 text-xs font-medium text-black whitespace-pre border border-black rounded-md shadow-sm cursor-pointer shadow-black hover:text-white">
+                                <div v-if="doubleCharacterKeys[entry]" class="absolute text-[9px] top-[-2px] left-[1px]">{{ doubleCharacterKeys[entry] }}</div>
+                                <div>{{ entry }}</div>
                                 <div v-if="entry.trim() === keyToShow.trim() && showSingleFinger" :class="[fingerBg(entry), fingerHeight(entry)]" class="w-[25px] left-[50%] translate-x-[-50%] top-[70%] z-[9] rounded-t-full h-14 shadow-md shadow-black z-1 after:w-[90%] after:absolute after:h-[20px] after:rounded-t-full after:bg-white after:top-[3px] after:left-[50%] after:translate-x-[-50%] absolute border border-neutral-700"></div>
                                 <div v-if="defaultFingerPositions.includes(entry.trim().toLowerCase()) && showDefaultFingerPositions" :class="[fingerBg(entry), fingerHeight(entry)]" class="w-[25px] left-[50%] translate-x-[-50%] top-[70%] z-[9] rounded-t-full h-14 shadow-md shadow-black z-1 after:w-[90%] after:absolute after:h-[20px] after:rounded-t-full after:bg-white after:top-[3px] after:left-[50%] after:translate-x-[-50%] absolute border border-neutral-700"></div>
                             </div> 
                         </div>
                     </div>
         
-                    <div class="flex gap-2 m-auto w-fit">                    
+                    <div class="flex gap-2 pt-4 m-auto w-fit">                    
                         <div v-if="showDefaultFingerPositions" @click="showImage = !showImage" class="flex px-10 m-auto mt-5 mb-2 space-x-2 border border-black rounded-lg w-fit hover:ring-[1px] hover:ring-green-500 cursor-pointer">
                             <input :checked="showImage" type="checkbox" class="checked:accent-green-500 hover:accent-green-700" name="shiftkey" id="shiftkey">
                             <label for="shiftkey" class="font-medium">Show Image</label>
                         </div>
                     </div>
         
-                    <div class="flex gap-6 m-auto rotate-180 w-fit mt-6">                
+                    <div class="flex gap-6 m-auto mt-6 rotate-180 w-fit">                
                         <div :class="[fingersPosition.right.includes(keyToShow.trim().toLowerCase()) ? 'ring' : '']" class="relative flex gap-2 pl-5">
                             <div class="w-[20px] left-[50%] translate-x-[-50%] top-[85%] z-[9] rounded-b-full h-14 bg-red-400 shadow-sm shadow-black z-1 after:w-[90%] after:absolute after:h-[20px] after:rounded-b-full after:bg-white after:bottom-[3px] after:left-[50%] after:translate-x-[-50%]"></div>
                             <div class="w-[20px] left-[50%] translate-x-[-50%] top-[85%] z-[9] rounded-b-full h-20 bg-yellow-500 shadow-sm shadow-black z-1 after:w-[90%] after:absolute after:h-[20px] after:rounded-b-full after:bg-white after:bottom-[3px] after:left-[50%] after:translate-x-[-50%]"></div>
@@ -123,7 +121,7 @@ const qwertyKeyboard = [
     ['tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\'],
     ['caps lock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "'", 'enter'],
     ['shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', 'shift'],
-    ['ctrl', 'fn', 'win', 'alt', 'space',  'alt', 'ctrl', '<<', 'top', '>>']
+    ['ctrl', 'alt', 'space',  'alt', 'ctrl']
 ]
 
 const fingersKeys = {
@@ -212,7 +210,7 @@ const fingerHeight = (character) => {
 const divisionLine = (character) => {
     let char = character.toLowerCase().trim()
     if (divisors.includes(character)) {
-        return `after:border-r-2 after:border-r-white after:bg-red-500 after:absolute after:right-[-1px] sm:after:right-[-2px] lg:after:right-[-3px] after:top-[50%] after:translate-y-[-50%] after:h-10`
+        // return `after:border-r-2 after:border-r-white after:bg-red-500 after:absolute after:right-[-1px] sm:after:right-[-2px] lg:after:right-[-3px] after:top-[50%] after:translate-y-[-50%] after:h-10`
     }
 }
 
@@ -226,12 +224,12 @@ const wideKeys = [
 
 const keysWidth = (character) => {
     if (wideKeys.includes(character)) {
-        if (character === 'caps lock') return 'w-fit min-w-[10%]'
-        else if (character === 'shift') return 'w-fit min-w-[17%]'
-        else if (character === 'space') return 'text-center w-[35%]'
-        else if (character === 'enter') return 'w-fit min-w-[8%]'
+        if (character === 'caps lock') return 'w-fit min-w-[13.32%]'
+        else if (character === 'shift') return 'w-fit min-w-[16.65%] text-left pl-2'
+        else if (character === 'space') return 'text-center w-[70%]'
+        else if (character === 'enter') return 'w-fit min-w-[13.32%]'
         else if (character === 'tab') return 'w-fit min-w-[8%]'
-        else return 'w-full text-center'
+        else return 'w-[6.67%] text-center'
     } 
 }
 
@@ -263,18 +261,4 @@ watch(showSingleFinger, newVal => {
         }, 5000);
     }
 })
-
-const routeToPage = (route) => {
-    router.push({name: route})
-    repeat.value = false
-    
-    mode.value = 'alphabets'
-    alphabetsMode_.value = true
-    movie.value = {}
-    authoredQuote.value = {}
-    
-    localStorageSettings.value.mode = mode.value
-    localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
-    switchNext(customizers.value )
-}
 </script>

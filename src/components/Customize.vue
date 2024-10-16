@@ -6,7 +6,7 @@
     </div>
 
     <Transition name="test">
-      <div v-if="!hasCompletedSession && !alphabetsMode_" :class="[appTheme]" class="relative m-auto rounded-md max-w-fit ring-1 ring-green-500">
+      <div v-if="!hasCompletedSession && !alphabetsMode_" :class="[appTheme]" class="relative m-auto rounded-md max-w-fit ring-1 ring-green-700">
         <div class="absolute right-[-5px] top-[-5px] z-[2] hover:text-red-500 h-5 w-5 rounded-full flex items-center justify-center bg-neutral-600 text-center cursor-pointer text-white" @click="hideElements = !hideElements">X</div>
           <div class=" items-center p-1 flex max-w-[1000px] justify-center flex-wrap relative z-[1]">
               <div class="flex items-center p-1 parent" v-for="(optionArr, key, listIndex) in option" :key="listIndex">          
@@ -16,7 +16,7 @@
                   @mouseleave="mouseLeave(listIndex)" >
                       <div 
                       class="px-[5px] hover:scale-105 rounded-md whitespace-nowrap" 
-                      :class="[disableOption[key] ? 'hide' : '', customizers[key] === option && !disableOption[key]  ? 'text-green-600' : '', option === 'custom']"
+                      :class="[disableOption[key] ? 'hide' : '', customizers[key] === option && !disableOption[key]  ? 'text-green-700' : '', option === 'custom']"
                       @click="changeConfig(option, key)" 
                       v-for="(option, index) in optionArr" 
                       :key="index">
@@ -30,14 +30,14 @@
     </Transition>
     
     <Transition name="alphabet">
-      <div v-if="!hasCompletedSession && alphabetsMode_" :class="[appTheme]" class="rounded-md w-[90%] min-w-fit m-auto max-w-fit ring-1 ring-green-600 relative py-3 px-10">
+      <div v-if="!hasCompletedSession && alphabetsMode_" :class="[appTheme]" class="rounded-md w-[90%] min-w-fit m-auto max-w-fit ring-1 ring-green-700 relative py-3 px-10">
         <div class="absolute right-[-3px] top-[-3px] z-[1] hover:text-red-500  h-5 w-5 rounded-full flex items-center justify-center bg-neutral-600 text-center cursor-pointer text-white" @click="hideElements = !hideElements">X</div>
-        <div class="flex flex-wrap items-center justify-center gap-[8px] rounded-md min-w-fit m-auto max-w-fit hover:ring-[1px] hover:ring-slate-500 group p-[2px] relative z-[1]">        
-          <div :class="[alphabetsConfig.uppercase ? 'text-green-600' : '']" @click="changeMode('uppercase')" class="px-[5px] hover:scale-105 rounded-md">uppercase</div>
-          <div :class="[alphabetsConfig.customCase ? 'text-green-600' : '']" @click="changeMode('customCase')" class="px-[5px] hover:scale-105 rounded-md">random-case</div>
-          <div :class="[alphabetsConfig.spaced ? 'text-green-600' : '']" @click="changeMode('spaced')" class="px-[5px] hover:scale-105 rounded-md">space</div>
-          <div :class="[alphabetsConfig.backwards ? 'text-green-600' : '']" @click="changeMode('backwards')" class="px-[5px] hover:scale-105 rounded-md">reverse</div>
-          <div :class="[alphabetsConfig.random ? 'text-green-600' : '']" @click="changeMode('random')" class="px-[5px] hover:scale-105 rounded-md">random</div>
+        <div class="flex flex-wrap items-center justify-center gap-[8px] rounded-md min-w-fit m-auto max-w-fit hover:ring-[1px] hover:ring-zinc-400 group p-[2px] relative z-[1]">        
+          <div :class="[alphabetsConfig.uppercase ? 'text-green-700' : '']" @click="changeMode('uppercase')" class="px-[5px] hover:scale-105 rounded-md">uppercase</div>
+          <div :class="[alphabetsConfig.customCase ? 'text-green-700' : '']" @click="changeMode('customCase')" class="px-[5px] hover:scale-105 rounded-md">random-case</div>
+          <div :class="[alphabetsConfig.spaced ? 'text-green-700' : '']" @click="changeMode('spaced')" class="px-[5px] hover:scale-105 rounded-md">space</div>
+          <div :class="[alphabetsConfig.backwards ? 'text-green-700' : '']" @click="changeMode('backwards')" class="px-[5px] hover:scale-105 rounded-md">reverse</div>
+          <div :class="[alphabetsConfig.random ? 'text-green-700' : '']" @click="changeMode('random')" class="px-[5px] hover:scale-105 rounded-md">random</div>
           <!-- <div :class="[alphabetsConfig.demo ? 'text-green-600' : '']" @click="changeMode('demo')" class="px-[5px] hover:scale-105 rounded-md">keyboard-demo</div> -->
           <div class="absolute left-0 text-black top-[115%] shadow-sm shadow-slate-500 px-[6px] bg-neutral-100 rounded-full whitespace-nowrap group-hover:block hidden text-xs font-normal">format</div>
         </div>
@@ -156,16 +156,14 @@ const changeConfig = (key, option) => {
       visibility: hidden;
     }
 
-    .alphabet-enter-from,
+    .alphabet-enter-from {
+      opacity: 0;
+      transform: translateY(-50%);
+    }
+
     .test-enter-from {
       opacity: 0;
-      transform: translateY(-100%);
-    }
-    
-    .alphabet-leave-to,
-    .test-leave-to {
-      opacity: 0;
-      transform: translateY(-100%);
+      transform: translateY(50%);
     }
 
     .alphabet-enter-active,
@@ -176,6 +174,6 @@ const changeConfig = (key, option) => {
     .alphabet-leave-active, 
     .test-leave-active {
       position: absolute;
+      opacity: 0;
     }
-
 </style>

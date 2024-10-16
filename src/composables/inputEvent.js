@@ -1,5 +1,6 @@
 import { mainStore } from "../store/mainStore"
 import { customizeStore } from "../store/customizeStore";
+import { isMobileOS } from "./isMobileOS";
 import { storeToRefs } from 'pinia';
 
 export const inputEvent = (e) => {
@@ -8,7 +9,9 @@ export const inputEvent = (e) => {
     const { sessionComplete } = store
     
     const customize = customizeStore()
-    const {backspace, pauseTyping, toggleCapsToast, capslock} = storeToRefs(customize)
+    const {backspace, pauseTyping, toggleCapsToast, capslock, customizers} = storeToRefs(customize)
+
+    if (customizers.value['stop-on-error'] && wrongCount.value && !isMobileOS() && e.key !== 'Backspace') return
 
     if (!capslock.value && !toggleCapsToast.value && e.key !== 'CapsLock' && e.getModifierState('CapsLock')) toggleCapsToast.value = true
     if (!capslock.value && e.getModifierState('CapsLock') && e.key !== 'CapsLock') return

@@ -1,17 +1,15 @@
 <template>
-    <div :class="[focus && isMobileOS() ? '' : '']" class="m-auto max-w-[1500px] lg:flex"> 
+    <div  class="m-auto max-w-[1500px] lg:flex"> 
       <div class="w-[100%] mx-auto flex-none">   
         <div @click="hideElements = !hideElements" v-if="hideElements && !focus" :class="!hideElements ? '' : ''" class="p-1 px-2 cursor-pointer font-[500] rounded-md m-auto text-[10px] uppercase border border-slate-500 whitespace-nowrap w-fit hover:border-green-400 relative z-[1]">quick settings </div>   
         <Customize v-if="!hideElements" />
         <TestContainer />
       </div>
-      <Settings />
     </div>
 </template>
 
 <script setup>
 import TestContainer from '../components/TestContainer.vue'
-import Settings from '../components/Settings/Settings.vue'
 import Customize from '../components/Customize.vue'
 import { ref, watch } from 'vue';
 import { mainStore } from '../store/mainStore';

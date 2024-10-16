@@ -1,11 +1,11 @@
 <template>
     <div :class="[theme === 'dark' ? 'hover:bg-neutral-800' : 'hover:bg-zinc-200']" class="py-2 pl-5">
         <div class="flex justify-between w-full p-1 border border-transparent rounded-sm ">
-            <div @click="customizers['clear-error'] = !customizers['clear-error'], customize('clear-error', customizers['clear-error'])" class="flex gap-4 w-fit">
-                <input name="nospace" :checked="customizers['clear-error']" type="checkbox" class="checked:accent-green-500 hover:accent-green-700">
+            <div @click="customizers['stop-on-error'] = !customizers['stop-on-error'], customize('stop-on-error', customizers['stop-on-error'])" class="flex gap-4 w-fit">
+                <input name="nospace" :checked="customizers['stop-on-error']" type="checkbox" class="checked:accent-green-500 hover:accent-green-700">
                 <label class="text-sm font-medium w-fit">
-                    <span>Must correct error </span>
-                    <span v-if="customizers['clear-error']" class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-teal-800 ml-1">hard</span>
+                    <span>Stop on error</span>
+                    <span v-if="customizers['stop-on-error']" class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-teal-800 ml-1">hard</span>
                     <span v-else class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-lime-800 ml-1">easy</span>
                 </label>
             </div>

@@ -13,7 +13,7 @@ export const generateTest = async (config, restart) => {
     const {textLength} = storeToRefs(count)
 
     const customize = customizeStore()
-    const {repeat, mode } = storeToRefs(customize)
+    const {repeat, mode, doubleEachWord } = storeToRefs(customize)
 
     if (repeat.value || restart ) {
         containerText.value = storedTest.value
@@ -48,6 +48,20 @@ export const generateTest = async (config, restart) => {
 
     for (let index = 0; index < containerText.value.length; index++) {
         if (containerText.value[index] === ' ') allSpacesIndex.value.push(index)
+    }
+
+    if (doubleEachWord.value && allSpacesIndex.value.length) {
+        let text = containerText.value
+        containerText.value = ''
+        for (let index = 0; index < allSpacesIndex.value.length - 1; index++) {
+            if (index === 0) {
+                containerText.value += text.slice(0, allSpacesIndex.value[index]) + ' ' + text.slice(0, allSpacesIndex.value[index])
+            } else if (index !== allSpacesIndex.value.length - 1) {
+                containerText.value += text.slice(allSpacesIndex.value[index - 1], allSpacesIndex.value[index])  + text.slice(allSpacesIndex.value[index - 1], allSpacesIndex.value[index])
+            } else {
+                containerText.value += text.slice(0, allSpacesIndex.value[index]) + ' ' + text.slice(0, allSpacesIndex.value[index])
+            }
+        }
     }
 
     storedTest.value = containerText.value

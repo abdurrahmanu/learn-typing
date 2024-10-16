@@ -1,8 +1,8 @@
 <template>
     <div v-if="!hasCompletedSession && route.name === 'home'" class="w-fit h-fit">
             <div class="flex text-[10px] font-medium cursor-pointer">
-                <p @click="toggleMode('test')" class="px-5 md:px-10 py-1 border rounded-l-lg hover:border-green-500" :class="[mode === 'auto' ? 'border-green-600 bg-green-700 text-white' : 'border-slate-500 border-r-0 hover:text-green-500']">WORDS</p>
-                <p @click="toggleMode('alphabets')" class="px-5 md:px-10 py-1 border rounded-r-lg hover:border-green-500" :class="[mode === 'alphabets' ? 'border-green-600 bg-green-500 text-white' : 'border-slate-500 hover:text-green-500 border-l-0']">ALPHABETS</p>
+                <p @click="toggleMode('auto')" class="px-5 py-1 border rounded-l-lg md:px-10 hover:border-green-500" :class="[mode === 'auto' ? 'border-green-600 bg-green-700 text-white' : 'border-slate-500 border-r-0 hover:text-green-500']">WORDS</p>
+                <p @click="toggleMode('alphabets')" class="px-5 py-1 border rounded-r-lg md:px-10 hover:border-green-500" :class="[mode === 'alphabets' ? 'border-green-600 bg-green-500 text-white' : 'border-slate-500 hover:text-green-500 border-l-0']">ALPHABETS</p>
             </div>
     </div>
 </template>
@@ -29,11 +29,14 @@ const { movie, authoredQuote, hasCompletedSession, timedTyping} = storeToRefs(st
 const {switchNext} = store
 
 const customize = customizeStore()
-const { customizers, mode, repeat} = storeToRefs(customize)
+const { customizers, mode, repeat, switchMode} = storeToRefs(customize)
 
 const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
 
 const toggleMode = (type) => {
+    if (mode.value === type) return
+    
+    switchMode.value = true
     repeat.value = false
     if (timedTyping.value) clearCounter()
     
@@ -43,7 +46,7 @@ const toggleMode = (type) => {
         movie.value = {}
         authoredQuote.value = {}
     }
-    else if (type === 'test') {
+    else if (type === 'auto') {
         mode.value = 'auto'
         alphabetsMode_.value = false
     }
