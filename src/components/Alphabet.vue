@@ -1,6 +1,6 @@
 <template>
     <div aria-hidden="true" ref="currentAlphabet" :class="[customizers['no-space'] ? '' : 'whitespace-pre-wrap']" class="relative inline">
-        <span  :class="[space, !focus && currentIndexStyle ? 'text-slate-500' : '', equalStyle, (isMobileOS() && focus) || !isMobileOS() ? currentIndexStyle : '', mainStyle, !currentIndex || isMobileOS() && !focus ? 'border-transparent' : '', pulseStyle, blurStyle, (caretType === 'pulse' || caretType === 'word-pulse') && alphabet === ' ' ? 'opacity-100 animate-pulse' : '']" class="relative transition-opacity duration-75 border" >{{ alphabet }}</span>
+        <span  :class="[space, !focus && currentIndexStyle ? 'text-slate-500' : '', equalStyle, (isMobileOS() && focus) || !isMobileOS() ? currentIndexStyle : '', mainStyle, !currentIndex || isMobileOS() && !focus ? 'border-transparent' : '', pulseStyle, blurStyle, (cursorType === 'pulse' || cursorType === 'word-pulse') && alphabet === ' ' ? 'opacity-100 animate-pulse' : '']" class="relative transition-opacity duration-75 border" >{{ alphabet }}</span>
     </div>
 </template> 
 
@@ -20,7 +20,7 @@ const { playerInputLength, focus, testContainerEl, allSpacesIndex, spaceCount, s
 const currentAlphabet = ref(null)
 
 const customize = customizeStore()
-const {customizers, caretType, font, blind} = storeToRefs(customize)
+const {customizers, cursorType, font, blind} = storeToRefs(customize)
 
 const emit = defineEmits(['equal', 'unequal'])
 const props = defineProps({
@@ -54,19 +54,19 @@ onMounted(() => {
             if (currentAlphabet.value) {     
                 const parentScrollHeight = testContainerEl.value.scrollHeight
                 const parentHeight = testContainerEl.value.getBoundingClientRect().height
-                const caretTopOffset = currentAlphabet.value.getBoundingClientRect().top
+                const cursorTopOffset = currentAlphabet.value.getBoundingClientRect().top
                 const parentTopOffset = testContainerEl.value.getBoundingClientRect().top
-                const caretBottomOffset = currentAlphabet.value.getBoundingClientRect().bottom
+                const cursorBottomOffset = currentAlphabet.value.getBoundingClientRect().bottom
                 const parentBottomOffset = testContainerEl.value.getBoundingClientRect().bottom
                 const lineHeight = currentAlphabet.value.getBoundingClientRect().bottom - currentAlphabet.value.getBoundingClientRect().top
                 const prevSiblingBottomOffset = props.index > 0 ? currentAlphabet.value.previousElementSibling.getBoundingClientRect().bottom : 0
                 const nextSiblingTopOffset = props.index > 0 && currentAlphabet.value.nextElementSibling ? currentAlphabet.value.nextElementSibling.getBoundingClientRect().top : 0
                 const nextSiblingBottomOffset = props.index > 0 && currentAlphabet.value.nextElementSibling ? currentAlphabet.value.nextElementSibling.getBoundingClientRect().bottom : 0
                 
-                if (nextSiblingBottomOffset > caretBottomOffset) enterKey.value = true
+                if (nextSiblingBottomOffset > cursorBottomOffset) enterKey.value = true
                 else enterKey.value = false         
                 
-                if (!(parentBottomOffset - prevSiblingBottomOffset <= lineHeight) && parentBottomOffset - caretBottomOffset <= lineHeight && scrollDistance.value < parentScrollHeight) {
+                if (!(parentBottomOffset - prevSiblingBottomOffset <= lineHeight) && parentBottomOffset - cursorBottomOffset <= lineHeight && scrollDistance.value < parentScrollHeight) {
                     if (!backspaceIsPressed.value) {     
                         if (testContainerEl.value.scrollTop + parentHeight === parentScrollHeight) return
                         else {
@@ -82,7 +82,7 @@ onMounted(() => {
                     }
                 }
 
-                if (caretTopOffset < parentTopOffset && props.index > 0 && nextSiblingTopOffset !== caretTopOffset) {   
+                if (cursorTopOffset < parentTopOffset && props.index > 0 && nextSiblingTopOffset !== cursorTopOffset) {   
                     if (backspaceIsPressed.value) {
                         if (testContainerEl.value.scrollTop <= parentHeight) {
                             scrollDistance.value = 0
@@ -109,12 +109,12 @@ const equalStyle = computed(() => {
 
 const currentIndexStyle = computed(() => {
     let text = theme.value === 'dark' ? 'text-slate-500' : 'bg-transparent text-zinc-500' 
-    let caret = caretType.value === 'border' ? 'border border-slate-500' : caretType.value === 'caret' ? 'border-transparent border-l-zinc-600' : caretType.value === 'underline' ? 'border-transparent border-b-blue-600' : caretType.value === 'pulse' && props.alphabet !== ' ' ? 'pulse border-transparent' : ''
-    return  props.currentIndex ? text + ' ' + caret : ''
+    let cursor = cursorType.value === 'border' ? 'border border-slate-500' : cursorType.value === 'cursor' ? 'border-transparent border-l-zinc-600' : cursorType.value === 'underline' ? 'border-transparent border-b-blue-600' : cursorType.value === 'pulse' && props.alphabet !== ' ' ? 'pulse border-transparent' : ''
+    return  props.currentIndex ? text + ' ' + cursor : ''
 })
 
 const space = computed(() => {
-    return (caretType.value === 'border' || caretType.value === 'pulse' || caretType.value === 'word-pulse') && props.currentIndex && props.alphabet === ' ' ? 'before:absolute before:top-0 before:bottom-0 before:w-[50%] before:max-w-[1px] before:left-[30%] before:bg-slate-500 border-transparent' : ''
+    return (cursorType.value === 'border' || cursorType.value === 'pulse' || cursorType.value === 'word-pulse') && props.currentIndex && props.alphabet === ' ' ? 'before:absolute before:top-0 before:bottom-0 before:w-[50%] before:max-w-[1px] before:left-[30%] before:bg-slate-500 border-transparent' : ''
 })
 
 const mainStyle = computed(() => {
@@ -129,7 +129,7 @@ const blurStyle = computed(() => {
 })
 
 const pulseStyle = computed(() => {
-    if (caretType.value === 'word-pulse') {        
+    if (cursorType.value === 'word-pulse') {        
         return (
             spaceCount.value === 0 && props.index < allSpacesIndex.value[0] + 1
         ) || 

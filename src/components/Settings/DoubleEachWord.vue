@@ -10,7 +10,7 @@
                 </label>
             </div>
         </div>
-        <p class="px-3 font-[400]">Toggle to capitalize all alphabets</p>
+        <p class="px-3 font-[400]">Toggle to repeat every word twice. Can only work with spaced test.</p>
     </div>
 </template>
 

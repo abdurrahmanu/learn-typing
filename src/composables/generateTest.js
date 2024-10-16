@@ -62,6 +62,11 @@ export const generateTest = async (config, restart) => {
                 containerText.value += text.slice(0, allSpacesIndex.value[index]) + ' ' + text.slice(0, allSpacesIndex.value[index])
             }
         }
+
+        allSpacesIndex.value = []
+        for (let index = 0; index < containerText.value.length; index++) {
+            if (containerText.value[index] === ' ') allSpacesIndex.value.push(index)
+        }
     }
 
     storedTest.value = containerText.value

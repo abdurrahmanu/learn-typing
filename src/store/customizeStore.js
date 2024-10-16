@@ -11,7 +11,7 @@ export const customizeStore = defineStore('customizeStore', () => {
     const configs = ref([])
     const showMoreSettings = ref(false)
     const hideElements = ref(false)
-    const caretType = ref('border')
+    const cursorType = ref('border')
     const difficulty = ref('beginner')
     const backspace = ref(false)
     const repeat = ref(false)
@@ -31,7 +31,7 @@ export const customizeStore = defineStore('customizeStore', () => {
         'stop-on-error': false,
         'test-length': 'auto',
         'words-type': 'frequent', 
-        'caret': 'border',
+        'cursor': 'border',
         'test-type': 'words',
         'caps': false,
         'punctuation': false,
@@ -129,7 +129,7 @@ export const customizeStore = defineStore('customizeStore', () => {
         doubleEachWord,
         difficulty,
         configs,
-        caretType,
+        cursorType,
         showMoreSettings,
         customizers,
         allOptions,

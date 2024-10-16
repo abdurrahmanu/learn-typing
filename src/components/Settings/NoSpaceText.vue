@@ -10,7 +10,7 @@
                 </label>
             </div>
         </div>
-        <p class="px-3 font-[400]">Toggle to remove all space between characters and words. e.g. thisisanexample</p>
+        <p class="px-3 font-[400]">Toggle to remove all spaces in test. e.g. thisisanexample</p>
     </div>
 </template>
 

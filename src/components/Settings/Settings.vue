@@ -7,7 +7,7 @@
                     <Header />
                     <div @click="demo = true, pauseTyping = true" :class="[demo ? 'hidden' : '']" class="my-3 m-auto w-fit font-medium caveat hover:animate-none transition-all duration-500 hover:px-20 ring-[1px] ring-green-500 px-10 py-1 opacity-50 shadow-sm cursor-pointer hover:shadow-green-500 text-center hover:shadow-md hover:opacity-100 z-[1]">HELP</div>
                     <Fonts />
-                    <Caret />
+                    <Cursor />
                     <Difficulty />
                     <BackSpace />
                     <BlindMode />
@@ -18,7 +18,7 @@
                     <DoubleEachWord />
                     <NoSpaceText />
                     <MovieQuotes />
-                    <StopOnError />
+                    <StopOnError v-if="!isMobileOS()" />
                     <AuthoredQoutes />
                     <AllCaps />
                 </div>
@@ -29,7 +29,7 @@
                         <Header />
                         <div @click="demo = true, pauseTyping = true" :class="[demo ? 'hidden' : '']" class="my-3 m-auto w-fit font-medium caveat hover:animate-none transition-all duration-500 hover:px-20 ring-[1px] ring-green-500 px-10 py-1 opacity-50 shadow-sm cursor-pointer hover:shadow-green-500 text-center hover:shadow-md hover:opacity-100 z-[1]">HELP</div>
                         <Fonts />
-                        <Caret />
+                        <Cursor />
                         <Difficulty />
                         <BlindMode />
                         <BackSpace />
@@ -37,6 +37,7 @@
                         <CapsLock v-if="!isMobileOS()" />
                         <Countdown />
                         <DoubleEachWord />
+                        <StopOnError v-if="!isMobileOS()" />
                         <LetterCombinations />
                     </div>
                 </div>
@@ -46,7 +47,7 @@
 </template>
 
 <script setup>
-import Caret from './Caret.vue'
+import Cursor from './Cursor.vue'
 import Fonts from './Fonts.vue'
 import AuthoredQoutes from './AuthoredQuotes.vue'
 import Header from './Header.vue'

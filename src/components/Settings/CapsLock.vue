@@ -10,7 +10,7 @@
                 </label>
             </div>
         </div>
-        <p  class="px-3 font-[400]">Toggle to enable CapsLock. Untoggle to use <span class="px-3 text-xs text-white bg-green-800 rounded-sm">Shift</span> + <span class="px-3 text-xs text-white bg-green-800 rounded-sm">Key</span> instead of CapsLock.</p>
+        <p  class="px-3 font-[400]">Toggle to enable Caps lock. Untoggle to use <span class="px-3 text-xs text-white bg-green-800 rounded-sm">Shift</span> + <span class="px-3 text-xs text-white bg-green-800 rounded-sm">Key</span> instead of Caps lock.</p>
     </div>
 </template>
 

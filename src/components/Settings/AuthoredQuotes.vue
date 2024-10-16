@@ -6,7 +6,7 @@
                 <label class="text-sm font-medium w-fit">Quotes with Authors</label>
             </div>
         </div>
-        <p class="px-2 font-[400]">When toggled, it toggles quotes mode and auto length</p>
+        <p class="px-2 font-[400]">When toggled, it enables quotes mode and auto length.</p>
     </div>
 </template>
 

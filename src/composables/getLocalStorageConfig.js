@@ -16,7 +16,7 @@ export const localStorageConfig = async () => {
     const {customTests} = storeToRefs(main)
 
     const customize = customizeStore()
-    const { customizers, doubleEachWord, disableOption, caretType, difficulty, mode, hideElements, font, range, blind, backspace, capslock } = storeToRefs(customize)
+    const { customizers, doubleEachWord, disableOption, cursorType, difficulty, mode, hideElements, font, range, blind, backspace, capslock } = storeToRefs(customize)
 
     if (localStorage.getItem('kiboard')) {
         const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
@@ -27,7 +27,7 @@ export const localStorageConfig = async () => {
             difficulty: localStorageSettings.value.difficulty || difficulty.value,
             customTests: localStorageSettings.value.customTests ||  customTests.value,
             config:  [ localStorageSettings.value.config[0] || customizers.value, localStorageSettings.value.config[1] || disableOption.value],
-            caret: localStorageSettings.value.caret || 'border',
+            cursor: localStorageSettings.value.cursor || 'border',
             theme: localStorageSettings.value.theme || 'white',
             backspace: typeof(localStorageSettings.value.backspace) === 'boolean' ? localStorageSettings.value.backspace : true,
             blind: localStorageSettings.value.blind || false,
@@ -47,7 +47,7 @@ export const localStorageConfig = async () => {
         font.value = localStorageSettings.value.fontsize 
         range.value = (font.value - 16) / 0.26
         hideElements.value = localStorageSettings.value.hide
-        caretType.value = localStorageSettings.value.caret
+        cursorType.value = localStorageSettings.value.cursor
         blind.value = localStorageSettings.value.blind
         difficulty.value = localStorageSettings.value.difficulty
         backspace.value = localStorageSettings.value.backspace
@@ -72,7 +72,7 @@ export const localStorageConfig = async () => {
             capslock: true,
             customTests: {'demo': 'This is a custom test, you can add your own tests by pressing the plus icon. This demo test cannot be deleted'},
             config: [customizers.value, disableOption.value],
-            caret: 'border',
+            cursor: 'border',
             theme: window.matchMedia("(prefers-color-scheme: dark)").matches ?  'dark' : 'white',
             backspace: true,
             blind: false,
