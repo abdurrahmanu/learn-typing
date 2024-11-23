@@ -18,24 +18,19 @@
 import {ref} from 'vue'
 import {storeToRefs} from 'pinia';
 import {customizeStore} from '../../store/customizeStore';
-import { mainStore } from '../../store/mainStore';
 import { themeStore } from '../../store/themeStore';
+import {updateLocalStorage} from '../../composables/updateLocalStorage'
 
 const theme_ = themeStore()
 const {theme} = theme_
 
 const custom = customizeStore()
-const {capslock, customizers} = storeToRefs(custom)
-
-const main = mainStore()
-const {switchNext} = main
-
-const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
+const {capslock} = storeToRefs(custom)
 
 const customize = () => {
     capslock.value = !capslock.value
-    localStorageSettings.value.capslock = capslock.value
-    switchNext(customizers.value, 'restart')
-    localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
+    updateLocalStorage(capslock.value, 'restart', true)
+    updateLocalStorage(Object.keys({capslock})[0], capslock.value, 'restart', true)
+
 }
 </script>

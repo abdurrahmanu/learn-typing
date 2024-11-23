@@ -8,19 +8,17 @@
 </template>
 
 <script setup>
-import {ref} from 'vue'
 import closedEye from './svg/closedEye.vue';
 import openEye from './svg/openEye.vue';
 import { customizeStore } from '../store/customizeStore';
 import { storeToRefs } from 'pinia';
+import {updateLocalStorage} from '../composables/updateLocalStorage'
 
 const custom = customizeStore()
 const {blind} = storeToRefs(custom)
-const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
 
 const customize = () => {
     blind.value = !blind.value
-    localStorageSettings.value.blind = blind.value
-    localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
+    updateLocalStorage(Object.keys({blind})[0], blind.value)
 }
 </script>

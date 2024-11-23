@@ -18,25 +18,17 @@
 import {ref} from 'vue'
 import {storeToRefs} from 'pinia'
 import {customizeStore} from '../../store/customizeStore'
-import { mainStore } from '../../store/mainStore';
 import { themeStore } from '../../store/themeStore';
+import {updateLocalStorage} from '../../composables/updateLocalStorage'
 
 const theme_ = themeStore()
 const {theme} = theme_
 
 const store = customizeStore()
-const {customizers, doubleEachWord} = storeToRefs(store)
-
-const main = mainStore()
-const {switchNext} = main
-
-const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
+const {doubleEachWord} = storeToRefs(store)
 
 const customize = () => {
     doubleEachWord.value = !doubleEachWord.value
-    localStorageSettings.value.doubleEachWord = doubleEachWord.value
-    localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
-    
-    switchNext(customizers.value)
+    updateLocalStorage(Object.keys({doubleEachWord})[0], doubleEachWord.value)
 }
 </script>

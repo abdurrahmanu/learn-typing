@@ -21,6 +21,7 @@
                     <StopOnError v-if="!isMobileOS()" />
                     <AuthoredQoutes />
                     <AllCaps />
+                    <Cookies />
                 </div>
             </div>
             <div v-if="alphabetsMode_">
@@ -39,6 +40,7 @@
                         <DoubleEachWord />
                         <StopOnError v-if="!isMobileOS()" />
                         <LetterCombinations />
+                        <Cookies />
                     </div>
                 </div>
             </div>
@@ -50,6 +52,7 @@
 import Cursor from './Cursor.vue'
 import Fonts from './Fonts.vue'
 import AuthoredQoutes from './AuthoredQuotes.vue'
+import Cookies from './Cookies.vue'
 import Header from './Header.vue'
 import AllCaps from './AllCaps.vue'
 import CustomCamelCase from './CustomCamelCase.vue'
@@ -70,6 +73,7 @@ import CapsLock from './CapsLock.vue'
 import StopOnError from './StopOnError.vue'
 import {mainStore} from '../../store/mainStore'
 import DoubleEachWord from './DoubleEachWord.vue'
+import {watch} from 'vue'
 
 const alphabets_ = alphabetsStore()
 const { alphabetsMode_, } = storeToRefs(alphabets_)
@@ -88,6 +92,12 @@ const toggleSettings = () => {
     if (showMoreSettings.value) pauseTyping.value = true
     else pauseTyping.value = false
 }
+
+watch(demo, newVal => {
+    if (newVal && showMoreSettings.value) {
+        showMoreSettings.value = false
+    }
+})
 </script>
 
 <style scoped>

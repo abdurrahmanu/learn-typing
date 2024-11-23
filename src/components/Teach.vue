@@ -2,12 +2,12 @@
     <div>        
         <div v-if="demo" class="relative py-2 mx-auto space-y-2 w-fit">
             <div class="flex justify-between font-bold">                
-                <div @click="demo = false, pauseTyping = false, showImage = false" class="uppercase text-sm  p-1 m-auto text-red-600 ring ring-transparent rounded-md shadow-sm exo shadow-transparent w-fit hover:ring-[1px] hover:ring-red-400">Go back</div>
+                <div @click="demo = false, pauseTyping = false, showImage = false" class="uppercase text-[14px]  p-1 m-auto text-red-600 ring ring-transparent rounded-md shadow-sm exo shadow-transparent w-fit hover:ring-[1px] hover:ring-red-400">Go back</div>
             </div>
 
             <div class="max-w-[1200px] m-auto lg:flex">                
                 <div class="max-w-[600px] lg:max-w-[40%] px-2 mx-auto lg:text-left text-center caveat font-normal lg:border-r w-[90%] leading-[2] lg:leading-[2.2] md:leading-[2.1] text-[14px] border-neutral-800">                
-                    <p>You are here to learn <span class="text-green-700 underline hover:text-green-500">Touch-typing</span> (typing without looking at your keyboard). In this method, your fingers are trained to know and navigate the locations of all the keys on a keyboard all by themselves (muscle memory). It sounds like a Super power right? Your fingers assume  
+                    <p>You are here to learn <span class="text-green-700 underline hover:text-green-500">Touch-typing</span> (typing without looking at your keyboard). Your fingers are trained to know and navigate the locations of all the keys on a keyboard all by themselves (muscle memory). It sounds like a Super power right? Your fingers assume  
                         <span @click="showDefaultFingerPositions = true" class="px-3 py-1 animate-pulse ring-[1px] ring-green-500 rounded-md hover:animate-none hover:bg-green-400 hover:text-black uppercase cursor-pointer whitespace-nowrap">default positions</span> 
                         <span>  and do not leave their positions. They go back and forth their initial positions while stroking other keys.  </span>
                         <span @click="" class="px-3 py-1 animate-pulse ring-[1px] ring-red-500 rounded-md hover:animate-none hover:bg-red-400 hover:text-black uppercase cursor-pointer">video</span>

@@ -16,14 +16,11 @@
 </template>
 
 <script setup>
-import {ref} from 'vue'
 import {storeToRefs} from 'pinia';
 import Blind from '../Blind.vue';
 import {customizeStore} from '../../store/customizeStore';
+import {updateLocalStorage} from '../../composables/updateLocalStorage'
 import { themeStore } from '../../store/themeStore';
-import ClosedEye from '../svg/closedEye.vue';
-import OpenEye from '../svg/openEye.vue';
-import Clock from '../Clock.vue';
 
 const theme_ = themeStore()
 const {theme} = theme_
@@ -31,11 +28,8 @@ const {theme} = theme_
 const store = customizeStore()
 const {blind} = storeToRefs(store)
 
-const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
-
 const customize = () => {
     blind.value = !blind.value
-    localStorageSettings.value.blind = blind.value
-    localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
+    updateLocalStorage(Object.keys({blind})[0], blind.value)
 }
 </script>

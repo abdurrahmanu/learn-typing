@@ -1,9 +1,11 @@
 import {defineStore} from 'pinia'
 import {isMobileOS} from '../composables/isMobileOS'
 import {ref} from 'vue'
+import { updateLocalStorage } from '../composables/updateLocalStorage'
 
 export const customizeStore = defineStore('customizeStore', () => {
     const mode = ref('auto')
+    const cookies_ = ref(false)
     const testType_ = ref('words')
     const userSelectedTest = ref('')
     const customTestModal = ref(false)
@@ -20,7 +22,7 @@ export const customizeStore = defineStore('customizeStore', () => {
     const blind = ref(false)
     const font = ref(32)
     const range = ref((font.value - 16) / 0.16)
-    const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
+    const localStorageSettings = ref(cookies_.value ? JSON.parse(localStorage.getItem('kiboard')) : null)
     const toggleCapsToast = ref(false)
     const customTestLength = ref(200)
     const useCustomLength = ref(false)
@@ -88,9 +90,8 @@ export const customizeStore = defineStore('customizeStore', () => {
             disableOption.value['test-length'] = false
         }
 
-        const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
-        localStorageSettings.value.config = [customizers.value, disableOption.value]
-        localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
+        let config = [customizers.value, disableOption.value]
+        updateLocalStorage(Object.keys({config})[0], config)
     }
 
     const useConfig = () => {
@@ -120,11 +121,12 @@ export const customizeStore = defineStore('customizeStore', () => {
             customizers.value['test-type'] = 'quotes'
         }
 
-        localStorageSettings.value.config = [customizers.value, disableOption.value]
-        localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))     
+        let config = [customizers.value, disableOption.value]
+        updateLocalStorage(Object.keys({config})[0], config)
     }
 
     return {
+        cookies_,
         disableOption,
         doubleEachWord,
         difficulty,

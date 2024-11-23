@@ -20,6 +20,7 @@ import {ref} from 'vue'
 import {storeToRefs} from 'pinia';
 import {customizeStore} from '../../store/customizeStore';
 import { mainStore } from '../../store/mainStore';
+import {updateLocalStorage} from '../../composables/updateLocalStorage'
 import { isMobileOS } from '../../composables/isMobileOS';
 import { themeStore } from '../../store/themeStore';
 
@@ -27,18 +28,15 @@ const theme_ = themeStore()
 const {theme} = theme_
 
 const custom = customizeStore()
-const {backspace, customizers} = storeToRefs(custom)
-
-const main = mainStore()
-const {switchNext} = main
-
-const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
+const {backspace} = storeToRefs(custom)
 
 const customize = () => {
     if (isMobileOS()) return
     backspace.value = !backspace.value
-    localStorageSettings.value.backspace = backspace.value
-    localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
-    switchNext(customizers.value)
+    
+    updateLocalStorage(Object.keys({backspace})[0], backspace.value, null, true)
 }
 </script>
+
+
+

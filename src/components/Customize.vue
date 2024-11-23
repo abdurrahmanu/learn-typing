@@ -54,6 +54,10 @@ import { mainStore } from '../store/mainStore.js';
 import {alphabetsStore}  from '../store/alphabetsModeStore';
 import { themeStore } from '../store/themeStore';
 import { isMobileOS } from '../composables/isMobileOS';
+import { cookiesStore } from '../store/cookiesStore';
+
+const cookies = cookiesStore()
+const {useCookies} = storeToRefs(cookies)
 
 const containerEl = ref(null)
 const singleDivWidth = ref(0)
@@ -106,19 +110,19 @@ const mouseEnter = (index) => hoverIndex.value = index
 const mouseLeave = (index) => hoverIndex.value = null
 
 const changeMode = (mode) => {  
-if (mode === 'uppercase') {
-  if (alphabetsConfig.value.customCase && !alphabetsConfig.value.uppercase) alphabetsConfig.value.customCase = false
-    alphabetsConfig.value.uppercase = !alphabetsConfig.value.uppercase
+  if (mode === 'uppercase') {
+    if (alphabetsConfig.value.customCase && !alphabetsConfig.value.uppercase) alphabetsConfig.value.customCase = false
+      alphabetsConfig.value.uppercase = !alphabetsConfig.value.uppercase
   }
 
   if (mode === 'customCase') {
     if (alphabetsConfig.value.uppercase && !alphabetsConfig.value.customCase) alphabetsConfig.value.uppercase = false
     alphabetsConfig.value.customCase = !alphabetsConfig.value.customCase
   }
-  
+
   if (mode === 'spaced') {
       alphabetsConfig.value.spaced = !alphabetsConfig.value.spaced
-    }
+  }
 
     if (mode === 'backwards') {
       if (alphabetsConfig.value.random && !alphabetsConfig.value.backwards) alphabetsConfig.value.random = false
@@ -134,9 +138,6 @@ if (mode === 'uppercase') {
       alphabetsConfig.value.demo = !alphabetsConfig.value.demo
     }
       
-    const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
-    localStorageSettings.value.alphabets.mode = alphabetsConfig.value
-    localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
     switchNext(customizers.value)
 }  
 
@@ -145,6 +146,7 @@ const changeConfig = (key, option) => {
   
   if (!disableOption.value[option]) {
     configs.value = [option, key]
+    
       useConfig()
     }
 }

@@ -34,10 +34,14 @@ import {mainStore} from '../../store/mainStore'
 import { customizeStore } from '../../store/customizeStore';
 import {alphabetsStore}  from '../../store/alphabetsModeStore';
 import { themeStore } from '../../store/themeStore';
+import { cookiesStore } from '../../store/cookiesStore';
+import { updateLocalStorage } from '../../composables/updateLocalStorage';
+
+const cookies = cookiesStore()
+const {useCookies} = storeToRefs(cookies)
 
 const theme_ = themeStore()
 const {theme} = theme_
-const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
 
 const alphabets_ = alphabetsStore()
 const { alphabetsCombination, useAlphabetCombination, shiftKey } = storeToRefs(alphabets_)
@@ -70,13 +74,15 @@ const toggle = () => {
         switchNext(customizers.value)
     }
 
-    if (useAlphabetCombination.value && alphabetsCombination.value.length > 1) {
-        localStorageSettings.value.alphabets.combo = true
-        localStorageSettings.value.alphabets.combination = alphabetsCombination.value
-        localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
-    } else {
-        localStorageSettings.value.alphabets.combo = false
-        localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
+    if (useCookies.value) {        
+        if (useAlphabetCombination.value && alphabetsCombination.value.length > 1) {
+            let alphabetsCombo = true
+            updateLocalStorage(Object.keys({alphabetsCombo})[0], alphabetsCombo.value)
+            updateLocalStorage(Object.keys({alphabetsCombination})[0], alphabetsCombination.value)
+        } else {
+            let alphabetsCombo = false
+            updateLocalStorage(Object.keys({alphabetsCombo})[0], alphabetsCombo)
+        }
     }
 }
 
@@ -98,18 +104,18 @@ watch(alphabetsCombination, (newVal) => {
     }
     
     if (useAlphabetCombination.value && newVal.length > 1) {
-        localStorageSettings.value.alphabets.combo = true
-        localStorageSettings.value.alphabets.combination = alphabetsCombination.value
-        localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
-        switchNext(customizers.value)
+        let alphabetsCombo = true
+        updateLocalStorage(Object.keys({alphabetsCombo})[0], alphabetsCombo)
+        updateLocalStorage(Object.keys({alphabetsCombination})[0], alphabetsCombination.value)
+
     } else {
-        localStorageSettings.value.alphabets.combo = false
-        localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
+        let alphabetsCombo = true
+        updateLocalStorage(Object.keys({alphabetsCombo})[0], alphabetsCombo)
     }
 }, {deep: true})
 
 watch(useAlphabetCombination, newVal => {
-    localStorageSettings.value.alphabets.combo = newVal
-    localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
+    let alphabetsCombo = newVal
+    updateLocalStorage(Object.keys({alphabetsCombo})[0], alphabetsCombo)
 })
 </script>

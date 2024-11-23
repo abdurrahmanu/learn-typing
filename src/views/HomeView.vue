@@ -18,6 +18,11 @@ import { customizeStore } from '../store/customizeStore';
 import { useRouter } from 'vue-router';
 import { isMobileOS } from '../composables/isMobileOS';
 import { countdownStore } from '../store/countdownStore'
+import { cookiesStore } from '../store/cookiesStore';
+import {updateLocalStorage} from '../composables/updateLocalStorage'
+
+const cookies = cookiesStore()
+const {useCookies} = storeToRefs(cookies)
 
 const count = countdownStore()
 const {clearCounter} = count
@@ -35,12 +40,11 @@ watch(hasCompletedSession, (newVal) => {
     if (newVal) router.push({path: 'result'})
 }, {deep: true})
 
-window.addEventListener('resize', () => screenWidth.value = window.innerWidth )
+window.addEventListener('resize', () => screenWidth.value = window.innerWidth)
 
 watch(hideElements, newVal => {
-  const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
-  localStorageSettings.value.hide = newVal
-  localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
+  let hide = newVal
+  updateLocalStorage(Object.keys({hide})[0], hide)
 })
 
 watch(focus, newVal => {

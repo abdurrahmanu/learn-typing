@@ -29,6 +29,7 @@ import {watch, ref} from 'vue'
 import {storeToRefs} from 'pinia'
 import {customizeStore} from '../../store/customizeStore'
 import { themeStore } from '../../store/themeStore';
+import {updateLocalStorage} from '../../composables/updateLocalStorage'
 
 const theme_ = themeStore()
 const {theme} = theme_
@@ -36,11 +37,9 @@ const {theme} = theme_
 const store = customizeStore()
 const { cursorType} = storeToRefs(store)
 
-const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
-
 watch(cursorType, (newVal) => {
-    localStorageSettings.value.cursor = newVal
-    localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
+    let cursor = newVal
+    updateLocalStorage(Object.keys({cursor})[0], cursor)
 })
 </script>
 

@@ -17,6 +17,7 @@ import { storeToRefs } from 'pinia';
 import { countdownStore } from '../../store/countdownStore'
 import { customizeStore } from '../../store/customizeStore'
 import { themeStore } from '../../store/themeStore';
+import {updateLocalStorage} from '../../composables/updateLocalStorage'
 
 const theme_ = themeStore()
 const {theme} = theme_
@@ -31,16 +32,15 @@ const { customizers, font, range} = storeToRefs(customize)
 const count = countdownStore()
 const {clearCounter} = count
 
-const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
-
 const fontSize = computed(() => {
     return range.value <= 1 ? 16 : (16 + (range.value * 0.26)).toFixed(2)
 })
 
 watch(fontSize, (newVal) => {
     font.value = newVal
-    localStorageSettings.value.fontsize = newVal
-    localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
+    let fontsize = newVal
+    updateLocalStorage(Object.keys({fontsize})[0], fontsize)
+
     if (playerInput.value.length) {        
         if (timedTyping.value) clearCounter()
         switchNext(customizers.value, 'restart' )

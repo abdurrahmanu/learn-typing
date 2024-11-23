@@ -25,6 +25,7 @@ import {watch, ref, computed} from 'vue'
 import {storeToRefs} from 'pinia'
 import {customizeStore} from '../../store/customizeStore'
 import { themeStore } from '../../store/themeStore';
+import { updateLocalStorage } from '../../composables/updateLocalStorage';
 
 const theme_ = themeStore()
 const {theme, appTheme} = theme_
@@ -40,11 +41,8 @@ const result = computed(() => {
     }
 })
 
-
-const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
-
 watch(difficulty, (newVal) => {
-    localStorageSettings.value.difficulty = newVal
-    localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
+    let difficulty = newVal
+    updateLocalStorage(Object.keys({difficulty})[0], difficulty)
 })
 </script>

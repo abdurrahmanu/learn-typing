@@ -11,7 +11,6 @@
                 <restart v-show="!hasCompletedSession && playerInputLength" @click="restartTest" class="absolute w-6 left-[50%] translate-x-[-50%] "/>
             </div>
         </div>
-        {{ goNext }}
         <Transition v-if="goNext" name="container">
         <div v-if="containerText" class="transition-all duration-100 relative mx-auto max-w-[700px] w-full min-w-[300px]">
                 <div @blur="textIsFocused = false" @focus="textIsFocused = true" tabindex="0" ria-describedby="full-text" ref="testContainerEl"  :style="{'height' : containerHeight + 'px', 'font-size': font + 'px'}" :class="[ customizers['no-space'] || customizers['test-type'] === 'custom' ? 'break-words' : '', alphabetsMode_ ? 'text-center break-words': 'text-left', !alphabetsMode_ && textPosition=== 'center' ? 'text-center' : !alphabetsMode_ && textPosition=== 'right' ? 'text-right' : 'text-left', !isMobileOS() ? 'overflow-y-auto ' : 'overflow-y-hidden'] " class="overflow-x-hidden scroll-smooth leading-[1.4] h-fit py-[1px] outline-none after:absolute after:top-0 after:bottom-0 after:w-[4px] after:right-[0] after:z-[999] after:bg-transparent">
@@ -112,8 +111,10 @@ watch(playerInput, (newVal, oldVal) => {
 })
 
 onMounted(() => {
-    if (!containerText.value) generateTest(customizers.value, null)
-    
+    if (!containerText.value) {
+        generateTest(customizers.value, null)
+    }
+
     document.addEventListener('keydown', event => {
         if (textIsFocused.value) preventKeyBoardScroll(event)
     })

@@ -7,9 +7,10 @@
         <Next />
       </main>
       <Teach />
+      <Cookies />
     </div>
-    <Settings />
     
+    <Settings />
     <div class="fixed flex items-center gap-3 bottom-2 right-2">      
       <SwitchModes :class="[demo ? 'opacity-0 hidden' : '']" class="self-end mb-[2px] transition-all duration-300" />
       <Theme class="self-end"/>
@@ -25,6 +26,7 @@
 import {onBeforeMount, onMounted, watch, ref} from 'vue'
 import Teach from './components/Teach.vue';
 import Settings from './components/Settings/Settings.vue'
+import Cookies from './components/Cookies.vue';
 import Header from './components/Header.vue'
 import SwitchModes from './components/SwitchModes.vue';
 import Next from './components/Next.vue';
@@ -40,14 +42,13 @@ import CapsLockToast from './components/Toast.vue';
 import {useRoute, useRouter} from 'vue-router'
 import { countdownStore } from './store/countdownStore';
 
-const route = useRoute()
 const router = useRouter()
 
 const theme_ = themeStore()
 const { appTheme } = storeToRefs(theme_)
 
 const customize = customizeStore()
-const {font, customizers, toggleCapsToast, pauseTyping } = storeToRefs(customize)
+const {font, customizers, toggleCapsToast } = storeToRefs(customize)
 
 const main = mainStore()
 const { containerHeight, timedTyping, demo} = storeToRefs(main)
@@ -55,10 +56,6 @@ const { switchNext} = main
 
 const count = countdownStore()
 const {clearCounter} = count
-
-const routeToPage = (route) => {
-    router.push({name: route})
-}
 
 watch(customizers, (newVal) => {
   if (timedTyping.value) clearCounter()
@@ -103,12 +100,6 @@ watch(toggleCapsToast, (newVal, oldVal) => {
   transform: rotateX(-80deg) rotateY(0deg);
   transform-style: preserve-3d;
 } 
-
-/* .glow {
-  -webkit-box-shadow:0px 0px 112px 50px #ffffff;
-  -moz-box-shadow: 0px 0px 112px 50px #ffffff;
-  box-shadow: 0px 0px 112px 50px #ffffff;
-} */
 
 .box-container {
   perspective: 1000px

@@ -15,6 +15,8 @@ import { customizeStore } from '../store/customizeStore';
 import {alphabetsStore}  from '../store/alphabetsModeStore';
 import { countdownStore } from '../store/countdownStore';
 import {useRoute} from 'vue-router'
+import {updateLocalStorage} from '../composables/updateLocalStorage'
+
 
 const route = useRoute()
 
@@ -26,12 +28,10 @@ const {clearCounter} = count
 
 const store = mainStore()
 const { movie, authoredQuote, hasCompletedSession, timedTyping} = storeToRefs(store)
-const {switchNext} = store
 
 const customize = customizeStore()
-const { customizers, mode, repeat, switchMode} = storeToRefs(customize)
+const { mode, repeat, switchMode} = storeToRefs(customize)
 
-const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
 
 const toggleMode = (type) => {
     if (mode.value === type) return
@@ -51,8 +51,6 @@ const toggleMode = (type) => {
         alphabetsMode_.value = false
     }
     
-    localStorageSettings.value.mode = mode.value
-    localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
-    switchNext(customizers.value)
+    updateLocalStorage(Object.keys({mode})[0], mode.value, null, true)
 }
 </script>

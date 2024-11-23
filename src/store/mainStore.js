@@ -8,7 +8,7 @@ export const mainStore = defineStore('mainStore', () => {
     const quoteType = ref('')
     const demo = ref(false)
     const keyboardMode = ref(false)
-    const goNext = ref(false)
+    const goNext = ref(true)
 
     //Test container
     const testContainerEl = ref(null)

@@ -8,6 +8,7 @@
 import {ref, onMounted} from 'vue'
 import { storeToRefs } from 'pinia';
 import {themeStore}  from '../store/themeStore'
+import { updateLocalStorage } from '../composables/updateLocalStorage';
 
 const theme_ = themeStore()
 const {theme } = storeToRefs(theme_)
@@ -15,22 +16,19 @@ const {theme } = storeToRefs(theme_)
 const openBackgrounds = ref(false)
 const bgContainer = ref(null)
 
-const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
-
 const toggleTheme = (color) => {
     theme.value = color
-
+    
     openBackgrounds.value = !openBackgrounds.value
     if (theme.value === 'dark') {
-        localStorageSettings.value.theme ='dark'
+        updateLocalStorage(Object.keys({theme})[0], theme.value)
         bg.value = ['bg-neutral-900', 'bg-white']
         colors.value = ['dark', 'white']
-        }  else {
-            localStorageSettings.value.theme ='white'
+    }  else {
+        updateLocalStorage(Object.keys({theme})[0], theme.value)
             bg.value = ['bg-white', 'bg-neutral-900']
             colors.value = ['white', 'dark']
         }
-        localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
 }
 
 const colors = ref([

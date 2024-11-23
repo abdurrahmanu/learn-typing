@@ -50,6 +50,7 @@ import {mainStore} from '../store/mainStore';
 import {themeStore}  from '../store/themeStore'
 import { customizeStore } from '../store/customizeStore';
 import { isMobileOS } from '../composables/isMobileOS';
+import { cookiesStore } from '../store/cookiesStore';
 import { useRoute } from 'vue-router';
 
 const route = useRoute()
@@ -62,6 +63,10 @@ const {theme, appTheme } = storeToRefs(theme_)
 const main = mainStore()
 const { customTests } = storeToRefs(main)
 const {switchNext} = main
+
+const cookies = cookiesStore()
+const {useCookies} = storeToRefs(cookies)
+
 
 const textAreaPlaceholder = ref('Custom test')
 const titlePlaceholder = ref('Title')
@@ -89,15 +94,17 @@ const startSavingCustomText = () => {
 }
 
 const saveNewCustomText = () => {
-    const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
     if (!customTestTitle.value.length) {
         titlePlaceholder.value = 'Must add title'
         return
     }
-
+    
     customTests.value[customTestTitle.value] = textAreaValueStore.value.trim()
-    localStorageSettings.value.customTests[customTestTitle.value] = textAreaValueStore.value.trim()
-    localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
+    if (useCookies.value) {        
+        const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
+        localStorageSettings.value.customTests[customTestTitle.value] = textAreaValueStore.value.trim()
+        localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
+    }
     textSaved.value = true
     customTestTitle.value = ''
     textAreaValueStore.value = ''
@@ -115,28 +122,28 @@ const cancel = () => {
 }
 
 const del= (name) => {
-    const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
-    delete localStorageSettings.value.customTests[name]
-    localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
-    delete customTests.value[name]
+    if (useCookies.value) {        
+        const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
+        delete localStorageSettings.value.customTests[name]
+        localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
+        delete customTests.value[name]
+    }
     switchNext(customizers.value)
 }
 
 const use = (name) => {
     if (repeat.value) return
-    const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
     if (customizers.value['test-type'] !== 'custom') {
         customizers.value['test-type'] = 'custom'
-        localStorageSettings.value.config[0]['test-type'] = 'custom'
-        localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
+        if (useCookies.value) {
+            const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
+            localStorageSettings.value.config[0]['test-type'] = 'custom'
+            localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
+        }
     }
     userSelectedTest.value = name
     switchNext(customizers.value)
     customTestModal.value = false
     pauseTyping.value = false
-}
-
-const edit = (name) => {
-    
 }
 </script>
