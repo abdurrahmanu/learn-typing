@@ -8,7 +8,7 @@
 import {ref, onMounted} from 'vue'
 import { storeToRefs } from 'pinia';
 import {themeStore}  from '../store/themeStore'
-import { updateLocalStorage } from '../composables/updateLocalStorage';
+import { updateDB } from '../composables/updateDB';
 
 const theme_ = themeStore()
 const {theme } = storeToRefs(theme_)
@@ -21,11 +21,11 @@ const toggleTheme = (color) => {
     
     openBackgrounds.value = !openBackgrounds.value
     if (theme.value === 'dark') {
-        updateLocalStorage(Object.keys({theme})[0], theme.value)
+        updateDB(Object.keys({theme})[0], theme.value)
         bg.value = ['bg-neutral-900', 'bg-white']
         colors.value = ['dark', 'white']
     }  else {
-        updateLocalStorage(Object.keys({theme})[0], theme.value)
+        updateDB(Object.keys({theme})[0], theme.value)
             bg.value = ['bg-white', 'bg-neutral-900']
             colors.value = ['white', 'dark']
         }

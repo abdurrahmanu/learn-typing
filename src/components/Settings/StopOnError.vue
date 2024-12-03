@@ -1,7 +1,7 @@
 <template>
     <div :class="[theme === 'dark' ? 'hover:bg-neutral-800' : 'hover:bg-zinc-200']" class="py-2 pl-5">
         <div class="flex justify-between w-full p-1 border border-transparent rounded-sm ">
-            <div @click="customizers['stop-on-error'] = !customizers['stop-on-error'], customize('stop-on-error', customizers['stop-on-error'])" class="flex gap-4 w-fit">
+            <div @click="onError" class="flex gap-4 w-fit">
                 <input name="nospace" :checked="customizers['stop-on-error']" type="checkbox" class="checked:accent-green-500 hover:accent-green-700">
                 <label class="text-sm font-medium w-fit">
                     <span>Stop on error</span>
@@ -10,7 +10,7 @@
                 </label>
             </div>
         </div>
-        <p class="px-3 font-[400]">With this toggled, you will not be able to go forward until you clear your error.</p>
+        <p class="px-3 font-[400]">With this toggled, you will not be able to go forward until you clear your error. Only works while backspace is enabled</p>
     </div>
 </template>
 
@@ -23,8 +23,16 @@ const theme_ = themeStore()
 const {theme} = theme_
 
 const store = customizeStore()
-const {customizers} = storeToRefs(store)
+const {customizers, backspace} = storeToRefs(store)
 const {customize} = store
+
+const onError = () => {
+    if (!backspace.value) customizers.value['stop-on-error'] = false
+    else {
+        customizers.value['stop-on-error'] = !customizers.value['stop-on-error']
+        customize('stop-on-error', customizers.value['stop-on-error'])
+    }
+}
 </script>
 
 

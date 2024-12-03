@@ -25,7 +25,7 @@ import {watch, ref, computed} from 'vue'
 import {storeToRefs} from 'pinia'
 import {customizeStore} from '../../store/customizeStore'
 import { themeStore } from '../../store/themeStore';
-import { updateLocalStorage } from '../../composables/updateLocalStorage';
+import { updateDB } from '../../composables/updateDB';
 
 const theme_ = themeStore()
 const {theme, appTheme} = theme_
@@ -43,6 +43,6 @@ const result = computed(() => {
 
 watch(difficulty, (newVal) => {
     let difficulty = newVal
-    updateLocalStorage(Object.keys({difficulty})[0], difficulty)
+    updateDB(Object.keys({difficulty})[0], difficulty)
 })
 </script>

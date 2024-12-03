@@ -19,7 +19,7 @@
 import {storeToRefs} from 'pinia';
 import Blind from '../Blind.vue';
 import {customizeStore} from '../../store/customizeStore';
-import {updateLocalStorage} from '../../composables/updateLocalStorage'
+import {updateDB} from '../../composables/updateDB'
 import { themeStore } from '../../store/themeStore';
 
 const theme_ = themeStore()
@@ -30,6 +30,6 @@ const {blind} = storeToRefs(store)
 
 const customize = () => {
     blind.value = !blind.value
-    updateLocalStorage(Object.keys({blind})[0], blind.value)
+    updateDB(Object.keys({blind})[0], blind.value)
 }
 </script>

@@ -19,7 +19,7 @@ import {ref} from 'vue'
 import {storeToRefs} from 'pinia';
 import {customizeStore} from '../../store/customizeStore';
 import { themeStore } from '../../store/themeStore';
-import {updateLocalStorage} from '../../composables/updateLocalStorage'
+import {updateDB} from '../../composables/updateDB'
 
 const theme_ = themeStore()
 const {theme} = theme_
@@ -29,8 +29,8 @@ const {capslock} = storeToRefs(custom)
 
 const customize = () => {
     capslock.value = !capslock.value
-    updateLocalStorage(capslock.value, 'restart', true)
-    updateLocalStorage(Object.keys({capslock})[0], capslock.value, 'restart', true)
+    updateDB(capslock.value, 'restart', true)
+    updateDB(Object.keys({capslock})[0], capslock.value, 'restart', true)
 
 }
 </script>

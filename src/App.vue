@@ -1,6 +1,7 @@
 <template>
   <div :class="[appTheme]" class="font-light selection:bg-none home max-w-[1500px] m-auto relative min-h-[100dvh] container overflow-y-auto scroll-smooth noscrollbar">
     <div class="min-h-[100dvh]">
+      <!-- <Connectivity /> -->
       <Header :class="[demo ? 'opacity-0 hidden' : '']" class="transition-all duration-300"/>
       <main :class="[demo ? 'opacity-0 hidden' : '']" class="transition-all duration-300">
         <RouterView />
@@ -9,13 +10,11 @@
       <Teach />
       <Cookies />
     </div>
-    
     <Settings />
     <div class="fixed flex items-center gap-3 bottom-2 right-2">      
       <SwitchModes :class="[demo ? 'opacity-0 hidden' : '']" class="self-end mb-[2px] transition-all duration-300" />
       <Theme class="self-end"/>
     </div>
-    
     <CustomTestModal />
     <Animate />
     <CapsLockToast top :toggle="toggleCapsToast" text="CapsLock is on, you cannot use it while it is disabled, enable in settings." />
@@ -23,10 +22,11 @@
 </template>
 
 <script setup>
-import {onBeforeMount, onMounted, watch, ref} from 'vue'
+import {onBeforeMount, onMounted, watch, watchEffect} from 'vue'
 import Teach from './components/Teach.vue';
 import Settings from './components/Settings/Settings.vue'
 import Cookies from './components/Cookies.vue';
+import Connectivity from './components/Connectivity.vue'
 import Header from './components/Header.vue'
 import SwitchModes from './components/SwitchModes.vue';
 import Next from './components/Next.vue';
@@ -36,13 +36,11 @@ import { storeToRefs } from 'pinia';
 import {themeStore}  from './store/themeStore'
 import {customizeStore}  from './store/customizeStore'
 import { mainStore } from './store/mainStore';
-import {localStorageConfig} from './composables/getLocalStorageConfig'
+import {height} from './composables/testContainerHeight'
+import {DB} from './composables/DB'
 import CustomTestModal from './components/CustomTestModal.vue';
 import CapsLockToast from './components/Toast.vue';
-import {useRoute, useRouter} from 'vue-router'
 import { countdownStore } from './store/countdownStore';
-
-const router = useRouter()
 
 const theme_ = themeStore()
 const { appTheme } = storeToRefs(theme_)
@@ -51,43 +49,28 @@ const customize = customizeStore()
 const {font, customizers, toggleCapsToast } = storeToRefs(customize)
 
 const main = mainStore()
-const { containerHeight, timedTyping, demo} = storeToRefs(main)
+const { timedTyping, demo, loading} = storeToRefs(main)
 const { switchNext} = main
 
 const count = countdownStore()
 const {clearCounter} = count
 
-watch(customizers, (newVal) => {
-  if (timedTyping.value) clearCounter()
-  if (newVal) switchNext(newVal)
-}, {deep : true})
 
-const height = () => {
-  const div = document.createElement("div");
-  const span = document.createElement('p')
-  span.style.fontSize = font.value + 'px'
-  span.innerText = 'A'
-  span.style.lineHeight = '1.4'
-  div.style.position = 'fixed'
-  div.style.opacity = '0'
-  div.appendChild(span)
-  document.body.appendChild(div)
-  const cssObject = getComputedStyle(div)
-  const height = +cssObject.getPropertyValue('height').slice(0, -2)
-  containerHeight.value = (height * 3).toFixed(2)
-  document.body.removeChild(div)
-}
-
-onMounted(() => height())
+onMounted(() => {
+  height()
+  watch(customizers, (newVal) => {
+    if (!loading.value) {   
+      if (timedTyping.value) clearCounter()
+      if (newVal) switchNext(newVal)
+    }
+    else loading.value = false
+  }, {deep : true})
+})
 watch(font, (newVal) => height() )
-onBeforeMount(() => localStorageConfig())
+onBeforeMount(() => DB())
 
 watch(toggleCapsToast, (newVal, oldVal) => {
-  if (newVal) {
-    setTimeout(() => {
-      toggleCapsToast.value = oldVal
-    }, 5000);
-  }
+  if (newVal) setTimeout(() => toggleCapsToast.value = oldVal, 5000);
 })
 </script>
 

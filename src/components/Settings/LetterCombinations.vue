@@ -35,7 +35,7 @@ import { customizeStore } from '../../store/customizeStore';
 import {alphabetsStore}  from '../../store/alphabetsModeStore';
 import { themeStore } from '../../store/themeStore';
 import { cookiesStore } from '../../store/cookiesStore';
-import { updateLocalStorage } from '../../composables/updateLocalStorage';
+import { updateDB } from '../../composables/updateDB';
 
 const cookies = cookiesStore()
 const {useCookies} = storeToRefs(cookies)
@@ -77,11 +77,11 @@ const toggle = () => {
     if (useCookies.value) {        
         if (useAlphabetCombination.value && alphabetsCombination.value.length > 1) {
             let alphabetsCombo = true
-            updateLocalStorage(Object.keys({alphabetsCombo})[0], alphabetsCombo.value)
-            updateLocalStorage(Object.keys({alphabetsCombination})[0], alphabetsCombination.value)
+            updateDB(Object.keys({alphabetsCombo})[0], alphabetsCombo.value)
+            updateDB(Object.keys({alphabetsCombination})[0], alphabetsCombination.value)
         } else {
             let alphabetsCombo = false
-            updateLocalStorage(Object.keys({alphabetsCombo})[0], alphabetsCombo)
+            updateDB(Object.keys({alphabetsCombo})[0], alphabetsCombo)
         }
     }
 }
@@ -105,17 +105,17 @@ watch(alphabetsCombination, (newVal) => {
     
     if (useAlphabetCombination.value && newVal.length > 1) {
         let alphabetsCombo = true
-        updateLocalStorage(Object.keys({alphabetsCombo})[0], alphabetsCombo)
-        updateLocalStorage(Object.keys({alphabetsCombination})[0], alphabetsCombination.value)
+        updateDB(Object.keys({alphabetsCombo})[0], alphabetsCombo)
+        updateDB(Object.keys({alphabetsCombination})[0], alphabetsCombination.value)
 
     } else {
         let alphabetsCombo = true
-        updateLocalStorage(Object.keys({alphabetsCombo})[0], alphabetsCombo)
+        updateDB(Object.keys({alphabetsCombo})[0], alphabetsCombo)
     }
 }, {deep: true})
 
 watch(useAlphabetCombination, newVal => {
     let alphabetsCombo = newVal
-    updateLocalStorage(Object.keys({alphabetsCombo})[0], alphabetsCombo)
+    updateDB(Object.keys({alphabetsCombo})[0], alphabetsCombo)
 })
 </script>

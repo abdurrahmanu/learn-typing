@@ -11,6 +11,10 @@ import {ref, onMounted} from 'vue'
 import {customizeStore} from '../store/customizeStore'
 import { storeToRefs } from 'pinia';
 import {themeStore}  from '../store/themeStore'
+import {cookiesStore} from '../store/cookiesStore'
+
+const cookies = cookiesStore()
+const {showCookiesModal} = storeToRefs(cookies)
 
 const theme_ = themeStore()
 const {theme, } = storeToRefs(theme_)
@@ -70,7 +74,7 @@ onMounted(() => {
             if (count.value === length) {
                 clearInterval(interval.value)
                 animation.value = !animation.value
-                pauseTyping.value = false
+                showCookiesModal.value ? pauseTyping.value = true : pauseTyping.value = false
                 document.querySelector('.container').removeChild(boxesContainer.value)
             }
         }, 5)

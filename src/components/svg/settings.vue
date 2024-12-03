@@ -14,14 +14,14 @@ import {ref} from 'vue'
 const hoverbg = ref('')
 const route = useRoute()
 const customize = customizeStore()
-const { showMoreSettings, pauseTyping} = storeToRefs(customize)
+const { allSettings, pauseTyping} = storeToRefs(customize)
 
 const theme_ = themeStore()
 const { svgFill } = storeToRefs(theme_)
 
 const toggleSettings = () => {
-    showMoreSettings.value = !showMoreSettings.value
-    if (showMoreSettings.value) pauseTyping.value = true
+    allSettings.value = !allSettings.value
+    if (allSettings.value) pauseTyping.value = true
     else pauseTyping.value = false
 }
 </script>

@@ -19,8 +19,7 @@
 import {ref} from 'vue'
 import {storeToRefs} from 'pinia';
 import {customizeStore} from '../../store/customizeStore';
-import { mainStore } from '../../store/mainStore';
-import {updateLocalStorage} from '../../composables/updateLocalStorage'
+import {updateDB} from '../../composables/updateDB'
 import { isMobileOS } from '../../composables/isMobileOS';
 import { themeStore } from '../../store/themeStore';
 
@@ -33,8 +32,7 @@ const {backspace} = storeToRefs(custom)
 const customize = () => {
     if (isMobileOS()) return
     backspace.value = !backspace.value
-    
-    updateLocalStorage(Object.keys({backspace})[0], backspace.value, null, true)
+    updateDB(Object.keys({backspace})[0], backspace.value, null, true)
 }
 </script>
 

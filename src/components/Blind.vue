@@ -12,13 +12,13 @@ import closedEye from './svg/closedEye.vue';
 import openEye from './svg/openEye.vue';
 import { customizeStore } from '../store/customizeStore';
 import { storeToRefs } from 'pinia';
-import {updateLocalStorage} from '../composables/updateLocalStorage'
+import {updateDB} from '../composables/updateDB'
 
 const custom = customizeStore()
 const {blind} = storeToRefs(custom)
 
 const customize = () => {
     blind.value = !blind.value
-    updateLocalStorage(Object.keys({blind})[0], blind.value)
+    updateDB(Object.keys({blind})[0], blind.value)
 }
 </script>

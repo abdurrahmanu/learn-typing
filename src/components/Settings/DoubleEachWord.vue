@@ -19,7 +19,7 @@ import {ref} from 'vue'
 import {storeToRefs} from 'pinia'
 import {customizeStore} from '../../store/customizeStore'
 import { themeStore } from '../../store/themeStore';
-import {updateLocalStorage} from '../../composables/updateLocalStorage'
+import {updateDB} from '../../composables/updateDB'
 
 const theme_ = themeStore()
 const {theme} = theme_
@@ -29,6 +29,6 @@ const {doubleEachWord} = storeToRefs(store)
 
 const customize = () => {
     doubleEachWord.value = !doubleEachWord.value
-    updateLocalStorage(Object.keys({doubleEachWord})[0], doubleEachWord.value)
+    updateDB(Object.keys({doubleEachWord})[0], doubleEachWord.value)
 }
 </script>

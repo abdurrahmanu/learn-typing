@@ -29,7 +29,7 @@ import {watch, ref} from 'vue'
 import {storeToRefs} from 'pinia'
 import {customizeStore} from '../../store/customizeStore'
 import { themeStore } from '../../store/themeStore';
-import {updateLocalStorage} from '../../composables/updateLocalStorage'
+import {updateDB} from '../../composables/updateDB'
 
 const theme_ = themeStore()
 const {theme} = theme_
@@ -39,7 +39,7 @@ const { cursorType} = storeToRefs(store)
 
 watch(cursorType, (newVal) => {
     let cursor = newVal
-    updateLocalStorage(Object.keys({cursor})[0], cursor)
+    updateDB(Object.keys({cursor})[0], cursor)
 })
 </script>
 

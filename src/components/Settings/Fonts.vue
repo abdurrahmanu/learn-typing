@@ -17,7 +17,7 @@ import { storeToRefs } from 'pinia';
 import { countdownStore } from '../../store/countdownStore'
 import { customizeStore } from '../../store/customizeStore'
 import { themeStore } from '../../store/themeStore';
-import {updateLocalStorage} from '../../composables/updateLocalStorage'
+import {updateDB} from '../../composables/updateDB'
 
 const theme_ = themeStore()
 const {theme} = theme_
@@ -39,7 +39,7 @@ const fontSize = computed(() => {
 watch(fontSize, (newVal) => {
     font.value = newVal
     let fontsize = newVal
-    updateLocalStorage(Object.keys({fontsize})[0], fontsize)
+    updateDB(Object.keys({fontsize})[0], fontsize)
 
     if (playerInput.value.length) {        
         if (timedTyping.value) clearCounter()

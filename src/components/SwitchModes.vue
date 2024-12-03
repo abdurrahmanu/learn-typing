@@ -15,7 +15,7 @@ import { customizeStore } from '../store/customizeStore';
 import {alphabetsStore}  from '../store/alphabetsModeStore';
 import { countdownStore } from '../store/countdownStore';
 import {useRoute} from 'vue-router'
-import {updateLocalStorage} from '../composables/updateLocalStorage'
+import {updateDB} from '../composables/updateDB'
 
 
 const route = useRoute()
@@ -51,6 +51,6 @@ const toggleMode = (type) => {
         alphabetsMode_.value = false
     }
     
-    updateLocalStorage(Object.keys({mode})[0], mode.value, null, true)
+    updateDB(Object.keys({mode})[0], mode.value, null, true)
 }
 </script>

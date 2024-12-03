@@ -1,7 +1,7 @@
 import {defineStore} from 'pinia'
 import {isMobileOS} from '../composables/isMobileOS'
 import {ref} from 'vue'
-import { updateLocalStorage } from '../composables/updateLocalStorage'
+import { updateDB } from '../composables/updateDB'
 
 export const customizeStore = defineStore('customizeStore', () => {
     const mode = ref('auto')
@@ -11,18 +11,17 @@ export const customizeStore = defineStore('customizeStore', () => {
     const customTestModal = ref(false)
     const pauseTyping = ref(true)
     const configs = ref([])
-    const showMoreSettings = ref(false)
-    const hideElements = ref(false)
+    const allSettings = ref(false)
+    const hideElements = ref(true)
     const cursorType = ref('border')
     const difficulty = ref('beginner')
-    const backspace = ref(false)
+    const backspace = ref(true)
     const repeat = ref(false)
     const capslock = ref(true)
     const textPosition = ref('left')
     const blind = ref(false)
     const font = ref(32)
     const range = ref((font.value - 16) / 0.16)
-    const localStorageSettings = ref(cookies_.value ? JSON.parse(localStorage.getItem('kiboard')) : null)
     const toggleCapsToast = ref(false)
     const customTestLength = ref(200)
     const useCustomLength = ref(false)
@@ -91,7 +90,7 @@ export const customizeStore = defineStore('customizeStore', () => {
         }
 
         let config = [customizers.value, disableOption.value]
-        updateLocalStorage(Object.keys({config})[0], config)
+        updateDB(Object.keys({config})[0], config)
     }
 
     const useConfig = () => {
@@ -122,7 +121,7 @@ export const customizeStore = defineStore('customizeStore', () => {
         }
 
         let config = [customizers.value, disableOption.value]
-        updateLocalStorage(Object.keys({config})[0], config)
+        updateDB(Object.keys({config})[0], config)
     }
 
     return {
@@ -132,7 +131,7 @@ export const customizeStore = defineStore('customizeStore', () => {
         difficulty,
         configs,
         cursorType,
-        showMoreSettings,
+        allSettings,
         customizers,
         allOptions,
         hideElements,
