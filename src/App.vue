@@ -1,7 +1,7 @@
 <template>
   <div :class="[appTheme]" class="font-light selection:bg-none home max-w-[1500px] m-auto relative min-h-[100dvh] container overflow-y-auto scroll-smooth noscrollbar">
     <div class="min-h-[100dvh]">
-      <!-- <Connectivity /> -->
+      <Connectivity v-if="!allSettings"/>
       <Header :class="[demo ? 'opacity-0 hidden' : '']" class="transition-all duration-300"/>
       <main :class="[demo ? 'opacity-0 hidden' : '']" class="transition-all duration-300">
         <RouterView />
@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-import {onBeforeMount, onMounted, watch, watchEffect} from 'vue'
+import {onBeforeMount, onMounted, watch, ref} from 'vue'
 import Teach from './components/Teach.vue';
 import Settings from './components/Settings/Settings.vue'
 import Cookies from './components/Cookies.vue';
@@ -33,6 +33,7 @@ import Next from './components/Next.vue';
 import Animate from './components/Animate.vue';
 import Theme from './components/Theme.vue';
 import { storeToRefs } from 'pinia';
+import {connectStore} from './store/connectStore'
 import {themeStore}  from './store/themeStore'
 import {customizeStore}  from './store/customizeStore'
 import { mainStore } from './store/mainStore';
@@ -42,30 +43,39 @@ import CustomTestModal from './components/CustomTestModal.vue';
 import CapsLockToast from './components/Toast.vue';
 import { countdownStore } from './store/countdownStore';
 
+const onLoad = ref(undefined)
+
 const theme_ = themeStore()
 const { appTheme } = storeToRefs(theme_)
 
 const customize = customizeStore()
-const {font, customizers, toggleCapsToast } = storeToRefs(customize)
+const {font, customizers, toggleCapsToast, allSettings } = storeToRefs(customize)
 
 const main = mainStore()
-const { timedTyping, demo, loading} = storeToRefs(main)
+const { timedTyping, demo} = storeToRefs(main)
 const { switchNext} = main
 
 const count = countdownStore()
 const {clearCounter} = count
 
+const connect = connectStore()
+const {isOnline} = storeToRefs(connect)
+window.addEventListener('online', () => isOnline.value = true);
+window.addEventListener('offline', (event) => isOnline.value = false);
 
 onMounted(() => {
+  isOnline.value = navigator.onLine 
+  !isOnline.value ? onLoad.value = true : ''
   height()
-  watch(customizers, (newVal) => {
-    if (!loading.value) {   
+  watch(customizers, (oldVal, newVal) => {
+    if (onLoad.value) {
       if (timedTyping.value) clearCounter()
-      if (newVal) switchNext(newVal)
+      if (newVal) switchNext(newVal)    
     }
-    else loading.value = false
+    else onLoad.value = true
   }, {deep : true})
 })
+
 watch(font, (newVal) => height() )
 onBeforeMount(() => DB())
 

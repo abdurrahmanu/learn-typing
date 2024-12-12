@@ -19,10 +19,7 @@ export const kiboardObj = () => {
         mode: 'auto',
         hide: true,
         fontsize: 32,
-        alphabetsCombo: false,
-        alphabetsCombination: [],
     })
-
     return kiboardObject
 }
 

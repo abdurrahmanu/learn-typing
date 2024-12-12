@@ -12,15 +12,13 @@ export const updateDB = async (variableName, updateVal, restart, next) => {
     const customize = customizeStore()
     const {customizers} = storeToRefs(customize)
 
-    const updateSingleDoc = async (ID, data) => {
-        const singleDoc = doc(db, "user", ID);
-        await updateDoc(singleDoc, data).catch(error => console.log(error))
-    } 
-
-    let id = localStorage.getItem('kiboardID')
-    const updateObject = ref({})
-    updateObject.value[variableName] = updateVal
-    updateSingleDoc(id, updateObject.value)
-
     if (next)  restart ? switchNext(customizers.value, 'restart') : switchNext(customizers.value)
+        
+    if (navigator.onLine && localStorage.getItem('kiboardID')) {
+        let id = localStorage.getItem('kiboardID')
+        const updateObject = ref({})
+        updateObject.value[variableName] = updateVal
+        const singleDoc = doc(db, "user", id);
+        await updateDoc(singleDoc, updateObject.value)
+    }
 }

@@ -73,17 +73,6 @@ const toggle = () => {
         useAlphabetCombination.value = !useAlphabetCombination.value
         switchNext(customizers.value)
     }
-
-    if (useCookies.value) {        
-        if (useAlphabetCombination.value && alphabetsCombination.value.length > 1) {
-            let alphabetsCombo = true
-            updateDB(Object.keys({alphabetsCombo})[0], alphabetsCombo.value)
-            updateDB(Object.keys({alphabetsCombination})[0], alphabetsCombination.value)
-        } else {
-            let alphabetsCombo = false
-            updateDB(Object.keys({alphabetsCombo})[0], alphabetsCombo)
-        }
-    }
 }
 
 const addSelection = (alphabet) => {
@@ -102,20 +91,6 @@ watch(alphabetsCombination, (newVal) => {
         switchNext(customizers.value)
         return
     }
-    
-    if (useAlphabetCombination.value && newVal.length > 1) {
-        let alphabetsCombo = true
-        updateDB(Object.keys({alphabetsCombo})[0], alphabetsCombo)
-        updateDB(Object.keys({alphabetsCombination})[0], alphabetsCombination.value)
-
-    } else {
-        let alphabetsCombo = true
-        updateDB(Object.keys({alphabetsCombo})[0], alphabetsCombo)
-    }
 }, {deep: true})
 
-watch(useAlphabetCombination, newVal => {
-    let alphabetsCombo = newVal
-    updateDB(Object.keys({alphabetsCombo})[0], alphabetsCombo)
-})
 </script>

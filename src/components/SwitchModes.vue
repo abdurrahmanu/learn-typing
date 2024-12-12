@@ -32,10 +32,8 @@ const { movie, authoredQuote, hasCompletedSession, timedTyping} = storeToRefs(st
 const customize = customizeStore()
 const { mode, repeat, switchMode} = storeToRefs(customize)
 
-
 const toggleMode = (type) => {
     if (mode.value === type) return
-    
     switchMode.value = true
     repeat.value = false
     if (timedTyping.value) clearCounter()
@@ -46,6 +44,7 @@ const toggleMode = (type) => {
         movie.value = {}
         authoredQuote.value = {}
     }
+
     else if (type === 'auto') {
         mode.value = 'auto'
         alphabetsMode_.value = false

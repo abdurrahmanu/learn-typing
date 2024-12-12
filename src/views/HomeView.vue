@@ -17,7 +17,6 @@ import { storeToRefs } from 'pinia';
 import { customizeStore } from '../store/customizeStore';
 import { useRouter } from 'vue-router';
 import { countdownStore } from '../store/countdownStore'
-import {updateDB} from '../composables/updateDB'
 
 const count = countdownStore()
 const {clearCounter} = count
@@ -36,13 +35,5 @@ watch(hasCompletedSession, (newVal) => {
 }, {deep: true})
 
 window.addEventListener('resize', () => screenWidth.value = window.innerWidth)
-
-watch(hideElements, newVal => {
-  let hide = newVal
-  updateDB(Object.keys({hide})[0], hide)
-})
-
-watch(focus, newVal => {
-  if (newVal) hideElements.value = true
-})
+watch(focus, newVal => newVal ? hideElements.value = true : '')
 </script>

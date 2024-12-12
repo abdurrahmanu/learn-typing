@@ -54,10 +54,6 @@ import { mainStore } from '../store/mainStore.js';
 import {alphabetsStore}  from '../store/alphabetsModeStore';
 import { themeStore } from '../store/themeStore';
 import { isMobileOS } from '../composables/isMobileOS';
-import { cookiesStore } from '../store/cookiesStore';
-
-const cookies = cookiesStore()
-const {useCookies} = storeToRefs(cookies)
 
 const containerEl = ref(null)
 const singleDivWidth = ref(0)

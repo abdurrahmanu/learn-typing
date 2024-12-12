@@ -15,7 +15,7 @@ export const DB = async () => {
     const {theme } = storeToRefs(theme_)
 
     const main = mainStore()
-    const {customTests, loading} = storeToRefs(main)
+    const {customTests} = storeToRefs(main)
 
     const cookies = cookiesStore()
     const {showCookiesModal} = storeToRefs(cookies)
@@ -25,41 +25,39 @@ export const DB = async () => {
 
     const getSingleDoc = async (ID) => {
         let user = doc(db, "user", ID )
-        return await getDoc(user)
-        .then((data) => {
-            return data.exists() ? data.data() : false
-        })
-        .catch((error) => console.log(error))
+        return await getDoc(user).then((data) => data.exists() ? data.data() : false)
     }
 
     if (localStorage.getItem('kiboardID')) {
         cookies_.value = true
-        loading.value = true      
-        let userData = await getSingleDoc(localStorage.getItem('kiboardID'))
-        if (!userData) return 
 
-        doubleEachWord.value = userData.doubleEachWord
-        theme.value = userData.theme
-        font.value = userData.fontsize 
-        range.value = (font.value - 16) / 0.26
-        hideElements.value = userData.hide
-        cursorType.value = userData.cursor
-        blind.value = userData.blind
-        difficulty.value = userData.difficulty
-        backspace.value = userData.backspace
-        customizers.value = userData.config[0]
-        disableOption.value = userData.config[1] 
-        mode.value = userData.mode
-        capslock.value = userData.capslock
-        customTests.value = userData.customTests
-        if (mode.value === 'alphabets') alphabetsMode_.value = true
-        else alphabetsMode_.value = false
+        if (navigator.onLine) {
+            let userData = await getSingleDoc(localStorage.getItem('kiboardID'))
     
-        if (userData.alphabetsCombo) {
-            useAlphabetCombination.value = true
-            alphabetsCombination.value = userData.alphabetsCombination || []
-        }    
+            if (!userData) return 
+            doubleEachWord.value = userData.doubleEachWord
+            theme.value = userData.theme
+            font.value = userData.fontsize 
+            range.value = (font.value - 16) / 0.26
+            hideElements.value = userData.hide
+            cursorType.value = userData.cursor
+            blind.value = userData.blind
+            difficulty.value = userData.difficulty
+            backspace.value = userData.backspace
+            customizers.value = userData.config[0]
+            disableOption.value = userData.config[1] 
+            mode.value = userData.mode
+            capslock.value = userData.capslock
+            customTests.value = userData.customTests
+            if (mode.value === 'alphabets') alphabetsMode_.value = true
+            else alphabetsMode_.value = false
+
+            if (userData.alphabetsCombo) {
+                useAlphabetCombination.value = true
+                alphabetsCombination.value = userData.alphabetsCombination || []
+            }    
+        }
     } 
 
-    else if (!localStorage.getItem('kiboard')) showCookiesModal.value = true
+    else if (!localStorage.getItem('kiboard') && navigator.onLine) showCookiesModal.value = true
 }
