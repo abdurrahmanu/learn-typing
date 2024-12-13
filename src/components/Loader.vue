@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-[100dvh] w-[100%] bg-neutral-900">
+  <div class="min-h-[100dvh] w-[100%] bg-slate-300">
     <div class="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] space-y-3">
       <div class="loader m-auto"></div>
       <div class="p-3 m-auto mt-1 space-y-2 rounded-sm ring w-fit hover:ring-green-600 group">
@@ -7,7 +7,7 @@
           <span class="absolute top-0 left-[50%] translate-x-[-50%] text-[15px] font-black pt-[1px]">KI</span>
           <board class="w-8"/>
         </div>
-        <p class="text-center text-[30px] leading-0 opacity-95 roboto-mono exo-ital"><span class="group-hover:text-blue-500">Ki</span><span class="group-hover:text-green-500">Board</span></p>
+        <p class="text-center text-[30px] leading-0 opacity-95 roboto-mono exo-ital"><span class="text-blue-500">Ki</span><span class="text-green-500">Board</span></p>
       </div>
       </div>
   </div>
@@ -35,7 +35,7 @@ import board from './svg/board.vue';
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #ffffff;
+  background: #000000;
   left: 0;
   top: 0;
   animation: 

@@ -25,7 +25,10 @@ export const DB = async () => {
 
     const getSingleDoc = async (ID) => {
         let user = doc(db, "user", ID )
-        return await getDoc(user).then((data) => data.exists() ? data.data() : false).catch(error => {
+        return await getDoc(user).then((data) => {
+            data.exists() ? data.data() : false
+            connectingServer.value = false
+        }).catch(error => {
             connectingServer.value = false
         })
     }
@@ -34,8 +37,13 @@ export const DB = async () => {
         cookies_.value = true
 
         if (navigator.onLine) {
+            setTimeout(() => {
+                if (connectingServer.value === true) {
+                    connectingServer.value = false
+                    isOnline.value = false
+                }
+            }, 4000);
             let userData = await getSingleDoc(localStorage.getItem('kiboardID'))
-            connectingServer.value = false
             if (!userData) return
             doubleEachWord.value = userData.doubleEachWord
             theme.value = userData.theme
@@ -52,7 +60,6 @@ export const DB = async () => {
             capslock.value = userData.capslock
             customTests.value = userData.customTests
         }
-    } 
-
+    }
     else if (!localStorage.getItem('kiboard') && navigator.onLine) showCookiesModal.value = true
 }
