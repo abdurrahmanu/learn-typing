@@ -11,7 +11,7 @@
 
 <script setup>
 import {watch, ref, onMounted, } from 'vue'
-import {DB} from  '../composables/DB'
+import {DB} from  '../composables/db'
 import { customizeStore } from '../store/customizeStore';
 import {cookiesStore} from '../store/cookiesStore'
 import { storeToRefs } from 'pinia';

@@ -27,7 +27,7 @@ export const DB = async () => {
         let user = doc(db, "user", ID )
         return await getDoc(user).then((data) => {
             data.exists() ? data.data() : false
-            if (navigator.onLine && !data.exists()) console.log('your connection is not strong enough');
+            // if (navigator.onLine && !data.exists()) console.log('your connection is not strong enough');
             connectingServer.value = false
         }).catch(error => {
             connectingServer.value = false
