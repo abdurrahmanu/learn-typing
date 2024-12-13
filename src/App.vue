@@ -44,6 +44,7 @@ import CustomTestModal from './components/CustomTestModal.vue';
 import CapsLockToast from './components/Toast.vue';
 import { countdownStore } from './store/countdownStore';
 import { DB } from './composables/db';
+import { db } from './firebase';
 
 const onLoad = ref(undefined)
 
@@ -63,8 +64,11 @@ const {clearCounter} = count
 const connect = connectStore()
 const {isOnline, connectingServer} = storeToRefs(connect)
 
-window.addEventListener('online', () => isOnline.value = true);
-window.addEventListener('offline', (event) => isOnline.value = false);
+window.addEventListener('online', () => {
+  db()
+  isOnline.value = true
+});
+window.addEventListener('offline', () => isOnline.value = false);
 
 onMounted(() => {
   isOnline.value = navigator.onLine 

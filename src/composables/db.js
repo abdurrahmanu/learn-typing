@@ -27,6 +27,7 @@ export const DB = async () => {
         let user = doc(db, "user", ID )
         return await getDoc(user).then((data) => {
             data.exists() ? data.data() : false
+            if (navigator.onLine && !data.exists()) console.log('your connection is not strong enough');
             connectingServer.value = false
         }).catch(error => {
             connectingServer.value = false
@@ -42,7 +43,7 @@ export const DB = async () => {
                     connectingServer.value = false
                     isOnline.value = false
                 }
-            }, 4000);
+            }, 6000);
             let userData = await getSingleDoc(localStorage.getItem('kiboardID'))
             if (!userData) return
             doubleEachWord.value = userData.doubleEachWord
