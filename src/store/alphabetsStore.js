@@ -3,11 +3,10 @@ import {ref} from 'vue'
 
 export const alphabetsStore = defineStore('alphabetsStore', () => {
     const containerText = ref('')
-    const alphabetsMode_ = ref(false)
     const shiftKey = ref(false)
     const useAlphabetCombination = ref(false)
     const alphabetsCombination = ref([]) // Alphabets combination for typing
-    const alphabetsConfig = ref({ // Alphabets mode config
+    const alphabetsConfig = ref({ // Alphabets config
         uppercase: false,
         customCase: false,
         random: false,
@@ -22,7 +21,6 @@ export const alphabetsStore = defineStore('alphabetsStore', () => {
         alphabetsCombination,
         containerText,
         alphabetsConfig,
-        alphabetsMode_,
         shiftKey,
     }
 })

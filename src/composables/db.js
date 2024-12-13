@@ -1,18 +1,18 @@
 import { storeToRefs } from 'pinia';
 import {themeStore}  from '../store/themeStore'
 import {customizeStore} from '../store/customizeStore'
-import {alphabetsStore}  from '../store/alphabetsModeStore';
 import { mainStore } from '../store/mainStore';
 import { cookiesStore } from '../store/cookiesStore';
+import { connectStore } from '../store/connectStore';
 import { doc, getDoc } from 'firebase/firestore'
 import {db} from '../firebase'
 
 export const DB = async () => {
-    const alphabets_ = alphabetsStore()
-    const { alphabetsMode_, alphabetsCombination, useAlphabetCombination } = storeToRefs(alphabets_)
-
     const theme_ = themeStore()
     const {theme } = storeToRefs(theme_)
+
+    const connect = connectStore()
+    const {isOnline, connectingServer} = storeToRefs(connect)
 
     const main = mainStore()
     const {customTests} = storeToRefs(main)
@@ -25,7 +25,9 @@ export const DB = async () => {
 
     const getSingleDoc = async (ID) => {
         let user = doc(db, "user", ID )
-        return await getDoc(user).then((data) => data.exists() ? data.data() : false)
+        return await getDoc(user).then((data) => data.exists() ? data.data() : false).catch(error => {
+            connectingServer.value = false
+        })
     }
 
     if (localStorage.getItem('kiboardID')) {
@@ -33,8 +35,8 @@ export const DB = async () => {
 
         if (navigator.onLine) {
             let userData = await getSingleDoc(localStorage.getItem('kiboardID'))
-    
-            if (!userData) return 
+            connectingServer.value = false
+            if (!userData) return
             doubleEachWord.value = userData.doubleEachWord
             theme.value = userData.theme
             font.value = userData.fontsize 
@@ -49,13 +51,6 @@ export const DB = async () => {
             mode.value = userData.mode
             capslock.value = userData.capslock
             customTests.value = userData.customTests
-            if (mode.value === 'alphabets') alphabetsMode_.value = true
-            else alphabetsMode_.value = false
-
-            if (userData.alphabetsCombo) {
-                useAlphabetCombination.value = true
-                alphabetsCombination.value = userData.alphabetsCombination || []
-            }    
         }
     } 
 

@@ -1,16 +1,16 @@
 import {ref} from 'vue'
-import {alphabetsStore}  from '../store/alphabetsModeStore';
+import {alphabetsStore}  from '../store/alphabetsStore';
 import { storeToRefs } from 'pinia';
-import { mainStore } from '../store/mainStore';
+import { customizeStore } from '../store/customizeStore';
 
 export function alphabetsMode() {
     const res  =  ref('')
 
-    const main = mainStore()
-    const {wrongCount} = storeToRefs(main)
+    const customize = customizeStore()
+    const {mode} = storeToRefs(customize)
 
     const alphabets_ = alphabetsStore()
-    const { alphabetsMode_ , useAlphabetCombination, alphabetsCombination, containerText, alphabetsConfig } = storeToRefs(alphabets_)
+    const {  useAlphabetCombination, alphabetsCombination, containerText, alphabetsConfig } = storeToRefs(alphabets_)
 
     const generateAlphabetsTest = () => {
         const englishAlphabets = ref('abcdefghijklmnopqrstuvwxyz')
@@ -73,7 +73,7 @@ export function alphabetsMode() {
             return containerText.value
     }
 
-    if (alphabetsMode_.value) res.value = generateAlphabetsTest()
+    if (mode.value === 'alphabets') res.value = generateAlphabetsTest()
 
     return  res.value
 }

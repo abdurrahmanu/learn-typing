@@ -1,19 +1,23 @@
 <template>
     <main class="w-[90%] min-h-[150px] space-y-[2px] relative transition-none  max-w-[900px] m-auto" :class="[isMobileOS() && focus ? 'pt-8' : '']">
-        <div :class="[isMobileOS() ? 'flex' : 'block', alphabetsMode_ && !useAlphabetCombination ? 'max-w-[450px]' : 'max-w-[700px]']" class="relative h-fit min-h-[30px] m-auto py-1">      
+        <div :class="[isMobileOS() ? 'flex' : 'block', mode === 'alphabets' && !useAlphabetCombination ? 'max-w-[450px]' : 'max-w-[700px]']" class="relative h-fit min-h-[30px] m-auto py-1">      
             <MobileInput />
-            <Countdown 
-                v-show="(isMobileOS() && focus && timedTyping) || timedTyping"
-                class="absolute left-0"
-                :length="countdown" 
-                :start="beginCountdown" />
+            <div class="space-x-[50px]">
+                <Countdown 
+                    v-show="(isMobileOS() && focus && timedTyping) || timedTyping"
+                    class="absolute left-0"
+                    :length="countdown" 
+                    :start="beginCountdown" />
+                <!-- <p>10/17</p> -->
+            </div>
+                
             <div class="w-fit h-fit"> 
                 <restart v-show="!hasCompletedSession && playerInputLength" @click="restartTest" class="absolute w-6 left-[50%] translate-x-[-50%] "/>
             </div>
         </div>
         <Transition v-if="goNext" name="container">
         <div v-if="containerText" class="transition-all duration-100 relative mx-auto max-w-[700px] w-full min-w-[300px]">
-                <div @blur="textIsFocused = false" @focus="textIsFocused = true" tabindex="0" ria-describedby="full-text" ref="testContainerEl"  :style="{'height' : containerHeight + 'px', 'font-size': font + 'px'}" :class="[ customizers['no-space'] || customizers['test-type'] === 'custom' ? 'break-words' : '', alphabetsMode_ ? 'text-center break-words': 'text-left', !alphabetsMode_ && textPosition=== 'center' ? 'text-center' : !alphabetsMode_ && textPosition=== 'right' ? 'text-right' : 'text-left', !isMobileOS() ? 'overflow-y-auto ' : 'overflow-y-hidden'] " class="overflow-x-hidden scroll-smooth leading-[1.4] h-fit py-[1px] outline-none after:absolute after:top-0 after:bottom-0 after:w-[4px] after:right-[0] after:z-[999] after:bg-transparent">
+                <div @blur="textIsFocused = false" @focus="textIsFocused = true" tabindex="0" ria-describedby="full-text" ref="testContainerEl"  :style="{'height' : containerHeight + 'px', 'font-size': font + 'px'}" :class="[ customizers['no-space'] || customizers['test-type'] === 'custom' ? 'break-words' : '', mode === 'alphabets' ? 'text-center break-words': 'text-left', mode !== 'alphabets' && textPosition=== 'center' ? 'text-center' : mode !== 'alphabets' && textPosition=== 'right' ? 'text-right' : 'text-left', !isMobileOS() ? 'overflow-y-auto ' : 'overflow-y-hidden'] " class="overflow-x-hidden scroll-smooth leading-[1.4] h-fit py-[1px] outline-none after:absolute after:top-0 after:bottom-0 after:w-[4px] after:right-[0] after:z-[999] after:bg-transparent">
                     <p id="full-text" class="hidden">{{ containerText }}</p>
                     <Alphabet
                     v-for="index in containerText.length"
@@ -47,7 +51,7 @@ import {mainStore} from '../store/mainStore'
 import { countdownStore } from '../store/countdownStore';
 import { customizeStore } from '../store/customizeStore';
 import { themeStore } from '../store/themeStore';
-import {alphabetsStore}  from '../store/alphabetsModeStore';
+import {alphabetsStore}  from '../store/alphabetsStore';
 import { generateTest } from '../composables/generateTest';
 import {managePlayerInput} from '../composables/managePlayerInput'
 import {mobileInputEvent} from '../composables/mobileInputEvent'
@@ -58,7 +62,7 @@ const route = useRoute()
 const textIsFocused = ref(false)
 
 const alphabets_ = alphabetsStore()
-const { alphabetsMode_, useAlphabetCombination } = storeToRefs(alphabets_)
+const { useAlphabetCombination } = storeToRefs(alphabets_)
 
 const store = mainStore()
 const { containerText, quoteType, goNext, mobileBackspace, wrongCount, previousPlayerInput, beginCountdown, timedTyping, hasCompletedSession, focus, testContainerEl, containerHeight, movie, playerInputLength, playerInput, authoredQuote, scrollTextContainer, restartSvgEl, restartEl, inputEl} = storeToRefs(store)
@@ -107,6 +111,7 @@ watch(playerInput, (newVal, oldVal) => {
         switchMode.value = false
         return
     }
+
     managePlayerInput()
 })
 

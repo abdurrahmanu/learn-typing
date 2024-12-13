@@ -1,5 +1,5 @@
 <template>
-  <div :class="[appTheme]" class="font-light selection:bg-none home max-w-[1500px] m-auto relative min-h-[100dvh] container overflow-y-auto scroll-smooth noscrollbar">
+  <div v-if="!connectingServer" :class="[appTheme]" class="font-light selection:bg-none home max-w-[1500px] m-auto relative min-h-[100dvh] container overflow-y-auto scroll-smooth noscrollbar">
     <div class="min-h-[100dvh]">
       <Connectivity v-if="!allSettings"/>
       <Header :class="[demo ? 'opacity-0 hidden' : '']" class="transition-all duration-300"/>
@@ -19,12 +19,14 @@
     <Animate />
     <CapsLockToast top :toggle="toggleCapsToast" text="CapsLock is on, you cannot use it while it is disabled, enable in settings." />
   </div>
+    <Loader v-else />
 </template>
 
 <script setup>
 import {onBeforeMount, onMounted, watch, ref} from 'vue'
 import Teach from './components/Teach.vue';
 import Settings from './components/Settings/Settings.vue'
+import Loader from './components/Loader.vue'
 import Cookies from './components/Cookies.vue';
 import Connectivity from './components/Connectivity.vue'
 import Header from './components/Header.vue'
@@ -59,7 +61,8 @@ const count = countdownStore()
 const {clearCounter} = count
 
 const connect = connectStore()
-const {isOnline} = storeToRefs(connect)
+const {isOnline, connectingServer} = storeToRefs(connect)
+
 window.addEventListener('online', () => isOnline.value = true);
 window.addEventListener('offline', (event) => isOnline.value = false);
 
@@ -76,9 +79,8 @@ onMounted(() => {
   }, {deep : true})
 })
 
-watch(font, (newVal) => height() )
 onBeforeMount(() => DB())
-
+watch(font, (newVal) => height() )
 watch(toggleCapsToast, (newVal, oldVal) => {
   if (newVal) setTimeout(() => toggleCapsToast.value = oldVal, 5000);
 })

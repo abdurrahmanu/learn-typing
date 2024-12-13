@@ -16,13 +16,14 @@
                     <CapsLock v-if="!isMobileOS()" />
                     <Countdown />
                     <CustomCamelCase />
-                    <DoubleEachWord v-if="!alphabetsMode_" />
-                    <NoSpaceText v-if="!alphabetsMode_" />
-                    <MovieQuotes v-if="!alphabetsMode_" />
+                    <DoubleEachWord v-if="mode !== 'alphabets'" />
+                    <NoSpaceText v-if="mode !== 'alphabets'" />
+                    <MovieQuotes v-if="mode !== 'alphabets'" />
                     <StopOnError v-if="!isMobileOS()" />
-                    <AuthoredQoutes v-if="!alphabetsMode_" />
+                    <AuthoredQoutes v-if="mode !== 'alphabets'" />
                     <AllCaps />
-                    <LetterCombinations v-if="alphabetsMode_"/>
+                    <LetterCombinations v-if="mode === 'alphabets'"/>
+                    <WordCount />
                     <Cookies />
                 </div>
             </div>
@@ -38,6 +39,7 @@ import Cookies from './Cookies.vue'
 import Header from './Header.vue'
 import AllCaps from './AllCaps.vue'
 import CustomCamelCase from './CustomCamelCase.vue'
+import WordCount from './WordCount.vue'
 import NoSpaceText from './NoSpaceText.vue'
 import BlindMode from './BlindMode.vue'
 import BackSpace from './BackSpace.vue';
@@ -47,7 +49,6 @@ import LetterCombinations from './LetterCombinations.vue'
 import {storeToRefs} from 'pinia'
 import {customizeStore} from '../../store/customizeStore'
 import {themeStore}  from '../../store/themeStore'
-import {alphabetsStore}  from '../../store/alphabetsModeStore';
 import { isMobileOS } from '../../composables/isMobileOS'
 import BlurTest from './BlurTest.vue'
 import Difficulty from './Difficulty.vue'
@@ -58,9 +59,6 @@ import DoubleEachWord from './DoubleEachWord.vue'
 import {watch} from 'vue'
 import Connectivity from '../Connectivity.vue'
 
-const alphabets_ = alphabetsStore()
-const { alphabetsMode_, } = storeToRefs(alphabets_)
-
 const theme_ = themeStore()
 const { appTheme } = storeToRefs(theme_)
 
@@ -68,7 +66,7 @@ const main = mainStore()
 const {demo} = storeToRefs(main)
 
 const customize = customizeStore()
-const {allSettings, pauseTyping} = storeToRefs(customize)
+const {allSettings, pauseTyping, mode} = storeToRefs(customize)
 
 const toggleSettings = () => {
     allSettings.value = !allSettings.value

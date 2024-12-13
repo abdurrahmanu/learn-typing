@@ -32,13 +32,8 @@ import {watch, ref} from 'vue'
 import {storeToRefs} from 'pinia';
 import {mainStore} from '../../store/mainStore'
 import { customizeStore } from '../../store/customizeStore';
-import {alphabetsStore}  from '../../store/alphabetsModeStore';
+import {alphabetsStore}  from '../../store/alphabetsStore';
 import { themeStore } from '../../store/themeStore';
-import { cookiesStore } from '../../store/cookiesStore';
-import { updateDB } from '../../composables/updateDB';
-
-const cookies = cookiesStore()
-const {useCookies} = storeToRefs(cookies)
 
 const theme_ = themeStore()
 const {theme} = theme_

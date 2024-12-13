@@ -22,6 +22,3 @@ export const kiboardObj = () => {
     })
     return kiboardObject
 }
-
-
-

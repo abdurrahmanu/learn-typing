@@ -6,7 +6,7 @@
     </div>
 
     <Transition name="test">
-      <div v-if="!hasCompletedSession && !alphabetsMode_" :class="[appTheme]" class="relative m-auto rounded-md max-w-fit ring-1 ring-green-700">
+      <div v-if="!hasCompletedSession && mode !== 'alphabets'" :class="[appTheme]" class="relative m-auto rounded-md max-w-fit ring-1 ring-green-700">
         <div class="absolute right-[-5px] top-[-5px] z-[2] hover:text-red-500 h-5 w-5 rounded-full flex items-center justify-center bg-neutral-600 text-center cursor-pointer text-white" @click="hideElements = !hideElements">X</div>
           <div class=" items-center p-1 flex max-w-[1000px] justify-center flex-wrap relative z-[1]">
               <div class="flex items-center p-1 parent" v-for="(optionArr, key, listIndex) in option" :key="listIndex">          
@@ -30,7 +30,7 @@
     </Transition>
     
     <Transition name="alphabet">
-      <div v-if="!hasCompletedSession && alphabetsMode_" :class="[appTheme]" class="rounded-md w-[90%] min-w-fit m-auto max-w-fit ring-1 ring-green-700 relative py-3 px-10">
+      <div v-if="!hasCompletedSession && mode === 'alphabets'" :class="[appTheme]" class="rounded-md w-[90%] min-w-fit m-auto max-w-fit ring-1 ring-green-700 relative py-3 px-10">
         <div class="absolute right-[-3px] top-[-3px] z-[1] hover:text-red-500  h-5 w-5 rounded-full flex items-center justify-center bg-neutral-600 text-center cursor-pointer text-white" @click="hideElements = !hideElements">X</div>
         <div class="flex flex-wrap items-center justify-center gap-[8px] rounded-md min-w-fit m-auto max-w-fit hover:ring-[1px] hover:ring-zinc-400 group p-[2px] relative z-[1]">        
           <div :class="[alphabetsConfig.uppercase ? 'text-green-700' : '']" @click="changeMode('uppercase')" class="px-[5px] hover:scale-105 rounded-md">uppercase</div>
@@ -51,7 +51,7 @@ import { ref, onMounted, watchEffect } from 'vue'
 import {customizeStore} from '../store/customizeStore.js'
 import {storeToRefs} from 'pinia'
 import { mainStore } from '../store/mainStore.js';
-import {alphabetsStore}  from '../store/alphabetsModeStore';
+import {alphabetsStore}  from '../store/alphabetsStore';
 import { themeStore } from '../store/themeStore';
 import { isMobileOS } from '../composables/isMobileOS';
 
@@ -62,14 +62,14 @@ const theme_ = themeStore()
 const {appTheme, theme}  = storeToRefs(theme_)
 
 const alphabets_ = alphabetsStore()
-const { alphabetsMode_, alphabetsConfig } = storeToRefs(alphabets_)
+const { alphabetsConfig } = storeToRefs(alphabets_)
 
 const store = mainStore()
 const { hasCompletedSession, completionLevel, containerText, playerInput, focus} = storeToRefs(store)
 const {switchNext} = store
 
 const customize = customizeStore()
-const { allOptions, configs, customizers, disableOption, blind, repeat, hideElements} = storeToRefs(customize)
+const { allOptions, mode, configs, customizers, disableOption, blind, repeat, hideElements} = storeToRefs(customize)
 const {useConfig} = customize
 const optionsTooltip = ['words', 'words', 'type', 'format', 'format', 'format']
 

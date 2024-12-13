@@ -6,17 +6,17 @@
                 <div class="relative w-fit">
                     <Clock class="peer" />
                 </div>
-                <div class="relative hidden w-fit min-[505px]:block" v-if="!alphabetsMode_ && !isMobileOS()">
+                <div class="relative hidden w-fit min-[505px]:block" v-if="mode !== 'alphabets' && !isMobileOS()">
                     <TextAlign  class="peer"/>
                 </div>
                 <div class="relative w-fit">
                     <Blind  class="peer"/>
                 </div>
-                <div class="relative w-fit" v-if="route.name === 'home' && !alphabetsMode_" >
+                <div class="relative w-fit" v-if="route.name === 'home' && mode !== 'alphabets'" >
                     <repeat class="w-4 peer"/>
                     <div class="absolute z-5 left-[50%] translate-x-[-50%] bottom-[-120%] rounded-full whitespace-nowrap peer-hover:block hidden">repeat</div>
                 </div>
-                <div class="relative w-fit" v-if="!alphabetsMode_" >
+                <div class="relative w-fit" v-if="mode !== 'alphabets'" >
                     <add @click="customTestModal = true, pauseTyping = true" class="w-4 peer"/>
                 </div>
             </div>
@@ -48,14 +48,10 @@ import { customizeStore } from '../store/customizeStore';
 import { mainStore } from '../store/mainStore';
 import {useRoute, useRouter} from 'vue-router'
 import { isMobileOS } from '../composables/isMobileOS';
-import { alphabetsStore } from '../store/alphabetsModeStore';
 import { themeStore } from '../store/themeStore';
 
 const route = useRoute()
 const router = useRouter()
-
-const alphabets = alphabetsStore()
-const {alphabetsMode_} = storeToRefs(alphabets)
 
 const theme_ = themeStore()
 const {theme} = storeToRefs(theme_)
@@ -64,7 +60,7 @@ const main = mainStore()
 const {focus} = storeToRefs(main)
 
 const customize = customizeStore()
-const { hideElements, blind, customTestModal, pauseTyping} = storeToRefs(customize)
+const { hideElements, blind, mode, customTestModal, pauseTyping} = storeToRefs(customize)
 
 const routeToPage = (route) => {
     router.push({name: route})
