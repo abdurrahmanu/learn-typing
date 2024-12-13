@@ -38,10 +38,10 @@ import {themeStore}  from './store/themeStore'
 import {customizeStore}  from './store/customizeStore'
 import { mainStore } from './store/mainStore';
 import {height} from './composables/testContainerHeight'
-import {DB} from './composables/DB'
 import CustomTestModal from './components/CustomTestModal.vue';
 import CapsLockToast from './components/Toast.vue';
 import { countdownStore } from './store/countdownStore';
+import { DB } from './composables/db';
 
 const onLoad = ref(undefined)
 

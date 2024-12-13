@@ -27,5 +27,4 @@ initializeFirestore(app,
 // Initialize Firebase
 const db = getFirestore(app);
 
-
 export {app, db}
