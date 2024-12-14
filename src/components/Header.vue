@@ -26,6 +26,12 @@
             <div class="relative w-fit" v-if="route.name === 'home'" >
                 <settings class="w-5 peer" />
             </div>
+            <div class="relative w-fit" @click="showUser = true" >
+                <user class="w-4 peer" />
+                <!-- <div v-if="showUser" class="absolute top-[calc(100%_+_10px)] right-0 bg-blue-500 min-h-[300px] w-[300px]">
+                    Logger dropDown will show if showUser is true
+                </div> -->
+            </div>
         </div>
         <CompletionRange :class="[hideElements ? 'block' : 'hidden max-[460px]:block']" v-if="blind" />
         <CompletionRangeWithErrors :class="[hideElements ? 'block' : 'hidden max-[460px]:block']" v-else/>
@@ -39,12 +45,14 @@ import settings from './svg/settings.vue';
 import add from './svg/add.vue'
 import TextAlign from './TextAlign.vue';
 import repeat from './svg/repeat.vue';
+import user from './svg/user.vue'
 import Blind from './Blind.vue';
 import Clock from './Clock.vue';
 import CompletionRangeWithErrors from './CompletionRangeWithErrors.vue';
 import CompletionRange from './CompletionRange.vue';
 import {storeToRefs} from 'pinia';
 import { customizeStore } from '../store/customizeStore';
+import {authStore} from '../store/authStore'
 import { mainStore } from '../store/mainStore';
 import {useRoute, useRouter} from 'vue-router'
 import { isMobileOS } from '../composables/isMobileOS';
@@ -55,6 +63,9 @@ const router = useRouter()
 
 const theme_ = themeStore()
 const {theme} = storeToRefs(theme_)
+
+const auth = authStore()
+const {showUser} = storeToRefs(auth)
 
 const main = mainStore()
 const {focus} = storeToRefs(main)
