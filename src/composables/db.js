@@ -2,32 +2,31 @@ import { storeToRefs } from 'pinia';
 import {themeStore}  from '../store/themeStore'
 import {customizeStore} from '../store/customizeStore'
 import { mainStore } from '../store/mainStore';
-import { cookiesStore } from '../store/cookiesStore';
 import { connectStore } from '../store/connectStore';
 import { doc, getDoc } from 'firebase/firestore'
 import {db} from '../firebase'
+import {ref} from 'vue'
 
-export const DB = async () => {
+export const DB = async (update) => {
     const theme_ = themeStore()
     const {theme } = storeToRefs(theme_)
 
     const connect = connectStore()
-    const {hasInternetConnection, connectingServer, connectionStrength} = storeToRefs(connect)
+    const {hasInternetConnection, connectingServer, connectionStrength, showConnectionStrength} = storeToRefs(connect)
 
     const main = mainStore()
     const {customTests} = storeToRefs(main)
 
-    const cookies = cookiesStore()
-    const {showCookiesModal} = storeToRefs(cookies)
-
     const customize = customizeStore()
     const { customizers, cookies_, doubleEachWord, disableOption, cursorType, difficulty, mode, hideElements, font, range, blind, backspace, capslock } = storeToRefs(customize)
 
-    if (navigator.onLine) connectingServer.value = true
-    else {
-        connectingServer.value = false
-        hasInternetConnection.value = false
-        return
+    if (!update) {
+        if (navigator.onLine) connectingServer.value = true
+        else {
+            connectingServer.value = false
+            hasInternetConnection.value = false
+            return
+        }
     }
 
     const getSingleDoc = async (ID) => {
@@ -36,34 +35,59 @@ export const DB = async () => {
     }
 
     if (localStorage.getItem('kiboard')) localStorage.clear()
+    if (localStorage.getItem('kicookies')) {
+        connectingServer.value = false
+        return
+    }
 
     if (localStorage.getItem('kiboardID')) {
+        let userData = ref(undefined)
+        let timedOut = ref(false)
+
+        setTimeout(() => {
+            if (!userData.value) {
+                timedOut.value = true
+                connectingServer.value = false
+                showConnectionStrength.value = true
+                connectionStrength.value = 'connecting server...'
+            }
+        }, 5000);
+
         cookies_.value = true
-        let userData = await getSingleDoc(localStorage.getItem('kiboardID'))
-        if (!userData) {
+        userData.value = await getSingleDoc(localStorage.getItem('kiboardID'))
+
+        if (update) {
+            showConnectionStrength.value = true
+            connectionStrength.value = 'connecting server...'
+        } 
+
+        if (!userData.value) {
             connectingServer.value = false
-            hasInternetConnection.value = true
+            showConnectionStrength.value = true
             connectionStrength.value = 'your connection is not strong'
             return
-        } else connectingServer.value = false
+        }
 
-        doubleEachWord.value = userData.doubleEachWord
-        theme.value = userData.theme
-        font.value = userData.fontsize 
-        range.value = (font.value - 16) / 0.26
-        hideElements.value = userData.hide
-        cursorType.value = userData.cursor
-        blind.value = userData.blind
-        difficulty.value = userData.difficulty
-        backspace.value = userData.backspace
-        customizers.value = userData.config[0]
-        disableOption.value = userData.config[1] 
-        mode.value = userData.mode
-        capslock.value = userData.capslock
-        customTests.value = userData.customTests
-    }
-    else if (!localStorage.getItem('kicookies')) {
+        if (update) {
+            showConnectionStrength.value = true
+            connectionStrength.value = 'connection is back'
+        } 
+
+        if (timedOut.value) connectionStrength.value = 'connection is back'
         connectingServer.value = false
-        showCookiesModal.value = true
-    }
+        doubleEachWord.value = userData.value.doubleEachWord
+        theme.value = userData.value.theme
+        font.value = userData.value.fontsize 
+        range.value = (font.value - 16) / 0.26
+        hideElements.value = userData.value.hide
+        cursorType.value = userData.value.cursor
+        blind.value = userData.value.blind
+        difficulty.value = userData.value.difficulty
+        backspace.value = userData.value.backspace
+        customizers.value = userData.value.config[0]
+        disableOption.value = userData.value.config[1] 
+        mode.value = userData.value.mode
+        capslock.value = userData.value.capslock
+        customTests.value = userData.value.customTests
+    } else connectingServer.value = false
 }

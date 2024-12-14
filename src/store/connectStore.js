@@ -5,10 +5,12 @@ export const connectStore = defineStore('connectStore', () => {
     const hasInternetConnection = ref(false)
     const connectingServer = ref(undefined)
     const connectionStrength = ref('')
+    const showConnectionStrength = ref(false)
 
     return {
         hasInternetConnection,
         connectingServer,
         connectionStrength,
+        showConnectionStrength,
     }
 })
