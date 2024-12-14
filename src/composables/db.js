@@ -35,6 +35,8 @@ export const DB = async () => {
         return await getDoc(user).then((data) => data.exists() ? data.data() : false )
     }
 
+    if (localStorage.getItem('kiboard')) localStorage.clear()
+
     if (localStorage.getItem('kiboardID')) {
         cookies_.value = true
         let userData = await getSingleDoc(localStorage.getItem('kiboardID'))
