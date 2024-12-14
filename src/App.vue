@@ -20,6 +20,7 @@
     <CapsLockToast top :toggle="toggleCapsToast" text="CapsLock is on, you cannot use it while it is disabled, enable in settings." />
   </div>
     <Loader v-else />
+    <div class="fixed top-[40%] z-[9999999] bg-green-500">{{ connectingServer }}</div>
 </template>
 
 <script setup>

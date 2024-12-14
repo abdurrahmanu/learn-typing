@@ -18,11 +18,11 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig)
 
-// initializeFirestore(app, 
-//     {localCache: 
-//         persistentLocalCache(/*settings*/{tabManager: persistentSingleTabManager()}),
-//     },
-// );
+initializeFirestore(app, 
+    {localCache: 
+        persistentLocalCache(/*settings*/{tabManager: persistentSingleTabManager()}),
+    },
+);
 
 // Initialize Firebase
 const db = getFirestore(app);
