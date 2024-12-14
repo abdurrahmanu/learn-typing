@@ -20,7 +20,6 @@
     <Animate />
     <CapsLockToast top :toggle="toggleCapsToast" text="CapsLock is on, you cannot use it while it is disabled, enable in settings." />
   </div>
-  <div class="fixed top-[40%] z-[9999999] bg-green-500">{{ connectingServer }}</div>
 </template>
 
 <script setup>
@@ -64,6 +63,8 @@ const {clearCounter} = count
 
 const connect = connectStore()
 const {hasInternetConnection, connectingServer} = storeToRefs(connect)
+
+console.log(navigator.connection.rtt, navigator.connection.downlink, navigator);
 
 window.addEventListener('online', () => {
   db()

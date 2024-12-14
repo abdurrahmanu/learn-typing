@@ -36,12 +36,12 @@ const deleteCookies = () => {
     deleteSingleDoc(id)
     cookies_.value = false
     localStorage.removeItem('kiboardID')
-    localStorage.setItem('kiboard', false)
+    localStorage.setItem('kicookies', false)
 }
 
 const acceptCookies = () => {
     addSingleDoc()    
-    if (localStorage.getItem('kiboard')) localStorage.removeItem('kiboard')
+    if (localStorage.getItem('kicookies')) localStorage.removeItem('kicookies')
     cookies_.value = true
 }
 </script>

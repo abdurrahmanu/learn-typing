@@ -101,9 +101,9 @@ const saveNewCustomText = () => {
     
     customTests.value[customTestTitle.value] = textAreaValueStore.value.trim()
     // if (useCookies.value) {        
-    //     const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
+    //     const localStorageSettings = ref(JSON.parse(localStorage.getItem('kicookies')))
     //     localStorageSettings.value.customTests[customTestTitle.value] = textAreaValueStore.value.trim()
-    //     localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
+    //     localStorage.setItem('kicookies', JSON.stringify(localStorageSettings.value))
     // }
     textSaved.value = true
     customTestTitle.value = ''
@@ -123,9 +123,9 @@ const cancel = () => {
 
 const del= (name) => {
     // if (useCookies.value) {        
-    //     const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
+    //     const localStorageSettings = ref(JSON.parse(localStorage.getItem('kicookies')))
     //     delete localStorageSettings.value.customTests[name]
-    //     localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
+    //     localStorage.setItem('kicookies', JSON.stringify(localStorageSettings.value))
     //     delete customTests.value[name]
     // }
     switchNext(customizers.value)
@@ -136,9 +136,9 @@ const use = (name) => {
     if (customizers.value['test-type'] !== 'custom') {
         customizers.value['test-type'] = 'custom'
         // if (useCookies.value) {
-        //     const localStorageSettings = ref(JSON.parse(localStorage.getItem('kiboard')))
+        //     const localStorageSettings = ref(JSON.parse(localStorage.getItem('kicookies')))
         //     localStorageSettings.value.config[0]['test-type'] = 'custom'
-        //     localStorage.setItem('kiboard', JSON.stringify(localStorageSettings.value))
+        //     localStorage.setItem('kicookies', JSON.stringify(localStorageSettings.value))
         // }
     }
     userSelectedTest.value = name

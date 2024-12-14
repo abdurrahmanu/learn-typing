@@ -35,7 +35,6 @@ export const DB = async () => {
         return await getDoc(user).then((data) => data.exists() ? data.data() : false )
     }
 
-
     if (localStorage.getItem('kiboardID')) {
         cookies_.value = true
         let userData = await getSingleDoc(localStorage.getItem('kiboardID'))
@@ -44,7 +43,8 @@ export const DB = async () => {
             hasInternetConnection.value = true
             connectionStrength.value = 'your connection is not strong'
             return
-        }
+        } else connectingServer.value = false
+
         doubleEachWord.value = userData.doubleEachWord
         theme.value = userData.theme
         font.value = userData.fontsize 
@@ -59,7 +59,9 @@ export const DB = async () => {
         mode.value = userData.mode
         capslock.value = userData.capslock
         customTests.value = userData.customTests
-        connectingServer.value = false
     }
-    else if (!localStorage.getItem('kiboard')) showCookiesModal.value = true
+    else if (!localStorage.getItem('kicookies')) {
+        connectingServer.value = false
+        showCookiesModal.value = true
+    }
 }

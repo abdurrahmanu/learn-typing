@@ -36,7 +36,7 @@ const addSingleDoc = async () => {
 const rejectCookies = () => {
     cookies_.value = false
     showCookiesModal.value = false
-    localStorage.setItem('kiboard', false)
+    localStorage.setItem('kicookies', false)
 }
 
 const acceptCookies = () => {
