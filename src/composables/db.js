@@ -12,7 +12,7 @@ export const DB = async () => {
     const {theme } = storeToRefs(theme_)
 
     const connect = connectStore()
-    const {isOnline, connectingServer} = storeToRefs(connect)
+    const {hasInternetConnection, connectingServer, connectionStrength} = storeToRefs(connect)
 
     const main = mainStore()
     const {customTests} = storeToRefs(main)
@@ -23,44 +23,43 @@ export const DB = async () => {
     const customize = customizeStore()
     const { customizers, cookies_, doubleEachWord, disableOption, cursorType, difficulty, mode, hideElements, font, range, blind, backspace, capslock } = storeToRefs(customize)
 
+    if (navigator.onLine) connectingServer.value = true
+    else {
+        connectingServer.value = false
+        hasInternetConnection.value = false
+        return
+    }
+
     const getSingleDoc = async (ID) => {
         let user = doc(db, "user", ID )
-        return await getDoc(user).then((data) => {
-            data.exists() ? data.data() : false
-            // if (navigator.onLine && !data.exists()) console.log('your connection is not strong enough');
-            connectingServer.value = false
-        }).catch(error => {
-            connectingServer.value = false
-        })
+        return await getDoc(user).then((data) => data.exists() ? data.data() : false )
     }
+
 
     if (localStorage.getItem('kiboardID')) {
         cookies_.value = true
-
-        if (navigator.onLine) {
-            setTimeout(() => {
-                if (connectingServer.value === true) {
-                    connectingServer.value = false
-                    isOnline.value = false
-                }
-            }, 6000);
-            let userData = await getSingleDoc(localStorage.getItem('kiboardID'))
-            if (!userData) return
-            doubleEachWord.value = userData.doubleEachWord
-            theme.value = userData.theme
-            font.value = userData.fontsize 
-            range.value = (font.value - 16) / 0.26
-            hideElements.value = userData.hide
-            cursorType.value = userData.cursor
-            blind.value = userData.blind
-            difficulty.value = userData.difficulty
-            backspace.value = userData.backspace
-            customizers.value = userData.config[0]
-            disableOption.value = userData.config[1] 
-            mode.value = userData.mode
-            capslock.value = userData.capslock
-            customTests.value = userData.customTests
+        let userData = await getSingleDoc(localStorage.getItem('kiboardID'))
+        if (!userData) {
+            connectingServer.value = false
+            hasInternetConnection.value = true
+            connectionStrength.value = 'your connection is not strong'
+            return
         }
+        doubleEachWord.value = userData.doubleEachWord
+        theme.value = userData.theme
+        font.value = userData.fontsize 
+        range.value = (font.value - 16) / 0.26
+        hideElements.value = userData.hide
+        cursorType.value = userData.cursor
+        blind.value = userData.blind
+        difficulty.value = userData.difficulty
+        backspace.value = userData.backspace
+        customizers.value = userData.config[0]
+        disableOption.value = userData.config[1] 
+        mode.value = userData.mode
+        capslock.value = userData.capslock
+        customTests.value = userData.customTests
+        connectingServer.value = false
     }
-    else if (!localStorage.getItem('kiboard') && navigator.onLine) showCookiesModal.value = true
+    else if (!localStorage.getItem('kiboard')) showCookiesModal.value = true
 }

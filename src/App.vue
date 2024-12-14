@@ -1,5 +1,6 @@
 <template>
-  <div v-if="!connectingServer" :class="[appTheme]" class="font-light selection:bg-none home max-w-[1500px] m-auto relative min-h-[100dvh] container overflow-y-auto scroll-smooth noscrollbar">
+  <Loader v-if="connectingServer" />
+  <div v-else :class="[appTheme]" class="font-light selection:bg-none home max-w-[1500px] m-auto relative min-h-[100dvh] container overflow-y-auto scroll-smooth noscrollbar">
     <div class="min-h-[100dvh]">
       <Connectivity v-if="!allSettings"/>
       <Header :class="[demo ? 'opacity-0 hidden' : '']" class="transition-all duration-300"/>
@@ -19,8 +20,7 @@
     <Animate />
     <CapsLockToast top :toggle="toggleCapsToast" text="CapsLock is on, you cannot use it while it is disabled, enable in settings." />
   </div>
-    <Loader v-else />
-    <div class="fixed top-[40%] z-[9999999] bg-green-500">{{ connectingServer }}</div>
+  <div class="fixed top-[40%] z-[9999999] bg-green-500">{{ connectingServer }}</div>
 </template>
 
 <script setup>
@@ -63,17 +63,17 @@ const count = countdownStore()
 const {clearCounter} = count
 
 const connect = connectStore()
-const {isOnline, connectingServer} = storeToRefs(connect)
+const {hasInternetConnection, connectingServer} = storeToRefs(connect)
 
 window.addEventListener('online', () => {
   db()
-  isOnline.value = true
+  hasInternetConnection.value = true
 });
-window.addEventListener('offline', () => isOnline.value = false);
+window.addEventListener('offline', () => hasInternetConnection.value = false);
 
 onMounted(() => {
-  isOnline.value = navigator.onLine 
-  !isOnline.value ? onLoad.value = true : ''
+  hasInternetConnection.value = navigator.onLine 
+  !hasInternetConnection.value ? onLoad.value = true : ''
   height()
   watch(customizers, (oldVal, newVal) => {
     if (onLoad.value) {

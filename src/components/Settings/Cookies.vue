@@ -1,5 +1,5 @@
 <template>
-    <div v-if="isOnline" class="p-3 m-auto rounded-sm w-fit max-w-[400px] bg-black text-slate-300 space-y-3 text-sm  my-2">
+    <div v-if="hasInternetConnection" class="p-3 m-auto rounded-sm w-fit max-w-[400px] bg-black text-slate-300 space-y-3 text-sm  my-2">
         <p class="text-center">This website {{ !cookies_ ? 'can save' : 'saves' }} your preferred settings to enhance your user experience.</p>
         <div class="flex justify-center hover:text-white">
             <div v-if="!cookies_" @click="acceptCookies" class="px-4 ring-[1px] hover:ring-green-700 hover:bg-green-700 py-1 whitespace-nowrap">USE COOKIES</div>
@@ -17,7 +17,7 @@ import { storeToRefs } from 'pinia';
 import { connectStore } from '../../store/connectStore';
 
 const connect = connectStore()
-const {isOnline} = storeToRefs(connect)
+const {hasInternetConnection} = storeToRefs(connect)
 
 const customize = customizeStore()
 const {cookies_} = storeToRefs(customize)
