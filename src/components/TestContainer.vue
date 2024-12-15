@@ -34,7 +34,7 @@
                 </div>
             </div>
         </Transition>
-        <p class=" text-base bg-transparent blur-[1px] w-fit whitespace-nowrap m-auto flex absolute top-[100px] left-[50%] translate-x-[-50%]" v-if="(isMobileOS() && !focus) || refocus" ><span class="pr-1">click</span><upwardsFinger v-if="!focus && isMobileOS()" class="relative w-5 bottom-1" />{{ refocus ? ' on screen to focus' : isMobileOS() && !focus ? 'text to focus' : '' }}</p>
+        <p class=" text-base bg-transparent w-fit whitespace-nowrap m-auto flex" v-if="(isMobileOS() && !focus) || refocus" :class="[isMobileOS() ? 'blur-[1px]' : 'absolute top-[100px] font-bold left-[50%] translate-x-[-50%]']" ><span class="pr-1">{{isMobileOS() ? 'click' : ''}} </span><upwardsFinger v-if="isMobileOS()" class="relative w-5 bottom-1" />{{ refocus ? 'click anywhere to focus' : isMobileOS() && !focus ? 'text to focus' : '' }}</p>
     </main>
 </template>
 

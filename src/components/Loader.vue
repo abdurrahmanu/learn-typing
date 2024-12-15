@@ -1,14 +1,11 @@
 <template>
-  <div class="min-h-[100dvh] w-[100%] bg-zinc-200">
+  <div class="min-h-[100dvh] w-[100%] bg-zinc-200 pt-4">
+    <div class="relative font-medium cursor-default w-fit h-fit p-[2px] m-auto">
+      <span class="absolute top-0 left-[50%] translate-x-[-50%] text-[15px] pt-[1px]">KI</span>
+      <board class="w-8"/>
+    </div>
     <div class="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] space-y-3">
       <div class="loader m-auto"></div>
-      <div class="p-3 m-auto mt-1 space-y-2 rounded-sm ring w-fit hover:ring-green-600 group">
-        <div class="relative font-medium cursor-default w-fit h-fit p-[2px] m-auto">
-          <span class="absolute top-0 left-[50%] translate-x-[-50%] text-[15px] font-black pt-[1px]">KI</span>
-          <board class="w-8"/>
-        </div>
-        <p class="text-center text-[30px] leading-0 opacity-95 roboto-mono exo-ital"><span class="text-blue-500">Ki</span><span class="text-green-500">Board</span></p>
-      </div>
       </div>
   </div>
 </template>
