@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-[100dvh] w-[100%] bg-slate-300">
+  <div class="min-h-[100dvh] w-[100%] bg-zinc-200">
     <div class="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] space-y-3">
       <div class="loader m-auto"></div>
       <div class="p-3 m-auto mt-1 space-y-2 rounded-sm ring w-fit hover:ring-green-600 group">

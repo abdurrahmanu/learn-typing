@@ -16,7 +16,7 @@
             </div>
         </div>
         <Transition v-if="goNext" name="container">
-        <div v-if="containerText" class="transition-all duration-100 relative mx-auto max-w-[700px] w-full min-w-[300px]">
+        <div v-if="containerText" class="transition-all duration-100 relative mx-auto max-w-[700px] w-full min-w-[300px]" :class="[refocus ? 'blur-sm' : '']">
                 <div @blur="textIsFocused = false" @focus="textIsFocused = true" tabindex="0" ria-describedby="full-text" ref="testContainerEl"  :style="{'height' : containerHeight + 'px', 'font-size': font + 'px'}" :class="[ customizers['no-space'] || customizers['test-type'] === 'custom' ? 'break-words' : '', mode === 'alphabets' ? 'text-center break-words': 'text-left', mode !== 'alphabets' && textPosition=== 'center' ? 'text-center' : mode !== 'alphabets' && textPosition=== 'right' ? 'text-right' : 'text-left', !isMobileOS() ? 'overflow-y-auto ' : 'overflow-y-hidden'] " class="overflow-x-hidden scroll-smooth leading-[1.4] h-fit py-[1px] outline-none after:absolute after:top-0 after:bottom-0 after:w-[4px] after:right-[0] after:z-[999] after:bg-transparent">
                     <p id="full-text" class="hidden">{{ containerText }}</p>
                     <Alphabet
@@ -34,7 +34,7 @@
                 </div>
             </div>
         </Transition>
-        <p class=" text-sm bg-transparent blur-[1px] w-fit whitespace-nowrap m-auto flex" v-if="isMobileOS() && !focus" ><span class="pr-1">click</span><upwardsFinger class="relative w-5 bottom-1" />test to focus cursor</p>
+        <p class=" text-base bg-transparent blur-[1px] w-fit whitespace-nowrap m-auto flex absolute top-[100px] left-[50%] translate-x-[-50%]" v-if="(isMobileOS() && !focus) || refocus" ><span class="pr-1">click</span><upwardsFinger v-if="!focus && isMobileOS()" class="relative w-5 bottom-1" />{{ refocus ? ' on screen to focus' : isMobileOS() && !focus ? 'text to focus' : '' }}</p>
     </main>
 </template>
 
@@ -65,7 +65,7 @@ const alphabets_ = alphabetsStore()
 const { useAlphabetCombination } = storeToRefs(alphabets_)
 
 const store = mainStore()
-const { containerText, quoteType, goNext, mobileBackspace, wrongCount, previousPlayerInput, beginCountdown, timedTyping, hasCompletedSession, focus, testContainerEl, containerHeight, movie, playerInputLength, playerInput, authoredQuote, scrollTextContainer, restartSvgEl, restartEl, inputEl} = storeToRefs(store)
+const { containerText, refocus, quoteType, goNext, mobileBackspace, wrongCount, previousPlayerInput, beginCountdown, timedTyping, hasCompletedSession, focus, testContainerEl, containerHeight, movie, playerInputLength, playerInput, authoredQuote, scrollTextContainer, restartSvgEl, restartEl, inputEl} = storeToRefs(store)
 const {switchNext} = store
 
 const customize = customizeStore()

@@ -22,7 +22,7 @@ import {app, db} from '../firebase'
 import {kiboardObj} from '../composables/kiboardObject'
 
 const cookies = cookiesStore()
-const {useCookies, showCookiesModal} = storeToRefs(cookies)
+const {showCookiesModal} = storeToRefs(cookies)
 
 const customize = customizeStore()
 const {cookies_, pauseTyping} = storeToRefs(customize)
@@ -44,7 +44,6 @@ const rejectCookies = () => {
 const acceptCookies = () => {
     addSingleDoc()
     cookies_.value = true
-    useCookies.value = true    
     showCookiesModal.value = false
 }
 

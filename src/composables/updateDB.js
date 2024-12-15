@@ -18,7 +18,7 @@ export const updateDB = async (variableName, updateVal, restart, next) => {
 
     if (next)  restart ? switchNext(customizers.value, 'restart') : switchNext(customizers.value)
         
-    if (navigator.onLine && localStorage.getItem('kiboardID')) {
+    if (localStorage.getItem('kiboardID')) {
         let id = localStorage.getItem('kiboardID')
         const updateObject = ref({})
         updateObject.value[variableName] = updateVal

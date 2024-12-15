@@ -3,6 +3,7 @@ import {ref, computed} from 'vue'
 import {generateTest} from '../composables/generateTest'
 
 export const mainStore = defineStore('mainStore', () => {
+    const preferredConfigs = ref(undefined)
     const route = ref(null)
     const mobileBackspace = ref(false)
     const quoteType = ref('')
@@ -19,6 +20,7 @@ export const mainStore = defineStore('mainStore', () => {
     const customLengthInput = ref(null)
 
     //keys states
+    const refocus = ref(false)
     const enterKey = ref(false)
     const backspaceIsPressed = ref(false)
     const inputEl = ref(null)
@@ -113,6 +115,7 @@ export const mainStore = defineStore('mainStore', () => {
     }
 
     return {
+        preferredConfigs,
         resetToDefault,
         sessionComplete,
         switchNext,
@@ -127,6 +130,7 @@ export const mainStore = defineStore('mainStore', () => {
         demo,
         keyboardMode,
         goNext,
+        refocus,
 
         testContainerEl,
         containerHeight,

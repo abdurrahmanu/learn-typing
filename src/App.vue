@@ -20,6 +20,7 @@
     <Animate />
     <CapsLockToast top :toggle="toggleCapsToast" text="CapsLock is on, you cannot use it while it is disabled, enable in settings." />
   </div>
+
 </template>
 
 <script setup>
@@ -54,7 +55,7 @@ const customize = customizeStore()
 const {font, customizers, toggleCapsToast, allSettings } = storeToRefs(customize)
 
 const main = mainStore()
-const { timedTyping, demo} = storeToRefs(main)
+const { timedTyping, demo, refocus, preferredConfigs} = storeToRefs(main)
 const { switchNext} = main
 
 const count = countdownStore()
@@ -65,9 +66,11 @@ const {hasInternetConnection, connectingServer} = storeToRefs(connect)
 
 // console.log(navigator.connection.rtt, navigator.connection.downlink, navigator);
 
+window.addEventListener('blur', event => refocus.value = true)
+window.addEventListener('focus', event => refocus.value = false)
+
 window.addEventListener('online', () => {
-  let update = true
-  DB(update)
+  DB(true) //arg network update event - true
   hasInternetConnection.value = true
 });
 

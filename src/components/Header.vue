@@ -26,11 +26,8 @@
             <div class="relative w-fit" v-if="route.name === 'home'" >
                 <settings class="w-5 peer" />
             </div>
-            <div class="relative w-fit" @click="showUser = true" >
+            <div class="relative w-fit" v-if="route.name !== 'user'" @click="routeToPage('user')" >
                 <user class="w-4 peer" />
-                <!-- <div v-if="showUser" class="absolute top-[calc(100%_+_10px)] right-0 bg-blue-500 min-h-[300px] w-[300px]">
-                    Logger dropDown will show if showUser is true
-                </div> -->
             </div>
         </div>
         <CompletionRange :class="[hideElements ? 'block' : 'hidden max-[460px]:block']" v-if="blind" />
