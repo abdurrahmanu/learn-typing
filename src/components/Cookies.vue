@@ -13,27 +13,16 @@
 
 <script setup>
 import {watch, ref, onMounted, } from 'vue'
-import {DB} from  '../composables/db'
 import { customizeStore } from '../store/customizeStore';
 import {cookiesStore} from '../store/cookiesStore'
 import { storeToRefs } from 'pinia';
-import { collection, doc, setDoc, getDoc, } from 'firebase/firestore'
-import {app, db} from '../firebase'
-import {kiboardObj} from '../composables/kiboardObject'
+import {addSingleDoc} from '../composables/connectFirestore'
 
 const cookies = cookiesStore()
 const {showCookiesModal} = storeToRefs(cookies)
 
 const customize = customizeStore()
 const {cookies_, pauseTyping} = storeToRefs(customize)
-
-const addSingleDoc = async () => {    
-    let docRef = doc(collection(db, 'user'))
-    localStorage.setItem('kiboardID', docRef.id)
-    await setDoc(docRef, kiboardObj().value)
-    let user = doc(db, "user", docRef.id )
-    await getDoc(user).then((data) => data.exists() ? localStorage.setItem('kiboardID', docRef.id) : '')
-}
 
 const rejectCookies = () => {
     cookies_.value = false
@@ -50,19 +39,3 @@ const acceptCookies = () => {
 onMounted(() => showCookiesModal.value ? pauseTyping.value = true : pauseTyping.value = false )
 watch(showCookiesModal, newVal => pauseTyping.value = false )
 </script>
-
-<style scoped>
-/* .zoom-enter-from {
-    scale: 0;
-}
-
-.zoom-leave-to {
-    scale: 50%;
-    opacity: 0
-}
-
-.zoom-enter-active,
-.zoom-leave-active {
-    transition: all .5s ease;
-} */
-</style>

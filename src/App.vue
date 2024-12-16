@@ -1,48 +1,32 @@
 <template>
+  <Connectivity />
   <Loader v-if="connectingServer" />
   <div v-else :class="[appTheme]" class="font-light selection:bg-none home max-w-[1500px] m-auto relative min-h-[100dvh] container overflow-y-auto scroll-smooth noscrollbar">
-    <div class="min-h-[100dvh]">
-      <Connectivity v-if="!allSettings"/>
-      <Header :class="[demo ? 'opacity-0 hidden' : '']" class="transition-all duration-300"/>
-      <main :class="[demo ? 'opacity-0 hidden' : '']" class="transition-all duration-300">
-        <RouterView />
-        <Next />
-      </main>
-      <Teach />
-      <Cookies />
-    </div>
-    <Settings />
-    <div class="fixed flex items-center gap-3 bottom-2 right-2">      
-      <SwitchModes :class="[demo ? 'opacity-0 hidden' : '']" class="self-end mb-[2px] transition-all duration-300" />
-      <Theme class="self-end"/>
-    </div>
-    <CustomTestModal />
-    <Animate />
-    <CapsLockToast top :toggle="toggleCapsToast" text="CapsLock is on, you cannot use it while it is disabled, enable in settings." />
+    <main v-if="!demo" class="transition-all duration-300">
+      <Header class="transition-all duration-300" />
+      <RouterView />
+      <Next />
+    </main>
+    <Footer />
+    <Modals_Popups_Toasts/>
   </div>
-
 </template>
 
 <script setup>
 import {onBeforeMount, onMounted, watch, ref} from 'vue'
+import Modals_Popups_Toasts from './components/Modals_Popups_Toasts.vue'
 import Teach from './components/Teach.vue';
-import Settings from './components/Settings/Settings.vue'
 import Loader from './components/Loader.vue'
-import Cookies from './components/Cookies.vue';
 import Connectivity from './components/Connectivity.vue'
+import Footer from './components/Footer.vue'
 import Header from './components/Header.vue'
-import SwitchModes from './components/SwitchModes.vue';
 import Next from './components/Next.vue';
-import Animate from './components/Animate.vue';
-import Theme from './components/Theme.vue';
 import { storeToRefs } from 'pinia';
 import {connectStore} from './store/connectStore'
 import {themeStore}  from './store/themeStore'
 import {customizeStore}  from './store/customizeStore'
 import { mainStore } from './store/mainStore';
 import {height} from './composables/testContainerHeight'
-import CustomTestModal from './components/CustomTestModal.vue';
-import CapsLockToast from './components/Toast.vue';
 import { countdownStore } from './store/countdownStore';
 import { DB } from './composables/db';
 

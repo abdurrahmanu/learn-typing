@@ -6,7 +6,7 @@
         </div>
         <p @click="sign('email')" class="flex items-center gap-3 px-10 py-1 font-medium border-neutral-600 border rounded-md justify-center active:border-green-500 hover:bg-black cursor-pointer"><email class="w-4" />EMAIL</p>
         <p @click="sign('google')" class="flex items-center gap-3 px-10 py-1 font-medium border-neutral-600 border rounded-md justify-center active:border-green-500 hover:bg-black cursor-pointer"><google />GOOGLE</p>
-        <p @click="sign('anon')" class="flex items-center gap-3 px-10 py-1 font-medium border-neutral-600 border rounded-md justify-center active:border-green-500 hover:bg-black cursor-pointer"><user class="w-4" />ANONYMOUS USER</p>
+        <!-- <p @click="sign('anon')" class="flex items-center gap-3 px-10 py-1 font-medium border-neutral-600 border rounded-md justify-center active:border-green-500 hover:bg-black cursor-pointer"><user class="w-4" />ANONYMOUS USER</p> -->
     </div>
     <div v-else>
         <p>user details are all in</p>
