@@ -3,7 +3,7 @@ import { storeToRefs } from 'pinia'
 import {mainStore} from '../store/mainStore'
 import { customizeStore } from '../store/customizeStore'
 
-export const height = () => {
+export const textBoxHeight = () => {
     const main = mainStore()
     const { containerHeight} = storeToRefs(main)
 

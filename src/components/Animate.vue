@@ -14,7 +14,7 @@ import {themeStore}  from '../store/themeStore'
 import {cookiesStore} from '../store/cookiesStore'
 
 const cookies = cookiesStore()
-const {showCookiesModal} = storeToRefs(cookies)
+const {cookiesModal} = storeToRefs(cookies)
 
 const theme_ = themeStore()
 const {theme, } = storeToRefs(theme_)
@@ -74,10 +74,10 @@ onMounted(() => {
             if (count.value === length) {
                 clearInterval(interval.value)
                 animation.value = !animation.value
-                showCookiesModal.value ? pauseTyping.value = true : pauseTyping.value = false
+                cookiesModal.value ? pauseTyping.value = true : pauseTyping.value = false
                 document.querySelector('.container').removeChild(boxesContainer.value)
             }
-        }, 5)
+        }, 3)
     }, 0)
     }
 }

@@ -12,7 +12,6 @@ export const   addSingleDoc = async () => {
     await setDoc(docRef, kiboardObj().value)
     let user = doc(db, "user", docRef.id )
     await getDoc(user).then((data) => data.exists() ? localStorage.setItem('kiboardID', docRef.id) : '')
-
 }
 
 export const deleteSingleDoc = async (ID) => await deleteDoc(doc(db, 'user', ID))

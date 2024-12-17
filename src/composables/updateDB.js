@@ -11,7 +11,7 @@ export const updateDB = async (variableName, updateVal, restart, next) => {
     const {switchNext} = main
 
     const cookies = cookiesStore()
-    const {showCookiesModal} = storeToRefs(cookies)
+    const {cookiesModal} = storeToRefs(cookies)
 
     const customize = customizeStore()
     const {customizers} = storeToRefs(customize)
@@ -26,5 +26,5 @@ export const updateDB = async (variableName, updateVal, restart, next) => {
         await updateDoc(singleDoc, updateObject.value)
     } 
 
-    else if (!localStorage.getItem('kicookies') && navigator.onLine) showCookiesModal.value = true
+    else if (!localStorage.getItem('kicookies') && navigator.onLine) cookiesModal.value = true
 }

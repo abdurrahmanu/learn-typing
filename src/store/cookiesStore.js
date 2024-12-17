@@ -2,9 +2,11 @@ import {defineStore} from 'pinia'
 import {ref} from 'vue'
 
 export const cookiesStore = defineStore('cookiesStore', () => {
-    const showCookiesModal = ref(null)
+    const cookiesModal = ref(null)
+    const saveConfigs = ref(false)
 
     return {
-        showCookiesModal,
+        cookiesModal,
+        saveConfigs,
     }
 })

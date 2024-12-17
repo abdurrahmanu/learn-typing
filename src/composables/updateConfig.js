@@ -2,6 +2,7 @@ import { mainStore } from "../store/mainStore"
 import { customizeStore } from "../store/customizeStore";
 import { connectStore } from "../store/connectStore";
 import { themeStore } from "../store/themeStore";
+import {getSingleDoc} from './connectFirestore'
 import { storeToRefs } from 'pinia';
 
 export const configUpdate = async () => {
@@ -16,6 +17,8 @@ export const configUpdate = async () => {
 
     const customize = customizeStore()
     const { customizers, doubleEachWord, disableOption, cursorType, difficulty, mode, hideElements, font, range, blind, backspace, capslock } = storeToRefs(customize)
+
+    preferredConfigs.value = await getSingleDoc(localStorage.getItem('kiboardID'))
 
     connectingServer.value = false
     doubleEachWord.value = preferredConfigs.value.doubleEachWord

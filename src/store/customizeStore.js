@@ -6,7 +6,6 @@ import { updateDB } from '../composables/updateDB'
 export const customizeStore = defineStore('customizeStore', () => {
     const mode = ref('auto')
     const count = ref(false)
-    const cookies_ = ref(false)
     const testType_ = ref('words')
     const userSelectedTest = ref('')
     const customTestModal = ref(false)
@@ -126,7 +125,6 @@ export const customizeStore = defineStore('customizeStore', () => {
     }
 
     return {
-        cookies_,
         count,
         disableOption,
         doubleEachWord,
