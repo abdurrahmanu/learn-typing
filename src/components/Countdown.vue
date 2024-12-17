@@ -40,16 +40,15 @@ onMounted(() => {
 <style scoped>
 .slide-left-enter-active,
 .slide-left-leave-active {
-    transition: all .5s ease;
+    transition: all .3s ease;
 }
 
 .slide-left-enter-from {
-    opacity: 0;
+    transform: translateX(30%);
+    opacity: .6;
 }
 
 .slide-left-leave-to {
     opacity: 0;
-    transform: translateX(100%);
 }
 </style>
-

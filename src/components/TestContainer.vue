@@ -185,12 +185,12 @@ const preventScroll = (e) => {
 }
 
 .container-enter-from {
-    transform: translateY(-10%)
+    transform: translateY(10%)
 }
 
 .container-enter-active,
 .container-leave-active {
     transition: all 0.1s ease;
-    opacity: .5
+    opacity: .8
 }
 </style>

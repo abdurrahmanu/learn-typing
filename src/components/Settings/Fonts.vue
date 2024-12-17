@@ -5,7 +5,7 @@
                 <div class="text-xs font-medium whitespace-nowrap">FONT SIZE</div> 
                 <div class="min-w-[40px] text-center text-sm ">{{ fontSize }}px</div>
             </div>
-            <input  name="range" type="range" class="w-full h-1 border-green-500 outline-none accent-green-400" v-model="range"/>
+            <input name="range" type="range" class="w-full h-1 outline-none bg-green-500 accent-green-800 appearance-none" v-model="range"/>
         </div>
     </div> 
 </template>

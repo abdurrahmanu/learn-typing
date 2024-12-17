@@ -13,9 +13,9 @@
             <div v-if="timedTyping && !beginCountdown" class="relative flex items-center gap-1 w-fit">  
                     <playTimer @click="timer" class="w-5" />
                     <div :class="[theme === 'dark' ? 'border-slate-200' : 'border-black']" class="flex text-xs border h-fit scale-105 max-[410px]:absolute max-[410px]:top-[calc(100%_+_2px)] max-[410px]:left-[50%] max-[410px]:translate-x-[-50%] cursor-pointer config">
-                        <div class="px-2 border-r w-fit" :class="[theme === 'dark' ? 'border-slate-200' : 'border-black', level === 'beginner' ? 'text-white bg-lime-800' : '']" @click="selectCountDown(timeForBeginner, 'beginner')">{{timeForBeginner}}<span class="text-[9px]">s</span></div>
-                        <div class="px-2 border-r w-fit" :class="[theme === 'dark' ? 'border-slate-200' : 'border-black', level === 'amateur' ? 'text-white bg-yellow-800' : '']" @click="selectCountDown(timeForAmateur, 'amateur')">{{timeForAmateur}}<span class="text-[9px]">s</span></div>
-                        <div class="px-2 border-l w-fit" :class="[theme === 'dark' ? 'border-slate-200' : 'border-black', level === 'expert' ? 'text-white bg-teal-800' : '']" @click="selectCountDown(timeForExpert, 'expert')">{{ timeForExpert }}<span class="text-[9px]">s</span></div>
+                        <div class="px-2 border-r w-fit" :class="[level === 'beginner' ? difficultyBg : '', theme === 'dark' ? 'border-slate-200' : 'border-black']" @click="selectCountDown(timeForBeginner, 'beginner')">{{timeForBeginner}}<span class="text-[9px]">s</span></div>
+                        <div class="px-2 border-r w-fit" :class="[level === 'amateur' ? difficultyBg : '', theme === 'dark' ? 'border-slate-200' : 'border-black']" @click="selectCountDown(timeForAmateur, 'amateur')">{{timeForAmateur}}<span class="text-[9px]">s</span></div>
+                        <div class="px-2 border-l w-fit" :class="[level === 'expert' ? difficultyBg : '', theme === 'dark' ? 'border-slate-200' : 'border-black']" @click="selectCountDown(timeForExpert, 'expert')">{{ timeForExpert }}<span class="text-[9px]">s</span></div>
                     </div>
             </div>
         </div>
@@ -23,7 +23,7 @@
 </template>
 
 <script setup>
-import {watch, ref, onMounted} from 'vue'
+import {watch, ref, onMounted, computed} from 'vue'
 import Countdown from './Countdown.vue'
 import pauseTimer from '../components/svg/pauseTimer.vue'
 import playTimer from '../components/svg/playTimer.vue'
@@ -51,6 +51,10 @@ const selectCountDown = (count, lvl) => {
     level.value = lvl
     switchNext(customizers.value, 'restart' )
 }
+
+const difficultyBg = computed(() => {
+    return level.value === 'beginner' ? 'text-white bg-[#44b0d3]' : level.value === 'amateur' ? 'text-white bg-[#ffa07a]' : level.value === 'expert' ? 'text-white bg-[#2e4053]' : ''
+})
 
 const countdownFunc = (level) => {
     if (level === 'beginner') return timeForBeginner.value

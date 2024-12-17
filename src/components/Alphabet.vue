@@ -1,6 +1,11 @@
 <template>
-    <div aria-hidden="true" ref="currentAlphabet" :class="[customizers['no-space'] ? '' : 'whitespace-pre-wrap']" class="relative inline">
-        <span  :class="[space, !focus && currentIndexStyle ? 'text-slate-500' : '', equalStyle, (isMobileOS() && focus) || !isMobileOS() ? currentIndexStyle : '', mainStyle, !currentIndex || isMobileOS() && !focus ? 'border-transparent' : '', pulseStyle, blurStyle, (cursorType === 'pulse' || cursorType === 'word-pulse') && alphabet === ' ' ? 'opacity-100 animate-pulse' : '']" class="relative transition-opacity duration-75 border" >{{ alphabet }}</span>
+    <div aria-hidden="true" ref="currentAlphabet"  class="relative inline">
+        <Transition name="smoothlyTransitionCursor" v-if="currentIndex">
+            <div class="inline-block h-[calc(100%_-_5px)] absolute left-0 top-[50%] translate-y-[-50%] bottom-0 right-0" :class="[cursorStyle]"></div>
+        </Transition>
+        <div :class="[customizers['no-space'] ? '' : 'whitespace-pre-wrap']" class="relative inline">
+            <span  :class="[!focus && currentIndexStyle ? 'text-slate-500' : '', equalStyle, (isMobileOS() && focus) || !isMobileOS() ? currentIndexStyle : '', mainStyle, !currentIndex || isMobileOS() && !focus ? 'border-transparent' : '', pulseStyle, blurStyle, (cursorType === 'pulse' || cursorType === 'word-pulse') && alphabet === ' ' ? 'opacity-100 animate-pulse' : '']" class="relative transition-opacity duration-75" >{{ alphabet }}</span>
+        </div>
     </div>
 </template> 
 
@@ -42,14 +47,8 @@ window.addEventListener('input', event => {
 onMounted(() => {
     watchEffect(() => {
         if (props.currentIndex) {      
-    
-            if (!backspaceIsPressed.value && props.alphabet === ' ')  {
-                spaceCount.value = allSpacesIndex.value.indexOf(props.index - 1) + 1
-            }
-            
-            if (backspaceIsPressed.value && props.alphabet === ' ')  {
-                spaceCount.value = allSpacesIndex.value.indexOf(props.index - 1) + 1
-            }
+            if (!backspaceIsPressed.value && props.alphabet === ' ') spaceCount.value = allSpacesIndex.value.indexOf(props.index - 1) + 1
+            if (backspaceIsPressed.value && props.alphabet === ' ') spaceCount.value = allSpacesIndex.value.indexOf(props.index - 1) + 1
 
             if (currentAlphabet.value) {     
                 const parentScrollHeight = testContainerEl.value.scrollHeight
@@ -99,22 +98,24 @@ onMounted(() => {
     })
 })
 
+const cursorStyle = computed(() => {
+    let cursor = cursorType.value === 'border' ? 'border-[1px]' : cursorType.value === 'cursor' ? 'border-l-[1px]' : cursorType.value == 'underline' ? 'border-b-[1px]' : ''
+    let bg = 'border-slate-500'
+    return cursor + ' ' + bg
+})
+
+const currentIndexStyle = computed(() => {
+    let text = theme.value === 'dark' ? 'text-slate-500' : 'bg-transparent text-zinc-500' 
+    let cursor = cursorType.value === 'pulse' && props.alphabet !== ' ' ? 'pulse border-transparent' : ''
+    return  props.currentIndex ? text + ' ' + cursor : ''
+})
+
 const equalStyle = computed(() => {
     if (!blind.value) {
         let correctText = theme.value === 'dark' ? 'text-green-300' : 'text-green-500'
         let wrongText = theme.value === 'dark' ? 'text-red-500' : theme.value !== 'dark' && props.index - 1 < playerInputLength.value  ? 'text-red-600' : ''
         return props.equality ? correctText : wrongText
     }
-})
-
-const currentIndexStyle = computed(() => {
-    let text = theme.value === 'dark' ? 'text-slate-500' : 'bg-transparent text-zinc-500' 
-    let cursor = cursorType.value === 'border' ? 'border border-slate-500' : cursorType.value === 'cursor' ? 'border-transparent border-l-zinc-600' : cursorType.value === 'underline' ? 'border-transparent border-b-blue-600' : cursorType.value === 'pulse' && props.alphabet !== ' ' ? 'pulse border-transparent' : ''
-    return  props.currentIndex ? text + ' ' + cursor : ''
-})
-
-const space = computed(() => {
-    return (cursorType.value === 'border' || cursorType.value === 'pulse' || cursorType.value === 'word-pulse') && props.currentIndex && props.alphabet === ' ' ? 'before:absolute before:top-0 before:bottom-0 before:w-[50%] before:max-w-[1px] before:left-[30%] before:bg-slate-500 border-transparent' : ''
 })
 
 const mainStyle = computed(() => {
@@ -182,5 +183,20 @@ const pulseStyle = computed(() => {
     100% {
         opacity: 70%;
     }
+}
+
+.smoothlyTransitionCursor-enter-from {
+    opacity: 0;
+    transform: translateX(-50%);
+}
+
+.smoothlyTransitionCursor-leave-to {
+    opacity: 0;
+    transform: translateX(50%);
+}
+
+.smoothlyTransitionCursor-enter-active,
+.smoothlyTransitionCursor-leave-active {
+    transition: all .3s ease;
 }
 </style>
