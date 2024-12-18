@@ -13,7 +13,7 @@ import { mainStore } from './store/mainStore';
 import {customizeStore}  from './store/customizeStore'
 import {textBoxHeight} from './composables/textBox'
 import { countdownStore } from './store/countdownStore';
-import { DB } from './composables/db';
+import { DB } from './composables/connectDB';
 
 const onLoad = ref(undefined)
 

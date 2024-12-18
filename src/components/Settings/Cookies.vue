@@ -14,7 +14,7 @@ import { customizeStore } from '../../store/customizeStore';
 import { storeToRefs } from 'pinia';
 import { connectStore } from '../../store/connectStore';
 import {cookiesStore} from '../../store/cookiesStore'
-import {addSingleDoc, deleteSingleDoc} from '../../composables/connectFirestore'
+import {addSingleDoc, deleteSingleDoc} from '../../composables/firestoreDocs'
 
 const connect = connectStore()
 const {hasInternetConnection} = storeToRefs(connect)

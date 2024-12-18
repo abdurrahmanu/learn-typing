@@ -28,7 +28,7 @@ export const DB = async (onUpdate) => {
                 loadingTimeout.value = true
                 connectingServer.value = false
                 showConnectionStrength.value = true
-                connectionStrength.value = 'unable to connect server...'
+                connectionStrength.value = 'Slow connection'
             }
         }, 6000)
 

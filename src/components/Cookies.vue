@@ -16,7 +16,7 @@ import {watch, ref, onMounted, } from 'vue'
 import { customizeStore } from '../store/customizeStore';
 import {cookiesStore} from '../store/cookiesStore'
 import { storeToRefs } from 'pinia';
-import {addSingleDoc} from '../composables/connectFirestore'
+import {addSingleDoc} from '../composables/firestoreDocs'
 
 const cookies = cookiesStore()
 const {cookiesModal, saveConfigs} = storeToRefs(cookies)

@@ -2,7 +2,7 @@ import { mainStore } from "../store/mainStore"
 import { customizeStore } from "../store/customizeStore";
 import { connectStore } from "../store/connectStore";
 import { themeStore } from "../store/themeStore";
-import {getSingleDoc} from './connectFirestore'
+import {getSingleDoc} from './firestoreDocs'
 import { storeToRefs } from 'pinia';
 
 export const configUpdate = async () => {
