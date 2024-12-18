@@ -29,8 +29,6 @@ const {capslock} = storeToRefs(custom)
 
 const customize = () => {
     capslock.value = !capslock.value
-    updateDB(capslock.value, 'restart', true)
     updateDB(Object.keys({capslock})[0], capslock.value, 'restart', true)
-
 }
 </script>

@@ -10,7 +10,6 @@
                     :start="beginCountdown" />
                 <!-- <p>10/17</p> -->
             </div>
-                
             <div class="w-fit h-fit"> 
                 <restart v-show="!hasCompletedSession && playerInputLength" @click="restartTest" class="absolute w-6 left-[50%] translate-x-[-50%] "/>
             </div>
@@ -23,7 +22,7 @@
                     v-for="index in containerText.length"
                     :index="index"
                     :key="index"
-                    :lastIndex = 'index - 1 === containerText.length'
+                    :lastIndex = 'index - 1 === playerInputLength - 1'
                     :currentIndex ="playerInputLength === index - 1" 
                     :equality="playerInput[index - 1] === containerText[index - 1]"
                     :alphabet="containerText[index - 1]"/>
@@ -34,7 +33,7 @@
                 </div>
             </div>
         </Transition>
-        <p class=" text-base bg-transparent w-fit whitespace-nowrap m-auto flex" v-if="(isMobileOS() && !focus) || refocus" :class="[isMobileOS() ? 'blur-[1px]' : 'absolute top-[100px] font-bold left-[50%] translate-x-[-50%]']" ><span class="pr-1">{{isMobileOS() ? 'click' : ''}} </span><upwardsFinger v-if="isMobileOS()" class="relative w-5 bottom-1" />{{ refocus ? 'click anywhere to focus' : isMobileOS() && !focus ? 'text to focus' : '' }}</p>
+        <p class="flex m-auto text-base bg-transparent w-fit whitespace-nowrap" v-if="(isMobileOS() && !focus) || refocus" :class="[isMobileOS() ? 'blur-[1px]' : 'absolute top-[100px] font-bold left-[50%] translate-x-[-50%]']" ><span class="pr-1">{{isMobileOS() ? 'click' : ''}} </span><upwardsFinger v-if="isMobileOS()" class="relative w-5 bottom-1" />{{ refocus ? 'click anywhere to focus' : isMobileOS() && !focus ? 'text to focus' : '' }}</p>
     </main>
 </template>
 

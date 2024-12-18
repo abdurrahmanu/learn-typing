@@ -16,7 +16,7 @@ export const configUpdate = async () => {
     const {connectingServer} = storeToRefs(connect)
 
     const customize = customizeStore()
-    const { customizers, doubleEachWord, disableOption, cursorType, difficulty, mode, hideElements, font, range, blind, backspace, capslock } = storeToRefs(customize)
+    const { customizers, doubleEachWord, disableOption, textLines, cursorType, difficulty, mode, hideElements, font, range, blind, backspace, capslock } = storeToRefs(customize)
 
     preferredConfigs.value = await getSingleDoc(localStorage.getItem('kiboardID'))
 
@@ -35,4 +35,5 @@ export const configUpdate = async () => {
     mode.value = preferredConfigs.value.mode
     capslock.value = preferredConfigs.value.capslock
     customTests.value = preferredConfigs.value.customTests
+    textLines.value = preferredConfigs.value.textLines
 }

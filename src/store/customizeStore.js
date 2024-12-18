@@ -27,7 +27,8 @@ export const customizeStore = defineStore('customizeStore', () => {
     const useCustomLength = ref(false)
     const switchMode = ref(false)
     const doubleEachWord = ref(false)
-
+    const textLines = ref(3)
+    
     const customizers = ref({
         'stop-on-error': false,
         'test-length': 'auto',
@@ -129,6 +130,7 @@ export const customizeStore = defineStore('customizeStore', () => {
         disableOption,
         doubleEachWord,
         difficulty,
+        textLines,
         configs,
         cursorType,
         allSettings,

@@ -1,5 +1,6 @@
 <template>
-    <div class="max-w-[800px] m-auto min-h-[calc(100dvh_-_90px)] overflow-y-auto relative font-[400] space-y-4">
+    <Teach v-if="demo" />
+    <div v-else class="max-w-[800px] m-auto min-h-[calc(100dvh_-_90px)] overflow-y-auto relative font-[400] space-y-4">
         <div class="p-3 m-auto mt-1 space-y-4 rounded-sm ring w-fit hover:ring-green-600 group">
             <div class="m-auto w-fit top-[15px] relative scale-125">                
                 <Logo />
@@ -9,16 +10,15 @@
         <p class="m-auto text-sm text-center w-fit caveat">DESIGNED AND DEVELOPED BY AHMED ABDULRAHMAN</p>
         <div @click="name='email'" class="px-2 py-[1px] border-gray-500 border rounded-sm transition-all duration-100 hover:shadow-md m-auto hover:border-green-500 flex items-center gap-2 pacifico text-xs w-fit hover:px-5"><email class="w-4" />EMAIL</div>
         <div @click="demo = true, pauseTyping = true" :class="[demo ? 'hidden' : '']" class="mt-8 m-auto w-fit font-medium caveat hover:animate-none transition-all duration-500 hover:px-20 ring-[1px] ring-green-500 px-10 py-1 opacity-80 shadow-sm cursor-pointer hover:shadow-green-500 text-center hover:shadow-md hover:opacity-100">HELP</div>
-        <p class="text-center">Develpoment phase</p>
+        <!-- <p class="text-center">Develpoment phase</p> -->
     </div>
 </template>
 
 <script setup>
 import {ref, watch} from 'vue'
+import Teach from '../components/Teach.vue';
 import Logo from '../components/Logo.vue'
 import email from '../components/svg/email.vue';
-import linkedin from '../components/svg/linkedin.vue';
-import github from '../components/svg/github.vue';
 import { customizeStore } from '../store/customizeStore';
 import { mainStore } from '../store/mainStore';
 import { storeToRefs } from 'pinia';

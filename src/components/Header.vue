@@ -30,8 +30,8 @@
                 <user class="w-4 peer" />
             </div>
         </div>
-        <CompletionRange :class="[hideElements ? 'block' : 'hidden max-[460px]:block']" v-if="blind" />
-        <CompletionRangeWithErrors :class="[hideElements ? 'block' : 'hidden max-[460px]:block']" v-else/>
+        <CompletionRange :class="[hideElements ? 'block' : 'hidden max-[460px]:block']" v-if="blind && route.name === 'home'" />
+        <CompletionRangeWithErrors :class="[hideElements ? 'block' : 'hidden max-[460px]:block']" v-if="!blind && route.name === 'home'"/>
     </header>
 </template>
 

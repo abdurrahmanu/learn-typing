@@ -8,7 +8,7 @@ export const textBoxHeight = () => {
     const { containerHeight} = storeToRefs(main)
 
     const customize = customizeStore()
-    const {font } = storeToRefs(customize)
+    const {font, textLines } = storeToRefs(customize)
 
     const div = document.createElement("div");
     const span = document.createElement('p')
@@ -21,6 +21,6 @@ export const textBoxHeight = () => {
     document.body.appendChild(div)
     const cssObject = getComputedStyle(div)
     const height = +cssObject.getPropertyValue('height').slice(0, -2)
-    containerHeight.value = (height * 3).toFixed(2)
+    containerHeight.value = (height * textLines.value).toFixed(2)
     document.body.removeChild(div)
 }

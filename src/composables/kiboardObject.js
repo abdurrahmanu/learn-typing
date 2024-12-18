@@ -12,13 +12,14 @@ export const kiboardObj = () => {
         capslock: true,
         customTests: {'demo': 'This is a custom test, you can add your own tests by pressing the plus icon. This demo test cannot be deleted'},
         config: [customizers.value, disableOption.value],
-        cursor: 'border',
+        cursor: 'cursor',
         theme: window.matchMedia("(prefers-color-scheme: dark)").matches ?  'dark' : 'white',
         backspace: true,
         blind: false,
         mode: 'auto',
         hide: true,
         fontsize: 32,
+        textLines: 3,
     })
     return kiboardObject
 }

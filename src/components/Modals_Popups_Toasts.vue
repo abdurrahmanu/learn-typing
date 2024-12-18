@@ -1,5 +1,4 @@
 <template>
-    <Teach v-if="demo" />
     <Cookies />
     <Settings />
     <CustomTestModal />

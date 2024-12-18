@@ -21,14 +21,14 @@ const customize = customizeStore()
 const {font, customizers, toggleCapsToast } = storeToRefs(customize)
 
 const main = mainStore()
-const { timedTyping, demo, refocus } = storeToRefs(main)
+const { timedTyping, preferredConfigs, spaceCount, refocus } = storeToRefs(main)
 const { switchNext} = main
 
 const count = countdownStore()
 const {clearCounter} = count
 
 const connect = connectStore()
-const {hasInternetConnection, connectingServer} = storeToRefs(connect)
+const {hasInternetConnection, connectingServer, connectionStrength, showConnectionStrength} = storeToRefs(connect)
 
 onMounted(() => {
   textBoxHeight()
@@ -46,6 +46,15 @@ onMounted(() => {
 watch(toggleCapsToast, (newVal, oldVal) => newVal ? setTimeout(() => toggleCapsToast.value = oldVal, 5000) : false )
 onBeforeMount(() => hasInternetConnection.value ? DB() : false)
 watch(font, (newVal) => textBoxHeight())
+
+watch(preferredConfigs, newVal => {
+  if (newVal && navigator.onLine && showConnectionStrength.value) {
+    connectionStrength.value = 'connected'
+    setTimeout(() => {
+      showConnectionStrength.value = false
+    }, 4000);
+  }
+})
 
 window.addEventListener('blur', () => refocus.value = true)
 window.addEventListener('focus', () => refocus.value = false)

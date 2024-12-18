@@ -1,8 +1,6 @@
 <template>
     <div aria-hidden="true" ref="currentAlphabet"  class="relative inline">
-        <Transition name="smoothlyTransitionCursor" v-if="currentIndex">
-            <div class="inline-block h-[calc(100%_-_5px)] absolute left-0 top-[50%] translate-y-[-50%] bottom-0 right-0" :class="[cursorStyle]"></div>
-        </Transition>
+        <div v-if="currentIndex" class="inline-block h-[calc(100%_-_5px)] absolute left-0 bottom-0 right-0" :class="[cursorStyle, currentIndex && !backspaceIsPressed ? 'smooth-cursor-forward' : 'smooth-cursor-backward']"></div>
         <div :class="[customizers['no-space'] ? '' : 'whitespace-pre-wrap']" class="relative inline">
             <span  :class="[!focus && currentIndexStyle ? 'text-slate-500' : '', equalStyle, (isMobileOS() && focus) || !isMobileOS() ? currentIndexStyle : '', mainStyle, !currentIndex || isMobileOS() && !focus ? 'border-transparent' : '', pulseStyle, blurStyle, (cursorType === 'pulse' || cursorType === 'word-pulse') && alphabet === ' ' ? 'opacity-100 animate-pulse' : '']" class="relative transition-opacity duration-75" >{{ alphabet }}</span>
         </div>
@@ -10,22 +8,22 @@
 </template> 
 
 <script setup>
-import { computed, watchEffect, ref, onMounted } from 'vue';
+import { computed, watch, ref, onMounted } from 'vue';
 import {storeToRefs} from 'pinia'
 import {mainStore} from '../store/mainStore'
 import {themeStore}  from '../store/themeStore'
-import {customizeStore}  from '../store/customizeStore'
+import { customizeStore }  from '../store/customizeStore'
 import { isMobileOS } from '../composables/isMobileOS';
 
 const theme_ = themeStore()
-const {theme } = storeToRefs(theme_)
+const { theme } = storeToRefs(theme_)
 
 const store = mainStore()
 const { playerInputLength, focus, testContainerEl, allSpacesIndex, spaceCount, scrollTextContainer, enterKey, scrollDistance, backspaceIsPressed, containerHeight } = storeToRefs(store)
 const currentAlphabet = ref(null)
 
 const customize = customizeStore()
-const {customizers, cursorType, font, blind} = storeToRefs(customize)
+const { customizers, cursorType, font, blind } = storeToRefs(customize)
 
 const emit = defineEmits(['equal', 'unequal'])
 const props = defineProps({
@@ -37,16 +35,13 @@ const props = defineProps({
 })
 
 window.addEventListener('input', event => {
-    if (event.inputType === 'deleteContentBackward' && props.currentIndex) {
-        backspaceIsPressed.value = true
-    } else if (event.inputType !== 'deleteContentBackward' && props.currentIndex)  {
-        backspaceIsPressed.value = false
-    }
+    if (event.inputType === 'deleteContentBackward' && props.currentIndex)  backspaceIsPressed.value = true
+    else if (event.inputType !== 'deleteContentBackward' && props.currentIndex) backspaceIsPressed.value = false
 })
 
 onMounted(() => {
-    watchEffect(() => {
-        if (props.currentIndex) {      
+    watch(() => props.currentIndex, newVal => {
+        if (newVal) {      
             if (!backspaceIsPressed.value && props.alphabet === ' ') spaceCount.value = allSpacesIndex.value.indexOf(props.index - 1) + 1
             if (backspaceIsPressed.value && props.alphabet === ' ') spaceCount.value = allSpacesIndex.value.indexOf(props.index - 1) + 1
 
@@ -69,11 +64,8 @@ onMounted(() => {
                     if (!backspaceIsPressed.value) {     
                         if (testContainerEl.value.scrollTop + parentHeight === parentScrollHeight) return
                         else {
-                            if (parentScrollHeight - testContainerEl.value.scrollTop > parentHeight) {          
-                                scrollDistance.value += containerHeight.value - font.value - (font.value * 0.4)
-                            } else {
-                                scrollDistance.value += parentScrollHeight - testContainerEl.value.scrollTop
-                            }
+                            if (parentScrollHeight - testContainerEl.value.scrollTop > parentHeight) scrollDistance.value += containerHeight.value - font.value - (font.value * 0.4)
+                            else scrollDistance.value += parentScrollHeight - testContainerEl.value.scrollTop
                             scrollTextContainer.value = {
                                 top: scrollDistance.value
                             }
@@ -83,12 +75,9 @@ onMounted(() => {
 
                 if (cursorTopOffset < parentTopOffset && props.index > 0 && nextSiblingTopOffset !== cursorTopOffset) {   
                     if (backspaceIsPressed.value) {
-                        if (testContainerEl.value.scrollTop <= parentHeight) {
-                            scrollDistance.value = 0
-                        } else {
-                            scrollDistance.value -= ((containerHeight.value / 3) * 2)
-                        }
-                            scrollTextContainer.value = {
+                        if (testContainerEl.value.scrollTop <= parentHeight) scrollDistance.value = 0
+                        else scrollDistance.value -= ((containerHeight.value / 3) * 2)
+                        scrollTextContainer.value = {
                             top: scrollDistance.value
                         }
                     }
@@ -99,8 +88,8 @@ onMounted(() => {
 })
 
 const cursorStyle = computed(() => {
-    let cursor = cursorType.value === 'border' ? 'border-[1px]' : cursorType.value === 'cursor' ? 'border-l-[1px]' : cursorType.value == 'underline' ? 'border-b-[1px]' : ''
-    let bg = 'border-slate-500'
+    let cursor = cursorType.value === 'border' ? 'border-[1px]' : cursorType.value === 'cursor' ? 'border-l-[2px]' : cursorType.value == 'underline' ? 'border-b-[2px]' : ''
+    let bg = 'border-blue-700'
     return cursor + ' ' + bg
 })
 
@@ -147,7 +136,6 @@ const pulseStyle = computed(() => {
         ''
     }
 })
-
 </script>
 
 <style scoped>
@@ -185,18 +173,50 @@ const pulseStyle = computed(() => {
     }
 }
 
-.smoothlyTransitionCursor-enter-from {
-    opacity: 0;
-    transform: translateX(-50%);
+.smooth-cursor-forward {
+    transition: all 0.1s ease-out;
+    animation: forward 0.1s ease-out;
 }
 
-.smoothlyTransitionCursor-leave-to {
-    opacity: 0;
-    transform: translateX(50%);
+@keyframes forward {
+    0% {
+        transform: translateX(-100%)
+    }
+    100% {
+        transform: translateX(0%);
+    }
 }
 
-.smoothlyTransitionCursor-enter-active,
-.smoothlyTransitionCursor-leave-active {
-    transition: all .3s ease;
+.smooth-cursor-backward {
+    transition: all 0.2s ease;
+    animation: backwards 0.2s ease;
+}
+
+@keyframes backwards {
+    0% {
+        transform: translateX(100%)
+    }
+    100% {
+        transform: translateX(0%);
+    }
 }
 </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
