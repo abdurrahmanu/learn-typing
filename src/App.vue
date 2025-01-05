@@ -14,7 +14,6 @@ import {customizeStore}  from './store/customizeStore'
 import {textBoxHeight} from './composables/textBox'
 import { countdownStore } from './store/countdownStore';
 import { DB } from './composables/connectDB';
-import { isMobileOS } from './composables/isMobileOS';
 
 const onLoad = ref(undefined)
 
@@ -22,7 +21,7 @@ const customize = customizeStore()
 const {font, customizers, toggleCapsToast } = storeToRefs(customize)
 
 const main = mainStore()
-const { timedTyping, preferredConfigs, spaceCount, refocus } = storeToRefs(main)
+const { timedTyping, preferredConfigs, refocus } = storeToRefs(main)
 const { switchNext} = main
 
 const count = countdownStore()

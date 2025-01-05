@@ -1,9 +1,9 @@
 <template>
-    <div @click="customTestModal = !customTestModal, pauseTyping = false, textValue = ''" v-if="customTestModal && route.name === 'home'" class="fixed top-0 bottom-0 left-0 right-0 bg-black  text-xs opacity-40 z-[3]"></div>
-    <div v-if="customTestModal && route.name === 'home'" class="max-w-[500px] w-[95%] fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] rounded-md py-5 max-h-[calc(100dvh_-_20px)] z-[3] text-xs" :class="[theme === 'dark' ? '' : 'shadow-sm shadow-slate-500', appTheme]">
+    <div @click="customTestModal = !customTestModal, pauseTyping = false, textValue = ''" v-if="customTestModal && route.name === 'home'" class="fixed top-[-100px] bottom-0 left-0 right-0 bg-black  text-xs opacity-40 z-[3]"></div>
+    <div v-if="customTestModal && route.name === 'home'" class="max-w-[500px] w-[95%] fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] rounded-md py-5 max-h-[calc(100dvh_-_20px)] z-[3]" :class="[theme === 'dark' ? '' : 'shadow-sm shadow-slate-500', appTheme]">
         <div @click="customTestModal = !customTestModal, pauseTyping = false, textValue = ''" class="absolute top-0 text-xl font-bold w-fit right-2 hover:text-red-500">x</div>
         <div>            
-            <div v-if="!saveCustomText" class="space-y-1 text-xs text-center">
+            <div v-if="!saveCustomText" class="space-y-1 text-center">
                 <p class="font-medium ">Add your preferred test, quote or story.</p>
                 <p class="text-red-400 font-[400] ">{{ isMobileOS() ? 'Maximum of 40 words / 500 characters' : 'Maximum of 150 words / 1200 characters' }}</p>
                 <div class="relative w-[90%] m-auto">  
@@ -25,17 +25,17 @@
         </div>
         
         <div class="max-w-[90%] m-auto">
-            <div class="text-xs font-medium">CUSTOM TESTS</div>
+            <div class="font-medium">CUSTOM TESTS</div>
             <div class="max-h-[calc(100dvh_-_50dvh)] overflow-y-auto h-fit p-1">
                 <div class="relative overflow-y-auto space-y-[5px]">                
                     <div v-for="(test, name, index) in customTests" :key="index" class="p-1 border hover:shadow-sm" :class="[theme === 'dark' ? 'border-neutral-700' : 'border-slate-400']">
-                        <div class="space-x-1 text-xs font-medium uppercase"> 
+                        <div class="space-x-1 font-medium uppercase"> 
                             <span>{{ name }}</span> 
-                            <span @click="use(name)" class=" text-[10px] px-3 text-white bg-green-700 rounded-full py-[1px] hover:bg-green-800 ml-1">use</span> 
+                            <span @click="use(name)" class=" text-[12px] px-3 text-white bg-green-700 rounded-full py-[1px] hover:bg-green-800 ml-1">use</span> 
                             <span v-if="index !== 0" @click="del(name)" class="px-1 text-white py-[1px] bg-red-500 rounded-full hover:bg-red-600 text-[10px]">delete</span>
                             <!-- <span v-if="index !== 0" @click="edit(name)" class="px-3 text-white py-[1px] bg-blue-600 rounded-full hover:bg-blue-700">edit</span> -->
                         </div>
-                        <div class="text-[12px] font-[400] exo-ital max-h-[100px] overflow-y-auto">{{ test }}</div>
+                        <div class="font-[400] exo-ital max-h-[100px] overflow-y-auto">{{ test }}</div>
                     </div>
                 </div>
             </div>
