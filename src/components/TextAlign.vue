@@ -1,13 +1,13 @@
 <template>
     <div class="flex justify-center mx-auto text-xs cursor-pointer gap-3 w-fit max-[500px]:hidden">
         <div @click="textPosition = 'left'">
-            <alignLeft :position="textPosition === 'left'" class="w-5" />
+            <alignLeft :position="textPosition === 'left'" class="w-6" />
         </div>
         <div  @click="textPosition = 'center'">
-            <alignMiddle :position="textPosition === 'center'" class="w-5"/>
+            <alignMiddle :position="textPosition === 'center'" class="w-6"/>
         </div>
         <div @click="textPosition = 'right'">
-            <alignRight :position="textPosition === 'right'" class="w-5"/>
+            <alignRight :position="textPosition === 'right'" class="w-6"/>
         </div>
     </div>
 </template>

@@ -1,8 +1,8 @@
 <template>
   <div class="min-h-[100dvh] w-[100%] bg-zinc-200 pt-4">
     <div class="relative font-medium cursor-default w-fit h-fit p-[2px] m-auto">
-      <span class="absolute top-0 left-[50%] translate-x-[-50%] text-[15px] pt-[1px]">KI</span>
-      <board class="w-8"/>
+      <span class="absolute top-0 left-[50%] translate-x-[-50%] text-[25px] pt-[4px] font-bold">KI</span>
+      <board class="w-16"/>
     </div>
     <div class="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] space-y-3">
       <div class="loader m-auto"></div>

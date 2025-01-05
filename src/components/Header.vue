@@ -7,27 +7,26 @@
                     <Clock class="peer" />
                 </div>
                 <div class="relative hidden w-fit min-[505px]:block" v-if="mode !== 'alphabets' && !isMobileOS()">
-                    <TextAlign  class="peer"/>
+                    <TextAlign class="peer"/>
                 </div>
                 <div class="relative w-fit">
-                    <Blind  class="peer"/>
+                    <Blind class="peer"/>
                 </div>
                 <div class="relative w-fit" v-if="route.name === 'home' && mode !== 'alphabets'" >
-                    <repeat class="w-4 peer"/>
-                    <div class="absolute z-5 left-[50%] translate-x-[-50%] bottom-[-120%] rounded-full whitespace-nowrap peer-hover:block hidden">repeat</div>
+                    <repeat class="w-5 peer"/>
                 </div>
                 <div class="relative w-fit" v-if="mode !== 'alphabets'" >
-                    <add @click="customTestModal = true, pauseTyping = true" class="w-4 peer"/>
+                    <add @click="customTestModal = true, pauseTyping = true" class="w-6 peer"/>
                 </div>
             </div>
             <div class="relative w-fit" v-if="route.name !== 'home'" >                
-                <home @click="routeToPage('home')" class="w-4 peer" />
+                <home @click="routeToPage('home')" class="w-5 peer" />
             </div>
             <div class="relative w-fit" v-if="route.name === 'home'" >
-                <settings class="w-5 peer" />
+                <settings class="w-6 peer" />
             </div>
             <div class="relative w-fit" v-if="route.name !== 'user'" @click="routeToPage('user')" >
-                <user class="w-4 peer" />
+                <user class="w-5 peer" />
             </div>
         </div>
         <CompletionRange :class="[hideElements ? 'block' : 'hidden max-[460px]:block']" v-if="blind && route.name === 'home'" />

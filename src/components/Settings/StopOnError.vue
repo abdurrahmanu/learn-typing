@@ -3,7 +3,7 @@
         <div class="flex justify-between w-full p-1 border border-transparent rounded-sm ">
             <div @click="onError" class="flex gap-4 w-fit">
                 <input name="nospace" :checked="customizers['stop-on-error']" type="checkbox" class="checked:accent-green-500 hover:accent-green-700">
-                <label class="text-sm font-medium w-fit">
+                <label class="text-[15px] font-bold uppercase w-fit">
                     <span>Stop on error</span>
                     <span v-if="customizers['stop-on-error']" class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-teal-800 ml-1">hard</span>
                     <span v-else class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-lime-800 ml-1">easy</span>

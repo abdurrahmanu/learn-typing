@@ -3,7 +3,7 @@
         <div :class="{'z-[999]' : !(allSettings && !isMobileOS())}" class="absolute top-0 bottom-0 right-0 left-0 z-[99] font-light settings-font" v-if="allSettings">
             <div @click="toggleSettings" class="opacity-40 absolute bg-black w-full top-0 bottom-0 right-0 left-0 z-[999]"></div>
             <div class="overflow-y-auto outline-none" :class="[allSettings ? 'absolute top-0 right-0 bottom-0 h-[100dvh] max-w-[800px] w-fit z-[9999]' : '', appTheme ]">
-                <div class="relative leading-5 text-[15px] pb-5">
+                <div class="relative leading-5 text-[17px] pb-5">
                     <Header />
                     <Fonts />
                     <TextLines />

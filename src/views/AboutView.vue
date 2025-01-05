@@ -7,9 +7,9 @@
             </div>
             <p class="text-center text-[30px] leading-0 opacity-95 roboto-mono exo-ital"><span class="group-hover:text-blue-500">Ki</span><span class="group-hover:text-green-500">Board</span></p>
         </div>
-        <p class="m-auto text-sm text-center w-fit caveat">DESIGNED AND DEVELOPED BY AHMED ABDULRAHMAN</p>
-        <div @click="name='email'" class="px-2 py-[1px] border-gray-500 border rounded-sm transition-all duration-100 hover:shadow-md m-auto hover:border-green-500 flex items-center gap-2 pacifico text-xs w-fit hover:px-5"><email class="w-4" />EMAIL</div>
-        <div @click="demo = true, pauseTyping = true" :class="[demo ? 'hidden' : '']" class="mt-8 m-auto w-fit font-medium caveat hover:animate-none transition-all duration-500 hover:px-20 ring-[1px] ring-green-500 px-10 py-1 opacity-80 shadow-sm cursor-pointer hover:shadow-green-500 text-center hover:shadow-md hover:opacity-100">HELP</div>
+        <p class="m-auto text-base text-center w-fit caveat">DESIGNED AND DEVELOPED BY AHMED ABDULRAHMAN</p>
+        <div @click="name='email'" class="px-2 py-[1px] border-gray-500 border rounded-sm transition-all duration-100 hover:shadow-md m-auto hover:border-green-500 flex items-center gap-2 w-fit hover:px-5"><email class="w-4" />EMAIL</div>
+        <div @click="demo = true, pauseTyping = true" :class="[demo ? 'hidden' : '']" class="mt-8 m-auto w-fit font-medium caveat hover:animate-none transition-all duration-500 hover:px-20 ring-[2px] text-xl ring-green-600 px-10 py-1 opacity-80 shadow-sm cursor-pointer hover:shadow-green-700 text-center hover:shadow-md hover:opacity-100">HELP</div>
         <!-- <p class="text-center">Develpoment phase</p> -->
     </div>
 </template>

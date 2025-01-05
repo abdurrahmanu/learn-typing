@@ -1,8 +1,8 @@
 <template>
-    <div v-if="!isAuthenticated" class="gap-10 pt-12 m-auto space-y-4 text-xs font-cursive w-fit">        
-        <div class="flex justify-center">
-            <p @click="signIn = false" :class="[signIn ? '' : 'ring-[1px]']" class="px-3 text-center cursor-pointer">SIGN UP</p>
-            <p @click="signIn = true" :class="[signIn ? 'ring-[1px]' : '']" class="px-3 text-center cursor-pointer">SIGN IN</p>
+    <div v-if="!isAuthenticated" class="gap-10 pt-12 m-auto space-y-4 font-cursive w-fit">
+        <div class="flex justify-center font-bold">
+            <p @click="signIn = false" :class="[signIn ? '' : 'ring-[2px]']" class="px-3 text-center cursor-pointer">SIGN UP</p>
+            <p @click="signIn = true" :class="[signIn ? 'ring-[2px]' : '']" class="px-3 text-center cursor-pointer">SIGN IN</p>
         </div>
         <p @click="sign('email')" class="flex items-center justify-center gap-3 px-10 py-1 font-medium border rounded-md cursor-pointer border-neutral-600 active:border-green-500 hover:bg-black"><email class="w-4" />EMAIL</p>
         <p @click="sign('google')" class="flex items-center justify-center gap-3 px-10 py-1 font-medium border rounded-md cursor-pointer border-neutral-600 active:border-green-500 hover:bg-black"><google />GOOGLE</p>

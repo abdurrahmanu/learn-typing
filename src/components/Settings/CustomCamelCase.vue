@@ -3,7 +3,7 @@
         <div  class="flex justify-between w-full p-1 border border-transparent rounded-sm ">
             <div @click="customizers['camel-case'] = !customizers['camel-case'], customize('camel-case', customizers['camel-case'])" class="flex gap-4 w-fit">
                 <input name="camelcase" :checked="customizers['camel-case']" type="checkbox" class="checked:accent-green-500 hover:accent-green-700">
-                <label class="text-sm font-medium w-fit">
+                <label class="text-[15px] font-bold uppercase w-fit">
                     <span>Custom case</span> 
                     <span v-if="customizers['camel-case']" class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-teal-800 ml-1">hard</span>
                     <span v-else class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-lime-800 ml-1">easy</span>

@@ -1,6 +1,6 @@
 <template>
 <div :class="[appTheme, theme === 'dark' ? 'hover:bg-neutral-800' : 'hover:bg-zinc-200']" class="py-4 pl-5 space-y-1">
-        <p class="text-xs font-medium">DIFFICULTY</p>        
+        <p class="text-[15px] font-bold">DIFFICULTY</p>        
         <div class="flex flex-wrap gap-x-2 gap-y-1 font-[400] items-center">
             <div @click="difficulty = 'beginner'" class="flex px-3 py-1 border rounded-md hover:border-black" :class="[difficulty === 'beginner' ? 'bg-[#44b0d3] border-transparent text-white' : 'border-[#44b0d3]']">
                 <p class="w-fit">Beginner</p>

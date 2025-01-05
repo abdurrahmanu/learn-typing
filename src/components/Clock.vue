@@ -9,9 +9,9 @@
                 :cancel="timedTyping" />
                 <pauseTimer @click="timer" class="w-6" />
             </div>
-            <playTimer v-if="!timedTyping" @click="timer" class="w-5" />
+            <playTimer v-if="!timedTyping" @click="timer" class="w-6" />
             <div v-if="timedTyping && !beginCountdown" class="relative flex items-center gap-1 w-fit">  
-                    <playTimer @click="timer" class="w-5" />
+                    <playTimer @click="timer" class="w-6" />
                     <div :class="[theme === 'dark' ? 'border-slate-200' : 'border-black']" class="flex text-xs border h-fit scale-105 max-[410px]:absolute max-[410px]:top-[calc(100%_+_2px)] max-[410px]:left-[50%] max-[410px]:translate-x-[-50%] cursor-pointer config">
                         <div class="px-2 border-r w-fit" :class="[level === 'beginner' ? difficultyBg : '', theme === 'dark' ? 'border-slate-200' : 'border-black']" @click="selectCountDown(timeForBeginner, 'beginner')">{{timeForBeginner}}<span class="text-[9px]">s</span></div>
                         <div class="px-2 border-r w-fit" :class="[level === 'amateur' ? difficultyBg : '', theme === 'dark' ? 'border-slate-200' : 'border-black']" @click="selectCountDown(timeForAmateur, 'amateur')">{{timeForAmateur}}<span class="text-[9px]">s</span></div>

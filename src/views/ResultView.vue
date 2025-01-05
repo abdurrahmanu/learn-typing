@@ -3,16 +3,16 @@
         <p class="py-3 text-4xl text-center text-slate-500 stats">STATISTICS</p>
         <div class="flex py-1 m-auto gap-x-2 w-fit text-slate-300">            
             <div class="relative">                        
-                        <div class="px-3 m-auto text-xs font-medium uppercase rounded-full peer bg-slate-800 w-fit">{{testType}}</div>
-                        <div class="absolute rounded-md top-[115%] left-[100%] translate-x-[-50%] z-[1] text-left p-1 hidden peer-hover:block shadow-sm shadow-black bg-slate-800 max-w-[300px] text-[13px] min-w-[195px]">
+                        <div class="px-3 m-auto text-[15px] font-medium uppercase rounded-full peer bg-slate-800 w-fit">{{testType}}</div>
+                        <div class="absolute rounded-md top-[115%] left-[100%] translate-x-[-50%] z-[1] text-left p-2 hidden peer-hover:block shadow-sm shadow-black bg-slate-800 max-w-[300px] text-[15px] min-w-[195px]">
                             <p class="font-medium underline">TWO MODES</p>
                             <p>* Test mode - quotes, random words and custom tests.</p>
                             <p>* Alphabet mode - Aphabets and letter combination mode</p>
                         </div>
                     </div>
             <div class="relative w-fit">                
-                <div class="relative px-3 m-auto text-xs font-medium uppercase rounded-full cursor-pointer w-fit peer"  :class="[difficulty === 'beginner' ? 'bg-teal-700' : difficulty === 'amateur' ? 'bg-green-500' : difficulty === 'expert' ? 'bg-amber-700' : '']">{{ difficulty }}</div>
-                <div :class="[difficulty === 'beginner' ? 'bg-teal-700' : difficulty === 'amateur' ? 'bg-green-500' : difficulty === 'expert' ? 'bg-amber-700' : '']" class="absolute rounded-md top-[115%] right-0 z-[1] text-left p-1 hidden peer-hover:block shadow-sm shadow-black text-[13px] max-w-[300px]">
+                <div class="relative px-3 m-auto text-[15px] font-medium uppercase rounded-full cursor-pointer w-fit peer"  :class="[difficulty === 'beginner' ? 'bg-teal-700' : difficulty === 'amateur' ? 'bg-green-500' : difficulty === 'expert' ? 'bg-amber-700' : '']">{{ difficulty }}</div>
+                <div :class="[difficulty === 'beginner' ? 'bg-teal-700' : difficulty === 'amateur' ? 'bg-green-500' : difficulty === 'expert' ? 'bg-amber-700' : '']" class="absolute rounded-md top-[115%] right-0 z-[1] text-left p-2 hidden peer-hover:block shadow-sm shadow-black text-[15px] max-w-[300px]">
                     <p class="font-bold underline uppercase">TO PASS {{ difficulty }} TEST</p>
                     <p class="min-w-[200px]">* Accuracy more than - {{  difficulty === 'beginner' ? '70%' : difficulty === 'amateur' ? '80%' : difficulty === 'expert' ? '95%' : '' }} </p>
                     <p class="min-w-[200px]">* Words Per Minute (WPM) more than - {{ difficulty === 'beginner' ? '50' : difficulty === 'amateur' ? '65' : difficulty === 'expert' ? '85' : '' }} </p>
@@ -27,8 +27,8 @@
                     <pass v-if="accuracyBasedOnLevels" class="absolute bottom-0 right-[2px] w-3" />
                     <fail v-else class="absolute bottom-0 right-[2px] w-3" />
                     <div class="relative">                        
-                        <div class="px-2 text-xs border border-transparent rounded-full peer hover:border-black font-[400]">ACCURACY</div>
-                        <div class="absolute rounded-md top-[115%] left-[0%] z-[1] text-left p-1 hidden peer-hover:block shadow-sm shadow-black bg-neutral-800 min-w-[185px] text-[13px] max-w-[300px] text-slate-400">
+                        <div class="px-2 border border-transparent rounded-full peer hover:border-black font-[400]">ACCURACY</div>
+                        <div class="absolute rounded-md top-[115%] left-[0%] z-[1] text-left p-1 hidden peer-hover:block shadow-sm shadow-black bg-neutral-800 min-w-[185px]  max-w-[300px] text-slate-400">
                             <p>The percentage of correctly typed characters out of the total number of characters.</p>
                         </div>
                     </div>
@@ -36,8 +36,8 @@
                 </div>
                 <div class="relative px-2 text-center border-r border-r-teal-700">
                     <div class="relative">                        
-                        <div class="px-2 text-xs border border-transparent rounded-full peer hover:border-black font-[400]">TIME</div>
-                        <div class="absolute rounded-md top-[115%] left-[50%] translate-x-[-50%] z-[1] text-left p-1 hidden peer-hover:block shadow-sm shadow-black bg-neutral-800 min-w-[185px] text-[13px] max-w-[300px] text-slate-400">
+                        <div class="px-2 border border-transparent rounded-full peer hover:border-black font-[400]">TIME</div>
+                        <div class="absolute rounded-md top-[115%] left-[50%] translate-x-[-50%] z-[1] text-left p-1 hidden peer-hover:block shadow-sm shadow-black bg-neutral-800 min-w-[185px]  max-w-[300px] text-slate-400">
                             <p>The total time taken to complete the typing test.</p>
                         </div>
                     </div>
@@ -47,8 +47,8 @@
                     <pass v-if="wpmBasedOnLevels" class="absolute bottom-0 right-[2px] w-3" />
                     <fail v-else class="absolute bottom-0 right-[2px] w-3" />
                     <div class="relative">                        
-                        <div class="px-2 text-xs border border-transparent rounded-full peer hover:border-black font-[400]">WPM</div>
-                        <div class="absolute rounded-md top-[115%] left-[50%] translate-x-[-50%] z-[1] text-left p-1 hidden peer-hover:block shadow-sm shadow-black bg-neutral-800 min-w-[185px] text-[13px] max-w-[300px] text-slate-400">
+                        <div class="px-2 border border-transparent rounded-full peer hover:border-black font-[400]">WPM</div>
+                        <div class="absolute rounded-md top-[115%] left-[50%] translate-x-[-50%] z-[1] text-left p-1 hidden peer-hover:block shadow-sm shadow-black bg-neutral-800 min-w-[185px]  max-w-[300px] text-slate-400">
                             <p>Words Per Minute is the number of words typed correctly per minute. One word is defined as five characters.</p>
                         </div>
                     </div>
@@ -58,8 +58,8 @@
                     <pass v-if="ErrorRatioBasedOnLevels" class="absolute bottom-0 right-[2px] w-3" />
                     <fail v-else class="absolute bottom-0 right-[2px] w-3" />
                     <div class="relative">                        
-                        <div class="px-2 text-xs border border-transparent rounded-full peer hover:border-black font-[400]">ERROR RATIO</div>
-                        <div class="absolute rounded-md top-[115%] right-[0%] z-[1] text-left p-1 hidden peer-hover:block shadow-sm shadow-black bg-neutral-800 min-w-[185px] text-[13px] max-w-[300px] text-slate-400">
+                        <div class="px-2 border border-transparent rounded-full peer hover:border-black font-[400]">ERROR RATIO</div>
+                        <div class="absolute rounded-md top-[115%] right-[0%] z-[1] text-left p-1 hidden peer-hover:block shadow-sm shadow-black bg-neutral-800 min-w-[185px]  max-w-[300px] text-slate-400">
                             <p>Incorrectly typed characters / Total number of characters</p>
                         </div>
                     </div>
@@ -67,7 +67,7 @@
                 </div>
             </div>
         </div>
-        <div class="space-y-1 text-lg font-[400] roboto-font py-4 border-y border-slate-500 w-fit m-auto caveat">            
+        <div class="space-y-1 text-3xl font-[400] roboto-font py-4 my-3 border-y border-slate-500 w-fit m-auto caveat">            
             <div v-if="timedTyping">                
                 <div v-if="beatCountdown && testResult === 'you passed the test'" class="text-green-700 uppercase ">You passed the test<span class="px-2 text-lg">&#128526;</span> </div>
                 <div v-else class="text-red-400 uppercase ">{{!beatCountdown ? 'You failed to beat the time' : 'You failed the test' }} <span class="text-lg">&#128551;</span></div>

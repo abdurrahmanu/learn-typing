@@ -3,7 +3,7 @@
         <div  class="flex justify-between w-full p-1 border border-transparent rounded-sm ">
             <div @click="customizers['blur'] = !customizers['blur'], customize('blur', customizers['blur'])" class="flex gap-4 w-fit">
                 <input name="caps" :checked="customizers['blur']" type="checkbox" class="checked:accent-green-500 hover:accent-green-700">
-                <label class="text-sm font-medium w-fit">
+                <label class="text-[15px] font-bold uppercase w-fit">
                     <span>Blur</span> 
                     <span v-if="customizers['blur']" class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-yellow-800 ml-1">medium</span> 
                     <span v-else class="px-3 text-white uppercase rounded-full text-[10px] bg-lime-800 ml-1 py-[1px] relative bottom-[2px]">easy</span>

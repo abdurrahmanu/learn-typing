@@ -3,7 +3,7 @@
             <div class="flex justify-between w-full p-1 border border-transparent rounded-sm ">
                 <div @click="timedTyping = !timedTyping" class="flex gap-4 w-fit">
                     <input name="countdown" :checked="timedTyping" type="checkbox" class="checked:accent-green-500 hover:accent-green-700">
-                    <label class="text-sm font-medium w-fit">
+                    <label class="text-[15px] font-bold uppercase w-fit">
                         <span>Countdown</span> 
                         <PlayTimer v-if="timedTyping" class="inline-block w-5 mx-2" /> 
                         <PauseTimer v-if="!timedTyping" class="inline-block w-5 mx-2" />

@@ -6,13 +6,13 @@
             </div>
 
             <div class="max-w-[1200px] m-auto lg:flex">                
-                <div class="max-w-[600px] lg:max-w-[40%] px-2 mx-auto lg:text-left text-center caveat font-normal lg:border-r w-[90%] leading-[2] lg:leading-[2.2] md:leading-[2.1] text-[14px] border-neutral-800">                
+                <div class="max-w-[700px] lg:max-w-[40%] px-2 mx-auto lg:text-left text-center font-normal lg:border-r w-[90%] leading-[2] lg:leading-[2.2] md:leading-[2] text-[18px] border-neutral-800">                
                     <p>You are here to learn <span class="text-green-700 underline hover:text-green-500">Touch-typing</span> (typing without looking at your keyboard). Your fingers are trained to know and navigate the locations of all the keys on a keyboard all by themselves (muscle memory). It sounds like a Super power right? Your fingers assume  
                         <span @click="showDefaultFingerPositions = true" class="px-3 py-1 animate-pulse ring-[1px] ring-green-500 rounded-md hover:animate-none hover:bg-green-400 hover:text-black uppercase cursor-pointer whitespace-nowrap">default positions</span> 
                         <span>  and do not leave their positions. They go back and forth their initial positions while stroking other keys.  </span>
                         <span @click="" class="px-3 py-1 animate-pulse ring-[1px] ring-red-500 rounded-md hover:animate-none hover:bg-red-400 hover:text-black uppercase cursor-pointer">video</span>
                     </p>
-                    <div class="hidden pt-2 text-xs text-black cursor-default lg:block lg:space-y-2 whitespace-nowrap opacity-80">
+                    <div class="hidden pt-2 text-[14px] text-black cursor-default lg:block lg:space-y-2 whitespace-nowrap opacity-80">
                         <div :class="[fingersKeys.normal.littleFinger.includes(keyToShow.trim()) || fingersKeys.shift.littleFinger.includes(keyToShow.trim()) ? 'ring-[2px] ring-green-800 animate-pulse' : '']" class="px-10 py-1 bg-red-400 w-fit">LITTLE FINGER / PINKY FINGER</div>
                         <div :class="[fingersKeys.normal.ringFinger.includes(keyToShow.trim()) || fingersKeys.shift.ringFinger.includes(keyToShow.trim()) ? 'ring-[2px] ring-green-800 animate-pulse' : '']" class="px-10 py-1 bg-yellow-500 w-fit">RING FINGER</div>
                         <div :class="[fingersKeys.normal.middleFinger.includes(keyToShow.trim()) || fingersKeys.shift.middleFinger.includes(keyToShow.trim()) ? 'ring-[2px] ring-green-800 animate-pulse' : '']" class="px-10 py-1 bg-orange-300 w-fit">MIDDLE FINGER</div>
@@ -29,7 +29,7 @@
                     <div class="p-2 space-y-1 text-center border border-black rounded-md h-fit bg-neutral-900 opacity-80 lg:max-w-[90%] m-auto">            
                         <div v-for="(line, i) in qwertyKeyboard" class="flex gap-[1px] max-w-[500px] w-[100%] m-auto">
                             <div @click="showSingleFinger = true, keyToShow = entry" :class="[fingerBg(entry), keysWidth(entry), divisionLine(entry), showDefaultFingerPositions && defaultFingerPositions.includes(entry.toLowerCase()) ? 'ring-[2px] ring-green-400' : '']" v-for="(entry, j) in line" :key="j" class="relative flex-grow py-1 text-xs font-medium text-black whitespace-pre border border-black rounded-md shadow-sm cursor-pointer shadow-black hover:text-white">
-                                <div v-if="doubleCharacterKeys[entry]" class="absolute text-[9px] top-[-2px] left-[1px]">{{ doubleCharacterKeys[entry] }}</div>
+                                <div v-if="doubleCharacterKeys[entry]" class="absolute text-[11px] top-[-2px] left-[1px]">{{ doubleCharacterKeys[entry] }}</div>
                                 <div>{{ entry }}</div>
                                 <div v-if="entry.trim() === keyToShow.trim() && showSingleFinger" :class="[fingerBg(entry), fingerHeight(entry)]" class="w-[25px] left-[50%] translate-x-[-50%] top-[70%] z-[9] rounded-t-full h-14 shadow-md shadow-black z-1 after:w-[90%] after:absolute after:h-[20px] after:rounded-t-full after:bg-white after:top-[3px] after:left-[50%] after:translate-x-[-50%] absolute border border-neutral-700"></div>
                                 <div v-if="defaultFingerPositions.includes(entry.trim().toLowerCase()) && showDefaultFingerPositions" :class="[fingerBg(entry), fingerHeight(entry)]" class="w-[25px] left-[50%] translate-x-[-50%] top-[70%] z-[9] rounded-t-full h-14 shadow-md shadow-black z-1 after:w-[90%] after:absolute after:h-[20px] after:rounded-t-full after:bg-white after:top-[3px] after:left-[50%] after:translate-x-[-50%] absolute border border-neutral-700"></div>

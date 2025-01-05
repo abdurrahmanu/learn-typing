@@ -14,6 +14,7 @@ import {customizeStore}  from './store/customizeStore'
 import {textBoxHeight} from './composables/textBox'
 import { countdownStore } from './store/countdownStore';
 import { DB } from './composables/connectDB';
+import { isMobileOS } from './composables/isMobileOS';
 
 const onLoad = ref(undefined)
 
