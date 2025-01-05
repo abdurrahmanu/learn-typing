@@ -15,25 +15,28 @@ export const configUpdate = async () => {
     const connect = connectStore()
     const {connectingServer} = storeToRefs(connect)
 
+    console.log(theme.value)
     const customize = customizeStore()
     const { customizers, doubleEachWord, disableOption, textLines, cursorType, difficulty, mode, hideElements, font, range, blind, backspace, capslock } = storeToRefs(customize)
 
     preferredConfigs.value = await getSingleDoc(localStorage.getItem('kiboardID'))
 
     connectingServer.value = false
-    doubleEachWord.value = preferredConfigs.value.doubleEachWord
-    theme.value = preferredConfigs.value.theme
-    font.value = preferredConfigs.value.fontsize 
+    doubleEachWord.value = preferredConfigs.value.doubleEachWord || false
+    theme.value = preferredConfigs.value.theme || theme.value
+    console.log(theme.value)
+
+    font.value = preferredConfigs.value.fontsize || font.value
     range.value = (font.value - 16) / 0.26
-    hideElements.value = preferredConfigs.value.hide
-    cursorType.value = preferredConfigs.value.cursor
-    blind.value = preferredConfigs.value.blind
-    difficulty.value = preferredConfigs.value.difficulty
-    backspace.value = preferredConfigs.value.backspace
-    customizers.value = preferredConfigs.value.config[0]
-    disableOption.value = preferredConfigs.value.config[1] 
-    mode.value = preferredConfigs.value.mode
-    capslock.value = preferredConfigs.value.capslock
-    customTests.value = preferredConfigs.value.customTests
-    textLines.value = preferredConfigs.value.textLines
+    hideElements.value = preferredConfigs.value.hide || hideElements.value
+    cursorType.value = preferredConfigs.value.cursor || cursorType.value
+    blind.value = preferredConfigs.value.blind || false
+    difficulty.value = preferredConfigs.value.difficulty || difficulty.value
+    backspace.value = preferredConfigs.value.backspace || backspace.value
+    customizers.value = preferredConfigs.value.config[0] || customizers.value
+    disableOption.value = preferredConfigs.value.config[1] || disableOption.value
+    mode.value = preferredConfigs.value.mode || 'auto'
+    capslock.value = preferredConfigs.value.capslock || false
+    customTests.value = preferredConfigs.value.customTests || customTests.value['demo']
+    textLines.value = preferredConfigs.value.textLines || 3
 }
