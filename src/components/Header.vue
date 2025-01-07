@@ -25,9 +25,9 @@
             <div class="relative w-fit" v-if="route.name === 'home'" >
                 <settings class="w-6 peer" />
             </div>
-            <div class="relative w-fit" v-if="route.name !== 'user'" @click="routeToPage('user')" >
+            <!-- <div class="relative w-fit" v-if="route.name !== 'user'" @click="routeToPage('user')" >
                 <user class="w-5 peer" />
-            </div>
+            </div> -->
         </div>
         <CompletionRange :class="[hideElements ? 'block' : 'hidden max-[460px]:block']" v-if="blind && route.name === 'home'" />
         <CompletionRangeWithErrors :class="[hideElements ? 'block' : 'hidden max-[460px]:block']" v-if="!blind && route.name === 'home'"/>

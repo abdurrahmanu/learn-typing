@@ -35,7 +35,7 @@
                 </div>
             </div>
         </Transition>
-        <p class="flex m-auto text-base bg-transparent w-fit whitespace-nowrap" v-if="(isTouchScreenDevice() && !focus) || refocus" :class="[isTouchScreenDevice() ? 'blur-[1px]' : 'absolute top-[100px] font-bold left-[50%] translate-x-[-50%]']" ><span class="pr-1">{{isTouchScreenDevice() ? 'click' : ''}} </span><upwardsFinger v-if="isTouchScreenDevice()" class="relative w-5 bottom-1" />{{ refocus ? 'click anywhere to focus' : isTouchScreenDevice() && !focus ? 'text to focus' : '' }}</p>
+        <p class="flex mx-auto text-base bg-transparent w-fit whitespace-nowrap" v-if="(isTouchScreenDevice() && !focus) || refocus" :class="[isTouchScreenDevice() ? 'blur-[1px]' : 'absolute top-[100px] font-bold left-[50%] translate-x-[-50%]']" ><span class="pr-1">{{isTouchScreenDevice() ? 'click' : ''}} </span><upwardsFinger v-if="isTouchScreenDevice()" class="relative w-5 bottom-1" />{{ refocus ? 'click anywhere to focus' : isTouchScreenDevice() && !focus ? 'text to focus' : '' }}</p>
     </main>
 </template>
 
@@ -145,20 +145,15 @@ onMounted(() => {
             inputEl.value.focus()
             inputEl.value.addEventListener('input', mobileInputEvent)
             window.addEventListener('click', event => {
-                if (testContainerEl.value instanceof HTMLElement) {    
-                    if (isMobile() && event.srcElement !== testContainerEl.value && !testContainerEl.value.contains(event.srcElement) && event.srcElement !== restartEl.value && !restartEl.value.contains(event.srcElement) && event.srcElement !== restartSvgEl.value) {
+                if (testContainerEl.value instanceof HTMLElement) {  
+                    const isOutsideTestContainer = event.srcElement !== testContainerEl.value && !testContainerEl.value.contains(event.srcElement) && event.srcElement !== restartEl.value && !restartEl.value.contains(event.srcElement) && event.srcElement !== restartSvgEl.value
+                    if (isOutsideTestContainer) {
                         inputEl.value.blur()
                         focus.value = false
-                    } else if (!isMobile()) {
-
-                    // } else if (!isMobile() && (event.srcElement === testContainerEl.value || testContainerEl.value.contains(event.srcElement))) {
-                    //     inputEl.value.focus()
-                    //     focus.value = true 
-                    // }
-                        
+                    } else if (!isOutsideTestContainer) {                        
                         inputEl.value.focus()
                         focus.value = true 
-                    }
+                    } 
                 }
             })
         }

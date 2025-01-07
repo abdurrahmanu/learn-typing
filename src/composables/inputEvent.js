@@ -13,8 +13,6 @@ export const inputEvent = (e) => {
 
     if (customizers.value['stop-on-error'] && wrongCount.value && !isTouchScreenDevice() && e.key !== 'Backspace') return
 
-    console.log('how did you pass?')
-
     if (!capslock.value && !toggleCapsToast.value && e.key !== 'CapsLock' && e.getModifierState('CapsLock')) toggleCapsToast.value = true
     if (!capslock.value && e.getModifierState('CapsLock') && e.key !== 'CapsLock') return
     if (e.key === 'CapsLock' && !capslock.value) {
