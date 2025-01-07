@@ -28,7 +28,6 @@ export const mainStore = defineStore('mainStore', () => {
     const restartSvgEl = ref(null)
     const focus = ref(false)
     const allSpacesIndex = ref([])
-    const spaceCount = ref(0)
     const pulseAnimate = ref(false)
     const currentWordArray = ref([])
 
@@ -39,6 +38,7 @@ export const mainStore = defineStore('mainStore', () => {
     const timerID = ref()
     const timePaused = ref(0)
     const beginCountdown = ref(false)
+    const spaces = ref({})
 
     // On-type states
     const completionLevel = ref(0) // test completion percentage
@@ -89,13 +89,13 @@ export const mainStore = defineStore('mainStore', () => {
         beginCountdown.value = false
         completionLevel.value = 0
         totalTime.value = 0
+        spaces.value = {}
         startTime.value = null
         correctCount.value = 0
         wrongCount.value = 0
         containerText.value = ''
         allSpacesIndex.value = []
         playerInputLength.value = 0
-        spaceCount.value = 0
     }
 
     const sessionComplete = async () => {
@@ -146,6 +146,7 @@ export const mainStore = defineStore('mainStore', () => {
         totalTime,
         timerID,
         timePaused,
+        spaces,
 
         completionLevel,
         playerInput,
@@ -157,7 +158,6 @@ export const mainStore = defineStore('mainStore', () => {
         correctCount,
         wrongCount,
         allSpacesIndex,
-        spaceCount,
         pulseAnimate,
         currentWordArray,
 

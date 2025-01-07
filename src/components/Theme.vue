@@ -1,5 +1,5 @@
 <template>
-    <div ref="bgContainer" :class="[openBackgrounds ? 'space-y-1' : '']" class="grid items-center justify-center rounded-full rotate-180 p-[2px]  border-slate-500 border bg-neutral-700 transition-all duration-200 hover:border-green-500">
+    <div ref="bgContainer" :class="[openBackgrounds ? 'space-y-1' : '']" class="grid items-center justify-center rounded-full rotate-180 p-[2px] ring-[2px] ring-white bg-neutral-700 transition-all duration-200 hover:border-green-500">
         <div v-for="(color, index) in colors" :key="index" @click="toggleTheme(color)" v-show="openBackgrounds || color === theme"  :class="[bg[index], !openBackgrounds && color !== theme ? 'hidden' : 'block w-7 h-7 md:w-6 md:h-6 rounded-full border border-black']"></div>
     </div>
 </template>
@@ -22,11 +22,11 @@ const toggleTheme = (color) => {
     openBackgrounds.value = !openBackgrounds.value
     if (theme.value === 'dark') {
         updateDB(Object.keys({theme})[0], theme.value)
-        bg.value = ['bg-neutral-900', 'bg-white']
+        bg.value = ['bg-[#503c3c]', 'bg-white']
         colors.value = ['dark', 'white']
     }  else {
         updateDB(Object.keys({theme})[0], theme.value)
-            bg.value = ['bg-white', 'bg-neutral-900']
+            bg.value = ['bg-white', 'bg-[#503c3c]']
             colors.value = ['white', 'dark']
         }
 }
@@ -37,7 +37,7 @@ const colors = ref([
 ])
 
 const bg = ref([
-    'bg-neutral-900',
+    'bg-[#503c3c]',
     'bg-white',
 ])
 

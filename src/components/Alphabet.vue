@@ -2,7 +2,7 @@
     <div aria-hidden="true" ref="currentAlphabet"  class="relative inline">
         <div v-if="currentIndex" class="inline-block h-[calc(100%_-_5px)] absolute left-0 bottom-0 right-0" :class="[cursorStyle, currentIndex && !backspaceIsPressed ? 'smooth-cursor-forward' : 'smooth-cursor-backward']"></div>
         <div :class="[customizers['no-space'] ? '' : 'whitespace-pre-wrap']" class="relative inline">
-            <span  :class="[!focus && currentIndexStyle ? 'text-slate-500' : '', equalStyle, (isMobileOS() && focus) || !isMobileOS() ? currentIndexStyle : '', mainStyle, !currentIndex || isMobileOS() && !focus ? 'border-transparent' : '', pulseStyle, blurStyle, (cursorType === 'pulse' || cursorType === 'word-pulse') && alphabet === ' ' ? 'opacity-100 animate-pulse' : '']" class="relative transition-opacity duration-75" >{{ alphabet }}</span>
+            <span  :class="[!focus && currentIndexStyle ? 'text-slate-500' : '', equalStyle, (isTouchScreenDevice() && focus) || !isTouchScreenDevice() ? currentIndexStyle : '', mainStyle, !currentIndex || isTouchScreenDevice() && !focus ? 'border-transparent' : '', pulseStyle, blurStyle, (cursorType === 'pulse' || cursorType === 'word-pulse') && alphabet === ' ' ? 'opacity-100 animate-pulse' : '']" class="relative transition-opacity duration-75" >{{ alphabet }}</span>
         </div>
     </div>
 </template> 
@@ -13,13 +13,16 @@ import {storeToRefs} from 'pinia'
 import {mainStore} from '../store/mainStore'
 import {themeStore}  from '../store/themeStore'
 import { customizeStore }  from '../store/customizeStore'
-import { isMobileOS } from '../composables/isMobileOS';
+import { isTouchScreenDevice } from '../composables/isTouchScreenDevice';
+
+//playerInputLength === props.index - 1
+//props.alphabet's index === containerText.value[props.index - 1]
 
 const theme_ = themeStore()
 const { theme } = storeToRefs(theme_)
 
 const store = mainStore()
-const { playerInputLength, focus, testContainerEl, allSpacesIndex, spaceCount, scrollTextContainer, enterKey, scrollDistance, backspaceIsPressed, containerHeight } = storeToRefs(store)
+const { playerInputLength, containerText, focus, spaces, testContainerEl, allSpacesIndex, scrollTextContainer, enterKey, scrollDistance, backspaceIsPressed, containerHeight } = storeToRefs(store)
 const currentAlphabet = ref(null)
 
 const customize = customizeStore()
@@ -42,9 +45,9 @@ window.addEventListener('input', event => {
 onMounted(() => {
     watch(() => props.currentIndex, newVal => {
         if (newVal) {      
-            if (!backspaceIsPressed.value && props.alphabet === ' ') spaceCount.value = allSpacesIndex.value.indexOf(props.index - 1) + 1
-            if (backspaceIsPressed.value && props.alphabet === ' ') spaceCount.value = allSpacesIndex.value.indexOf(props.index - 1) + 1
-
+            if (!backspaceIsPressed.value && containerText.value[props.index - 2] === ' ') spaces.value[props.index - 1] = ' '            
+            if (backspaceIsPressed.value && containerText.value[props.index - 1] === ' ') spaces.value[props.index] ? delete spaces.value[props.index] : ''
+            
             if (currentAlphabet.value) {     
                 const parentScrollHeight = testContainerEl.value.scrollHeight
                 const parentHeight = testContainerEl.value.getBoundingClientRect().height
@@ -87,6 +90,8 @@ onMounted(() => {
     })
 })
 
+const typedWhiteSpaces = computed(() => Object.keys(spaces.value).length)
+
 const cursorStyle = computed(() => {
     let cursor = cursorType.value === 'border' ? 'border-[1px]' : cursorType.value === 'cursor' ? 'border-l-[2px]' : cursorType.value == 'underline' ? 'border-b-[2px]' : ''
     let bg = 'border-blue-700'
@@ -114,28 +119,29 @@ const mainStyle = computed(() => {
 
 const blurStyle = computed(() => {
     if (customizers.value['blur']) {        
-        return allSpacesIndex.value[spaceCount.value + 1] && props.index > allSpacesIndex.value[spaceCount.value + 1] ? 'blur-[7px]' : props.index > allSpacesIndex.value[spaceCount.value] ? 'blur-[1px]' : ''
+        return allSpacesIndex.value[typedWhiteSpaces.value + 1] && props.index > allSpacesIndex.value[typedWhiteSpaces.value + 1] ? 'blur-[7px]' : props.index > allSpacesIndex.value[typedWhiteSpaces.value] ? 'blur-[1px]' : ''
     }
 })
 
 const pulseStyle = computed(() => {
     if (cursorType.value === 'word-pulse') {        
         return (
-            spaceCount.value === 0 && props.index < allSpacesIndex.value[0] + 1
+            typedWhiteSpaces.value === 0 && props.index < allSpacesIndex.value[0] + 1
         ) || 
         (
-            allSpacesIndex.value[spaceCount.value - 1] + 1 &&
-            props.index > allSpacesIndex.value[spaceCount.value -1] + 1 &&
-            props.index < allSpacesIndex.value[spaceCount.value] + 1
+            allSpacesIndex.value[typedWhiteSpaces.value - 1] + 1 &&
+            props.index > allSpacesIndex.value[typedWhiteSpaces.value -1] + 1 &&
+            props.index < allSpacesIndex.value[typedWhiteSpaces.value] + 1
         ) ||
         (
             props.index > allSpacesIndex.value[allSpacesIndex.value.length - 1] + 1 &&
-            spaceCount.value === allSpacesIndex.value.length
+            typedWhiteSpaces.value === allSpacesIndex.value.length
         ) ?
         'word-pulse border-transparent' :
         ''
     }
 })
+
 </script>
 
 <style scoped>

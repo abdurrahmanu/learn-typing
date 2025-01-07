@@ -1,22 +1,24 @@
 <template>
-    <main class="w-[90%] min-h-[150px] space-y-[2px] relative transition-none  max-w-[900px] m-auto" :class="[isMobileOS() && focus ? 'pt-8' : '']">
-        <div :class="[isMobileOS() ? 'flex' : 'block', mode === 'alphabets' && !useAlphabetCombination ? 'max-w-[450px]' : 'max-w-[700px]']" class="relative h-fit min-h-[30px] m-auto py-1">      
+    <main class="w-[90%] min-h-[150px] space-y-[2px] relative transition-none max-w-[900px] m-auto" :class="[isMobile() && focus ? 'pt-8' : '']">
+
+        <div :class="[isTouchScreenDevice() ? 'flex' : 'block', mode === 'alphabets' && !useAlphabetCombination ? 'max-w-[450px]' : 'max-w-[700px]']" class="relative h-fit flex justify-between min-h-[30px] m-auto py-1">      
             <MobileInput />
             <div class="space-x-[50px]">
                 <Countdown 
-                    v-show="(isMobileOS() && focus && timedTyping) || timedTyping"
+                    v-show="(isTouchScreenDevice() && focus && timedTyping) || timedTyping"
                     class="absolute left-0"
                     :length="countdown" 
                     :start="beginCountdown" />
-                <!-- <p>10/17</p> -->
             </div>
             <div class="w-fit h-fit"> 
                 <restart v-show="!hasCompletedSession && playerInputLength" @click="restartTest" class="absolute w-6 left-[50%] translate-x-[-50%] "/>
             </div>
+            <WordCount />
         </div>
+        
         <Transition v-if="goNext" name="container">
         <div v-if="containerText" class="transition-all duration-100 relative mx-auto max-w-[700px] w-full min-w-[300px]" :class="[refocus ? 'blur-sm' : '']">
-                <div @blur="textIsFocused = false" @focus="textIsFocused = true" tabindex="0" ria-describedby="full-text" ref="testContainerEl"  :style="{'height' : containerHeight + 'px', 'font-size': font + 'px'}" :class="[ customizers['no-space'] || customizers['test-type'] === 'custom' ? 'break-words' : '', mode === 'alphabets' ? 'text-center break-words': 'text-left', mode !== 'alphabets' && textPosition=== 'center' ? 'text-center' : mode !== 'alphabets' && textPosition=== 'right' ? 'text-right' : 'text-left', !isMobileOS() ? 'overflow-y-auto ' : 'overflow-y-hidden'] " class="overflow-x-hidden scroll-smooth leading-[1.4] h-fit py-[1px] outline-none after:absolute after:top-0 after:bottom-0 after:w-[4px] after:right-[0] after:z-[999] after:bg-transparent">
+                <div @blur="textIsFocused = false" @focus="textIsFocused = true" tabindex="0" ria-describedby="full-text" ref="testContainerEl"  :style="{'height' : containerHeight + 'px', 'font-size': font + 'px'}" :class="[ customizers['no-space'] || customizers['test-type'] === 'custom' ? 'break-words' : '', mode === 'alphabets' ? 'text-center break-words': 'text-left', mode !== 'alphabets' && textPosition=== 'center' ? 'text-center' : mode !== 'alphabets' && textPosition=== 'right' ? 'text-right' : 'text-left', !isTouchScreenDevice() ? 'overflow-y-hidden ' : 'overflow-y-hidden'] " class="overflow-x-hidden scroll-smooth leading-[1.4] h-fit py-[1px] outline-none after:absolute after:top-0 after:bottom-0 after:w-[4px] after:right-[0] after:z-[999] after:bg-transparent">
                     <p id="full-text" class="hidden">{{ containerText }}</p>
                     <Alphabet
                     v-for="index in containerText.length"
@@ -33,15 +35,17 @@
                 </div>
             </div>
         </Transition>
-        <p class="flex m-auto text-base bg-transparent w-fit whitespace-nowrap" v-if="(isMobileOS() && !focus) || refocus" :class="[isMobileOS() ? 'blur-[1px]' : 'absolute top-[100px] font-bold left-[50%] translate-x-[-50%]']" ><span class="pr-1">{{isMobileOS() ? 'click' : ''}} </span><upwardsFinger v-if="isMobileOS()" class="relative w-5 bottom-1" />{{ refocus ? 'click anywhere to focus' : isMobileOS() && !focus ? 'text to focus' : '' }}</p>
+        <p class="flex m-auto text-base bg-transparent w-fit whitespace-nowrap" v-if="(isTouchScreenDevice() && !focus) || refocus" :class="[isTouchScreenDevice() ? 'blur-[1px]' : 'absolute top-[100px] font-bold left-[50%] translate-x-[-50%]']" ><span class="pr-1">{{isTouchScreenDevice() ? 'click' : ''}} </span><upwardsFinger v-if="isTouchScreenDevice()" class="relative w-5 bottom-1" />{{ refocus ? 'click anywhere to focus' : isTouchScreenDevice() && !focus ? 'text to focus' : '' }}</p>
     </main>
 </template>
 
 <script setup>
 import { onMounted, watch, ref } from 'vue';
-import { isMobileOS } from '../composables/isMobileOS';
+import { isTouchScreenDevice } from '../composables/isTouchScreenDevice';
+import { isMobile } from '../composables/isMobile';
 import upwardsFinger from './svg/upwardsFinger.vue';
 import Countdown from './Countdown.vue';
+import WordCount from './WordCount.vue';
 import MobileInput from'./MobileInput.vue'
 import Alphabet from './Alphabet.vue'
 import restart from './svg/restart.vue'
@@ -136,18 +140,24 @@ onMounted(() => {
     }, {passive: false})
     
     if (route.name === 'home') {
-        if (isMobileOS()) {
+        if (isTouchScreenDevice()) {
             focus.value = true
             inputEl.value.focus()
             inputEl.value.addEventListener('input', mobileInputEvent)
             window.addEventListener('click', event => {
-                if (testContainerEl.value instanceof HTMLElement) {                    
-                    if (event.srcElement !== testContainerEl.value && !testContainerEl.value.contains(event.srcElement) && event.srcElement !== restartEl.value && !restartEl.value.contains(event.srcElement) && event.srcElement !== restartSvgEl.value) {
+                if (testContainerEl.value instanceof HTMLElement) {    
+                    if (isMobile() && event.srcElement !== testContainerEl.value && !testContainerEl.value.contains(event.srcElement) && event.srcElement !== restartEl.value && !restartEl.value.contains(event.srcElement) && event.srcElement !== restartSvgEl.value) {
                         inputEl.value.blur()
                         focus.value = false
-                    } else {
+                    } else if (!isMobile()) {
+
+                    // } else if (!isMobile() && (event.srcElement === testContainerEl.value || testContainerEl.value.contains(event.srcElement))) {
+                    //     inputEl.value.focus()
+                    //     focus.value = true 
+                    // }
+                        
                         inputEl.value.focus()
-                        focus.value = true
+                        focus.value = true 
                     }
                 }
             })

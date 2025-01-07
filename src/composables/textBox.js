@@ -5,7 +5,7 @@ import { customizeStore } from '../store/customizeStore'
 
 export const textBoxHeight = () => {
     const main = mainStore()
-    const { containerHeight} = storeToRefs(main)
+    const { containerHeight } = storeToRefs(main)
 
     const customize = customizeStore()
     const {font, textLines } = storeToRefs(customize)

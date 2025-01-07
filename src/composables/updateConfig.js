@@ -15,7 +15,6 @@ export const configUpdate = async () => {
     const connect = connectStore()
     const {connectingServer} = storeToRefs(connect)
 
-    console.log(theme.value)
     const customize = customizeStore()
     const { customizers, doubleEachWord, disableOption, textLines, cursorType, difficulty, mode, hideElements, font, range, blind, backspace, capslock } = storeToRefs(customize)
 
@@ -24,7 +23,6 @@ export const configUpdate = async () => {
     connectingServer.value = false
     doubleEachWord.value = preferredConfigs.value.doubleEachWord || false
     theme.value = preferredConfigs.value.theme || theme.value
-    console.log(theme.value)
 
     font.value = preferredConfigs.value.fontsize || font.value
     range.value = (font.value - 16) / 0.26

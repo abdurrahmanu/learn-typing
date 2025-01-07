@@ -1,6 +1,6 @@
 import { mainStore } from "../store/mainStore"
 import { customizeStore } from "../store/customizeStore";
-import { isMobileOS } from "./isMobileOS";
+import { isTouchScreenDevice } from "./isTouchScreenDevice";
 import { storeToRefs } from 'pinia';
 
 export const managePlayerInput = () => {
@@ -11,7 +11,7 @@ export const managePlayerInput = () => {
     const {customizers} = storeToRefs(customize)
     
     if (route.value !== 'home') return
-    if (isMobileOS()) playerLastInput.value = playerInput.value[playerInput.value.length - 1]
+    if (isTouchScreenDevice()) playerLastInput.value = playerInput.value[playerInput.value.length - 1]
 
     if (containerText.value) {
         if (previousPlayerInput.value.length > playerInput.value.length) {
@@ -19,7 +19,7 @@ export const managePlayerInput = () => {
             else wrongCount.value--
         }
         else {
-            if (isMobileOS()) {
+            if (isTouchScreenDevice()) {
                 if (playerInput.value[playerInput.value.length - 1] === containerText.value[playerInput.value.length - 1]) correctCount.value ++
                 else wrongCount.value++
             }

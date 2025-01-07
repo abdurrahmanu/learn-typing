@@ -1,11 +1,13 @@
 <template>
-    <div :class="[appTheme]" class="font-light space-y-7 selection:bg-none home max-w-[1500px] m-auto relative min-h-[100dvh] container overflow-y-auto scroll-smooth noscrollbar transition-all duration-300">
+    <div :class="[appTheme]" class="font-light selection:bg-none home max-w-[1500px] m-auto relative min-h-[100dvh] container overflow-y-auto scroll-smooth noscrollbar transition-all duration-300">
         <Connectivity />
-        <Header />
-        <RouterView />
-        <Next />
-        <Footer />
-        <Modals_Popups_Toasts/>
+        <div class="space-y-8 main">
+            <Header />
+            <RouterView />
+            <Next />
+            <Footer />
+            <Modals_Popups_Toasts/>
+        </div>
     </div>
 </template>
 

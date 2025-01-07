@@ -21,5 +21,6 @@ export const kiboardObj = () => {
         fontsize: 32,
         textLines: 3,
     })
+
     return kiboardObject
 }

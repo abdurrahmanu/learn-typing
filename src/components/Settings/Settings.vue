@@ -1,6 +1,6 @@
 <template>
     <Transition name="slide" appear mode="in-out">
-        <div :class="{'z-[999]' : !(allSettings && !isMobileOS())}" class="absolute top-0 bottom-0 right-0 left-0 z-[99] font-light settings-font" v-if="allSettings">
+        <div :class="{'z-[999]' : !(allSettings && !isTouchScreenDevice())}" class="absolute top-0 bottom-0 right-0 left-0 z-[99] font-light redit-font" v-if="allSettings">
             <div @click="toggleSettings" class="opacity-40 absolute bg-black w-full top-[-100px] bottom-0 right-0 left-0 z-[999]"></div>
             <div class="overflow-y-auto outline-none" :class="[allSettings ? 'absolute right-0 bottom-0 h-[100dvh] max-w-[800px] w-fit z-[9999]' : '', appTheme ]">
                 <div class="relative leading-5 text-[17px] pb-5">
@@ -12,17 +12,16 @@
                     <BackSpace />
                     <BlindMode />
                     <BlurTest />
-                    <CapsLock v-if="!isMobileOS()" />
+                    <CapsLock v-if="!isTouchScreenDevice()" />
                     <Countdown />
                     <CustomCamelCase />
                     <DoubleEachWord v-if="mode !== 'alphabets'" />
                     <NoSpaceText v-if="mode !== 'alphabets'" />
                     <MovieQuotes v-if="mode !== 'alphabets'" />
-                    <StopOnError v-if="!isMobileOS()" />
+                    <StopOnError v-if="!isTouchScreenDevice()" />
                     <AuthoredQoutes v-if="mode !== 'alphabets'" />
                     <AllCaps />
                     <LetterCombinations v-if="mode === 'alphabets'"/>
-                    <WordCount />
                     <Cookies />
                 </div>
             </div>
@@ -39,7 +38,6 @@ import Cookies from './Cookies.vue'
 import Header from './Header.vue'
 import AllCaps from './AllCaps.vue'
 import CustomCamelCase from './CustomCamelCase.vue'
-import WordCount from './WordCount.vue'
 import NoSpaceText from './NoSpaceText.vue'
 import BlindMode from './BlindMode.vue'
 import BackSpace from './BackSpace.vue';
@@ -49,7 +47,7 @@ import LetterCombinations from './LetterCombinations.vue'
 import {storeToRefs} from 'pinia'
 import {customizeStore} from '../../store/customizeStore'
 import {themeStore}  from '../../store/themeStore'
-import { isMobileOS } from '../../composables/isMobileOS'
+import { isTouchScreenDevice } from '../../composables/isTouchScreenDevice'
 import BlurTest from './BlurTest.vue'
 import Difficulty from './Difficulty.vue'
 import CapsLock from './CapsLock.vue'

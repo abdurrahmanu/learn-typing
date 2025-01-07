@@ -1,7 +1,7 @@
 <template>
     <div  v-show="animation"  ref="boxesContainer" class="absolute w-full h-[100vdh] left-0 top-0 flex flex-wrap bg-transparent">
         <div v-for="(box, index) in numberOfBoxes" :key="index" class="w-fit h-fit z-[20] box-container">
-        <div :style="{'width' : boxWidth, 'height': boxHeight}" :class="[theme === 'dark' ? 'bg-neutral-800' : 'bg-zinc-300']" class=" box"></div>
+        <div :style="{'width' : boxWidth, 'height': boxHeight}" :class="[theme === 'dark' ? 'bg-[#503c3c]' : 'bg-zinc-300']" class=" box"></div>
         </div>
     </div>
 </template>
@@ -75,7 +75,9 @@ onMounted(() => {
                 clearInterval(interval.value)
                 animation.value = !animation.value
                 cookiesModal.value ? pauseTyping.value = true : pauseTyping.value = false
-                document.querySelector('.container').removeChild(boxesContainer.value)
+                if (boxesContainer.value instanceof HTMLElement) {
+                    document.querySelector('.main').removeChild(boxesContainer.value)
+                }
             }
         }, 3)
     }, 0)

@@ -1,5 +1,5 @@
 <template>
-    <div class="fixed flex items-center gap-3 bottom-2 right-2">      
+    <div class="fixed m-auto max-w-[1500px] flex items-center gap-3 bottom-2 pr-2 w-full justify-end">      
         <SwitchModes :class="[demo ? 'opacity-0 hidden' : '']" class="self-end mb-[2px] transition-all duration-300" />
         <Theme class="self-end"/>
     </div>

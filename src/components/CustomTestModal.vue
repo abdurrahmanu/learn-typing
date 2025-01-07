@@ -5,10 +5,10 @@
         <div>            
             <div v-if="!saveCustomText" class="space-y-1 text-center">
                 <p class="font-medium ">Add your preferred test, quote or story.</p>
-                <p class="text-red-400 font-[400] ">{{ isMobileOS() ? 'Maximum of 40 words / 500 characters' : 'Maximum of 150 words / 1200 characters' }}</p>
+                <p class="text-red-400 font-[400] ">{{ isTouchScreenDevice() ? 'Maximum of 40 words / 500 characters' : 'Maximum of 150 words / 1200 characters' }}</p>
                 <div class="relative w-[90%] m-auto">  
                     <p @click="textValue = ''" v-if="textValue" class="absolute top-0 right-0 px-2 py-[2px] uppercase text-[13px] hover:text-red-500 cursor-default">X</p>     
-                    <textarea v-model="textValue" :class="[appTheme]" class="w-full h-40 p-2 pt-2 border rounded-md outline-none border-slate-500" :placeholder="textAreaPlaceholder" :maxlength="isMobileOS() ? 500 : 1200" name="custom-textarea" />
+                    <textarea v-model="textValue" :class="[appTheme]" class="w-full h-40 p-2 pt-2 border rounded-md outline-none border-slate-500" :placeholder="textAreaPlaceholder" :maxlength="isTouchScreenDevice() ? 500 : 1200" name="custom-textarea" />
                 </div>
                 <div @click="startSavingCustomText" class="py-[2px] m-auto text-center border rounded-full px-4 w-fit border-slate-600 hover:bg-green-800 hover:text-white font-medium">ADD TEST</div>
             </div>
@@ -49,7 +49,7 @@ import {storeToRefs} from 'pinia';
 import {mainStore} from '../store/mainStore';
 import {themeStore}  from '../store/themeStore'
 import { customizeStore } from '../store/customizeStore';
-import { isMobileOS } from '../composables/isMobileOS';
+import { isTouchScreenDevice } from '../composables/isTouchScreenDevice';
 import { useRoute } from 'vue-router';
 
 const route = useRoute()

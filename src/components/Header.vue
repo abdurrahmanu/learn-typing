@@ -1,12 +1,12 @@
 <template>
-    <header class="sticky mx-auto flex items-center justify-between pl-3 pr-2 max-w-[1500px] mb-3 text-[11px] uppercase font-medium min-w-[360px] transition-all duration-300" :class="[focus && isMobileOS() ? 'h-0 p-0 mb-0' : 'h-[50px]', theme === 'dark' ? 'hover:bg-neutral-900' : 'hover:bg-zinc-200']">
-        <Logo @click="routeToPage('about')" v-show="!focus" class="flex hover:ring-[1px] hover:ring-green-500 hover:shadow hover:shadow-black cursor-pointer" />
-        <div v-show="(!focus && isMobileOS()) || !isMobileOS()" class="absolute flex items-center gap-4 w-fit" :class="[!hideElements ? 'right-[50%] translate-x-[50%]' : 'left-[50%] translate-x-[-50%]']">
+    <header class="sticky mx-auto flex items-center justify-between pl-3 pt-5 pb-2 pr-2 max-w-[1500px] mb-3 text-[11px] uppercase font-medium min-w-[360px] transition-all duration-300" :class="[focus && isMobile() ? 'h-0 p-0 mb-0' : 'h-[50px]', theme === 'dark' ? 'hover:bg-[#503c3c]' : 'hover:bg-zinc-200']">
+        <Logo @click="routeToPage('about')" v-show="!(focus && isMobile())" class="flex hover:shadow-md hover:shadow-black hover:ring-[1px] hover:ring-green-500 cursor-pointer" />
+        <div v-show="(!focus && isMobile()) || !isMobile()" class="absolute flex items-center gap-4 w-fit" :class="[!hideElements ? 'right-[50%] translate-x-[50%]' : 'left-[50%] translate-x-[-50%]']">
             <div v-show="route.name === 'home'" class="flex items-center gap-4 text-[9px]">
                 <div class="relative w-fit">
                     <Clock class="peer" />
                 </div>
-                <div class="relative hidden w-fit min-[505px]:block" v-if="mode !== 'alphabets' && !isMobileOS()">
+                <div class="relative hidden w-fit min-[505px]:block" v-if="mode !== 'alphabets' && !isMobile()">
                     <TextAlign class="peer"/>
                 </div>
                 <div class="relative w-fit">
@@ -45,13 +45,14 @@ import user from './svg/user.vue'
 import Blind from './Blind.vue';
 import Clock from './Clock.vue';
 import CompletionRangeWithErrors from './CompletionRangeWithErrors.vue';
+import { isTouchScreenDevice } from '../composables/isTouchScreenDevice';
 import CompletionRange from './CompletionRange.vue';
 import {storeToRefs} from 'pinia';
 import { customizeStore } from '../store/customizeStore';
 import {authStore} from '../store/authStore'
 import { mainStore } from '../store/mainStore';
 import {useRoute, useRouter} from 'vue-router'
-import { isMobileOS } from '../composables/isMobileOS';
+import { isMobile } from '../composables/isMobile';
 import { themeStore } from '../store/themeStore';
 
 const route = useRoute()

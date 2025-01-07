@@ -1,5 +1,5 @@
 import {defineStore} from 'pinia'
-import {isMobileOS} from '../composables/isMobileOS'
+import {isTouchScreenDevice} from '../composables/isTouchScreenDevice'
 import {ref} from 'vue'
 import { updateDB } from '../composables/updateDB'
 
@@ -21,7 +21,7 @@ export const customizeStore = defineStore('customizeStore', () => {
     const textPosition = ref('left')
     const blind = ref(false)
     const font = ref(32)
-    const range = ref((font.value - 16) / 0.16)
+    const range = ref((font.value - 16) / 0.26)
     const toggleCapsToast = ref(false)
     const customTestLength = ref(200)
     const useCustomLength = ref(false)
@@ -58,7 +58,7 @@ export const customizeStore = defineStore('customizeStore', () => {
     })
 
     const allOptions = ref({
-        'test-length' : isMobileOS() ? ['auto', 10, 20, 30 ] : ['auto', 10, 20, 30, 50,  100],
+        'test-length' : isTouchScreenDevice() ? ['auto', 10, 20, 30 ] : ['auto', 10, 20, 30, 50,  100],
         'words-type' : ['frequent', 'common', 'rare'],
         'test-type' : ['quotes', 'words', 'custom'],
         'caps' : ['caps'],

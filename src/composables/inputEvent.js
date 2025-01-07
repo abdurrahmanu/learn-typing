@@ -1,6 +1,6 @@
 import { mainStore } from "../store/mainStore"
 import { customizeStore } from "../store/customizeStore";
-import { isMobileOS } from "./isMobileOS";
+import { isTouchScreenDevice } from "./isTouchScreenDevice";
 import { storeToRefs } from 'pinia';
 
 export const inputEvent = (e) => {
@@ -11,7 +11,9 @@ export const inputEvent = (e) => {
     const customize = customizeStore()
     const {backspace, pauseTyping, toggleCapsToast, capslock, customizers} = storeToRefs(customize)
 
-    if (customizers.value['stop-on-error'] && wrongCount.value && !isMobileOS() && e.key !== 'Backspace') return
+    if (customizers.value['stop-on-error'] && wrongCount.value && !isTouchScreenDevice() && e.key !== 'Backspace') return
+
+    console.log('how did you pass?')
 
     if (!capslock.value && !toggleCapsToast.value && e.key !== 'CapsLock' && e.getModifierState('CapsLock')) toggleCapsToast.value = true
     if (!capslock.value && e.getModifierState('CapsLock') && e.key !== 'CapsLock') return
@@ -29,6 +31,7 @@ export const inputEvent = (e) => {
     if ((e.key === 'Enter' && !enterKey.value) || pauseTyping.value) return
 
     if (e.key === 'Backspace') {
+        console.log
         backspaceIsPressed.value = true
         playerInputLength.value--
         playerInput.value = playerInput.value.slice(0, -1)
