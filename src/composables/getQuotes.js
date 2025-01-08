@@ -5,7 +5,7 @@ import { customizeStore } from '../store/customizeStore.js';
 import { mainStore } from '../store/mainStore.js';
 import authoredQuotes from '../../data/quotes.json'
 
-export async function UseGetQuotes (config, customText) {
+export async function getQuotes (config, customText) {
     const res = ref('')
     const {mostUsed, mediumUsed, rarelyUsed, numbers, quotesWithoutAuthors, movieQuotes} = englishWords()
     const testType = config['test-type']

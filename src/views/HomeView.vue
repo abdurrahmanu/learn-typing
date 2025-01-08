@@ -18,7 +18,6 @@ import { customizeStore } from '../store/customizeStore';
 import { useRouter } from 'vue-router';
 import { countdownStore } from '../store/countdownStore'
 import { isMobile } from '../composables/isMobile';
-import SwitchModes from '../components/SwitchModes.vue';
 
 const count = countdownStore()
 const {clearCounter} = count

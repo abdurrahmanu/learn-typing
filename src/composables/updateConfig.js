@@ -31,7 +31,6 @@ export const configUpdate = async () => {
     backspace.value = preferredConfigs.value.backspace || backspace.value
     customizers.value = preferredConfigs.value.config[0] || customizers.value
     disableOption.value = preferredConfigs.value.config[1] || disableOption.value
-    mode.value = preferredConfigs.value.mode || 'auto'
     capslock.value = preferredConfigs.value.capslock || false
     customTests.value = preferredConfigs.value.customTests || customTests.value['demo']
     textLines.value = preferredConfigs.value.textLines || 3

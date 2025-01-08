@@ -1,9 +1,9 @@
 import { mainStore } from "../store/mainStore"
 import { countdownStore } from "../store/countdownStore"
 import {customizeStore} from '../store/customizeStore'
-import {alphabetsMode} from './alphabetsMode'
+import {getAlphabets} from './getAlphabets'
 import { storeToRefs } from "pinia"
-import { UseGetQuotes } from "./UseGetQuotes"
+import { getQuotes } from "./getQuotes"
 
 export const generateTest = async (config, restart) => {
     const main = mainStore()
@@ -13,14 +13,14 @@ export const generateTest = async (config, restart) => {
     const {textLength} = storeToRefs(count)
 
     const customize = customizeStore()
-    const {repeat, mode, doubleEachWord } = storeToRefs(customize)
+    const {repeat, doubleEachWord, customizers } = storeToRefs(customize)
 
     if (repeat.value || restart ) {
         containerText.value = storedTest.value
     }
 
-    else if (mode.value === 'auto') {
-        await UseGetQuotes(config).then( quote => {
+    else if (customizers.value['modes'] === 'word-test') {
+        await getQuotes(config).then( quote => {
             if (typeof quote === 'object') {  
                 if (!quote[2]) {
                     containerText.value = quote[1]
@@ -44,7 +44,7 @@ export const generateTest = async (config, restart) => {
         })
     }
 
-    else if (mode.value === 'alphabets') containerText.value = alphabetsMode()
+    else if (customizers.value['modes'] === 'alphabet-test') containerText.value = getAlphabets()
 
     for (let index = 0; index < containerText.value.length; index++) {
         if (containerText.value[index] === ' ') allSpacesIndex.value.push(index)

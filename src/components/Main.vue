@@ -5,7 +5,7 @@
             <Header />
             <RouterView />
             <Next />
-            <Footer />
+            <Theme class="fixed left-[50%] translate-x-[-50%] m-auto max-w-[1500px] bottom-2 pr-2 w-fit"/>
             <Modals_Popups_Toasts/>
         </div>
     </div>
@@ -16,8 +16,8 @@ import {storeToRefs} from 'pinia'
 import {themeStore}  from '../store/themeStore'
 import Modals_Popups_Toasts from './Modals_Popups_Toasts.vue'
 import Connectivity from './Connectivity.vue'
-import Footer from './Footer.vue'
 import Header from './Header.vue'
+import Theme from './Theme.vue'
 import Next from './Next.vue';
 
 const theme_ = themeStore()

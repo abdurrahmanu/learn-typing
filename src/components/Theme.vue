@@ -2,8 +2,8 @@
     <!-- <div ref="bgContainer" :class="[openBackgrounds ? 'space-y-1' : '']" class=" rounded-full p-[2px] ring-[2px] ring-white bg-neutral-700 transition-all duration-200">
         <div v-for="(color, index) in colors" :key="index" @click="toggleTheme(color)" v-show="openBackgrounds || color === theme"  :class="[bg[index], !openBackgrounds && color !== theme ? 'hidden' : 'block w-7 h-7 md:w-6 md:h-6 rounded-full ring-[1px] ring-black']"></div>
     </div> -->
-    <div ref="bgContainer" class="flex gap-2 rounded-full p-[2px] ring-[1px] ring-blue-600 bg-blue-800 transition-all duration-200">
-        <div v-for="(color, index) in colors" class="'block w-7 h-7 md:w-6 md:h-6 rounded-full ring-[1px] ring-black'" :key="index" @click="toggleTheme(color)" :class="[bg[index]]"></div>
+    <div ref="bgContainer" :class="[theme === 'dark' ? 'ring-white' : 'ring-black']" class="flex gap-2 rounded-full p-[4px] ring-[1px] bg-neutral-600 transition-all duration-200">
+        <div v-for="(color, index) in colors" class="block w-5 h-4 rounded-full" :key="index" @click="toggleTheme(color)" :class="[bg[index]]"></div>
     </div>
 </template>
 

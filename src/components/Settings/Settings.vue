@@ -15,13 +15,13 @@
                     <CapsLock v-if="!isTouchScreenDevice()" />
                     <Countdown />
                     <CustomCamelCase />
-                    <DoubleEachWord v-if="mode !== 'alphabets'" />
-                    <NoSpaceText v-if="mode !== 'alphabets'" />
-                    <MovieQuotes v-if="mode !== 'alphabets'" />
+                    <DoubleEachWord v-if="customizers['modes'] !== 'alphabet-test'" />
+                    <NoSpaceText v-if="customizers['modes'] !== 'alphabet-test'" />
+                    <MovieQuotes v-if="customizers['modes'] !== 'alphabet-test'" />
                     <StopOnError v-if="!isTouchScreenDevice()" />
-                    <AuthoredQoutes v-if="mode !== 'alphabets'" />
+                    <AuthoredQoutes v-if="customizers['modes'] !== 'alphabet-test'" />
                     <AllCaps />
-                    <LetterCombinations v-if="mode === 'alphabets'"/>
+                    <LetterCombinations v-if="customizers['modes'] === 'alphabet-test'"/>
                     <Cookies />
                 </div>
             </div>
@@ -69,7 +69,7 @@ const counter = countdownStore()
 const {clearCounter} = counter
 
 const store = customizeStore()
-const {customizers, capslock, backspace, font, mode, switchMode, userSelectedTest, customTestLength, customTestModal, disableOption, range, repeat, testType_, textPosition, toggleCapsToast, useCustomLength,  count, allOptions, allSettings, blind, configs, cursorType, difficulty, doubleEachWord, hideElements, pauseTyping, } = storeToRefs(store)
+const {customizers, allSettings, pauseTyping, } = storeToRefs(store)
 
 const toggleSettings = () => {
     if (timedTyping.value) clearCounter()

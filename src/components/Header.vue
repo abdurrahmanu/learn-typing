@@ -1,21 +1,21 @@
 <template>
     <header class="sticky mx-auto flex items-center justify-between pl-3 pt-5 pb-2 pr-2 max-w-[1500px] min-w-[360px] transition-all duration-300" :class="[theme === 'dark' ? 'hover:bg-zinc-700' : 'hover:bg-zinc-200']">
-        <Logo @click="routeToPage('about')" v-show="!(focus && isMobile())" class="flex hover:shadow-md hover:shadow-black hover:ring-[1px] hover:ring-green-500 cursor-pointer" />
+        <Logo @click="routeToPage('about')" v-show="!(focus && isMobile())" class="flex cursor-pointer" />
         <div v-show="(!focus && isMobile()) || !isMobile()" class="absolute flex items-center gap-4 w-fit" :class="[!hideElements ? 'right-[50%] translate-x-[50%]' : 'left-[50%] translate-x-[-50%]']">
             <div v-show="route.name === 'home'" class="flex items-center gap-4 text-[9px]">
                 <div class="relative w-fit">
                     <Clock class="peer" />
                 </div>
-                <div class="relative hidden w-fit min-[505px]:block" v-if="mode !== 'alphabets' && !isMobile()">
+                <div class="relative hidden w-fit min-[505px]:block" v-if="customizers['modes'] !== 'alphabet-test' && !isMobile()">
                     <TextAlign class="peer"/>
                 </div>
                 <div class="relative w-fit">
                     <Blind class="peer"/>
                 </div>
-                <div class="relative w-fit" v-if="route.name === 'home' && mode !== 'alphabets'" >
+                <div class="relative w-fit" v-if="route.name === 'home' && customizers['modes'] !== 'alphabet-test'" >
                     <repeat class="w-4 peer"/>
                 </div>
-                <div class="relative w-fit" v-if="mode !== 'alphabets'" >
+                <div class="relative w-fit" v-if="customizers['modes'] !== 'alphabet-test'" >
                     <add @click="customTestModal = true, pauseTyping = true" class="w-5 peer"/>
                 </div>
             </div>
@@ -68,7 +68,7 @@ const main = mainStore()
 const {focus} = storeToRefs(main)
 
 const customize = customizeStore()
-const { hideElements, blind, mode, customTestModal, pauseTyping} = storeToRefs(customize)
+const { hideElements, blind, customizers, customTestModal, pauseTyping} = storeToRefs(customize)
 
 const routeToPage = (route) => {
     router.push({name: route})

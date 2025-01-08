@@ -32,14 +32,10 @@ import {watch, ref} from 'vue'
 import {storeToRefs} from 'pinia';
 import {mainStore} from '../../store/mainStore'
 import { customizeStore } from '../../store/customizeStore';
-import {alphabetsStore}  from '../../store/alphabetsStore';
 import { themeStore } from '../../store/themeStore';
 
 const theme_ = themeStore()
 const {theme} = theme_
-
-const alphabets_ = alphabetsStore()
-const { alphabetsCombination, useAlphabetCombination, shiftKey } = storeToRefs(alphabets_)
 
 const capsQwertyKeyboard = [
     ['~', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+'],
@@ -61,7 +57,7 @@ const store = mainStore()
 const {switchNext} = store
 
 const customize = customizeStore()
-const {customizers} = storeToRefs(customize)
+const {customizers, alphabetsCombination, useAlphabetCombination, shiftKey} = storeToRefs(customize)
 
 const toggle = () => {
     if (alphabetsCombination.value.length > 1) {
