@@ -18,7 +18,6 @@
         
         <Transition v-if="goNext" name="container">
         <div v-if="containerText" class="transition-all duration-100 relative mx-auto max-w-[700px] w-full min-w-[300px]" :class="[(refocus || ((isTouchScreenDevice() && !isMobile()) && !focus)) && theme === 'dark' ? 'blur-[2px] bg-[#323437] cursor-pointer opacity-40' : '', (refocus || ((isTouchScreenDevice() && !isMobile()) && !focus)) && theme !== 'dark' ? 'blur-[2px] bg-zinc-200 cursor-pointer opacity-40' : '',]">
-            {{ goNext }}
                 <div @blur="textIsFocused = false" @focus="textIsFocused = true" tabindex="0" ria-describedby="full-text" ref="testContainerEl"  :style="{'height' : containerHeight + 'px', 'font-size': font + 'px'}" :class="[ customizers['no-space'] || customizers['test-type'] === 'custom' ? 'break-words' : '', mode === 'alphabets' ? 'text-center break-words': 'text-left', mode !== 'alphabets' && textPosition=== 'center' ? 'text-center' : mode !== 'alphabets' && textPosition=== 'right' ? 'text-right' : 'text-left', !isTouchScreenDevice() ? 'overflow-y-hidden ' : 'overflow-y-hidden'] " class="overflow-x-hidden scroll-smooth leading-[1.4] h-fit py-[1px] outline-none after:absolute after:top-0 after:bottom-0 after:w-[4px] after:right-[0] after:z-[999] after:bg-transparent font-medium">
                     <p id="full-text" class="hidden">{{ containerText }}</p>
                     <Alphabet
