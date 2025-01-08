@@ -1,6 +1,6 @@
 <template>
 	<div>		
-		<svg @mouseover="hoverbg = '#22c55e'" @mouseleave="hoverbg = ''"  version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+		<svg @mouseover="hoverbg = '#4299e1'" @mouseleave="hoverbg = ''"  version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 			viewBox="0 0 472.615 472.615" style="enable-background:new 0 0 472.615 472.615;" xml:space="preserve">
 		<g>
 			<g>

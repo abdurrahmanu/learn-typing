@@ -2,6 +2,7 @@ import {defineStore} from 'pinia'
 import {isTouchScreenDevice} from '../composables/isTouchScreenDevice'
 import {ref} from 'vue'
 import { updateDB } from '../composables/updateDB'
+import { isMobile } from '../composables/isMobile'
 
 export const customizeStore = defineStore('customizeStore', () => {
     const mode = ref('auto')
@@ -12,7 +13,7 @@ export const customizeStore = defineStore('customizeStore', () => {
     const pauseTyping = ref(true)
     const configs = ref([])
     const allSettings = ref(false)
-    const hideElements = ref(true)
+    const hideElements = ref(isMobile() ? true : false)
     const cursorType = ref('border')
     const difficulty = ref('beginner')
     const backspace = ref(true)

@@ -1,5 +1,5 @@
 <template>
-    <div v-if="allSpacesIndex.length > 1" class="w-fit text-[15pt] font-bold">
+    <div v-if="allSpacesIndex.length > 1" class="w-fit font-bold">
         <p>{{ totalNumberOfTypedWords }}/{{ totalNumberOfWords }}</p>
     </div>
 </template>

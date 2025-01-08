@@ -1,12 +1,12 @@
 <template>
     <main class="w-[90%] min-h-[150px] space-y-[2px] relative transition-none max-w-[900px] m-auto" :class="[isMobile() && focus ? 'pt-8' : '']">
 
-        <div :class="[isTouchScreenDevice() ? 'flex' : 'block', mode === 'alphabets' && !useAlphabetCombination ? 'max-w-[450px]' : 'max-w-[700px]']" class="relative h-fit flex justify-between min-h-[30px] m-auto py-1">      
+        <div :class="[isTouchScreenDevice() ? 'flex' : 'block', mode === 'alphabets' && !useAlphabetCombination ? 'max-w-[450px]' : 'max-w-[700px]']" class="relative h-fit flex text-[16px] justify-between min-h-[30px] m-auto py-1 px-10">      
             <MobileInput />
             <div class="space-x-[50px]">
                 <Countdown 
                     v-show="(isTouchScreenDevice() && focus && timedTyping) || timedTyping"
-                    class="absolute left-0"
+                    class="absolute left-[20px]"
                     :length="countdown" 
                     :start="beginCountdown" />
             </div>
@@ -17,8 +17,9 @@
         </div>
         
         <Transition v-if="goNext" name="container">
-        <div v-if="containerText" class="transition-all duration-100 relative mx-auto max-w-[700px] w-full min-w-[300px]" :class="[refocus || ((isTouchScreenDevice() && !isMobile()) && !focus) ? 'blur-sm cursor-pointer' : '']">
-                <div @blur="textIsFocused = false" @focus="textIsFocused = true" tabindex="0" ria-describedby="full-text" ref="testContainerEl"  :style="{'height' : containerHeight + 'px', 'font-size': font + 'px'}" :class="[ customizers['no-space'] || customizers['test-type'] === 'custom' ? 'break-words' : '', mode === 'alphabets' ? 'text-center break-words': 'text-left', mode !== 'alphabets' && textPosition=== 'center' ? 'text-center' : mode !== 'alphabets' && textPosition=== 'right' ? 'text-right' : 'text-left', !isTouchScreenDevice() ? 'overflow-y-hidden ' : 'overflow-y-hidden'] " class="overflow-x-hidden scroll-smooth leading-[1.4] h-fit py-[1px] outline-none after:absolute after:top-0 after:bottom-0 after:w-[4px] after:right-[0] after:z-[999] after:bg-transparent">
+        <div v-if="containerText" class="transition-all duration-100 relative mx-auto max-w-[700px] w-full min-w-[300px]" :class="[(refocus || ((isTouchScreenDevice() && !isMobile()) && !focus)) && theme === 'dark' ? 'blur-[2px] bg-[#323437] cursor-pointer opacity-40' : '', (refocus || ((isTouchScreenDevice() && !isMobile()) && !focus)) && theme !== 'dark' ? 'blur-[2px] bg-zinc-200 cursor-pointer opacity-40' : '',]">
+            {{ goNext }}
+                <div @blur="textIsFocused = false" @focus="textIsFocused = true" tabindex="0" ria-describedby="full-text" ref="testContainerEl"  :style="{'height' : containerHeight + 'px', 'font-size': font + 'px'}" :class="[ customizers['no-space'] || customizers['test-type'] === 'custom' ? 'break-words' : '', mode === 'alphabets' ? 'text-center break-words': 'text-left', mode !== 'alphabets' && textPosition=== 'center' ? 'text-center' : mode !== 'alphabets' && textPosition=== 'right' ? 'text-right' : 'text-left', !isTouchScreenDevice() ? 'overflow-y-hidden ' : 'overflow-y-hidden'] " class="overflow-x-hidden scroll-smooth leading-[1.4] h-fit py-[1px] outline-none after:absolute after:top-0 after:bottom-0 after:w-[4px] after:right-[0] after:z-[999] after:bg-transparent font-medium">
                     <p id="full-text" class="hidden">{{ containerText }}</p>
                     <Alphabet
                     v-for="index in containerText.length"
@@ -36,7 +37,7 @@
             </div>
         </Transition>
 
-        <div v-if="(isTouchScreenDevice() && !focus) || refocus" class="flex mx-auto text-base bg-transparent w-fit whitespace-nowrap">
+        <div v-if="(isTouchScreenDevice() && !focus) || refocus" class="flex mx-auto text-[16px] bg-transparent w-fit whitespace-nowrap">
             <p class="blur-[1px] flex items-center" v-if="isTouchScreenDevice() && isMobile()">Click <upwardsFinger class="w-5" /> test to focus</p>
             <p @click="focusInputEl" class="absolute top-[100px] font-bold left-[50%] translate-x-[-50%]" v-if="isTouchScreenDevice() && !isMobile()">Click test or press any key to focus </p>
             <p class="absolute top-[100px] font-bold left-[50%] translate-x-[-50%]" v-if="!isTouchScreenDevice()">Press any key to focus</p>
@@ -162,8 +163,15 @@ onMounted(() => {
                 if (testContainerEl.value instanceof HTMLElement) {  
                     const isOutsideTestContainer = event.srcElement !== testContainerEl.value && !testContainerEl.value.contains(event.srcElement) && event.srcElement !== restartEl.value && !restartEl.value.contains(event.srcElement) && event.srcElement !== restartSvgEl.value
                     if (isOutsideTestContainer) {
-                        inputEl.value.blur()
-                        focus.value = false
+                        if (goNext.value) {
+                            console.log('not changing')
+                            inputEl.value.blur()
+                            focus.value = false
+                        } else {
+                            inputEl.value.focus()
+                            focus.value = true
+                            console.log('changing test')
+                        }
                     } else if (!isOutsideTestContainer) {                        
                         inputEl.value.focus()
                         focus.value = true 

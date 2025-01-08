@@ -1,6 +1,7 @@
 import {ref} from 'vue'
 import { customizeStore } from '../store/customizeStore'
 import { storeToRefs } from 'pinia'
+import { isMobile } from './isMobile'
 
 export const kiboardObj = () => {
     const customize = customizeStore()
@@ -17,7 +18,6 @@ export const kiboardObj = () => {
         backspace: true,
         blind: false,
         mode: 'auto',
-        hide: true,
         fontsize: 32,
         textLines: 3,
     })

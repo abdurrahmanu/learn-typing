@@ -1,6 +1,7 @@
 import {defineStore} from 'pinia'
 import {ref, computed} from 'vue'
 import {generateTest} from '../composables/generateTest'
+import { isTouchScreenDevice } from '../composables/isTouchScreenDevice'
 
 export const mainStore = defineStore('mainStore', () => {
     const preferredConfigs = ref(undefined)

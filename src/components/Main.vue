@@ -1,7 +1,7 @@
 <template>
     <div :class="[appTheme]" class="font-light selection:bg-none home max-w-[1500px] m-auto relative min-h-[100dvh] container overflow-y-auto scroll-smooth noscrollbar transition-all duration-300">
         <Connectivity />
-        <div class="space-y-8 main">
+        <div class="main">
             <Header />
             <RouterView />
             <Next />

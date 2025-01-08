@@ -23,10 +23,8 @@ export const configUpdate = async () => {
     connectingServer.value = false
     doubleEachWord.value = preferredConfigs.value.doubleEachWord || false
     theme.value = preferredConfigs.value.theme || theme.value
-
     font.value = preferredConfigs.value.fontsize || font.value
     range.value = (font.value - 16) / 0.26
-    hideElements.value = preferredConfigs.value.hide || hideElements.value
     cursorType.value = preferredConfigs.value.cursor || cursorType.value
     blind.value = preferredConfigs.value.blind || false
     difficulty.value = preferredConfigs.value.difficulty || difficulty.value

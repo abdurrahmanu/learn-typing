@@ -1,27 +1,26 @@
 <template>
-<div ref="containerEl" :class="[isMobile() && focus ? 'hidden' : 'block']" class="m-auto rounded-md w-fit relative max-w-[90%] bg-inherit text-[15px] config min-w-[300px] font-[500]">
-    <div :style="{'width': completionLevel + '%'}" :class="[!playerInput.length ? 'h-0' : '', theme === 'dark' ? 'bg-green-400 after:bg-green-400' : 'bg-green-600 after:bg-green-600', !completionLevel || playerInput.length < 2 ? 'after:w-0 after:hidden' : 'after:w-[3%] after:right-0 after:absolute after:top-0 after:bottom-0 after:blur-[5px]']" class="absolute left-0 bottom-[-3px] top-[-3px] m-auto rounded-md max-[460px]:hidden p-1" v-if="blind" ></div>
+<div ref="containerEl" :class="[isMobile() && focus ? 'hidden' : 'block']" class="m-auto rounded-md w-fit relative h-fit text-[13px] config min-w-[300px] font-[500] pb-7">
+    <!-- <div :style="{'width': completionLevel + '%'}" :class="[!playerInput.length ? 'h-0' : '', theme === 'dark' ? 'bg-green-400 after:bg-green-400' : 'bg-green-600 after:bg-green-600', !completionLevel || playerInput.length < 2 ? 'after:w-0 after:hidden' : 'after:w-[3%] after:right-0 after:absolute after:top-0 after:bottom-0 after:blur-[5px]']" class="absolute left-0 bottom-[-3px] top-[-3px] m-auto rounded-md max-[460px]:hidden p-1" v-if="blind" ></div>
     <div :style="{'width': completionLevel + '%'}" class="absolute left-0 bottom-[-3px] top-[-3px] m-auto rounded-md max-[460px]:hidden flex" v-else>
-        <div v-show="index <= playerInput.length - 1" :class="[ index === 0 ? 'rounded-l-[10px]' : '' ,playerInput[index] === alphabet && index <= playerInput.length - 1 ? 'bg-green-500 after:bg-green-500' : 'bg-red-500 after:bg-red-500', index === playerInput.length - 1 ? 'after:w-[100%] after:right-0 after:top-0 after:bottom-0 after:blur-[5px]' : 'after:w-0 after:hidden', !completionLevel || index < 2 ? 'after:hidden' : 'after:absolute']" class="h-[100%] relative" :style="{'width': singleDivWidth + 'px'}" v-for="(alphabet, index) in containerText" :key="index"></div>
-    </div>
+        <div v-show="index <= playerInput.length - 1" :class="[ index === 0 ? 'rounded-l-[10px]' : '' ,playerInput[index] === alphabet && index <= playerInput.length - 1 ? 'bg-green-500 after:bg-green-500' : 'bg-red-500 after:bg-red-500', index === playerInput.length - 1 ? 'after:w-[100%] after:right-0 after:bottom-0 after:blur-[5px]' : 'after:w-0 after:hidden', !completionLevel || index < 2 ? 'after:hidden' : 'after:absolute']" class="h-[100%] relative" :style="{'width': singleDivWidth + 'px'}" v-for="(alphabet, index) in containerText" :key="index"></div>
+    </div> -->
     <Transition name="test">
-      <div v-if="!hasCompletedSession && mode !== 'alphabets'" :class="[appTheme]" class="relative m-auto rounded-md max-w-fit ring-1 ring-slate-400">
-        <div class="absolute right-[-5px] top-[-5px] z-[2] text-red-600 hover:bg-red-500 hover:text-white h-5 w-5 rounded-full flex items-center justify-center bg-white text-center cursor-pointer font-bold" @click="hideElements = !hideElements">X</div>
-          <div class=" items-center p-1 flex max-w-[1000px] justify-center flex-wrap relative z-[1]">
-              <div class="flex items-center p-[1px] parent" v-for="(optionArr, key, listIndex) in option" :key="listIndex">          
+      <div v-if="!hasCompletedSession && mode !== 'alphabets'" :class="[appTheme]" class="relative m-auto rounded-md max-w-fit">
+          <div class=" items-center p-1 flex max-w-[500px] gap-2 justify-center flex-wrap relative z-[1]">
+              <div class="flex items-center gap-3 p-[1px] parent" v-for="(optionArr, key, listIndex) in option" :key="listIndex">          
                   <div 
-                  :class="[hoverIndex === listIndex ? 'border-zinc-400' : 'border-transparent']" class="relative flex gap-2 py-[2px] px-1 border rounded-lg cursor-pointer flex-wrap justify-center items-center"
+                  class="relative ring-zinc-700 hover:ring-blue-800 flex py-[2px] px-1 ring-[1px] rounded-lg cursor-pointer flex-wrap justify-center items-center"
                   @mouseenter="mouseEnter(listIndex)"
                   @mouseleave="mouseLeave(listIndex)" >
                       <div 
-                      class="px-[5px] hover:scale-105 rounded-md whitespace-nowrap" 
-                      :class="[disableOption[key] ? 'hide' : '', customizers[key] === option && !disableOption[key]  ? 'text-green-600' : '', option === 'custom']"
+                      class="px-[5px] rounded-md whitespace-nowrap" 
+                      :class="[disableOption[key] ? 'hide' : '', customizers[key] === option && !disableOption[key]  ? 'text-blue-500' : '', option === 'custom']"
                       @click="changeConfig(option, key)" 
                       v-for="(option, index) in optionArr" 
                       :key="index">
                           {{ option }}
                       </div>
-                      <div v-if="listIndex === hoverIndex" class="absolute z-10 left-0 text-black top-[105%] shadow-sm shadow-slate-500 px-[6px] bg-neutral-100 rounded-full whitespace-nowrap text-xs font-light">{{optionsTooltip[listIndex]}}</div>
+                      <div v-if="listIndex === hoverIndex" class="absolute z-10 left-0 text-black top-[105%] shadow-sm shadow-slate-500 px-[6px] bg-neutral-100 rounded-full whitespace-nowrap text-xs font-normal">{{optionsTooltip[listIndex]}}</div>
                   </div>
               </div>
           </div>
@@ -29,16 +28,15 @@
     </Transition>
     
     <Transition name="alphabet">
-      <div v-if="!hasCompletedSession && mode === 'alphabets'" :class="[appTheme]" class="rounded-md w-[90%] min-w-fit m-auto max-w-fit ring-1 ring-slate-400 relative py-1 px-10">
-        <div class="absolute right-[-3px] top-[-3px] z-[1] hover:text-red-500  h-5 w-5 rounded-full flex items-center justify-center bg-neutral-600 text-center cursor-pointer text-white" @click="hideElements = !hideElements">X</div>
-        <div class="flex flex-wrap items-center justify-center gap-[8px] rounded-md min-w-fit m-auto max-w-fit hover:ring-[1px] hover:ring-zinc-400 group p-[2px] relative z-[1]">        
-          <div :class="[alphabetsConfig.uppercase ? 'text-green-600' : '']" @click="changeMode('uppercase')" class="px-[5px] hover:scale-105 rounded-md">uppercase</div>
-          <div :class="[alphabetsConfig.customCase ? 'text-green-600' : '']" @click="changeMode('customCase')" class="px-[5px] hover:scale-105 rounded-md">random-case</div>
-          <div :class="[alphabetsConfig.spaced ? 'text-green-600' : '']" @click="changeMode('spaced')" class="px-[5px] hover:scale-105 rounded-md">space</div>
-          <div :class="[alphabetsConfig.backwards ? 'text-green-600' : '']" @click="changeMode('backwards')" class="px-[5px] hover:scale-105 rounded-md">reverse</div>
-          <div :class="[alphabetsConfig.random ? 'text-green-600' : '']" @click="changeMode('random')" class="px-[5px] hover:scale-105 rounded-md">random</div>
-          <!-- <div :class="[alphabetsConfig.demo ? 'text-green-600' : '']" @click="changeMode('demo')" class="px-[5px] hover:scale-105 rounded-md">keyboard-demo</div> -->
-          <div class="absolute left-0 text-black top-[115%] shadow-sm shadow-slate-500 px-[6px] bg-neutral-100 rounded-full whitespace-nowrap group-hover:block hidden text-xs font-light">format</div>
+      <div v-if="!hasCompletedSession && mode === 'alphabets'" :class="[appTheme]" class="rounded-md w-[90%] min-w-fit m-auto max-w-fit relative py-1 px-10">
+        <div class="flex flex-wrap items-center justify-center gap-[8px] rounded-md min-w-fit m-auto max-w-fit ring-[1px] ring-zinc-700 hover:ring-blue-800 group p-[2px] relative z-[1]">        
+          <div :class="[alphabetsConfig.uppercase ? 'text-blue-500' : '']" @click="changeMode('uppercase')" class="px-[5px] rounded-md">uppercase</div>
+          <div :class="[alphabetsConfig.customCase ? 'text-blue-500' : '']" @click="changeMode('customCase')" class="px-[5px] rounded-md">random-case</div>
+          <div :class="[alphabetsConfig.spaced ? 'text-blue-500' : '']" @click="changeMode('spaced')" class="px-[5px] rounded-md">space</div>
+          <div :class="[alphabetsConfig.backwards ? 'text-blue-500' : '']" @click="changeMode('backwards')" class="px-[5px] rounded-md">reverse</div>
+          <div :class="[alphabetsConfig.random ? 'text-blue-500' : '']" @click="changeMode('random')" class="px-[5px] rounded-md">random</div>
+          <!-- <div :class="[alphabetsConfig.demo ? 'text-blue-500' : '']" @click="changeMode('demo')" class="px-[5px] rounded-md">keyboard-demo</div> -->
+          <div class="absolute left-0 text-black top-[115%] shadow-sm shadow-slate-500 px-[6px] bg-neutral-100 rounded-full whitespace-nowrap group-hover:block hidden text-xs font-normal">format</div>
         </div>
       </div>
     </Transition>
