@@ -1,6 +1,8 @@
 import { mainStore } from "../store/mainStore"
 import { customizeStore } from "../store/customizeStore";
 import { storeToRefs } from 'pinia';
+import { isTouchScreenDevice } from "./isTouchScreenDevice";
+import { isMobile } from "./isMobile";
 
 export const mobileInputEvent = (e) => {
     const store = mainStore()

@@ -17,7 +17,7 @@
         </div>
         
         <Transition v-if="goNext" name="container">
-        <div v-if="containerText" class="transition-all duration-100 relative mx-auto max-w-[700px] w-full min-w-[300px]" :class="[refocus ? 'blur-sm' : '']">
+        <div v-if="containerText" class="transition-all duration-100 relative mx-auto max-w-[700px] w-full min-w-[300px]" :class="[refocus || ((isTouchScreenDevice() && !isMobile()) && !focus) ? 'blur-sm cursor-pointer' : '']">
                 <div @blur="textIsFocused = false" @focus="textIsFocused = true" tabindex="0" ria-describedby="full-text" ref="testContainerEl"  :style="{'height' : containerHeight + 'px', 'font-size': font + 'px'}" :class="[ customizers['no-space'] || customizers['test-type'] === 'custom' ? 'break-words' : '', mode === 'alphabets' ? 'text-center break-words': 'text-left', mode !== 'alphabets' && textPosition=== 'center' ? 'text-center' : mode !== 'alphabets' && textPosition=== 'right' ? 'text-right' : 'text-left', !isTouchScreenDevice() ? 'overflow-y-hidden ' : 'overflow-y-hidden'] " class="overflow-x-hidden scroll-smooth leading-[1.4] h-fit py-[1px] outline-none after:absolute after:top-0 after:bottom-0 after:w-[4px] after:right-[0] after:z-[999] after:bg-transparent">
                     <p id="full-text" class="hidden">{{ containerText }}</p>
                     <Alphabet
@@ -35,7 +35,12 @@
                 </div>
             </div>
         </Transition>
-        <p class="flex mx-auto text-base bg-transparent w-fit whitespace-nowrap" v-if="(isTouchScreenDevice() && !focus) || refocus" :class="[isTouchScreenDevice() ? 'blur-[1px]' : 'absolute top-[100px] font-bold left-[50%] translate-x-[-50%]']" ><span class="pr-1">{{isTouchScreenDevice() ? 'click' : ''}} </span><upwardsFinger v-if="isTouchScreenDevice()" class="relative w-5 bottom-1" />{{ refocus ? 'click anywhere to focus' : isTouchScreenDevice() && !focus ? 'text to focus' : '' }}</p>
+
+        <div v-if="(isTouchScreenDevice() && !focus) || refocus" class="flex mx-auto text-base bg-transparent w-fit whitespace-nowrap">
+            <p class="blur-[1px] flex items-center" v-if="isTouchScreenDevice() && isMobile()">Click <upwardsFinger class="w-5" /> test to focus</p>
+            <p @click="focusInputEl" class="absolute top-[100px] font-bold left-[50%] translate-x-[-50%]" v-if="isTouchScreenDevice() && !isMobile()">Click test or press any key to focus </p>
+            <p class="absolute top-[100px] font-bold left-[50%] translate-x-[-50%]" v-if="!isTouchScreenDevice()">Press any key to focus</p>
+        </div>
     </main>
 </template>
 
@@ -72,7 +77,7 @@ const { containerText, refocus, quoteType, goNext, mobileBackspace, wrongCount, 
 const {switchNext} = store
 
 const customize = customizeStore()
-const { customizers, mode, font, textPosition, switchMode} = storeToRefs(customize)
+const { customizers, mode, font, textPosition, switchMode, pauseTyping} = storeToRefs(customize)
 
 const theme_ = themeStore()
 const {theme} = storeToRefs(theme_)
@@ -84,6 +89,11 @@ const {clearCounter} = count
 const restartTest = async () => {
     if (timedTyping.value) clearCounter()
     switchNext(customizers.value, 'restart')
+}
+
+const focusInputEl = () => {
+    focus.value = true
+    inputEl.value.focus()
 }
 
 watch(scrollTextContainer, (newVal, oldVal)=> {
@@ -125,6 +135,10 @@ onMounted(() => {
 
     document.addEventListener('keydown', event => {
         if (textIsFocused.value) preventKeyBoardScroll(event)
+        if (isTouchScreenDevice() && !isMobile() && !focus.value) {
+            focus.value = true
+            setTimeout(() => inputEl.value.focus(), 10);
+        }
     })
 
     window.addEventListener('touchmove', event => {

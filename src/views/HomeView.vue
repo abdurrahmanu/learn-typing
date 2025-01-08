@@ -18,6 +18,7 @@ import { customizeStore } from '../store/customizeStore';
 import { useRouter } from 'vue-router';
 import { countdownStore } from '../store/countdownStore'
 import { isMobile } from '../composables/isMobile';
+import { isTouchScreenDevice } from '../composables/isTouchScreenDevice';
 
 const count = countdownStore()
 const {clearCounter} = count
@@ -28,6 +29,10 @@ const { hasCompletedSession, focus, timedTyping} = storeToRefs(store)
 
 const customize = customizeStore()
 const { hideElements } = storeToRefs(customize)
+
+const main = mainStore()
+const {inputEl} = storeToRefs(main)
+
 const screenWidth = ref(window.innerWidth)
 
 watch(hasCompletedSession, (newVal) => {
@@ -36,5 +41,7 @@ watch(hasCompletedSession, (newVal) => {
 }, {deep: true})
 
 window.addEventListener('resize', () => screenWidth.value = window.innerWidth)
-watch(focus, newVal => newVal ? hideElements.value = true : '')
+watch(focus, newVal => {
+  newVal ? hideElements.value = true : ''
+})
 </script>
