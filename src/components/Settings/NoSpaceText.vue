@@ -1,12 +1,14 @@
 <template>
     <div :class="[theme === 'dark' ? 'hover:bg-neutral-800' : 'hover:bg-zinc-200']" class="py-2 pl-5">
         <div class="flex justify-between w-full p-1 border border-transparent rounded-sm ">
-            <div @click="customizers['no-space'] = !customizers['no-space'], customize('no-space', customizers['no-space'])" class="flex gap-4 w-fit">
-                <input name="nospace" :checked="customizers['no-space']" type="checkbox" class="checked:accent-green-500 hover:accent-green-700">
-                <label class="text-[15px] font-bold uppercase w-fit">
-                    <span>No space </span>
-                    <span v-if="customizers['no-space']" class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-teal-800 ml-1">hard</span>
-                    <span v-else class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-lime-800 ml-1">easy</span>
+            <div @click="customizers['no-space'] = !customizers['no-space'], customize('no-space', customizers['no-space'])" class="flex gap-3 items-center w-fit">
+                <div class="relative w-4 h-4">
+                    <input name="nospace" :checked="customizers['no-space']"  type="checkbox" class="appearance-none shadow-sm shadow-black w-4 h-4 peer border-blue-500 rounded-full hover:ring-[2px] ring-[1px] hover:ring-blue-500" id="">
+                    <good />
+                </div>
+                <label class="text-[13px] font-bold uppercase w-fit flex items-center">
+                    <div>No space</div>
+                    <div class="px-3 text-white leading-normal rounded-full text-[10px]" :class="[customizers['no-space'] ? 'text-teal-700' : 'text-lime-700']">{{ customizers['no-space'] ? 'hard' : 'easy' }}</div>
                 </label>
             </div>
         </div>
@@ -18,6 +20,7 @@
 import {storeToRefs} from 'pinia'
 import {customizeStore} from '../../store/customizeStore'
 import { themeStore } from '../../store/themeStore';
+import good from '../svg/good.vue';
 
 const theme_ = themeStore()
 const {theme} = theme_

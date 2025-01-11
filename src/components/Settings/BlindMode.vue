@@ -1,14 +1,15 @@
 <template>
         <div :class="[theme === 'dark' ? 'hover:bg-neutral-800' : 'hover:bg-zinc-200']" class="py-2 pl-5">
             <div class="flex justify-between w-full p-1 border border-transparent rounded-sm ">
-                <div @click="customize"  class="gap-4 w-fit">
-                    <input name="blind" :checked="blind"  type="checkbox" class="checked:accent-green-500 hover:accent-green-700" id="">
-                    <label class="text-[15px] font-bold uppercase w-fit pl-3">
-                        <span>Blind mode</span>
-                        <Blind class="relative inline-block px-2 top-1" />
-                        <span v-if="!blind" class="px-3 text-white uppercase rounded-full text-[10px] bg-lime-800 ml-1 py-[1px] relative bottom-[2px]">easy</span>
-                        <span v-else class="px-3 text-white uppercase rounded-full text-[10px] bg-yellow-800 ml-1 py-[1px] relative bottom-[2px]">medium</span>
-                    </label>
+                <div @click="customize"  class="gap-3 flex items-center w-fit">
+                    <div class="relative w-4 h-4">
+                        <input name="blind" :checked="blind"  type="checkbox" class="appearance-none shadow-sm shadow-black w-4 h-4 peer border-blue-500 rounded-full hover:ring-[2px] ring-[1px] hover:ring-blue-500" id="">
+                        <good />
+                    </div>
+                    <label class="text-[13px] font-bold uppercase w-fit flex items-center">
+                    <div>Blind mode</div>
+                    <div class="px-3 text-white leading-normal rounded-full text-[10px]" :class="[!blind ? 'text-lime-700' : 'text-yellow-700']">{{ !blind ? 'easy' : 'medium' }}</div>
+                </label>
                 </div>
             </div>
             <p class="px-3 font-[400]">Toggle to type while fully trusting your muscle memory. </p>
@@ -21,6 +22,7 @@ import Blind from '../Blind.vue';
 import {customizeStore} from '../../store/customizeStore';
 import {updateDB} from '../../composables/updateDB'
 import { themeStore } from '../../store/themeStore';
+import good from '../svg/good.vue';
 
 const theme_ = themeStore()
 const {theme} = theme_

@@ -1,14 +1,16 @@
 <template>
         <div :class="[theme === 'dark' ? 'hover:bg-neutral-800' : 'hover:bg-zinc-200']" class="py-2 pl-5">
             <div class="flex justify-between w-full p-1 border border-transparent rounded-sm ">
-                <div @click="timedTyping = !timedTyping" class="flex gap-4 w-fit">
-                    <input name="countdown" :checked="timedTyping" type="checkbox" class="checked:accent-green-500 hover:accent-green-700">
-                    <label class="text-[15px] font-bold uppercase w-fit">
-                        <span>Countdown</span> 
-                        <PlayTimer v-if="timedTyping" class="inline-block w-5 mx-2" /> 
-                        <PauseTimer v-if="!timedTyping" class="inline-block w-5 mx-2" />
-                        <span v-if="timedTyping" class="px-3 text-white uppercase rounded-full text-[10px] bg-yellow-800 ml-1 py-[1px] relative bottom-[2px]">medium</span>
-                        <span v-else class="px-3 text-white uppercase rounded-full text-[10px] bg-lime-800 ml-1 py-[1px] relative bottom-[2px]">easy</span>
+                <div @click="timedTyping = !timedTyping" class="flex gap-3 items-center w-fit">
+                    <div class="relative w-4 h-4">
+                        <input name="countdown" :checked="timedTyping"  type="checkbox" class="appearance-none shadow-sm shadow-black w-4 h-4 peer border-blue-500 rounded-full hover:ring-[2px] ring-[1px] hover:ring-blue-500" id="">
+                        <good />
+                    </div>
+                    <label class="text-[13px] font-bold uppercase w-fit gap-2 flex items-center">
+                        <div>Countdown</div>
+                        <PlayTimer v-if="timedTyping" class="inline-block w-5" /> 
+                        <PauseTimer v-if="!timedTyping" class="inline-block w-5" />
+                        <div class="px-1 text-white leading-normal rounded-full text-[10px]" :class="[!timedTyping ? 'text-lime-700' : 'text-yellow-700']">{{ !timedTyping ? 'easy' : 'medium' }}</div>
                     </label>
                 </div>
             </div>
@@ -22,6 +24,7 @@ import {mainStore} from '../../store/mainStore';
 import { themeStore } from '../../store/themeStore';
 import PauseTimer from '../svg/pauseTimer.vue';
 import PlayTimer from '../svg/playTimer.vue';
+import good from '../svg/good.vue';
 
 const theme_ = themeStore()
 const {theme} = theme_

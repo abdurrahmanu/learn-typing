@@ -2,15 +2,19 @@
     <div :class="[theme === 'dark' ? 'hover:bg-neutral-800' : 'hover:bg-zinc-200']" class="py-1 pl-5">
         <div @click="toggle" class="flex w-full p-1 space-x-4 border border-transparent rounded-sm">
             <input :disabled="!(mixCharactersArray.length > 1)" :checked="mixCharacters"  type="checkbox" class="checked:accent-green-500 hover:accent-green-700" name="letter-combination" id="id">
+            <div class="relative w-4 h-4">
+                        <input name="letter-combination" :disabled="!(mixCharactersArray.length > 1)" :checked="mixCharacters"   type="checkbox" class="appearance-none shadow-sm shadow-black w-4 h-4 peer border-blue-500 rounded-full hover:ring-[2px] ring-[1px] hover:ring-blue-500" id="">
+                        <good />
+                    </div>
             <label for="id" class="text-sm font-medium w-fit"> 
-                <span>Characters Combinations</span>
+                <span class="text-[13px]">Characters Combinations</span>
                 <span v-if="mixCharacters" class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-yellow-800 ml-1">medium</span>
                 <span v-else class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-lime-800 ml-1">easy</span>
             </label>
         </div>
         <div class="px-4 font-[400]">
-            <p>Toggle to randomly repeat and shuffles your selection. A minimum of two characters and maximum of ten.</p>
-            <div class="w-fit m-auto px-10 text-center text-[16px] min-h-[25px] h-fit" :class="[mixCharactersArray.length ? 'ring-[1px] ring-blue-600 rounded-md' : '']">[ {{ mixCharactersArray.join(' , ') }} ]</div>
+            <p class="text-[13px]">Toggle to randomly repeat and shuffles your selection. A minimum of two characters and maximum of ten.</p>
+            <div class="w-fit m-auto px-10 text-center text-[15px] min-h-[25px] h-fit" :class="[mixCharactersArray.length ? 'ring-[1px] ring-blue-600 rounded-md' : '']">[ {{ mixCharactersArray.join(' , ') }} ]</div>
             <div @click="shiftKey = !shiftKey" class="flex m-auto my-1 space-x-2 w-fit">
                 <input :checked="shiftKey" type="checkbox" class="checked:accent-green-500 hover:accent-green-700" name="shiftkey" id="shiftkey">
                 <label for="shiftkey" class="font-medium">Shift Key</label>
@@ -33,6 +37,7 @@ import {storeToRefs} from 'pinia';
 import {mainStore} from '../../store/mainStore'
 import { customizeStore } from '../../store/customizeStore';
 import { themeStore } from '../../store/themeStore';
+import good from '../svg/good.vue';
 
 const theme_ = themeStore()
 const {theme} = theme_

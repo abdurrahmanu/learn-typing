@@ -1,12 +1,15 @@
 <template>
     <div :class="[theme === 'dark' ? 'hover:bg-neutral-800' : 'hover:bg-zinc-200']" class="py-2 pl-5">
-        <div class="flex justify-between w-full p-1 border border-transparent rounded-sm ">
-            <div @click="customize" class="flex gap-4 w-fit">
-                <input name="backspace" :disabled="isTouchScreenDevice() ? true : false" :checked="isTouchScreenDevice() ? true : backspace"  type="checkbox" class="checked:accent-green-500  hover:accent-green-700">
-                <label class="text-[15px] font-bold uppercase w-fit">
-                    <span>Backspace</span>
-                    <span v-if="backspace" class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-lime-800 ml-1">easy</span>
-                    <span v-else class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-yellow-800 ml-1">medium</span>
+        <div class="flex p-1 justify-between w-full border border-transparent rounded-sm w-fit">
+            <div @click="customize" class="flex items-center gap-x-3 w-fit">
+                <div class="relative w-4 h-4">
+                    <input name="backspace" :disabled="isTouchScreenDevice() ? true : false" :checked="isTouchScreenDevice() ? true : backspace"  type="checkbox" class="appearance-none shadow-sm shadow-black w-4 h-4 peer disabled:ring-slate-600 rounded-full hover:ring-[2px] ring-[1px] disabled:hover:ring-yellow-900
+                    hover:ring-blue-500" id="">
+                    <good />
+                </div>
+                <label class="text-[13px] font-bold uppercase w-fit flex items-center">
+                    <div>Backspace</div>
+                    <div class="px-3 text-white leading-normal rounded-full text-[10px]" :class="[backspace ? 'text-lime-700' : 'text-yellow-700']">{{ backspace ? 'easy' : 'medium' }}</div>
                 </label>
             </div>
         </div>
@@ -17,6 +20,7 @@
 
 <script setup>
 import {ref} from 'vue'
+import good from '../svg/good.vue';
 import {storeToRefs} from 'pinia';
 import {customizeStore} from '../../store/customizeStore';
 import {updateDB} from '../../composables/updateDB'

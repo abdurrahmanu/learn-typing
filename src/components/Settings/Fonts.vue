@@ -2,8 +2,8 @@
     <div :class="[theme === 'dark' ? 'hover:bg-neutral-800' : 'hover:bg-zinc-200']" class="flex items-center gap-2 py-4 pl-5 font-[400]">           
         <div class="w-[90%]">
             <div class="flex items-center justify-between">
-                <div class="text-[15px] font-bold whitespace-nowrap">TEST FONT SIZE</div> 
-                <div class="min-w-[40px] text-center text-[15px] font-bold">{{ fontSize }}px</div>
+                <div class="text-[13px] font-bold whitespace-nowrap">TEST FONT SIZE</div> 
+                <div class="min-w-[40px] text-center text-[13px] font-bold">{{ fontSize }}px</div>
             </div>
             <input name="range" type="range" class="w-full h-1 outline-none bg-blue-500 accent-blue-800 appearance-none" v-model="range"/>
         </div>

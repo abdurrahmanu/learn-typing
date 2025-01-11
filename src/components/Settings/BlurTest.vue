@@ -1,13 +1,15 @@
 <template>
     <div :class="[theme === 'dark' ? 'hover:bg-neutral-800' : 'hover:bg-zinc-200']" class="py-2 pl-5">
-        <div  class="flex justify-between w-full p-1 border border-transparent rounded-sm ">
-            <div @click="customizers['blur'] = !customizers['blur'], customize('blur', customizers['blur'])" class="flex gap-4 w-fit">
-                <input name="caps" :checked="customizers['blur']" type="checkbox" class="checked:accent-green-500 hover:accent-green-700">
-                <label class="text-[15px] font-bold uppercase w-fit">
-                    <span>Blur</span> 
-                    <span v-if="customizers['blur']" class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-yellow-800 ml-1">medium</span> 
-                    <span v-else class="px-3 text-white uppercase rounded-full text-[10px] bg-lime-800 ml-1 py-[1px] relative bottom-[2px]">easy</span>
-                </label>
+        <div  class="flex justify-between w-full p-1 border border-transparent items-center rounded-sm ">
+            <div @click="customizers['blur'] = !customizers['blur'], customize('blur', customizers['blur'])" class="flex items-center gap-3 w-fit">
+                <div class="relative w-4 h-4">
+                    <input name="blur" :checked="customizers['blur']"  type="checkbox" class="appearance-none shadow-sm shadow-black w-4 h-4 peer border-blue-500 rounded-full hover:ring-[2px] ring-[1px] hover:ring-blue-500" id="">
+                    <good />
+                </div>
+                <label class="text-[13px] font-bold uppercase w-fit flex items-center">
+                <div>Blur</div>
+                <div class="px-3 text-white leading-normal rounded-full text-[10px]" :class="[!customizers['blur'] ? 'text-lime-700' : 'text-yellow-700']">{{ !customizers['blur'] ? 'easy' : 'medium' }}</div>
+            </label>
             </div>
         </div>
         <p class="px-3 font-[400]">Toggle to blur out all words excluding the current and next words. Only works with spaced test.</p>
@@ -17,6 +19,7 @@
 <script setup>
 import {storeToRefs} from 'pinia'
 import {customizeStore} from '../../store/customizeStore'
+import good from '../svg/good.vue';
 import { themeStore } from '../../store/themeStore';
 
 const theme_ = themeStore()
