@@ -19,7 +19,8 @@ export const configUpdate = async () => {
     const { customizers, doubleEachWord, disableOption, textLines, cursorType, difficulty, font, range, blind, backspace, capslock } = storeToRefs(customize)
 
     preferredConfigs.value = await getSingleDoc(localStorage.getItem('kiboardID'))
-
+    
+    console.log('now is too late')
     connectingServer.value = false
     doubleEachWord.value = preferredConfigs.value.doubleEachWord || false
     theme.value = preferredConfigs.value.theme || theme.value

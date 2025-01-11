@@ -144,7 +144,7 @@ onMounted(() => {
                 if (testContainerEl.value instanceof HTMLElement) {  
                     const isOutsideTestContainer = event.srcElement !== testContainerEl.value && !testContainerEl.value.contains(event.srcElement)
                     const restartElement = event.srcElement === restartEl.value || restartEl.value.contains(event.srcElement) || event.srcElement === restartSvgEl.value
-                    const customizerElement = event.srcElement === customizeElement.value || customizeElement.value.contains(event.srcElement)
+                    const customizerElement = customizeElement.value instanceof HTMLElement && customizeElement.value.contains(event.srcElement)
 
                     if (!restartElement && !customizerElement && isOutsideTestContainer) {
                         inputEl.value.blur()
