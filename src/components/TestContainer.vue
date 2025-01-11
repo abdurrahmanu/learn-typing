@@ -87,7 +87,7 @@ const restartTest = async () => {
 }
 
 const focusInputElement = (delay) => {
-    if (pauseTyping.value && route.value !== 'home') return
+    if (pauseTyping.value && route.name !== 'home') return
     focus.value = true
     delay ? setTimeout(() => inputEl.value.focus(), 10) : inputEl.value.focus()
 }
@@ -124,7 +124,9 @@ onMounted(() => {
     
     document.addEventListener('keydown', event => {
         if (textIsFocused.value) preventKeyBoardScroll(event)
-        if (isTouchScreenDevice() && !focus.value) focusInputElement(true)  
+        if (isTouchScreenDevice() && !focus.value) {
+            focusInputElement(true)  
+        }
     })
 
     window.addEventListener('touchmove', event => {
@@ -150,7 +152,6 @@ onMounted(() => {
                         inputEl.value.blur()
                         focus.value = false
                     } else if (!isOutsideTestContainer || restartElement || customizerElement) focusInputElement()   
-                    
                 }
             })
         }

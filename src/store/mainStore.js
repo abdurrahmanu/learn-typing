@@ -10,6 +10,9 @@ export const mainStore = defineStore('mainStore', () => {
     const demo = ref(false)
     const keyboardMode = ref(false)
     const goNext = ref(true)
+    const isLoaded = ref(false)
+    const backOnline = ref(false)
+    const hasAnimated = ref(false)
 
     //Test container
     const customizeElement = ref(null)
@@ -133,12 +136,16 @@ export const mainStore = defineStore('mainStore', () => {
         keyboardMode,
         goNext,
         refocus,
+        isLoaded,
+        backOnline,
+        hasAnimated,
 
         testContainerEl,
         containerHeight,
         scrollDistance,
         scrollTextContainer,
         containerText ,
+
 
         enterKey,
         backspaceIsPressed,
