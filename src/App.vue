@@ -4,7 +4,7 @@
 </template>
 
 <script setup>
-import {onBeforeMount, onMounted, watch, ref, onUpdated, onBeforeUpdate} from 'vue'
+import {onBeforeMount, onMounted, watch, ref} from 'vue'
 import Main from './components/Main.vue'
 import Loader from './components/Loader.vue'
 import { storeToRefs } from 'pinia';
@@ -13,17 +13,15 @@ import { mainStore } from './store/mainStore';
 import {customizeStore}  from './store/customizeStore'
 import {textBoxHeight} from './composables/textBox'
 import { countdownStore } from './store/countdownStore';
-import { useRoute } from 'vue-router';
 import { DB } from './composables/connectDB';
 
 const onLoad = ref(undefined)
-const route = useRoute()
 
 const customize = customizeStore()
 const {font, customizers, toggleCapsToast } = storeToRefs(customize)
 
 const store = mainStore()
-const { timedTyping, hasAnimated, isLoaded, backOnline, preferredConfigs, refocus } = storeToRefs(store)
+const { timedTyping, preferredConfigs, refocus } = storeToRefs(store)
 const { switchNext} = store
 
 const count = countdownStore()
@@ -61,7 +59,7 @@ watch(preferredConfigs, newVal => {
 window.addEventListener('blur', () => refocus.value = true)
 window.addEventListener('focus', () => refocus.value = false)
 window.addEventListener('offline', () => hasInternetConnection.value = false);
-window.addEventListener('online', () => backOnline.value = true);
+window.addEventListener('online', () => DB(true));
 </script>
 
 <style scoped>

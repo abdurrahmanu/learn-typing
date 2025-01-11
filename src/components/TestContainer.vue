@@ -124,9 +124,7 @@ onMounted(() => {
     
     document.addEventListener('keydown', event => {
         if (textIsFocused.value) preventKeyBoardScroll(event)
-        if (isTouchScreenDevice() && !focus.value) {
-            focusInputElement(true)  
-        }
+        if (isTouchScreenDevice() && !focus.value) focusInputElement(true)  
     })
 
     window.addEventListener('touchmove', event => {
@@ -152,6 +150,7 @@ onMounted(() => {
                         inputEl.value.blur()
                         focus.value = false
                     } else if (!isOutsideTestContainer || restartElement || customizerElement) focusInputElement()   
+                    
                 }
             })
         }

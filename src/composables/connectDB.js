@@ -35,3 +35,14 @@ export const DB = async (onUpdate) => {
         configUpdate()
     } else connectingServer.value = false
 }
+
+
+
+
+
+
+
+
+
+
+

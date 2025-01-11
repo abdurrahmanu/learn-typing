@@ -7,7 +7,7 @@ import { storeToRefs } from 'pinia';
 
 export const configUpdate = async () => {
     const store = mainStore()
-    const {preferredConfigs, isLoaded, customTests} = storeToRefs(store)
+    const {preferredConfigs, customTests} = storeToRefs(store)
 
     const theme_ = themeStore()
     const {theme } = storeToRefs(theme_)
@@ -18,24 +18,20 @@ export const configUpdate = async () => {
     const customize = customizeStore()
     const { customizers, doubleEachWord, disableOption, textLines, cursorType, difficulty, font, range, blind, backspace, capslock } = storeToRefs(customize)
 
-    if (!preferredConfigs.value) {
-        preferredConfigs.value = await getSingleDoc(localStorage.getItem('kiboardID'))
-        connectingServer.value = false
-    }
-    
-    if (!isLoaded.value) {
-        doubleEachWord.value = preferredConfigs.value.doubleEachWord || false
-        theme.value = preferredConfigs.value.theme || theme.value
-        font.value = preferredConfigs.value.fontsize || font.value
-        range.value = (font.value - 16) / 0.26
-        cursorType.value = preferredConfigs.value.cursor || cursorType.value
-        blind.value = preferredConfigs.value.blind || false
-        difficulty.value = preferredConfigs.value.difficulty || difficulty.value
-        backspace.value = preferredConfigs.value.backspace || backspace.value
-        customizers.value = preferredConfigs.value.config[0] || customizers.value
-        disableOption.value = preferredConfigs.value.config[1] || disableOption.value
-        capslock.value = preferredConfigs.value.capslock || false
-        customTests.value = preferredConfigs.value.customTests || customTests.value['demo']
-        textLines.value = preferredConfigs.value.textLines || 3
-    }
+    preferredConfigs.value = await getSingleDoc(localStorage.getItem('kiboardID'))
+
+    connectingServer.value = false
+    doubleEachWord.value = preferredConfigs.value.doubleEachWord || false
+    theme.value = preferredConfigs.value.theme || theme.value
+    font.value = preferredConfigs.value.fontsize || font.value
+    range.value = (font.value - 16) / 0.26
+    cursorType.value = preferredConfigs.value.cursor || cursorType.value
+    blind.value = preferredConfigs.value.blind || false
+    difficulty.value = preferredConfigs.value.difficulty || difficulty.value
+    backspace.value = preferredConfigs.value.backspace || backspace.value
+    customizers.value = preferredConfigs.value.config[0] || customizers.value
+    disableOption.value = preferredConfigs.value.config[1] || disableOption.value
+    capslock.value = preferredConfigs.value.capslock || false
+    customTests.value = preferredConfigs.value.customTests || customTests.value['demo']
+    textLines.value = preferredConfigs.value.textLines || 3
 }

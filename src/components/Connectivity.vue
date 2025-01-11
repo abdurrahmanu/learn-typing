@@ -4,15 +4,11 @@
 
 <script setup>
 import {ref, watch, onMounted} from 'vue'
-import { mainStore } from '../store/mainStore';
 import { connectStore } from '../store/connectStore';
 import { storeToRefs } from 'pinia';
 
 const connect = connectStore()
 const {hasInternetConnection, connectionStrength, showConnectionStrength} = storeToRefs(connect)
-
-const store = mainStore()
-const {isLoaded} = storeToRefs(store)
 
 const toggle = ref(false)
 
@@ -20,14 +16,12 @@ onMounted(() => {
     toggle.value = showConnectionStrength.value
 
     if (!navigator.onLine) {
-        isLoaded.value = true
         showConnectionStrength.value = true
         toggle.value = showConnectionStrength.value
         connectionStrength.value  = 'No internet connection'
     }
 
     watch(hasInternetConnection, newVal => !newVal ? connectionStrength.value = 'No internet connection' : '')
-    
     watch(showConnectionStrength, newVal => toggle.value = newVal )
 })
 
