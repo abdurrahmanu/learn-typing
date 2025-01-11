@@ -22,12 +22,12 @@
             </div>
         </div>
         <div class="w-fit p-[1px] hover:bg-gradient-to-tr transition-all duration-500rounded-md m-auto py-3">            
-            <div class="flex justify-center p-3 m-auto border border-transparent rounded-md w-fit hover:border-zinc-600">
-                <div class="relative px-2 text-center border-r border-r-teal-700">
+            <div class="flex justify-center p-3 m-auto border border-transparent  text-[13px] rounded-md w-fit hover:border-zinc-600">
+                <div class="relative px-2  text-center border-r border-r-teal-700">
                     <pass v-if="accuracyBasedOnLevels" class="absolute bottom-0 right-[2px] w-3" />
                     <fail v-else class="absolute bottom-0 right-[2px] w-3" />
                     <div class="relative">                        
-                        <div class="px-2 border border-transparent rounded-full peer hover:border-black font-[400]">ACCURACY</div>
+                        <div class="px-2 border  border-transparent rounded-full peer hover:border-black font-[400]">ACCURACY</div>
                         <div class="absolute rounded-md top-[115%] left-[0%] z-[1] text-left p-1 hidden peer-hover:block shadow-sm shadow-black bg-neutral-800 min-w-[185px]  max-w-[300px] text-slate-400">
                             <p>The percentage of correctly typed characters out of the total number of characters.</p>
                         </div>
@@ -67,7 +67,7 @@
                 </div>
             </div>
         </div>
-        <div class="space-y-1 text-xl font-[400] roboto-font py-4 my-3 border-y border-slate-500 w-fit m-auto">            
+        <div class="space-y-1 text-lg font-[400] roboto-font py-4 my-3 border-y border-slate-500 w-fit m-auto">            
             <div v-if="timedTyping">                
                 <div v-if="beatCountdown && testResult === 'you passed the test'" class="text-green-700 uppercase ">You passed the test<span class="px-2 text-lg">&#128526;</span> </div>
                 <div v-else class="text-red-400 uppercase ">{{!beatCountdown ? 'You failed to beat the time' : 'You failed the test' }} <span class="text-lg">&#128551;</span></div>
