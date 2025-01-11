@@ -1,7 +1,6 @@
 <template>
     <main class="w-[90%] min-h-[150px] space-y-[2px] relative transition-none max-w-[900px] m-auto" :class="[isMobile() && focus ? 'pt-8' : '']">
-
-        <div :class="[isTouchScreenDevice() ? 'flex' : 'block', customizers['modes'] === 'alphabet-test' && !useAlphabetCombination ? 'max-w-[450px]' : 'max-w-[700px]']" class="relative h-fit flex text-[16px] justify-between min-h-[30px] m-auto py-1 px-10">      
+        <div class="relative max-w-[700px] h-fit flex text-[16px] justify-between min-h-[30px] m-auto py-1 px-3">      
             <MobileInput />
             <div class="space-x-[50px]">
                 <Countdown 
@@ -18,7 +17,7 @@
         
         <Transition v-if="goNext" name="container">
         <div v-if="containerText" class="transition-all duration-100 relative mx-auto max-w-[700px] w-full min-w-[300px]" :class="[(refocus || ((isTouchScreenDevice() && !isMobile()) && !focus)) && theme === 'dark' ? 'blur-[2px] bg-[#323437] cursor-pointer opacity-40' : '', (refocus || ((isTouchScreenDevice() && !isMobile()) && !focus)) && theme !== 'dark' ? 'blur-[2px] bg-zinc-200 cursor-pointer opacity-40' : '',]">
-                <div @blur="textIsFocused = false" @focus="textIsFocused = true" tabindex="0" ria-describedby="full-text" ref="testContainerEl"  :style="{'height' : containerHeight + 'px', 'font-size': font + 'px'}" :class="[ customizers['no-space'] || customizers['test-type'] === 'custom' ? 'break-words' : '', customizers['modes'] === 'alphabet-test' ? 'text-center break-words': 'text-left', customizers['modes'] !== 'alphabet-test' && textPosition=== 'center' ? 'text-center' : customizers['modes'] !== 'alphabet-test' && textPosition=== 'right' ? 'text-right' : 'text-left', !isTouchScreenDevice() ? 'overflow-y-hidden ' : 'overflow-y-hidden'] " class="overflow-x-hidden scroll-smooth leading-[1.4] h-fit py-[1px] outline-none after:absolute after:top-0 after:bottom-0 after:w-[4px] after:right-[0] after:z-[999] after:bg-transparent font-[300]">
+                <div @blur="textIsFocused = false" @focus="textIsFocused = true" tabindex="0" ria-describedby="full-text" ref="testContainerEl"  :style="{'height' : containerHeight + 'px', 'font-size': font + 'px'}" :class="[ customizers['no-space'] || customizers['test-type'] === 'custom' ? 'break-words' : '', textPosition=== 'center' ? 'text-center' : textPosition=== 'right' ? 'text-right' : 'text-left'] " class="overflow-hidden scroll-smooth leading-[1.4] h-fit py-[1px] outline-none after:absolute after:top-0 after:bottom-0 after:w-[4px] after:right-[0] after:z-[999] after:bg-transparent font-[300]">
                     <p id="full-text" class="hidden">{{ containerText }}</p>
                     <Alphabet
                     v-for="index in containerText.length"
@@ -38,7 +37,7 @@
 
         <div v-if="(isTouchScreenDevice() && !focus) || refocus" class="flex mx-auto text-[16px] bg-transparent w-fit whitespace-nowrap">
             <p class="blur-[1px] flex items-center" v-if="isTouchScreenDevice() && isMobile()">Click <upwardsFinger class="w-5" /> test to focus</p>
-            <p @click="focusInputEl" class="absolute top-[100px] font-bold left-[50%] translate-x-[-50%]" v-if="isTouchScreenDevice() && !isMobile()">Click test or press any key to focus </p>
+            <p @click="focusInputElement" class="absolute top-[100px] font-bold left-[50%] translate-x-[-50%]" v-if="isTouchScreenDevice() && !isMobile()">Click test or press any key to focus </p>
             <p class="absolute top-[100px] font-bold left-[50%] translate-x-[-50%]" v-if="!isTouchScreenDevice()">Press any key to focus</p>
         </div>
     </main>
@@ -69,11 +68,11 @@ const route = useRoute()
 const textIsFocused = ref(false)
 
 const store = mainStore()
-const { containerText, refocus, quoteType, goNext, mobileBackspace, wrongCount, previousPlayerInput, beginCountdown, timedTyping, hasCompletedSession, focus, testContainerEl, containerHeight, movie, playerInputLength, playerInput, authoredQuote, scrollTextContainer, restartSvgEl, restartEl, inputEl} = storeToRefs(store)
+const { containerText, refocus, quoteType, goNext, mobileBackspace, wrongCount, previousPlayerInput, beginCountdown, timedTyping, hasCompletedSession, focus, testContainerEl, containerHeight, movie, playerInputLength, playerInput, authoredQuote, scrollTextContainer, customizeElement, restartSvgEl, restartEl, inputEl} = storeToRefs(store)
 const {switchNext} = store
 
 const customize = customizeStore()
-const { customizers, useAlphabetCombination, font, textPosition} = storeToRefs(customize)
+const { customizers, pauseTyping, font, textPosition} = storeToRefs(customize)
 
 const theme_ = themeStore()
 const {theme} = storeToRefs(theme_)
@@ -87,9 +86,10 @@ const restartTest = async () => {
     switchNext(customizers.value, 'restart')
 }
 
-const focusInputEl = () => {
+const focusInputElement = (delay) => {
+    if (pauseTyping.value && route.value !== 'home') return
     focus.value = true
-    inputEl.value.focus()
+    delay ? setTimeout(() => inputEl.value.focus(), 10) : inputEl.value.focus()
 }
 
 watch(scrollTextContainer, (newVal, oldVal)=> {
@@ -120,50 +120,37 @@ watch(playerInput, (newVal, oldVal) => {
 })
 
 onMounted(() => {
-    if (!containerText.value) {
-        generateTest(customizers.value, null)
-    }
-
+    if (!containerText.value) generateTest(customizers.value, null)
+    
     document.addEventListener('keydown', event => {
         if (textIsFocused.value) preventKeyBoardScroll(event)
-        if (isTouchScreenDevice() && !isMobile() && !focus.value) {
-            focus.value = true
-            setTimeout(() => inputEl.value.focus(), 10);
-        }
+        if (isTouchScreenDevice() && !focus.value) focusInputElement(true)  
     })
 
     window.addEventListener('touchmove', event => {
-        if (event.target === testContainerEl.value || testContainerEl.value.contains(event.srcElement)) {
-            preventScroll(event)
-        }
+        if (event.target === testContainerEl.value || testContainerEl.value.contains(event.srcElement)) preventScroll(event)
     }, {passive: false})
 
     window.addEventListener('wheel', event => {
-        if (event.target === testContainerEl.value || testContainerEl.value.contains(event.srcElement)) {
-            preventScroll(event)
-        }
+        if (event.target === testContainerEl.value || testContainerEl.value.contains(event.srcElement)) preventScroll(event)
     }, {passive: false})
     
     if (route.name === 'home') {
         if (isTouchScreenDevice()) {
-            focus.value = true
-            inputEl.value.focus()
+            focusInputElement()
             inputEl.value.addEventListener('input', mobileInputEvent)
+
             window.addEventListener('click', event => {
                 if (testContainerEl.value instanceof HTMLElement) {  
-                    const isOutsideTestContainer = event.srcElement !== testContainerEl.value && !testContainerEl.value.contains(event.srcElement) && event.srcElement !== restartEl.value && !restartEl.value.contains(event.srcElement) && event.srcElement !== restartSvgEl.value
-                    if (isOutsideTestContainer) {
-                        if (goNext.value) {
-                            inputEl.value.blur()
-                            focus.value = false
-                        } else {
-                            inputEl.value.focus()
-                            focus.value = true
-                        }
-                    } else if (!isOutsideTestContainer) {                        
-                        inputEl.value.focus()
-                        focus.value = true 
-                    } 
+                    const isOutsideTestContainer = event.srcElement !== testContainerEl.value && !testContainerEl.value.contains(event.srcElement)
+                    const restartElement = event.srcElement === restartEl.value || restartEl.value.contains(event.srcElement) || event.srcElement === restartSvgEl.value
+                    const customizerElement = event.srcElement === customizeElement.value || customizeElement.value.contains(event.srcElement)
+
+                    if (!restartElement && !customizerElement && isOutsideTestContainer) {
+                        inputEl.value.blur()
+                        focus.value = false
+                    } else if (!isOutsideTestContainer || restartElement || customizerElement) focusInputElement()   
+                    
                 }
             })
         }

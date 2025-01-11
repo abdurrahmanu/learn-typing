@@ -1,7 +1,6 @@
 import {ref} from 'vue'
 import { customizeStore } from '../store/customizeStore'
 import { storeToRefs } from 'pinia'
-import { isMobile } from './isMobile'
 
 export const kiboardObj = () => {
     const customize = customizeStore()
@@ -17,7 +16,6 @@ export const kiboardObj = () => {
         theme: window.matchMedia("(prefers-color-scheme: dark)").matches ?  'dark' : 'white',
         backspace: true,
         blind: false,
-        mode: 'auto',
         fontsize: 32,
         textLines: 3,
     })

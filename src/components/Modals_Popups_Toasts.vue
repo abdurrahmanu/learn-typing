@@ -17,8 +17,8 @@ import {storeToRefs} from 'pinia'
 import { mainStore } from '../store/mainStore';
 import {customizeStore} from '../store/customizeStore'
 
-const main = mainStore()
-const { demo } = storeToRefs(main)
+const store = mainStore()
+const { demo } = storeToRefs(store)
 
 const customize = customizeStore()
 const { toggleCapsToast } = storeToRefs(customize)

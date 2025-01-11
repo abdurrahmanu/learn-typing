@@ -4,8 +4,8 @@ import {mainStore} from '../store/mainStore'
 import { customizeStore } from '../store/customizeStore'
 
 export const textBoxHeight = () => {
-    const main = mainStore()
-    const { containerHeight } = storeToRefs(main)
+    const store = mainStore()
+    const { containerHeight } = storeToRefs(store)
 
     const customize = customizeStore()
     const {font, textLines } = storeToRefs(customize)

@@ -10,7 +10,7 @@
                     <p @click="textValue = ''" v-if="textValue" class="absolute top-0 right-0 px-2 py-[2px] uppercase text-[13px] hover:text-red-500 cursor-default">X</p>     
                     <textarea v-model="textValue" :class="[appTheme]" class="w-full h-40 p-2 pt-2 border rounded-md outline-none border-slate-500" :placeholder="textAreaPlaceholder" :maxlength="isTouchScreenDevice() ? 500 : 1200" name="custom-textarea" />
                 </div>
-                <div @click="startSavingCustomText" class="py-[2px] m-auto text-center border rounded-full px-4 w-fit border-slate-600 hover:bg-green-800 hover:text-white font-medium">ADD TEST</div>
+                <div @click="startSavingCustomText" class="py-[2px] text-sm m-auto text-center border rounded-full px-4 w-fit border-slate-600 hover:bg-green-800 hover:text-white font-medium">ADD TEST</div>
             </div>
             <div v-else class="pt-3 text-center">
                 <p v-if="textSaved" class="py-3 text-center text-green-600 uppercase">Added Successfully</p>
@@ -25,7 +25,7 @@
         </div>
         
         <div class="max-w-[90%] m-auto">
-            <div class="font-medium">CUSTOM TESTS</div>
+            <div class="font-medium text-sm">CUSTOM TESTS</div>
             <div class="max-h-[calc(100dvh_-_50dvh)] overflow-y-auto h-fit p-1">
                 <div class="relative overflow-y-auto space-y-[5px]">                
                     <div v-for="(test, name, index) in customTests" :key="index" class="p-1 border hover:shadow-sm" :class="[theme === 'dark' ? 'border-neutral-700' : 'border-slate-400']">
@@ -44,7 +44,7 @@
 </template>
 
 <script setup>
-import {ref, watch} from 'vue'
+import {ref} from 'vue'
 import {storeToRefs} from 'pinia';
 import {mainStore} from '../store/mainStore';
 import {themeStore}  from '../store/themeStore'
@@ -59,9 +59,9 @@ const {customTestModal, pauseTyping, customizers, userSelectedTest, repeat} = st
 const theme_ = themeStore()
 const {theme, appTheme } = storeToRefs(theme_)
 
-const main = mainStore()
-const { customTests } = storeToRefs(main)
-const {switchNext} = main
+const store = mainStore()
+const { customTests } = storeToRefs(store)
+const {switchNext} = store
 
 const textAreaPlaceholder = ref('Custom test')
 const titlePlaceholder = ref('Title')

@@ -24,8 +24,8 @@ const name = ref('')
 const customize = customizeStore()
 const {pauseTyping } = storeToRefs(customize)
 
-const main = mainStore()
-const {demo} = storeToRefs(main)
+const store = mainStore()
+const {demo} = storeToRefs(store)
 
 watch(name, (newVal) => {
     if (newVal) {

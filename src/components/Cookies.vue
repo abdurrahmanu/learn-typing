@@ -12,14 +12,14 @@
 </template>
 
 <script setup>
-import {watch, ref, onMounted, } from 'vue'
+import {watch} from 'vue'
 import { customizeStore } from '../store/customizeStore';
 import {cookiesStore} from '../store/cookiesStore'
 import { storeToRefs } from 'pinia';
 import {addSingleDoc} from '../composables/firestoreDocs'
 
 const cookies = cookiesStore()
-const {cookiesModal, saveConfigs} = storeToRefs(cookies)
+const {cookiesModal, acceptedCookies, saveConfigs} = storeToRefs(cookies)
 
 const customize = customizeStore()
 const { pauseTyping} = storeToRefs(customize)
@@ -34,8 +34,14 @@ const acceptCookies = () => {
     addSingleDoc()
     saveConfigs.value = true
     cookiesModal.value = false
+    acceptedCookies.value = true
 }
 
-onMounted(() => cookiesModal.value ? pauseTyping.value = true : pauseTyping.value = false )
-watch(cookiesModal, newVal => pauseTyping.value = false )
+watch(cookiesModal, newVal => {
+    if (newVal) {
+        pauseTyping.value = true
+    } else {
+        pauseTyping.value = false
+    }
+})
 </script>

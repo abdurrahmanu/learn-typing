@@ -23,14 +23,12 @@ const count = countdownStore()
 const {clearCounter} = count
 
 const router = useRouter()
+
 const store = mainStore()
 const { hasCompletedSession, focus, timedTyping} = storeToRefs(store)
 
 const customize = customizeStore()
 const { hideElements } = storeToRefs(customize)
-
-const main = mainStore()
-const {inputEl} = storeToRefs(main)
 
 const screenWidth = ref(window.innerWidth)
 

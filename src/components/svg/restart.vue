@@ -12,6 +12,6 @@
     const theme_ = themeStore()
     const { svgFill } = storeToRefs(theme_)
 
-    const main = mainStore()
-    const {restartSvgEl}  = storeToRefs(main)
+    const store = mainStore()
+    const {restartSvgEl}  = storeToRefs(store)
     </script>

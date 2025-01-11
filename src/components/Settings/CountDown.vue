@@ -26,6 +26,6 @@ import PlayTimer from '../svg/playTimer.vue';
 const theme_ = themeStore()
 const {theme} = theme_
 
-const main = mainStore()
-const { timedTyping } = storeToRefs(main)
+const store = mainStore()
+const { timedTyping } = storeToRefs(store)
 </script>

@@ -1,6 +1,6 @@
 <template>
-  <Transition name="test">
-      <div v-if="!hasCompletedSession" :class="[isMobile() && focus ? 'hidden' : 'block', appTheme]" class="relative m-auto items-center p-1 flex font-[500] pb-7 config text-[13px] max-w-[900px] gap-2 justify-center flex-wrap relative z-[1]">
+  <Transition name="customizer-transition">
+      <div ref="customizeElement"  v-if="!hasCompletedSession" :class="[isMobile() && focus ? 'hidden' : 'block', appTheme]" class="relative m-auto items-center p-1 flex font-[500] pb-7 config text-[13px] max-w-[900px] gap-2 justify-center flex-wrap relative z-[1]">
         <div class="flex items-center gap-3 p-[1px] parent" v-for="(optionArr, key, listIndex) in option" :key="listIndex">          
             <div 
             class="relative ring-zinc-700 hover:ring-blue-800 flex py-[2px] px-1 ring-[1px] rounded-lg cursor-pointer flex-wrap justify-center items-center"
@@ -14,7 +14,7 @@
                 :key="index">
                     {{ option }}
                 </div>
-                <div v-if="listIndex === hoverIndex" class="absolute z-10 left-0 text-black top-[105%] shadow-sm shadow-slate-500 px-[6px] bg-neutral-100 rounded-full whitespace-nowrap text-xs font-normal">{{optionsTooltip[listIndex]}}</div>
+                <!-- <div v-if="listIndex === hoverIndex" class="absolute z-10 left-0 text-black top-[105%] shadow-sm shadow-slate-500 px-[6px] bg-neutral-100 rounded-full whitespace-nowrap text-xs font-normal">{{optionsTooltip[listIndex]}}</div> -->
             </div>
         </div>
     </div>
@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watchEffect } from 'vue'
+import { ref } from 'vue'
 import {customizeStore} from '../store/customizeStore.js'
 import {storeToRefs} from 'pinia'
 import { mainStore } from '../store/mainStore.js';
@@ -33,12 +33,11 @@ const theme_ = themeStore()
 const {appTheme}  = storeToRefs(theme_)
 
 const store = mainStore()
-const { hasCompletedSession, focus} = storeToRefs(store)
+const { hasCompletedSession, focus, customizeElement} = storeToRefs(store)
 
 const customize = customizeStore()
 const { allOptions, configs, customizers, disableOption, repeat} = storeToRefs(customize)
 const {changeConfig} = customize
-const optionsTooltip = ['words', 'words', 'type', 'format', 'format', 'format']
 
 const {
     'test-length' : textLength,
@@ -48,11 +47,9 @@ const {
     'punctuation':  includePunctuations,
     'numbers': includeNumbers,
     'modes': modes,
-    'reverse': reverse,
-    'randomcase': randomCase,
-    'spaced': space,
-    'jumble': random,
-    'uppercase': uppercase,
+    'spaced': reverse,
+    'case': allCases,
+    'arrangement': allArrangements
     } = allOptions.value
 
 const option = ref({
@@ -63,11 +60,9 @@ const option = ref({
     'punctuation': includePunctuations,
     'numbers': includeNumbers,
     'modes': modes,
-    'reverse': reverse,
-    'randomcase': randomCase,
-    'spaced': space,
-    'jumble': random,
-    'uppercase': uppercase,
+    'spaced': reverse,
+    'case': allCases,
+    'arrangement': allArrangements,
 })
 
 const hoverIndex = ref(null)
@@ -76,8 +71,8 @@ const mouseLeave = (index) => hoverIndex.value = null
 
 const checkSelection = (key, option) => {
   if ((option === 'test-type' && key !== customizers.value['test-type']) || (option === 'modes' && key !== customizers.value['modes'])) repeat.value = false
-  configs.value = [option, key]
 
+  configs.value = [option, key]
   let selection = +configs.value[1] || configs.value[1]
   let currentWordType = customizers.value['words-type']
   let currentTestType = customizers.value['test-type']
@@ -95,24 +90,8 @@ const checkSelection = (key, option) => {
       visibility: hidden;
     }
 
-    .alphabet-enter-from {
-      opacity: 0;
-      transform: translateY(-50%);
-    }
-
-    .test-enter-from {
+    .customizer-transition-enter-from {
       opacity: 0;
       transform: translateY(50%);
-    }
-
-    .alphabet-enter-active,
-    .test-enter-active {
-      transition: all 0.3s ease;
-    }
-
-    .alphabet-leave-active, 
-    .test-leave-active {
-      position: absolute;
-      opacity: 0;
     }
 </style>

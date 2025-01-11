@@ -5,7 +5,7 @@
             <Header />
             <RouterView />
             <Next />
-            <Theme class="fixed left-[50%] translate-x-[-50%] m-auto max-w-[1500px] bottom-2 pr-2 w-fit"/>
+            <Theme />
             <Modals_Popups_Toasts/>
         </div>
     </div>

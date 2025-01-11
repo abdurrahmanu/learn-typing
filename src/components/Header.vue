@@ -6,13 +6,13 @@
                 <div class="relative w-fit">
                     <Clock class="peer" />
                 </div>
-                <div class="relative hidden w-fit min-[505px]:block" v-if="customizers['modes'] !== 'alphabet-test' && !isMobile()">
+                <div class="relative hidden w-fit min-[505px]:block" v-if="!isMobile()">
                     <TextAlign class="peer"/>
                 </div>
                 <div class="relative w-fit">
                     <Blind class="peer"/>
                 </div>
-                <div class="relative w-fit" v-if="route.name === 'home' && customizers['modes'] !== 'alphabet-test'" >
+                <div class="relative w-fit" v-if="route.name === 'home'" >
                     <repeat class="w-4 peer"/>
                 </div>
                 <div class="relative w-fit" v-if="customizers['modes'] !== 'alphabet-test'" >
@@ -64,8 +64,8 @@ const {theme} = storeToRefs(theme_)
 const auth = authStore()
 const {showUser} = storeToRefs(auth)
 
-const main = mainStore()
-const {focus} = storeToRefs(main)
+const store = mainStore()
+const {focus} = storeToRefs(store)
 
 const customize = customizeStore()
 const { hideElements, blind, customizers, customTestModal, pauseTyping} = storeToRefs(customize)

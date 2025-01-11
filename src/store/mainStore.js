@@ -1,7 +1,6 @@
 import {defineStore} from 'pinia'
 import {ref, computed} from 'vue'
 import {generateTest} from '../composables/generateTest'
-import { isTouchScreenDevice } from '../composables/isTouchScreenDevice'
 
 export const mainStore = defineStore('mainStore', () => {
     const preferredConfigs = ref(undefined)
@@ -13,6 +12,7 @@ export const mainStore = defineStore('mainStore', () => {
     const goNext = ref(true)
 
     //Test container
+    const customizeElement = ref(null)
     const testContainerEl = ref(null)
     const containerHeight = ref(0)
     const scrollDistance = ref(0) // Container scroll Y axis
@@ -127,6 +127,7 @@ export const mainStore = defineStore('mainStore', () => {
         customLengthInput,
         restartEl,
         restartSvgEl,
+        customizeElement,
         focus,
         demo,
         keyboardMode,

@@ -8,8 +8,8 @@ export const DB = async (onUpdate) => {
     if (localStorage.getItem('kiboard')) localStorage.clear()
     if (localStorage.getItem('kicookies')) return
     
-    const main = mainStore()
-    const {preferredConfigs} = storeToRefs(main)
+    const store = mainStore()
+    const {preferredConfigs} = storeToRefs(store)
     
     const cookies = cookiesStore()
     const {saveConfigs} = storeToRefs(cookies)

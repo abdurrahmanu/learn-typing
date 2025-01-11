@@ -6,8 +6,8 @@ import {getSingleDoc} from './firestoreDocs'
 import { storeToRefs } from 'pinia';
 
 export const configUpdate = async () => {
-    const main = mainStore()
-    const {preferredConfigs, customTests} = storeToRefs(main)
+    const store = mainStore()
+    const {preferredConfigs, customTests} = storeToRefs(store)
 
     const theme_ = themeStore()
     const {theme } = storeToRefs(theme_)
@@ -16,7 +16,7 @@ export const configUpdate = async () => {
     const {connectingServer} = storeToRefs(connect)
 
     const customize = customizeStore()
-    const { customizers, doubleEachWord, disableOption, textLines, cursorType, difficulty, mode, hideElements, font, range, blind, backspace, capslock } = storeToRefs(customize)
+    const { customizers, doubleEachWord, disableOption, textLines, cursorType, difficulty, font, range, blind, backspace, capslock } = storeToRefs(customize)
 
     preferredConfigs.value = await getSingleDoc(localStorage.getItem('kiboardID'))
 

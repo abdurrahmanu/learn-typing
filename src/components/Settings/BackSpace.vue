@@ -2,7 +2,7 @@
     <div :class="[theme === 'dark' ? 'hover:bg-neutral-800' : 'hover:bg-zinc-200']" class="py-2 pl-5">
         <div class="flex justify-between w-full p-1 border border-transparent rounded-sm ">
             <div @click="customize" class="flex gap-4 w-fit">
-                <input name="backspace" :disabled="isTouchScreenDevice() ? true : false" :checked="isTouchScreenDevice() ? true : backspace"  type="checkbox" class="checked:accent-green-500 hover:accent-green-700">
+                <input name="backspace" :disabled="isTouchScreenDevice() ? true : false" :checked="isTouchScreenDevice() ? true : backspace"  type="checkbox" class="checked:accent-green-500  hover:accent-green-700">
                 <label class="text-[15px] font-bold uppercase w-fit">
                     <span>Backspace</span>
                     <span v-if="backspace" class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-lime-800 ml-1">easy</span>

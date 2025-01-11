@@ -7,11 +7,11 @@ import {ref} from 'vue'
 import {db} from '../firebase'
 
 export const updateDB = async (variableName, updateVal, restart, next) => {
-    const main = mainStore()
-    const {switchNext} = main
+    const store = mainStore()
+    const {switchNext} = store
 
     const cookies = cookiesStore()
-    const {cookiesModal} = storeToRefs(cookies)
+    const {cookiesModal, acceptedCookies} = storeToRefs(cookies)
 
     const customize = customizeStore()
     const {customizers} = storeToRefs(customize)
@@ -24,7 +24,9 @@ export const updateDB = async (variableName, updateVal, restart, next) => {
         updateObject.value[variableName] = updateVal
         const singleDoc = doc(db, "user", id);
         await updateDoc(singleDoc, updateObject.value)
-    } 
+    }
 
-    else if (!localStorage.getItem('kicookies') && navigator.onLine) cookiesModal.value = true
+    else if (!localStorage.getItem('kicookies') && navigator.onLine) {
+        if (!acceptedCookies.value) cookiesModal.value = true
+    }
 }

@@ -9,8 +9,8 @@ import { computed } from 'vue';
 import { mainStore } from '../store/mainStore';
 import { storeToRefs } from 'pinia';
 
-const main = mainStore()
-const { spaces, allSpacesIndex } = storeToRefs(main)
+const store = mainStore()
+const { spaces, allSpacesIndex } = storeToRefs(store)
 
 const totalNumberOfTypedWords = computed(() => Object.keys(spaces.value).length )
 const totalNumberOfWords = computed(() => allSpacesIndex.value.length + 1 )

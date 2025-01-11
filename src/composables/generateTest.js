@@ -6,8 +6,8 @@ import { storeToRefs } from "pinia"
 import { getQuotes } from "./getQuotes"
 
 export const generateTest = async (config, restart) => {
-    const main = mainStore()
-    const {containerText, storedTest, movie, authoredQuote, allSpacesIndex} = storeToRefs(main)
+    const store = mainStore()
+    const {containerText, storedTest, movie, authoredQuote, allSpacesIndex} = storeToRefs(store)
 
     const count = countdownStore()
     const {textLength} = storeToRefs(count)
@@ -15,9 +15,7 @@ export const generateTest = async (config, restart) => {
     const customize = customizeStore()
     const {repeat, doubleEachWord, customizers } = storeToRefs(customize)
 
-    if (repeat.value || restart ) {
-        containerText.value = storedTest.value
-    }
+    if (repeat.value || restart ) containerText.value = storedTest.value
 
     else if (customizers.value['modes'] === 'word-test') {
         await getQuotes(config).then( quote => {

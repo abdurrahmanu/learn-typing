@@ -20,9 +20,9 @@ const onLoad = ref(undefined)
 const customize = customizeStore()
 const {font, customizers, toggleCapsToast } = storeToRefs(customize)
 
-const main = mainStore()
-const { timedTyping, preferredConfigs, refocus } = storeToRefs(main)
-const { switchNext} = main
+const store = mainStore()
+const { timedTyping, preferredConfigs, refocus } = storeToRefs(store)
+const { switchNext} = store
 
 const count = countdownStore()
 const {clearCounter} = count
@@ -37,7 +37,7 @@ onMounted(() => {
   watch(customizers, newVal => {
     if (onLoad.value) {
       if (timedTyping.value) clearCounter()
-      if (newVal) switchNext(newVal)    
+      if (newVal) switchNext(newVal)   
     }
     else onLoad.value = true
   }, {deep : true})
