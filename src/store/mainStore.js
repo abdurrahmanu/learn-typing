@@ -174,17 +174,3 @@ export const mainStore = defineStore('mainStore', () => {
         mobileBackspace,
     }
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-

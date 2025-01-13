@@ -43,9 +43,7 @@ onMounted(() => {
         if (width.value > 500) {
         squareLength.value = 55
     } 
-    if (width.value > 800) {
-        squareLength.value = 70
-    }
+    if (width.value > 800) squareLength.value = 70
     
     const numberOfboxesV = height.value / squareLength.value
     const numberOfboxesH = width.value  / squareLength.value
@@ -76,6 +74,7 @@ onMounted(() => {
                 childrenArray.value = childrenArray.value.filter((child, index) => index !== random)
                 count.value++
             if (count.value === length) {
+                pauseTyping.value = false
                 clearInterval(interval.value)
                 animation.value = !animation.value
                 if (boxesContainer.value instanceof HTMLElement) {

@@ -36,14 +36,12 @@ const signIn = ref(true)
 const sign = async (method) => {
 //     await signInAnonymously(auth)
 //     .then((data) => {
-//         console.log(data);
 //         // Signed in..
 //     })
 //     .catch((error) => {
 //         const errorCode = error.code;
 //         const errorMessage = error.message;
 //         // ...
-//         console.log(errorMessage);
 //     });
 
 //     onAuthStateChanged(auth, (user) => {

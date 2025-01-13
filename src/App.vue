@@ -18,7 +18,7 @@ import { DB } from './composables/connectDB';
 const onLoad = ref(undefined)
 
 const customize = customizeStore()
-const {font, customizers, toggleCapsToast } = storeToRefs(customize)
+const {font, pauseTyping, customizers, toggleCapsToast } = storeToRefs(customize)
 
 const store = mainStore()
 const { timedTyping, preferredConfigs, refocus } = storeToRefs(store)

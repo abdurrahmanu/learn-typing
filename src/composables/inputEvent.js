@@ -29,7 +29,6 @@ export const inputEvent = (e) => {
     if ((e.key === 'Enter' && !enterKey.value) || pauseTyping.value) return
 
     if (e.key === 'Backspace') {
-        console.log
         backspaceIsPressed.value = true
         playerInputLength.value--
         playerInput.value = playerInput.value.slice(0, -1)
