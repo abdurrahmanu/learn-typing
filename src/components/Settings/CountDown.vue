@@ -10,7 +10,7 @@
                         <div>Countdown</div>
                         <PlayTimer v-if="timedTyping" class="inline-block w-5" /> 
                         <PauseTimer v-if="!timedTyping" class="inline-block w-5" />
-                        <div class="px-1 text-white leading-normal rounded-full text-[10px]" :class="[!timedTyping ? 'text-lime-700' : 'text-yellow-700']">{{ !timedTyping ? 'easy' : 'medium' }}</div>
+                        <div class="px-1 text-white leading-normal rounded-full text-[10px]" :class="[!timedTyping ? 'text-[#4d7c0f]' : 'text-[#a16207]']">{{ !timedTyping ? 'easy' : 'medium' }}</div>
                     </label>
                 </div>
             </div>

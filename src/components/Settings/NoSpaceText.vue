@@ -8,7 +8,7 @@
                 </div>
                 <label class="text-[13px] font-bold uppercase w-fit flex items-center">
                     <div>No space</div>
-                    <div class="px-3 text-white leading-normal rounded-full text-[10px]" :class="[customizers['no-space'] ? 'text-teal-700' : 'text-lime-700']">{{ customizers['no-space'] ? 'hard' : 'easy' }}</div>
+                    <div class="px-3 text-white leading-normal rounded-full text-[10px]" :class="[customizers['no-space'] ? 'text-[#0f766e]' : 'text-[#4d7c0f]']">{{ customizers['no-space'] ? 'hard' : 'easy' }}</div>
                 </label>
             </div>
         </div>

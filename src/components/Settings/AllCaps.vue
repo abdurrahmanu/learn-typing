@@ -8,7 +8,7 @@
                 </div>
                 <label class="text-[13px] font-bold uppercase w-fit flex items-center">
                     <div>uppercase</div>
-                    <div class="px-3 text-white leading-normal rounded-full text-[10px]" :class="[customizers['all-caps'] ? 'text-yellow-700' : 'text-lime-700' ]">{{ customizers['all-caps'] ? 'medium' : 'easy' }}</div>
+                    <div class="px-3 text-white leading-normal rounded-full text-[10px]" :class="[customizers['all-caps'] ? 'text-[#a16207]' : 'text-[#4d7c0f]' ]">{{ customizers['all-caps'] ? 'medium' : 'easy' }}</div>
                 </label>
             </div>
         </div>

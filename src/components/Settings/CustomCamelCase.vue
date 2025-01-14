@@ -8,7 +8,7 @@
                 </div>
                 <label class="text-[13px] font-bold uppercase w-fit flex items-center">
                     <div>Custom case</div>
-                    <div class="px-3 text-white leading-normal rounded-full text-[10px]" :class="[customizers['camel-case'] ? 'text-teal-700' : 'text-lime-700']">{{ customizers['camel-case'] ? 'hard' : 'easy' }}</div>
+                    <div class="px-3 text-white leading-normal rounded-full text-[10px]" :class="[customizers['camel-case'] ? 'text-[#0f766e]' : 'text-[#4d7c0f]']">{{ customizers['camel-case'] ? 'hard' : 'easy' }}</div>
                 </label>
             </div>
         </div>

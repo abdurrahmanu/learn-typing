@@ -8,7 +8,7 @@
                 </div>
                 <label class="text-[13px] font-bold uppercase w-fit flex items-center">
                     <div>Double every word</div>
-                    <div class="px-3 text-white leading-normal rounded-full text-[10px]" :class="[doubleEachWord ? 'text-yellow-700' : 'text-lime-700']">{{ doubleEachWord ? 'medium' : 'easy' }}</div>
+                    <div class="px-3 text-white leading-normal rounded-full text-[10px]" :class="[doubleEachWord ? 'text-[#a16207]' : 'text-[#4d7c0f]']">{{ doubleEachWord ? 'medium' : 'easy' }}</div>
                 </label>
             </div>
         </div>

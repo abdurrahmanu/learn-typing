@@ -1,20 +1,20 @@
 <template>
 <div :class="[appTheme, theme === 'dark' ? 'hover:bg-neutral-800' : 'hover:bg-zinc-200']" class="py-4 pl-5 space-y-1">
         <p class="text-[13px] font-bold">DIFFICULTY</p>        
-        <div class="flex flex-wrap gap-x-1 gap-y-[6px] font-[400] items-center">
-            <div @click="difficulty = 'beginner'" class="flex px-3 py-1 border rounded-md hover:border-black" :class="[difficulty === 'beginner' ? 'bg-[#44b0d3] border-transparent text-black font-bold' : 'border-[#44b0d3]']">
+        <div class="flex flex-wrap gap-x-2 gap-y-[6px] font-[400] items-center">
+            <div @click="difficulty = 'beginner'" class="cursor-pointer flex px-3 py-1 ring-[1px] rounded-l-md hover:ring-black" :class="[difficulty === 'beginner' ? 'bg-[#44b0d3] ring-transparent text-black font-bold' : 'ring-[#44b0d3]']">
                 <p class="w-fit">Beginner</p>
             </div>
-            <div @click="difficulty = 'amateur'" class="flex px-3 py-1 border rounded-md hover:border-black" :class="[difficulty === 'amateur' ? 'bg-[#ffa07a] border-transparent text-black font-bold' : 'border-[#ffa07a]']">
+            <div @click="difficulty = 'amateur'" class="cursor-pointer flex px-3 py-1 ring-[1px] hover:ring-black" :class="[difficulty === 'amateur' ? 'bg-[#ffa07a] ring-transparent text-black font-bold' : 'ring-[#ffa07a]']">
                 <p class="w-fit">Amateur</p>
             </div>
-            <div @click="difficulty = 'expert'" class="flex px-3 py-1 border rounded-md hover:border-black" :class="[difficulty === 'expert' ? 'border-transparent bg-[#4d5f43] text-black font-bold' : 'border-[#2e4053]']">
+            <div @click="difficulty = 'expert'" class="cursor-pointer flex px-3 py-1 ring-[1px] rounded-r-md hover:ring-black" :class="[difficulty === 'expert' ? 'ring-transparent bg-[#4d5f43] text-black font-bold' : 'ring-[#2e4053]']">
                 <p class="w-fit">Expert</p>
             </div>
-            <div :class="[bg]" class="flex gap-[2px] text-[13px] rounded-md text-black font-bold p-[2px]">
-                <div class="px-1 py-1 rounded-md" :class="[appTheme]">Accuracy: {{ result.accuracy }}</div>
-                <div class="px-1 py-1 rounded-md" :class="[appTheme]">WPM: {{ result.wpm }}</div>
-                <div class="px-1 py-1 rounded-md" :class="[appTheme]">Error percentage {{ result.errorPercentage }}</div>
+            <div :class="[bg]" class="flex gap-[2px] text-[13px] rounded-md text-black font-bold p-[1px]">
+                <div class="px-1 py-1 rounded-l-md" :class="[appTheme]">Accuracy: {{ result.accuracy }}</div>
+                <div class="px-1 py-1" :class="[appTheme]">WPM: {{ result.wpm }}</div>
+                <div class="px-1 py-1 rounded-r-md" :class="[appTheme]">Error percentage {{ result.errorPercentage }}</div>
             </div>
     </div>
     </div>

@@ -8,7 +8,7 @@
                     </div>
                     <label class="text-[13px] font-bold uppercase w-fit flex items-center">
                     <div>Blind mode</div>
-                    <div class="px-3 text-white leading-normal rounded-full text-[10px]" :class="[!blind ? 'text-lime-700' : 'text-yellow-700']">{{ !blind ? 'easy' : 'medium' }}</div>
+                    <div class="px-3 text-white leading-normal rounded-full text-[10px]" :class="[!blind ? 'text-[#4d7c0f]' : 'text-[#a16207]']">{{ !blind ? 'easy' : 'medium' }}</div>
                 </label>
                 </div>
             </div>
@@ -18,7 +18,6 @@
 
 <script setup>
 import {storeToRefs} from 'pinia';
-import Blind from '../Blind.vue';
 import {customizeStore} from '../../store/customizeStore';
 import {updateDB} from '../../composables/updateDB'
 import { themeStore } from '../../store/themeStore';

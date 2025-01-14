@@ -8,7 +8,7 @@
                     </div>
                 <label class="text-[13px] font-bold uppercase w-fit flex items-center">
                     <div>Caps Lock</div>
-                    <div class="px-3 text-white leading-normal rounded-full text-[10px]" :class="[!capslock ? 'text-lime-700' : 'text-yellow-700']">{{ capslock ? 'medium' : 'easy' }}</div>
+                    <div class="px-3 text-white leading-normal rounded-full text-[10px]" :class="[!capslock ? 'text-[#4d7c0f]' : 'text-[#a16207]']">{{ capslock ? 'medium' : 'easy' }}</div>
                 </label>
             </div>
         </div>

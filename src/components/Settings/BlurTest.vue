@@ -8,7 +8,7 @@
                 </div>
                 <label class="text-[13px] font-bold uppercase w-fit flex items-center">
                 <div>Blur</div>
-                <div class="px-3 text-white leading-normal rounded-full text-[10px]" :class="[!customizers['blur'] ? 'text-lime-700' : 'text-yellow-700']">{{ !customizers['blur'] ? 'easy' : 'medium' }}</div>
+                <div class="px-3 text-white leading-normal rounded-full text-[10px]" :class="[!customizers['blur'] ? 'text-[#4d7c0f]' : 'text-[#a16207]']">{{ !customizers['blur'] ? 'easy' : 'medium' }}</div>
             </label>
             </div>
         </div>
