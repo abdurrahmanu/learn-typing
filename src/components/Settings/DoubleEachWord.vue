@@ -3,12 +3,12 @@
         <div  class="flex justify-between w-full p-1 border border-transparent rounded-sm ">
             <div @click="customize" class="flex gap-3 items-center w-fit">
                 <div class="relative w-4 h-4">
-                    <input name="double" :checked="doubleEachWord"  type="checkbox" class="appearance-none shadow-sm shadow-black w-4 h-4 peer border-blue-500 rounded-full hover:ring-[2px] ring-[1px] hover:ring-blue-500" id="">
+                    <input name="double" :checked="doubleEachWord"  type="checkbox" class="appearance-none shadow-sm shadow-black w-4 h-4 peer ring-blue-500 rounded-full hover:ring-[2px] ring-[1px] hover:ring-blue-500" id="">
                     <good />
                 </div>
                 <label class="text-[13px] font-bold uppercase w-fit flex items-center">
                     <div>Double every word</div>
-                    <div class="px-3 text-white leading-normal rounded-full text-[10px]" :class="[doubleEachWord ? 'text-[#a16207]' : 'text-[#4d7c0f]']">{{ doubleEachWord ? 'medium' : 'easy' }}</div>
+                    <div class="px-3 leading-normal rounded-full text-[10px]" :class="[doubleEachWord ? 'text-[#a16207]' : 'text-[#4d7c0f]']">{{ doubleEachWord ? 'medium' : 'easy' }}</div>
                 </label>
             </div>
         </div>

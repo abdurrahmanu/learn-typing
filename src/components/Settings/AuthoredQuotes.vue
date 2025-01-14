@@ -3,7 +3,7 @@
         <div  class="flex justify-between w-full p-1 border border-transparent rounded-sm">
             <div @click="customizers['author-quotes'] = !customizers['author-quotes'], customize('author-quotes', customizers['author-quotes'])" class="flex items-center gap-4 w-fit">
                 <div class="relative w-4 h-4">
-                        <input name="authored" :checked="customizers['author-quotes']"  type="checkbox" class="appearance-none shadow-sm shadow-black w-4 h-4 peer border-blue-500 rounded-full hover:ring-[2px] ring-[1px] hover:ring-blue-500" id="">
+                        <input name="authored" :checked="customizers['author-quotes']"  type="checkbox" class="appearance-none shadow-sm shadow-black w-4 h-4 peer ring-blue-500 rounded-full hover:ring-[2px] ring-[1px] hover:ring-blue-500" id="">
                         <good />
                     </div>
                 <label class="text-[13px] font-bold uppercase w-fit">Quotes with Authors</label>

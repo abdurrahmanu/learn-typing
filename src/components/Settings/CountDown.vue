@@ -3,7 +3,7 @@
             <div class="flex justify-between w-full p-1 border border-transparent rounded-sm ">
                 <div @click="timedTyping = !timedTyping" class="flex gap-3 items-center w-fit">
                     <div class="relative w-4 h-4">
-                        <input name="countdown" :checked="timedTyping"  type="checkbox" class="appearance-none shadow-sm shadow-black w-4 h-4 peer border-blue-500 rounded-full hover:ring-[2px] ring-[1px] hover:ring-blue-500" id="">
+                        <input name="countdown" :checked="timedTyping"  type="checkbox" class="appearance-none shadow-sm shadow-black w-4 h-4 peer ring-blue-500 rounded-full hover:ring-[2px] ring-[1px] hover:ring-blue-500" id="">
                         <good />
                     </div>
                     <label class="text-[13px] font-bold uppercase w-fit gap-2 flex items-center">

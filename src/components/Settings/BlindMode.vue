@@ -3,13 +3,13 @@
             <div class="flex justify-between w-full p-1 border border-transparent rounded-sm ">
                 <div @click="customize"  class="gap-3 flex items-center w-fit">
                     <div class="relative w-4 h-4">
-                        <input name="blind" :checked="blind"  type="checkbox" class="appearance-none shadow-sm shadow-black w-4 h-4 peer border-blue-500 rounded-full hover:ring-[2px] ring-[1px] hover:ring-blue-500" id="">
+                        <input name="blind" :checked="blind"  type="checkbox" class="appearance-none shadow-sm shadow-black w-4 h-4 peer ring-blue-500 rounded-full hover:ring-[2px] ring-[1px] hover:ring-blue-500" id="">
                         <good />
                     </div>
                     <label class="text-[13px] font-bold uppercase w-fit flex items-center">
-                    <div>Blind mode</div>
-                    <div class="px-3 text-white leading-normal rounded-full text-[10px]" :class="[!blind ? 'text-[#4d7c0f]' : 'text-[#a16207]']">{{ !blind ? 'easy' : 'medium' }}</div>
-                </label>
+                        <div>Blind mode</div>
+                        <div class="px-3 leading-normal rounded-full text-[10px]" :class="[!blind ? 'text-[#4d7c0f]' : 'text-[#a16207]']">{{ !blind ? 'easy' : 'medium' }}</div>
+                    </label>
                 </div>
             </div>
             <p class="px-3 font-[400]">Toggle to type while fully trusting your muscle memory. </p>

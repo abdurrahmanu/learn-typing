@@ -8,13 +8,13 @@
             <div @click="textLines = 2" class="flex px-5 py-1 border rounded-md" :class="[textLines === 2 ? 'border-blue-500' : 'border-slate-500']">
                 <p class="border border-transparent w-fit border-l-slate-500 ">2</p>
             </div> -->
-            <div @click="textLines = 3" class="flex px-5 py-1 border rounded-md" :class="[textLines === 3 ? 'border-blue-500' : 'border-slate-500']">
-                <p class="border border-transparent w-fit">3</p>
+            <div @click="textLines = 3" class="flex ring-[2px] px-5 py-1 rounded-md" :class="[textLines === 3 ? 'ring-blue-500' : 'ring-slate-500']">
+                <p class="w-fit">3</p>
             </div>
-            <div @click="textLines = 4" class="flex px-5 py-1 border rounded-md" :class="[textLines === 4 ? 'border-blue-500' : 'border-slate-500']" v-if="!isMobile()">
+            <div @click="textLines = 4" class="flex ring-[2px] px-5 py-1 rounded-md" :class="[textLines === 4 ? 'ring-blue-500' : 'ring-slate-500']" v-if="!isMobile()">
                 <p class="w-fit ">4</p>
             </div>
-            <div @click="textLines = 5" class="flex px-5 py-1 border rounded-md" :class="[textLines === 5 ? 'border-blue-500' : 'border-slate-500']" v-if="!isMobile()">
+            <div @click="textLines = 5" class="flex ring-[2px] px-5 py-1 ring rounded-md" :class="[textLines === 5 ? 'ring-blue-500' : 'ring-slate-500']" v-if="!isMobile()">
                 <p class="w-fit ">5</p>
             </div>
         </div>

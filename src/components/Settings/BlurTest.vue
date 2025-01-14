@@ -3,12 +3,12 @@
         <div  class="flex justify-between w-full p-1 border border-transparent items-center rounded-sm ">
             <div @click="customizers['blur'] = !customizers['blur'], customize('blur', customizers['blur'])" class="flex items-center gap-3 w-fit">
                 <div class="relative w-4 h-4">
-                    <input name="blur" :checked="customizers['blur']"  type="checkbox" class="appearance-none shadow-sm shadow-black w-4 h-4 peer border-blue-500 rounded-full hover:ring-[2px] ring-[1px] hover:ring-blue-500" id="">
+                    <input name="blur" :checked="customizers['blur']"  type="checkbox" class="appearance-none shadow-sm shadow-black w-4 h-4 peer ring-blue-500 rounded-full hover:ring-[2px] ring-[1px] hover:ring-blue-500" id="">
                     <good />
                 </div>
                 <label class="text-[13px] font-bold uppercase w-fit flex items-center">
-                <div>Blur</div>
-                <div class="px-3 text-white leading-normal rounded-full text-[10px]" :class="[!customizers['blur'] ? 'text-[#4d7c0f]' : 'text-[#a16207]']">{{ !customizers['blur'] ? 'easy' : 'medium' }}</div>
+                    <div>Blur</div>
+                    <div class="px-3 leading-normal rounded-full text-[10px]" :class="[!customizers['blur'] ? 'text-[#4d7c0f]' : 'text-[#a16207]']">{{ !customizers['blur'] ? 'easy' : 'medium' }}</div>
             </label>
             </div>
         </div>

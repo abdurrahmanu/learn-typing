@@ -9,7 +9,7 @@
                 </div>
                 <label class="text-[13px] font-bold uppercase w-fit flex items-center">
                     <div>Backspace</div>
-                    <div class="px-3 text-white leading-normal rounded-full text-[10px]" :class="[backspace ? 'text-[#4d7c0f]' : 'text-[#a16207]']">{{ backspace ? 'easy' : 'medium' }}</div>
+                    <div class="px-3 leading-normal rounded-full text-[10px]" :class="[backspace ? 'text-[#4d7c0f]' : 'text-[#a16207]']">{{ backspace ? 'easy' : 'medium' }}</div>
                 </label>
             </div>
         </div>

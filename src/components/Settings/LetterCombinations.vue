@@ -1,14 +1,13 @@
 <template>
     <div :class="[theme === 'dark' ? 'hover:bg-neutral-800' : 'hover:bg-zinc-200']" class="py-1 pl-5">
-        <div @click="toggle" class="flex w-full p-1 space-x-4 border border-transparent rounded-sm">
+        <div @click="toggle" class="flex items-center w-full p-1 space-x-4 border border-transparent rounded-sm">
             <div class="relative w-4 h-4">
-                <input name="letter-combination" :disabled="!(mixCharactersArray.length > 1)" :checked="mixCharacters"   type="checkbox" class="appearance-none shadow-sm shadow-black w-4 h-4 peer border-blue-500 rounded-full hover:ring-[2px] ring-[1px] hover:ring-blue-500" id="">
+                <input name="letter-combination" :disabled="!(mixCharactersArray.length > 1)" :checked="mixCharacters"   type="checkbox" class="appearance-none shadow-sm shadow-black w-4 h-4 peer ring-blue-500 rounded-full hover:ring-[2px] ring-[1px] hover:ring-blue-500" id="">
                 <good />
             </div>
-            <label for="id" class="font-medium w-fit"> 
-                <span class="text-[13px] uppercase font-bold">Characters Combinations</span>
-                <span v-if="mixCharacters" class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-yellow-800 ml-1">medium</span>
-                <span v-else class="px-3 text-white uppercase rounded-full py-[1px] text-[10px] bg-lime-800 ml-1">easy</span>
+            <label for="id" class="text-[13px] font-bold uppercase w-fit flex items-center">
+                <div>Characters Combinations</div>
+                <div class="px-3 leading-normal rounded-full text-[10px]" :class="[mixCharacters ? 'text-[#a16207]' : 'text-[#4d7c0f]']">{{ mixCharacters ? 'medium' : 'easy' }}</div>
             </label>
         </div>
         <div class="px-4 font-[400]">
