@@ -175,6 +175,19 @@ export function englishWords() {
         '324', '23', '132', '45', '644', '345', '324', '2121', '86', '43', '7609', '345', '2000', '3423', '242', '534', '001', '2005', '3424', '2', '1', '43', '24', '234', '3123', '43643', '34234'
     ]
 
+    const quotesWithNumbers = [
+        "You miss 100% of the shots you don't take.",
+        "I have not failed. I've just found 10,000 ways that won't work.",
+        "The journey of 1000 miles begins with one step.  ",
+        "In 3 words I can sum up everything I've learned about life: it goes on.",
+        "There are 2 ways of spreading light: to be the candle or the mirror that reflects it.",
+        "The best time to plant a tree was 20 years ago. The second best time is now.",
+        "Life is 10% what happens to us and 90% how we react to it.",
+        "There are 1,440 minutes in a day.",
+        "There are 7 days in a week, and someday isn't one of them.",
+        "A journey of 1,000 miles begins with a single step.",
+      ]
+
     const quotesWithoutAuthors = ref({
         'ten': [
             "The only true wisdom is in knowing you know nothing.",
@@ -191,6 +204,7 @@ export function englishWords() {
             "The secret of getting ahead is getting started.",
             "It always seems impossible until it is done.",
             "The future depends on what you do today.",
+            "Everything you can imagine is real.",
             "Everything you can imagine is real.",
             "It is not the mountain we conquer, but ourselves.",
             "The true sign of intelligence is not knowledge but imagination.",
@@ -241,6 +255,12 @@ export function englishWords() {
         ],
         'twenty': [
             "The only thing necessary for the triumph of evil is for good men to do nothing.",
+            "I am not a product of my circumstances. I am a product of my decisions.",
+            "Success is not final, failure is not fatal: It is the courage to continue that counts.",
+            "A fool thinks himself to be wise, but a wise man knows himself to be a fool.",
+            "We are what we repeatedly do. Excellence, then, is not an act, but a habit.",
+            "If you can't do great things, do small things in a great way.",
+            "The only limit to our realization of tomorrow is our doubts of today.",
             "To be yourself in a world that is constantly trying to make you something else is the greatest accomplishment.",
             "It does not matter how slowly you go as long as you do not stop.",
             "The greatest glory in living lies not in never falling, but in rising every time we fall.",
@@ -259,7 +279,10 @@ export function englishWords() {
             "The greatest discovery of any generation is that a human can alter his life by altering his attitude.",
             "Life is a shipwreck, but we must not forget to sing in the lifeboats.",
             "To be yourself in a world that is constantly trying to make you something else is the greatest accomplishment.",
+            "If you want to go fast, go alone. If you want to go far, go together.  ",
+            "You only live once, but if you do it right, once is enough.",
             "Two things are infinite: the universe and human stupidity; and I'm not sure about the universe.",
+            "I find that the harder I work, the more luck I seem to have.",
             "The only way to do great work is to love what you do.",
             "Do not dwell in the past, do not dream of the future, concentrate the mind on the present moment.",
             "Our greatest glory is not in never falling, but in rising every time we fall.",
@@ -323,6 +346,7 @@ export function englishWords() {
             "The future belongs to those who believe in the beauty of their dreams.",
             "Success is liking yourself, liking what you do, and liking how you do it.",
             "Success is not final, failure is not fatal: It is the courage to continue that counts. ",
+            "I am one with the force, and the force is with me.",
             "Life is not about getting and having, i about giving and being.",
             "Whatever the mind of man can conceive and believe, it can achieve.",
             "Strive not to be a success, but rather to be of value.",
@@ -604,5 +628,6 @@ export function englishWords() {
         numbers,
         quotesWithoutAuthors,
         movieQuotes,
+        quotesWithNumbers
     }
 }

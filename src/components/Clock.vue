@@ -9,14 +9,14 @@
                 :cancel="timedTyping" />
                 <pauseTimer @click="timer" class="w-6" />
             </div>
-            <playTimer v-if="!timedTyping" @click="timer" class="w-5" />
+            <pauseTimer v-if="!timedTyping" @click="timer" class="w-5 mr-[-4px]" />
             <div v-if="timedTyping && !beginCountdown" class="relative flex items-center gap-1 w-fit">  
-                    <playTimer @click="timer" class="w-5" />
-                    <div :class="[theme === 'dark' ? 'ring-slate-100' : 'ring-black']" class="flex text-[13px] font-[600] rounded-lg ring-[1px] h-fit scale-105 max-[410px]:absolute max-[410px]:top-[calc(100%_+_2px)] max-[410px]:left-[50%] max-[410px]:translate-x-[-50%] cursor-pointer config">
-                        <div class="px-2 border-r rounded-l-lg w-fit" :class="[level === 'beginner' ? difficultyBg : '', theme === 'dark' ? 'border-slate-200' : 'border-black']" @click="selectCountDown(timeForBeginner, 'beginner')">{{timeForBeginner}}<span class="text-[9px]">s</span></div>
-                        <div class="px-2 w-fit" :class="[level === 'amateur' ? difficultyBg : '', theme === 'dark' ? 'border-slate-200' : 'border-black']" @click="selectCountDown(timeForAmateur, 'amateur')">{{timeForAmateur}}<span class="text-[9px]">s</span></div>
-                        <div class="px-2 border-l-[1px] rounded-r-lg w-fit" :class="[level === 'expert' ? difficultyBg : '', theme === 'dark' ? 'border-slate-200' : 'border-black']" @click="selectCountDown(timeForExpert, 'expert')">{{ timeForExpert }}<span class="text-[9px]">s</span></div>
-                    </div>
+                <playTimer @click="timer" class="w-5 mr-2" />
+                <div :class="[theme === 'dark' ? 'ring-slate-100' : 'ring-black']" class="flex text-[13px] font-[600] rounded-lg ring-[1px] h-fit scale-105 max-[410px]:absolute max-[410px]:top-[calc(100%_+_2px)] max-[410px]:left-[50%] max-[410px]:translate-x-[-50%] cursor-pointer config">
+                    <div class="px-2 border-r rounded-l-lg w-fit" :class="[level === 'beginner' ? difficultyBg : '', theme === 'dark' ? 'border-slate-200' : 'border-black']" @click="selectCountDown(timeForBeginner, 'beginner')">{{timeForBeginner}}<span class="text-[9px]">s</span></div>
+                    <div class="px-2 w-fit" :class="[level === 'amateur' ? difficultyBg : '', theme === 'dark' ? 'border-slate-200' : 'border-black']" @click="selectCountDown(timeForAmateur, 'amateur')">{{timeForAmateur}}<span class="text-[9px]">s</span></div>
+                    <div class="px-2 border-l-[1px] rounded-r-lg w-fit" :class="[level === 'expert' ? difficultyBg : '', theme === 'dark' ? 'border-slate-200' : 'border-black']" @click="selectCountDown(timeForExpert, 'expert')">{{ timeForExpert }}<span class="text-[9px]">s</span></div>
+                </div>
             </div>
         </div>
     </div>

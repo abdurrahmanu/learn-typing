@@ -7,9 +7,16 @@ import authoredQuotes from '../../data/quotes.json'
 
 export async function getQuotes (config, customText) {
     const res = ref('')
-    const {mostUsed, mediumUsed, rarelyUsed, numbers, quotesWithoutAuthors, movieQuotes} = englishWords()
+    const {mostUsed, mediumUsed, rarelyUsed, quotesWithNumbers, numbers, quotesWithoutAuthors, movieQuotes} = englishWords()
+    const includeNumbers = customizeStore().customizers['numbers']
     const testType = config['test-type']
     const testLength = config['test-length']
+    const allQuotes = [
+        ...quotesWithoutAuthors.value.ten,
+         ...quotesWithoutAuthors.value.twenty, 
+         ...quotesWithoutAuthors.value.thirty, 
+         ...quotesWithoutAuthors.value.long,
+        ]
     let allMovies = [ movieQuotes['The Hobbit'].quotes, movieQuotes['Pirates of the Caribbean'].quotes, movieQuotes['Harry Potter'].quotes, movieQuotes['The Lord of the Rings'].quotes, movieQuotes['Legend of the Seeker'].quotes, movieQuotes['Star Wars'].quotes, movieQuotes['Indiana Jones and the Raiders of the Lost Ark'].quotes, movieQuotes['Jurassic Park'].quotes,]
     
     function generateTest() {
@@ -21,7 +28,7 @@ export async function getQuotes (config, customText) {
                 40: [],
                 50: [],
                 100: [],
-                'auto': [...quotesWithoutAuthors.value.ten, ...quotesWithoutAuthors.value.twenty, ...quotesWithoutAuthors.value.thirty, ...quotesWithoutAuthors.value.long]
+                'auto': includeNumbers ? [...quotesWithNumbers, ...allQuotes, ...quotesWithNumbers] : allQuotes
             }
 
             if (Object.keys(lengths).includes(`${testLength}`)) res.value = lengths[testLength][Math.ceil(Math.random() * lengths[testLength].length) - 1]
