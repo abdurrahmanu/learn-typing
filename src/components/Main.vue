@@ -1,5 +1,5 @@
 <template>
-    <div :class="[appTheme]" class="font-light selection:bg-none home max-w-[1500px] m-auto relative min-h-[100dvh] container overflow-y-auto scroll-smooth noscrollbar transition-all duration-300">
+    <div :class="[appTheme]" class="font-light dii selection:bg-none home max-w-[1500px] m-auto relative min-h-[100dvh] container overflow-y-auto scroll-smooth noscrollbar transition-all duration-300">
         <Connectivity />
         <div class="main">
             <Header />

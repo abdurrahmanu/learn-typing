@@ -1,12 +1,14 @@
 <template>
   <Loader v-if="connectingServer" />
   <Main v-else />
+  <ClickEffect />
 </template>
 
 <script setup>
 import {onBeforeMount, onMounted, watch, ref} from 'vue'
 import Main from './components/Main.vue'
 import Loader from './components/Loader.vue'
+import ClickEffect from './components/ClickEffect.vue';
 import { storeToRefs } from 'pinia';
 import {connectStore} from './store/connectStore'
 import { mainStore } from './store/mainStore';
@@ -18,7 +20,7 @@ import { DB } from './composables/connectDB';
 const onLoad = ref(undefined)
 
 const customize = customizeStore()
-const {font, pauseTyping, customizers, toggleCapsToast } = storeToRefs(customize)
+const {font, customizers, toggleCapsToast } = storeToRefs(customize)
 
 const store = mainStore()
 const { timedTyping, preferredConfigs, refocus } = storeToRefs(store)

@@ -4,8 +4,8 @@
         <div v-if="cookiesModal" class="fixed p-3 m-auto rounded-sm w-[500px] max-w-[90%] bg-black text-slate-300 space-y-3 text-sm left-[50%] translate-x-[-50%] z-[9999] top-[40%] translate-y-[-50%] rounded-br-[20px]">
             <p class="text-sm text-center">Allow this site to save your preferred settings to enhance your user experience.</p>
             <div class="flex justify-center hover:text-white">
-                <div @click="acceptCookies" class="px-4 ring-[1px] hover:ring-green-700 hover:bg-green-700 py-1 whitespace-nowrap">ALLOW</div>
-                <div @click="rejectCookies" class="px-4 ring-[1px] hover:bg-red-500 py-1 whitespace-nowrap hover:ring-red-500">REJECT</div>
+                <div @click="acceptCookies" class="px-4 cursor-pointer ring-[1px] hover:ring-green-700 hover:bg-green-700 py-1 whitespace-nowrap">ALLOW</div>
+                <div @click="rejectCookies" class="px-4 cursor-pointer ring-[1px] hover:bg-red-500 py-1 whitespace-nowrap hover:ring-red-500">REJECT</div>
             </div>
         </div>
     </Transition>

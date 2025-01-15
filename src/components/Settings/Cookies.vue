@@ -2,8 +2,8 @@
     <div v-if="hasInternetConnection" :class="[appTheme]" class="pl-6 py-2 rounded-sm w-fit space-y-3 my-2 px-5 font-[400]">
         <p>This site {{ !saveConfigs ? 'can save' : 'saves' }} your preferred settings to enhance your user experience.</p>
         <div class="hover:text-white w-fit">
-            <div v-if="!saveConfigs" @click="acceptCookies" class="px-4 ring-[1px] hover:ring-green-700 hover:bg-green-700 py-1 ring-offset-[2px] whitespace-nowrap">ALLOW</div>
-            <div v-else @click="deleteCookies" class="px-4 ring-[2px] ring-offset-[2px] font-bold hover:bg-red-500 py-1 whitespace-nowrap hover:ring-red-500">DISABLE</div>
+            <div v-if="!saveConfigs" @click="acceptCookies" class="px-4 ring-[1px] hover:ring-green-700 hover:bg-green-700 py-1 ring-offset-[2px] cursor-pointer whitespace-nowrap">ALLOW</div>
+            <div v-else @click="deleteCookies" class="px-4 cursor-pointer ring-[2px] ring-offset-[2px] font-bold hover:bg-red-500 py-1 whitespace-nowrap hover:ring-red-500">DISABLE</div>
         </div>
     </div>
 </template>

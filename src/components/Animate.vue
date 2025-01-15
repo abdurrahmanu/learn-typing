@@ -11,14 +11,6 @@ import {ref, onMounted} from 'vue'
 import {customizeStore} from '../store/customizeStore'
 import { storeToRefs } from 'pinia';
 import {themeStore}  from '../store/themeStore'
-import { mainStore } from '../store/mainStore';
-import {cookiesStore} from '../store/cookiesStore'
-
-const store = mainStore()
-const {hasAnimated} = storeToRefs(store)
-
-const cookies = cookiesStore()
-const {cookiesModal} = storeToRefs(cookies)
 
 const theme_ = themeStore()
 const {theme} = storeToRefs(theme_)
@@ -78,7 +70,6 @@ onMounted(() => {
                 clearInterval(interval.value)
                 animation.value = !animation.value
                 if (boxesContainer.value instanceof HTMLElement) {
-                    hasAnimated.value = true
                     document.querySelector('.main').removeChild(boxesContainer.value)
                 }
             }

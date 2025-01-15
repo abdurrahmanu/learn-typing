@@ -1,6 +1,6 @@
 <template>
     <div ref="bgContainer" :class="[theme === 'dark' ? 'ring-white' : 'ring-black']" class="flex space-x-1 rounded-full p-[3px] w-fit ring-[1px] bg-neutral-500 transition-all duration-200 fixed left-[50%] translate-x-[-50%] m-auto max-w-[1500px] bottom-2">
-        <div v-for="(color, index) in colors" class="block w-5 ring-[1px] ring-black h-4 rounded-full" :key="index" @click="toggleTheme(color)" :class="[bg[index]]"></div>
+        <div v-for="(color, index) in colors" class="block w-5 cursor-pointer ring-[1px] ring-black h-4 rounded-full" :key="index" @click="toggleTheme(color)" :class="[bg[index]]"></div>
     </div>
 </template>
 

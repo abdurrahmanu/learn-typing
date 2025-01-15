@@ -7,14 +7,13 @@
             @mouseenter="mouseEnter(listIndex)"
             @mouseleave="mouseLeave(listIndex)" >
                 <div 
-                class="px-[5px] rounded-md whitespace-nowrap" 
+                class="px-[5px] rounded-md whitespace-nowrap hover-state" 
                 :class="[disableOption[key] ? 'hide' : '', customizers[key] === option && !disableOption[key]  ? 'text-blue-500' : '', option === 'custom']"
                 @click="checkSelection(option, key)" 
                 v-for="(option, index) in optionArr" 
                 :key="index">
                     {{ option }}
                 </div>
-                <!-- <div v-if="listIndex === hoverIndex" class="absolute z-10 left-0 text-black top-[105%] shadow-sm shadow-slate-500 px-[6px] bg-neutral-100 rounded-full whitespace-nowrap text-xs font-normal">{{optionsTooltip[listIndex]}}</div> -->
             </div>
         </div>
     </div>
