@@ -20,7 +20,7 @@
                     <fail v-else class="absolute bottom-0 right-[2px] w-4" />
                     <div class="relative">                        
                         <div class="px-2 border  border-transparent rounded-full peer hover:border-black font-[400]">ACCURACY</div>
-                        <div class="absolute rounded-md top-[115%] left-[0%] z-[1] text-left p-1 hidden peer-hover:block shadow-sm shadow-black bg-neutral-800 min-w-[185px]  max-w-[300px] text-slate-400">
+                        <div class="absolute text-sm rounded-md top-[115%] left-[0%] z-[1] text-left p-1 hidden peer-hover:block shadow-sm shadow-black bg-neutral-900 min-w-[185px]  max-w-[300px] text-slate-400">
                             <p>The percentage of correctly typed characters out of the total number of characters.</p>
                         </div>
                     </div>
@@ -29,7 +29,7 @@
                 <div class="relative px-2 text-center border-r border-r-teal-700">
                     <div class="relative">                        
                         <div class="px-2 border border-transparent rounded-full peer hover:border-black font-[400]">TIME</div>
-                        <div class="absolute rounded-md top-[115%] left-[50%] translate-x-[-50%] z-[1] text-left p-1 hidden peer-hover:block shadow-sm shadow-black bg-neutral-800 min-w-[185px]  max-w-[300px] text-slate-400">
+                        <div class="absolute text-sm rounded-md top-[115%] left-[50%] translate-x-[-50%] z-[1] text-left p-1 hidden peer-hover:block shadow-sm shadow-black bg-neutral-900 min-w-[185px]  max-w-[300px] text-slate-400">
                             <p>The total time taken to complete the typing test.</p>
                         </div>
                     </div>
@@ -40,7 +40,7 @@
                     <fail v-else class="absolute bottom-0 right-[2px] w-4" />
                     <div class="relative">                        
                         <div class="px-2 border border-transparent rounded-full peer hover:border-black font-[400]">WPM</div>
-                        <div class="absolute rounded-md top-[115%] left-[50%] translate-x-[-50%] z-[1] text-left p-1 hidden peer-hover:block shadow-sm shadow-black bg-neutral-800 min-w-[185px]  max-w-[300px] text-slate-400">
+                        <div class="absolute rounded-md top-[115%] left-[50%] translate-x-[-50%] z-[1] text-left p-1 text-sm hidden peer-hover:block shadow-sm shadow-black bg-neutral-900 min-w-[185px]  max-w-[300px] text-slate-400">
                             <p>Words Per Minute is the number of words typed correctly per minute. One word is defined as five characters.</p>
                         </div>
                     </div>
@@ -51,7 +51,7 @@
                     <fail v-else class="absolute bottom-0 right-[2px] w-4" />
                     <div class="relative">                        
                         <div class="px-2 border border-transparent rounded-full peer hover:border-black font-[400]">ERROR RATIO</div>
-                        <div class="absolute rounded-md top-[115%] right-[0%] z-[1] text-left p-1 hidden peer-hover:block shadow-sm shadow-black bg-neutral-800 min-w-[185px]  max-w-[300px] text-slate-400">
+                        <div class="absolute text-sm rounded-md top-[115%] right-[0%] z-[1] text-left p-1 hidden peer-hover:block shadow-sm shadow-black bg-neutral-900 min-w-[185px]  max-w-[300px] text-slate-400">
                             <p>Incorrectly typed characters / Total number of characters</p>
                         </div>
                     </div>
