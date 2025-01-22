@@ -45,7 +45,9 @@ export const generateTest = async (config, restart) => {
     else if (customizers.value['modes'] === 'alphabet-test') containerText.value = getAlphabets()
 
     for (let index = 0; index < containerText.value.length; index++) {
-        if (containerText.value[index] === ' ') allSpacesIndex.value.push(index)
+        if (containerText.value[index] === ' ') {
+            allSpacesIndex.value.push(index)
+        }
     }
 
     if (doubleEachWord.value && allSpacesIndex.value.length) {

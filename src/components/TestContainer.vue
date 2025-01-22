@@ -67,7 +67,7 @@ const route = useRoute()
 const textIsFocused = ref(false)
 
 const store = mainStore()
-const { containerText, refocus, quoteType, goNext, mobileBackspace, wrongCount, previousPlayerInput, beginCountdown, timedTyping, hasCompletedSession, focus, testContainerEl, containerHeight, movie, playerInputLength, playerInput, authoredQuote, scrollTextContainer, customizeElement, restartSvgEl, restartEl, inputEl} = storeToRefs(store)
+const { containerText, allSpacesIndex, refocus, quoteType, goNext, mobileBackspace, wrongCount, previousPlayerInput, beginCountdown, timedTyping, hasCompletedSession, focus, testContainerEl, containerHeight, movie, playerInputLength, playerInput, authoredQuote, scrollTextContainer, customizeElement, restartSvgEl, restartEl, inputEl} = storeToRefs(store)
 const {switchNext} = store
 
 const customize = customizeStore()
@@ -109,6 +109,7 @@ watch(scrollTextContainer, (newVal, oldVal)=> {
 )
 
 watch(playerInput, (newVal, oldVal) => {
+    if (pauseTyping.value) return
     if (mobileBackspace.value && wrongCount.value === 0) {
         playerInput.value = oldVal
         mobileBackspace.value = false
@@ -122,6 +123,7 @@ onMounted(() => {
     if (!containerText.value) generateTest(customizers.value, null)
     
     document.addEventListener('keydown', event => {
+        if (pauseTyping.value) return
         if (textIsFocused.value) preventKeyBoardScroll(event)
         if (isTouchScreenDevice() && !focus.value) focusInputElement(true)  
     })
@@ -149,7 +151,6 @@ onMounted(() => {
                         inputEl.value.blur()
                         focus.value = false
                     } else if (!isOutsideTestContainer || restartElement || customizerElement) focusInputElement()   
-                    
                 }
             })
         }
@@ -161,10 +162,10 @@ onMounted(() => {
 })
 
 const preventKeyBoardScroll = (e) => {
-        if ([38, 40].includes(e.keyCode)) {
-            e.preventDefault();
-            return false;
-        }
+    if ([38, 40].includes(e.keyCode)) {
+        e.preventDefault();
+        return false;
+    }
 }
 
 const preventScroll = (e) => {

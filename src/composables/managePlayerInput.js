@@ -8,7 +8,7 @@ export const managePlayerInput = () => {
     const { containerText, playerInputLength, playerInput, route, playerLastInput, previousPlayerInput, correctCount, wrongCount, completionLevel} = storeToRefs(store)
 
     const customize = customizeStore()
-    const {customizers} = storeToRefs(customize)
+    const {customizers, pauseTyping} = storeToRefs(customize)
     
     if (route.value !== 'home') return
     if (isTouchScreenDevice()) playerLastInput.value = playerInput.value[playerInput.value.length - 1]

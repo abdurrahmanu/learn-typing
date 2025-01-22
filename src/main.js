@@ -25,7 +25,7 @@ router.beforeEach((to, from) => {
         store.switchNext(customize.customizers)
     }
 
-    customize.customTestModal = false
+    customize.toggleCustomTestModal = false
     store.route = to.name
 })
 

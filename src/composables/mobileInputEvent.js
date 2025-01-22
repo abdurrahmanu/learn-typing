@@ -14,7 +14,6 @@ export const mobileInputEvent = (e) => {
         mobileBackspace.value = false
         return
     }
-
     
     e.inputType === 'deleteContentBackward' ? backspaceIsPressed.value = true : backspaceIsPressed.value = false
     

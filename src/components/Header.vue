@@ -16,7 +16,7 @@
                     <repeat class="w-4 peer"/>
                 </div>
                 <div class="relative w-fit" v-if="customizers['modes'] !== 'alphabet-test'" >
-                    <add @click="customTestModal = true, pauseTyping = true" class="w-5 peer"/>
+                    <add @click="openCustomTestModal" class="w-5 peer"/>
                 </div>
             </div>
             <div class="relative w-fit" v-if="route.name !== 'home'" >                
@@ -68,9 +68,14 @@ const store = mainStore()
 const {focus} = storeToRefs(store)
 
 const customize = customizeStore()
-const { hideElements, blind, customizers, customTestModal, pauseTyping} = storeToRefs(customize)
+const { hideElements, blind, customizers, toggleCustomTestModal, pauseTyping} = storeToRefs(customize)
 
 const routeToPage = (route) => {
     router.push({name: route})
+}
+
+const openCustomTestModal = () => {
+    toggleCustomTestModal.value = true
+    pauseTyping.value = true
 }
 </script>

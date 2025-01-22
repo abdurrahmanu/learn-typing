@@ -44,7 +44,7 @@ const toggleTheme = (color) => {
 onMounted(() => {
     window.addEventListener('click', (event) => {
         if (bgContainer.value instanceof HTMLElement && !bgContainer.value.contains(event.target) && event.target !== bgContainer.value) {
-        openBackgrounds.value = false
+            openBackgrounds.value = false
         }
     })
 })

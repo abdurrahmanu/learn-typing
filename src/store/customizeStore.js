@@ -7,7 +7,7 @@ export const customizeStore = defineStore('customizeStore', () => {
     const count = ref(false)
     const testType_ = ref('words')
     const userSelectedTest = ref('')
-    const customTestModal = ref(false)
+    const toggleCustomTestModal = ref(false)
     const pauseTyping = ref(true)
     const configs = ref([])
     const allSettings = ref(false)
@@ -66,7 +66,8 @@ export const customizeStore = defineStore('customizeStore', () => {
     })
 
     const allOptions = ref({
-        'test-length' : isMobile() ? ['auto', 10, 20, 30 ] : ['auto', 10, 20, 30, 50,  100],
+        // next time I will make allOptions responsive to changes....either computed or watched...
+        'test-length' : isMobile() || customizers.value['test-type'] === 'quotes' ? ['auto', 10, 20, 30 ] : ['auto', 10, 20, 30, 50,  100],
         'words-type' : ['frequent', 'common', 'rare'],
         'test-type' : ['quotes', 'words', 'custom'],
         'caps' : ['caps'],
@@ -193,7 +194,7 @@ export const customizeStore = defineStore('customizeStore', () => {
         repeat,
         textPosition,
         pauseTyping,
-        customTestModal,
+        toggleCustomTestModal,
         userSelectedTest,
         testType_,
         capslock,

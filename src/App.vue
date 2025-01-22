@@ -39,7 +39,6 @@ onMounted(() => {
   watch(customizers, newVal => {
     if (onLoad.value) {
       if (timedTyping.value) clearCounter()
-      if (newVal) switchNext(newVal)   
     }
     else onLoad.value = true
   }, {deep : true})

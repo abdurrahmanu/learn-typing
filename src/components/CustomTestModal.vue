@@ -1,13 +1,13 @@
 <template>
-    <div @click="customTestModal = !customTestModal, pauseTyping = false, textValue = ''" v-if="customTestModal && route.name === 'home'" class="fixed top-[-100px] bottom-0 left-0 right-0 bg-black  text-xs opacity-40 z-[3]"></div>
-    <div v-if="customTestModal && route.name === 'home'" class="max-w-[500px] w-[95%] fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] rounded-md py-5 max-h-[calc(100dvh_-_20px)] z-[3]" :class="[theme === 'dark' ? '' : 'shadow-sm shadow-slate-500', appTheme]">
-        <div @click="customTestModal = !customTestModal, pauseTyping = false, textValue = ''" class="absolute top-0 text-xl font-bold w-fit right-2 hover:text-red-500">x</div>
+    <div @click="toggleCustomTestModal = !toggleCustomTestModal, pauseTyping = false, textValue = ''" v-if="toggleCustomTestModal && route.name === 'home'" class="fixed top-[-100px] bottom-0 left-0 right-0 bg-black text-xs opacity-40 z-[3]"></div>
+    <div v-if="toggleCustomTestModal && route.name === 'home'" class="max-w-[500px] w-[95%] fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] rounded-md py-5 max-h-[calc(100dvh_-_20px)] z-[3]" :class="[theme === 'dark' ? '' : 'shadow-sm shadow-slate-500', appTheme]">
+        <div @click="toggleCustomTestModal = !toggleCustomTestModal, pauseTyping = false, textValue = ''" class="absolute top-0 text-lg font-bold w-fit right-2 hover:text-red-500">x</div>
         <div>            
-            <div v-if="!saveCustomText" class="space-y-1 text-center">
+            <div v-if="!saveCustomText" class="space-y-1 text-center text-[12px]">
                 <p class="font-medium ">Add your preferred test, quote or story.</p>
                 <p class="text-red-400 font-[400] ">{{ isTouchScreenDevice() ? 'Maximum of 40 words / 500 characters' : 'Maximum of 150 words / 1200 characters' }}</p>
                 <div class="relative w-[90%] m-auto">  
-                    <p @click="textValue = ''" v-if="textValue" class="absolute top-0 right-0 px-2 py-[2px] uppercase text-[13px] hover:text-red-500 cursor-default">X</p>     
+                    <p @click="textValue = ''" v-if="textValue" class="absolute top-0 right-0 px-2 py-[2px] uppercase hover:text-red-500 cursor-default">X</p>     
                     <textarea v-model="textValue" :class="[appTheme]" class="w-full h-40 p-2 pt-2 border rounded-md outline-none border-slate-500" :placeholder="textAreaPlaceholder" :maxlength="isTouchScreenDevice() ? 500 : 1200" name="custom-textarea" />
                 </div>
                 <div @click="startSavingCustomText" class="py-[2px] text-sm m-auto text-center border rounded-full px-4 w-fit border-slate-600 hover:bg-green-800 hover:text-white font-medium">ADD TEST</div>
@@ -44,7 +44,7 @@
 </template>
 
 <script setup>
-import {ref} from 'vue'
+import {ref, watch} from 'vue'
 import {storeToRefs} from 'pinia';
 import {mainStore} from '../store/mainStore';
 import {themeStore}  from '../store/themeStore'
@@ -54,7 +54,7 @@ import { useRoute } from 'vue-router';
 
 const route = useRoute()
 const customize = customizeStore()
-const {customTestModal, pauseTyping, customizers, userSelectedTest, repeat} = storeToRefs(customize)
+const {toggleCustomTestModal, pauseTyping, customizers, userSelectedTest, repeat} = storeToRefs(customize)
 
 const theme_ = themeStore()
 const {theme, appTheme } = storeToRefs(theme_)
@@ -122,7 +122,7 @@ const use = (name) => {
     }
     userSelectedTest.value = name
     switchNext(customizers.value)
-    customTestModal.value = false
+    toggleCustomTestModal.value = false
     pauseTyping.value = false
 }
 </script>
