@@ -4,7 +4,7 @@
             <MobileInput />
             <div class="space-x-[50px]">
                 <Countdown 
-                    v-show="(isTouchScreenDevice() && focus && timedTyping) || timedTyping"
+                    v-show="(isTouchScreenDevice() && focus && customizers['timer']) || customizers['timer']"
                     class="absolute left-[20px]"
                     :length="countdown" 
                     :start="beginCountdown" />
@@ -67,7 +67,7 @@ const route = useRoute()
 const textIsFocused = ref(false)
 
 const store = mainStore()
-const { containerText, allSpacesIndex, refocus, quoteType, goNext, mobileBackspace, wrongCount, previousPlayerInput, beginCountdown, timedTyping, hasCompletedSession, focus, testContainerEl, containerHeight, movie, playerInputLength, playerInput, authoredQuote, scrollTextContainer, customizeElement, restartSvgEl, restartEl, inputEl} = storeToRefs(store)
+const { containerText, allSpacesIndex, refocus, quoteType, goNext, mobileBackspace, wrongCount, previousPlayerInput, beginCountdown, hasCompletedSession, focus, testContainerEl, containerHeight, movie, playerInputLength, playerInput, authoredQuote, scrollTextContainer, customizeElement, restartSvgEl, restartEl, inputEl} = storeToRefs(store)
 const {switchNext} = store
 
 const customize = customizeStore()
@@ -81,7 +81,7 @@ const {countdown} = storeToRefs(count)
 const {clearCounter} = count
 
 const restartTest = async () => {
-    if (timedTyping.value) clearCounter()
+    if (customizers.value['timer']) clearCounter()
     switchNext(customizers.value, 'restart')
 }
 

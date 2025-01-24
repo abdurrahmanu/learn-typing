@@ -25,15 +25,15 @@ const {clearCounter} = count
 const router = useRouter()
 
 const store = mainStore()
-const { hasCompletedSession, focus, timedTyping} = storeToRefs(store)
+const { hasCompletedSession, focus} = storeToRefs(store)
 
 const customize = customizeStore()
-const { hideElements } = storeToRefs(customize)
+const { hideElements, customizers } = storeToRefs(customize)
 
 const screenWidth = ref(window.innerWidth)
 
 watch(hasCompletedSession, (newVal) => {
-    if (timedTyping.value) clearCounter()
+    if (customizers.value['timer']) clearCounter()
     if (newVal) router.push({path: 'result'})
 }, {deep: true})
 

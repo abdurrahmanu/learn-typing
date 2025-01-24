@@ -1,7 +1,7 @@
 <template>
   <Transition name="customizer-transition">
       <div ref="customizeElement"  v-if="!hasCompletedSession" :class="[isMobile() && focus ? 'hidden' : 'block', appTheme]" class="relative m-auto items-center p-1 flex font-[500] pb-7 config text-[13px] max-w-[900px] gap-2 justify-center flex-wrap relative z-[1]">
-        <div class="flex items-center gap-3 p-[1px] parent" v-for="(optionArr, key, listIndex) in option" :key="listIndex">          
+        <div class="flex items-center gap-3 p-[1px] parent" v-for="(optionArr, key, listIndex) in quickSettingsGroups" :key="listIndex">          
             <div 
             class="relative ring-zinc-700 hover:ring-blue-800 flex py-[2px] px-1 ring-[1px] rounded-lg cursor-pointer flex-wrap justify-center items-center"
             @mouseenter="mouseEnter(listIndex)"
@@ -21,7 +21,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import {customizeStore} from '../store/customizeStore.js'
 import {storeToRefs} from 'pinia'
 import { mainStore } from '../store/mainStore.js';
@@ -35,34 +35,10 @@ const store = mainStore()
 const { hasCompletedSession, focus, customizeElement} = storeToRefs(store)
 
 const customize = customizeStore()
-const { allOptions, configs, customizers, disableOption, repeat} = storeToRefs(customize)
-const {changeConfig} = customize
+const { quickSettingsGroups, configs, customizers, disableOption, repeat} = storeToRefs(customize)
+const {checkQuickSettings} = customize
 
-const {
-    'test-length' : textLength,
-    'words-type':  wordType,
-    'test-type': testType,
-    'caps': includeCaps,
-    'punctuation':  includePunctuations,
-    'numbers': includeNumbers,
-    'modes': modes,
-    'spaced': reverse,
-    'case': allCases,
-    'arrangement': allArrangements
-    } = allOptions.value
-
-const option = ref({
-    'test-length' : textLength,
-    'words-type': wordType, 
-    'test-type': testType,
-    'caps': includeCaps, 
-    'punctuation': includePunctuations,
-    'numbers': includeNumbers,
-    'modes': modes,
-    'spaced': reverse,
-    'case': allCases,
-    'arrangement': allArrangements,
-})
+const alphabetModeOptions = ['no-space', 'case', 'arrangement', 'spaced']
 
 const hoverIndex = ref(null)
 const mouseEnter = (index) => hoverIndex.value = index
@@ -79,18 +55,18 @@ const checkSelection = (key, option) => {
   let currentMode = customizers.value['modes']
 
   if (selection === currentWordType || selection === currentTestType || selection === currentTextLength || selection === currentMode) return
-  changeConfig()
+  checkQuickSettings()
 }
 </script>
 
 <style scoped>
-    .parent:has(.hide) {
-      display: none;
-      visibility: hidden;
-    }
+  .parent:has(.hide) {
+    display: none;
+    visibility: hidden;
+  }
 
-    .customizer-transition-enter-from {
-      opacity: 0;
-      transform: translateY(50%);
-    }
+  .customizer-transition-enter-from {
+    opacity: 0;
+    transform: translateY(50%);
+  }
 </style>

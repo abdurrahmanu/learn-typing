@@ -21,7 +21,7 @@ const count = countdownStore()
 const {clearCounter} = count
 const store = mainStore()
 const {switchNext} = store
-const {hasCompletedSession, timedTyping, restartEl, containerText} = storeToRefs(store)
+const {hasCompletedSession, restartEl, containerText} = storeToRefs(store)
 
 const customize = customizeStore()
 const { customizers} = storeToRefs(customize)
@@ -33,7 +33,7 @@ window.addEventListener('keyup', event=> {
 
 const next = () => {
     containerText.value = ''
-    if (timedTyping.value) clearCounter()
+    if (customizers.value['timer']) clearCounter()
     if (hasCompletedSession.value) router.push('/')
     switchNext(customizers.value)
 }

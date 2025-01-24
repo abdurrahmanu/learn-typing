@@ -23,7 +23,7 @@ const customize = customizeStore()
 const {font, customizers, toggleCapsToast } = storeToRefs(customize)
 
 const store = mainStore()
-const { timedTyping, preferredConfigs, refocus } = storeToRefs(store)
+const { preferredConfigs, refocus } = storeToRefs(store)
 const { switchNext} = store
 
 const count = countdownStore()
@@ -36,11 +36,12 @@ onMounted(() => {
   textBoxHeight()
   onLoad.value = !hasInternetConnection.value
 
-  watch(customizers, newVal => {
+  watch(customizers, (newVal, oldVal) => {
     if (onLoad.value) {
-      if (timedTyping.value) clearCounter()
+      if (customizers.value['timer']) clearCounter()
     }
     else onLoad.value = true
+
   }, {deep : true})
 })
 

@@ -11,16 +11,16 @@
                     <Difficulty />
                     <BackSpace />
                     <BlindMode />
-                    <BlurTest />
+                    <Blur />
                     <CapsLock v-if="!isMobile()" />
                     <Countdown />
-                    <CustomCamelCase />
-                    <DoubleEachWord v-if="customizers['modes'] !== 'alphabet-test'" />
-                    <NoSpaceText v-if="customizers['modes'] !== 'alphabet-test'" />
+                    <CustomCase />
+                    <DoubleWords v-if="customizers['modes'] !== 'alphabet-test'" />
+                    <NoSpace v-if="customizers['modes'] !== 'alphabet-test'" />
                     <MovieQuotes v-if="customizers['modes'] !== 'alphabet-test'" />
                     <StopOnError v-if="!isMobile()" />
                     <AuthoredQoutes v-if="customizers['modes'] !== 'alphabet-test'" />
-                    <AllCaps />
+                    <UpperCase />
                     <LetterCombinations v-if="customizers['modes'] === 'alphabet-test'"/>
                     <Cookies />
                 </div>
@@ -36,9 +36,9 @@ import Fonts from './Fonts.vue'
 import AuthoredQoutes from './AuthoredQuotes.vue'
 import Cookies from './Cookies.vue'
 import Header from './Header.vue'
-import AllCaps from './AllCaps.vue'
-import CustomCamelCase from './CustomCamelCase.vue'
-import NoSpaceText from './NoSpaceText.vue'
+import UpperCase from './UpperCase.vue'
+import CustomCase from './CustomCase.vue'
+import NoSpace from './NoSpace.vue'
 import BlindMode from './BlindMode.vue'
 import BackSpace from './BackSpace.vue';
 import Countdown from './CountDown.vue';
@@ -48,13 +48,13 @@ import {storeToRefs} from 'pinia'
 import {customizeStore} from '../../store/customizeStore'
 import {themeStore}  from '../../store/themeStore'
 import { isTouchScreenDevice } from '../../composables/isTouchScreenDevice'
-import BlurTest from './BlurTest.vue'
+import Blur from './Blur.vue'
 import Difficulty from './Difficulty.vue'
 import CapsLock from './CapsLock.vue'
 import StopOnError from './StopOnError.vue'
 import {mainStore} from '../../store/mainStore'
 import { countdownStore } from '../../store/countdownStore'
-import DoubleEachWord from './DoubleEachWord.vue'
+import DoubleWords from './DoubleWords.vue'
 import {watch} from 'vue'
 import TextLines from './TextLines.vue'
 import { isMobile } from '../../composables/isMobile'
@@ -63,7 +63,7 @@ const theme_ = themeStore()
 const { appTheme } = storeToRefs(theme_)
 
 const store = mainStore()
-const {demo, timedTyping} = storeToRefs(store)
+const {demo} = storeToRefs(store)
 const {switchNext} = store
 
 const counter = countdownStore()
@@ -73,7 +73,7 @@ const customize = customizeStore()
 const {customizers, allSettings, pauseTyping, } = storeToRefs(customize)
 
 const toggleSettings = () => {
-    if (timedTyping.value) clearCounter()
+    if (customizers.value['timer']) clearCounter()
     switchNext(customizers.value, 'restart')
     allSettings.value = !allSettings.value
     if (allSettings.value) pauseTyping.value = true

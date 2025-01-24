@@ -27,13 +27,13 @@ const {theme} = theme_
 
 const store = customizeStore()
 const {customizers, backspace} = storeToRefs(store)
-const {customize} = store
+const {changeSettings} = store
 
 const onError = () => {
     if (!backspace.value) customizers.value['stop-on-error'] = false
     else {
         customizers.value['stop-on-error'] = !customizers.value['stop-on-error']
-        customize('stop-on-error', customizers.value['stop-on-error'])
+        changeSettings('stop-on-error', customizers.value['stop-on-error'])
     }
 }
 </script>

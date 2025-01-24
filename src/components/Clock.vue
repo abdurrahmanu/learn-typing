@@ -6,11 +6,11 @@
                 class="hidden"
                 :length="countdown" 
                 :start="beginCountdown" 
-                :cancel="timedTyping" />
+                :cancel="customizers['timer']" />
                 <pauseTimer @click="timer" class="w-6" />
             </div>
-            <pauseTimer v-if="!timedTyping" @click="timer" class="w-5 mr-[-4px]" />
-            <div v-if="timedTyping && !beginCountdown" class="relative flex items-center gap-1 w-fit">  
+            <pauseTimer v-if="!customizers['timer']" @click="timer" class="w-5 mr-[-4px]" />
+            <div v-if="customizers['timer'] && !beginCountdown" class="relative flex items-center gap-1 w-fit">  
                 <playTimer @click="timer" class="w-5 mr-2" />
                 <div :class="[theme === 'dark' ? 'ring-slate-100' : 'ring-black']" class="flex text-[13px] font-[600] rounded-lg ring-[1px] h-fit scale-105 max-[410px]:absolute max-[410px]:top-[calc(100%_+_2px)] max-[410px]:left-[50%] max-[410px]:translate-x-[-50%] cursor-pointer config">
                     <div class="px-2 border-r rounded-l-lg w-fit" :class="[level === 'beginner' ? difficultyBg : '', theme === 'dark' ? 'border-slate-200' : 'border-black']" @click="selectCountDown(timeForBeginner, 'beginner')">{{timeForBeginner}}<span class="text-[9px]">s</span></div>
@@ -41,7 +41,7 @@ const theme_ = themeStore()
 const {theme} = storeToRefs(theme_)
 
 const store = mainStore()
-const { timedTyping, beginCountdown, timerID} = storeToRefs(store)
+const { beginCountdown, timerID} = storeToRefs(store)
 const {sessionComplete, switchNext} = store
 
 const customize = customizeStore()
@@ -64,8 +64,8 @@ const countdownFunc = (level) => {
 
 const timer = () => {
     countdown.value = countdownFunc(level.value)
-    timedTyping.value = !timedTyping.value
-    if (!timedTyping.value) clearCounter()
+    customizers.value['timer'] = !customizers.value['timer']
+    if (!customizers.value['timer']) clearCounter()
     if (beginCountdown.value) {
         clearInterval(timerID.value)
     }

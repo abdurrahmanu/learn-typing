@@ -33,7 +33,6 @@ export const mainStore = defineStore('mainStore', () => {
     const currentWordArray = ref([])
 
     // Time states
-    const timedTyping = ref(false)
     const startTime = ref(null)
     const totalTime = ref(null)
     const timerID = ref()
@@ -75,11 +74,9 @@ export const mainStore = defineStore('mainStore', () => {
     })
 
     const resetToDefault = () => {
-        if (timedTyping.value) {
-            clearInterval(timerID.value)
-            beginCountdown.value = false
-        }
-        if (beatCountdown.value && timedTyping.value) beatCountdown.value = false
+        clearInterval(timerID.value)
+        beginCountdown.value = false
+        if (beatCountdown.value) beatCountdown.value = false
         else beatCountdown.value = null
         playerLastInput.value = ''
         playerInput.value = ''
@@ -101,10 +98,8 @@ export const mainStore = defineStore('mainStore', () => {
 
     const sessionComplete = async () => {
         hasCompletedSession.value = true
-        if (timedTyping.value) {
-            clearInterval(timerID.value)
-            beginCountdown.value = false
-        }
+        clearInterval(timerID.value)
+        beginCountdown.value = false
         totalTime.value = (performance.now() - startTime.value).toFixed(0) / 1000
     }
 
@@ -143,7 +138,6 @@ export const mainStore = defineStore('mainStore', () => {
         enterKey,
         backspaceIsPressed,
 
-        timedTyping,
         startTime,
         totalTime,
         timerID,

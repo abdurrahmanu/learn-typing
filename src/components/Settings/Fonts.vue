@@ -23,7 +23,7 @@ const theme_ = themeStore()
 const {theme} = theme_
 
 const store = mainStore()
-const {timedTyping, playerInput} = storeToRefs(store)
+const {playerInput} = storeToRefs(store)
 const {switchNext} = store
 
 const customize = customizeStore()
@@ -42,7 +42,7 @@ watch(fontSize, (newVal) => {
     updateDB(Object.keys({fontsize})[0], fontsize)
 
     if (playerInput.value.length) {        
-        if (timedTyping.value) clearCounter()
+        if (customizers.value['timer']) clearCounter()
         switchNext(customizers.value, 'restart' )
     }
 })

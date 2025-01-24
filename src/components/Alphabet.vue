@@ -186,7 +186,7 @@ const pulseStyle = computed(() => {
 
 @keyframes forward {
     0% {
-        transform: translateX(-100%)
+        transform: translateX(-70%)
     }
     100% {
         transform: translateX(0%);
@@ -200,7 +200,7 @@ const pulseStyle = computed(() => {
 
 @keyframes backwards {
     0% {
-        transform: translateX(100%)
+        transform: translateX(80%)
     }
     100% {
         transform: translateX(0%);

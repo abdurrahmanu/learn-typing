@@ -12,13 +12,8 @@ import Settings from './Settings/Settings.vue'
 import Animate from './Animate.vue';
 import CapsLockToast from './Toast.vue';
 import CustomTestModal from './CustomTestModal.vue';
-import Teach from './Teach.vue'
 import {storeToRefs} from 'pinia'
-import { mainStore } from '../store/mainStore';
 import {customizeStore} from '../store/customizeStore'
-
-const store = mainStore()
-const { demo } = storeToRefs(store)
 
 const customize = customizeStore()
 const { toggleCapsToast } = storeToRefs(customize)

@@ -5,17 +5,17 @@ import { storeToRefs } from 'pinia';
 
 export const inputEvent = (e) => {
     const store = mainStore()
-    const { containerText, beatCountdown, playerInputLength, route,  playerInput, wrongCount, backspaceIsPressed, playerLastInput, beginCountdown, startTime, enterKey, timedTyping} = storeToRefs(store)
+    const { containerText, beatCountdown, playerInputLength, route,  playerInput, wrongCount, backspaceIsPressed, playerLastInput, beginCountdown, startTime, enterKey} = storeToRefs(store)
     const { sessionComplete } = store
     
     const customize = customizeStore()
-    const {backspace, pauseTyping, toggleCapsToast, capslock, customizers} = storeToRefs(customize)
+    const {backspace, pauseTyping, toggleCapsToast, customizers} = storeToRefs(customize)
 
     if (customizers.value['stop-on-error'] && wrongCount.value && !isTouchScreenDevice() && e.key !== 'Backspace') return
 
-    if (!capslock.value && !toggleCapsToast.value && e.key !== 'CapsLock' && e.getModifierState('CapsLock')) toggleCapsToast.value = true
-    if (!capslock.value && e.getModifierState('CapsLock') && e.key !== 'CapsLock') return
-    if (e.key === 'CapsLock' && !capslock.value) {
+    if (!customizers.value['capslock'] && !toggleCapsToast.value && e.key !== 'CapsLock' && e.getModifierState('CapsLock')) toggleCapsToast.value = true
+    if (!customizers.value['capslock'] && e.getModifierState('CapsLock') && e.key !== 'CapsLock') return
+    if (e.key === 'CapsLock' && !customizers.value['capslock']) {
         if (e.getModifierState('CapsLock')) toggleCapsToast.value = true
         else toggleCapsToast.value = false
         return
@@ -42,7 +42,7 @@ export const inputEvent = (e) => {
             if (e.key === 'Enter' && !enterKey.value) return 
             playerInputLength.value++
             if (playerInputLength.value === 1)  {
-                if (timedTyping.value) {
+                if (customizers.value['timer']) {
                     beatCountdown.value = false
                     beginCountdown.value = true
                 }
@@ -58,7 +58,7 @@ export const inputEvent = (e) => {
             playerInput.value += playerLastInput.value
 
             if (playerInputLength.value === containerText.value.length) {
-                if (timedTyping.value) beatCountdown.value = true
+                if (customizers.value['timer']) beatCountdown.value = true
                 sessionComplete()
             }
         }

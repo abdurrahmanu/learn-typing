@@ -1,5 +1,5 @@
 import {defineStore} from 'pinia'
-import {ref} from 'vue'
+import {ref, computed} from 'vue'
 import { updateDB } from '../composables/updateDB'
 import { isMobile } from '../composables/isMobile'
 
@@ -16,7 +16,6 @@ export const customizeStore = defineStore('customizeStore', () => {
     const difficulty = ref('beginner')
     const backspace = ref(true)
     const repeat = ref(false)
-    const capslock = ref(true)
     const textPosition = ref('left')
     const blind = ref(false)
     const font = ref(32)
@@ -24,7 +23,6 @@ export const customizeStore = defineStore('customizeStore', () => {
     const toggleCapsToast = ref(false)
     const customTestLength = ref(200)
     const useCustomLength = ref(false)
-    const doubleEachWord = ref(false)
     const textLines = ref(3)
     const shiftKey = ref(false)
     const mixCharacters = ref(false)
@@ -50,7 +48,10 @@ export const customizeStore = defineStore('customizeStore', () => {
         'modes': 'word-test',
         'spaced': false,
         'case': '',
-        'arrangement': ''
+        'arrangement': '',
+        'double-words': false,
+        'capslock': true,
+        'timer': false,
     })
 
     const disableOption = ref({
@@ -65,24 +66,27 @@ export const customizeStore = defineStore('customizeStore', () => {
         'spaced': customizers.value['modes'] === 'word-test' ? true : false,
     })
 
-    const allOptions = ref({
-        // next time I will make allOptions responsive to changes....either computed or watched...
-        'test-length' : isMobile() || customizers.value['test-type'] === 'quotes' ? ['auto', 10, 20, 30 ] : ['auto', 10, 20, 30, 50,  100],
+    const quickSettingsGroups = computed(() => {
+        return {
+        // For word-test
+        'test-length' : isMobile() || customizers.value['test-type'] === 'quotes' ? ['auto', 10, 20, 30 ] : ['auto', 10, 20, 30, 50, 100],
         'words-type' : ['frequent', 'common', 'rare'],
         'test-type' : ['quotes', 'words', 'custom'],
         'caps' : ['caps'],
         'punctuation' : ['punctuations'],
         'numbers' : ['numbers'],
-        'all-caps' : ['all caps'],
-        'camel-case' : ['custom camel case'],
-        'no-space' : ['no space'],
+        // 'all-caps' : ['all caps'],
+        // 'no-space' : ['no space'],
+        // 'camel-case' : ['custom case'],
         'modes': ['word-test', 'alphabet-test'],
+        // For alphabet-test
         'case': ['randomcase', 'uppercase'],
         'arrangement': ['reverse', 'jumble'],
         'spaced': ['space'],
+        }
     })
 
-    const useCustomizers = (group, selection) => {
+    const changeQuickSettings = (group, selection) => {
         if (customizers.value[group] === selection) customizers.value[group] = ''
         else customizers.value[group] = selection
 
@@ -128,7 +132,7 @@ export const customizeStore = defineStore('customizeStore', () => {
         updateDB(Object.keys({config})[0], config, null, true)
     }
 
-    const changeConfig = () => {
+    const checkQuickSettings = () => {
         testType_.value = customizers.value['test-type']
         let selection = +configs.value[1] || configs.value[1]
         let group = configs.value[0]
@@ -157,12 +161,15 @@ export const customizeStore = defineStore('customizeStore', () => {
             } 
         }
 
-        useCustomizers(group, selection)   
+        changeQuickSettings(group, selection)   
     }
 
-    const customize = (mode, boolean) => {
-        if (boolean && mode === 'all-caps') customizers.value['camel-case'] = false
-        if (boolean && mode === 'camel-case') customizers.value['all-caps'] = false
+    const changeSettings = (mode, boolean) => {
+        // not countdown, blindMode
+        console.log('settings')
+
+        let booleanSwap = ['all-caps', 'camel-case', 'double-words', 'capslock', 'blind-mode', 'countdown']
+        if (boolean && booleanSwap.includes(mode)) customizers.value[mode] = false
 
         if (mode === 'author-quotes' || mode === 'movie-quotes') {
             customizers.value['test-length'] = 'auto'
@@ -176,19 +183,18 @@ export const customizeStore = defineStore('customizeStore', () => {
     return {
         count,
         disableOption,
-        doubleEachWord,
         difficulty,
         textLines,
         configs,
         cursorType,
         allSettings,
         customizers,
-        allOptions,
+        quickSettingsGroups,
         hideElements,
         backspace,
         blind,
-        changeConfig, 
-        customize,
+        checkQuickSettings, 
+        changeSettings,
         font, 
         range,
         repeat,
@@ -197,7 +203,6 @@ export const customizeStore = defineStore('customizeStore', () => {
         toggleCustomTestModal,
         userSelectedTest,
         testType_,
-        capslock,
         toggleCapsToast,
         customTestLength,
         useCustomLength,

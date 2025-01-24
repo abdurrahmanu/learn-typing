@@ -13,7 +13,7 @@ export const generateTest = async (config, restart) => {
     const {textLength} = storeToRefs(count)
 
     const customize = customizeStore()
-    const {repeat, doubleEachWord, customizers } = storeToRefs(customize)
+    const {repeat, customizers } = storeToRefs(customize)
 
     if (repeat.value || restart ) containerText.value = storedTest.value
 
@@ -50,7 +50,7 @@ export const generateTest = async (config, restart) => {
         }
     }
 
-    if (doubleEachWord.value && allSpacesIndex.value.length) {
+    if (customizers.value['double-words'] && allSpacesIndex.value.length) {
         let text = containerText.value
         containerText.value = ''
         for (let index = 0; index < allSpacesIndex.value.length - 1; index++) {

@@ -1,7 +1,7 @@
 <template>
     <div :class="[theme === 'dark' ? 'hover:bg-neutral-800' : 'hover:bg-zinc-200']" class="py-2 pl-5">
         <div  class="flex justify-between w-full p-1 border border-transparent items-center rounded-sm ">
-            <div @click="customizers['blur'] = !customizers['blur'], customize('blur', customizers['blur'])" class="flex items-center gap-3 w-fit">
+            <div @click="customizers['blur'] = !customizers['blur'], changeSettings('blur', customizers['blur'])" class="flex items-center gap-3 w-fit">
                 <div class="relative w-4 h-4">
                     <input name="blur" :checked="customizers['blur']"  type="checkbox" class="appearance-none shadow-sm shadow-black w-4 h-4 peer ring-blue-500 rounded-full hover:ring-[2px] ring-[1px] hover:ring-blue-500" id="">
                     <good />
@@ -27,5 +27,5 @@ const {theme} = theme_
 
 const store = customizeStore()
 const {customizers} = storeToRefs(store)
-const {customize} = store
+const {changeSettings} = store
 </script>

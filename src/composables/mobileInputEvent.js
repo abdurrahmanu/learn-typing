@@ -4,11 +4,11 @@ import { storeToRefs } from 'pinia';
 
 export const mobileInputEvent = (e) => {
     const store = mainStore()
-    const { containerText, mobileBackspace, beatCountdown, hasCompletedSession, route, playerInputLength, playerInput, backspaceIsPressed, beginCountdown, startTime, enterKey, timedTyping, focus} = storeToRefs(store)
+    const { containerText, mobileBackspace, beatCountdown, hasCompletedSession, route, playerInputLength, playerInput, backspaceIsPressed, beginCountdown, startTime, enterKey, focus} = storeToRefs(store)
     const { sessionComplete } = store
     
     const customize = customizeStore()
-    const {pauseTyping} = storeToRefs(customize)
+    const {pauseTyping, customizers} = storeToRefs(customize)
     
     if (mobileBackspace.value) {
         mobileBackspace.value = false
@@ -21,7 +21,7 @@ export const mobileInputEvent = (e) => {
     if (!focus.value || (e.key === 'Enter' && !enterKey.value) || pauseTyping.value || hasCompletedSession.value) return
 
     if (playerInputLength.value === 1)  {
-        if (timedTyping.value) {
+        if (customizers.value['timer']) {
             beatCountdown.value = false
             beginCountdown.value = true
         }
@@ -30,7 +30,7 @@ export const mobileInputEvent = (e) => {
 
     if (e.key === 'Enter' && enterKey.value)  playerInput.value += ' '
     if (playerInput.value.length === containerText.value.length) {
-        if (timedTyping.value) beatCountdown.value = true
+        if (customizers.value['timer']) beatCountdown.value = true
         sessionComplete()
     }
 }
