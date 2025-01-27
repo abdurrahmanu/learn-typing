@@ -31,10 +31,7 @@ const {changeSettings} = store
 
 const onError = () => {
     if (!backspace.value) customizers.value['stop-on-error'] = false
-    else {
-        customizers.value['stop-on-error'] = !customizers.value['stop-on-error']
-        changeSettings('stop-on-error', customizers.value['stop-on-error'])
-    }
+    else changeSettings('stop-on-error', customizers.value['stop-on-error'])
 }
 </script>
 

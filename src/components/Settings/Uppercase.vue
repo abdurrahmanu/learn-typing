@@ -1,7 +1,7 @@
 <template>
     <div :class="[theme === 'dark' ? 'hover:bg-neutral-800' : 'hover:bg-zinc-200']" class="py-2 pl-5">
         <div class="flex justify-between w-full p-1 border border-transparent  rounded-sm ">
-            <div @click="customizers['all-caps'] = !customizers['all-caps'], changeSettings('all-caps', customizers['all-caps'])" class="flex items-center gap-3 items-center w-fit">
+            <div @click="changeSettings('all-caps', customizers['all-caps'])" class="flex items-center gap-3 items-center w-fit">
                 <div class="relative w-4 h-4">
                     <input name="caps" :checked="customizers['all-caps']"  type="checkbox" class="appearance-none shadow-sm shadow-black w-4 h-4 peer ring-blue-500 rounded-full hover:ring-[2px] ring-[1px] hover:ring-blue-500" id="">
                     <good />
@@ -12,7 +12,7 @@
                 </label>
             </div>
         </div>
-        <p class="px-3 font-[400]">Toggle to capitalize test.</p>
+        <p class="px-3 font-[400]">Toggle to capitalize test. {{ customizers['all-caps'] }}</p>
     </div>
 </template>
 

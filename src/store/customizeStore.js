@@ -39,7 +39,6 @@ export const customizeStore = defineStore('customizeStore', () => {
         'numbers': false,
         'all-caps': false,
         'backspace': true,
-        'blind-mode': false,
         'camel-case': false,
         'no-space': false,
         'movie-quotes': false,
@@ -69,7 +68,7 @@ export const customizeStore = defineStore('customizeStore', () => {
     const quickSettingsGroups = computed(() => {
         return {
         // For word-test
-        'test-length' : isMobile() || customizers.value['test-type'] === 'quotes' ? ['auto', 10, 20, 30 ] : ['auto', 10, 20, 30, 50, 100],
+        'test-length' : isMobile() || customizers.value['test-type'] === 'quotes' ? ['auto', 10, 20, 30 ] : customizers.value['test-type'] === 'custom' ? ['auto'] : ['auto', 10, 20, 30, 50, 100],
         'words-type' : ['frequent', 'common', 'rare'],
         'test-type' : ['quotes', 'words', 'custom'],
         'caps' : ['caps'],
@@ -128,6 +127,13 @@ export const customizeStore = defineStore('customizeStore', () => {
             disableOption.value['test-type'] = true
         }
 
+        if (customizers.value['test-type'] === 'quotes' || customizers.value['test-type'] === 'custom') {
+            disableOption.value['words-type'] = true
+        } else {
+            disableOption.value['words-type'] = false
+        }
+
+
         let config = [customizers.value, disableOption.value]
         updateDB(Object.keys({config})[0], config, null, true)
     }
@@ -165,11 +171,11 @@ export const customizeStore = defineStore('customizeStore', () => {
     }
 
     const changeSettings = (mode, boolean) => {
-        // not countdown, blindMode
-        console.log('settings')
+        // not countdown
+        let booleanSwap = ['all-caps', 'movie-quotes', 'camel-case', 'double-words', 'capslock', 'countdown', 'blur', 'stop-on-error', 'no-space']
 
-        let booleanSwap = ['all-caps', 'camel-case', 'double-words', 'capslock', 'blind-mode', 'countdown']
         if (boolean && booleanSwap.includes(mode)) customizers.value[mode] = false
+        if (!boolean && booleanSwap.includes(mode)) customizers.value[mode] = true
 
         if (mode === 'author-quotes' || mode === 'movie-quotes') {
             customizers.value['test-length'] = 'auto'
@@ -177,7 +183,7 @@ export const customizeStore = defineStore('customizeStore', () => {
         }
 
         let config = [customizers.value, disableOption.value]
-        updateDB(Object.keys({config})[0], config)
+        updateDB(Object.keys({config})[0], config, null, true)
     }
 
     return {
