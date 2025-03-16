@@ -1,14 +1,12 @@
 <template>
   <Loader v-if="connectingServer" />
   <Main v-else />
-  <ClickEffect />
 </template>
 
 <script setup>
 import {onBeforeMount, onMounted, watch, ref} from 'vue'
 import Main from './components/Main.vue'
 import Loader from './components/Loader.vue'
-import ClickEffect from './components/ClickEffect.vue';
 import { storeToRefs } from 'pinia';
 import {connectStore} from './store/connectStore'
 import { mainStore } from './store/mainStore';
@@ -16,6 +14,7 @@ import {customizeStore}  from './store/customizeStore'
 import {textBoxHeight} from './composables/textBox'
 import { countdownStore } from './store/countdownStore';
 import { DB } from './composables/connectDB';
+import { isMobile } from './composables/isMobile';
 
 const onLoad = ref(undefined)
 
@@ -24,7 +23,6 @@ const {font, customizers, toggleCapsToast } = storeToRefs(customize)
 
 const store = mainStore()
 const { preferredConfigs, refocus } = storeToRefs(store)
-const { switchNext} = store
 
 const count = countdownStore()
 const {clearCounter} = count
@@ -33,6 +31,7 @@ const connect = connectStore()
 const {hasInternetConnection, connectingServer, connectionStrength, showConnectionStrength} = storeToRefs(connect)
 
 onMounted(() => {
+  isMobile()
   textBoxHeight()
   onLoad.value = !hasInternetConnection.value
 

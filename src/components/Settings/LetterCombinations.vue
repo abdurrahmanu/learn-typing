@@ -84,7 +84,9 @@ watch(mixCharactersArray, (newVal) => {
         mixCharacters.value = false
         switchNext(customizers.value)
         return
+    } else {
+        mixCharacters.value = true
+        switchNext(customizers.value)
     }
 }, {deep: true})
-
 </script>

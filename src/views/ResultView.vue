@@ -1,14 +1,14 @@
 <template>
-    <div :class="appTheme" class="min-h-[200px] text-center pt-10 cursor-default result">
+    <div :class="appTheme" class="min-h-[200px] text-center cursor-default result">
         <p class="py-3 text-2xl text-center text-slate-500 stats">STATISTICS</p>
         <div class="flex py-1 m-auto gap-x-2 w-fit text-slate-300">            
             <div class="relative w-fit">                
-                <div class="relative px-3 ring-[1px] hover:ring-[3px] m-auto font-black text-[15px] drop-shadow-md bg-neutral-900 uppercase rounded-full cursor-pointer w-fit peer"  :class="[difficulty === 'beginner' ? 'ring-[#44b0d3] text-[#44b0d3]' : difficulty === 'amateur' ? 'ring-[#ffa07a] text-[#ffa07a]' : difficulty === 'expert' ? 'ring-[#4d5f43] text-[#4d5f43]' : '']">{{ difficulty }}</div>
+                <div class="relative px-3 ring-[1px] hover:ring-[3px] m-auto font-black text-[15px] drop-shadow-md uppercase rounded-full cursor-pointer w-fit peer"  :class="[difficulty === 'beginner' ? 'ring-[#44b0d3] text-[#44b0d3]' : difficulty === 'amateur' ? 'ring-[#ffa07a] text-[#ffa07a]' : difficulty === 'expert' ? 'ring-[#4d5f43] text-[#4d5f43]' : '']">{{ difficulty }}</div>
                 <div :class="[difficulty === 'beginner' ? 'bg-[#44b0d3]' : difficulty === 'amateur' ? 'bg-[#ffa07a]' : difficulty === 'expert' ? 'bg-[#4d5f43]' : '']" class="absolute rounded-md top-[115%] left-[50%] translate-x-[-50%] z-[1] text-left p-2 hidden peer-hover:block text-black font-medium shadow-sm shadow-black text-[13px] max-w-[300px]">
                     <p class="font-bold underline uppercase">TO PASS {{ difficulty }} TEST</p>
-                    <p class="min-w-[200px]">* Accuracy more than - {{  difficulty === 'beginner' ? '70%' : difficulty === 'amateur' ? '80%' : difficulty === 'expert' ? '95%' : '' }} </p>
-                    <p class="min-w-[200px]">* Words Per Minute (WPM) more than - {{ difficulty === 'beginner' ? '50' : difficulty === 'amateur' ? '65' : difficulty === 'expert' ? '85' : '' }} </p>
-                    <p class="min-w-[200px]">* Error Percentage less than - {{  difficulty === 'beginner' ? '30%' : difficulty === 'amateur' ? '20%' : difficulty === 'expert' ? '10%' : '' }} </p>
+                    <p class="min-w-[200px]">* Accuracy more than {{  difficulty === 'beginner' ? '70%' : difficulty === 'amateur' ? '80%' : difficulty === 'expert' ? '95%' : '' }} </p>
+                    <p class="min-w-[200px]">* Words Per Minute (WPM) more than {{ difficulty === 'beginner' ? '50' : difficulty === 'amateur' ? '65' : difficulty === 'expert' ? '85' : '' }} </p>
+                    <p class="min-w-[200px]">* Error Percentage less than {{  difficulty === 'beginner' ? '30%' : difficulty === 'amateur' ? '20%' : difficulty === 'expert' ? '10%' : '' }} </p>
                     <p class="min-w-[200px]">* Beat Countdown</p>
                 </div>
             </div>
@@ -59,6 +59,9 @@
                 </div>
             </div>
         </div>
+        <LineChart :x="time" :y="wpm" />
+        {{ time }}
+        {{ wpm }}
         <div class="space-y-1 text-lg font-[400] roboto-font py-4 my-3 border-y border-slate-500 max-w-[300px] w-full m-auto">            
             <div v-if="customizers['timer']">                
                 <div v-if="beatCountdown && testResult === 'you passed the test'" class="text-green-700 uppercase ">
@@ -82,7 +85,7 @@
 </template>
 
 <script setup>
-import {ref, onMounted, computed} from 'vue'
+import {computed} from 'vue'
 import {storeToRefs} from 'pinia'
 import {mainStore} from '../store/mainStore'
 import {themeStore}  from '../store/themeStore'
@@ -90,6 +93,7 @@ import { customizeStore } from '../store/customizeStore'
 import { countdownStore } from '../store/countdownStore'
 import pass from '../components/svg/pass.vue'
 import fail from '../components/svg/fail.vue'
+import LineChart from '../components/LineChart.vue'
 
 const count = countdownStore()
 const {level}  = storeToRefs(count)
@@ -191,9 +195,7 @@ const wpmBasedOnLevels = computed(() => {
     }
 })
 
-const ErrorRatioBasedOnLevels = computed(() => {
-    return errorRatioLevel() ? true : false
-})
+const ErrorRatioBasedOnLevels = computed(() => errorRatioLevel() ? true : false)
 
 const testResult  = computed(() => {
     if (difficulty.value === 'beginner') {        
@@ -206,9 +208,13 @@ const testResult  = computed(() => {
         return accuracy() > 95 && (resultData.value.WPM * (accuracy() / 100)).toFixed(0) > 85 && errorRatioLevel() ? 'you passed the test' : 'you failed the test'
     }
 })
+
+const wpm =  computed(() => Array.from({length: Math.ceil(resultData.value.WPM / 20) > 1 || Math.ceil(resultData.value.WPM / 20) === 1 ? Math.ceil(resultData.value.WPM / 20) + 1 : 1 }, (value, index) => index * 20))
+
+const time = computed(() => Array.from({length: wpm.value.length}, (value, index) => index * Math.ceil(resultData.value.totalTime / wpm.value.length)))
+
+
 </script>
-
-
 
 
 

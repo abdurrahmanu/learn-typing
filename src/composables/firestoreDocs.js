@@ -7,7 +7,7 @@ export const getSingleDoc = async (ID) => {
     return await getDoc(user).then((data) => data.exists() ? data.data() : false )
 }
 
-export const   addSingleDoc = async () => {
+export const addSingleDoc = async () => {
     let docRef = doc(collection(db, 'user'))
     await setDoc(docRef, kiboardObj().value)
     let user = doc(db, "user", docRef.id )

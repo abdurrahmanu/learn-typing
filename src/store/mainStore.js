@@ -69,7 +69,7 @@ export const mainStore = defineStore('mainStore', () => {
             containerText: containerText.value,
             characters: containerText.value.length,
             totalTime: totalTime.value.toFixed(2),
-            WPM: Math.round(  ((containerText.value.length / 5) - (wrongCount.value / 5)) / (totalTime.value/60)),
+            WPM: Math.round(((containerText.value.length / 5) - (wrongCount.value / 5)) / (totalTime.value/60)),
         }
     })
 
