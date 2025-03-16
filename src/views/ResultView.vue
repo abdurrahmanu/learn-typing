@@ -5,7 +5,7 @@
             <div class="relative w-fit">       
                 <div 
                 class="relative px-3 ring-[1px] hover:ring-[3px] m-auto font-black text-[15px] drop-shadow-md uppercase rounded-full cursor-pointer w-fit peer"  
-                :class="[difficulty === 'beginner' ? 'ring-[#44b0d3] text-[#44b0d3]' : difficulty === 'amateur' ? 'ring-[#ffa07a] text-[#ffa07a]' : difficulty === 'expert' ? 'ring-[#4d5f43] text-[#4d5f43]' : '']">why are you black ?? {{ difficulty }}</div>
+                :class="[difficulty === 'beginner' ? 'ring-[#44b0d3] text-[#44b0d3]' : difficulty === 'amateur' ? 'ring-[#ffa07a] text-[#ffa07a]' : difficulty === 'expert' ? 'ring-[#4d5f43] text-[#4d5f43]' : '']">{{ difficulty }}</div>
                 
                 <div :class="[difficulty === 'beginner' ? 'bg-[#44b0d3]' : difficulty === 'amateur' ? 'bg-[#ffa07a]' : difficulty === 'expert' ? 'bg-[#4d5f43]' : '']" class="absolute rounded-md top-[115%] left-[50%] translate-x-[-50%] z-[1] text-left p-2 hidden peer-hover:block text-black font-medium shadow-sm shadow-black text-[13px] max-w-[300px]">
                     <p class="font-bold underline uppercase">TO PASS {{ difficulty }} TEST</p>
