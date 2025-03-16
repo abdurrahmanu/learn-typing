@@ -38,7 +38,7 @@ import Cookies from './Cookies.vue'
 import Header from './Header.vue'
 import UpperCase from './Uppercase.vue'
 import CustomCase from './CustomCase.vue'
-import NoSpace from './NoSpace.vue'
+import NoSpace from './noSpace.vue'
 import BlindMode from './BlindMode.vue'
 import BackSpace from './BackSpace.vue';
 import Countdown from './CountDown.vue';
