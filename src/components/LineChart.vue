@@ -1,4 +1,5 @@
 <template>
+  <div></div>
   <canvas class="max-w-[600px] w-[90%] m-auto" ref="lineGraph"></canvas>
 </template>
 
