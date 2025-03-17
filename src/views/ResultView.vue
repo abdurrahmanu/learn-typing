@@ -59,27 +59,7 @@
                 </div>
             </div>
         </div>
-        <LineChart :x="time" :y="wpm" />
-        {{ time }} {{ wpm }}
-        <div class="space-y-1 text-lg font-[400] roboto-font py-4 my-3 border-y border-slate-500 max-w-[300px] w-full m-auto">            
-            <div v-if="customizers['timer']">                
-                <div v-if="beatCountdown && testResult === 'you passed the test'" class="text-green-700 uppercase ">
-                    <!-- <span>You passed the test</span> -->
-                    <span class="px-2 text-lg">&#128526;</span> 
-                </div>
-                <div v-else class="text-red-400 uppercase ">
-                    <!-- <span>{{!beatCountdown ? 'You failed to beat the time' : 'You failed the test' }}</span>  -->
-                    <span class="text-lg">&#128551;</span>
-                </div>
-                <!-- <div v-if="level !== difficulty && beatCountdown && testResult === 'you passed the test' && (((difficulty === 'beginner' || difficulty === 'amateur') && level === 'expert') || (difficulty === 'beginner' && level === 'amateur'))" class="text-green-700 uppercase"> 
-                    {{ ((difficulty === 'beginner' || difficulty === 'amateur') && level === 'expert') || (difficulty === 'beginner' && level === 'amateur') ? 'Wow!!' : ''  }} As a {{difficulty}}, This is {{ level }} pace
-                </div> -->
-            </div>
-            <div v-else  :class="[testResult === 'you passed the test' ? 'text-green-700' : 'text-red-400']" class="text-center uppercase">
-                <!-- <span>{{ testResult }}</span> -->
-                <span class="px-3 text-5xl">{{ testResult === 'you failed the test' ? '&#128551;' : '&#128526;' }}</span>
-            </div>
-        </div>
+        <LineChart :wpm="wpmPerSecond" />
     </div>
 </template>
 
@@ -104,7 +84,7 @@ const theme_ = themeStore()
 const { appTheme } = storeToRefs(theme_)
 
 const store = mainStore()
-const {resultData, beatCountdown} = storeToRefs(store)
+const {resultData, beatCountdown, wpmPerSecond} = storeToRefs(store)
 
 const testType = computed(() => {
     if (customizers.value['timer']) {
@@ -207,12 +187,6 @@ const testResult  = computed(() => {
         return accuracy() > 95 && (resultData.value.WPM * (accuracy() / 100)).toFixed(0) > 85 && errorRatioLevel() ? 'you passed the test' : 'you failed the test'
     }
 })
-
-const wpm =  computed(() => Array.from({length: Math.ceil(resultData.value.WPM / 20) > 1 || Math.ceil(resultData.value.WPM / 20) === 1 ? Math.ceil(resultData.value.WPM / 20) + 1 : 1 }, (value, index) => index * 20))
-
-const time = computed(() => Array.from({length: wpm.value.length}, (value, index) => index * Math.ceil(resultData.value.totalTime / wpm.value.length)))
-
-
 </script>
 
 

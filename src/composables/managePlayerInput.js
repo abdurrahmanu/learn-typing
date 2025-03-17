@@ -5,7 +5,7 @@ import { storeToRefs } from 'pinia';
 
 export const managePlayerInput = () => {
     const store = mainStore()
-    const { containerText, playerInputLength, playerInput, route, playerLastInput, previousPlayerInput, correctCount, wrongCount, completionLevel} = storeToRefs(store)
+    const { containerText, characterEqualityArray, playerInputLength, playerInput, route, playerLastInput, previousPlayerInput, correctCount, wrongCount, completionLevel} = storeToRefs(store)
 
     const customize = customizeStore()
     const {customizers, pauseTyping} = storeToRefs(customize)
@@ -21,13 +21,19 @@ export const managePlayerInput = () => {
         else {
             if (isTouchScreenDevice()) {
                 if (playerInput.value[playerInput.value.length - 1] === containerText.value[playerInput.value.length - 1]) correctCount.value ++
-                else wrongCount.value++
+                else {
+                    wrongCount.value++
+                }
             }
             else {
                 if (playerLastInput.value === containerText.value[playerInput.value.length - 1]) correctCount.value ++
-                else wrongCount.value++
+                else {
+                    wrongCount.value++
+                }
             }
         }
+
+        characterEqualityArray.value.push(playerInput.value[playerInput.value.length - 1] === containerText.value[playerInput.value.length - 1])
     }
 
     playerInputLength.value = playerInput.value.length

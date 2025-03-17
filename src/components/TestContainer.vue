@@ -62,13 +62,14 @@ import {managePlayerInput} from '../composables/managePlayerInput'
 import {mobileInputEvent} from '../composables/mobileInputEvent'
 import {inputEvent} from '../composables/inputEvent'
 import { useRoute } from 'vue-router';
+import { _ } from 'core-js';
 
 const route = useRoute()
 const textIsFocused = ref(false)
 
 const store = mainStore()
-const { containerText, allSpacesIndex, refocus, quoteType, goNext, mobileBackspace, wrongCount, previousPlayerInput, beginCountdown, hasCompletedSession, focus, testContainerEl, containerHeight, movie, playerInputLength, playerInput, authoredQuote, scrollTextContainer, customizeElement, restartSvgEl, restartEl, inputEl} = storeToRefs(store)
-const {switchNext} = store
+const { containerText, refocus, quoteType, goNext, mobileBackspace, wrongCount, previousPlayerInput, beginCountdown, hasCompletedSession, focus, testContainerEl, containerHeight, movie, playerInputLength, playerInput, authoredQuote, scrollTextContainer, customizeElement, restartSvgEl, restartEl, inputEl} = storeToRefs(store)
+const {switchNext, wpmTime} = store
 
 const customize = customizeStore()
 const { customizers, pauseTyping, font, textPosition} = storeToRefs(customize)
@@ -109,6 +110,7 @@ watch(scrollTextContainer, (newVal, oldVal)=> {
 )
 
 watch(playerInput, (newVal, oldVal) => {
+    if (!oldVal) wpmTime()
     if (pauseTyping.value) return
     if (mobileBackspace.value && wrongCount.value === 0) {
         playerInput.value = oldVal

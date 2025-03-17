@@ -3,6 +3,9 @@ import {ref, computed} from 'vue'
 import {generateTest} from '../composables/generateTest'
 
 export const mainStore = defineStore('mainStore', () => {
+    const characterEqualityArray = ref([])
+    const wpmPerSecond = ref({})
+    const wpmPerSecondTimerID = ref(null)
     const preferredConfigs = ref(undefined)
     const route = ref(null)
     const mobileBackspace = ref(false)
@@ -60,6 +63,7 @@ export const mainStore = defineStore('mainStore', () => {
     const customTests = ref({
         'demo': 'This is a custom test, you can add your own test, use the plus icon. This particular demo cannot be deleted.'
     }) 
+
     const authoredQuote = ref({})
 
     const resultData = computed(() => {
@@ -73,6 +77,48 @@ export const mainStore = defineStore('mainStore', () => {
         }
     })
 
+    const wpmTime = () => {
+        let secondsCount = ref(0)
+        let prevLength = ref(0)
+
+        if (!hasCompletedSession.value) {
+            if (playerInput.value) {
+                wpmPerSecondTimerID.value = setInterval(() => {
+                    secondsCount.value++
+                    let gross = playerInput.value.slice(prevLength.value).length
+                    let net = gross - characterEqualityArray.value.slice(prevLength.value).filter(bool => bool === false).length
+
+                    let grossCharPerMinute = gross * 60
+                    let netCharPerMinute = net * 60
+
+                    let grossWPM = grossCharPerMinute/5
+                    let netWPM = netCharPerMinute/5
+
+                    wpmPerSecond.value[secondsCount.value] = {
+                        grossWPM: grossWPM,
+                        netWPM: netWPM
+                    }
+                    prevLength.value = playerInputLength.value
+                }, 1000);
+            }
+        } else {
+            clearInterval(wpmPerSecondTimerID.value)
+        }
+    }
+
+    // 59, 30, 20, 15, 12, 10, 9, 8
+    // 2,   3,  4,  5,  6,  7, 8, 9
+    // 60/2 = 30
+    //(60 + 30)/3 = 20
+    // (60 + 30 + 20) / 4 = 
+    // (60 + 30 + 20 + 15) / 5 =
+    // (60 + 30 + 20 + 15 + 12) / 6 =
+    // (60 + 30 + 20 + 15 + 12 + 10) / 7 =
+    // (60 + 30 + 20 + 15 + 12 + 10 + 9) / 8 =
+    // (60 + 30 + 20 + 15 + 12 + 10 + 9 + 8) / 9 =
+
+    // 116, 104, 76, 40 20
+ 
     const resetToDefault = () => {
         clearInterval(timerID.value)
         beginCountdown.value = false
@@ -94,10 +140,14 @@ export const mainStore = defineStore('mainStore', () => {
         containerText.value = ''
         allSpacesIndex.value = []
         playerInputLength.value = 0
+        characterEqualityArray.value = {}
+        characterEqualityArray.value = []
+        wpmPerSecond.value = {}
     }
 
     const sessionComplete = async () => {
         hasCompletedSession.value = true
+        wpmTime()
         clearInterval(timerID.value)
         beginCountdown.value = false
         totalTime.value = (performance.now() - startTime.value).toFixed(0) / 1000
@@ -111,7 +161,10 @@ export const mainStore = defineStore('mainStore', () => {
     }
 
     return {
+        wpmTime,
         preferredConfigs,
+        wpmPerSecond,
+        characterEqualityArray,
         resetToDefault,
         sessionComplete,
         switchNext,
