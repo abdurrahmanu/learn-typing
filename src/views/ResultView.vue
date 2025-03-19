@@ -1,9 +1,11 @@
 <template>
     <div :class="appTheme" class="min-h-[200px] text-center cursor-default result">
-        <p class="py-3 text-2xl text-center text-slate-500 stats">STATISTICS</p>
+        <div class="flex w-fit m-auto gap-x-4">
+            <p class="py-1 text-2xl text-center text-slate-500 stats">STATISTICS</p>
+            <div class="relative px-3 ring-[1px] hover:ring-[3px] m-auto font-black text-[15px] drop-shadow-md uppercase rounded-full cursor-pointer w-fit peer" :class="[difficulty === 'beginner' ? 'ring-[#44b0d3] text-[#44b0d3]' : difficulty === 'amateur' ? 'ring-[#ffa07a] text-[#ffa07a]' : difficulty === 'expert' ? 'ring-[#4d5f43] text-[#4d5f43]' : '']">{{ difficulty }}</div>
+        </div>
         <div class="flex py-1 m-auto gap-x-2 w-fit text-slate-300">            
             <div class="relative w-fit">       
-                <div class="relative px-3 ring-[1px] hover:ring-[3px] m-auto font-black text-[15px] drop-shadow-md uppercase rounded-full cursor-pointer w-fit peer" :class="[difficulty === 'beginner' ? 'ring-[#44b0d3] text-[#44b0d3]' : difficulty === 'amateur' ? 'ring-[#ffa07a] text-[#ffa07a]' : difficulty === 'expert' ? 'ring-[#4d5f43] text-[#4d5f43]' : '']">{{ difficulty }}</div>
                 <div :class="[difficulty === 'beginner' ? 'bg-[#44b0d3]' : difficulty === 'amateur' ? 'bg-[#ffa07a]' : difficulty === 'expert' ? 'bg-[#4d5f43]' : '']" class="absolute rounded-md top-[115%] left-[50%] translate-x-[-50%] z-[1] text-left p-2 hidden peer-hover:block text-black font-medium shadow-sm shadow-black text-[13px] max-w-[300px]">
                     <p class="font-bold underline uppercase">TO PASS {{ difficulty }} TEST</p>
                     <p class="min-w-[200px]">* Accuracy more than {{  difficulty === 'beginner' ? '70%' : difficulty === 'amateur' ? '80%' : difficulty === 'expert' ? '95%' : '' }} </p>
@@ -14,7 +16,7 @@
             </div>
         </div>
         <div class="w-fit p-[1px] hover:bg-gradient-to-tr transition-all duration-500rounded-md m-auto py-3">            
-            <div class="flex justify-center p-3 m-auto border border-transparent  text-[13px] rounded-md w-fit hover:border-zinc-600">
+            <div class="flex justify-center p-3 m-auto border border-transparent  text-[17px] rounded-md w-fit hover:border-zinc-600">
                 <div class="relative px-2  text-center border-r border-r-teal-700">
                     <pass v-if="accuracyBasedOnLevels" class="absolute bottom-0 right-[2px] w-4" />
                     <fail v-else class="absolute bottom-0 right-[2px] w-4" />

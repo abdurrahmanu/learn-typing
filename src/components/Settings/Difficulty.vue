@@ -11,10 +11,10 @@
             <div @click="difficulty = 'expert'" class="cursor-pointer flex px-3 py-1 ring-[1px] rounded-r-md hover:ring-black" :class="[difficulty === 'expert' ? 'ring-transparent bg-[#4d5f43] text-black font-bold' : 'ring-[#2e4053]']">
                 <p class="w-fit">Expert</p>
             </div>
-            <div :class="[bg]" class="flex gap-[2px] text-[13px] rounded-md text-black font-bold p-[1px]">
-                <div class="px-1 py-1 rounded-l-md" :class="[appTheme]">Accuracy: {{ result.accuracy }}</div>
-                <div class="px-1 py-1" :class="[appTheme]">WPM: {{ result.wpm }}</div>
-                <div class="px-1 py-1 rounded-r-md" :class="[appTheme]">Error percentage {{ result.errorPercentage }}</div>
+            <div :class="[appTheme,]" class="flex gap-[2px] text-[13px] rounded-md text-black font-bold p-[1px]">
+                <div class="px-2 py-1 rounded-l-md" :class="[appTheme]">Accuracy: {{ result.accuracy }}</div>
+                <div class="px-2 py-1" :class="[appTheme]">WPM: {{ result.wpm }}</div>
+                <div class="px-2 py-1 rounded-r-md" :class="[appTheme]">Error percentage {{ result.errorPercentage }}</div>
             </div>
     </div>
     </div>

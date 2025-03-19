@@ -106,19 +106,6 @@ export const mainStore = defineStore('mainStore', () => {
         }
     }
 
-    // 59, 30, 20, 15, 12, 10, 9, 8
-    // 2,   3,  4,  5,  6,  7, 8, 9
-    // 60/2 = 30
-    //(60 + 30)/3 = 20
-    // (60 + 30 + 20) / 4 = 
-    // (60 + 30 + 20 + 15) / 5 =
-    // (60 + 30 + 20 + 15 + 12) / 6 =
-    // (60 + 30 + 20 + 15 + 12 + 10) / 7 =
-    // (60 + 30 + 20 + 15 + 12 + 10 + 9) / 8 =
-    // (60 + 30 + 20 + 15 + 12 + 10 + 9 + 8) / 9 =
-
-    // 116, 104, 76, 40 20
- 
     const resetToDefault = () => {
         clearInterval(timerID.value)
         beginCountdown.value = false
@@ -143,6 +130,7 @@ export const mainStore = defineStore('mainStore', () => {
         characterEqualityArray.value = {}
         characterEqualityArray.value = []
         wpmPerSecond.value = {}
+        clearInterval(wpmPerSecondTimerID.value)
     }
 
     const sessionComplete = async () => {

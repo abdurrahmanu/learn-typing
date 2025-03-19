@@ -18,6 +18,9 @@
                 <div class="relative w-fit" v-if="customizers['modes'] !== 'alphabet-test'" >
                     <add @click="openCustomTestModal" class="w-5 peer"/>
                 </div>
+                <div class="relative w-fit">
+                    <feedback @click="routeToPage('about')" class="w-5 peer"/>
+                </div>
             </div>
             <div class="relative w-fit" v-if="route.name !== 'home'" >                
                 <home @click="routeToPage('home')" class="w-4 peer" />
@@ -43,6 +46,7 @@ import TextAlign from './TextAlign.vue';
 import repeat from './svg/repeat.vue';
 import user from './svg/user.vue'
 import Blind from './Blind.vue';
+import feedback from './svg/feedback.vue'
 import Clock from './Clock.vue';
 import Theme from './Theme.vue'
 import CompletionRangeWithErrors from './CompletionRangeWithErrors.vue';

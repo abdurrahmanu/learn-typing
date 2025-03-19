@@ -1,5 +1,12 @@
 <template>
-  <canvas class="max-w-[1000px] w-[100%] m-auto" ref="lineGraph"></canvas>
+  <div class="py-5">
+    <div class="flex gap-5 w-fit m-auto text-sm">
+      <div class="w-fit px-3 border-2 border-gray-500">GROSS WPM</div>
+      <div class="w-fit px-3 border-2 border-sky-300">NET WPM</div>
+    </div>
+    <canvas class="max-w-[1000px] w-[100%] m-auto max-h-[250px]" ref="lineGraph"></canvas>
+    <div dir="rtl" class="text-gray-600 text-right w-fit font-bold m-auto">Time</div>
+  </div>
 </template>
 
 <script setup>
@@ -14,11 +21,15 @@ const props = defineProps({
   },
 })
 
+
 const net = Object.values(props.wpm).map((val, index) => val['netWPM'])
 const gross = Object.values(props.wpm).map((val, index) => val['grossWPM'])
-const time = Array(net.length).fill('').map((_, index) => index)
+const time = Array(net.length).fill('').map((_, index) => index + 1)
 const lineGraph = ref(null)
 const labels = ref([])
+const computeTime = computed(() => {
+  return Math.round(net.length)
+})
 
 onMounted(() => {
   labels.value = time
@@ -26,19 +37,31 @@ onMounted(() => {
   // moving average
   let improvedGross = ref([])
 
-  for (let index = 0; index < gross.length; index++) {
-    let len = improvedGross.value.length + 1
-    let average = [...gross.slice(0, index + 1)].reduce((prev, curr) => prev + curr, 0)
-    improvedGross.value.push(Math.round(average) / len)
-  }
+  // for (let index = 0; index < gross.length; index++) {
+  //   let len = improvedGross.value.length + 1
+  //   let average = [...gross.slice(0, index + 1)].reduce((prev, curr) => prev + curr, 0)
+  //   improvedGross.value.push(Math.round(average) / len)
+  // }
 
-  let improvedNet = ref([])
-  for (let index = 0; index < net.length; index++) {
-    // let len = improvedNet.value.length + 1
-    // let average = [...gross.slice(0, index + 1)].reduce((prev, curr) => prev + curr, 0)
-    // improvedNet.value.push(Math.round(average) / len)
-  }
+  // 300 seconds --- 
 
+    for (let index = 0; index < gross.length; index++) {
+      if (index - 1 > -1) {
+        let current = Math.round(gross[index])
+        let previous = Math.round(gross[index - 1])
+
+        if (current === 0) improvedGross.value.push((current + previous) / 2)
+        else improvedGross.value.push(gross[index])
+      } else {
+        improvedGross.value.push(gross[index])
+      }
+    }
+
+  // for (let index = 0; index < net.length; index++) {
+  //   if (index - 1 > -1) {
+  //     net[index] = (net[index] + net[index - 1]) / 2
+  //   }
+  // }
 
   const data = ref({
     labels: labels.value,
@@ -46,20 +69,20 @@ onMounted(() => {
     {
       label: 'GROSS WPM',
       data: improvedGross,
-      borderColor: 'green',
-      backgroundColor: 'white',
-      fill: false,
-      yAxisID: 'y',
-      tension: 0.1
-    },
-    {
-      label: 'NET WPM',
-      data: net,
       borderColor: 'skyblue',
       backgroundColor: 'white',
       fill: false,
       yAxisID: 'y',
-      tension: 0.1
+      tension: 0.2
+    },
+    {
+      // label: 'NET WPM',
+      data: net,
+      borderColor: 'gray',
+      backgroundColor: 'black',
+      fill: false,
+      yAxisID: 'y',
+      tension: 0.2
     }
   ]
   })
@@ -67,6 +90,16 @@ onMounted(() => {
   const config = ref({
     type: 'line',
     data: data.value,
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+                stepSize: 20
+            }
+        }
+      }
+    }
   })
 
   new Chart(lineGraph.value, config.value)
