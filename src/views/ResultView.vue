@@ -61,7 +61,9 @@
                 </div>
             </div>
         </div>
-        <LineChart :wpm="wpmPerSecond" />
+       <!--
+       <LineChart :wpm="wpmPerSecond" />
+       -->
     </div>
 </template>
 
