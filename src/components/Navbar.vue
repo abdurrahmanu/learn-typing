@@ -3,16 +3,16 @@
         <Logo @click="routeToPage('about')" v-show="!(focus && isMobile())" class="flex cursor-pointer" />
         <div v-show="(!focus && isMobile()) || !isMobile()" class="absolute flex items-center gap-4 w-fit" :class="[!hideElements ? 'right-[50%] translate-x-[50%]' : 'left-[50%] translate-x-[-50%]']">
             <div v-show="route.name === 'home'" class="flex items-center gap-4 text-[9px]">
-                <div class="relative w-fit">
+                <div id="focus" class="relative w-fit">
                     <Clock class="peer" />
                 </div>
-                <div class="relative hidden w-fit min-[505px]:block" v-if="!isMobile()">
+                <div id="focus" class="relative hidden w-fit min-[505px]:block" v-if="!isMobile()">
                     <TextAlign class="peer"/>
                 </div>
                 <div class="relative w-fit">
                     <Blind class="peer"/>
                 </div>
-                <div class="relative w-fit" v-if="route.name === 'home'" >
+                <div id="focus" class="relative w-fit" v-if="route.name === 'home'" >
                     <repeat class="w-4 peer"/>
                 </div>
                 <div class="relative w-fit" v-if="customizers['modes'] !== 'alphabet-test'" >
@@ -28,9 +28,9 @@
             <div class="relative w-fit" v-if="route.name === 'home'" >
                 <settings class="w-5 peer" />
             </div>
-            <!-- <div class="relative w-fit" v-if="route.name !== 'user'" @click="routeToPage('user')" >
+            <div class="relative w-fit" v-if="route.name !== 'user'" @click="routeToPage('user')" >
                 <user class="w-5 peer" />
-            </div> -->
+            </div>
         </div>
         <CompletionRange v-if="blind && route.name === 'home'" class="block" />
         <CompletionRangeWithErrors v-if="!blind && route.name === 'home'" class="block" />
@@ -48,16 +48,19 @@ import user from './svg/user.vue'
 import Blind from './Blind.vue';
 import feedback from './svg/feedback.vue'
 import Clock from './Clock.vue';
-import Theme from './Theme.vue'
 import CompletionRangeWithErrors from './CompletionRangeWithErrors.vue';
 import CompletionRange from './CompletionRange.vue';
 import {storeToRefs} from 'pinia';
 import { customizeStore } from '../store/customizeStore';
 import {authStore} from '../store/authStore'
-import { mainStore } from '../store/mainStore';
 import {useRoute, useRouter} from 'vue-router'
 import { isMobile } from '../composables/isMobile';
 import { themeStore } from '../store/themeStore';
+import { typingStateStore } from '../store/typingStateStore';
+import focusInputElement from '../composables/focusInputElement';
+
+const typingstatestore = typingStateStore()
+const {focus} = storeToRefs(typingstatestore)
 
 const route = useRoute()
 const router = useRouter()
@@ -67,9 +70,6 @@ const {theme} = storeToRefs(theme_)
 
 const auth = authStore()
 const {showUser} = storeToRefs(auth)
-
-const store = mainStore()
-const {focus} = storeToRefs(store)
 
 const customize = customizeStore()
 const { hideElements, blind, customizers, toggleCustomTestModal, pauseTyping} = storeToRefs(customize)

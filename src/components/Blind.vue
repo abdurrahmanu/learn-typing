@@ -1,8 +1,8 @@
 <template>
     <div @click="customize" class="relative">
         <div class="flex w-fit peer">
-            <closedEye v-if="blind" class="w-6" />
-            <openEye v-else class="w-5" />
+            <closedEye v-if="blind" id="focus" class="w-6" />
+            <openEye v-else id='focus' class="w-5" />
         </div>
     </div>
 </template>

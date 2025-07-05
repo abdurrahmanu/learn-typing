@@ -1,11 +1,18 @@
 import { mainStore } from "../store/mainStore"
 import { customizeStore } from "../store/customizeStore";
 import { storeToRefs } from 'pinia';
+import {timerStore} from '../store/timerStore'
+import { typingStateStore } from "../store/typingStateStore";
 
 export const mobileInputEvent = (e) => {
+    const typingstatestore = typingStateStore()
+    const {playerInput, playerInputLength, focus, enterKey, backspaceIsPressed} = storeToRefs(typingstatestore)
+
+    const timerstore = timerStore()
+    const {startTime, beginCountdown, beatCountdown} = storeToRefs(timerstore)
+    
     const store = mainStore()
-    const { containerText, mobileBackspace, beatCountdown, hasCompletedSession, route, playerInputLength, playerInput, backspaceIsPressed, beginCountdown, startTime, wrongCount, enterKey, focus} = storeToRefs(store)
-    const { sessionComplete } = store
+    const { containerText, mobileBackspace, hasCompletedSession, route} = storeToRefs(store)
     
     const customize = customizeStore()
     const {pauseTyping, customizers} = storeToRefs(customize)
@@ -14,7 +21,7 @@ export const mobileInputEvent = (e) => {
         mobileBackspace.value = false
         return
     }
-        
+    
     e.inputType === 'deleteContentBackward' ? backspaceIsPressed.value = true : backspaceIsPressed.value = false
     
     if (route.value !== 'home') return
@@ -31,6 +38,6 @@ export const mobileInputEvent = (e) => {
     if (e.key === 'Enter' && enterKey.value)  playerInput.value += ' '
     if (playerInput.value.length === containerText.value.length) {
         if (customizers.value['timer']) beatCountdown.value = true
-        sessionComplete()
+        hasCompletedSession.value = true
     }
 }

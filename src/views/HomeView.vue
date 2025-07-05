@@ -17,7 +17,11 @@ import { storeToRefs } from 'pinia';
 import { customizeStore } from '../store/customizeStore';
 import { useRouter } from 'vue-router';
 import { countdownStore } from '../store/countdownStore'
+import { typingStateStore } from '../store/typingStateStore';
 import { isMobile } from '../composables/isMobile';
+
+const typingstatestore = typingStateStore()
+const {focus} = storeToRefs(typingstatestore)
 
 const count = countdownStore()
 const {clearCounter} = count
@@ -25,7 +29,7 @@ const {clearCounter} = count
 const router = useRouter()
 
 const store = mainStore()
-const { hasCompletedSession, focus} = storeToRefs(store)
+const { hasCompletedSession} = storeToRefs(store)
 
 const customize = customizeStore()
 const { hideElements, customizers } = storeToRefs(customize)

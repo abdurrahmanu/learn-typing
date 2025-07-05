@@ -1,28 +1,30 @@
 <template>
     <Transition name="slide" appear mode="in-out">
-        <div :class="{'z-[999]' : !(allSettings && !isTouchScreenDevice())}" class="absolute top-0 bottom-0 right-0 left-0 z-[99] settings-font" v-if="allSettings">
-            <div @click="toggleSettings" class="opacity-40 absolute bg-black w-full top-[-100px] bottom-0 right-0 left-0 z-[999]"></div>
-            <div class="overflow-y-auto outline-none" :class="[allSettings ? 'absolute right-0 bottom-0 h-[100dvh] max-w-[800px] w-fit z-[9999]' : '', appTheme ]">
+        <div :class="{'z-[999]' : !(showSettings && !isTouchScreenDevice())}" class="absolute top-0 bottom-0 right-0 left-0 z-[99] settings-font" v-if="showSettings">
+            <div @click="settingsPage" class="opacity-40 absolute bg-black w-full top-[-100px] bottom-0 right-0 left-0 z-[999]"></div>
+
+            <div class="overflow-y-auto outline-none" :class="[showSettings ? 'absolute right-0 bottom-0 h-[100dvh] max-w-[1000px] w-[100%] sm:w-[80%] z-[9999]' : '', appTheme ]">
+
                 <div class="relative leading-6 text-[15px] pb-5">
                     <Header />
-                    <Fonts />
-                    <TextLines />
-                    <Cursor />
-                    <Difficulty />
-                    <BackSpace />
-                    <BlindMode />
-                    <Blur />
-                    <CapsLock v-if="!isMobile()" />
-                    <Countdown />
-                    <CustomCase />
-                    <DoubleWords v-if="customizers['modes'] !== 'alphabet-test'" />
-                    <NoSpace v-if="customizers['modes'] !== 'alphabet-test'" />
-                    <MovieQuotes v-if="customizers['modes'] !== 'alphabet-test'" />
-                    <StopOnError v-if="!isMobile()" />
-                    <AuthoredQoutes v-if="customizers['modes'] !== 'alphabet-test'" />
-                    <UpperCase />
-                    <LetterCombinations v-if="customizers['modes'] === 'alphabet-test'"/>
-                    <Cookies />
+                    <Fonts  v-if="!useValue  || searchResult.includes('font')"/>
+                    <TextLines v-if="!useValue  || searchResult.includes('test lines')"/>
+                    <Cursor  v-if="!useValue  || searchResult.includes('cursor')"/>
+                    <Difficulty  v-if="!useValue  || searchResult.includes('difficulty')"/>
+                    <BackSpace  v-if="!useValue  || searchResult.includes('backspace')"/>
+                    <BlindMode  v-if="!useValue  || searchResult.includes('blind mode')"/>
+                    <Blur  v-if="!useValue  || searchResult.includes('blur')"/>
+                    <CapsLock v-if="!useValue  || !isMobile() && searchResult.includes('caps lock')"/>
+                    <Countdown  v-if="!useValue  || searchResult.includes('countdown')"/>
+                    <CustomCase  v-if="!useValue  || searchResult.includes('custom case')"/>
+                    <DoubleWords v-if="!useValue  || customizers['modes'] !== 'alphabet-test' && searchResult.includes('double words')"/>
+                    <NoSpace v-if="!useValue  || customizers['modes'] !== 'alphabet-test' && searchResult.includes('no space')" />
+                    <MovieQuotes v-if="!useValue  || customizers['modes'] !== 'alphabet-test' && searchResult.includes('movie quotes')" />
+                    <StopOnError v-if="!useValue  || !isMobile() && searchResult.includes('stop on error')" />
+                    <AuthoredQoutes v-if="!useValue  || customizers['modes'] !== 'alphabet-test' && searchResult.includes('quotes')" />
+                    <UpperCase v-if="!useValue  || searchResult.includes('uppercase')" />
+                    <LetterCombinations v-if="!useValue  || customizers['modes'] === 'alphabet-test' && searchResult.includes('letter combination')"/>
+                    <Cookies v-if="!useValue  || searchResult.includes('cookies')"/>
                 </div>
             </div>
         </div>
@@ -52,37 +54,21 @@ import Blur from './Blur.vue'
 import Difficulty from './Difficulty.vue'
 import CapsLock from './CapsLock.vue'
 import StopOnError from './StopOnError.vue'
-import {mainStore} from '../../store/mainStore'
-import { countdownStore } from '../../store/countdownStore'
 import DoubleWords from './DoubleWords.vue'
-import {watch} from 'vue'
 import TextLines from './TextLines.vue'
 import { isMobile } from '../../composables/isMobile'
+import { searchStore } from '../../store/searchStore'
+
+const searchstore = searchStore()
+const {searchResult, useValue} = storeToRefs(searchstore)
 
 const theme_ = themeStore()
 const { appTheme } = storeToRefs(theme_)
 
-const store = mainStore()
-const {demo} = storeToRefs(store)
-const {switchNext} = store
+const customizestore = customizeStore()
+const {customizers, showSettings, } = storeToRefs(customizestore)
+const {settingsPage} = customizestore
 
-const counter = countdownStore()
-const {clearCounter} = counter
-
-const customize = customizeStore()
-const {customizers, allSettings, pauseTyping, } = storeToRefs(customize)
-
-const toggleSettings = () => {
-    if (customizers.value['timer']) clearCounter()
-    switchNext(customizers.value, 'restart')
-    allSettings.value = !allSettings.value
-    if (allSettings.value) pauseTyping.value = true
-    else pauseTyping.value = false
-}
-
-watch(demo, newVal => {
-    if (newVal && allSettings.value) allSettings.value = false
-})
 </script>
 
 <style scoped>

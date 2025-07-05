@@ -2,11 +2,22 @@ import { mainStore } from "../store/mainStore"
 import { customizeStore } from "../store/customizeStore";
 import { isTouchScreenDevice } from "./isTouchScreenDevice";
 import { storeToRefs } from 'pinia';
+import { correctWrongCountStore } from "../store/correctWrongCountStore";
+import {timerStore} from '../store/timerStore'
+import { typingStateStore } from "../store/typingStateStore";
 
 export const inputEvent = (e) => {
+    const typingstatestore = typingStateStore()
+    const {playerInput, playerInputLength, backspaceIsPressed, playerLastInput, enterKey} = storeToRefs(typingstatestore)
+
+    const timerstore = timerStore()
+    const {startTime, beginCountdown, beatCountdown} = storeToRefs(timerstore)
+
+    const correctWrongCountstore = correctWrongCountStore()
+    const {wrongCount} = storeToRefs(correctWrongCountstore)
+
     const store = mainStore()
-    const { containerText, beatCountdown, playerInputLength, route,  playerInput, wrongCount, backspaceIsPressed, playerLastInput, beginCountdown, startTime, enterKey} = storeToRefs(store)
-    const { sessionComplete } = store
+    const { containerText, hasCompletedSession, route} = storeToRefs(store)
     
     const customize = customizeStore()
     const {backspace, pauseTyping, toggleCapsToast, customizers} = storeToRefs(customize)
@@ -59,7 +70,7 @@ export const inputEvent = (e) => {
 
             if (playerInputLength.value === containerText.value.length) {
                 if (customizers.value['timer']) beatCountdown.value = true
-                sessionComplete()
+                hasCompletedSession.value = true
             }
         }
 }

@@ -7,7 +7,7 @@
 
             <div class="max-w-[1200px] m-auto lg:flex">                
                 <div class="max-w-[700px] lg:max-w-[40%] px-2 mx-auto lg:text-left text-center font-normal lg:border-r w-[90%] leading-[2] lg:leading-[2.2] md:leading-[2] text-[13px] border-neutral-800">                
-                    <p>You are here to learn <span class="text-blue-600 underline hover:text-blue-500">Touch-typing</span> (typing without looking at your keyboard). Your fingers are trained to know and navigate the locations of all the keys on a keyboard all by themselves (muscle memory). It sounds like a Super power right? Your fingers assume  
+                    <p>You are here to learn <span class="text-blue-500 underline hover:text-blue-400">Touch-typing</span> (typing without looking at your keyboard). Your fingers are trained to know and navigate the locations of all the keys on a keyboard all by themselves (muscle memory). It sounds like a Super power right? Your fingers assume  
                         <span @click="showDefaultFingerPositions = true" class="px-3 py-1 animate-pulse ring-[1px] ring-green-500 rounded-md hover:animate-none hover:bg-green-400 hover:text-black uppercase cursor-pointer whitespace-nowrap">default positions</span> 
                         <span>  and do not leave their positions. They go back and forth their initial positions while stroking other keys.  </span>
                         <span @click="" class="px-3 py-1 animate-pulse ring-[1px] ring-red-500 rounded-md hover:animate-none hover:bg-red-400 hover:text-black uppercase cursor-pointer">video</span>
@@ -21,7 +21,7 @@
                     </div>
                 </div>
                 
-                <div class="relative pt-1 lg:m-l-0 m-auto max-w-[90%] lg:w-[50%]">                
+                <!-- <div class="relative pt-1 lg:m-l-0 m-auto max-w-[90%] lg:w-[50%]">                
                     <div v-if="showDefaultFingerPositions && showImage" class="absolute top-0 bottom-0 left-0 right-0 bg-black z-[999] w-fit m-auto">
                         <p @click="showDefaultFingerPositions = false, showImage = false" class="absolute w-fit h-fit bottom-5 left-[50%] translate-x-[-50%] text-red-500 p-[1px] px-4 ring-[1px] ring-red-600 rounded-md hover:bg-red-600 hover:text-white">X</p>
                         <img class="" src="/keyboard.png" alt="">
@@ -63,7 +63,7 @@
                         </div>
                     </div>
                     
-                </div>
+                </div> -->
             </div>
             
         </div>

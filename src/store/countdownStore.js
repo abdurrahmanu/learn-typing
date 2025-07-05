@@ -12,7 +12,6 @@ export const countdownStore = defineStore('countdown', () => {
     const countdown = ref(0)
 
     const timeForBeginner = computed(() => {
-        let correctWords = ((textLength.value ) / 5) - (textLength.value  * 0.3)
         let wpm = 50
         return Math.ceil(((textLength.value / 5) * 60) / wpm)
     })

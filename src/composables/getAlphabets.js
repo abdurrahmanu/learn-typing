@@ -12,7 +12,7 @@ export function getAlphabets() {
     const uppercase = customizers.value['case'] === 'uppercase'
     const randomcase = customizers.value['case'] === 'randomcase'
 
-    const generateTest = () => {
+    const generateAlphabetTest = () => {
         const alphabets_ = ref('')
         const alphabets = ref('abcdefghijklmnopqrstuvwxyz')
         alphabets_.value = alphabets.value
@@ -75,5 +75,5 @@ export function getAlphabets() {
         return alphabets_.value
     }
 
-    return generateTest()
+    return generateAlphabetTest()
 }

@@ -33,16 +33,3 @@ const router = createRouter({
 })
 
 export default router
-
-// const {quotesWithoutAuthors} = englishWords()
-// for (let index = 0; index < quotesWithoutAuthors.length; index++) {
-//   if (quotesWithoutAuthors[index].length - quotesWithoutAuthors[index].replace(/\s+/g, '').length <= 9 ) {
-//     newQuotes.value['ten'].push(quotesWithoutAuthors[index])
-//   }   else if (quotesWithoutAuthors[index].length - quotesWithoutAuthors[index].replace(/\s+/g, '').length  <= 19) {
-//     newQuotes.value['twenty'].push(quotesWithoutAuthors[index])
-//   } else  if (quotesWithoutAuthors[index].length - quotesWithoutAuthors[index].replace(/\s+/g, '').length  <= 29) {
-//     newQuotes.value['thirty'].push(quotesWithoutAuthors[index])
-//   } else if (quotesWithoutAuthors[index].length - quotesWithoutAuthors[index].replace(/\s+/g, '').length  <= 39) {
-//     newQuotes.value['fourty'].push(quotesWithoutAuthors[index])
-//   }
-// }

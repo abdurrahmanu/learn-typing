@@ -17,56 +17,28 @@
         </div>
         <div class="w-fit p-[1px] hover:bg-gradient-to-tr transition-all duration-500rounded-md m-auto py-3">            
             <div class="flex justify-center p-3 m-auto border border-transparent  text-[17px] rounded-md w-fit hover:border-zinc-600">
-                <div class="relative px-2  text-center border-r border-r-teal-700">
-                    <pass v-if="accuracyBasedOnLevels" class="absolute bottom-0 right-[2px] w-4" />
-                    <fail v-else class="absolute bottom-0 right-[2px] w-4" />
+
+                <div v-for="(sectionValue, sectionKey, index) in resultSections" :key="index" class="relative px-2  text-center border-r border-r-teal-700">
+                    <div v-if="Array.isArray(sectionValue)">
+                        <pass v-if="sectionValue[1]" class="absolute bottom-0 right-[2px] w-4" />
+                        <fail v-else class="absolute bottom-0 right-[2px] w-4" />
+                    </div>
                     <div class="relative">                        
-                        <div class="px-2 border  border-transparent rounded-full peer hover:border-black font-[400]">ACCURACY</div>
-                        <div class="absolute text-sm rounded-md top-[115%] left-[0%] z-[1] text-left p-1 hidden peer-hover:block shadow-sm shadow-black bg-neutral-900 min-w-[185px]  max-w-[300px] text-slate-400">
+                        <div class="px-2 border border-transparent rounded-full peer uppercase font-[400]">{{ sectionKey }}</div>
+                        <!-- <div class="absolute text-sm rounded-md top-[115%] left-[0%] z-[1] text-left p-1 hidden peer-hover:block shadow-sm shadow-black bg-neutral-900 min-w-[185px]  max-w-[300px] text-slate-400">
                             <p>The percentage of correctly typed characters out of the total number of characters.</p>
-                        </div>
+                        </div> -->
                     </div>
-                    <div class="config font-[500]">{{ accuracy() }}%</div>
-                </div>
-                <div class="relative px-2 text-center border-r border-r-teal-700">
-                    <div class="relative">                        
-                        <div class="px-2 border border-transparent rounded-full peer hover:border-black font-[400]">TIME</div>
-                        <div class="absolute text-sm rounded-md top-[115%] left-[50%] translate-x-[-50%] z-[1] text-left p-1 hidden peer-hover:block shadow-sm shadow-black bg-neutral-900 min-w-[185px]  max-w-[300px] text-slate-400">
-                            <p>The total time taken to complete the typing test.</p>
-                        </div>
-                    </div>
-                    <div class="config font-[500]">{{ resultData.totalTime }}s</div>
-                </div>
-                <div class="relative px-2 text-center border-r border-r-teal-700">
-                    <pass v-if="wpmBasedOnLevels" class="absolute bottom-0 right-[2px] w-4" />
-                    <fail v-else class="absolute bottom-0 right-[2px] w-4" />
-                    <div class="relative">                        
-                        <div class="px-2 border border-transparent rounded-full peer hover:border-black font-[400]">WPM</div>
-                        <div class="absolute rounded-md top-[115%] left-[50%] translate-x-[-50%] z-[1] text-left p-1 text-sm hidden peer-hover:block shadow-sm shadow-black bg-neutral-900 min-w-[185px]  max-w-[300px] text-slate-400">
-                            <p>Words Per Minute is the number of words typed correctly per minute. One word is defined as five characters.</p>
-                        </div>
-                    </div>
-                    <div class="config font-[500]">{{ (resultData.WPM * (accuracy() / 100)).toFixed(0) }}</div>
-                </div>
-                <div class="relative px-2 border-r border-r-teal-700"> 
-                    <pass v-if="ErrorRatioBasedOnLevels" class="absolute bottom-0 right-[2px] w-4" />
-                    <fail v-else class="absolute bottom-0 right-[2px] w-4" />
-                    <div class="relative">                        
-                        <div class="px-2 border border-transparent rounded-full peer hover:border-black font-[400]">ERROR RATIO</div>
-                        <div class="absolute text-sm rounded-md top-[115%] right-[0%] z-[1] text-left p-1 hidden peer-hover:block shadow-sm shadow-black bg-neutral-900 min-w-[185px]  max-w-[300px] text-slate-400">
-                            <p>Incorrectly typed characters / Total number of characters</p>
-                        </div>
-                    </div>
-                    <div class="config font-[500]">{{ errorRatio() }}<span class="text-[11px] font-cursive font-bold"></span></div>
+                    <div class="config font-[500]">{{ Array.isArray(sectionValue) ? sectionValue[0]  : sectionValue}}</div>
                 </div>
             </div>
         </div>
-        <LineChart :wpm="wpmPerSecond" />
+        <!-- <LineChart :wpm="wpmPerSecond" /> -->
     </div>
 </template>
 
 <script setup>
-import {computed} from 'vue'
+import {computed, onUpdated, ref} from 'vue'
 import {storeToRefs} from 'pinia'
 import {mainStore} from '../store/mainStore'
 import {themeStore}  from '../store/themeStore'
@@ -75,6 +47,18 @@ import { countdownStore } from '../store/countdownStore'
 import pass from '../components/svg/pass.vue'
 import fail from '../components/svg/fail.vue'
 import LineChart from '../components/LineChart.vue'
+import {correctWrongCountStore} from '../store/correctWrongCountStore'
+import { resultStore } from '../store/resultStore'
+import {timerStore} from '../store/timerStore'
+
+const resultstore = resultStore()
+const {} = storeToRefs(resultstore)
+
+const timerstore = timerStore()
+const {totalTime, beatCountdown, wpmPerSecond} = storeToRefs(timerstore)
+
+const correctWrongCountstore = correctWrongCountStore()
+const {resultData, wrongCount} = storeToRefs(correctWrongCountstore)
 
 const count = countdownStore()
 const {level}  = storeToRefs(count)
@@ -86,109 +70,97 @@ const theme_ = themeStore()
 const { appTheme } = storeToRefs(theme_)
 
 const store = mainStore()
-const {resultData, beatCountdown, wpmPerSecond} = storeToRefs(store)
+const {containerText} = storeToRefs(store)
 
-const testType = computed(() => {
-    if (customizers.value['timer']) {
-        if (customizers.value['modes'] === 'word-test') {
-            return `TEST MODE - COUNTDOWN `
-        } else if (customizers.value['modes'] === 'alphabet-test') {
-            return `ALPHABETS MODE - COUNTDOWN`
-        }
-    } else {
-        if (customizers.value['modes'] === 'word-test') {
-            return `TEST MODE`
-        } else if (customizers.value['modes'] === 'alphabet-test') {
-            return `ALPHABETS MODE `
-        }
-    }
-})
+const WPM = ref(Math.round(((containerText.value.length / 5) - (wrongCount.value / 5)) / (totalTime.value/60)))
 
-const accuracy = () => {
-    return Math.round((resultData.value.correctCount/(resultData.value.containerText.length) * 100))
-}
+const accuracy = ref(Math.round((resultData.value.correctCount/(containerText.value.length) * 100)))
+
+const failedToBeatCountdown = computed(() => customizers.value['timer'] && !beatCountdown.value)
 
 const errorRatio = () => {
-    if (customizers.value['timer'] && !beatCountdown.value) {
-        return (resultData.value.wrongCount) + (resultData.value.containerText.length - (resultData.value.wrongCount + resultData.value.correctCount)) + '/' + (resultData.value.containerText.length)
-    } else {        
-        return (resultData.value.wrongCount) + '/' + (resultData.value.containerText.length)
-    }
+    const total = containerText.value.length
+    const correct = failedToBeatCountdown.value ? 
+    resultData.value.wrongCount : 
+    (resultData.value.wrongCount) + (containerText.value.length - (resultData.value.wrongCount + resultData.value.correctCount))
+
+    return correct + '/' + total
 }
 
 const errorRatioLevel = () => {
-    if (customizers.value['timer'] && !beatCountdown.value) {
-        if (difficulty.value === 'beginner') {
-            return ((resultData.value.wrongCount) + (resultData.value.containerText.length - resultData.value.correctCount) / (resultData.value.containerText.length)) * 100 < 30
-        }
-        if (difficulty.value === 'amateur') {
-            return ((resultData.value.wrongCount) + (resultData.value.containerText.length - resultData.value.correctCount) / (resultData.value.containerText.length)) * 100 < 20
-        }
-        if (difficulty.value === 'expert') {
-            return ((resultData.value.wrongCount) + (resultData.value.containerText.length - resultData.value.correctCount) / (resultData.value.containerText.length)) * 100 < 10
-        }
-    } else {     
-        if (difficulty.value === 'beginner') {
-            return (resultData.value.wrongCount / resultData.value.containerText.length) * 100 < 30
-        }   
-        if (difficulty.value === 'amateur') {
-            return (resultData.value.wrongCount / resultData.value.containerText.length) * 100 < 20
-        }
-        if (difficulty.value === 'expert') {
-            return (resultData.value.wrongCount / resultData.value.containerText.length) * 100 < 10
+    let result = resultData.value
+    let length = containerText.value.length
+    let timer = failedToBeatCountdown.value ? 'timer' : 'no-timer'
+
+    const errorRatioObject = {
+        'timer': {
+            'beginner': ((result.wrongCount) + (length - result.correctCount) / (length)) * 100 < 30,
+            'amateur': ((result.wrongCount) + (length - result.correctCount) / (length)) * 100 < 20,
+            'expert': ((result.wrongCount) + (length - result.correctCount) / (length)) * 100 < 10,
+        },
+        'no-timer': {
+            'beginner': (result.wrongCount / length) * 100 < 30,
+            'amateur': (result.wrongCount / length) * 100 < 20,
+            'expert': (result.wrongCount / length) * 100 < 10,
         }
     }
+
+    return errorRatioObject[timer][difficulty.value]
 }
 
-const accuracyBasedOnLevels = computed(() => {
-    if (difficulty.value === 'beginner') {
-        return accuracy() > 70 ? true : false
+const accuracyBasedOnLevels = () => {
+    const accuracyObject = {
+        'beginner': accuracy.value > 70 ? true : false,
+        'amateur': accuracy.value > 80 ? true : false,
+        'expert': accuracy.value > 5 ? true : false,
     }
-    else if (difficulty.value === 'amateur') {
-        return accuracy() > 80 ? true : false
+
+    return accuracyObject[difficulty.value]
+}
+
+const wpmBasedOnLevels = () => {
+    let timer = failedToBeatCountdown.value? 'timer' : 'no-timer'
+
+    const wpmObject = {
+        'timer': {
+            'beginner': beatCountdown.value && (WPM.value * (accuracy.value / 100)).toFixed(0) > 50 ? true : false,
+            'amateur': beatCountdown.value && (WPM.value * (accuracy.value / 100)).toFixed(0) > 65 ? true : false,
+            'expert': beatCountdown.value && (WPM.value * (accuracy.value / 100)).toFixed(0) > 85 ? true : false,
+        },
+        'no-timer': {
+            'beginner': (WPM.value * (accuracy.value / 100)).toFixed(0) > 50 ? true : false,
+            'amateur': (WPM.value * (accuracy.value / 100)).toFixed(0) > 65 ? true : false,
+            'expert': (WPM.value * (accuracy.value / 100)).toFixed(0) > 85 ? true : false,
+        }
     }
-    else if (difficulty.value === 'expert') {
-        return accuracy() > 95 ? true : false
+
+    return wpmObject[timer][difficulty.value]
+}
+
+const resultSections = computed(() => {
+    return {
+        'accuracy': [accuracy.value + '%', accuracyBasedOnLevels()],
+        'time': totalTime.value.toFixed(0) + 's',
+        'wpm': [(WPM.value * (accuracy.value / 100)).toFixed(0), wpmBasedOnLevels()],
+        'error ratio': [errorRatio(), errorRatioLevel() ? true : false]
     }
 })
-
-const wpmBasedOnLevels = computed(() => {
-    if (customizers.value['timer']) {
-        if (difficulty.value === 'beginner') {
-        return beatCountdown.value && (resultData.value.WPM * (accuracy() / 100)).toFixed(0) > 50 ? true : false
-        }
-        else if (difficulty.value === 'amateur') {
-            return beatCountdown.value && (resultData.value.WPM * (accuracy() / 100)).toFixed(0) > 65 ? true : false
-        }
-        else if (difficulty.value === 'expert') {
-            return beatCountdown.value && (resultData.value.WPM * (accuracy() / 100)).toFixed(0) > 85 ? true : false
-        }
-    } else {        
-        if (difficulty.value === 'beginner') {
-            return (resultData.value.WPM * (accuracy() / 100)).toFixed(0) > 50 ? true : false
-        }
-        else if (difficulty.value === 'amateur') {
-            return (resultData.value.WPM * (accuracy() / 100)).toFixed(0) > 65 ? true : false
-        }
-        else if (difficulty.value === 'expert') {
-            return (resultData.value.WPM * (accuracy() / 100)).toFixed(0) > 85 ? true : false
-        }
-    }
-})
-
-const ErrorRatioBasedOnLevels = computed(() => errorRatioLevel() ? true : false)
 
 const testResult  = computed(() => {
+    let timer = failedToBeatCountdown.value? 'timer' : 'no-timer'
+
     if (difficulty.value === 'beginner') {        
-        return accuracy() > 70 && (resultData.value.WPM * (accuracy() / 100)).toFixed(0) > 50 && errorRatioLevel() ? 'you passed the test' : 'you failed the test'
+        return accuracy.value > 70 && (WPM.value * (accuracy.value / 100)).toFixed(0) > 50 && errorRatioLevel() ? 'you passed the test' : 'you failed the test'
     } 
+
     else if (difficulty.value === 'amateur') {
-        return accuracy() > 80 && (resultData.value.WPM * (accuracy() / 100)).toFixed(0) > 65 && errorRatioLevel() ? 'you passed the test' : 'you failed the test'
+        return accuracy.value > 80 && (WPM.value * (accuracy.value / 100)).toFixed(0) > 65 && errorRatioLevel() ? 'you passed the test' : 'you failed the test'
     } 
+
     else if (difficulty.value === 'expert') {
-        return accuracy() > 95 && (resultData.value.WPM * (accuracy() / 100)).toFixed(0) > 85 && errorRatioLevel() ? 'you passed the test' : 'you failed the test'
+        return accuracy.value > 95 && (WPM.value * (accuracy.value / 100)).toFixed(0) > 85 && errorRatioLevel() ? 'you passed the test' : 'you failed the test'
     }
-})
+}) 
 </script>
 
 

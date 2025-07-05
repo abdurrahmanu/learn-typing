@@ -51,6 +51,7 @@ import {themeStore}  from '../store/themeStore'
 import { customizeStore } from '../store/customizeStore';
 import { isTouchScreenDevice } from '../composables/isTouchScreenDevice';
 import { useRoute } from 'vue-router';
+import {nextStore} from '../store/nextStore'
 
 const route = useRoute()
 const customize = customizeStore()
@@ -59,9 +60,11 @@ const {toggleCustomTestModal, pauseTyping, customizers, userSelectedTest, repeat
 const theme_ = themeStore()
 const {theme, appTheme } = storeToRefs(theme_)
 
+const nextstore = nextStore()
+const {goNext} = storeToRefs(nextstore)
+
 const store = mainStore()
 const { customTests } = storeToRefs(store)
-const {switchNext} = store
 
 const textAreaPlaceholder = ref('Custom test')
 const titlePlaceholder = ref('Title')
@@ -111,8 +114,7 @@ const cancel = () => {
     customTestTitle.value = ''
 }
 
-const del= (name) => {
-    switchNext(customizers.value)
+const del = (name) => {
 }
 
 const use = (name) => {
@@ -121,8 +123,10 @@ const use = (name) => {
         customizers.value['test-type'] = 'custom'
     }
     userSelectedTest.value = name
-    switchNext(customizers.value)
+    go()
     toggleCustomTestModal.value = false
     pauseTyping.value = false
 }
+
+const go = () => goNext.value = true
 </script>

@@ -19,7 +19,7 @@ export async function getQuotes (config, customText) {
         ]
     let allMovies = [ movieQuotes['The Hobbit'].quotes, movieQuotes['Pirates of the Caribbean'].quotes, movieQuotes['Harry Potter'].quotes, movieQuotes['The Lord of the Rings'].quotes, movieQuotes['Legend of the Seeker'].quotes, movieQuotes['Star Wars'].quotes, movieQuotes['Indiana Jones and the Raiders of the Lost Ark'].quotes, movieQuotes['Jurassic Park'].quotes,]
     
-    function generateTest() {
+    function generateQuoteTest() {
         if (testType === 'quotes') {
             const lengths = {
                 10: [...quotesWithoutAuthors.value.ten],
@@ -117,7 +117,7 @@ export async function getQuotes (config, customText) {
         }
     }
 
-    generateTest()
+    generateQuoteTest()
     customizers()
 
     return res.value

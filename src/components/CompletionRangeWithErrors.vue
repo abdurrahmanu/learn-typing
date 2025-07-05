@@ -9,12 +9,17 @@
 <script setup>
 import {ref, onMounted, watchEffect} from 'vue'
 import { mainStore } from '../store/mainStore';
+import { typingStateStore } from '../store/typingStateStore';
 import { storeToRefs } from 'pinia';
 
 const rangeEl = ref(null)
 const singleDivWidth = ref(0)
+
+const typingstatestore = typingStateStore()
+const {completionLevel, playerInput} = storeToRefs(typingstatestore)
+
 const store = mainStore()
-const { completionLevel, hasCompletedSession, containerText, playerInput} = storeToRefs(store)
+const { hasCompletedSession, containerText} = storeToRefs(store)
 
 onMounted(() => {
     watchEffect(() => {

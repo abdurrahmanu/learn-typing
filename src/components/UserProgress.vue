@@ -27,7 +27,6 @@
 
 <script setup>
 import {ref} from 'vue'
-
 const selected = ref({})
 const wpm = allResults.map(result => {
     return result.WPM

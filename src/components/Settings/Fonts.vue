@@ -18,13 +18,16 @@ import { countdownStore } from '../../store/countdownStore'
 import { customizeStore } from '../../store/customizeStore'
 import { themeStore } from '../../store/themeStore';
 import {updateDB} from '../../composables/updateDB'
+import {nextStore} from '../../store/nextStore'
 
 const theme_ = themeStore()
 const {theme} = theme_
 
+const nextstore = nextStore()
+const {goNext} = storeToRefs(nextstore)
+
 const store = mainStore()
 const {playerInput} = storeToRefs(store)
-const {switchNext} = store
 
 const customize = customizeStore()
 const { customizers, font, range} = storeToRefs(customize)
@@ -43,7 +46,7 @@ watch(fontSize, (newVal) => {
 
     if (playerInput.value.length) {        
         if (customizers.value['timer']) clearCounter()
-        switchNext(customizers.value, 'restart' )
+        goNext.value = true
     }
 })
 </script>

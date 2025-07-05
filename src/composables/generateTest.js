@@ -5,17 +5,20 @@ import {getAlphabets} from './getAlphabets'
 import { storeToRefs } from "pinia"
 import { getQuotes } from "./getQuotes"
 
-export const generateTest = async (config, restart) => {
+export const generateTest = async (config) => {
     const store = mainStore()
     const {containerText, storedTest, movie, authoredQuote, allSpacesIndex} = storeToRefs(store)
-
+    
     const count = countdownStore()
     const {textLength} = storeToRefs(count)
-
+    
     const customize = customizeStore()
     const {repeat, customizers } = storeToRefs(customize)
 
-    if (repeat.value || restart ) containerText.value = storedTest.value
+    if (repeat.value) {
+        containerText.value = ''
+        containerText.value = storedTest.value
+    }
 
     else if (customizers.value['modes'] === 'word-test') {
         await getQuotes(config).then( quote => {

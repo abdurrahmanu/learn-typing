@@ -18,6 +18,10 @@ import {storeToRefs} from 'pinia'
 import {customizeStore} from '../../store/customizeStore'
 import { themeStore } from '../../store/themeStore';
 import good from '../svg/good.vue'
+import { searchStore } from '../../store/searchStore';
+
+const searchstore = searchStore()
+const { searchResult} = storeToRefs(searchstore)
 
 const theme_ = themeStore()
 const {theme} = theme_

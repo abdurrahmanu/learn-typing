@@ -1,14 +1,22 @@
 import { mainStore } from "../store/mainStore"
-import { customizeStore } from "../store/customizeStore";
 import { isTouchScreenDevice } from "./isTouchScreenDevice";
 import { storeToRefs } from 'pinia';
+import {correctWrongCountStore} from '../store/correctWrongCountStore'
+import { timerStore } from "../store/timerStore";
+import { typingStateStore } from "../store/typingStateStore";
 
 export const managePlayerInput = () => {
-    const store = mainStore()
-    const { containerText, characterEqualityArray, playerInputLength, playerInput, route, playerLastInput, previousPlayerInput, correctCount, wrongCount, completionLevel} = storeToRefs(store)
+    const typingstatestore = typingStateStore()
+    const {completionLevel, playerInput, playerInputLength, playerLastInput, previousPlayerInput} = storeToRefs(typingstatestore)
 
-    const customize = customizeStore()
-    const {customizers, pauseTyping} = storeToRefs(customize)
+    const timerstore = timerStore()
+    const {characterEqualityArray} = storeToRefs(timerstore)
+
+    const correctWrongCountstore = correctWrongCountStore()
+    const {correctCount, wrongCount} = storeToRefs(correctWrongCountstore)
+    
+    const store = mainStore()
+    const { containerText, route} = storeToRefs(store)
     
     if (route.value !== 'home') return
     if (isTouchScreenDevice()) playerLastInput.value = playerInput.value[playerInput.value.length - 1]

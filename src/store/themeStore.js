@@ -12,20 +12,11 @@ export const themeStore = defineStore('themeStore', () => {
         if (theme.value === 'dark') return '#d4d4d4'
         if (theme.value === 'white') return 'black '
     })
-
-    // 2c2e31;
-    // 323437
-    // #4d4d4
-    // 8d8d8d
-    // #101010
-
+    
     return {
         theme,
         appTheme,
         svgFill,
     }
 })
-
-
-
 

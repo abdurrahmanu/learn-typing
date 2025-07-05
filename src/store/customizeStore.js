@@ -10,7 +10,7 @@ export const customizeStore = defineStore('customizeStore', () => {
     const toggleCustomTestModal = ref(false)
     const pauseTyping = ref(true)
     const configs = ref([])
-    const allSettings = ref(false)
+    const showSettings = ref(false)
     const hideElements = ref(isMobile() ? true : false)
     const cursorType = ref('border')
     const difficulty = ref('beginner')
@@ -133,7 +133,6 @@ export const customizeStore = defineStore('customizeStore', () => {
             disableOption.value['words-type'] = false
         }
 
-
         let config = [customizers.value, disableOption.value]
         updateDB(Object.keys({config})[0], config, null, true)
     }
@@ -170,8 +169,13 @@ export const customizeStore = defineStore('customizeStore', () => {
         changeQuickSettings(group, selection)   
     }
 
+    const settingsPage = () => {
+        showSettings.value = !showSettings.value
+        if (showSettings.value) pauseTyping.value = true
+        else pauseTyping.value = false
+    }
+
     const changeSettings = (mode, boolean) => {
-        // not countdown
         let booleanSwap = ['all-caps', 'movie-quotes', 'camel-case', 'double-words', 'capslock', 'countdown', 'blur', 'stop-on-error', 'no-space']
 
         if (boolean && booleanSwap.includes(mode)) customizers.value[mode] = false
@@ -193,7 +197,7 @@ export const customizeStore = defineStore('customizeStore', () => {
         textLines,
         configs,
         cursorType,
-        allSettings,
+        showSettings,
         customizers,
         quickSettingsGroups,
         hideElements,
@@ -201,6 +205,7 @@ export const customizeStore = defineStore('customizeStore', () => {
         blind,
         checkQuickSettings, 
         changeSettings,
+        settingsPage,
         font, 
         range,
         repeat,

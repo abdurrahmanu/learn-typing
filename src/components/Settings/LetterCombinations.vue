@@ -32,10 +32,13 @@
 <script setup>
 import {watch, ref} from 'vue'
 import {storeToRefs} from 'pinia';
-import {mainStore} from '../../store/mainStore'
 import { customizeStore } from '../../store/customizeStore';
 import { themeStore } from '../../store/themeStore';
 import good from '../svg/good.vue';
+import { nextStore } from '../../store/nextStore';
+
+const nextstore = nextStore()
+const {goNext} = storeToRefs(nextstore)
 
 const theme_ = themeStore()
 const {theme} = theme_
@@ -56,16 +59,12 @@ const qwertyKeyboard = [
 
 const entries = [capsQwertyKeyboard, qwertyKeyboard]
 
-const store = mainStore()
-const {switchNext} = store
-
 const customize = customizeStore()
-const {customizers, mixCharactersArray, mixCharacters, shiftKey} = storeToRefs(customize)
+const { mixCharactersArray, mixCharacters, shiftKey} = storeToRefs(customize)
 
 const toggle = () => {
     if (mixCharactersArray.value.length > 1) {
         mixCharacters.value = !mixCharacters.value
-        switchNext(customizers.value)
     }
 }
 
@@ -80,13 +79,11 @@ const addSelection = (alphabet) => {
 }
 
 watch(mixCharactersArray, (newVal) => {
-    if (newVal.length < 2) {
-        mixCharacters.value = false
-        switchNext(customizers.value)
-        return
-    } else {
-        mixCharacters.value = true
-        switchNext(customizers.value)
-    }
+    if (newVal.length < 2) mixCharacters.value = false
+    else mixCharacters.value = true
 }, {deep: true})
+
+watch(mixCharacters, newVal => go())
+
+const go = () => goNext.value = true
 </script>
