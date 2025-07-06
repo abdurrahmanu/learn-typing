@@ -1,5 +1,11 @@
 <template>
-  <Transition name="customizer-transition">
+  <div 
+  v-if="hideElements && !(focus && isMobile()) && isMobile()" 
+  @click="hideElements = !hideElements" 
+  :class="!hideElements ? '' : ''" 
+  class="mobile-quick-settings">quick settings</div> 
+  <div v-if="!hideElements">
+    <Transition name="customizer-transition">
       <div v-if="!hasCompletedSession" :class="[isMobile() && focus ? 'hidden' : 'block', appTheme]" class="relative m-auto items-center p-1 flex font-[500] pb-7 config text-[13px] max-w-[900px] gap-2 justify-center flex-wrap relative z-[1]">
         <div class="flex items-center gap-3 p-[1px] parent" v-for="(optionArr, key, listIndex) in quickSettingsGroups" :key="listIndex">          
             <div 
@@ -19,6 +25,7 @@
         </div>
     </div>
   </Transition>
+  </div>  
 </template>
 
 <script setup>
@@ -40,7 +47,7 @@ const store = mainStore()
 const { hasCompletedSession} = storeToRefs(store)
 
 const customize = customizeStore()
-const { quickSettingsGroups, configs, customizers, disableOption, repeat} = storeToRefs(customize)
+const { quickSettingsGroups, hideElements, configs, customizers, disableOption, repeat} = storeToRefs(customize)
 const {checkQuickSettings} = customize
 
 const hoverIndex = ref(null)
@@ -71,5 +78,9 @@ const checkSelection = (key, option) => {
   .customizer-transition-enter-from {
     opacity: 0;
     transform: translateY(50%);
+  }
+
+  .mobile-quick-settings {
+    @apply p-1 px-2 cursor-pointer rounded-md m-auto text-[12px] uppercase border border-slate-500 whitespace-nowrap w-fit hover:border-green-400 relative z-[1]
   }
 </style>

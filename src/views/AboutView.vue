@@ -13,7 +13,6 @@
 <script setup>
 import {ref, watch} from 'vue'
 import Teach from '../components/Teach.vue';
-import Logo from '../components/Logo.vue'
 import email from '../components/svg/email.vue';
 import { customizeStore } from '../store/customizeStore';
 import { mainStore } from '../store/mainStore';

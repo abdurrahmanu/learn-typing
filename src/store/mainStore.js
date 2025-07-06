@@ -2,9 +2,6 @@ import {defineStore} from 'pinia'
 import {ref, computed} from 'vue'
 
 export const mainStore = defineStore('mainStore', () => {
-    ////
-    const zzz = ref(false)
-
     const preferredConfigs = ref(undefined)
     const route = ref(null)
     const mobileBackspace = ref(false)
@@ -21,8 +18,6 @@ export const mainStore = defineStore('mainStore', () => {
     const customLengthInput = ref(null)
 
     //keys states
-    const restartEl = ref(null)
-    const restartSvgEl = ref(null)
     const allSpacesIndex = ref([])
     const pulseAnimate = ref(false)
 
@@ -50,8 +45,6 @@ export const mainStore = defineStore('mainStore', () => {
         quoteType,
         route,
         customLengthInput,
-        restartEl,
-        restartSvgEl,
         focus,
         demo,
         keyboardMode,
@@ -74,9 +67,5 @@ export const mainStore = defineStore('mainStore', () => {
         customTests,
         authoredQuote,
         mobileBackspace,
-
-
-
-        zzz,
     }
 })

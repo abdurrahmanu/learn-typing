@@ -3,18 +3,7 @@
 ** leaderboard
 
 
-
 ** difference between previousPlayerInput and playerLastInput
 ** countdownStore and timerStore have to be merged or refactored to be one entity
 ** one central source of truth should be maintained for every dependency 
 ** check network connection before sending to db to avoid errors
-** navbar is classified as outsideElement therefore it doesnt focus input in test container --- fix by making it focus.
-
-** ref Element like e.g restartEl  === check if useful or useless --- delete
-** customizers not changing -- work on it
-
-
-
-
-
-** clear zzz
