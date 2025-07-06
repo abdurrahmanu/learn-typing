@@ -7,7 +7,7 @@
     @keydown.delete="playerInputLength ? mobileBackspace = true : ''"
     ref="inputEl"
     type="text" 
-    class="text-sm text-center rounded-md appearance-none outline-none max-w-[1px] text-slate-100 bg-zinc-900 mx-auto opacity-100 z-[-1]" 
+    class="input" 
     :maxlength="containerText.length">
 </template>
 
@@ -23,3 +23,9 @@ const {playerInput, inputEl, playerInputLength} = storeToRefs(typingstatestore)
 const store = mainStore()
 const {containerText, mobileBackspace} = storeToRefs(store)
 </script>
+
+<style scoped>
+.input {
+    @apply text-sm text-center rounded-md appearance-none outline-none text-slate-100 bg-zinc-900 mx-auto
+}
+</style>
