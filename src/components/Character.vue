@@ -18,7 +18,6 @@ import {mainStore} from '../store/mainStore'
 import {themeStore}  from '../store/themeStore'
 import { customizeStore }  from '../store/customizeStore'
 import { typingStateStore } from '../store/typingStateStore';
-import { isTouchScreenDevice } from '../composables/isTouchScreenDevice';
 import { nextStore } from '../store/nextStore';
 
 const className = ref({
@@ -49,7 +48,6 @@ const props = defineProps({
 
 const currentIndex = computed(() => playerInputLength.value === props.index)
 const equality = computed(() => playerInput.value[props.index] === containerText.value[props.index])
-const lastIndex = computed(() => playerInputLength.value - 1 === props.index)
 
 onMounted(() => {
     watch(currentIndex, newVal => {

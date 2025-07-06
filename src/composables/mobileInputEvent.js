@@ -36,6 +36,7 @@ export const mobileInputEvent = (e) => {
     } 
 
     if (e.key === 'Enter' && enterKey.value)  playerInput.value += ' '
+    
     if (playerInput.value.length === containerText.value.length) {
         if (customizers.value['timer']) beatCountdown.value = true
         hasCompletedSession.value = true
