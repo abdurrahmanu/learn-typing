@@ -1,4 +1,6 @@
 <template>
+        <!-- :value="playerInput"
+    @input="event => playerinput = event.target.value" -->
     <input
     name="mobile"
     v-if="isTouchScreenDevice()"
