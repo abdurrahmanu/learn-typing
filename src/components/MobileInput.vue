@@ -1,10 +1,9 @@
 <template>
-        <!-- :value="playerInput"
-    @input="event => playerinput = event.target.value" -->
     <input
     name="mobile"
+    :value="playerInput"
+    @input="event => playerInput = event.target.value"
     v-if="isTouchScreenDevice()"
-    v-model="playerInput"
     @keydown.delete="playerInputLength ? mobileBackspace = true : ''"
     ref="inputEl"
     type="text" 
