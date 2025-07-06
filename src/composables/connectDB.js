@@ -15,25 +15,25 @@ export const DB = async (onUpdate) => {
     const {saveConfigs} = storeToRefs(cookies)
 
     const connect = connectStore()
-    const {hasInternetConnection, connectingServer, connectionStrength, loadingTimeout, showConnectionStrength} = storeToRefs(connect)
+    const {connectionAvailable, isConnectingServer, connectionStrength, loadingTimeout, showConnectionStrength} = storeToRefs(connect)
 
-    if (onUpdate) hasInternetConnection.value = true
+    if (onUpdate) connectionAvailable.value = true
 
     if (localStorage.getItem('kiboardID')) {
-        connectingServer.value = onUpdate ? false : true
+        isConnectingServer.value = onUpdate ? false : true
         saveConfigs.value = true
 
         setTimeout(() => {
             if (!preferredConfigs.value) {
                 loadingTimeout.value = true
-                connectingServer.value = false
+                isConnectingServer.value = false
                 showConnectionStrength.value = true
                 connectionStrength.value = 'Slow connection'
             }
         }, 6000)
 
         configUpdate()
-    } else connectingServer.value = false
+    } else isConnectingServer.value = false
 }
 
 

@@ -8,8 +8,16 @@ import { inputEvent } from "./inputEvent"
 import { storeToRefs } from "pinia"
 import { onMounted, onUnmounted } from "vue"
 import { mobileInputEvent } from "./mobileInputEvent"
+import { DB } from "./connectDB"
+import { nextStore } from "../store/nextStore"
+import { themeStore } from "../store/themeStore"
 
 export default function useEventListener(target, listener) {
+    const nextstore = nextStore()
+    const {goNext} = storeToRefs(nextstore)
+
+    const theme_ = themeStore()
+    const {openBackgrounds } = storeToRefs(theme_)
 
     const typingstatestore = typingStateStore()
     const {refocus, focus, backspaceIsPressed, textIsFocused,inputEl} = storeToRefs(typingstatestore)
@@ -18,10 +26,10 @@ export default function useEventListener(target, listener) {
     const {pauseTyping } = storeToRefs(customize)
     
     const store = mainStore()
-    const { testContainerEl} = storeToRefs(store)
+    const { testContainerEl, hasCompletedSession} = storeToRefs(store)
     
     const connect = connectStore()
-    const {hasInternetConnection } = storeToRefs(connect)
+    const {connectionAvailable } = storeToRefs(connect)
     
     const eventsObject = {
         'keydown': function() {
@@ -55,7 +63,7 @@ export default function useEventListener(target, listener) {
         },
 
         'offline': function() {
-            hasInternetConnection.value = false
+            connectionAvailable.value = false
         },
 
         'online': function() {
@@ -70,8 +78,13 @@ export default function useEventListener(target, listener) {
             !isTouchScreenDevice() && inputEvent(event)
         },
 
+        'keyup': function(event) {
+            if ((event.key === 'Escape' && !hasCompletedSession.value) || 
+            (event.key === 'Enter' && hasCompletedSession.value)) goNext.value = true
+        },
+ 
         'click': function(event) {
-            if (!isTouchScreenDevice()) return
+            if (!isTouchScreenDevice() || hasCompletedSession.value) return
 
             const focusElement = event.srcElement.id === 'focus' || event.srcElement.closest('#focus')
         
@@ -87,7 +100,7 @@ export default function useEventListener(target, listener) {
         target && target.addEventListener(listener, event => eventsObject[listener](event))        
     })
 
-    onUnmounted(() => {
-        target.removeEventListener(listener, undefined)
-    })
+    // onUnmounted(() => {
+    //     target.removeEventListener(listener, undefined)
+    // })
 }

@@ -2,15 +2,15 @@ import {defineStore} from 'pinia'
 import {ref} from 'vue'
 
 export const connectStore = defineStore('connectStore', () => {
-    const hasInternetConnection = ref(navigator.onLine ? true : false)
-    const connectingServer = ref(undefined)
+    const connectionAvailable = ref(navigator.onLine ? true : false)
+    const isConnectingServer = ref(undefined)
     const connectionStrength = ref('')
     const showConnectionStrength = ref(false)
     const loadingTimeout = ref(undefined)
 
     return {
-        hasInternetConnection,
-        connectingServer,
+        connectionAvailable,
+        isConnectingServer,
         connectionStrength,
         showConnectionStrength,
         loadingTimeout,

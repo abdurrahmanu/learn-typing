@@ -6,7 +6,7 @@ import { typingStateStore } from "../store/typingStateStore";
 
 export const mobileInputEvent = (e) => {
     const typingstatestore = typingStateStore()
-    const {playerInput, playerInputLength, focus, enterKey, backspaceIsPressed} = storeToRefs(typingstatestore)
+    const {playerInput, playerInputLength, focus, enterKey} = storeToRefs(typingstatestore)
 
     const timerstore = timerStore()
     const {startTime, beginCountdown, beatCountdown} = storeToRefs(timerstore)
@@ -21,10 +21,7 @@ export const mobileInputEvent = (e) => {
         mobileBackspace.value = false
         return
     }
-    
-    e.inputType === 'deleteContentBackward' ? backspaceIsPressed.value = true : backspaceIsPressed.value = false
-    
-    if (route.value !== 'home') return
+
     if (!focus.value || (e.key === 'Enter' && !enterKey.value) || pauseTyping.value || hasCompletedSession.value) return
 
     if (playerInputLength.value === 1)  {

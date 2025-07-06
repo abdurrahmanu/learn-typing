@@ -107,6 +107,10 @@ export default function useWatchers({
       if (next) {     
           watch(next, newVal => {
               if (newVal) {
+                if (hasCompletedSession.value) {
+                    router.push('/')
+                }
+
                 resetToDefault()
                 clearResult()
                 clearTimer()

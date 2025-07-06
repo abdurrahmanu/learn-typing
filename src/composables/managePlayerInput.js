@@ -18,7 +18,6 @@ export const managePlayerInput = () => {
     const mainstore = mainStore()
     const { containerText, route} = storeToRefs(mainstore)
     
-    if (route.value !== 'home') return
     if (isTouchScreenDevice()) playerLastInput.value = playerInput.value[playerInput.value.length - 1]
 
     if (containerText.value) {

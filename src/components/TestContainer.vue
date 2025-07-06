@@ -39,6 +39,7 @@ import { generateTest } from '../composables/generateTest';
 import AllCharacters from './AllCharacters.vue';
 import focusInputElement from '../composables/focusInputElement';
 import useWatchers from '../composables/useWatchers';
+import { textBoxHeight } from '../composables/textBox';
 
 const typingstatestore = typingStateStore()
 const { focus, playerInputLength, playerInput} = storeToRefs(typingstatestore)
@@ -64,6 +65,7 @@ useWatchers({
 })
 
 onMounted(() => {
+    textBoxHeight()
     generateTest(customizers.value)
     isTouchScreenDevice() && focusInputElement()
 })

@@ -29,13 +29,13 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
+import { isMobile } from '../composables/isMobile.js';
 import {customizeStore} from '../store/customizeStore.js'
 import { typingStateStore } from '../store/typingStateStore.js';
-import {storeToRefs} from 'pinia'
 import { mainStore } from '../store/mainStore.js';
 import { themeStore } from '../store/themeStore';
-import { isMobile } from '../composables/isMobile.js';
+import {storeToRefs} from 'pinia'
 
 const typingstatestore = typingStateStore()
 const {focus} = storeToRefs(typingstatestore)

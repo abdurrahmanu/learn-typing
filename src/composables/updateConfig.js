@@ -13,14 +13,14 @@ export const configUpdate = async () => {
     const {theme } = storeToRefs(theme_)
 
     const connect = connectStore()
-    const {connectingServer} = storeToRefs(connect)
+    const {isConnectingServer} = storeToRefs(connect)
 
     const customize = customizeStore()
     const { customizers, disableOption, textLines, cursorType, difficulty, font, range, blind, backspace } = storeToRefs(customize)
 
     preferredConfigs.value = await getSingleDoc(localStorage.getItem('kiboardID'))
 
-    connectingServer.value = false
+    isConnectingServer.value = false
     theme.value = preferredConfigs.value.theme || theme.value
     font.value = preferredConfigs.value.fontsize || font.value
     range.value = (font.value - 16) / 0.26
