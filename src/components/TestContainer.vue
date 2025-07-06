@@ -92,6 +92,7 @@ watch(playerInput, (newVal, oldVal) => {
     }
     previousPlayerInput.value = oldVal
     managePlayerInput()
+    zzz.value = true
 })
 
 onMounted(() => {

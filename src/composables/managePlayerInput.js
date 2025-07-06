@@ -16,7 +16,7 @@ export const managePlayerInput = () => {
     const {correctCount, wrongCount} = storeToRefs(correctWrongCountstore)
     
     const mainstore = mainStore()
-    const { containerText, route, zzz} = storeToRefs(mainstore)
+    const { containerText, route} = storeToRefs(mainstore)
     
     if (route.value !== 'home') return
     if (isTouchScreenDevice()) playerLastInput.value = playerInput.value[playerInput.value.length - 1]
@@ -47,9 +47,7 @@ export const managePlayerInput = () => {
     
     playerInputLength.value = playerInput.value.length
     completionLevel.value = ((playerInputLength.value) / containerText.value.length) * 100 
-    zzz.value = true
 }
-
 
 
 
