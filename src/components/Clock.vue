@@ -104,6 +104,6 @@ watch(countdown, newVal => {
     }
 })
 
-onMounted(() => changeLevel(difficulty.value))
 watch(difficulty, newVal => changeLevel(difficulty.value))
+onMounted(() => changeLevel(difficulty.value))
 </script>
