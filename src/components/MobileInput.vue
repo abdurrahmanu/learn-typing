@@ -6,7 +6,7 @@
     @keydown.delete="playerInputLength ? mobileBackspace = true : ''"
     ref="inputEl"
     type="text" 
-    class="text-sm text-center rounded-md appearance-none outline-none text-slate-100 bg-zinc-900 mx-auto" 
+    class="text-sm text-center rounded-md appearance-none outline-none max-w-[1px] text-slate-100 bg-zinc-900 mx-auto opacity-100 z-[-1]" 
     :maxlength="containerText.length">
 </template>
 
