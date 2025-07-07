@@ -1,4 +1,3 @@
-import { mainStore } from "../store/mainStore"
 import { customizeStore } from "../store/customizeStore";
 import { storeToRefs } from 'pinia';
 import { correctWrongCountStore } from "../store/correctWrongCountStore";
@@ -14,9 +13,6 @@ export default function inputEvent (e) {
     
     const correctWrongCountstore = correctWrongCountStore()
     const {wrongCount} = storeToRefs(correctWrongCountstore)
-    
-    const store = mainStore()
-    const { containerText, hasCompletedSession} = storeToRefs(store)
     
     const customize = customizeStore()
     const {backspace, pauseTyping, toggleCapsToast, customizers} = storeToRefs(customize)
@@ -86,11 +82,6 @@ export default function inputEvent (e) {
 
     playerInput.value += playerLastInput.value
     playerInputLength.value = playerInput.value.length
-
-    if (playerInputLength.value === containerText.value.length) {
-        if (customizers.value['timer']) beatCountdown.value = true
-        hasCompletedSession.value = true
-    }
 
     if (playerInputLength.value === 1) startTimer() 
 }

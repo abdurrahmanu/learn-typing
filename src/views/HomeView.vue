@@ -24,6 +24,7 @@ import { onMounted, onUnmounted } from 'vue';
 import preventScroll from '../composables/preventScroll'
 import preventKeyBoardScroll from '../composables/preventKeyBoardScroll'
 import inputEvent from '../composables/inputEvent'
+import { DB } from '../composables/connectDB';
 
 const customize = customizeStore()
 const {font, toggleCapsToast} = storeToRefs(customize)
@@ -81,6 +82,7 @@ onMounted(() => {
       if (focus.value) {
           preventKeyBoardScroll(event);
       }
+
       inputEvent(event);
   }
 

@@ -1,4 +1,5 @@
 <template>
+ {{ playerInput }} {{ playerInputLength }} {{ wrongCount }}
     <main class="w-[90%] min-h-[150px] space-y-[2px] relative transition-none max-w-[1200px] m-auto" :class="[isMobile() && focus ? 'pt-8' : '']">
         <div class="relative max-w-[700px] h-fit flex text-[16px] justify-between min-h-[30px] m-auto py-1 px-3">      
             <div class="space-x-[50px]">
@@ -39,6 +40,10 @@ import AllCharacters from './AllCharacters.vue';
 import useWatchers from '../composables/useWatchers';
 import { textBoxHeight } from '../composables/textBox';
 import OnScreenInput from './onScreenInput.vue';
+import { correctWrongCountStore } from '../store/correctWrongCountStore';
+
+const dd = correctWrongCountStore()
+const { wrongCount } = storeToRefs(dd)
 
 const typingstatestore = typingStateStore()
 const { focus, playerInputLength, playerInput} = storeToRefs(typingstatestore)

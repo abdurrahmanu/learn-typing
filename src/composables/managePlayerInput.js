@@ -3,30 +3,36 @@ import { storeToRefs } from 'pinia';
 import {correctWrongCountStore} from '../store/correctWrongCountStore'
 import { timerStore } from "../store/timerStore";
 import { typingStateStore } from "../store/typingStateStore";
+import { customizeStore } from "../store/customizeStore";
 
 export const managePlayerInput = () => {
     const typingstatestore = typingStateStore()
     const { playerInput, playerInputLength, playerLastInput} = storeToRefs(typingstatestore)
 
     const timerstore = timerStore()
-    const {characterEqualityArray} = storeToRefs(timerstore)
+    const {characterEqualityArray, beatCountdown} = storeToRefs(timerstore)
 
     const correctWrongCountstore = correctWrongCountStore()
     const {correctCount, wrongCount} = storeToRefs(correctWrongCountstore)
-    
+
     const mainstore = mainStore()
-    const { containerText} = storeToRefs(mainstore)
+    const { containerText, hasCompletedSession} = storeToRefs(mainstore)
+
+    const customize = customizeStore()
+    const {customizers} = storeToRefs(customize)
     
     if (playerLastInput.value === containerText.value[playerInput.value.length - 1]) correctCount.value ++
     else wrongCount.value++
 
     characterEqualityArray.value.push(playerInput.value[playerInput.value.length - 1] === containerText.value[playerInput.value.length - 1])
-    playerInputLength.value = playerInput.value.length
+
+    if (playerInputLength.value === containerText.value.length) {
+        if (customizers.value['timer']) beatCountdown.value = true
+        hasCompletedSession.value = true
+    }
 
     playerLastInput.value = ''
 }
-
-
 
 
 
