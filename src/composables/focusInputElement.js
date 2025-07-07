@@ -16,5 +16,5 @@ export default function focusInputElement (delay) {
     if (pauseTyping.value && route.value !== 'home') return
 
     focus.value = true
-    delay ? setTimeout(() => inputEl.value.focus(), 10) : inputEl.value.focus()
+    // delay ? setTimeout(() => inputEl.value.focus(), 10) : inputEl.value.focus()
 }

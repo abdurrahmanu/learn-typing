@@ -4,7 +4,6 @@ import {ref, computed} from 'vue'
 export const mainStore = defineStore('mainStore', () => {
     const preferredConfigs = ref(undefined)
     const route = ref(null)
-    const mobileBackspace = ref(false)
     const quoteType = ref('')
     const demo = ref(false)
     const keyboardMode = ref(false)
@@ -66,6 +65,5 @@ export const mainStore = defineStore('mainStore', () => {
         movie,
         customTests,
         authoredQuote,
-        mobileBackspace,
     }
 })

@@ -1,11 +1,12 @@
 import {defineStore} from 'pinia'
 import {ref, computed} from 'vue'
+import { mainStore } from './mainStore'
 
 export const typingStateStore = defineStore('typingStateStore', () => {
+    const mainstore = mainStore()
+
     const spaces = ref({})
-    const completionLevel = ref(0) 
     const playerInput = ref('') 
-    const previousPlayerInput = ref('')
     const playerLastInput = ref('')
     const playerInputLength = ref(0)
     const refocus = ref(false)
@@ -16,11 +17,13 @@ export const typingStateStore = defineStore('typingStateStore', () => {
     const currentWordArray = ref([])
     const textIsFocused = ref(false)
 
+    const completionLevel = computed(() => {
+        return ((playerInputLength.value) / mainstore.containerText.length) * 100 
+    })
+
     const resetTypingState = () => {
         playerLastInput.value = ''
         playerInput.value = ''
-        previousPlayerInput.value = ''
-        completionLevel.value = 0
         playerInputLength.value = 0
         spaces.value = {}
     }
@@ -33,7 +36,6 @@ export const typingStateStore = defineStore('typingStateStore', () => {
         completionLevel,
         playerInput,
         playerLastInput,
-        previousPlayerInput,
         playerInputLength,
         refocus,
         enterKey,

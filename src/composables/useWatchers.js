@@ -29,7 +29,7 @@ export default function useWatchers({
     const {showConnectionStrength, connectionStrength} = storeToRefs(connectstore)
 
     const typingstatestore = typingStateStore()
-    const {playerInput, previousPlayerInput, playerInputLength} = storeToRefs(typingstatestore)
+    const {playerInput, playerInputLength} = storeToRefs(typingstatestore)
     const {resetTypingState} = typingstatestore
     
     const timerstore = timerStore()
@@ -43,15 +43,14 @@ export default function useWatchers({
     const {switchNext} = nextstore
         
     const customize = customizeStore()
-    const { customizers, pauseTyping, hideElements, toggleCapsToast } = storeToRefs(customize)
+    const { customizers, hideElements, toggleCapsToast } = storeToRefs(customize)
     
     const store = mainStore()
-    const { hasCompletedSession, mobileBackspace, testContainerEl} = storeToRefs(store)
+    const { hasCompletedSession, testContainerEl} = storeToRefs(store)
     const {resetToDefault} = store
     
     const count = countdownStore()
     const {clearCounter} = count
-
     
     if (scrollContainer) {
         watch(scrollContainer, (newVal, oldVal)=> {
@@ -74,13 +73,6 @@ export default function useWatchers({
     if (input) {
         watch(input, (newVal, oldVal) => {
             if (!oldVal) wpmTime(hasCompletedSession.value, playerInput.value, playerInputLength.value)
-            if (pauseTyping.value) return
-            if (mobileBackspace.value && wrongCount.value === 0) {
-                playerInput.value = oldVal
-                mobileBackspace.value = false
-                return
-            }
-            previousPlayerInput.value = oldVal
             managePlayerInput()
         })
     }

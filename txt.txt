@@ -2,8 +2,11 @@
 ** user auth
 ** leaderboard
 
+it has been long so the codebase is looking strange even though I wrote it.
 
-** difference between previousPlayerInput and playerLastInput
 ** countdownStore and timerStore have to be merged or refactored to be one entity
 ** one central source of truth should be maintained for every dependency 
 ** check network connection before sending to db to avoid errors
+
+** will come back for capslock in inputEvent.js
+** clearly understand the use of enterKey.value

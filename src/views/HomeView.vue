@@ -1,5 +1,5 @@
 <template>
-    <div  class="m-auto max-w-[1500px] lg:flex pt-10 pb-5"> 
+    <div v-if="!hasCompletedSession" class="m-auto max-w-[1500px] lg:flex pt-10 pb-5"> 
       <div class="w-[100%] mx-auto flex-none space-y-2">   
         <Customize />
         <TestContainer />
@@ -14,23 +14,103 @@ import Customize from '../components/Customize.vue'
 import useWatchers from '../composables/useWatchers';
 import useEventListener from '../composables/useEventLIstener';
 
+import { connectStore } from '../store/connectStore';
 import { nextStore } from '../store/nextStore';
 import { mainStore } from '../store/mainStore';
 import {customizeStore}  from '../store/customizeStore'
 import { typingStateStore } from '../store/typingStateStore';
 import { storeToRefs } from 'pinia';
-
-const typingstatestore = typingStateStore()
-const { focus, inputEl} = storeToRefs(typingstatestore)
-
-const nextstore = nextStore()
-const {goNext} = storeToRefs(nextstore)
+import { onMounted, onUnmounted } from 'vue';
+import preventScroll from '../composables/preventScroll'
+import preventKeyBoardScroll from '../composables/preventKeyBoardScroll'
+import inputEvent from '../composables/inputEvent'
 
 const customize = customizeStore()
 const {font, toggleCapsToast} = storeToRefs(customize)
 
+const nextstore = nextStore()
+const {goNext} = storeToRefs(nextstore)
+
+const typingstatestore = typingStateStore()
+const {refocus, focus, textIsFocused} = storeToRefs(typingstatestore)
+
 const store = mainStore()
-const { preferredConfigs, hasCompletedSession} = storeToRefs(store)
+const { testContainerEl, preferredConfigs, hasCompletedSession} = storeToRefs(store)
+
+const connect = connectStore()
+const {connectionAvailable } = storeToRefs(connect)
+
+onMounted(() => {
+  function handleTouchMove(event) {
+      if (event.target === testContainerEl.value || testContainerEl.value.contains(event.srcElement)) {
+          preventScroll(event);
+      }
+  }
+
+  function handleWheel(event) {
+      if (event.target === testContainerEl.value || testContainerEl.value.contains(event.srcElement)) {
+          preventScroll(event);
+      }
+  }
+
+  function handleBlur() {
+      refocus.value = true;
+  }
+
+  function handleFocus() {
+      refocus.value = false;
+  }
+
+  function handleOffline() {
+      connectionAvailable.value = false;
+  }
+
+  function handleOnline() {
+      DB(true);
+  }
+
+  function handleKeydown(event) {
+      if (
+          (event.key === 'Escape' && !hasCompletedSession.value) || 
+          (event.key === 'Enter' && hasCompletedSession.value)
+      ) {
+          goNext.value = true;
+          return;
+      }
+
+      if (textIsFocused.value) {
+          preventKeyBoardScroll(event);
+      }
+      inputEvent(event);
+  }
+
+  function handleClick(event) {
+    console.log('adf')
+      if (hasCompletedSession.value) return;
+      const focusElement = event.srcElement.id === 'focus' || event.srcElement.closest('#focus');
+      focusElement ? focus.value = true : focus.value = false;
+  }
+
+  useEventListener('touchmove', handleTouchMove)
+  useEventListener('wheel', handleWheel)
+  useEventListener('blur', handleBlur)
+  useEventListener('focus', handleFocus)
+  useEventListener('offline', handleOffline)
+  useEventListener('online', handleOnline)
+  useEventListener('keydown', handleKeydown)
+  useEventListener('click', handleClick)
+
+  onUnmounted(() => {
+    useEventListener('touchmove', handleTouchMove, true)
+    useEventListener('wheel', handleWheel, true)
+    useEventListener('blur', handleBlur, true)
+    useEventListener('focus', handleFocus, true)
+    useEventListener('offline', handleOffline, true)
+    useEventListener('online', handleOnline, true)
+    useEventListener('keydown', handleKeydown, true)
+    useEventListener('click', handleClick, true)
+  })
+})
 
 useWatchers({
   focus,
@@ -39,18 +119,5 @@ useWatchers({
   font,
   preferredConfigs,
   toggleCapsToast,
-})
-
-useEventListener(document, 'keydown')
-useEventListener(window, 'input')
-useEventListener(window, 'touchmove')
-useEventListener(window, 'wheel')
-useEventListener(window, 'blur')
-useEventListener(window, 'focus')
-useEventListener(window, 'offline')
-useEventListener(window, 'online')
-useEventListener(window, 'keypress')
-useEventListener(window, 'keydown')
-useEventListener(window, 'click')
-useEventListener(inputEl.value, 'input')
+});
 </script>

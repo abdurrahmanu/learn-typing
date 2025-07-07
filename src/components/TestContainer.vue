@@ -1,7 +1,6 @@
 <template>
     <main class="w-[90%] min-h-[150px] space-y-[2px] relative transition-none max-w-[1200px] m-auto" :class="[isMobile() && focus ? 'pt-8' : '']">
         <div class="relative max-w-[700px] h-fit flex text-[16px] justify-between min-h-[30px] m-auto py-1 px-3">      
-            <MobileInput />
             <div class="space-x-[50px]">
                 <Countdown 
                     v-show="(isTouchScreenDevice() && focus && customizers['timer']) || customizers['timer']"
@@ -15,7 +14,7 @@
             <WordCount />
         </div>
         <AllCharacters />
-        <NextButton @focusInputEl="focusInputElement()" />
+        <NextButton @focusInputEl="focus = true" />
     </main>
 </template>
 
@@ -25,7 +24,6 @@ import { isTouchScreenDevice } from '../composables/isTouchScreenDevice';
 import { isMobile } from '../composables/isMobile';
 import Countdown from './Countdown.vue';
 import WordCount from './WordCount.vue';
-import MobileInput from'./MobileInput.vue'
 import restart from './svg/restart.vue'
 import NextButton from './NextButton.vue';
 import {storeToRefs} from 'pinia'
@@ -37,7 +35,6 @@ import {timerStore} from '../store/timerStore'
 import { typingStateStore } from '../store/typingStateStore';
 import { generateTest } from '../composables/generateTest';
 import AllCharacters from './AllCharacters.vue';
-import focusInputElement from '../composables/focusInputElement';
 import useWatchers from '../composables/useWatchers';
 import { textBoxHeight } from '../composables/textBox';
 
@@ -67,7 +64,7 @@ useWatchers({
 onMounted(() => {
     textBoxHeight()
     generateTest(customizers.value)
-    isTouchScreenDevice() && focusInputElement()
+    focus.value = true
 })
 </script>
 
