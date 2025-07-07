@@ -22,13 +22,9 @@ export const managePlayerInput = () => {
 
     characterEqualityArray.value.push(playerInput.value[playerInput.value.length - 1] === containerText.value[playerInput.value.length - 1])
     playerInputLength.value = playerInput.value.length
+
+    playerLastInput.value = ''
 }
-
-
-
-
-
-
 
 
 

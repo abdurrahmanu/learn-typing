@@ -8,19 +8,19 @@ import { typingStateStore } from "../store/typingStateStore";
 export default function inputEvent (e) {
     const typingstatestore = typingStateStore()
     const {playerInput, playerInputLength, backspaceIsPressed, playerLastInput, enterKey} = storeToRefs(typingstatestore)
-
+    
     const timerstore = timerStore()
     const {startTime, beginCountdown, beatCountdown} = storeToRefs(timerstore)
-
+    
     const correctWrongCountstore = correctWrongCountStore()
     const {wrongCount} = storeToRefs(correctWrongCountstore)
-
+    
     const store = mainStore()
     const { containerText, hasCompletedSession} = storeToRefs(store)
     
     const customize = customizeStore()
     const {backspace, pauseTyping, toggleCapsToast, customizers} = storeToRefs(customize)
-
+    
     const returnOnWrongInput = () => {
         return customizers.value['stop-on-error'] && wrongCount.value && e.key !== 'Backspace'
     }

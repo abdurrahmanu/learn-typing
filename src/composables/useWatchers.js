@@ -29,7 +29,7 @@ export default function useWatchers({
     const {showConnectionStrength, connectionStrength} = storeToRefs(connectstore)
 
     const typingstatestore = typingStateStore()
-    const {playerInput, playerInputLength} = storeToRefs(typingstatestore)
+    const {playerInput, playerInputLength, inputEl} = storeToRefs(typingstatestore)
     const {resetTypingState} = typingstatestore
     
     const timerstore = timerStore()
@@ -125,8 +125,11 @@ export default function useWatchers({
 
       if (focus) {
         watch(focus, newVal => {
-            if (isMobile()) {
-              newVal ? hideElements.value = true : ''
+            if (newVal) {
+                inputEl.value.focus()
+                if (isMobile()) newVal ? hideElements.value = true : ''
+            } else {
+                inputEl.value.blur()
             }
           })
       }

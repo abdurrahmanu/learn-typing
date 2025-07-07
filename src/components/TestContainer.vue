@@ -3,16 +3,17 @@
         <div class="relative max-w-[700px] h-fit flex text-[16px] justify-between min-h-[30px] m-auto py-1 px-3">      
             <div class="space-x-[50px]">
                 <Countdown 
-                    v-show="(isTouchScreenDevice() && focus && customizers['timer']) || customizers['timer']"
-                    class="absolute left-[20px]"
-                    :length="countdown" 
-                    :start="beginCountdown" />
+                v-show="(isTouchScreenDevice() && focus && customizers['timer']) || customizers['timer']"
+                class="absolute left-[20px]"
+                :length="countdown" 
+                :start="beginCountdown"/>
             </div>
             <div class="w-fit h-fit"> 
                 <restart v-show="!hasCompletedSession && playerInputLength" @click="goNext = true" class="absolute w-6 left-[50%] translate-x-[-50%] "/>
             </div>
             <WordCount />
         </div>
+        <OnScreenInput />
         <AllCharacters />
         <NextButton @focusInputEl="focus = true" />
     </main>
@@ -25,7 +26,7 @@ import { isMobile } from '../composables/isMobile';
 import Countdown from './Countdown.vue';
 import WordCount from './WordCount.vue';
 import restart from './svg/restart.vue'
-import NextButton from './NextButton.vue';
+import NextButton from './focusButton.vue';
 import {storeToRefs} from 'pinia'
 import {mainStore} from '../store/mainStore'
 import {nextStore} from '../store/nextStore'
@@ -37,6 +38,7 @@ import { generateTest } from '../composables/generateTest';
 import AllCharacters from './AllCharacters.vue';
 import useWatchers from '../composables/useWatchers';
 import { textBoxHeight } from '../composables/textBox';
+import OnScreenInput from './onScreenInput.vue';
 
 const typingstatestore = typingStateStore()
 const { focus, playerInputLength, playerInput} = storeToRefs(typingstatestore)

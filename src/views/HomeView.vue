@@ -32,7 +32,7 @@ const nextstore = nextStore()
 const {goNext} = storeToRefs(nextstore)
 
 const typingstatestore = typingStateStore()
-const {refocus, focus, textIsFocused} = storeToRefs(typingstatestore)
+const {refocus, focus} = storeToRefs(typingstatestore)
 
 const store = mainStore()
 const { testContainerEl, preferredConfigs, hasCompletedSession} = storeToRefs(store)
@@ -78,14 +78,13 @@ onMounted(() => {
           return;
       }
 
-      if (textIsFocused.value) {
+      if (focus.value) {
           preventKeyBoardScroll(event);
       }
       inputEvent(event);
   }
 
   function handleClick(event) {
-    console.log('adf')
       if (hasCompletedSession.value) return;
       const focusElement = event.srcElement.id === 'focus' || event.srcElement.closest('#focus');
       focusElement ? focus.value = true : focus.value = false;

@@ -3,8 +3,8 @@ import {ref, computed} from 'vue'
 import { mainStore } from './mainStore'
 
 export const typingStateStore = defineStore('typingStateStore', () => {
+    
     const mainstore = mainStore()
-
     const spaces = ref({})
     const playerInput = ref('') 
     const playerLastInput = ref('')
@@ -15,7 +15,6 @@ export const typingStateStore = defineStore('typingStateStore', () => {
     const backspaceIsPressed = ref(false)
     const inputEl = ref(null)
     const currentWordArray = ref([])
-    const textIsFocused = ref(false)
 
     const completionLevel = computed(() => {
         return ((playerInputLength.value) / mainstore.containerText.length) * 100 
@@ -41,9 +40,8 @@ export const typingStateStore = defineStore('typingStateStore', () => {
         enterKey,
         focus,
         backspaceIsPressed,
-        inputEl,
         currentWordArray,
         typedWhiteSpaces,
-        textIsFocused,
+        inputEl,
     }
 })
