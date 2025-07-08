@@ -2,7 +2,6 @@ import {defineStore} from 'pinia'
 import {ref, computed} from 'vue'
 
 export const mainStore = defineStore('mainStore', () => {
-    const tttt = ref(0)
     const preferredConfigs = ref(undefined)
     const route = ref(null)
     const quoteType = ref('')
@@ -66,6 +65,5 @@ export const mainStore = defineStore('mainStore', () => {
         movie,
         customTests,
         authoredQuote,
-        tttt,
     }
 })

@@ -41,7 +41,7 @@ import { textBoxHeight } from '../composables/textBox';
 import OnScreenInput from './onScreenInput.vue';
 
 const typingstatestore = typingStateStore()
-const { focus, playerInputLength, playerInput} = storeToRefs(typingstatestore)
+const { focus, playerInputLength} = storeToRefs(typingstatestore)
 
 const timerstore = timerStore()
 const { beginCountdown} = storeToRefs(timerstore)
@@ -50,7 +50,7 @@ const nextstore = nextStore()
 const {goNext} = storeToRefs(nextstore)
 
 const mainstore = mainStore()
-const { hasCompletedSession, scrollTextContainer, tttt} = storeToRefs(mainstore)
+const { hasCompletedSession, scrollTextContainer} = storeToRefs(mainstore)
 
 const customize = customizeStore()
 const { customizers} = storeToRefs(customize)
