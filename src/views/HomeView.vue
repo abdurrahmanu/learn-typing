@@ -26,6 +26,7 @@ import preventScroll from '../composables/preventScroll'
 import preventKeyBoardScroll from '../composables/preventKeyBoardScroll'
 import inputEvent from '../composables/inputEvent'
 import { DB } from '../composables/connectDB';
+import {ref} from 'vue'
 
 const a = ref('')
 
