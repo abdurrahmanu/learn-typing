@@ -31,6 +31,7 @@ export const managePlayerInput = () => {
         hasCompletedSession.value = true
     }
 
+    
     playerLastInput.value = ''
 }
 
