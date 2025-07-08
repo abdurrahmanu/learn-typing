@@ -1,8 +1,9 @@
 <template>
     <input 
-    class="max-w-[1px] outline-none appearance-none z-[-1] opacity-0 max-h-[1px]"
+    class=""
     ref="inputEl"
     type="text">
+    <!-- class="max-w-[1px] outline-none appearance-none z-[-1] opacity-0 max-h-[1px]" -->
 </template>
 
 <script setup>
