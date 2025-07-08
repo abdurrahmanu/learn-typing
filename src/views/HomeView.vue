@@ -3,6 +3,7 @@
       <div class="w-[100%] mx-auto flex-none space-y-2">   
         <Customize />
         <TestContainer />
+        {{ playerInput }}
       </div>
     </div>
 </template>
