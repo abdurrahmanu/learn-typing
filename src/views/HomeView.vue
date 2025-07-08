@@ -28,8 +28,6 @@ import inputEvent from '../composables/inputEvent'
 import { DB } from '../composables/connectDB';
 import {ref} from 'vue'
 
-const a = ref('')
-
 const customize = customizeStore()
 const {font, toggleCapsToast} = storeToRefs(customize)
 
@@ -74,28 +72,27 @@ function handleOnline() {
 }
 
 function handleKeydown(event) {
-if (
-    (event.key === 'Escape' && !hasCompletedSession.value) || 
-    (event.key === 'Enter' && hasCompletedSession.value)
-) {
-    goNext.value = true;
-    return;
-}
-
-if (focus.value) {
-    preventKeyBoardScroll(event);
-}
-
-let value = inputEvent(event)
-
-a.value += value
-if (value) {
-    if (value === 'delete') {
-        playerInput.value = playerInput.value.slice(0, -1);
-    } else {
-        playerInput.value += value;
+    if (
+        (event.key === 'Escape' && !hasCompletedSession.value) || 
+        (event.key === 'Enter' && hasCompletedSession.value)
+    ) {
+        goNext.value = true;
+        return;
     }
-}
+
+    if (focus.value) {
+        preventKeyBoardScroll(event);
+    }
+
+    let value = inputEvent(event)
+    
+    if (value) {
+        if (value === 'delete') {
+            playerInput.value = playerInput.value.slice(0, -1);
+        } else {
+            playerInput.value += value;
+        }
+    }
 
     if (event.key === 'CapsLock') {
         toggleCapsToast.value = true;
