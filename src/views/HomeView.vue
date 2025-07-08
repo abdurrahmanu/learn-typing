@@ -55,8 +55,7 @@ function handleKeydown(event) {
         preventKeyBoardScroll(event);
     }
 
-    z.value += event.key
-
+    z.value = event
     let value = inputEvent(event)
 
     if (value) {
