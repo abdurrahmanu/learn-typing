@@ -17,11 +17,6 @@ export default function inputEvent (e) {
     
     const customize = customizeStore()
     const {backspace, pauseTyping, toggleCapsToast, customizers} = storeToRefs(customize)
-    
-    const mainstore = mainStore()
-    const {tttt} = storeToRefs(mainstore)
-
-    tttt.value++
 
     const returnOnWrongInput = () => {
         return customizers.value['stop-on-error'] && wrongCount.value && e.key !== 'Backspace'
