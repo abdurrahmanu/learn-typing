@@ -18,18 +18,18 @@ export default function inputEvent (e) {
     }
 
     const returnFromCapsLockEvent = () => {
-        // if (!customizers.value['capslock']) {
-        //     if (e.getModifierState('CapsLock') && e.key !== 'CapsLock') {
-        //         if (!toggleCapsToast.value) toggleCapsToast.value = true
-        //         return true
-        //     }
+        if (!customizers.value['capslock']) {
+            if (e.getModifierState('CapsLock') && e.key !== 'CapsLock') {
+                if (!toggleCapsToast.value) toggleCapsToast.value = true
+                return true
+            }
 
-        //     if (e.key === 'CapsLock') {
-        //         if (e.getModifierState('CapsLock')) toggleCapsToast.value = true
-        //         else toggleCapsToast.value = false
-        //         return true
-        //     }
-        // }
+            if (e.key === 'CapsLock') {
+                if (e.getModifierState('CapsLock')) toggleCapsToast.value = true
+                else toggleCapsToast.value = false
+                return true
+            }
+        }
     }
 
     const invalidBackspaceEvent = () => {
@@ -39,10 +39,10 @@ export default function inputEvent (e) {
     }
 
     if (
-        pauseTyping.value ||
+        // pauseTyping.value ||
         returnOnWrongInput() || 
-        invalidBackspaceEvent()
-        // returnFromCapsLockEvent() ||
+        invalidBackspaceEvent() ||
+        returnFromCapsLockEvent()
     ) return
 
     if (e.key === 'Enter' && !enterKey.value) return

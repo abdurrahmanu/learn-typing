@@ -11,7 +11,7 @@ export default function focusInputElement (delay) {
     const { pauseTyping } = storeToRefs(customize)
 
     const typingstatestore = typingStateStore()
-    const {inputEl, focus} = storeToRefs(typingstatestore)
+    const {focus} = storeToRefs(typingstatestore)
 
     if (pauseTyping.value && route.value !== 'home') return
 
