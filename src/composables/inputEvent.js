@@ -3,7 +3,6 @@ import { storeToRefs } from 'pinia';
 import { correctWrongCountStore } from "../store/correctWrongCountStore";
 import {timerStore} from '../store/timerStore'
 import { typingStateStore } from "../store/typingStateStore";
-import { mainStore } from "../store/mainStore";
 
 export default function inputEvent (e) {
     const typingstatestore = typingStateStore()
