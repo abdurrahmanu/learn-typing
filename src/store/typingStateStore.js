@@ -3,7 +3,8 @@ import {ref, computed} from 'vue'
 import { mainStore } from './mainStore'
 
 export const typingStateStore = defineStore('typingStateStore', () => {
-    
+    const z = ref('-') // This is a placeholder, replace with actual logic if needed
+
     const mainstore = mainStore()
     const spaces = ref({})
     const playerInput = ref('') 
@@ -47,5 +48,6 @@ export const typingStateStore = defineStore('typingStateStore', () => {
         currentWordArray,
         typedWhiteSpaces,
         inputEl,
+        z
     }
 })

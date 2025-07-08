@@ -3,7 +3,7 @@
       <div class="w-[100%] mx-auto flex-none space-y-2">   
         <Customize />
         <TestContainer />
-        {{ pauseTyping }}-{{ playerInput }}-{{ a }}
+        {{ z }}
       </div>
     </div>
 </template>
@@ -26,18 +26,15 @@ import preventScroll from '../composables/preventScroll'
 import preventKeyBoardScroll from '../composables/preventKeyBoardScroll'
 import inputEvent from '../composables/inputEvent'
 import { DB } from '../composables/connectDB';
-import { ref } from 'vue';
-
-const a = ref('')
 
 const customize = customizeStore()
-const {font, toggleCapsToast, pauseTyping} = storeToRefs(customize)
+const {font, toggleCapsToast} = storeToRefs(customize)
 
 const nextstore = nextStore()
 const {goNext} = storeToRefs(nextstore)
 
 const typingstatestore = typingStateStore()
-const {refocus, focus, playerInput} = storeToRefs(typingstatestore)
+const {refocus, focus, playerInput, z} = storeToRefs(typingstatestore)
 
 const store = mainStore()
 const { testContainerEl, preferredConfigs, hasCompletedSession} = storeToRefs(store)
@@ -58,9 +55,10 @@ function handleKeydown(event) {
         preventKeyBoardScroll(event);
     }
 
+    z.value += event.key
+
     let value = inputEvent(event)
-    a.value = value;
-    
+
     if (value) {
         if (value === 'delete') {
             playerInput.value = playerInput.value.slice(0, -1);

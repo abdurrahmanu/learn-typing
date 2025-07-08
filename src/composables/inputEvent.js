@@ -5,7 +5,7 @@ import { typingStateStore } from "../store/typingStateStore";
 
 export default function inputEvent (e) {
     const typingstatestore = typingStateStore()
-    const {playerInputLength, backspaceIsPressed, enterKey} = storeToRefs(typingstatestore)
+    const {playerInputLength, backspaceIsPressed, enterKey, z} = storeToRefs(typingstatestore)
     
     const correctWrongCountstore = correctWrongCountStore()
     const {wrongCount} = storeToRefs(correctWrongCountstore)
@@ -17,20 +17,20 @@ export default function inputEvent (e) {
         return customizers.value['stop-on-error'] && wrongCount.value && e.key !== 'Backspace'
     }
 
-    // const returnFromCapsLockEvent = () => {
-    //     if (!customizers.value['capslock']) {
-    //         if (e.getModifierState('CapsLock') && e.key !== 'CapsLock') {
-    //             if (!toggleCapsToast.value) toggleCapsToast.value = true
-    //             return true
-    //         }
+    const returnFromCapsLockEvent = () => {
+        if (!customizers.value['capslock']) {
+            if (e.getModifierState('CapsLock') && e.key !== 'CapsLock') {
+                if (!toggleCapsToast.value) toggleCapsToast.value = true
+                return true
+            }
 
-    //         if (e.key === 'CapsLock') {
-    //             if (e.getModifierState('CapsLock')) toggleCapsToast.value = true
-    //             else toggleCapsToast.value = false
-    //             return true
-    //         }
-    //     }
-    // }
+            if (e.key === 'CapsLock') {
+                if (e.getModifierState('CapsLock')) toggleCapsToast.value = true
+                else toggleCapsToast.value = false
+                return true
+            }
+        }
+    }
 
     const invalidBackspaceEvent = () => {
         let noError = !backspace.value || !wrongCount.value || !playerInputLength.value
@@ -45,8 +45,8 @@ export default function inputEvent (e) {
         pauseTyping.value ||
         returnOnWrongInput() || 
         invalidBackspaceEvent() ||
-        invaLidEnterEvent()
-        // returnFromCapsLockEvent()
+        invaLidEnterEvent() ||
+        returnFromCapsLockEvent()
     ) return
 
     if (e.key === 'Enter' || e.key === ' ') {
