@@ -25,10 +25,6 @@ export const typingStateStore = defineStore('typingStateStore', () => {
 
     const typedWhiteSpaces = computed(() => Object.keys(spaces.value).length)
 
-    // const playerInput = computed(() => {
-    //     return
-    // })
-
     const playerLastInput = computed(() => {
         return playerInput.value[playerInput.value.length - 1]
     })
