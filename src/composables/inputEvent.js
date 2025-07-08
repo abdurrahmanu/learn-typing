@@ -18,8 +18,6 @@ export default function inputEvent (e) {
     const customize = customizeStore()
     const {backspace, pauseTyping, toggleCapsToast, customizers} = storeToRefs(customize)
 
-    const mainstore = mainStore()
-
     const returnOnWrongInput = () => {
         return customizers.value['stop-on-error'] && wrongCount.value && e.key !== 'Backspace'
     }
@@ -68,23 +66,18 @@ export default function inputEvent (e) {
 
     if ((e.key === 'Enter' && enterKey.value) || e.key === ' ') {
         if (e.key === ' ') e.preventDefault()
-        playerLastInput.value = ' '
+        playerInput.value += ' '
     }
 
     if (e.key === 'Backspace') {        
         backspaceIsPressed.value = true
-        playerInputLength.value--
         playerInput.value = playerInput.value.slice(0, -1)
-        playerLastInput.value = playerInput.value[playerInput.value.length - 1]
         return
     }
     
     else backspaceIsPressed.value = false
  
-    if (e.key.length === 1 && e.key !== 'Dead') playerLastInput.value = eventSelector 
-
-    playerInput.value += playerLastInput.value
-    playerInputLength.value = playerInput.value.length
+    if (e.key.length === 1 && e.key !== 'Dead' && e.key !== ' ') playerInput.value += eventSelector 
 
     if (playerInputLength.value === 1) startTimer() 
 }

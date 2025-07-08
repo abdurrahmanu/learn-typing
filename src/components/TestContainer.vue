@@ -20,7 +20,7 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { isTouchScreenDevice } from '../composables/isTouchScreenDevice';
 import { isMobile } from '../composables/isMobile';
 import Countdown from './Countdown.vue';
@@ -66,6 +66,8 @@ onMounted(() => {
     textBoxHeight()
     generateTest(customizers.value)
     focus.value = true
+
+
 })
 </script>
 

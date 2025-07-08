@@ -14,3 +14,4 @@ it has been long so the codebase is looking strange even though I wrote it.
 ** wrongCoutn doesnt reduce, -- think it is from backspace
 
 ** pressing escape routes to result page if user has started typing
+** typing still goes on on blur --- fix

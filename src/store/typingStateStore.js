@@ -7,8 +7,6 @@ export const typingStateStore = defineStore('typingStateStore', () => {
     const mainstore = mainStore()
     const spaces = ref({})
     const playerInput = ref('') 
-    const playerLastInput = ref('')
-    const playerInputLength = ref(0)
     const refocus = ref(false)
     const enterKey = ref(false)
     const focus = ref(false)
@@ -21,13 +19,23 @@ export const typingStateStore = defineStore('typingStateStore', () => {
     })
 
     const resetTypingState = () => {
-        playerLastInput.value = ''
         playerInput.value = ''
-        playerInputLength.value = 0
         spaces.value = {}
     }
 
     const typedWhiteSpaces = computed(() => Object.keys(spaces.value).length)
+
+    // const playerInput = computed(() => {
+    //     return
+    // })
+
+    const playerLastInput = computed(() => {
+        return playerInput.value[playerInput.value.length - 1]
+    })
+
+    const playerInputLength = computed(() => {
+        return playerInput.value.length
+    })
 
     return {
         resetTypingState,

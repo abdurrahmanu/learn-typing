@@ -30,8 +30,6 @@ export const managePlayerInput = () => {
         if (customizers.value['timer']) beatCountdown.value = true
         hasCompletedSession.value = true
     }
-
-    playerLastInput.value = ''
 }
 
 
