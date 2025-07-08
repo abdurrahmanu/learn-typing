@@ -3,7 +3,7 @@
       <div class="w-[100%] mx-auto flex-none space-y-2">   
         <Customize />
         <TestContainer />
-        {{ pauseTyping }}-{{ playerInput }}-
+        {{ pauseTyping }}-{{ playerInput }}-{{ a }}
       </div>
     </div>
 </template>
@@ -45,34 +45,6 @@ const { testContainerEl, preferredConfigs, hasCompletedSession} = storeToRefs(st
 const connect = connectStore()
 const {connectionAvailable } = storeToRefs(connect)
 
-function handleTouchMove(event) {
-    if (event.target === testContainerEl.value || testContainerEl.value.contains(event.srcElement)) {
-        preventScroll(event);
-    }
-}
-
-function handleWheel(event) {
-    if (event.target === testContainerEl.value || testContainerEl.value.contains(event.srcElement)) {
-        preventScroll(event);
-    }
-}
-
-function handleBlur() {
-    refocus.value = true;
-}
-
-function handleFocus() {
-    refocus.value = false;
-}
-
-function handleOffline() {
-    connectionAvailable.value = false;
-}
-
-function handleOnline() {
-    DB(true);
-}
-
 function handleKeydown(event) {
     if (
         (event.key === 'Escape' && !hasCompletedSession.value) || 
@@ -103,6 +75,34 @@ function handleKeydown(event) {
             toggleCapsToast.value = false;
         }, 2000);
     }
+}
+
+function handleTouchMove(event) {
+    if (event.target === testContainerEl.value || testContainerEl.value.contains(event.srcElement)) {
+        preventScroll(event);
+    }
+}
+
+function handleWheel(event) {
+    if (event.target === testContainerEl.value || testContainerEl.value.contains(event.srcElement)) {
+        preventScroll(event);
+    }
+}
+
+function handleBlur() {
+    refocus.value = true;
+}
+
+function handleFocus() {
+    refocus.value = false;
+}
+
+function handleOffline() {
+    connectionAvailable.value = false;
+}
+
+function handleOnline() {
+    DB(true);
 }
 
 function handleClick(event) {
