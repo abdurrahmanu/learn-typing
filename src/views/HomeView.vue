@@ -75,6 +75,7 @@ onMounted(() => {
   }
 
   function handleKeydown(event) {
+    aaa.value = playerInput.value
       if (
           (event.key === 'Escape' && !hasCompletedSession.value) || 
           (event.key === 'Enter' && hasCompletedSession.value)
@@ -88,7 +89,7 @@ onMounted(() => {
       }
 
       inputEvent(event);
-      aaa.value += 'aa'
+      aaa.value = playerInput.value
   }
 
   function handleClick(event) {
