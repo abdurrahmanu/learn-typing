@@ -33,7 +33,7 @@ const nextstore = nextStore()
 const {goNext} = storeToRefs(nextstore)
 
 const typingstatestore = typingStateStore()
-const {refocus, focus} = storeToRefs(typingstatestore)
+const {refocus, focus, playerInput} = storeToRefs(typingstatestore)
 
 const store = mainStore()
 const { testContainerEl, preferredConfigs, hasCompletedSession} = storeToRefs(store)
@@ -84,6 +84,7 @@ onMounted(() => {
       }
 
       inputEvent(event);
+      useWatchers({playerInput})
   }
 
   function handleClick(event) {

@@ -25,7 +25,6 @@ import { customizeStore } from '../store/customizeStore';
 import { themeStore } from '../store/themeStore';
 import { isTouchScreenDevice } from '../composables/isTouchScreenDevice';
 import { isMobile } from '../composables/isMobile';
-import useWatchers from '../composables/useWatchers';
 
 const typingstatestore = typingStateStore()
 const {refocus, focus, inputEl, playerInput} = storeToRefs(typingstatestore)
@@ -50,6 +49,4 @@ const focusInput = (boolean) => {
         if (isTouchScreenDevice()) inputEl.value.blur()
     }
 }
-
-useWatchers({playerInput})
 </script>
