@@ -89,14 +89,13 @@ onMounted(() => {
 
     let value = inputEvent(event)
 
+    a.value += value
     if (value) {
         if (value === 'delete') {
             playerInput.value = playerInput.value.slice(0, -1);
         } else {
             playerInput.value += value;
         }
-
-        a.value = playerInput.value
     }
 
       if (event.key === 'CapsLock') {
