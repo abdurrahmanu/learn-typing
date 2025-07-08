@@ -10,7 +10,7 @@ export const managePlayerInput = () => {
     const { playerInput, playerInputLength, playerLastInput} = storeToRefs(typingstatestore)
 
     const timerstore = timerStore()
-    const {characterEqualityArray, beatCountdown} = storeToRefs(timerstore)
+    const {characterEqualityArray, beatCountdown, beginCountdown, startTime} = storeToRefs(timerstore)
 
     const correctWrongCountstore = correctWrongCountStore()
     const {correctCount, wrongCount} = storeToRefs(correctWrongCountstore)
@@ -20,6 +20,18 @@ export const managePlayerInput = () => {
 
     const customize = customizeStore()
     const {customizers} = storeToRefs(customize)
+
+    const startTimer = () => {
+        if (playerInputLength.value === 1)  {
+            if (customizers.value['timer']) {
+                beatCountdown.value = false
+                beginCountdown.value = true
+            }
+            startTime.value = performance.now();
+        } 
+    }
+
+    if (playerInputLength.value === 1) startTimer() 
     
     if (playerLastInput.value === containerText.value[playerInput.value.length - 1]) correctCount.value ++
     else wrongCount.value++

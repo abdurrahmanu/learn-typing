@@ -1,16 +1,11 @@
 import { customizeStore } from "../store/customizeStore";
 import { storeToRefs } from 'pinia';
 import { correctWrongCountStore } from "../store/correctWrongCountStore";
-import {timerStore} from '../store/timerStore'
 import { typingStateStore } from "../store/typingStateStore";
-import { mainStore } from "../store/mainStore";
 
 export default function inputEvent (e) {
     const typingstatestore = typingStateStore()
-    const {playerInput, playerInputLength, backspaceIsPressed, playerLastInput, enterKey} = storeToRefs(typingstatestore)
-    
-    const timerstore = timerStore()
-    const {startTime, beginCountdown, beatCountdown} = storeToRefs(timerstore)
+    const {playerInput, backspaceIsPressed, enterKey} = storeToRefs(typingstatestore)
     
     const correctWrongCountstore = correctWrongCountStore()
     const {wrongCount} = storeToRefs(correctWrongCountstore)
@@ -54,30 +49,19 @@ export default function inputEvent (e) {
 
     let eventSelector = e.key
 
-    const startTimer = () => {
-        if (playerInputLength.value === 1)  {
-            if (customizers.value['timer']) {
-                beatCountdown.value = false
-                beginCountdown.value = true
-            }
-            startTime.value = performance.now();
-        } 
-    }
-
     if ((e.key === 'Enter' && enterKey.value) || e.key === ' ') {
         if (e.key === ' ') e.preventDefault()
-        playerInput.value += ' '
+        return ' '
     }
 
     if (e.key === 'Backspace') {        
         backspaceIsPressed.value = true
-        playerInput.value = playerInput.value.slice(0, -1)
-        return
+        return 'delete'
     }
     
     else backspaceIsPressed.value = false
  
-    if (e.key.length === 1 && e.key !== 'Dead' && e.key !== ' ') playerInput.value += eventSelector 
-
-    if (playerInputLength.value === 1) startTimer() 
+    if (e.key.length === 1 && e.key !== 'Dead' && e.key !== ' ') {
+        return eventSelector
+    }
 }
