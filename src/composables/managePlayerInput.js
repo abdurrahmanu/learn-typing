@@ -7,7 +7,7 @@ import { customizeStore } from "../store/customizeStore";
 
 export const managePlayerInput = () => {
     const typingstatestore = typingStateStore()
-    const { playerInput, playerInputLength, playerLastInput} = storeToRefs(typingstatestore)
+    const { playerInputLength, playerLastInput} = storeToRefs(typingstatestore)
 
     const timerstore = timerStore()
     const {characterEqualityArray, beatCountdown, beginCountdown, startTime} = storeToRefs(timerstore)
@@ -33,18 +33,18 @@ export const managePlayerInput = () => {
 
     if (playerInputLength.value === 1) startTimer() 
     
-    if (playerLastInput.value === containerText.value[playerInput.value.length - 1]) correctCount.value ++
+    let equality = playerLastInput.value === containerText.value[playerInputLength.value - 1]
+
+    if (equality) correctCount.value ++
     else wrongCount.value++
 
-    characterEqualityArray.value.push(playerInput.value[playerInput.value.length - 1] === containerText.value[playerInput.value.length - 1])
+    characterEqualityArray.value.push(equality)
 
     if (playerInputLength.value === containerText.value.length) {
         if (customizers.value['timer']) beatCountdown.value = true
         hasCompletedSession.value = true
     }
 }
-
-
 
 
 

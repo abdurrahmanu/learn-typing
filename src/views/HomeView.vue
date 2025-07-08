@@ -45,73 +45,73 @@ const { testContainerEl, preferredConfigs, hasCompletedSession} = storeToRefs(st
 const connect = connectStore()
 const {connectionAvailable } = storeToRefs(connect)
 
+function handleTouchMove(event) {
+    if (event.target === testContainerEl.value || testContainerEl.value.contains(event.srcElement)) {
+        preventScroll(event);
+    }
+}
+
+function handleWheel(event) {
+    if (event.target === testContainerEl.value || testContainerEl.value.contains(event.srcElement)) {
+        preventScroll(event);
+    }
+}
+
+function handleBlur() {
+    refocus.value = true;
+}
+
+function handleFocus() {
+    refocus.value = false;
+}
+
+function handleOffline() {
+    connectionAvailable.value = false;
+}
+
+function handleOnline() {
+    DB(true);
+}
+
+function handleKeydown(event) {
+if (
+    (event.key === 'Escape' && !hasCompletedSession.value) || 
+    (event.key === 'Enter' && hasCompletedSession.value)
+) {
+    goNext.value = true;
+    return;
+}
+
+if (focus.value) {
+    preventKeyBoardScroll(event);
+}
+
+let value = inputEvent(event)
+
+a.value += value
+if (value) {
+    if (value === 'delete') {
+        playerInput.value = playerInput.value.slice(0, -1);
+    } else {
+        playerInput.value += value;
+    }
+}
+
+    if (event.key === 'CapsLock') {
+        toggleCapsToast.value = true;
+        setTimeout(() => {
+            toggleCapsToast.value = false;
+        }, 2000);
+    }
+}
+
+function handleClick(event) {
+    if (hasCompletedSession.value) return;
+    const focusElement = event.srcElement.id === 'focus' || event.srcElement.closest('#focus');
+    focusElement ? focus.value = true : focus.value = false;
+}
+
 onMounted(() => {
-  function handleTouchMove(event) {
-      if (event.target === testContainerEl.value || testContainerEl.value.contains(event.srcElement)) {
-          preventScroll(event);
-      }
-  }
-
-  function handleWheel(event) {
-      if (event.target === testContainerEl.value || testContainerEl.value.contains(event.srcElement)) {
-          preventScroll(event);
-      }
-  }
-
-  function handleBlur() {
-      refocus.value = true;
-  }
-
-  function handleFocus() {
-      refocus.value = false;
-  }
-
-  function handleOffline() {
-      connectionAvailable.value = false;
-  }
-
-  function handleOnline() {
-      DB(true);
-  }
-
-  function handleKeydown(event) {
-    if (
-        (event.key === 'Escape' && !hasCompletedSession.value) || 
-        (event.key === 'Enter' && hasCompletedSession.value)
-    ) {
-        goNext.value = true;
-        return;
-    }
-
-    if (focus.value) {
-        preventKeyBoardScroll(event);
-    }
-
-    let value = inputEvent(event)
-
-    a.value += value
-    if (value) {
-        if (value === 'delete') {
-            playerInput.value = playerInput.value.slice(0, -1);
-        } else {
-            playerInput.value += value;
-        }
-    }
-
-      if (event.key === 'CapsLock') {
-          toggleCapsToast.value = true;
-          setTimeout(() => {
-              toggleCapsToast.value = false;
-          }, 2000);
-      }
-  }
-
-  function handleClick(event) {
-      if (hasCompletedSession.value) return;
-      const focusElement = event.srcElement.id === 'focus' || event.srcElement.closest('#focus');
-      focusElement ? focus.value = true : focus.value = false;
-  }
-
   useEventListener('touchmove', handleTouchMove)
   useEventListener('wheel', handleWheel)
   useEventListener('blur', handleBlur)
@@ -121,16 +121,17 @@ onMounted(() => {
   useEventListener('keydown', handleKeydown)
   useEventListener('click', handleClick)
 
-  onUnmounted(() => {
-    useEventListener('touchmove', handleTouchMove, true)
-    useEventListener('wheel', handleWheel, true)
-    useEventListener('blur', handleBlur, true)
-    useEventListener('focus', handleFocus, true)
-    useEventListener('offline', handleOffline, true)
-    useEventListener('online', handleOnline, true)
-    useEventListener('keydown', handleKeydown, true)
-    useEventListener('click', handleClick, true)
-  })
+})
+
+onUnmounted(() => {
+  useEventListener('touchmove', handleTouchMove, true)
+  useEventListener('wheel', handleWheel, true)
+  useEventListener('blur', handleBlur, true)
+  useEventListener('focus', handleFocus, true)
+  useEventListener('offline', handleOffline, true)
+  useEventListener('online', handleOnline, true)
+  useEventListener('keydown', handleKeydown, true)
+  useEventListener('click', handleClick, true)
 })
 
 useWatchers({

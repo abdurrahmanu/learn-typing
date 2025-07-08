@@ -29,14 +29,13 @@ export default function useWatchers({
     const {showConnectionStrength, connectionStrength} = storeToRefs(connectstore)
 
     const typingstatestore = typingStateStore()
-    const {playerInput, playerInputLength, inputEl} = storeToRefs(typingstatestore)
+    const {inputEl} = storeToRefs(typingstatestore)
     const {resetTypingState} = typingstatestore
     
     const timerstore = timerStore()
     const {clearTimer, wpmTime} = timerstore
     
     const correctwrongstore = correctWrongCountStore()
-    const {wrongCount} = storeToRefs(correctwrongstore)
     const {clearResult} = correctwrongstore
     
     const nextstore = nextStore()
@@ -72,7 +71,7 @@ export default function useWatchers({
     
     if (input) {
         watch(input, (newVal, oldVal) => {
-            if (!oldVal) wpmTime(hasCompletedSession.value, playerInput.value, playerInputLength.value)
+            if (!oldVal) wpmTime(hasCompletedSession.value)
             managePlayerInput()
         })
     }
@@ -117,7 +116,7 @@ export default function useWatchers({
           watch(completed, (newVal) => {
             if (customizers.value['timer']) clearCounter()
             if (newVal) {
-                wpmTime(hasCompletedSession.value, playerInput.value, playerInputLength.value)
+                wpmTime(hasCompletedSession.value)
                 router.push({path: 'result'})
               }
           }, {deep: true})

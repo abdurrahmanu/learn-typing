@@ -12,13 +12,13 @@
 
 <script setup>
 import {ref, computed, watch} from 'vue'
-import { mainStore } from '../../store/mainStore';
 import { storeToRefs } from 'pinia';
 import { countdownStore } from '../../store/countdownStore'
 import { customizeStore } from '../../store/customizeStore'
 import { themeStore } from '../../store/themeStore';
 import {updateDB} from '../../composables/updateDB'
 import {nextStore} from '../../store/nextStore'
+import { typingStateStore } from '../../store/typingStateStore';
 
 const theme_ = themeStore()
 const {theme} = theme_
@@ -26,8 +26,8 @@ const {theme} = theme_
 const nextstore = nextStore()
 const {goNext} = storeToRefs(nextstore)
 
-const store = mainStore()
-const {playerInput} = storeToRefs(store)
+const typingstatestore = typingStateStore()
+const {playerInputLength} = typingstatestore
 
 const customize = customizeStore()
 const { customizers, font, range} = storeToRefs(customize)
@@ -44,7 +44,7 @@ watch(fontSize, (newVal) => {
     let fontsize = newVal
     updateDB(Object.keys({fontsize})[0], fontsize)
 
-    if (playerInput.value.length) {        
+    if (playerInputLength.value) {        
         if (customizers.value['timer']) clearCounter()
         goNext.value = true
     }

@@ -1,7 +1,13 @@
 import {defineStore} from 'pinia'
 import {ref, computed} from 'vue'
+import { typingStateStore } from './typingStateStore'
+import { storeToRefs } from 'pinia'
 
 export const timerStore = defineStore('timerStore', () => {
+
+    const typingState = typingStateStore()
+    const {playerInput, playerInputLength} = storeToRefs(typingState)
+
     const characterEqualityArray = ref([])
     const wpmPerSecondTimerID = ref(null)
     const wpmPerSecond = ref({})
@@ -12,15 +18,15 @@ export const timerStore = defineStore('timerStore', () => {
     const beginCountdown = ref(false)
     const beatCountdown = ref(null)
 
-    const wpmTime = (sessionComplete, input, length) => {
+    const wpmTime = (sessionComplete) => {
         let secondsCount = ref(0)
         let prevLength = ref(0)
 
         if (!sessionComplete) {
-            if (input) {
+            if (playerInput.value) {
                 wpmPerSecondTimerID.value = setInterval(() => {
                     secondsCount.value++
-                    let gross = input.slice(prevLength.value).length
+                    let gross = playerInput.value.slice(prevLength.value).length
                     let net = gross - characterEqualityArray.value.slice(prevLength.value).filter(bool => bool === false).length
 
                     let grossCharPerMinute = gross * 60
@@ -33,7 +39,7 @@ export const timerStore = defineStore('timerStore', () => {
                         grossWPM: grossWPM,
                         netWPM: netWPM
                     }
-                    prevLength.value = length
+                    prevLength.value = playerInputLength.value
                 }, 1000);
             }
         } 

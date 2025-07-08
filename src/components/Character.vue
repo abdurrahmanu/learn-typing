@@ -25,7 +25,7 @@ const className = ref({
 })
 
 const typingstatestore = typingStateStore()
-const {playerInputLength, playerInput, typedWhiteSpaces, focus, spaces, backspaceIsPressed, enterKey} = storeToRefs(typingstatestore)
+const {playerInputLength, playerLastInput, typedWhiteSpaces, focus, spaces, backspaceIsPressed, enterKey} = storeToRefs(typingstatestore)
 
 const theme_ = themeStore()
 const { theme } = storeToRefs(theme_)
@@ -38,7 +38,7 @@ const { containerText, testContainerEl, allSpacesIndex, scrollTextContainer, scr
 const currentCharacterElement = ref(null)
 
 const customize = customizeStore()
-const { customizers, cursorType, font, blind, repeat } = storeToRefs(customize)
+const { customizers, cursorType, font, blind } = storeToRefs(customize)
 
 const emit = defineEmits(['equal', 'unequal'])
 const props = defineProps({
@@ -47,7 +47,7 @@ const props = defineProps({
 })
 
 const currentIndex = computed(() => playerInputLength.value === props.index)
-const equality = computed(() => playerInput.value[props.index] === containerText.value[props.index])
+const equality = computed(() => playerLastInput.value === containerText.value[props.index])
 
 onMounted(() => {
     watch(currentIndex, newVal => {

@@ -5,7 +5,7 @@ import { typingStateStore } from "../store/typingStateStore";
 
 export default function inputEvent (e) {
     const typingstatestore = typingStateStore()
-    const {playerInput, backspaceIsPressed, enterKey} = storeToRefs(typingstatestore)
+    const {playerInputLength, backspaceIsPressed, enterKey} = storeToRefs(typingstatestore)
     
     const correctWrongCountstore = correctWrongCountStore()
     const {wrongCount} = storeToRefs(correctWrongCountstore)
@@ -34,7 +34,7 @@ export default function inputEvent (e) {
 
     const invalidBackspaceEvent = () => {
         if (e.key === 'Backspace') {
-            if (!backspace.value || !wrongCount.value || !playerInput.value.length) return true
+            if (!backspace.value || !wrongCount.value || !playerInputLength.value) return true
         }
     }
 
