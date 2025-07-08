@@ -12,3 +12,5 @@ it has been long so the codebase is looking strange even though I wrote it.
 ** clearly understand the use of enterKey.value
 
 ** wrongCoutn doesnt reduce, -- think it is from backspace
+
+** pressing escape routes to result page if user has started typing
