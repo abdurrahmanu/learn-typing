@@ -148,7 +148,6 @@ const pulseStyle = computed(() => {
         ''
     }
 })
-
 </script>
 
 <style scoped>
