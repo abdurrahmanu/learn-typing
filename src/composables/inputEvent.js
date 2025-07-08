@@ -3,6 +3,7 @@ import { storeToRefs } from 'pinia';
 import { correctWrongCountStore } from "../store/correctWrongCountStore";
 import {timerStore} from '../store/timerStore'
 import { typingStateStore } from "../store/typingStateStore";
+import { mainStore } from "../store/mainStore";
 
 export default function inputEvent (e) {
     const typingstatestore = typingStateStore()
@@ -16,6 +17,9 @@ export default function inputEvent (e) {
     
     const customize = customizeStore()
     const {backspace, pauseTyping, toggleCapsToast, customizers} = storeToRefs(customize)
+
+    const mainstore = mainStore()
+    const {tttt} = storeToRefs(mainstore)
 
     const returnOnWrongInput = () => {
         return customizers.value['stop-on-error'] && wrongCount.value && e.key !== 'Backspace'
@@ -66,12 +70,14 @@ export default function inputEvent (e) {
     if ((e.key === 'Enter' && enterKey.value) || e.key === ' ') {
         if (e.key === ' ') e.preventDefault()
         playerLastInput.value = ' '
+        tttt.value += 'E'
     }
 
     if (e.key === 'Backspace') {        
         backspaceIsPressed.value = true
         playerInputLength.value--
         playerInput.value = playerInput.value.slice(0, -1)
+        tttt.value += 'B'
         playerLastInput.value = playerInput.value[playerInput.value.length - 1]
         return
     }
@@ -81,6 +87,7 @@ export default function inputEvent (e) {
     if (e.key.length === 1 && e.key !== 'Dead') playerLastInput.value = eventSelector 
 
     playerInput.value += playerLastInput.value
+    tttt.value += 'K'
     playerInputLength.value = playerInput.value.length
 
     if (playerInputLength.value === 1) startTimer() 

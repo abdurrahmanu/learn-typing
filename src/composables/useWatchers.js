@@ -46,7 +46,7 @@ export default function useWatchers({
     const { customizers, hideElements, toggleCapsToast } = storeToRefs(customize)
     
     const mainstore = mainStore()
-    const { hasCompletedSession, testContainerEl, tttt} = storeToRefs(mainstore)
+    const { hasCompletedSession, testContainerEl} = storeToRefs(mainstore)
     const {resetToDefault} = mainstore
     
     const count = countdownStore()
@@ -72,7 +72,6 @@ export default function useWatchers({
     
     if (input) {
         watch(input, (newVal, oldVal) => {
-            tttt.value++
             if (!oldVal) wpmTime(hasCompletedSession.value, playerInput.value, playerInputLength.value)
             managePlayerInput()
         })
