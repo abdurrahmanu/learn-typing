@@ -17,38 +17,40 @@ export default function inputEvent (e) {
         return customizers.value['stop-on-error'] && wrongCount.value && e.key !== 'Backspace'
     }
 
-    const returnFromCapsLockEvent = () => {
-        if (!customizers.value['capslock']) {
-            if (e.getModifierState('CapsLock') && e.key !== 'CapsLock') {
-                if (!toggleCapsToast.value) toggleCapsToast.value = true
-                return true
-            }
+    // const returnFromCapsLockEvent = () => {
+    //     if (!customizers.value['capslock']) {
+    //         if (e.getModifierState('CapsLock') && e.key !== 'CapsLock') {
+    //             if (!toggleCapsToast.value) toggleCapsToast.value = true
+    //             return true
+    //         }
 
-            if (e.key === 'CapsLock') {
-                if (e.getModifierState('CapsLock')) toggleCapsToast.value = true
-                else toggleCapsToast.value = false
-                return true
-            }
-        }
-    }
+    //         if (e.key === 'CapsLock') {
+    //             if (e.getModifierState('CapsLock')) toggleCapsToast.value = true
+    //             else toggleCapsToast.value = false
+    //             return true
+    //         }
+    //     }
+    // }
 
     const invalidBackspaceEvent = () => {
-        if (e.key === 'Backspace') {
-            if (!backspace.value || !wrongCount.value || !playerInputLength.value) return true
-        }
+        let noError = !backspace.value || !wrongCount.value || !playerInputLength.value
+        return e.key === 'Backspace' && noError
+    }
+
+    const invaLidEnterEvent = () => {   
+        return e.key === 'Enter' && !enterKey.value
     }
 
     if (
-        // pauseTyping.value ||
+        pauseTyping.value ||
         returnOnWrongInput() || 
         invalidBackspaceEvent() ||
-        returnFromCapsLockEvent()
+        invaLidEnterEvent()
+        // returnFromCapsLockEvent()
     ) return
 
-    if (e.key === 'Enter' && !enterKey.value) return
-
-    if ((e.key === 'Enter' && enterKey.value) || e.key === ' ') {
-        if (e.key === ' ') e.preventDefault()
+    if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault()
         return ' '
     }
 
