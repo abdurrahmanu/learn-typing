@@ -16,7 +16,7 @@ export const managePlayerInput = () => {
     const {correctCount, wrongCount} = storeToRefs(correctWrongCountstore)
 
     const mainstore = mainStore()
-    const { containerText, hasCompletedSession, tttt} = storeToRefs(mainstore)
+    const { containerText, hasCompletedSession} = storeToRefs(mainstore)
 
     const customize = customizeStore()
     const {customizers} = storeToRefs(customize)
@@ -30,9 +30,6 @@ export const managePlayerInput = () => {
         if (customizers.value['timer']) beatCountdown.value = true
         hasCompletedSession.value = true
     }
-
-    tttt.value++
-
 
     playerLastInput.value = ''
 }
