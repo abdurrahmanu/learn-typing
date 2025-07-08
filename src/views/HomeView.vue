@@ -3,6 +3,7 @@
       <div class="w-[100%] mx-auto flex-none space-y-2">   
         <Customize />
         <TestContainer />
+        {{ aaa }}1
       </div>
     </div>
 </template>
@@ -25,6 +26,9 @@ import preventScroll from '../composables/preventScroll'
 import preventKeyBoardScroll from '../composables/preventKeyBoardScroll'
 import inputEvent from '../composables/inputEvent'
 import { DB } from '../composables/connectDB';
+import { ref } from 'vue';
+
+const aaa = ref('')
 
 const customize = customizeStore()
 const {font, toggleCapsToast} = storeToRefs(customize)
@@ -84,6 +88,7 @@ onMounted(() => {
       }
 
       inputEvent(event);
+      aaa.value += 'aa'
   }
 
   function handleClick(event) {
