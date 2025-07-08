@@ -3,6 +3,7 @@
       <div class="w-[100%] mx-auto flex-none space-y-2">   
         <Customize />
         <TestContainer />
+        <div>{{ playerInput }} --</div>
       </div>
     </div>
 </template>
@@ -84,7 +85,6 @@ onMounted(() => {
       }
 
       inputEvent(event);
-      useWatchers({playerInput})
   }
 
   function handleClick(event) {
@@ -121,5 +121,6 @@ useWatchers({
   font,
   preferredConfigs,
   toggleCapsToast,
+  playerInput,
 });
 </script>
