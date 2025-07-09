@@ -3,6 +3,7 @@
       <div class="w-[100%] mx-auto flex-none space-y-2">   
         <Customize />
         <TestContainer />
+        {{ z }}-
       </div>
     </div>
 </template>
@@ -64,6 +65,7 @@ function handleKeydown(event) {
     }
 
     let value = inputEvent(event)
+
     if (value) {
         if (value === 'delete') {
             playerInput.value = playerInput.value.slice(0, -1);

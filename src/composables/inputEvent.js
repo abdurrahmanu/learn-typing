@@ -6,7 +6,7 @@ import { isMobile } from "./isMobile";
 
 export default function inputEvent (event) {
     const typingstatestore = typingStateStore()
-    const {playerInputLength, backspaceIsPressed, enterKey} = storeToRefs(typingstatestore)
+    const {playerInputLength, backspaceIsPressed, enterKey, z} = storeToRefs(typingstatestore)
 
     const correctWrongCountstore = correctWrongCountStore()
     const {wrongCount} = storeToRefs(correctWrongCountstore)
@@ -60,7 +60,8 @@ export default function inputEvent (event) {
         return ' '
     }
 
-    if (eventForm === 'Backspace' || eventForm === 'deleteContentBackward') {        
+    if (eventForm === 'Backspace' || eventForm === 'deleteContentBackward') {      
+        z.value += 't'  
         event.preventDefault()
         backspaceIsPressed.value = true
         return 'delete'
