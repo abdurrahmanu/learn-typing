@@ -27,7 +27,7 @@ import inputEvent from '../composables/inputEvent'
 import { DB } from '../composables/connectDB';
 
 const customize = customizeStore()
-const {font, toggleCapsToast} = storeToRefs(customize)
+const {font, toggleCapsToast, pauseTyping} = storeToRefs(customize)
 
 const nextstore = nextStore()
 const {goNext} = storeToRefs(nextstore)
@@ -47,10 +47,13 @@ function handleKeydown(event) {
 
     if (pasteDropReplaceEvents.includes(eventType)) return
 
-    if (
-        (eventType === 'Escape' && !hasCompletedSession.value) || 
-        (eventType === 'Enter' && hasCompletedSession.value)
-    ) {
+    if (pauseTyping.value) {
+        focus.value = true
+        pauseTyping.value = false
+        return
+    }
+    
+    if (eventType === 'Escape' && !hasCompletedSession.value)  {
         goNext.value = true;
         return;
     }

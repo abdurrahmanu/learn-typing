@@ -42,7 +42,7 @@ export default function useWatchers({
     const {switchNext} = nextstore
         
     const customize = customizeStore()
-    const { customizers, hideElements, toggleCapsToast } = storeToRefs(customize)
+    const { customizers, hideElements, toggleCapsToast, pauseTyping } = storeToRefs(customize)
     
     const mainstore = mainStore()
     const { hasCompletedSession, testContainerEl} = storeToRefs(mainstore)
@@ -125,9 +125,11 @@ export default function useWatchers({
       if (focus) {
         watch(focus, newVal => {
             if (newVal) {
+                pauseTyping.value = false
                 inputEl.value.focus()
                 if (isMobile()) newVal ? hideElements.value = true : ''
             } else {
+                pauseTyping.value = true
                 inputEl.value.blur()
             }
           })

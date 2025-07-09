@@ -12,7 +12,7 @@ export default function inputEvent (event) {
     const {wrongCount} = storeToRefs(correctWrongCountstore)
     
     const customize = customizeStore()
-    const {backspace, pauseTyping, toggleCapsToast, customizers} = storeToRefs(customize)
+    const {backspace, toggleCapsToast, customizers} = storeToRefs(customize)
 
     const eventData = event.key || event.data
     const eventType  = event.key || event.inputType
@@ -48,7 +48,6 @@ export default function inputEvent (event) {
     }
 
     if (
-        pauseTyping.value ||
         returnOnWrongInput() || 
         invalidBackspaceEvent() ||
         invaLidEnterEvent() ||

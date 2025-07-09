@@ -26,7 +26,7 @@ const {hasCompletedSession} = storeToRefs(store)
 useWatchers({ goNext })
 
 window.addEventListener('keydown', event => {
-    if (event.key === 'Enter') goNext.value = true
+    if (event.key === 'Enter' && hasCompletedSession.value) goNext.value = true
 })
 </script> 
 

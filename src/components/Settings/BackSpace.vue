@@ -13,8 +13,7 @@
                 </label>
             </div>
         </div>
-        <p v-if="isTouchScreenDevice()"  class="px-3 font-[400]">Cannot be disabled on mobile.</p>
-        <p v-else class="px-3 font-[400]">Toggle to enable Backspace or delete key.</p>
+        <p class="px-3 font-[400]">Toggle to enable Backspace or delete key.</p>
     </div>
 </template>
 
