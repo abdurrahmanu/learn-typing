@@ -132,6 +132,7 @@ onUnmounted(() => {
   useEventListener('online', handleOnline, true)
   useEventListener('keydown', handleKeydown, true)
   useEventListener('click', handleClick, true)
+  useEventListener('input', handleKeydown, false, inputEl.value)
 })
 
 useWatchers({
