@@ -3,8 +3,8 @@ import { isMobile } from "./isMobile";
 export default function useEventListener(event, listener, remove, target) { // windowEvents
 
     if (target && isMobile()) {
-        if (!remove) window.addEventListener('input', listener);
-        else window.removeEventListener('input', listener);
+        if (!remove) target.addEventListener('input', listener);
+        else target.removeEventListener('input', listener);
     }
 
     if (event === 'touchmove') {
