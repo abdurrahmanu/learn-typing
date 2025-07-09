@@ -56,7 +56,7 @@ export default function inputEvent (event) {
     ) return
 
     if (eventType === 'Enter' || eventType === ' ') {
-        e.preventDefault()
+        event.preventDefault()
         return ' '
     }
 
