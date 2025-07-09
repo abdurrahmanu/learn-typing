@@ -1,4 +1,10 @@
-export default function useEventListener(event, listener, remove) { // windowEvents
+export default function useEventListener(event, listener, remove, target) { // windowEvents
+
+    if (target) {
+        console.log('asdf')
+        if (!remove) window.addEventListener('input', listener);
+        else window.removeEventListener('input', listener);
+    }
 
     if (event === 'touchmove') {
         if (!remove) window.addEventListener('touchmove', listener);

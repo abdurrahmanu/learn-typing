@@ -26,6 +26,7 @@ import preventScroll from '../composables/preventScroll'
 import preventKeyBoardScroll from '../composables/preventKeyBoardScroll'
 import inputEvent from '../composables/inputEvent'
 import { DB } from '../composables/connectDB';
+import { isMobile } from '../composables/isMobile';
 
 const customize = customizeStore()
 const {font, toggleCapsToast} = storeToRefs(customize)
@@ -34,7 +35,7 @@ const nextstore = nextStore()
 const {goNext} = storeToRefs(nextstore)
 
 const typingstatestore = typingStateStore()
-const {refocus, focus, playerInput, z} = storeToRefs(typingstatestore)
+const {refocus, focus, playerInput, z, inputEl} = storeToRefs(typingstatestore)
 
 const store = mainStore()
 const { testContainerEl, preferredConfigs, hasCompletedSession} = storeToRefs(store)
@@ -43,16 +44,24 @@ const connect = connectStore()
 const {connectionAvailable } = storeToRefs(connect)
 
 function handleKeydown(event) {
+    const eventType = event.inputType || event.key
+
+    const pasteDropReplaceEvents = ['insertFromPaste','insertFromDrop','insertReplacementText']
+    if (isMobile() && pasteDropReplaceEvents.includes(eventType)) return
+
     if (
-        (event.key === 'Escape' && !hasCompletedSession.value) || 
-        (event.key === 'Enter' && hasCompletedSession.value)
+        (eventType === 'Escape' && !hasCompletedSession.value) || 
+        (eventType === 'Enter' && hasCompletedSession.value)
     ) {
         goNext.value = true;
         return;
     }
 
-    if (focus.value) {
-        preventKeyBoardScroll(event);
+    if (eventType === 'CapsLock') {
+        toggleCapsToast.value = true;
+        setTimeout(() => {
+            toggleCapsToast.value = false;
+        }, 2000);
     }
 
     let value = inputEvent(event)
@@ -65,12 +74,9 @@ function handleKeydown(event) {
         }
     }
 
-    if (event.key === 'CapsLock') {
-        toggleCapsToast.value = true;
-        setTimeout(() => {
-            toggleCapsToast.value = false;
-        }, 2000);
-    }
+    // if (focus.value) {
+    //     preventKeyBoardScroll(event);
+    // }
 }
 
 function handleTouchMove(event) {
@@ -116,6 +122,7 @@ onMounted(() => {
   useEventListener('online', handleOnline)
   useEventListener('keydown', handleKeydown)
   useEventListener('click', handleClick)
+  useEventListener('input', handleKeydown, false, inputEl.value)
 })
 
 onUnmounted(() => {

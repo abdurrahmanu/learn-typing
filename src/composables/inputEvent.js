@@ -4,11 +4,9 @@ import { correctWrongCountStore } from "../store/correctWrongCountStore";
 import { typingStateStore } from "../store/typingStateStore";
 import { isMobile } from "./isMobile";
 
-export default function inputEvent (e) {
+export default function inputEvent (event) {
     const typingstatestore = typingStateStore()
-    const {playerInputLength, backspaceIsPressed, enterKey, z} = storeToRefs(typingstatestore)
-
-    if (isMobile() && e.key?.toLowerCase() === 'unidentified') z.value += String.fromCharCode(e.code) + '-' + String.fromCharCode(e.which)
+    const {playerInputLength, backspaceIsPressed, enterKey} = storeToRefs(typingstatestore)
 
     const correctWrongCountstore = correctWrongCountStore()
     const {wrongCount} = storeToRefs(correctWrongCountstore)
@@ -16,18 +14,23 @@ export default function inputEvent (e) {
     const customize = customizeStore()
     const {backspace, pauseTyping, toggleCapsToast, customizers} = storeToRefs(customize)
 
+    const eventType = event.key || event.data
+    const eventForm  = event.key || event.inputType
+
     const returnOnWrongInput = () => {
-        return customizers.value['stop-on-error'] && wrongCount.value && e.key !== 'Backspace'
+        return customizers.value['stop-on-error'] && wrongCount.value && (eventForm !== 'Backspace' || eventForm !== 'deleteContentBackward')
     }
 
     const returnFromCapsLockEvent = () => {
+        if (isMobile()) return false
+
         if (!customizers.value['capslock']) {
-            if (e.getModifierState('CapsLock') && e.key !== 'CapsLock') {
+            if (event.getModifierState('CapsLock') && eventType !== 'CapsLock') {
                 if (!toggleCapsToast.value) toggleCapsToast.value = true
                 return true
             }
 
-            if (e.key === 'CapsLock') {
+            if (eventType === 'CapsLock') {
                 if (e.getModifierState('CapsLock')) toggleCapsToast.value = true
                 else toggleCapsToast.value = false
                 return true
@@ -37,11 +40,11 @@ export default function inputEvent (e) {
 
     const invalidBackspaceEvent = () => {
         let noError = !backspace.value || !wrongCount.value || !playerInputLength.value
-        return e.key === 'Backspace' && noError
+        return (eventForm === 'Backspace' || eventForm === 'deleteContentBackward') && noError
     }
 
     const invaLidEnterEvent = () => {   
-        return e.key === 'Enter' && !enterKey.value
+        return eventType === 'Enter' && !enterKey.value
     }
 
     if (
@@ -52,19 +55,19 @@ export default function inputEvent (e) {
         returnFromCapsLockEvent()
     ) return
 
-    if (e.key === 'Enter' || e.key === ' ') {
+    if (eventType === 'Enter' || eventType === ' ') {
         e.preventDefault()
         return ' '
     }
 
-    if (e.key === 'Backspace') {        
+    if ((eventForm === 'Backspace' || eventForm === 'deleteContentBackward')) {        
         backspaceIsPressed.value = true
         return 'delete'
     }
     
     else backspaceIsPressed.value = false
  
-    if (e.key.length === 1 && e.key !== 'Dead' && e.key !== ' ') {
-        return e.key
+    if (eventType.length === 1 && eventType !== 'Dead' && eventType !== ' ') {
+        return eventType
     }
 }
