@@ -2,12 +2,13 @@ import { customizeStore } from "../store/customizeStore";
 import { storeToRefs } from 'pinia';
 import { correctWrongCountStore } from "../store/correctWrongCountStore";
 import { typingStateStore } from "../store/typingStateStore";
+import { isMobile } from "./isMobile";
 
 export default function inputEvent (e) {
     const typingstatestore = typingStateStore()
     const {playerInputLength, backspaceIsPressed, enterKey, z} = storeToRefs(typingstatestore)
 
-    if (e.key === Unidentified) z.value = StringfronComCharCode(e.key)
+    if (isMobile() && e.key === Unidentified) z.value = StringfronComCharCode(e.key)
     
     const correctWrongCountstore = correctWrongCountStore()
     const {wrongCount} = storeToRefs(correctWrongCountstore)
