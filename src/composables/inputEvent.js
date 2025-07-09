@@ -8,7 +8,7 @@ export default function inputEvent (e) {
     const typingstatestore = typingStateStore()
     const {playerInputLength, backspaceIsPressed, enterKey, z} = storeToRefs(typingstatestore)
 
-    if (isMobile() && e.key?.toLowerCase() === 'unidentified') z.value = StringfromComCharCode(e.key) + '--'
+    if (isMobile() && e.key?.toLowerCase() === 'unidentified') z.value = String.fromCharCode(e.key) + '--'
     
     const correctWrongCountstore = correctWrongCountStore()
     const {wrongCount} = storeToRefs(correctWrongCountstore)
