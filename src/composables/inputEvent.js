@@ -40,6 +40,7 @@ export default function inputEvent (event) {
 
     const invalidBackspaceEvent = () => {
         let noError = !backspace.value || !wrongCount.value || !playerInputLength.value
+        z.value = (eventType === 'Backspace' || eventType === 'deleteContentBackward') && noError
         return (eventType === 'Backspace' || eventType === 'deleteContentBackward') && noError
     }
 
