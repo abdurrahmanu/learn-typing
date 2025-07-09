@@ -117,7 +117,6 @@ onMounted(() => {
   useEventListener('online', handleOnline)
   useEventListener('keydown', handleKeydown)
   useEventListener('click', handleClick)
-
 })
 
 onUnmounted(() => {

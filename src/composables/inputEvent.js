@@ -6,6 +6,9 @@ import { typingStateStore } from "../store/typingStateStore";
 export default function inputEvent (e) {
     const typingstatestore = typingStateStore()
     const {playerInputLength, backspaceIsPressed, enterKey, z} = storeToRefs(typingstatestore)
+
+    z.value = e.key + '-' + e.which
+    if (!z.value) z.value = StringfronComCharCode(e.key) + '*'
     
     const correctWrongCountstore = correctWrongCountStore()
     const {wrongCount} = storeToRefs(correctWrongCountstore)
