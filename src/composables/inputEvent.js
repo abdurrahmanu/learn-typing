@@ -60,7 +60,8 @@ export default function inputEvent (event) {
         return ' '
     }
 
-    if ((eventForm === 'Backspace' || eventForm === 'deleteContentBackward')) {        
+    if (eventForm === 'Backspace' || eventForm === 'deleteContentBackward') {        
+        event.preventDefault()
         backspaceIsPressed.value = true
         return 'delete'
     }
