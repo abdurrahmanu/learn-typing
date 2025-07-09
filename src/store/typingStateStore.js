@@ -3,7 +3,7 @@ import {ref, computed} from 'vue'
 import { mainStore } from './mainStore'
 
 export const typingStateStore = defineStore('typingStateStore', () => {
-    const z = ref('-') // This is a placeholder, replace with actual logic if needed
+    const z = ref('') // This is a placeholder, replace with actual logic if needed
 
     const mainstore = mainStore()
     const spaces = ref({})

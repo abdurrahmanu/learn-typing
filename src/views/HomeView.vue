@@ -3,7 +3,7 @@
       <div class="w-[100%] mx-auto flex-none space-y-2">   
         <Customize />
         <TestContainer />
-        {{ z }} {{ isMobile() }}
+        {{ z }}
       </div>
     </div>
 </template>
