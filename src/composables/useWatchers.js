@@ -72,7 +72,7 @@ export default function useWatchers({
     if (input) {
         watch(input, (newVal, oldVal) => {
             if (!oldVal) wpmTime(hasCompletedSession.value)
-            managePlayerInput()
+            if (newVal) managePlayerInput()
         })
     }
 
@@ -101,11 +101,11 @@ export default function useWatchers({
                 if (hasCompletedSession.value) {
                     router.push('/')
                 }
-
+                
+                resetTypingState()
                 resetToDefault()
                 clearResult()
                 clearTimer()
-                resetTypingState()
                 clearCounter()
                 switchNext(customizers.value)
               }

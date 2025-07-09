@@ -5,16 +5,12 @@
 it has been long so the codebase is looking strange even though I wrote it.
 
 ** countdownStore and timerStore have to be merged or refactored to be one entity
-** one central source of truth should be maintained for every dependency 
 ** check network connection before sending to db to avoid errors
 
 ** will come back for capslock in inputEvent.js
 ** clearly understand the use of enterKey.value
 
 ** wrongCoutn doesnt reduce, -- think it is from backspace -- mistakenly deleted code!!
-
-** pressing escape routes to result page if user has started typing
-** typing still goes on on blur --- fix
 
 ** the use of preventKeyboardScroll and preventScroll
 ** alphabet only settings should be shown only in alphabet-test

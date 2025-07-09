@@ -32,7 +32,6 @@ const custom = customizeStore()
 const {backspace} = storeToRefs(custom)
 
 const customize = () => {
-    if (isTouchScreenDevice()) return
     backspace.value = !backspace.value
     updateDB(Object.keys({backspace})[0], backspace.value, null, true)
 }

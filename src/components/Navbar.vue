@@ -88,7 +88,6 @@ import feedback from './svg/feedback.vue'
 import Clock from './Clock.vue';
 import CompletionRangeWithErrors from './CompletionRangeWithErrors.vue';
 import CompletionRange from './CompletionRange.vue';
-
 import {useRoute, useRouter} from 'vue-router'
 import { isMobile } from '../composables/isMobile';
 import { customizeStore } from '../store/customizeStore';
@@ -120,7 +119,7 @@ const openCustomTestModal = () => {
     toggleCustomTestModal.value = true
     pauseTyping.value = true
 }
-</script>
+</script>   
 
 <style scoped>
 .header {
