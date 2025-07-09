@@ -25,7 +25,6 @@ import { onMounted, onUnmounted } from 'vue';
 import preventScroll from '../composables/preventScroll'
 import preventKeyBoardScroll from '../composables/preventKeyBoardScroll'
 import inputEvent from '../composables/inputEvent'
-import { isMobile } from '../composables/isMobile';
 import { DB } from '../composables/connectDB';
 
 const customize = customizeStore()
