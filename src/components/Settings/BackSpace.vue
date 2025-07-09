@@ -3,7 +3,7 @@
         <div class="flex p-1 justify-between w-full border border-transparent rounded-sm w-fit">
             <div @click="customize" class="flex items-center gap-x-3 w-fit">
                 <div class="relative w-4 h-4">
-                    <input name="backspace" :disabled="isTouchScreenDevice() ? true : false" :checked="isTouchScreenDevice() ? true : backspace"  type="checkbox" class="appearance-none shadow-sm shadow-black w-4 h-4 peer disabled:ring-slate-600 rounded-full hover:ring-[2px] ring-[1px] disabled:hover:ring-yellow-900
+                    <input name="backspace" :checked="isTouchScreenDevice() ? true : backspace"  type="checkbox" class="appearance-none shadow-sm shadow-black w-4 h-4 peer disabled:ring-slate-600 rounded-full hover:ring-[2px] ring-[1px] disabled:hover:ring-yellow-900
                     hover:ring-blue-500" id="">
                     <good />
                 </div>
@@ -19,7 +19,6 @@
 </template>
 
 <script setup>
-import {ref} from 'vue'
 import good from '../svg/good.vue';
 import {storeToRefs} from 'pinia';
 import {customizeStore} from '../../store/customizeStore';

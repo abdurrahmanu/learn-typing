@@ -3,7 +3,6 @@
       <div class="w-[100%] mx-auto flex-none space-y-2">   
         <Customize />
         <TestContainer />
-        {{ z }}-
       </div>
     </div>
 </template>
@@ -26,7 +25,6 @@ import preventScroll from '../composables/preventScroll'
 import preventKeyBoardScroll from '../composables/preventKeyBoardScroll'
 import inputEvent from '../composables/inputEvent'
 import { DB } from '../composables/connectDB';
-import { isMobile } from '../composables/isMobile';
 
 const customize = customizeStore()
 const {font, toggleCapsToast} = storeToRefs(customize)
