@@ -45,9 +45,9 @@ const {connectionAvailable } = storeToRefs(connect)
 
 function handleKeydown(event) {
     const eventType = event.inputType || event.key
-
     const pasteDropReplaceEvents = ['insertFromPaste','insertFromDrop','insertReplacementText']
-    if (isMobile() && pasteDropReplaceEvents.includes(eventType)) return
+
+    if (pasteDropReplaceEvents.includes(eventType)) return
 
     if (
         (eventType === 'Escape' && !hasCompletedSession.value) || 
@@ -65,7 +65,7 @@ function handleKeydown(event) {
     }
 
     let value = inputEvent(event)
-
+    z.value += value + '-'
     if (value) {
         if (value === 'delete') {
             playerInput.value = playerInput.value.slice(0, -1);
