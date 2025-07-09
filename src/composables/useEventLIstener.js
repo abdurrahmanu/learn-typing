@@ -1,7 +1,8 @@
+import { isMobile } from "./isMobile";
+
 export default function useEventListener(event, listener, remove, target) { // windowEvents
 
-    if (target) {
-        console.log('asdf')
+    if (target && isMobile()) {
         if (!remove) window.addEventListener('input', listener);
         else window.removeEventListener('input', listener);
     }
