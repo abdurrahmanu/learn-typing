@@ -47,7 +47,7 @@ import { countdownStore } from '../store/countdownStore'
 import pass from '../components/svg/pass.vue'
 import fail from '../components/svg/fail.vue'
 import LineChart from '../components/LineChart.vue'
-import {correctWrongCountStore} from '../store/correctWrongCountStore'
+import {charCountStore} from '../store/charCountStore'
 import { resultStore } from '../store/resultStore'
 import {timerStore} from '../store/timerStore'
 
@@ -57,8 +57,8 @@ const {} = storeToRefs(resultstore)
 const timerstore = timerStore()
 const {totalTime, beatCountdown, wpmPerSecond} = storeToRefs(timerstore)
 
-const correctWrongCountstore = correctWrongCountStore()
-const {resultData, wrongCount} = storeToRefs(correctWrongCountstore)
+const charcountstore = charCountStore()
+const {resultData, incorrectCharCount} = storeToRefs(charcountstore)
 
 const count = countdownStore()
 const {level}  = storeToRefs(count)
@@ -72,17 +72,17 @@ const { appTheme } = storeToRefs(theme_)
 const store = mainStore()
 const {containerText} = storeToRefs(store)
 
-const WPM = ref(Math.round(((containerText.value.length / 5) - (wrongCount.value / 5)) / (totalTime.value/60)))
+const WPM = ref(Math.round(((containerText.value.length / 5) - (incorrectCharCount.value / 5)) / (totalTime.value/60)))
 
-const accuracy = ref(Math.round((resultData.value.correctCount/(containerText.value.length) * 100)))
+const accuracy = ref(Math.round((resultData.value.correctCharCount/(containerText.value.length) * 100)))
 
 const failedToBeatCountdown = computed(() => customizers.value['timer'] && !beatCountdown.value)
 
 const errorRatio = () => {
     const total = containerText.value.length
     const correct = failedToBeatCountdown.value ? 
-    resultData.value.wrongCount : 
-    (resultData.value.wrongCount) + (containerText.value.length - (resultData.value.wrongCount + resultData.value.correctCount))
+    resultData.value.incorrectCharCount : 
+    (resultData.value.incorrectCharCount) + (containerText.value.length - (resultData.value.incorrectCharCount + resultData.value.correctCharCount))
 
     return correct + '/' + total
 }
@@ -94,14 +94,14 @@ const errorRatioLevel = () => {
 
     const errorRatioObject = {
         'timer': {
-            'beginner': ((result.wrongCount) + (length - result.correctCount) / (length)) * 100 < 30,
-            'amateur': ((result.wrongCount) + (length - result.correctCount) / (length)) * 100 < 20,
-            'expert': ((result.wrongCount) + (length - result.correctCount) / (length)) * 100 < 10,
+            'beginner': ((result.incorrectCharCount) + (length - result.correctCharCount) / (length)) * 100 < 30,
+            'amateur': ((result.incorrectCharCount) + (length - result.correctCharCount) / (length)) * 100 < 20,
+            'expert': ((result.incorrectCharCount) + (length - result.correctCharCount) / (length)) * 100 < 10,
         },
         'no-timer': {
-            'beginner': (result.wrongCount / length) * 100 < 30,
-            'amateur': (result.wrongCount / length) * 100 < 20,
-            'expert': (result.wrongCount / length) * 100 < 10,
+            'beginner': (result.incorrectCharCount / length) * 100 < 30,
+            'amateur': (result.incorrectCharCount / length) * 100 < 20,
+            'expert': (result.incorrectCharCount / length) * 100 < 10,
         }
     }
 

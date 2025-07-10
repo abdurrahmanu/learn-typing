@@ -1,19 +1,20 @@
 import { mainStore } from "../store/mainStore"
 import { storeToRefs } from 'pinia';
-import {correctWrongCountStore} from '../store/correctWrongCountStore'
+import {charCountStore} from '../store/charCountStore'
 import { timerStore } from "../store/timerStore";
 import { typingStateStore } from "../store/typingStateStore";
 import { customizeStore } from "../store/customizeStore";
+import { ref } from 'vue';
 
-export const managePlayerInput = () => {
+export const evaluateInput = (char) => {
     const typingstatestore = typingStateStore()
-    const { playerInputLength, playerLastInput} = storeToRefs(typingstatestore)
+    const { playerInputLength, playerLastInput, backspaceIsPressed} = storeToRefs(typingstatestore)
 
     const timerstore = timerStore()
     const {characterEqualityArray, beatCountdown, beginCountdown, startTime} = storeToRefs(timerstore)
 
-    const correctWrongCountstore = correctWrongCountStore()
-    const {correctCount, wrongCount} = storeToRefs(correctWrongCountstore)
+    const charcountstore = charCountStore()
+    const {correctCharCount, incorrectCharCount} = storeToRefs(charcountstore)
 
     const mainstore = mainStore()
     const { containerText, hasCompletedSession} = storeToRefs(mainstore)
@@ -31,14 +32,26 @@ export const managePlayerInput = () => {
         } 
     }
 
-    if (playerInputLength.value === 1) startTimer() 
+    console.log(char)
+
+    if (playerInputLength.value === 1 && !beginCountdown.value) startTimer() 
     
-    let equality = playerLastInput.value === containerText.value[playerInputLength.value - 1]
+    const equality = ref(playerLastInput.value === containerText.value[playerInputLength.value - 1])
+        
+    // why does incorrectChar persist as 1 no matter how backspace is pressed ?
+    // for last input, playerInput is already empty before function call, so the last incorrect input value is never evaluated as incorrect.
 
-    if (equality) correctCount.value ++
-    else wrongCount.value++
+    if (backspaceIsPressed.value) {
+        if (equality.value) correctCharCount.value--
+        else incorrectCharCount.value--
+    }
 
-    characterEqualityArray.value.push(equality)
+    else {
+        if (equality.value) correctCharCount.value++
+        else incorrectCharCount.value++
+    }
+
+    characterEqualityArray.value.push(equality.value)
 
     if (playerInputLength.value === containerText.value.length) {
         if (customizers.value['timer']) beatCountdown.value = true

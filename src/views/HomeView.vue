@@ -3,7 +3,7 @@
       <div class="w-[100%] mx-auto flex-none space-y-2">   
         <Customize />
         <TestContainer />
-        {{ z }} - 
+        {{ charCountStore().incorrectCharCount }} - {{ charCountStore().correctCharCount }}
       </div>
     </div>
 </template>
@@ -26,6 +26,8 @@ import preventScroll from '../composables/preventScroll'
 import preventKeyBoardScroll from '../composables/preventKeyBoardScroll'
 import inputEvent from '../composables/inputEvent'
 import { DB } from '../composables/connectDB';
+import { charCountStore } from '../store/charCountStore';
+import { evaluateInput } from '../composables/evaluateInput';
 
 const customize = customizeStore()
 const {font, toggleCapsToast, pauseTyping} = storeToRefs(customize)
@@ -68,7 +70,7 @@ function handleKeydown(event) {
 
     let value = inputEvent(event)
 
-    if (value) {
+    if (value) {        
         if (value === 'delete') {
             playerInput.value = playerInput.value.slice(0, -1);
         } else {

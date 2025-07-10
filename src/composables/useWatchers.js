@@ -3,7 +3,7 @@ import {mainStore} from '../store/mainStore'
 import {nextStore} from '../store/nextStore'
 import { countdownStore } from '../store/countdownStore';
 import { customizeStore } from '../store/customizeStore';
-import {correctWrongCountStore} from '../store/correctWrongCountStore'
+import {charCountStore} from '../store/charCountStore'
 import {timerStore} from '../store/timerStore'
 import { typingStateStore } from '../store/typingStateStore';
 import { useRouter } from 'vue-router';
@@ -11,7 +11,7 @@ import { isMobile } from './isMobile';
 import { watch } from 'vue';
 import { textBoxHeight } from './textBox';
 import { connectStore } from '../store/connectStore';
-import { managePlayerInput } from './managePlayerInput';
+import { evaluateInput } from './evaluateInput';
 
 export default function useWatchers({
     focus: focus, 
@@ -35,7 +35,7 @@ export default function useWatchers({
     const timerstore = timerStore()
     const {clearTimer, wpmTime} = timerstore
     
-    const correctwrongstore = correctWrongCountStore()
+    const correctwrongstore = charCountStore()
     const {clearResult} = correctwrongstore
     
     const nextstore = nextStore()
@@ -72,7 +72,7 @@ export default function useWatchers({
     if (input) {
         watch(input, (newVal, oldVal) => {
             if (!oldVal) wpmTime(hasCompletedSession.value)
-            if (newVal) managePlayerInput()
+            evaluateInput(oldVal)
         })
     }
 

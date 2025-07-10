@@ -1,15 +1,19 @@
 import { customizeStore } from "../store/customizeStore";
 import { storeToRefs } from 'pinia';
-import { correctWrongCountStore } from "../store/correctWrongCountStore";
+import { charCountStore } from "../store/charCountStore";
 import { typingStateStore } from "../store/typingStateStore";
 import { isMobile } from "./isMobile";
+import { evaluateInput } from "./evaluateInput";
+import { ref } from "vue";
 
 export default function inputEvent (event) {
+    const value = ref('')
+
     const typingstatestore = typingStateStore()
     const {playerInputLength, backspaceIsPressed, enterKey, z} = storeToRefs(typingstatestore)
 
-    const correctWrongCountstore = correctWrongCountStore()
-    const {wrongCount} = storeToRefs(correctWrongCountstore)
+    const charcountstore = charCountStore()
+    const {incorrectCharCount} = storeToRefs(charcountstore)
     
     const customize = customizeStore()
     const {backspace, toggleCapsToast, customizers} = storeToRefs(customize)
@@ -18,7 +22,7 @@ export default function inputEvent (event) {
     const eventType  = event.key || event.inputType
 
     const returnOnWrongInput = () => {
-        return customizers.value['stop-on-error'] && wrongCount.value && (eventType !== 'Backspace' || eventType !== 'deleteContentBackward')
+        return customizers.value['stop-on-error'] && incorrectCharCount.value && (eventType !== 'Backspace' || eventType !== 'deleteContentBackward')
     }
 
     const returnFromCapsLockEvent = () => {
@@ -39,8 +43,7 @@ export default function inputEvent (event) {
     }
 
     const invalidBackspaceEvent = () => {
-        let noError = !backspace.value || !wrongCount.value || !playerInputLength.value
-        z.value = (eventType === 'Backspace' || eventType === 'deleteContentBackward') && noError
+        let noError = !backspace.value || !incorrectCharCount.value || !playerInputLength.value
         return (eventType === 'Backspace' || eventType === 'deleteContentBackward') && noError
     }
 
@@ -57,19 +60,20 @@ export default function inputEvent (event) {
 
     if (eventData === 'Enter' || eventData === ' ') {
         event.preventDefault()
-        return ' '
+        value.value = ' '
     }
 
     if (eventType === 'Backspace' || eventType === 'deleteContentBackward') {      
-        z.value += 't'  
         event.preventDefault()
         backspaceIsPressed.value = true
-        return 'delete'
+        value.value = 'delete'
     }
     
     else backspaceIsPressed.value = false
  
     if (eventData.length === 1 && eventData !== 'Dead' && eventData !== ' ') {
-        return eventData
+        value.value = eventData
     }
+    
+    return value.value
 }

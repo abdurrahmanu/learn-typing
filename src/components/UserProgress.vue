@@ -11,8 +11,8 @@
                 <div v-if="tooltip != null" class="space-y-1 min-w-[270px] w-fit border rounded-md border-black h-fit p-2">
                     <div>TOTAL TIME- {{selected.totalTime }}s</div>
                     <div class="whitespace-nowrap">NUMBER OF CHARACTERS- {{selected.characters}}</div>
-                    <div>CORRECT INPUTS- {{selected.correctCount}}</div>
-                    <div>WRONG INPUTS- {{selected.wrongCount}}</div>
+                    <div>CORRECT INPUTS- {{selected.correctCharCount}}</div>
+                    <div>WRONG INPUTS- {{selected.incorrectCharCount}}</div>
                     <div>WPM- {{ selected.WPM }}</div>
                     <div class="space-y-2">
                         <div class=" rounded-md w-fit whitespace-nowrap">{{selected.containerText.slice(0, 30)}}...<span class="text-xs border border-black rounded-full px-5 py-[2px] text-black">more</span></div>
