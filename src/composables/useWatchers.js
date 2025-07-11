@@ -11,7 +11,6 @@ import { isMobile } from './isMobile';
 import { watch } from 'vue';
 import { textBoxHeight } from './textBox';
 import { connectStore } from '../store/connectStore';
-import { evaluateInput } from './evaluateInput';
 
 export default function useWatchers({
     focus: focus, 
@@ -72,7 +71,6 @@ export default function useWatchers({
     if (input) {
         watch(input, (newVal, oldVal) => {
             if (!oldVal) wpmTime(hasCompletedSession.value)
-            evaluateInput(oldVal)
         })
     }
 

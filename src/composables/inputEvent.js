@@ -3,7 +3,7 @@ import { storeToRefs } from 'pinia';
 import { charCountStore } from "../store/charCountStore";
 import { typingStateStore } from "../store/typingStateStore";
 import { isMobile } from "./isMobile";
-import { evaluateInput } from "./evaluateInput";
+import { timerStore } from "../store/timerStore";
 import { ref } from "vue";
 
 export default function inputEvent (event) {
@@ -11,6 +11,10 @@ export default function inputEvent (event) {
 
     const typingstatestore = typingStateStore()
     const {playerInputLength, backspaceIsPressed, enterKey, z} = storeToRefs(typingstatestore)
+
+    const timerstore = timerStore()
+    const {beatCountdown, beginCountdown, startTime} = storeToRefs(timerstore)
+
 
     const charcountstore = charCountStore()
     const {incorrectCharCount} = storeToRefs(charcountstore)
@@ -74,6 +78,16 @@ export default function inputEvent (event) {
     if (eventData.length === 1 && eventData !== 'Dead' && eventData !== ' ') {
         value.value = eventData
     }
-    
+
+    const startTimer = () => {
+        if (customizers.value['timer']) {
+            beatCountdown.value = false
+            beginCountdown.value = true
+        }
+        startTime.value = performance.now();
+    }
+
+    if (!playerInputLength.value && value.value && !beginCountdown.value) startTimer() 
+
     return value.value
 }

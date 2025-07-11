@@ -15,7 +15,7 @@
         </div>
         <OnScreenInput />
         <AllCharacters />
-        <NextButton @focusInputEl="focus = true" />
+        <focusButton />
     </main>
 </template>
 
@@ -26,7 +26,7 @@ import { isMobile } from '../composables/isMobile';
 import Countdown from './Countdown.vue';
 import WordCount from './WordCount.vue';
 import restart from './svg/restart.vue'
-import NextButton from './focusButton.vue';
+import focusButton from './focusButton.vue';
 import {storeToRefs} from 'pinia'
 import {mainStore} from '../store/mainStore'
 import {nextStore} from '../store/nextStore'

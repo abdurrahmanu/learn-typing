@@ -27,7 +27,7 @@ import { isTouchScreenDevice } from '../composables/isTouchScreenDevice';
 import { isMobile } from '../composables/isMobile';
 
 const typingstatestore = typingStateStore()
-const {refocus, focus, inputEl, playerInput} = storeToRefs(typingstatestore)
+const {refocus, focus, inputEl} = storeToRefs(typingstatestore)
 
 const store = mainStore()
 const { containerText, quoteType, testContainerEl, containerHeight, movie, authoredQuote} = storeToRefs(store)

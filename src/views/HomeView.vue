@@ -27,22 +27,25 @@ import preventKeyBoardScroll from '../composables/preventKeyBoardScroll'
 import inputEvent from '../composables/inputEvent'
 import { DB } from '../composables/connectDB';
 import { charCountStore } from '../store/charCountStore';
-import { evaluateInput } from '../composables/evaluateInput';
+import { timerStore } from '../store/timerStore';
 
 const customize = customizeStore()
-const {font, toggleCapsToast, pauseTyping} = storeToRefs(customize)
+const {font, toggleCapsToast, pauseTyping, customizers} = storeToRefs(customize)
 
 const nextstore = nextStore()
 const {goNext} = storeToRefs(nextstore)
 
 const typingstatestore = typingStateStore()
-const {refocus, focus, playerInput, z, inputEl} = storeToRefs(typingstatestore)
+const {refocus, focus, playerInput, z, inputEl, deletedValue, playerInputLength} = storeToRefs(typingstatestore)
 
 const store = mainStore()
-const { testContainerEl, preferredConfigs, hasCompletedSession} = storeToRefs(store)
+const { testContainerEl, preferredConfigs, hasCompletedSession, containerText} = storeToRefs(store)
 
 const connect = connectStore()
 const {connectionAvailable } = storeToRefs(connect)
+
+const timerstore = timerStore()
+const {beatCountdown} = storeToRefs(timerstore)
 
 function handleKeydown(event) {
     const eventType = event.inputType || event.key
@@ -72,6 +75,7 @@ function handleKeydown(event) {
 
     if (value) {        
         if (value === 'delete') {
+            deletedValue.value = playerInput.value.slice(-1);
             playerInput.value = playerInput.value.slice(0, -1);
         } else {
             playerInput.value += value;

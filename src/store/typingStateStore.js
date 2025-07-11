@@ -4,7 +4,7 @@ import { mainStore } from './mainStore'
 
 export const typingStateStore = defineStore('typingStateStore', () => {
     const z = ref('') // This is a placeholder, replace with actual logic if needed
-
+    
     const mainstore = mainStore()
     const spaces = ref({})
     const playerInput = ref('') 
@@ -14,6 +14,7 @@ export const typingStateStore = defineStore('typingStateStore', () => {
     const backspaceIsPressed = ref(false)
     const inputEl = ref(null)
     const currentWordArray = ref([])
+    const deletedValue = ref('')
 
     const completionLevel = computed(() => {
         return ((playerInputLength.value) / mainstore.containerText.length) * 100 
@@ -48,6 +49,7 @@ export const typingStateStore = defineStore('typingStateStore', () => {
         currentWordArray,
         typedWhiteSpaces,
         inputEl,
+        deletedValue,
         z
     }
 })
