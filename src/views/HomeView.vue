@@ -3,7 +3,7 @@
       <div class="w-[100%] mx-auto flex-none space-y-2">   
         <Customize />
         <TestContainer />
-        {{ charCountStore().incorrectCharCount }} - {{ charCountStore().correctCharCount }}
+        <!-- {{ charCountStore().incorrectCharCount }} - {{ charCountStore().correctCharCount }} -->
       </div>
     </div>
 </template>

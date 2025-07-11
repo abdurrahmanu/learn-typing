@@ -108,16 +108,15 @@ onMounted(() => {
 })
 
 watch([currentIndex, blind, goNext], ([newCurrent, newBlind, newNext]) => {
-    if (newCurrent) return 
-    
+
     className.value = {
         // UNTYPED CHARS
         'text-slate-500': theme.value === 'dark' && props.index > playerInputLength.value,
         'text-zinc-500': theme.value === 'white' && props.index > playerInputLength.value,
 
         // CORRECT CHARS
-        'text-green-400': !blind.value && equality.value && theme.value === 'dark'&& !blind.value,
-        'text-green-500': !blind.value && equality.value && theme.value === 'white' && !blind.value,
+        'text-green-400': !blind.value && !newCurrent && equality.value && theme.value === 'dark'&& !blind.value,
+        'text-green-500': !blind.value && !newCurrent && equality.value && theme.value === 'white' && !blind.value,
         
         // INCORRECT CHARS
         'text-red-500': !blind.value && !currentIndex.value && !equality.value && theme.value === 'dark',
