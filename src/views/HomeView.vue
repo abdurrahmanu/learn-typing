@@ -29,23 +29,26 @@ import { DB } from '../composables/connectDB';
 import { charCountStore } from '../store/charCountStore';
 import { timerStore } from '../store/timerStore';
 
+const charcountstore = charCountStore()
+const {correctCharCount, incorrectCharCount} = storeToRefs(charcountstore)
+
 const customize = customizeStore()
-const {font, toggleCapsToast, pauseTyping, customizers} = storeToRefs(customize)
+const {font, toggleCapsToast, pauseTyping} = storeToRefs(customize)
 
 const nextstore = nextStore()
 const {goNext} = storeToRefs(nextstore)
 
 const typingstatestore = typingStateStore()
-const {refocus, focus, playerInput, z, inputEl, deletedValue, playerInputLength} = storeToRefs(typingstatestore)
+const {refocus, focus, playerInput, z, inputEl, deletedValue, playerInputLength, backspaceIsPressed, playerLastInput} = storeToRefs(typingstatestore)
 
-const store = mainStore()
-const { testContainerEl, preferredConfigs, hasCompletedSession, containerText} = storeToRefs(store)
+const mainstore = mainStore()
+const { testContainerEl, preferredConfigs, hasCompletedSession, containerText} = storeToRefs(mainstore)
 
 const connect = connectStore()
 const {connectionAvailable } = storeToRefs(connect)
 
 const timerstore = timerStore()
-const {beatCountdown} = storeToRefs(timerstore)
+const { characterEqualityArray} = storeToRefs(timerstore)
 
 function handleKeydown(event) {
     const eventType = event.inputType || event.key
@@ -79,6 +82,22 @@ function handleKeydown(event) {
             playerInput.value = playerInput.value.slice(0, -1);
         } else {
             playerInput.value += value;
+        }
+
+        if (backspaceIsPressed.value) {
+            let equality = deletedValue.value === containerText.value[playerInputLength.value]
+            if (equality) correctCharCount.value--
+            else incorrectCharCount.value--
+
+            characterEqualityArray.value.push(equality)
+        } 
+        
+        else {
+            let equality = playerLastInput.value === containerText.value[playerInputLength.value - 1]
+            if (equality) correctCharCount.value++
+            else incorrectCharCount.value++
+
+            characterEqualityArray.value.push(equality)
         }
     }
 

@@ -29,9 +29,6 @@ const className = ref({
 const typingstatestore = typingStateStore()
 const {playerInputLength, playerLastInput, typedWhiteSpaces, focus, spaces, deletedValue, backspaceIsPressed, enterKey} = storeToRefs(typingstatestore)
 
-const timerstore = timerStore()
-const {characterEqualityArray} = storeToRefs(timerstore)
-
 const theme_ = themeStore()
 const { theme } = storeToRefs(theme_)
 
@@ -41,9 +38,6 @@ const {goNext} = storeToRefs(nextstore)
 const mainstore = mainStore()
 const { containerText, testContainerEl, allSpacesIndex, scrollTextContainer, scrollDistance, containerHeight, hasCompletedSession } = storeToRefs(mainstore)
 const currentCharacterElement = ref(null)
-
-const charcountstore = charCountStore()
-const {correctCharCount, incorrectCharCount} = storeToRefs(charcountstore)
 
 const customize = customizeStore()
 const { customizers, cursorType, font, blind } = storeToRefs(customize)
@@ -62,28 +56,6 @@ onMounted(() => {
         let isLastChar = !isNextChar && playerInputLength.value === containerText.value.length
         
         if (isNextChar || isLastChar) {    
-            let currChar = containerText.value[props.index - 1]
-            let nextChar = containerText.value[props.index]
-             
-            if (backspaceIsPressed.value) {
-                let equality = deletedValue.value === containerText.value[props.index - 1]
-                if (equality) correctCharCount.value--
-                else incorrectCharCount.value--
-
-                characterEqualityArray.value.push(equality)
-            } 
-            
-            else {           
-                let equality = playerLastInput.value === (!isLastChar ? containerText.value[props.index - 1] : containerText.value[props.index])
-                console.log(equality)
-                if (equality) correctCharCount.value++
-                else incorrectCharCount.value++
-
-                characterEqualityArray.value.push(equality)
-            }
-
-            // evaluateInputEquality()
-
             if (!backspaceIsPressed.value && containerText.value[props.index - 1] === ' ') spaces.value[props.index] = ' '            
             if (backspaceIsPressed.value && containerText.value[props.index] === ' ') spaces.value[props.index] ? delete spaces.value[props.index] : ''
             
@@ -136,6 +108,8 @@ onMounted(() => {
 })
 
 watch([currentIndex, blind, goNext], ([newCurrent, newBlind, newNext]) => {
+    if (newCurrent) return 
+    
     className.value = {
         // UNTYPED CHARS
         'text-slate-500': theme.value === 'dark' && props.index > playerInputLength.value,
