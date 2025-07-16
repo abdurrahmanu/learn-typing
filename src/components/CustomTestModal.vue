@@ -1,5 +1,5 @@
 <template>
-    <div @click="toggleCustomTestModal = !toggleCustomTestModal, pauseTyping = false, textValue = ''" v-if="toggleCustomTestModal && route.name === 'home'" class="fixed top-[-100px] bottom-0 left-0 right-0 bg-black text-xs opacity-40 z-[3]"></div>
+    <div @click="toggleCustomTestModal = !toggleCustomTestModal, pauseTyping = true, textValue = ''" v-if="toggleCustomTestModal && route.name === 'home'" class="fixed top-[-100px] bottom-0 left-0 right-0 bg-black text-xs opacity-40 z-[3]"></div>
     <div v-if="toggleCustomTestModal && route.name === 'home'" class="max-w-[500px] w-[95%] fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] rounded-md py-5 max-h-[calc(100dvh_-_20px)] z-[3]" :class="[theme === 'dark' ? '' : 'shadow-sm shadow-slate-500', appTheme]">
         <div @click="toggleCustomTestModal = !toggleCustomTestModal, pauseTyping = false, textValue = ''" class="absolute top-0 text-lg font-bold w-fit right-2 hover:text-red-500">x</div>
         <div>            

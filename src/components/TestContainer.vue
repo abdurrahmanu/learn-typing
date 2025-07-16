@@ -66,8 +66,6 @@ onMounted(() => {
     textBoxHeight()
     generateTest(customizers.value)
     focus.value = true
-
-
 })
 </script>
 

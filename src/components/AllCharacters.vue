@@ -41,9 +41,11 @@ const {theme} = storeToRefs(theme_)
 const focusInput = (boolean) => {
     if (boolean) {
         focus.value = true
-        if (isTouchScreenDevice()) inputEl.value.focus()
+        if (isTouchScreenDevice()) {
+            inputEl.value.focus()
+            // navigator.virtualKeyboard.show()
+        }
     } 
-
     else {
         focus.value = false
         if (isTouchScreenDevice()) inputEl.value.blur()

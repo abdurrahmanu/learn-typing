@@ -125,6 +125,7 @@ export default function useWatchers({
             if (newVal) {
                 pauseTyping.value = false
                 inputEl.value.focus()
+                // navigator.virtualKeyboard.show()
                 if (isMobile()) newVal ? hideElements.value = true : ''
             } else {
                 pauseTyping.value = true

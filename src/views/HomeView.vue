@@ -26,33 +26,30 @@ import preventScroll from '../composables/preventScroll'
 import preventKeyBoardScroll from '../composables/preventKeyBoardScroll'
 import inputEvent from '../composables/inputEvent'
 import { DB } from '../composables/connectDB';
-import { charCountStore } from '../store/charCountStore';
-import { timerStore } from '../store/timerStore';
-
-const charcountstore = charCountStore()
-const {correctCharCount, incorrectCharCount} = storeToRefs(charcountstore)
+import evaluateInput from '../composables/evaluateInput';
 
 const customize = customizeStore()
-const {font, toggleCapsToast, pauseTyping} = storeToRefs(customize)
+const {font, toggleCapsToast, pauseTyping, toggleCustomTestModal} = storeToRefs(customize)
+
 
 const nextstore = nextStore()
 const {goNext} = storeToRefs(nextstore)
 
 const typingstatestore = typingStateStore()
-const {refocus, focus, playerInput, z, inputEl, deletedValue, playerInputLength, backspaceIsPressed, playerLastInput} = storeToRefs(typingstatestore)
+const {refocus, focus, playerInput, z, inputEl} = storeToRefs(typingstatestore)
 
 const mainstore = mainStore()
-const { testContainerEl, preferredConfigs, hasCompletedSession, containerText} = storeToRefs(mainstore)
+const { testContainerEl, preferredConfigs, hasCompletedSession} = storeToRefs(mainstore)
 
 const connect = connectStore()
 const {connectionAvailable } = storeToRefs(connect)
 
-const timerstore = timerStore()
-const { characterEqualityArray} = storeToRefs(timerstore)
-
 function handleKeydown(event) {
     const eventType = event.inputType || event.key
     const pasteDropReplaceEvents = ['insertFromPaste','insertFromDrop','insertReplacementText']
+
+    if (toggleCustomTestModal.value) return // temporary --------- will fix later
+
 
     if (pasteDropReplaceEvents.includes(eventType)) return
 
@@ -76,30 +73,7 @@ function handleKeydown(event) {
 
     let value = inputEvent(event)
 
-    if (value) {        
-        if (value === 'delete') {
-            deletedValue.value = playerInput.value.slice(-1);
-            playerInput.value = playerInput.value.slice(0, -1);
-        } else {
-            playerInput.value += value;
-        }
-
-        if (backspaceIsPressed.value) {
-            let equality = deletedValue.value === containerText.value[playerInputLength.value]
-            if (equality) correctCharCount.value--
-            else incorrectCharCount.value--
-
-            characterEqualityArray.value.push(equality)
-        } 
-        
-        else {
-            let equality = playerLastInput.value === containerText.value[playerInputLength.value - 1]
-            if (equality) correctCharCount.value++
-            else incorrectCharCount.value++
-
-            characterEqualityArray.value.push(equality)
-        }
-    }
+    if (value) evaluateInput(value);
 
     // if (focus.value) {
     //     preventKeyBoardScroll(event);
