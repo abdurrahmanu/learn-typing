@@ -19,6 +19,7 @@ it has been long so the codebase is looking strange even though I wrote it.
 ** container focus isnt working as it is supposed to
 
 ** if custom test modal is opened, focus doesnt focus into the custom test input field -- fix
+** toggling blind mode changes user correct characters to wrong
 
 --------------------------------------
 Previewing wep app on android

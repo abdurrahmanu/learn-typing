@@ -5,9 +5,10 @@
 
             <div class="overflow-y-auto outline-none" :class="[showSettings ? 'absolute right-0 bottom-0 h-[100dvh] max-w-[1000px] w-[100%] sm:w-[80%] z-[9999]' : '', appTheme ]">
 
-                <div class="relative leading-6 text-[15px] pb-5">
+                <div class="relative leading-6 text-[15px]">
+                    {{ customizers['modes'] }}
                     <Header />
-                    <Fonts  v-if="!useValue  || searchResult.includes('font')"/>
+                    <Fonts  v-if="!useValue || searchResult.includes('font')"/>
                     <TextLines v-if="!useValue  || searchResult.includes('test lines')"/>
                     <Cursor  v-if="!useValue  || searchResult.includes('cursor')"/>
                     <Difficulty  v-if="!useValue  || searchResult.includes('difficulty')"/>
@@ -23,7 +24,7 @@
                     <StopOnError v-if="!useValue  || !isMobile() && searchResult.includes('stop on error')" />
                     <AuthoredQoutes v-if="!useValue  || customizers['modes'] !== 'alphabet-test' && searchResult.includes('quotes')" />
                     <UpperCase v-if="!useValue  || searchResult.includes('uppercase')" />
-                    <LetterCombinations v-if="!useValue  || customizers['modes'] === 'alphabet-test' && searchResult.includes('letter combination')"/>
+                    <LetterCombinations v-if="isAlphabetTest && (!useValue  || customizers['modes'] === 'alphabet-test' && searchResult.includes('letter combination'))"/>
                     <Cookies v-if="!useValue  || searchResult.includes('cookies')"/>
                 </div>
             </div>
@@ -58,6 +59,7 @@ import DoubleWords from './DoubleWords.vue'
 import TextLines from './TextLines.vue'
 import { isMobile } from '../../composables/isMobile'
 import { searchStore } from '../../store/searchStore'
+import { computed } from 'vue'
 
 const searchstore = searchStore()
 const {searchResult, useValue} = storeToRefs(searchstore)
@@ -69,6 +71,9 @@ const customizestore = customizeStore()
 const {customizers, showSettings, } = storeToRefs(customizestore)
 const {settingsPage} = customizestore
 
+const isAlphabetTest = computed(() => {
+    return customizers.value['modes'] === 'alphabet-test'
+})
 </script>
 
 <style scoped>
