@@ -3,11 +3,11 @@ import { countdownStore } from "../store/countdownStore"
 import {customizeStore} from '../store/customizeStore'
 import {getAlphabets} from './getAlphabets'
 import { storeToRefs } from "pinia"
-import { getQuotes } from "./getQuotes"
+import { getTest } from "./getTest"
 
-export const generateTest = async (config) => {
+export const generateTest = async () => {
     const store = mainStore()
-    const {containerText, storedTest, movie, authoredQuote, allSpacesIndex} = storeToRefs(store)
+    const {containerText, storedTest, allSpacesIndex} = storeToRefs(store)
     
     const count = countdownStore()
     const {textLength} = storeToRefs(count)
@@ -20,32 +20,17 @@ export const generateTest = async (config) => {
         containerText.value = storedTest.value
     }
 
-    else if (customizers.value['modes'] === 'word-test') {
-        await getQuotes(config).then( quote => {
-            if (typeof quote === 'object') {  
-                if (!quote[2]) {
-                    containerText.value = quote[1]
-                    authoredQuote.value = {
-                        author: quote[0]
-                    }
-                }
-                else {
-                    containerText.value = quote[2]
-                    movie.value = {
-                        name : quote[0],
-                        quoteAuthor: quote[1]
-                    }
-                }
-            } 
-            else {
-                movie.value = {}
-                authoredQuote.value = {}
-                containerText.value = quote
-                }
-        })
+    else {
+        const mode = customizers.value['modes']
+
+        if (mode === 'word-test') {
+            let test = await getTest()
+            containerText.value = test['test']
+        }
+
+        else containerText.value = getAlphabets()
     }
 
-    else if (customizers.value['modes'] === 'alphabet-test') containerText.value = getAlphabets()
 
     for (let index = 0; index < containerText.value.length; index++) {
         if (containerText.value[index] === ' ') {

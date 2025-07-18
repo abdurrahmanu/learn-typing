@@ -64,7 +64,8 @@ useWatchers({
 
 onMounted(() => {
     textBoxHeight()
-    generateTest(customizers.value)
+    // if network.............use network to generate test
+    generateTest()
     focus.value = true
 })
 </script>

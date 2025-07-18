@@ -33,7 +33,6 @@
                             <span>{{ name }}</span> 
                             <span @click="use(name)" class=" text-[12px] px-3 text-white bg-green-700 rounded-full py-[1px] hover:bg-green-800 ml-1">use</span> 
                             <span v-if="index !== 0" @click="del(name)" class="px-1 text-white py-[1px] bg-red-500 rounded-full hover:bg-red-600 text-[10px]">delete</span>
-                            <!-- <span v-if="index !== 0" @click="edit(name)" class="px-3 text-white py-[1px] bg-blue-600 rounded-full hover:bg-blue-700">edit</span> -->
                         </div>
                         <div class="font-[400] exo-ital max-h-[100px] overflow-y-auto">{{ test }}</div>
                     </div>
@@ -119,9 +118,7 @@ const del = (name) => {
 
 const use = (name) => {
     if (repeat.value) return
-    if (customizers.value['test-type'] !== 'custom') {
-        customizers.value['test-type'] = 'custom'
-    }
+    customizers.value['test-type'] = 'custom'
     userSelectedTest.value = name
     go()
     toggleCustomTestModal.value = false

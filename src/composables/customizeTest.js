@@ -1,40 +1,47 @@
 import { ref } from 'vue'
 
-export function useCustomizeFormat(args, text) {
-    const res = ref(text);
+export function customizeTest({
+    numbers,
+    punctuation,
+    caps,
+    allCaps,
+    camelCase,
+    noSpace ,
+    testType,
+    test
+}) {
+
+    const res = ref(test);
     let punctuations = [',', '.', ':', ';', '-', "'", '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '=', '[', ']', '{', '}', '|', "\\", '"', '<', '>', '/', '?']
 
-    // Random Case
-    if (args[4]) {
+    if (camelCase) {
         res.value = ''
-        for (let index = 0; index < text.length; index++) {
+        for (let index = 0; index < test.length; index++) {
             let random = Math.round(Math.random() + 1)
-            if (random % 2 === 0) res.value += text[index].toUpperCase()
-            else res.value += text[index].toLowerCase()
+            if (random % 2 === 0) res.value += test[index].toUpperCase()
+            else res.value += test[index].toLowerCase()
         }
     }
 
-    // No space
-    if (args[5]) {
-        if (!args[1]) {
+    if (noSpace) {
+        if (punctuation) {
             let newText = res.value
             res.value = ''
-            for (let index = 0; index < text.length; index++) {
+            for (let index = 0; index < test.length; index++) {
                 if (newText[index] !== ' ') res.value += newText[index]
                 else res.value += ''
             }
         }
     }
 
-    // All Caps
-    if (args[3]) {
+    if (allCaps) {
         res.value = res.value.toUpperCase()
     }
 
-    if (!args.includes('caps') && !args[4] && !args[3]) {
+    if (!caps && !camelCase && !allCaps) {
         res.value = res.value.toLowerCase()
     } else {
-        if (args[6] === 'words') {
+        if (testType === 'words') {
             let newText = res.value
             res.value = ''
             for (let index = 0; index < newText.length; index++) {
@@ -46,7 +53,7 @@ export function useCustomizeFormat(args, text) {
     }
 
     // Punctuations
-    if (!args[1]) {
+    if (punctuation) {
         let newText = res.value
         res.value = ''
         for (let index = 0; index < newText.length; index++) {
@@ -56,7 +63,7 @@ export function useCustomizeFormat(args, text) {
         }
     }
     else {
-        if (args[6] === 'words') {
+        if (testType === 'words') {
             let punctuations = [',', '.', ';', '.', '.', '.', ',', ',', '?', '!']
             let newText = res.value
             res.value = ''
@@ -66,10 +73,11 @@ export function useCustomizeFormat(args, text) {
                 } else res.value += newText[index]
             }
         }
-        if (args[5]) {
+        
+        if (noSpace) {
             let newText = res.value
             res.value = ''
-            for (let index = 0; index < text.length; index++) {
+            for (let index = 0; index < test.length; index++) {
                 if (newText[index] !== ' ') res.value += newText[index]
                 else res.value += ''
             }

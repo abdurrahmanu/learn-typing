@@ -105,7 +105,7 @@ export default function useWatchers({
                 clearResult()
                 clearTimer()
                 clearCounter()
-                switchNext(customizers.value)
+                switchNext()
               }
             })
       }

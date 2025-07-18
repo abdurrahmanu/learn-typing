@@ -1,5 +1,5 @@
 <template>
-    <div ref="rangeEl" v-show="!hasCompletedSession && completionLevel"  class="w-full max-w-[700px] absolute top-[100%] left-[50%] translate-x-[-50%]">
+    <div ref="rangeEl" v-show="!hasCompletedSession && completionLevel"  class="max-w-[700px] m-auto">
         <div :style="{'width': completionLevel + '%'}" class="flex h-[2px]">
             <div v-show="index <= playerInput.length - 1" :class="[playerInput[index] === alphabet && index <= playerInput.length - 1 ? 'bg-green-500' : 'bg-red-500', ]" :style="{'width': singleDivWidth + 'px'}" v-for="(alphabet, index) in containerText" :key="index"></div>
         </div>

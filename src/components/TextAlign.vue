@@ -3,19 +3,15 @@
         <div @click="textPosition = 'left'">
             <alignLeft :position="textPosition === 'left'" class="w-5" />
         </div>
-        <div  @click="textPosition = 'center'">
-            <alignMiddle :position="textPosition === 'center'" class="w-5"/>
-        </div>
-        <div @click="textPosition = 'right'">
-            <alignRight :position="textPosition === 'right'" class="w-5"/>
+        <div  @click="textPosition = 'justify'">
+            <alignJustify :position="textPosition === 'justify'" class="w-5"/>
         </div>
     </div>
 </template>
 
 <script setup>
 import alignLeft from './svg/alignLeft.vue';
-import alignMiddle from './svg/alignMiddle.vue';
-import alignRight from './svg/alignRight.vue';
+import alignJustify from './svg/alignJustify.vue';
 import {storeToRefs} from 'pinia'
 import { customizeStore } from '../store/customizeStore';
 

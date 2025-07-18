@@ -15,8 +15,7 @@
             class="container-style"
             :style="{'height' : containerHeight + 'px', 'font-size': font + 'px'}" 
             :class="[ (customizers['no-space'] || customizers['test-type'] === 'custom' || customizers['modes'] === 'alphabet-test') && 'break-words', 
-            (textPosition === 'center') && 'text-justify',
-            (textPosition === 'right') && 'text-right' 
+            (textPosition === 'justify') && 'text-justify',
             (textPosition === 'left') && 'text-left'] ">                 
                 <Character
                 v-for="(character, index) in containerText"

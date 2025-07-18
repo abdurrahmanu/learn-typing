@@ -1,6 +1,6 @@
 <template>
-    <div v-show="!hasCompletedSession && completionLevel" class="w-full max-w-[700px] absolute top-[100%] left-[50%] translate-x-[-50%]">
-        <div :class="theme === 'dark' ? 'bg-white' : 'bg-black'" :style="{'width': completionLevel + '%'}" class="absolute h-[2px] top-0 bottom-0 left-0"></div>
+    <div v-show="!hasCompletedSession && completionLevel" class="max-w-[700px] m-auto">
+        <div :class="theme === 'dark' ? 'bg-white' : 'bg-black'" :style="{'width': completionLevel + '%'}" class="h-[2px]"></div>
     </div>
 </template>
 

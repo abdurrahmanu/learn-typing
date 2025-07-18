@@ -189,7 +189,7 @@ export function englishWords() {
       ]
 
     const quotesWithoutAuthors = ref({
-        'ten': [
+        '10': [
             "The only true wisdom is in knowing you know nothing.",
             "The unexamined life is not worth living.",
             "Knowing yourself is the beginning of all wisdom.",
@@ -253,7 +253,7 @@ export function englishWords() {
             "It is not the mountain we conquer, but ourselves.",
             "The true sign of intelligence is not knowledge but imagination."
         ],
-        'twenty': [
+        '20': [
             "The only thing necessary for the triumph of evil is for good men to do nothing.",
             "I am not a product of my circumstances. I am a product of my decisions.",
             "Success is not final, failure is not fatal: It is the courage to continue that counts.",
@@ -404,7 +404,7 @@ export function englishWords() {
             "The only way to do great work is to love what you do.",
             "In the end, we will remember not the words of our enemies, but the silence of our friends.",
         ],
-        'thirty': [
+        '30': [
             "The function of education is to teach one to think intensively and to think critically. Intelligence plus character  that is the goal of true education.",
             "Success is not the key to happiness. Happiness is the key to success. If you love what you are doing, you will be successful.",
             "The only thing standing between you and your dream is the will to try and the belief that it is actually possible.",
@@ -422,7 +422,7 @@ export function englishWords() {
             "The only thing standing between you and your dream is the will to try and the belief that it is actually possible.",
             "Twenty years from now you will be more disappointed by the things that you didn't do than by the ones you did do.",
         ],
-        'long': [
+        '40': [
             "When one door of happiness closes, another opens; but often we look so long at the closed door that we do not see the one which has been opened for us."
         ],
     })

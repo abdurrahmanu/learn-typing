@@ -1,7 +1,8 @@
-import {defineStore} from 'pinia'
+import {defineStore, storeToRefs} from 'pinia'
 import {ref, computed} from 'vue'
 import { updateDB } from '../composables/updateDB'
 import { isMobile } from '../composables/isMobile'
+import { mainStore } from './mainStore'
 
 export const customizeStore = defineStore('customizeStore', () => {
     const count = ref(false)
@@ -16,7 +17,7 @@ export const customizeStore = defineStore('customizeStore', () => {
     const difficulty = ref('beginner')
     const backspace = ref(true)
     const repeat = ref(false)
-    const textPosition = ref('left')
+    const textPosition = ref('justify')
     const blind = ref(false)
     const font = ref(32)
     const range = ref((font.value - 16) / 0.26)
@@ -27,6 +28,13 @@ export const customizeStore = defineStore('customizeStore', () => {
     const shiftKey = ref(false)
     const mixCharacters = ref(false)
     const mixCharactersArray = ref([])
+
+    const mainstore = mainStore()
+    const {route} = storeToRefs(mainstore)
+
+    const isBlindMode = computed(() => {
+        return blind.value && route.value === 'home'
+    })
 
     const customizers = ref({
         'stop-on-error': false,
@@ -220,5 +228,6 @@ export const customizeStore = defineStore('customizeStore', () => {
         shiftKey,
         mixCharactersArray,
         mixCharacters,
+        isBlindMode,
     }
 })

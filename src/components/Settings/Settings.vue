@@ -6,7 +6,6 @@
             <div class="overflow-y-auto outline-none" :class="[showSettings ? 'absolute right-0 bottom-0 h-[100dvh] max-w-[1000px] w-[100%] sm:w-[80%] z-[9999]' : '', appTheme ]">
 
                 <div class="relative leading-6 text-[15px]">
-                    {{ customizers['modes'] }}
                     <Header />
                     <Fonts  v-if="!useValue || searchResult.includes('font')"/>
                     <TextLines v-if="!useValue  || searchResult.includes('test lines')"/>

@@ -1,7 +1,7 @@
 <template>
     <div @click="customize" class="relative">
         <div class="flex w-fit peer">
-            <closedEye v-if="blind" id="focus" class="w-6" />
+            <closedEye v-if="blind" id="focus" class="w-5" />
             <openEye v-else id='focus' class="w-5" />
         </div>
     </div>

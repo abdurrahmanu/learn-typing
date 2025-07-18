@@ -2,11 +2,12 @@
     <header 
     :class="[theme === 'dark' ? 'hover:bg-zinc-700' : 'hover:bg-zinc-200']"
     class="header">
+
         <Logo 
         @click="routeToPage('about')" 
         v-show="!(focus && isMobile())" 
-        class="flex cursor-pointer" 
-        />
+        class="flex cursor-pointer" />
+
         <div 
         v-show="(!focus && isMobile()) || !isMobile()" 
         :class="[!hideElements ? 'right-[50%] translate-x-[50%]' : 'left-[50%] translate-x-[-50%]']"
@@ -65,13 +66,6 @@
                 <user class="w-5 peer" />
             </div>
         </div>
-        <CompletionRange 
-        v-if="blind && route.name === 'home'" 
-        class="block" />
-
-        <CompletionRangeWithErrors 
-        v-if="!blind && route.name === 'home'" 
-        class="block" />
     </header>
 </template>
 
@@ -86,8 +80,6 @@ import user from './svg/user.vue'
 import Blind from './Blind.vue';
 import feedback from './svg/feedback.vue'
 import Clock from './Clock.vue';
-import CompletionRangeWithErrors from './CompletionRangeWithErrors.vue';
-import CompletionRange from './CompletionRange.vue';
 import {useRoute, useRouter} from 'vue-router'
 import { isMobile } from '../composables/isMobile';
 import { customizeStore } from '../store/customizeStore';

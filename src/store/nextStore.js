@@ -5,8 +5,8 @@ import {generateTest} from '../composables/generateTest'
 export const nextStore = defineStore('nextStore', () => {
     const goNext = ref(false)
     
-    const switchNext = (config) => {
-        generateTest(config)
+    const switchNext = () => {
+        generateTest()
         setTimeout(() => goNext.value = false, 0);
     }
 

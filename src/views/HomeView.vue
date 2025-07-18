@@ -1,9 +1,10 @@
 <template>
     <div v-if="!hasCompletedSession" class="m-auto max-w-[1500px] lg:flex pt-10 pb-5"> 
       <div class="w-[100%] mx-auto flex-none space-y-2">   
+        <CompletionRange v-if="isBlindMode" />
+        <CompletionRangeWithErrors v-if="!isBlindMode" />
         <Customize />
         <TestContainer />
-        <!-- {{ charCountStore().incorrectCharCount }} - {{ charCountStore().correctCharCount }} -->
       </div>
     </div>
 </template>
@@ -11,6 +12,8 @@
 <script setup>
 import TestContainer from '../components/TestContainer.vue'
 import Customize from '../components/Customize.vue'
+import CompletionRange from '../components/CompletionRange.vue';
+import CompletionRangeWithErrors from '../components/CompletionRangeWithErrors.vue';
 
 import useWatchers from '../composables/useWatchers';
 import useEventListener from '../composables/useEventLIstener';
@@ -27,10 +30,12 @@ import preventKeyBoardScroll from '../composables/preventKeyBoardScroll'
 import inputEvent from '../composables/inputEvent'
 import { DB } from '../composables/connectDB';
 import evaluateInput from '../composables/evaluateInput';
+import { useRoute } from 'vue-router';
+
+const route = useRoute()
 
 const customize = customizeStore()
-const {font, toggleCapsToast, pauseTyping, toggleCustomTestModal} = storeToRefs(customize)
-
+const {font, toggleCapsToast, pauseTyping, toggleCustomTestModal, isBlindMode} = storeToRefs(customize)
 
 const nextstore = nextStore()
 const {goNext} = storeToRefs(nextstore)
