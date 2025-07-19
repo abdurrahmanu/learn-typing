@@ -1,5 +1,4 @@
 <template>
-  {{ user?.uid }}
   <Loader v-if="connectStore().loadingApp" />
   <Main v-else />
 </template>
