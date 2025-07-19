@@ -1,5 +1,5 @@
 import { auth } from '../firebase';
-import { signInWithPopup, signOut, GoogleAuthProvider, signInWithRedirect } from 'firebase/auth';
+import { signInWithPopup, signOut, GoogleAuthProvider, signInWithRedirect, getRedirectResult } from 'firebase/auth';
 import { authStore } from '../store/authStore';
 import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
@@ -7,7 +7,6 @@ import { mainStore } from '../store/mainStore';
 import { addSingleDoc, getSingleDoc } from './firestoreDocs';
 import { isMobile } from './isMobile';
 import {ref} from 'vue'
-import { updateConfig } from './updateConfig';
 
 export function useAuth() {
   const router = useRouter()
@@ -20,19 +19,22 @@ export function useAuth() {
 
   const loginWithGoogle = async () => {
     const result = ref(null)
+
     try {
         const provider = new GoogleAuthProvider();
 
-      if (isMobile()) {
-        result.value = await signInWithRedirect(auth, provider)
-        console.log('asdfasdf')
-      } else {
         if (route.value === 'user') {
           provider.setCustomParameters({
-            prompt: 'select_account'
+              prompt: 'select_account'
           });
         }
 
+        if (isMobile()) {
+          signInWithRedirect(auth, provider)
+          result.value = await getRedirectResult(auth)
+        } 
+        
+        else {
         result.value = await signInWithPopup(auth, provider)
       }
 

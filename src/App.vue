@@ -15,12 +15,13 @@ import { storeToRefs } from 'pinia';
 import { authStore } from './store/authStore';
 import { updateConfig } from './composables/updateConfig';
 import { getSingleDoc } from './composables/firestoreDocs';
+import { isMobile } from './composables/isMobile';
 
 const mainstore = mainStore()
 const {route} = storeToRefs(mainstore)
 
 const authstore = authStore()
-const {login, user, data} = storeToRefs(authstore)
+const {login, user} = storeToRefs(authstore)
 
 const connectstore = connectStore()
 const {loadingApp} = storeToRefs(connectstore)

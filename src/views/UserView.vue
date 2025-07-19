@@ -12,7 +12,7 @@
       </div>
     </div>
   </div>
-
+{{ data }}
   <div class="text-center p-5">
     <p>{{ user?.email }}</p>
     <p>{{ user?.displayName }}</p>
