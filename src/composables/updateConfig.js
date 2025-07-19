@@ -6,12 +6,12 @@ import {getSingleDoc} from './firestoreDocs'
 import { storeToRefs } from 'pinia';
 import { authStore } from "../store/authStore";
 
-export const updateConfig = async () => {
+export const updateConfig = async (userData) => {
     const authstore = authStore()
     const {login, user} = storeToRefs(authstore)
     
     const store = mainStore()
-    const {preferredConfigs, customTests} = storeToRefs(store)
+    const { customTests} = storeToRefs(store)
 
     const theme_ = themeStore()
     const {theme } = storeToRefs(theme_)
@@ -22,18 +22,16 @@ export const updateConfig = async () => {
     const customize = customizeStore()
     const { customizers, disableOption, textLines, cursorType, difficulty, font, range, blind, backspace } = storeToRefs(customize)
     
-    preferredConfigs.value = await getSingleDoc(user.value?.uid)
-
     loadingApp.value = false
-    theme.value = preferredConfigs.value.theme || theme.value
-    font.value = preferredConfigs.value.fontsize || font.value
+    theme.value = userData.theme || theme.value
+    font.value = userData.fontsize || font.value
     range.value = (font.value - 16) / 0.26
-    cursorType.value = preferredConfigs.value.cursor || cursorType.value
-    blind.value = preferredConfigs.value.blind || false
-    difficulty.value = preferredConfigs.value.difficulty || difficulty.value
-    backspace.value = preferredConfigs.value.backspace || backspace.value
-    customizers.value = preferredConfigs.value.config[0] || customizers.value
-    disableOption.value = preferredConfigs.value.config[1] || disableOption.value
-    customTests.value = preferredConfigs.value.customTests || customTests.value['demo']
-    textLines.value = preferredConfigs.value.textLines || 3
+    cursorType.value = userData.cursor || cursorType.value
+    blind.value = userData.blind || false
+    difficulty.value = userData.difficulty || difficulty.value
+    backspace.value = userData.backspace || backspace.value
+    customizers.value = userData.config[0] || customizers.value
+    disableOption.value = userData.config[1] || disableOption.value
+    customTests.value = userData.customTests || customTests.value['demo']
+    textLines.value = userData.textLines || 3
 }

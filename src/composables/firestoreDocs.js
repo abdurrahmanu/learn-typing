@@ -14,10 +14,9 @@ export const addSingleDoc = async (ID) => {
 
 export const deleteSingleDoc = async (ID) => await deleteDoc(doc(db, 'users', ID))
 
-export const updateSingleDoc = async (variableName, updateVal) => {
-    let id = user.value.uid
-    const updateObject = ref({})
-    updateObject.value[variableName] = updateVal
-    const singleDoc = doc(db, "users", id);
-    await updateDoc(singleDoc, updateObject.value)
+export const updateSingleDoc = async (name, val, ID) => {
+    const updateObject = {}
+    updateObject[name] = val
+    const singleDoc = doc(db, "users", ID);
+    await updateDoc(singleDoc, updateObject)
 }

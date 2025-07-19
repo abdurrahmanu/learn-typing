@@ -2,7 +2,6 @@ import {defineStore} from 'pinia'
 import {ref, computed} from 'vue'
 
 export const mainStore = defineStore('mainStore', () => {
-    const preferredConfigs = ref(undefined)
     const route = ref(null)
     const quoteType = ref('')
     const demo = ref(false)
@@ -39,7 +38,6 @@ export const mainStore = defineStore('mainStore', () => {
     }
 
     return {
-        preferredConfigs,
         resetToDefault,
         quoteType,
         route,

@@ -19,7 +19,6 @@ export default function useWatchers({
     hasCompletedSession: completed, 
     font: font, 
     toggleCapsToast: capsToggle, 
-    preferredConfigs: config,
     playerInput: input,
     scrollTextContainer: scrollContainer,
     settingsToUpdate: update,
@@ -83,17 +82,6 @@ export default function useWatchers({
     if (capsToggle) {
         watch(capsToggle, (newVal, oldVal) => newVal ? setTimeout(() => toggleCapsToast.value = oldVal, 5000) : false )
     }
-    
-    if (config) {
-          watch(config, newVal => {
-              if (newVal && navigator.onLine && showConnectionStrength.value) {
-                connectionStrength.value = 'connected'
-                setTimeout(() => {
-                  showConnectionStrength.value = false
-                }, 4000);
-              }
-            }, {deep: true})  
-      }
       
       if (next) {     
           watch(next, newVal => {

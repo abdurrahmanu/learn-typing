@@ -43,7 +43,7 @@ const typingstatestore = typingStateStore()
 const {refocus, focus, playerInput, z, inputEl} = storeToRefs(typingstatestore)
 
 const mainstore = mainStore()
-const { testContainerEl, preferredConfigs, hasCompletedSession} = storeToRefs(mainstore)
+const { testContainerEl, hasCompletedSession} = storeToRefs(mainstore)
 
 const connect = connectStore()
 const {connectionAvailable } = storeToRefs(connect)
@@ -147,7 +147,6 @@ useWatchers({
   goNext,
   hasCompletedSession,
   font,
-  preferredConfigs,
   toggleCapsToast,
   playerInput,
   settingsToUpdate,

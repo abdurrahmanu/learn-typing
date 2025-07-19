@@ -38,7 +38,6 @@ const toggleTheme = (color) => {
         name: Object.keys({theme})[0],
         value: theme.value
     }
-
 }
 </script>
 

@@ -1,40 +1,47 @@
 import { auth } from '../firebase';
-import { signInWithPopup, signOut, GoogleAuthProvider } from 'firebase/auth';
+import { signInWithPopup, signOut, GoogleAuthProvider, signInWithRedirect } from 'firebase/auth';
 import { authStore } from '../store/authStore';
 import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
 import { mainStore } from '../store/mainStore';
 import { addSingleDoc, getSingleDoc } from './firestoreDocs';
+import { isMobile } from './isMobile';
+import {ref} from 'vue'
+import { updateConfig } from './updateConfig';
 
 export function useAuth() {
   const router = useRouter()
 
   const authstore = authStore()
-  const {login, user} = storeToRefs(authstore)
+  const {login, user, data} = storeToRefs(authstore)
 
   const mainstore = mainStore()
   const {route} = storeToRefs(mainstore)
 
   const loginWithGoogle = async () => {
+    const result = ref(null)
     try {
         const provider = new GoogleAuthProvider();
 
-      if (route.value === 'user') {
-        provider.setCustomParameters({
-          prompt: 'select_account'
-        });
+      if (isMobile()) {
+        result.value = await signInWithRedirect(auth, provider)
+        console.log('asdfasdf')
+      } else {
+        if (route.value === 'user') {
+          provider.setCustomParameters({
+            prompt: 'select_account'
+          });
+        }
+
+        result.value = await signInWithPopup(auth, provider)
       }
 
-      const result = await signInWithPopup(auth, provider)
-      user.value = result.user;
+      user.value = result.value.user;
       
       if (user.value?.emailVerified) {
         login.value = true
-
-        let userExists = getSingleDoc(user.value.uid)
-        if (userExists) {
-          updateConfig()
-        } else {
+        let userExists = await getSingleDoc(user.value.uid)
+        if (!userExists) {
           addSingleDoc(user.value.uid)
         }
       }
