@@ -16,7 +16,6 @@ import { storeToRefs } from 'pinia';
 import { countdownStore } from '../../store/countdownStore'
 import { customizeStore } from '../../store/customizeStore'
 import { themeStore } from '../../store/themeStore';
-import {updateDB} from '../../composables/updateDB'
 import {nextStore} from '../../store/nextStore'
 import { typingStateStore } from '../../store/typingStateStore';
 
@@ -29,8 +28,8 @@ const {goNext} = storeToRefs(nextstore)
 const typingstatestore = typingStateStore()
 const {playerInputLength} = typingstatestore
 
-const customize = customizeStore()
-const { customizers, font, range} = storeToRefs(customize)
+const customizestore = customizeStore()
+const { customizers, settingsToUpdate, font, range} = storeToRefs(customizestore)
 
 const count = countdownStore()
 const {clearCounter} = count
@@ -42,7 +41,11 @@ const fontSize = computed(() => {
 watch(fontSize, (newVal) => {
     font.value = newVal
     let fontsize = newVal
-    updateDB(Object.keys({fontsize})[0], fontsize)
+
+    settingsToUpdate.value = {
+        name: Object.keys({fontsize})[0],
+        value: fontsize
+    }
 
     if (playerInputLength.value) {        
         if (customizers.value['timer']) clearCounter()

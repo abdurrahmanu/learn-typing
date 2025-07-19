@@ -26,17 +26,20 @@ import {watch, ref} from 'vue'
 import {storeToRefs} from 'pinia'
 import {customizeStore} from '../../store/customizeStore'
 import { themeStore } from '../../store/themeStore';
-import {updateDB} from '../../composables/updateDB'
 
 const theme_ = themeStore()
 const {theme} = theme_
 
-const store = customizeStore()
-const { cursorType} = storeToRefs(store)
+const customizestore = customizeStore()
+const { cursorType, settingsToUpdate} = storeToRefs(customizestore)
 
 watch(cursorType, (newVal) => {
     let cursor = newVal
-    updateDB(Object.keys({cursor})[0], cursor)
+
+    settingsToUpdate.value = {
+        name: Object.keys({cursor})[0],
+        value: cursor
+    }
 })
 </script>
 

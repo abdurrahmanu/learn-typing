@@ -35,7 +35,7 @@ import { useRoute } from 'vue-router';
 const route = useRoute()
 
 const customize = customizeStore()
-const {font, toggleCapsToast, pauseTyping, toggleCustomTestModal, isBlindMode} = storeToRefs(customize)
+const {font, settingsToUpdate, toggleCapsToast, pauseTyping, toggleCustomTestModal, isBlindMode} = storeToRefs(customize)
 
 const nextstore = nextStore()
 const {goNext} = storeToRefs(nextstore)
@@ -151,5 +151,6 @@ useWatchers({
   preferredConfigs,
   toggleCapsToast,
   playerInput,
+  settingsToUpdate,
 });
 </script>

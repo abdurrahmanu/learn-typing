@@ -71,7 +71,9 @@ const countdownTimer = computed(() => {
     return time[level.value]
 })
 
-const go = () => goNext.value = true
+const go = () => {
+    goNext.value = true
+}
 
 const changeLevel = (lvl) => {
     level.value = lvl

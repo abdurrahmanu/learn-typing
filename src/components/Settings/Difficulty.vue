@@ -25,13 +25,12 @@ import {watch, ref, computed} from 'vue'
 import {storeToRefs} from 'pinia'
 import {customizeStore} from '../../store/customizeStore'
 import { themeStore } from '../../store/themeStore';
-import { updateDB } from '../../composables/updateDB';
 
 const theme_ = themeStore()
 const {theme, appTheme} = theme_
 
-const store = customizeStore()
-const { difficulty } = storeToRefs(store)
+const customizestore = customizeStore()
+const { difficulty, settingsToUpdate } = storeToRefs(customizestore)
 
 const bg = computed(() => {
     return difficulty.value === 'beginner' ? 'bg-[#44b0d3]' : difficulty.value === 'amateur' ? 'bg-[#ffa07a]' : 'bg-[#4d5f43]'
@@ -47,6 +46,9 @@ const result = computed(() => {
 
 watch(difficulty, (newVal) => {
     let difficulty = newVal
-    updateDB(Object.keys({difficulty})[0], difficulty)
+        settingsToUpdate.value = {
+        name: Object.keys({difficulty})[0],
+        value: difficulty
+    }
 })
 </script>

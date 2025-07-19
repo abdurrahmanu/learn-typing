@@ -12,12 +12,15 @@
 
 <script setup>
 import {ref} from 'vue'
-import { updateDB } from '../composables/updateDB';
 import {themeStore}  from '../store/themeStore'
 import { storeToRefs } from 'pinia';
+import { customizeStore } from '../store/customizeStore';
 
 const theme_ = themeStore()
 const {theme, openBackgrounds } = storeToRefs(theme_)
+
+const customizestore = customizeStore()
+const {settingsToUpdate} = storeToRefs(customizestore)
 
 const bgContainer = ref(null)
 const colors = ref([
@@ -31,7 +34,11 @@ const bg = ref([
 
 const toggleTheme = (color) => {
     theme.value = color
-    updateDB(Object.keys({theme})[0], theme.value)
+    settingsToUpdate.value = {
+        name: Object.keys({theme})[0],
+        value: theme.value
+    }
+
 }
 </script>
 

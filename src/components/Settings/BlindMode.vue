@@ -19,18 +19,20 @@
 <script setup>
 import {storeToRefs} from 'pinia';
 import {customizeStore} from '../../store/customizeStore';
-import {updateDB} from '../../composables/updateDB'
 import { themeStore } from '../../store/themeStore';
 import good from '../svg/good.vue';
 
 const theme_ = themeStore()
 const {theme} = theme_
 
-const store = customizeStore()
-const {blind} = storeToRefs(store)
+const customizestore = customizeStore()
+const {blind, settingsToUpdate} = storeToRefs(customizestore)
 
 const customize = () => {
     blind.value = !blind.value
-    updateDB(Object.keys({blind})[0], blind.value)
+        settingsToUpdate.value = {
+        name: Object.keys({blind})[0],
+        value: blind.value
+    }
 }
 </script>

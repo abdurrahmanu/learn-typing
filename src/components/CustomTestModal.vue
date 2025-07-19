@@ -28,11 +28,11 @@
             <div class="font-medium text-sm">CUSTOM TESTS</div>
             <div class="max-h-[calc(100dvh_-_50dvh)] overflow-y-auto h-fit p-1">
                 <div class="relative overflow-y-auto space-y-[5px]">                
-                    <div v-for="(test, name, index) in customTests" :key="index" class="p-1 border hover:shadow-sm" :class="[theme === 'dark' ? 'border-neutral-700' : 'border-slate-400']">
+                    <div v-for="(test, key, index) in customTests" :key="index" class="p-1 border hover:shadow-sm" :class="[theme === 'dark' ? 'border-neutral-700' : 'border-slate-400']">
                         <div class="space-x-1 font-medium uppercase"> 
-                            <span>{{ name }}</span> 
-                            <span @click="use(name)" class=" text-[12px] px-3 text-white bg-green-700 rounded-full py-[1px] hover:bg-green-800 ml-1">use</span> 
-                            <span v-if="index !== 0" @click="del(name)" class="px-1 text-white py-[1px] bg-red-500 rounded-full hover:bg-red-600 text-[10px]">delete</span>
+                            <span>{{ key }}</span> 
+                            <span @click="use(key)" class=" text-[12px] px-3 text-white bg-green-700 rounded-full py-[1px] hover:bg-green-800 ml-1">use</span> 
+                            <span v-if="index !== 0" @click="del(key)" class="px-1 text-white py-[1px] bg-red-500 rounded-full hover:bg-red-600 text-[10px]">delete</span>
                         </div>
                         <div class="font-[400] exo-ital max-h-[100px] overflow-y-auto">{{ test }}</div>
                     </div>
@@ -54,7 +54,7 @@ import {nextStore} from '../store/nextStore'
 
 const route = useRoute()
 const customize = customizeStore()
-const {toggleCustomTestModal, pauseTyping, customizers, userSelectedTest, repeat} = storeToRefs(customize)
+const {toggleCustomTestModal, pauseTyping, customizers, customChoice, repeat} = storeToRefs(customize)
 
 const theme_ = themeStore()
 const {theme, appTheme } = storeToRefs(theme_)
@@ -113,17 +113,20 @@ const cancel = () => {
     customTestTitle.value = ''
 }
 
-const del = (name) => {
+const del = (key) => {
+    
 }
 
-const use = (name) => {
+const use = (testName) => {
     if (repeat.value) return
     customizers.value['test-type'] = 'custom'
-    userSelectedTest.value = name
+    customChoice.value = testName
     go()
+}
+
+const go = () => {
+    goNext.value = true
     toggleCustomTestModal.value = false
     pauseTyping.value = false
 }
-
-const go = () => goNext.value = true
 </script>

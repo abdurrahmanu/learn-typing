@@ -19,9 +19,7 @@
                     <CustomCase  v-if="!useValue  || searchResult.includes('custom case')"/>
                     <DoubleWords v-if="!useValue  || customizers['modes'] !== 'alphabet-test' && searchResult.includes('double words')"/>
                     <NoSpace v-if="!useValue  || customizers['modes'] !== 'alphabet-test' && searchResult.includes('no space')" />
-                    <MovieQuotes v-if="!useValue  || customizers['modes'] !== 'alphabet-test' && searchResult.includes('movie quotes')" />
                     <StopOnError v-if="!useValue  || !isMobile() && searchResult.includes('stop on error')" />
-                    <AuthoredQoutes v-if="!useValue  || customizers['modes'] !== 'alphabet-test' && searchResult.includes('quotes')" />
                     <UpperCase v-if="!useValue  || searchResult.includes('uppercase')" />
                     <LetterCombinations v-if="isAlphabetTest && (!useValue  || customizers['modes'] === 'alphabet-test' && searchResult.includes('letter combination'))"/>
                     <Cookies v-if="!useValue  || searchResult.includes('cookies')"/>
@@ -32,10 +30,8 @@
 </template>
 
 <script setup>
-// import SettingsUI from './SettingsUI.vue'
 import Cursor from './Cursor.vue'
 import Fonts from './Fonts.vue'
-import AuthoredQoutes from './AuthoredQuotes.vue'
 import Cookies from './Cookies.vue'
 import Header from './Header.vue'
 import UpperCase from './Uppercase.vue'
@@ -44,7 +40,6 @@ import NoSpace from './noSpace.vue'
 import BlindMode from './BlindMode.vue'
 import BackSpace from './BackSpace.vue';
 import Countdown from './CountDown.vue';
-import MovieQuotes from './MovieQuotes.vue'
 import LetterCombinations from './LetterCombinations.vue'
 import {storeToRefs} from 'pinia'
 import {customizeStore} from '../../store/customizeStore'

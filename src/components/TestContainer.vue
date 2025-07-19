@@ -48,6 +48,7 @@ const { beginCountdown} = storeToRefs(timerstore)
 
 const nextstore = nextStore()
 const {goNext} = storeToRefs(nextstore)
+const {generateNewTest} = nextstore
 
 const mainstore = mainStore()
 const { hasCompletedSession, scrollTextContainer} = storeToRefs(mainstore)
@@ -65,7 +66,7 @@ useWatchers({
 onMounted(() => {
     textBoxHeight()
     // if network.............use network to generate test
-    generateTest()
+    generateNewTest()
     focus.value = true
 })
 </script>

@@ -1,13 +1,14 @@
 import {defineStore, storeToRefs} from 'pinia'
 import {ref, computed} from 'vue'
-import { updateDB } from '../composables/updateDB'
 import { isMobile } from '../composables/isMobile'
 import { mainStore } from './mainStore'
+import { nextStore } from './nextStore'
 
 export const customizeStore = defineStore('customizeStore', () => {
+    const settingsToUpdate = ref({})
     const count = ref(false)
     const testType_ = ref('words')
-    const userSelectedTest = ref('')
+    const customChoice = ref('')
     const toggleCustomTestModal = ref(false)
     const pauseTyping = ref(true)
     const configs = ref([])
@@ -32,6 +33,9 @@ export const customizeStore = defineStore('customizeStore', () => {
     const mainstore = mainStore()
     const {route} = storeToRefs(mainstore)
 
+    const nextstore = nextStore()
+    const {goNext} = storeToRefs(nextstore)
+
     const isBlindMode = computed(() => {
         return blind.value && route.value === 'home'
     })
@@ -49,8 +53,6 @@ export const customizeStore = defineStore('customizeStore', () => {
         'backspace': true,
         'camel-case': false,
         'no-space': false,
-        'movie-quotes': false,
-        'author-quotes': false,
         'blur': false,
         'modes': 'word-test',
         'spaced': false,
@@ -142,7 +144,13 @@ export const customizeStore = defineStore('customizeStore', () => {
         }
 
         let config = [customizers.value, disableOption.value]
-        updateDB(Object.keys({config})[0], config, null, true)
+
+        goNext.value = true
+
+        settingsToUpdate.value = {
+            name: Object.keys({config})[0],
+            value: config
+        }
     }
 
     const checkQuickSettings = () => {
@@ -150,11 +158,6 @@ export const customizeStore = defineStore('customizeStore', () => {
         let selection = +configs.value[1] || configs.value[1]
         let group = configs.value[0]
         let arr = ['arrangement', 'case', 'spaced']
-
-        if ((typeof configs.value[1] === 'number' && configs.value[0] === 'test-length' ) || configs.value[1] === 'words') {
-            customizers.value['movie-quotes'] = false
-            customizers.value['author-quotes'] = false
-        }
 
         if (arr.includes(group)) {       
             if (selection === 'uppercase') {
@@ -184,18 +187,18 @@ export const customizeStore = defineStore('customizeStore', () => {
     }
 
     const changeSettings = (mode, boolean) => {
-        let booleanSwap = ['all-caps', 'movie-quotes', 'camel-case', 'double-words', 'capslock', 'countdown', 'blur', 'stop-on-error', 'no-space']
+        let booleanSwap = ['all-caps', 'camel-case', 'double-words', 'capslock', 'countdown', 'blur', 'stop-on-error', 'no-space']
 
         if (boolean && booleanSwap.includes(mode)) customizers.value[mode] = false
         if (!boolean && booleanSwap.includes(mode)) customizers.value[mode] = true
 
-        if (mode === 'author-quotes' || mode === 'movie-quotes') {
-            customizers.value['test-length'] = 'auto'
-            customizers.value['test-type'] = 'quotes'
-        }
-
         let config = [customizers.value, disableOption.value]
-        updateDB(Object.keys({config})[0], config, null, true)
+        goNext.value = true
+
+        settingsToUpdate.value = {
+            name: Object.keys({config})[0],
+            value: config
+        }
     }
 
     return {
@@ -220,7 +223,7 @@ export const customizeStore = defineStore('customizeStore', () => {
         textPosition,
         pauseTyping,
         toggleCustomTestModal,
-        userSelectedTest,
+        customChoice,
         testType_,
         toggleCapsToast,
         customTestLength,
@@ -229,5 +232,6 @@ export const customizeStore = defineStore('customizeStore', () => {
         mixCharactersArray,
         mixCharacters,
         isBlindMode,
+        settingsToUpdate,
     }
 })

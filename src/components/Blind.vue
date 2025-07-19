@@ -12,13 +12,15 @@ import closedEye from './svg/closedEye.vue';
 import openEye from './svg/openEye.vue';
 import { customizeStore } from '../store/customizeStore';
 import { storeToRefs } from 'pinia';
-import {updateDB} from '../composables/updateDB'
 
-const custom = customizeStore()
-const {blind} = storeToRefs(custom)
+const customizestore = customizeStore()
+const {blind, settingsToUpdate} = storeToRefs(customizestore)
 
 const customize = () => {
     blind.value = !blind.value
-    updateDB(Object.keys({blind})[0], blind.value)
+    settingsToUpdate.value = {
+        name: Object.keys({blind})[0],
+        value: blind.value
+    }
 }
 </script>

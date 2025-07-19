@@ -12,93 +12,77 @@ export async function getTest () {
         author: null,
         name: null
     })
-
     const customizestore = customizeStore()
-    const {customizers, userSelectedTest} = storeToRefs(customizestore)
-
+    const {customizers, customChoice} = storeToRefs(customizestore)
     const mainstore = mainStore()
     const {customTests} = storeToRefs(mainstore)
-
     const {mostUsed, mediumUsed, rarelyUsed, quotesWithNumbers, numbers, quotesWithoutAuthors, movieQuotes} = englishWords()
-
     const includeNumbers = customizers.value['numbers']
     const testType = customizers.value['test-type']
+    const wordType =  customizers.value['words-type']
     const testLength = customizers.value['test-length']
-
-    const allQuotes = Array.from(Object.values(quotesWithoutAuthors.value)).flat(2)
-    const allMovies = Array.from(Object.values(movieQuotes)).map(movie => movie.quotes.flat()).flat(2)
+    const singleQoutes = Array.from(Object.values(quotesWithoutAuthors.value)).flat(2)
+    const allMovies = Array.from(Object.values(movieQuotes)).map((movies, index) => {
+        return movies.quotes.map(movie => {
+            return {
+                quote: movie.quote,
+                author: movie.author,
+                name: Array.from(Object.keys(movieQuotes))[index]
+            }
+        })
+    }).flat()
         
-    function generateQuoteTest() {
-        if (testType === 'quotes') {
-            let authored = customizers.value['author-quotes'] || customizers.value['movie-quotes']
-            if (authored) {
-                let movieIndex = Math.floor(Math.random() * allMovies.length)
-                let quoteIndex = Math.floor(Math.random() * authoredQuotes.length) 
-                let quote = authoredQuotes[quoteIndex]
-                let movie = allMovies[movieIndex][Math.floor(Math.random() * allMovies.length)]
-                let movieName = Object.keys(movieQuotes)[movieIndex]
-                
-                test.value = {
-                    author: quote.author || movie.quote,
-                    test: quote.quote || movie.author,
-                    name: movieName || null
-                }
-            } 
+    if (testType === 'quotes') {
+        let allQuotes = [
+            ...allMovies,
+            ...authoredQuotes,
+            ...singleQoutes,
+            ...(includeNumbers ? quotesWithNumbers : [])
+        ];
 
-            else {
-                if (testLength === 'auto') {
-                    const all = includeNumbers ? [...allQuotes, ...quotesWithNumbers] : [...allQuotes];
-                    const index = Math.floor(Math.random() * all.length);
-                    test.value['test'] = all[index];
-                }
-                else {
-                    let len = quotesWithoutAuthors.value.length
-                    test.value['test'] = quotesWithoutAuthors.value[`${testLength}`][Math.floor(Math.random() * len)]
-                }
-            }
-        }
+        let index = Math.floor(Math.random() * allQuotes.length)
+        const author =  allQuotes[index]?.author
+        const quote = allQuotes[index]?.quote || allQuotes[index]
+        const name = allQuotes[index]?.name
 
-        else if (testType === 'custom')  {
-            if (userSelectedTest.value) {
-                test.value['test'] = customTests.value[userSelectedTest.value]
-            } else {
-                let quotes = Object.values(customTests.value)
-                test.value['test'] = quotes[Math.floor(Math.random() * quotes.length)]
-            }
-        }
-
-        else if (testType === 'words') {
-            const words = ref([...mostUsed])
-            const numberOfWords = ref(testLength)
-            const wordType =  customizers.value['words-type']
-            if (testLength === 'auto') numberOfWords.value = Math.round(Math.random() * 50) + 5
-            if (customizers.value['numbers']) words.value.push(...numbers)
-
-            if (wordType === 'common') words.value.push(...mediumUsed)
-            if (wordType === 'rare') words.value.push(...rarelyUsed, ...mediumUsed)
-
-            for (let index = 0; index < numberOfWords.value; index++) {
-                let random = Math.floor(Math.random() * words.value.length)
-                let word = words.value[random]     
-                index == 0 ? test.value['test'] += word : test.value['test'] += ' ' + word
-            }
-        }
-
-        // convert line break /\n/ to space character
-        if (typeof test.value['test'] === 'string') {
-            const temp = test.value['test']     
-            test.value['test'] = ''
-
-            for (let index = 0; index < temp.length; index++) {
-                if (temp[index].match(/\n/)) test.value['test'] += ' '
-                else test.value['test'] += temp[index]
-            }
-            test.value['test'].trimStart()
-            test.value['test'].trimEnd()
+        test.value = {
+            author: author,
+            test: quote,
+            name: name
         }
     }
 
-    generateQuoteTest()
+    else if (testType === 'custom')  {
+        const quotes = [
+            ...(customChoice.value ? customTests.value[customChoice.value] : []),
+            ...(!customChoice.value ? [...Object.values(customTests.value), ...singleQoutes] : []),
+        ]
+
+        const index = Math.floor(Math.random() * quotes.length)
+        test.value['test'] = quotes[index]
+    }
+
+    else if (testType === 'words') {
+        const _ = ref('')
+
+        const words = [
+            ...mostUsed,
+            ...(wordType === 'common' ? mediumUsed : []),
+            ...(wordType === 'rare' ? rarelyUsed : []),
+            ...(customizers.value['numbers'] ? numbers : [])
+        ]
+
+        const numberOfWords = ref(testLength)
+        if (testLength === 'auto') numberOfWords.value = Math.round(Math.random() * 45) + 5
+
+        for (let index = 0; index < numberOfWords.value; index++) {
+            let random = Math.floor(Math.random() * words.length)
+            let word = words[random]     
+            index === 0 ? _.value += word : _.value += ' ' + word
+        }
+
+        test.value['test'] = _.value
+    }
 
     const params = {
         numbers : customizers.value['numbers'],
@@ -111,6 +95,7 @@ export async function getTest () {
         test: test.value['test']
     }
 
+    test.value['test'] = test.value['test'].replace(/[\r\n]+/g, ' ').trim();
     test.value['test'] = customizeTest(params, test.value['test']).res.value
 
     return test.value

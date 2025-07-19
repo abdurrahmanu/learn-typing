@@ -26,19 +26,21 @@ import {watch, ref} from 'vue'
 import {storeToRefs} from 'pinia'
 import {customizeStore} from '../../store/customizeStore'
 import { themeStore } from '../../store/themeStore';
-import {updateDB} from '../../composables/updateDB'
 import { isMobile } from '../../composables/isMobile';
 import {textBoxHeight} from '../../composables/textBox'
 
 const theme_ = themeStore()
 const {theme} = theme_
 
-const store = customizeStore()
-const { textLines } = storeToRefs(store)
+const customizestore = customizeStore()
+const { textLines, settingsToUpdate } = storeToRefs(customizestore)
 
 watch(textLines, (newVal) => {
     let lines = newVal
     textBoxHeight()
-    updateDB(Object.keys({lines})[0], lines, true)
+    settingsToUpdate.value = {
+        name: Object.keys({lines})[0],
+        value: lines
+    }
 })
 </script>

@@ -11,6 +11,7 @@ import { isMobile } from './isMobile';
 import { watch } from 'vue';
 import { textBoxHeight } from './textBox';
 import { connectStore } from '../store/connectStore';
+import { updateDB } from './updateDB';
 
 export default function useWatchers({
     focus: focus, 
@@ -21,6 +22,7 @@ export default function useWatchers({
     preferredConfigs: config,
     playerInput: input,
     scrollTextContainer: scrollContainer,
+    settingsToUpdate: update,
 }) {
     const router = useRouter()
     
@@ -38,7 +40,7 @@ export default function useWatchers({
     const {clearResult} = correctwrongstore
     
     const nextstore = nextStore()
-    const {switchNext} = nextstore
+    const {generateNewTest} = nextstore
         
     const customize = customizeStore()
     const { customizers, hideElements, toggleCapsToast, pauseTyping } = storeToRefs(customize)
@@ -99,13 +101,12 @@ export default function useWatchers({
                 if (hasCompletedSession.value) {
                     router.push('/')
                 }
-                
                 resetTypingState()
                 resetToDefault()
                 clearResult()
                 clearTimer()
                 clearCounter()
-                switchNext()
+                generateNewTest()
               }
             })
       }
@@ -125,12 +126,20 @@ export default function useWatchers({
             if (newVal) {
                 pauseTyping.value = false
                 inputEl.value.focus()
-                // navigator.virtualKeyboard.show()
                 if (isMobile()) newVal ? hideElements.value = true : ''
             } else {
                 pauseTyping.value = true
                 inputEl.value.blur()
             }
           })
+      }
+
+      if (update) {
+        watch(update, newVal => {
+            updateDB({
+                name: newVal.name,
+                value: newVal.value
+            })
+        }, {deep: true})
       }
 }

@@ -31,7 +31,6 @@ export const generateTest = async () => {
         else containerText.value = getAlphabets()
     }
 
-
     for (let index = 0; index < containerText.value.length; index++) {
         if (containerText.value[index] === ' ') {
             allSpacesIndex.value.push(index)

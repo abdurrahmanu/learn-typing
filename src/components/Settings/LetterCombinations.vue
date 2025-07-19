@@ -85,5 +85,7 @@ watch(mixCharactersArray, (newVal) => {
 
 watch(mixCharacters, newVal => go())
 
-const go = () => goNext.value = true
+const go = () => {
+    goNext.value = true
+}
 </script>

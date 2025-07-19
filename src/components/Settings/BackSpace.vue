@@ -21,19 +21,27 @@
 import good from '../svg/good.vue';
 import {storeToRefs} from 'pinia';
 import {customizeStore} from '../../store/customizeStore';
-import {updateDB} from '../../composables/updateDB'
 import { isTouchScreenDevice } from '../../composables/isTouchScreenDevice';
 import { themeStore } from '../../store/themeStore';
+import { nextStore } from '../../store/nextStore';
 
 const theme_ = themeStore()
 const {theme} = theme_
 
 const custom = customizeStore()
-const {backspace} = storeToRefs(custom)
+const {backspace, settingsToUpdate} = storeToRefs(custom)
+
+const nextstore = nextStore()
+const {goNext} = storeToRefs(nextstore)
 
 const customize = () => {
     backspace.value = !backspace.value
-    updateDB(Object.keys({backspace})[0], backspace.value, null, true)
+    goNext.value = true
+
+    settingsToUpdate.value = {
+        name: Object.keys({backspace})[0],
+        value: backspace.value
+    }
 }
 </script>
 

@@ -5,13 +5,13 @@ import {generateTest} from '../composables/generateTest'
 export const nextStore = defineStore('nextStore', () => {
     const goNext = ref(false)
     
-    const switchNext = () => {
+    const generateNewTest = () => {
         generateTest()
-        setTimeout(() => goNext.value = false, 0);
+        goNext.value = false
     }
 
     return {
-        switchNext,
+        generateNewTest,
         goNext,
     }
 })
