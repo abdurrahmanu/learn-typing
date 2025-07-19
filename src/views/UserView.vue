@@ -1,7 +1,5 @@
 <template>
   <div class="mt-10">
-      {{ user?.displayName }}--
-
     <div v-if="login">
       <p @click='logout' class="flex items-center justify-center gap-3 px-10 py-1 font-medium border rounded-md w-fit m-auto cursor-pointer border-neutral-600 active:border-green-500 hover:bg-black"><google />LOGOUT</p>
     </div>
