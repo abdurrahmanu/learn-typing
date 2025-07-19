@@ -10,7 +10,6 @@
 
 <script setup>
 import {themeStore} from '../../store/themeStore'
-import { customizeStore } from '../../store/customizeStore';
 import { storeToRefs } from 'pinia';
 import { connectStore } from '../../store/connectStore';
 import {cookiesStore} from '../../store/cookiesStore'
@@ -26,16 +25,12 @@ const cookies = cookiesStore()
 const {saveConfigs} = storeToRefs(cookies)
 
 const deleteCookies = () => {
-    let id = localStorage.getItem('kiboardID')
     deleteSingleDoc(id)
     saveConfigs.value = false
-    localStorage.removeItem('kiboardID')
-    localStorage.setItem('kicookies', false)
 }
 
 const acceptCookies = () => {
     addSingleDoc()    
-    if (localStorage.getItem('kicookies')) localStorage.removeItem('kicookies')
     saveConfigs.value = true
 }
 </script>

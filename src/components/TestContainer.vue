@@ -72,7 +72,7 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.noscrollbar::-webkit-scrollbar {
+.no-scrollbar::-webkit-scrollbar {
     display: none;
 }
 

@@ -62,7 +62,7 @@
             <div 
             @click="routeToPage('user')"
             v-if="route.name !== 'user'" 
-            class="relative w-fit" >
+            class="relative w-fit rounded-full p-2" :class="[login ? 'ring-green-600 ring-[2px]' : 'ring-blue-500 ring-[1px]']" >
                 <user class="w-4 peer" />
             </div>
         </div>
@@ -98,7 +98,7 @@ const theme_ = themeStore()
 const {theme} = storeToRefs(theme_)
 
 const auth = authStore()
-const {showUser} = storeToRefs(auth)
+const {login} = storeToRefs(auth)
 
 const customize = customizeStore()
 const { hideElements, blind, customizers, toggleCustomTestModal, pauseTyping} = storeToRefs(customize)

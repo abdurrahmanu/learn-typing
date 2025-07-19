@@ -4,8 +4,12 @@ import { connectStore } from "../store/connectStore";
 import { themeStore } from "../store/themeStore";
 import {getSingleDoc} from './firestoreDocs'
 import { storeToRefs } from 'pinia';
+import { authStore } from "../store/authStore";
 
-export const configUpdate = async () => {
+export const updateConfig = async () => {
+    const authstore = authStore()
+    const {login, user} = storeToRefs(authstore)
+    
     const store = mainStore()
     const {preferredConfigs, customTests} = storeToRefs(store)
 
@@ -13,14 +17,14 @@ export const configUpdate = async () => {
     const {theme } = storeToRefs(theme_)
 
     const connect = connectStore()
-    const {isConnectingServer} = storeToRefs(connect)
+    const {loadingApp} = storeToRefs(connect)
 
     const customize = customizeStore()
     const { customizers, disableOption, textLines, cursorType, difficulty, font, range, blind, backspace } = storeToRefs(customize)
+    
+    preferredConfigs.value = await getSingleDoc(user.value?.uid)
 
-    preferredConfigs.value = await getSingleDoc(localStorage.getItem('kiboardID'))
-
-    isConnectingServer.value = false
+    loadingApp.value = false
     theme.value = preferredConfigs.value.theme || theme.value
     font.value = preferredConfigs.value.fontsize || font.value
     range.value = (font.value - 16) / 0.26

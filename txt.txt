@@ -42,3 +42,16 @@ Previewing vue app on android
 4. run the command with npm run host
 5. access your app in external device, just use {your ip}:{port} eg: 192.168.10.1:5173.
 
+
+
+
+
+
+
+
+
+
+
+
+// if I load my page, first loading then check if user exists, if yes login, else no-user
+

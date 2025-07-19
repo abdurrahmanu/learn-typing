@@ -28,7 +28,6 @@ import { onMounted, onUnmounted } from 'vue';
 import preventScroll from '../composables/preventScroll'
 import preventKeyBoardScroll from '../composables/preventKeyBoardScroll'
 import inputEvent from '../composables/inputEvent'
-import { DB } from '../composables/connectDB';
 import evaluateInput from '../composables/evaluateInput';
 import { useRoute } from 'vue-router';
 
@@ -110,7 +109,7 @@ function handleOffline() {
 }
 
 function handleOnline() {
-    DB(true);
+    // DB();
 }
 
 function handleClick(event) {

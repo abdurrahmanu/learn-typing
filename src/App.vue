@@ -1,29 +1,45 @@
 <template>
-  <Loader v-if="isConnectingServer" />
+  <Loader v-if="connectStore().loadingApp" />
   <Main v-else />
 </template>
 
 <script setup>
 import Main from './components/Main.vue'
 import Loader from './components/Loader.vue'
-import {onBeforeMount} from 'vue'
-import { storeToRefs } from 'pinia';
+import { onMounted, watch} from 'vue'
 import {connectStore} from './store/connectStore'
-import { DB } from './composables/connectDB';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from './firebase';
+import { mainStore } from './store/mainStore';
+import { storeToRefs } from 'pinia';
+import { useRouter, useRoute } from 'vue-router';
+import { authStore } from './store/authStore';
+import { updateConfig } from './composables/updateConfig';
 
-const connect = connectStore()
-const {isConnectingServer} = storeToRefs(connect)
+const mainstore = mainStore()
+const {route} = storeToRefs(mainstore)
 
-onBeforeMount(() => DB())
+const authstore = authStore()
+const {login, user} = storeToRefs(authstore)
+
+const connectstore = connectStore()
+const {loadingApp} = storeToRefs(connectstore)
+
+onMounted(() => {    
+  loadingApp.value = true
+
+  onAuthStateChanged(auth, (user_) => {
+    user.value = user_
+
+    if (user.value?.emailVerified) {
+      loadingApp.value = false
+    } 
+  });
+
+  setTimeout(() => {
+    loadingApp.value = false
+  }, 4000);
+});
+
 </script>
 
-<style scoped>
-.noscrollbar::-webkit-scrollbar {
-    display: none;
-}
-
-.no-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none
-}
-</style>

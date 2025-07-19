@@ -2,7 +2,7 @@
     <Cookies />
     <Settings />
     <CustomTestModal />
-    <Animate />
+    <!-- <Animate /> -->
     <CapsLockToast 
     top 
     :toggle="toggleCapsToast" 

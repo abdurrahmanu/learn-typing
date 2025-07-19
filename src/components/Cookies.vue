@@ -27,7 +27,6 @@ const { pauseTyping} = storeToRefs(customize)
 const rejectCookies = () => {
     saveConfigs.value = false
     cookiesModal.value = false
-    localStorage.setItem('kicookies', false)
 }
 
 const acceptCookies = () => {

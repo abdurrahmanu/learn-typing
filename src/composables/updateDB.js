@@ -1,27 +1,17 @@
-import { nextStore } from "../store/nextStore";
-import { cookiesStore } from "../store/cookiesStore";
 import { storeToRefs } from 'pinia';
 import { doc, updateDoc } from 'firebase/firestore'
 import {ref} from 'vue'
 import {db} from '../firebase'
+import { authStore } from "../store/authStore";
 
-export const updateDB = async ({
-    name: name,
-    value : value
-}) => {
+export const updateDB = async ({ name, value}) => {
+    const authstore = authStore()
+    const {login, user} = storeToRefs(authstore)
     
-    const cookies = cookiesStore()
-    const {cookiesModal, acceptedCookies} = storeToRefs(cookies)
-    
-    if (localStorage.getItem('kiboardID')) {
-        let id = localStorage.getItem('kiboardID')
+    if (login.value) {
         const updateObject = ref({})
         updateObject.value[name] = value
-        const singleDoc = doc(db, "user", id);
+        const singleDoc = doc(db, "user", user.value.uid);
         await updateDoc(singleDoc, updateObject.value)
-    }
-
-    else if (!localStorage.getItem('kicookies') && navigator.onLine) {
-        if (!acceptedCookies.value) cookiesModal.value = true
     }
 }

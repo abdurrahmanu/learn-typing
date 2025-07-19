@@ -5,7 +5,6 @@ import { customizeStore } from "../store/customizeStore";
 import { nextStore } from "../store/nextStore";
 import { storeToRefs } from "pinia";
 
-
 export default function reRouter () {
     const auth = authStore()
     const store = mainStore()

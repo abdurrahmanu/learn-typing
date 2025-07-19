@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-[100dvh] w-[100%] bg-zinc-300 pt-4">
+  <div class="min-h-[100dvh] bg-zinc-300">
     <div class="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] space-y-3">
       <div class="loader m-auto"></div>
       </div>

@@ -1,5 +1,5 @@
 <template>
-    <main :class="[appTheme]" class="page home noscrollbar">
+    <main :class="[appTheme]" class="page main-font">
         <Connectivity />
         <div class="main">
             <Navbar />
@@ -21,8 +21,8 @@ import Next from './Next.vue';
 import {themeStore}  from '../store/themeStore'
 import {storeToRefs} from 'pinia'
 
-const theme_ = themeStore()
-const { appTheme } = storeToRefs(theme_)
+const themestore = themeStore()
+const { appTheme } = storeToRefs(themestore)
 </script>
 
 <style scoped>
