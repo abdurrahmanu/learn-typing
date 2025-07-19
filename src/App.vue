@@ -6,16 +6,15 @@
 <script setup>
 import Main from './components/Main.vue'
 import Loader from './components/Loader.vue'
-
 import {onBeforeMount} from 'vue'
 import { storeToRefs } from 'pinia';
 import {connectStore} from './store/connectStore'
 import { DB } from './composables/connectDB';
 
 const connect = connectStore()
-const {connectionAvailable, isConnectingServer} = storeToRefs(connect)
+const {isConnectingServer} = storeToRefs(connect)
 
-onBeforeMount(() => connectionAvailable.value ? DB() : false)
+onBeforeMount(() => DB())
 </script>
 
 <style scoped>

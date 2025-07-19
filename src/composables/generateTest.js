@@ -1,7 +1,7 @@
 import { mainStore } from "../store/mainStore"
 import { countdownStore } from "../store/countdownStore"
-import {customizeStore} from '../store/customizeStore'
-import {getAlphabets} from './getAlphabets'
+import { customizeStore } from '../store/customizeStore'
+import { getAlphabets } from './getAlphabets'
 import { storeToRefs } from "pinia"
 import { getTest } from "./getTest"
 
@@ -59,3 +59,8 @@ export const generateTest = async () => {
     storedTest.value = containerText.value
     textLength.value = containerText.value.length
 }
+
+
+
+
+

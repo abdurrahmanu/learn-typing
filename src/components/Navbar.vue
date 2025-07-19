@@ -39,12 +39,12 @@
                 class="relative w-fit" >
                     <add 
                     @click="openCustomTestModal" 
-                    class="w-5 peer"/>
+                    class="w-4 peer"/>
                 </div>
                 <div class="relative w-fit">
                     <feedback 
                     @click="routeToPage('about')" 
-                    class="w-5 peer"/>
+                    class="w-4 peer"/>
                 </div>
             </div>
             <div 
@@ -57,13 +57,13 @@
             <div 
             v-if="route.name === 'home'"
             class="relative w-fit" >
-                <settings class="w-5 peer" />
+                <settings class="w-4 peer" />
             </div>
             <div 
             @click="routeToPage('user')"
             v-if="route.name !== 'user'" 
             class="relative w-fit" >
-                <user class="w-5 peer" />
+                <user class="w-4 peer" />
             </div>
         </div>
     </header>
