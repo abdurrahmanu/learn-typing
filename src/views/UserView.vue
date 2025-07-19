@@ -12,6 +12,12 @@
       </div>
     </div>
   </div>
+
+  <div class="text-center p-5">
+    <p>{{ user?.email }}</p>
+    <p>{{ user?.displayName }}</p>
+    <p>{{ customizers }}</p>
+  </div>
 </template>
 
 <script setup>
@@ -19,9 +25,13 @@ import { storeToRefs } from 'pinia';
 import google from '../components/svg/google.vue'
 import { useAuth } from '../composables/useAuth';
 import { authStore } from '../store/authStore';
+import { customizeStore } from '../store/customizeStore';
 
 const authstore = authStore()
-const {login, user} = storeToRefs(authstore)
+const {login, user, data} = storeToRefs(authstore)
+
+const customizestore = customizeStore()
+const {customizers} = storeToRefs(customizestore)
 
 const {loginWithGoogle, logout} = useAuth()
 </script>

@@ -12,7 +12,6 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './firebase';
 import { mainStore } from './store/mainStore';
 import { storeToRefs } from 'pinia';
-import { useRouter, useRoute } from 'vue-router';
 import { authStore } from './store/authStore';
 import { updateConfig } from './composables/updateConfig';
 import { getSingleDoc } from './composables/firestoreDocs';
