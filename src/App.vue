@@ -28,8 +28,6 @@ onMounted( async () => {
 
   onAuthStateChanged(auth, async (user_) => {
     user.value = user_
-      
-    data.value += 'dddddd'
     if (user.value?.emailVerified) {
       if (!data.value) {
         data.value = await getSingleDoc(user.value.uid)

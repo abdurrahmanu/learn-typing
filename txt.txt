@@ -31,7 +31,7 @@ Previewing wep app on android
 5. use IPv4 address:host e.g 192.168.173.144:5173/index.html on mobile phone
 
 ---------------------------------
-Previewing vue app on android
+Previewing vue.js app in android
 1. connect to same network - wifi / hotspot
 2. Add "host": "vite --host" in package.json scripts / change server setting inside vite.config.js too with this setting
   server: {
