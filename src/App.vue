@@ -15,6 +15,7 @@ import { authStore } from './store/authStore';
 import { updateDataFromDB } from './composables/updateDataFromDB';
 import { generateTest } from './composables/generateTest';
 import { getSingleDoc, addSingleDoc } from './composables/firestoreDocs';
+import { isMobile } from './composables/isMobile';
 
 const authstore = authStore()
 const {login, user, data} = storeToRefs(authstore)
@@ -27,7 +28,9 @@ onMounted( async () => {
 
   onAuthStateChanged(auth, async (user_) => {
     user.value = user_
-      
+
+    if (isMobile()) await getRedirectResult(auth)
+
     if (user.value?.emailVerified) {
       data.value = await getSingleDoc(user.value.uid)
       if (!data.value) {

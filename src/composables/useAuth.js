@@ -9,7 +9,6 @@ export function useAuth() {
   const router = useRouter()
 
   const authstore = authStore()
-  const {result} = storeToRefs(authstore)
 
   const loginWithGoogle = async () => {
     try {
@@ -21,11 +20,10 @@ export function useAuth() {
       
         if (isMobile()) {
           await signInWithRedirect(auth, provider)
-          result.value = await getRedirectResult(auth)
         } 
         
         else {
-        result.value = await signInWithPopup(auth, provider)
+        await signInWithPopup(auth, provider)
       }
 
       router.push('/')
