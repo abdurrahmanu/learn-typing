@@ -20,6 +20,7 @@ export function useAuth() {
       
         if (isMobile()) {
           await signInWithRedirect(auth, provider)
+          await getRedirectResult(auth)
         } 
         
         else {
