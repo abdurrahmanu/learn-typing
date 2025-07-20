@@ -1,5 +1,5 @@
 <template>
-  <div class="py-10 max-h-screen overflow-y-scroll">
+  <div class="py-10 max-h-screen overflow-y-scroll text-sm">
     <div v-if="login" class="space-y-10">
       <UserCard />
       <UserBestStats />
