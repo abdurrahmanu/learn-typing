@@ -15,8 +15,6 @@ import { authStore } from './store/authStore';
 import { updateDataFromDB } from './composables/updateDataFromDB';
 import { generateTest } from './composables/generateTest';
 import { getSingleDoc, addSingleDoc } from './composables/firestoreDocs';
-import { provider } from './firebase';
-import { getRedirectResult } from 'firebase/auth';
 
 const authstore = authStore()
 const {login, user, data} = storeToRefs(authstore)
@@ -31,7 +29,6 @@ onMounted( async () => {
     user.value = user_
 
     if (user.value?.emailVerified) {
-      console.log(user.value)
       if (!data.value) {
         data.value = await getSingleDoc(user.value.uid)
       }

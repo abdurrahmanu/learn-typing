@@ -26,19 +26,9 @@
             class="w-full p-2 mt-1 border rounded-lg dark:bg-neutral-800 dark:border-neutral-700"
           />
         </div>
-
-        <!-- <div class="sm:col-span-2">
-          <label class="text-sm text-neutral-700 dark:text-neutral-300">Email</label>
-          <input
-            v-model="form.email"
-            type="email"
-            class="w-full p-2 mt-1 border rounded-lg dark:bg-neutral-800 dark:border-neutral-700"
-            disabled
-          />
-        </div> -->
       </div>
 
-      <div class="pt-4 flex justify-between flex-col md:flex-row space-y-2 md:space-y-0">
+      <div class="pt-4 flex gap-4 flex-col md:flex-row space-y-2 md:space-y-0">
         <button
           type="submit"
           class="px-4 py-2 bg-green-600 text-white rounded-xl hover:bg-green-700">
