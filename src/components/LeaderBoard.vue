@@ -1,6 +1,6 @@
 <template>
-  <div class="w-[95%] max-w-[1000px] mx-auto mt-6 bg-white dark:bg-neutral-900 shadow-lg rounded-2xl overflow-hidden">
-    <div class="bg-sky-500 text-white p-4 text-xl font-bold">🏆 Leaderboard Top 200 KiBoarders</div>
+  <div class="w-[95%] max-w-[1000px] mx-auto relative mt-6 bg-white max-h-screen overflow-y-scroll dark:bg-neutral-900 shadow-lg rounded-2xl overflow-hidden">
+    <div class="bg-sky-500 text-white sticky top-0 p-4 text-xl font-bold">🏆 Leaderboard Top KiBoarders</div>
 
     <div class="overflow-x-auto">
       <table class="w-full text-sm text-left text-neutral-700 dark:text-neutral-300">
@@ -8,7 +8,7 @@
           <tr>
             <th class="px-4 py-3">Rank</th>
             <th class="px-4 py-3">User</th>
-            <th class="px-4 py-3">Best WPM</th>
+            <th class="px-4 py-3">WPM</th>
             <th class="px-4 py-3">Accuracy</th>
             <th class="px-4 py-3">Joined</th>
           </tr>
@@ -40,7 +40,7 @@
       <button
         v-if="displayedUsers.length < leaderboard.length"
         @click="loadMore"
-        class="px-4 py-2 bg-neutral-800 text-white rounded hover:bg-neutral-700 transition"
+        class="px-4 py-2 sticky bottom-0 bg-neutral-800 text-white rounded hover:bg-neutral-700 transition"
       >
         Load More
       </button>
