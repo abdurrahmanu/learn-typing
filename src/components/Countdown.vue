@@ -1,5 +1,5 @@
 <template>
-    <div :class="appTheme" class="font-medium max-w-fit m-auto">
+    <div :class="appTheme" class="w-fit">
         <Transition name="slide-left" mode="out-in">
             <div v-if="isNextCountDown" ref="countDownElement">{{ countdown }}s </div>
         </Transition>

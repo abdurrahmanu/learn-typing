@@ -1,5 +1,5 @@
 <template>
-    <div ref="bgContainer" :class="[theme === 'dark' ? 'ring-white' : 'ring-black']" class='container'>
+    <div :class="[theme === 'dark' ? 'ring-white' : 'ring-black']" class='container center-x'>
         <div 
         v-for="(color, index) in colors" 
         :key="index" 
@@ -17,12 +17,11 @@ import { storeToRefs } from 'pinia';
 import { customizeStore } from '../store/customizeStore';
 
 const theme_ = themeStore()
-const {theme, openBackgrounds } = storeToRefs(theme_)
+const {theme} = storeToRefs(theme_)
 
 const customizestore = customizeStore()
 const {settingsToUpdate} = storeToRefs(customizestore)
 
-const bgContainer = ref(null)
 const colors = ref([
     'dark',
     'white',
@@ -43,7 +42,7 @@ const toggleTheme = (color) => {
 
 <style scoped>
 .container {
-    @apply flex space-x-1 rounded-full p-[3px] w-fit ring-[1px] bg-neutral-500 transition-all duration-200 fixed left-[50%] translate-x-[-50%] m-auto max-w-[1500px] bottom-2
+    @apply flex gap-1 rounded-full p-[3px] w-fit ring-[2px] bg-neutral-400 fixed m-auto bottom-2
 }
 
 .color {

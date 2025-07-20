@@ -1,11 +1,9 @@
 <template>
-    <div v-if="!hasCompletedSession" class="m-auto max-w-[1500px] lg:flex pt-10 pb-5"> 
-      <div class="w-[100%] mx-auto flex-none space-y-2">   
+    <div v-if="!hasCompletedSession" class="mx-auto max-w-[1500px] py-10"> 
         <CompletionRange v-if="isBlindMode" />
-        <CompletionRangeWithErrors v-if="!isBlindMode" />
+        <CompletionRangeWithErrors v-else />
         <Customize />
         <TestContainer />
-      </div>
     </div>
 </template>
 
@@ -30,8 +28,6 @@ import preventKeyBoardScroll from '../composables/preventKeyBoardScroll'
 import inputEvent from '../composables/inputEvent'
 import evaluateInput from '../composables/evaluateInput';
 import { useRoute } from 'vue-router';
-
-const route = useRoute()
 
 const customize = customizeStore()
 const {font, settingsToUpdate, toggleCapsToast, pauseTyping, toggleCustomTestModal, isBlindMode} = storeToRefs(customize)

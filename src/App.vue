@@ -69,5 +69,29 @@ onMounted( async () => {
     -ms-overflow-style: none;
     scrollbar-width: none
 }
+
+.center-xy {
+  @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
+}
+
+.center-x {
+  @apply absolute left-1/2 -translate-x-1/2
+}
+
+.center-y {
+  @apply absolute top-1/2 -translate-y-1/2
+}
+
+.fill-parent {
+  @apply absolute top-0 left-0 bottom-0 right-0
+}
+
+.center-text-xy {
+  @apply flex items-center justify-center
+}
+
+.default {
+  @apply appearance-none outline-none
+}
 </style>
 
