@@ -29,7 +29,9 @@ onMounted( async () => {
     user.value = user_
       
     if (user.value?.emailVerified) {
-      data.value = await getSingleDoc(user.value.uid)
+      if (!data.value) {
+        data.value = await getSingleDoc(user.value.uid)
+      }
       if (!data.value) {
         data.value = await addSingleDoc(user.value.uid)
       }
