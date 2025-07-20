@@ -16,6 +16,7 @@ import { updateDataFromDB } from './composables/updateDataFromDB';
 import { generateTest } from './composables/generateTest';
 import { getSingleDoc, addSingleDoc } from './composables/firestoreDocs';
 import { isMobile } from './composables/isMobile';
+import { getRedirectResult } from 'firebase/auth';
 
 const authstore = authStore()
 const {login, user, data} = storeToRefs(authstore)
