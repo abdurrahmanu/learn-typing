@@ -17,17 +17,16 @@ export function useAuth() {
             prompt: 'select_account'
         });
       
-        if (isMobile()) {
-          await signInWithRedirect(auth, provider)
+        // if (isMobile()) {
+        //   await signInWithRedirect(auth, provider)
 
-          await getRedirectResult(auth).then((result) => {
-            data.value = result?.user
-          }).catch(err => data.value = err)
-        } 
-        else {
-          await signInWithPopup(auth, provider)
-        }
-
+        //   await getRedirectResult(auth).then((result) => {
+        //     data.value = result?.user
+        //   }).catch(err => data.value = err)
+        // } 
+        // else {
+        // }
+      await signInWithPopup(auth, provider)
       router.push('/')
 
     } catch (err){console.log('sfsasd')}
