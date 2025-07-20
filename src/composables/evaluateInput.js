@@ -17,7 +17,7 @@ export default function evaluateInput(value) {
     const {playerInput, deletedValue, playerInputLength, backspaceIsPressed, playerLastInput} = storeToRefs(typingstatestore)
 
     const mainstore = mainStore()
-    const {containerText} = storeToRefs(mainstore)
+    const {currentTest} = storeToRefs(mainstore)
 
     const timerstore = timerStore()
     const { characterEqualityArray} = storeToRefs(timerstore)
@@ -32,7 +32,7 @@ export default function evaluateInput(value) {
     }
 
     if (backspaceIsPressed.value) {
-        let equality = deletedValue.value === containerText.value[playerInputLength.value]
+        let equality = deletedValue.value === currentTest.value[playerInputLength.value]
         if (equality) correctCharCount.value--
         else incorrectCharCount.value--
 
@@ -40,7 +40,7 @@ export default function evaluateInput(value) {
     } 
     
     else {
-        let equality = playerLastInput.value === containerText.value[playerInputLength.value - 1]
+        let equality = playerLastInput.value === currentTest.value[playerInputLength.value - 1]
         if (equality) correctCharCount.value++
         else incorrectCharCount.value++
 

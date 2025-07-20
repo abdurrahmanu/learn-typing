@@ -12,7 +12,7 @@ export const mainStore = defineStore('mainStore', () => {
     const containerHeight = ref(0)
     const scrollDistance = ref(0) // Container scroll Y axis
     const scrollTextContainer = ref({}) // Scroll top distance {top: number}
-    const containerText = ref('') // Test
+    const currentTest = ref('') // Test
     const customLengthInput = ref(null)
 
     //keys states
@@ -33,7 +33,7 @@ export const mainStore = defineStore('mainStore', () => {
         scrollDistance.value = 0
         scrollTextContainer.value = {}
         hasCompletedSession.value = false
-        containerText.value = ''
+        currentTest.value = ''
         allSpacesIndex.value = []
     }
 
@@ -50,7 +50,7 @@ export const mainStore = defineStore('mainStore', () => {
         containerHeight,
         scrollDistance,
         scrollTextContainer,
-        containerText ,
+        currentTest ,
 
         hasCompletedSession,
         allSpacesIndex,

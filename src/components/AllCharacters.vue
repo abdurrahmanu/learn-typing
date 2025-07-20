@@ -1,7 +1,7 @@
 <template>
     <Transition name="container"> 
     <div 
-    v-if="containerText" 
+    v-if="currentTest" 
     class="transition-all duration-100 relative mx-auto w-[1000px] max-w-[100%] min-w-[300px]" 
     :class="[((refocus || ((isTouchScreenDevice() && !isMobile()) && !focus)) && theme === 'dark') && 'blur-[2px] bg-[#323437] cursor-pointer opacity-40',
     ((refocus || ((isTouchScreenDevice() && !isMobile()) && !focus)) && theme !== 'dark') && 'blur-[2px] bg-zinc-200 cursor-pointer opacity-40']">
@@ -18,7 +18,7 @@
             (textPosition === 'justify') && 'text-justify',
             (textPosition === 'left') && 'text-left'] ">                 
                 <Character
-                v-for="(character, index) in containerText"
+                v-for="(character, index) in currentTest"
                 :index="index"
                 :key="index"
                 :character="character" />
@@ -45,7 +45,7 @@ const typingstatestore = typingStateStore()
 const {refocus, focus, inputEl} = storeToRefs(typingstatestore)
 
 const store = mainStore()
-const { containerText, quoteType, testContainerEl, containerHeight, movie, authoredQuote} = storeToRefs(store)
+const { currentTest, quoteType, testContainerEl, containerHeight, movie, authoredQuote} = storeToRefs(store)
 
 const customize = customizeStore()
 const { customizers, font, textPosition} = storeToRefs(customize)

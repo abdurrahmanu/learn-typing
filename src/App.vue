@@ -10,51 +10,61 @@ import { onMounted, watch} from 'vue'
 import {connectStore} from './store/connectStore'
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './firebase';
-import { mainStore } from './store/mainStore';
 import { storeToRefs } from 'pinia';
 import { authStore } from './store/authStore';
-import { updateConfig } from './composables/updateConfig';
-import { getSingleDoc } from './composables/firestoreDocs';
-import { isMobile } from './composables/isMobile';
-
-const mainstore = mainStore()
-const {route} = storeToRefs(mainstore)
+import { updateDataFromDB } from './composables/updateDataFromDB';
+import { generateTest } from './composables/generateTest';
+import { getSingleDoc, addSingleDoc } from './composables/firestoreDocs';
 
 const authstore = authStore()
-const {login, user} = storeToRefs(authstore)
+const {login, user, data} = storeToRefs(authstore)
 
 const connectstore = connectStore()
 const {loadingApp} = storeToRefs(connectstore)
 
-onMounted(() => {    
+onMounted( async () => {    
   loadingApp.value = true
 
-  onAuthStateChanged(auth, (user_) => {
+  onAuthStateChanged(auth, async (user_) => {
     user.value = user_
-
+      
     if (user.value?.emailVerified) {
-      login.value = true
-      loadingApp.value = false
-    } else {
-      login.value = false
+      data.value = await getSingleDoc(user.value.uid)
+      if (!data.value) {
+        data.value = await addSingleDoc(user.value.uid)
+      }
+      if (data.value) {
+        login.value = true
+      }
     }
+    
+    else {
+      login.value = false
+      generateTest()
+    }
+
+    loadingApp.value = false
   })
 
-  setTimeout(() => {
-    loadingApp.value = false
-  }, 4000)
-
-  watch(login, async newVal => {
+  watch(login, newVal => {
     if (newVal) {
-      let userExists = await getSingleDoc(user.value.uid)
-
-      if (userExists) {
-        updateConfig(userExists)
+      if (data.value) {
+        updateDataFromDB(data.value)
+        generateTest()
       } 
     }
   })
-  
 });
-
 </script>
+
+<style>
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none
+}
+</style>
 

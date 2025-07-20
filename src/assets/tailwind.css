@@ -3,10 +3,11 @@
 @tailwind utilities;
 
 ::-webkit-scrollbar {
-    width: 7px;
+    /* width: 7px; */
+    display: none
 }
 
-::-webkit-scrollbar-track {
+/* ::-webkit-scrollbar-track {
     background: rgb(134, 167, 224);
 }
 
@@ -16,4 +17,4 @@
 
 ::-webkit-scrollbar-thumb:hover {
     background: #1d3458;
-}
+} */

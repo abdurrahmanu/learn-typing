@@ -7,7 +7,7 @@ import { getTest } from "./getTest"
 
 export const generateTest = async () => {
     const store = mainStore()
-    const {containerText, storedTest, allSpacesIndex} = storeToRefs(store)
+    const {currentTest, storedTest, allSpacesIndex} = storeToRefs(store)
     
     const count = countdownStore()
     const {textLength} = storeToRefs(count)
@@ -16,8 +16,8 @@ export const generateTest = async () => {
     const {repeat, customizers } = storeToRefs(customize)
 
     if (repeat.value) {
-        containerText.value = ''
-        containerText.value = storedTest.value
+        currentTest.value = ''
+        currentTest.value = storedTest.value
     }
 
     else {
@@ -25,39 +25,37 @@ export const generateTest = async () => {
 
         if (mode === 'word-test') {
             let test = await getTest()
-            containerText.value = test['test']
+            currentTest.value = test['test']
         }
 
-        else containerText.value = getAlphabets()
+        else currentTest.value = getAlphabets()
     }
 
-    for (let index = 0; index < containerText.value.length; index++) {
-        if (containerText.value[index] === ' ') {
+    for (let index = 0; index < currentTest.value.length; index++) {
+        if (currentTest.value[index] === ' ') {
             allSpacesIndex.value.push(index)
         }
     }
 
     if (customizers.value['double-words'] && allSpacesIndex.value.length) {
-        let text = containerText.value
-        containerText.value = ''
-        for (let index = 0; index < allSpacesIndex.value.length - 1; index++) {
-            if (index === 0) {
-                containerText.value += text.slice(0, allSpacesIndex.value[index]) + ' ' + text.slice(0, allSpacesIndex.value[index])
-            } else if (index !== allSpacesIndex.value.length - 1) {
-                containerText.value += text.slice(allSpacesIndex.value[index - 1], allSpacesIndex.value[index])  + text.slice(allSpacesIndex.value[index - 1], allSpacesIndex.value[index])
-            } else {
-                containerText.value += text.slice(0, allSpacesIndex.value[index]) + ' ' + text.slice(0, allSpacesIndex.value[index])
-            }
+        let text = currentTest.value
+        currentTest.value = ''
+
+        for (let index = 0; index < Math.ceil(allSpacesIndex.value.length / 2); index++) {
+            let word = text.slice(allSpacesIndex.value[index - 1], allSpacesIndex.value[index])
+            let firstWordSpace = (index === 0 ? ' ' : '') 
+
+            currentTest.value += word + firstWordSpace + word
         }
 
         allSpacesIndex.value = []
-        for (let index = 0; index < containerText.value.length; index++) {
-            if (containerText.value[index] === ' ') allSpacesIndex.value.push(index)
+        for (let index = 0; index < currentTest.value.length; index++) {
+            if (currentTest.value[index] === ' ') allSpacesIndex.value.push(index)
         }
     }
 
-    storedTest.value = containerText.value
-    textLength.value = containerText.value.length
+    storedTest.value = currentTest.value
+    textLength.value = currentTest.value.length
 }
 
 

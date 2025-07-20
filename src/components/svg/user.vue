@@ -4,7 +4,7 @@
 			viewBox="0 0 472.615 472.615" style="enable-background:new 0 0 472.615 472.615;" xml:space="preserve">
 		<g>
 			<g>
-				<circle cx="236.308" cy="117.504" r="111.537" :fill="hoverbg || svgFill"/>
+				<circle cx="236.308" cy="117.504" r="111.537" :fill="login ? 'red' : (hoverbg || svgFill)"/>
 			</g>
 		</g>
 		<g>
@@ -52,6 +52,10 @@
 import {storeToRefs} from 'pinia'
 import {themeStore}  from '../../store/themeStore'
 import {ref} from 'vue'
+import { authStore } from '../../store/authStore'
+
+const authstore = authStore()
+const {login} = storeToRefs(authstore)
 
 const hoverbg = ref('')
 const theme_ = themeStore()

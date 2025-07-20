@@ -70,26 +70,26 @@ const theme_ = themeStore()
 const { appTheme } = storeToRefs(theme_)
 
 const store = mainStore()
-const {containerText} = storeToRefs(store)
+const {currentTest} = storeToRefs(store)
 
-const WPM = ref(Math.round(((containerText.value.length / 5) - (incorrectCharCount.value / 5)) / (totalTime.value/60)))
+const WPM = ref(Math.round(((currentTest.value.length / 5) - (incorrectCharCount.value / 5)) / (totalTime.value/60)))
 
-const accuracy = ref(Math.round((resultData.value.correctCharCount/(containerText.value.length) * 100)))
+const accuracy = ref(Math.round((resultData.value.correctCharCount/(currentTest.value.length) * 100)))
 
 const failedToBeatCountdown = computed(() => customizers.value['timer'] && !beatCountdown.value)
 
 const errorRatio = () => {
-    const total = containerText.value.length
+    const total = currentTest.value.length
     const correct = failedToBeatCountdown.value ? 
     resultData.value.incorrectCharCount : 
-    (resultData.value.incorrectCharCount) + (containerText.value.length - (resultData.value.incorrectCharCount + resultData.value.correctCharCount))
+    (resultData.value.incorrectCharCount) + (currentTest.value.length - (resultData.value.incorrectCharCount + resultData.value.correctCharCount))
 
     return correct + '/' + total
 }
 
 const errorRatioLevel = () => {
     let result = resultData.value
-    let length = containerText.value.length
+    let length = currentTest.value.length
     let timer = failedToBeatCountdown.value ? 'timer' : 'no-timer'
 
     const errorRatioObject = {

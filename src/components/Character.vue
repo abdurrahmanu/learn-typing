@@ -36,7 +36,7 @@ const nextstore = nextStore()
 const {goNext} = storeToRefs(nextstore)
 
 const mainstore = mainStore()
-const { containerText, testContainerEl, allSpacesIndex, scrollTextContainer, scrollDistance, containerHeight, hasCompletedSession } = storeToRefs(mainstore)
+const { currentTest, testContainerEl, allSpacesIndex, scrollTextContainer, scrollDistance, containerHeight, hasCompletedSession } = storeToRefs(mainstore)
 const currentCharacterElement = ref(null)
 
 const customize = customizeStore()
@@ -49,15 +49,15 @@ const props = defineProps({
 })
 
 const currentIndex = computed(() => playerInputLength.value === props.index)
-const equality = computed(() => playerLastInput.value === containerText.value[props.index])
+const equality = computed(() => playerLastInput.value === currentTest.value[props.index])
 
 onMounted(() => {
     watch(currentIndex, (isNextChar, prevCharacter) => {
-        let isLastChar = !isNextChar && playerInputLength.value === containerText.value.length
+        let isLastChar = !isNextChar && playerInputLength.value === currentTest.value.length
         
         if (isNextChar || isLastChar) {    
-            if (!backspaceIsPressed.value && containerText.value[props.index - 1] === ' ') spaces.value[props.index] = ' '            
-            if (backspaceIsPressed.value && containerText.value[props.index] === ' ') spaces.value[props.index] ? delete spaces.value[props.index] : ''
+            if (!backspaceIsPressed.value && currentTest.value[props.index - 1] === ' ') spaces.value[props.index] = ' '            
+            if (backspaceIsPressed.value && currentTest.value[props.index] === ' ') spaces.value[props.index] ? delete spaces.value[props.index] : ''
             
             if (currentCharacterElement.value) {    
                 const parentScrollHeight = testContainerEl.value.scrollHeight
@@ -99,7 +99,7 @@ onMounted(() => {
                 }
             }
 
-            if (playerInputLength.value === containerText.value.length) {
+            if (playerInputLength.value === currentTest.value.length) {
                 if (customizers.value['timer']) beatCountdown.value = true
                 hasCompletedSession.value = true
             }

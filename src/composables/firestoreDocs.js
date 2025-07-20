@@ -1,15 +1,22 @@
 import { doc, getDoc, setDoc, updateDoc, deleteDoc, collection } from 'firebase/firestore'
-import {kiboardObject} from './kiboardObject'
+import {userData} from './userData'
 import {db} from '../firebase'
 
 export const getSingleDoc = async (ID) => {
-    let user = doc(db, "users", ID )
-    return await getDoc(user).then((data) => data.exists() ? data.data() : null )
+  try {
+    const userRef = doc(db, "users", ID);
+    const docSnap = await getDoc(userRef);
+    return docSnap.exists() ? docSnap.data() : null;
+  } catch (error) {
+    console.error(`Failed to fetch document with ID ${ID}:`, error);
+    return null;
+  }
 }
 
 export const addSingleDoc = async (ID) => {
   const userDocRef = doc(db, 'users', ID);
-  await setDoc(userDocRef, kiboardObject());
+  await setDoc(userDocRef, userData());
+  return (await getDoc(userDocRef)).data()
 };
 
 export const deleteSingleDoc = async (ID) => await deleteDoc(doc(db, 'users', ID))

@@ -17,7 +17,7 @@ export const typingStateStore = defineStore('typingStateStore', () => {
     const deletedValue = ref('')
 
     const completionLevel = computed(() => {
-        return ((playerInputLength.value) / mainstore.containerText.length) * 100 
+        return ((playerInputLength.value) / mainstore.currentTest.length) * 100 
     })
 
     const resetTypingState = () => {

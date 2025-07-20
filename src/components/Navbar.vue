@@ -1,6 +1,6 @@
 <template>
     <header 
-    :class="[theme === 'dark' ? 'hover:bg-zinc-700' : 'hover:bg-zinc-200']"
+    :class="[theme === 'dark' ? 'bg-[#2c2e31] hover:bg-zinc-700' : 'bg-gray-300 hover:bg-zinc-200']"
     class="header">
 
         <Logo 
@@ -62,7 +62,7 @@
             <div 
             @click="routeToPage('user')"
             v-if="route.name !== 'user'" 
-            class="relative w-fit rounded-full p-2" :class="[login ? 'ring-green-600 ring-[2px]' : 'ring-blue-500 ring-[1px]']" >
+            class="relative w-fit rounded-full p-1" :class="[login ? 'ring-green-600 ring-[2px]' : 'ring-blue-500 ring-[1px]']" >
                 <user class="w-4 peer" />
             </div>
         </div>
@@ -97,8 +97,8 @@ const router = useRouter()
 const theme_ = themeStore()
 const {theme} = storeToRefs(theme_)
 
-const auth = authStore()
-const {login} = storeToRefs(auth)
+const authstore = authStore()
+const {login} = storeToRefs(authstore)
 
 const customize = customizeStore()
 const { hideElements, blind, customizers, toggleCustomTestModal, pauseTyping} = storeToRefs(customize)
@@ -115,6 +115,6 @@ const openCustomTestModal = () => {
 
 <style scoped>
 .header {
-    @apply sticky mx-auto flex items-center justify-between pl-3 pt-5 pb-2 pr-2 max-w-[1500px] min-w-[360px] transition-all duration-300
+    @apply sticky mx-auto flex items-center justify-between pl-3 pt-5 pb-2 pr-2 max-w-[1500px] min-w-[360px] transition-all duration-300 top-0
 }
 </style>
