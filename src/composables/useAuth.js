@@ -21,10 +21,11 @@ export function useAuth() {
       
         if (isMobile()) {
           await signInWithRedirect(auth, provider)
+          data.value = 'adsfasdf'
           data.value = await getRedirectResult(auth)
         } 
         
-        else {
+      else {
         await signInWithPopup(auth, provider)
       }
 
