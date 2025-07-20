@@ -4,7 +4,6 @@ import { getFirestore } from "firebase/firestore";
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
 import { initializeFirestore, persistentLocalCache, persistentSingleTabManager, CACHE_SIZE_UNLIMITED } from "firebase/firestore";
 
-
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {

@@ -1,5 +1,5 @@
 <template>
-  {{ data }}--
+  <!-- {{ data }}-- -->
   <Loader v-if="connectStore().loadingApp" />
   <Main v-else />
 </template>
@@ -16,6 +16,8 @@ import { authStore } from './store/authStore';
 import { updateDataFromDB } from './composables/updateDataFromDB';
 import { generateTest } from './composables/generateTest';
 import { getSingleDoc, addSingleDoc } from './composables/firestoreDocs';
+import { provider } from './firebase';
+import { getRedirectResult } from 'firebase/auth';
 
 const authstore = authStore()
 const {login, user, data} = storeToRefs(authstore)
@@ -28,6 +30,17 @@ onMounted( async () => {
 
   onAuthStateChanged(auth, async (user_) => {
     user.value = user_
+    getRedirectResult(auth).then((result) => {
+    // This gives you a Google Access Token. You can use it to access Google APIs.
+    const credential = provider.credentialFromResult(result);
+
+    // The signed-in user info.
+    const user = result.user;
+    // IdP data available using getAdditionalUserInfo(result)
+    // ...
+    data.value = 'what?'
+  }).catch(err => data.value = 'Yess')
+
     if (user.value?.emailVerified) {
       if (!data.value) {
         data.value = await getSingleDoc(user.value.uid)
