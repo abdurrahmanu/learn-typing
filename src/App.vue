@@ -1,5 +1,5 @@
 <template>
-  <!-- {{ data }}-- -->
+  {{ data }}--
   <Loader v-if="connectStore().loadingApp" />
   <Main v-else />
 </template>
