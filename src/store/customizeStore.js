@@ -58,7 +58,7 @@ export const customizeStore = defineStore('customizeStore', () => {
         'spaced': false,
         'case': '',
         'arrangement': '',
-        'double-words': true, // working on it
+        'double-words': false,
         'capslock': true,
         'timer': false,
     })

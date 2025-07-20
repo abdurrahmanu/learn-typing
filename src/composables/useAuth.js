@@ -31,7 +31,9 @@ export function useAuth() {
 
       router.push('/')
 
-    } catch (err){console.log('sfsasd')}
+    } catch (err){
+      data.value = err
+      console.log('sfsasd')}
   }
 
   const logout = async () => {
