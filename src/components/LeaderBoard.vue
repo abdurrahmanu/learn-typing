@@ -9,7 +9,6 @@
             <th class="px-4 py-3">Rank</th>
             <th class="px-4 py-3">User</th>
             <th class="px-4 py-3">WPM</th>
-            <th class="px-4 py-3">Accuracy</th>
             <th class="px-4 py-3">Joined</th>
           </tr>
         </thead>
@@ -24,12 +23,11 @@
               <img
                 :src="user.photo"
                 alt="profile"
-                class="w-8 h-8 rounded-full object-cover border border-neutral-400"
+                class="w-8 h-8 hidden md:block rounded-full object-cover border border-neutral-400"
               />
               <span class="font-medium">{{ user.username }}</span>
             </td>
             <td class="px-4 py-2">{{ user.bestWPM }}</td>
-            <td class="px-4 py-2">{{ user.accuracy }}%</td>
             <td class="px-4 py-2">{{ formatDate(user.joinedAt) }}</td>
           </tr>
         </tbody>
@@ -56,7 +54,6 @@ const leaderboard = ref(
     username: `user${i + 1}`,
     photo: `https://i.pravatar.cc/150?img=${(i % 70) + 1}`,
     bestWPM: Math.floor(50 + Math.random() * 100),
-    accuracy: Math.floor(85 + Math.random() * 15),
     joinedAt: Date.now() - i * 86400000,
   }))
 )

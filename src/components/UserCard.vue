@@ -15,6 +15,7 @@
               alt="Profile"
               class="object-cover w-10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"/>
         </div>
+
         <div class="text-center md:text-left flex-1">
           <h2 class="text-2xl font-semibold text-neutral-600">
             @{{ user.username }}
@@ -26,7 +27,7 @@
         </div>
   
         <button
-          class="mt-4 md:mt-0 bg-sky-500 hover:bg-sky-600 text-white font-semibold py-2 px-4 rounded-lg transition"
+          class="my-4 md:mt-0 bg-sky-500 hover:bg-sky-600 text-white font-semibold py-2 px-4 rounded-lg transition"
           @click="editUser = true"
         >
           Edit Profile

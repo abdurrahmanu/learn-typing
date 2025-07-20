@@ -20,7 +20,9 @@ export function useAuth() {
       await signInWithPopup(auth, provider)
       router.push('/')
 
-    } catch (err){console.log('sfsasd')}
+    } catch (err){
+      
+    }
   }
 
   const logout = async () => {

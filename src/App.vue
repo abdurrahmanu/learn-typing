@@ -29,6 +29,7 @@ onMounted( async () => {
 
   onAuthStateChanged(auth, async (user_) => {
     user.value = user_
+    console.log(user.value)
 
     if (user.value?.emailVerified) {
       if (!data.value) {
