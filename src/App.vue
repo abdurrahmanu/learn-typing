@@ -1,5 +1,4 @@
 <template>
-  {{ data }}--
   <Loader v-if="connectStore().loadingApp" />
   <Main v-else />
 </template>
@@ -32,7 +31,6 @@ onMounted( async () => {
     user.value = user_
 
     if (user.value?.emailVerified) {
-      data.value += 'DONE'
       if (!data.value) {
         data.value = await getSingleDoc(user.value.uid)
       }
