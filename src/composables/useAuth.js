@@ -3,18 +3,13 @@ import { signInWithPopup, signOut, GoogleAuthProvider, signInWithRedirect, getRe
 import { authStore } from '../store/authStore';
 import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
-import { mainStore } from '../store/mainStore';
 import { isMobile } from './isMobile';
-import { connectStore } from '../store/connectStore';
 
 export function useAuth() {
   const router = useRouter()
 
   const authstore = authStore()
   const {result} = storeToRefs(authstore)
-
-  const connectstore = connectStore()
-  const {loadingApp} = storeToRefs(connectstore)
 
   const loginWithGoogle = async () => {
     try {
@@ -25,7 +20,7 @@ export function useAuth() {
         });
       
         if (isMobile()) {
-          signInWithRedirect(auth, provider)
+          await signInWithRedirect(auth, provider)
           result.value = await getRedirectResult(auth)
         } 
         
