@@ -32,7 +32,6 @@ import UserStats from '../components/UserStats.vue';
 import UserBestStats from '../components/UserBestStats.vue'
 import LineChart from '../components/LineChart.vue';
 import LeaderBoard from '../components/LeaderBoard.vue'
-import { onAuthStateChanged } from 'firebase/auth';
 
 const authstore = authStore()
 const {login} = storeToRefs(authstore)

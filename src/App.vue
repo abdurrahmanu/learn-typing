@@ -29,9 +29,9 @@ onMounted( async () => {
 
   onAuthStateChanged(auth, async (user_) => {
     user.value = user_
-    console.log(user.value)
 
     if (user.value?.emailVerified) {
+      console.log(user.value)
       if (!data.value) {
         data.value = await getSingleDoc(user.value.uid)
       }
@@ -45,6 +45,7 @@ onMounted( async () => {
     
     else {
       login.value = false
+      data.value = null
       generateTest()
     }
 

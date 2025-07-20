@@ -1,5 +1,4 @@
 <template>
-    <Cookies />
     <Settings />
     <CustomTestModal />
     <!-- <Animate /> -->
@@ -10,7 +9,6 @@
 </template>
 
 <script setup>
-import Cookies from './Cookies.vue';
 import Settings from './Settings/Settings.vue'
 import Animate from './Animate.vue';
 import CapsLockToast from './Toast.vue';

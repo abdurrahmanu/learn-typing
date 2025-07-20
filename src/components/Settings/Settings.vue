@@ -22,7 +22,6 @@
                     <StopOnError v-if="!useValue  || !isMobile() && searchResult.includes('stop on error')" />
                     <UpperCase v-if="!useValue  || searchResult.includes('uppercase')" />
                     <LetterCombinations v-if="isAlphabetTest && (!useValue  || customizers['modes'] === 'alphabet-test' && searchResult.includes('letter combination'))"/>
-                    <Cookies v-if="!useValue  || searchResult.includes('cookies')"/>
                 </div>
             </div>
         </div>
@@ -32,7 +31,6 @@
 <script setup>
 import Cursor from './Cursor.vue'
 import Fonts from './Fonts.vue'
-import Cookies from './Cookies.vue'
 import Header from './Header.vue'
 import UpperCase from './Uppercase.vue'
 import CustomCase from './CustomCase.vue'

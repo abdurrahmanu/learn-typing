@@ -38,7 +38,7 @@
         </div> -->
       </div>
 
-      <div class="pt-4 flex justify-between">
+      <div class="pt-4 flex justify-between flex-col md:flex-row space-y-2 md:space-y-0">
         <button
           type="submit"
           class="px-4 py-2 bg-green-600 text-white rounded-xl hover:bg-green-700">
