@@ -20,9 +20,8 @@ export function useAuth() {
         });
       
         if (isMobile()) {
-          data.value = 'adsfasdf'
+          await signInWithRedirect(auth, provider).then(val => data.value = val).catch(err => data.value = err)
 
-          await signInWithRedirect(auth, provider)
           data.value = await getRedirectResult(auth)
         } 
         
