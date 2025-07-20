@@ -18,7 +18,11 @@ export function useAuth() {
         });
       
         if (isMobile()) {
-          signInWithRedirect(auth, provider)
+          await signInWithRedirect(auth, provider)
+
+          await getRedirectResult(auth).then((result) => {
+            data.value = result?.user
+          }).catch(err => data.value = err)
         } 
         else {
           await signInWithPopup(auth, provider)

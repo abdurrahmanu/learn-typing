@@ -30,18 +30,9 @@ onMounted( async () => {
 
   onAuthStateChanged(auth, async (user_) => {
     user.value = user_
-    getRedirectResult(auth).then((result) => {
-    // This gives you a Google Access Token. You can use it to access Google APIs.
-    const credential = provider.credentialFromResult(result);
-
-    // The signed-in user info.
-    const user = result.user;
-    // IdP data available using getAdditionalUserInfo(result)
-    // ...
-    data.value = 'what?'
-  }).catch(err => data.value = 'Yess')
 
     if (user.value?.emailVerified) {
+      data.value += 'DONE'
       if (!data.value) {
         data.value = await getSingleDoc(user.value.uid)
       }
