@@ -13,6 +13,7 @@ import { textBoxHeight } from './textBox';
 import { updateDB } from './updateDB';
 import { userDataStore } from '../store/userDataStore';
 import { resultStore } from '../store/resultStore';
+import { authStore } from '../store/authStore';
 
 export default function useWatchers({
     focus: focus, 
@@ -26,6 +27,9 @@ export default function useWatchers({
     beginTest: begin
 }) {
     const router = useRouter()
+
+    const authstore = authStore()
+    const {login} = storeToRefs(authstore)
 
     const userstore = userDataStore()
     const {userHistory, userInfo, bestStats} = storeToRefs(userstore)
@@ -95,12 +99,13 @@ export default function useWatchers({
                     router.push('/')
                 }
 
-                if (halfWayReset.value && !testCompleted.value && navigator.onLine) {
+                if (halfWayReset.value && !testCompleted.value && login.value && navigator.onLine) {
                     // let currentTimeInSeconds = (performance.now() - startTime.value).toFixed(0) / 1000
                     // let previousTimeInSeconds = userInfo.value.secondsTyped
                     // let totalTime = (currentTimeInSeconds + previousTimeInSeconds).toFixed(2)
                     // userInfo.value.secondsTyped = totalTime
-                    userInfo.value.testsStarted++
+                    userInfo.value.testsStarted = Number(userInfo.value.testsStarted) + 1
+                    
                     settingsToUpdate.value.push({
                         name: Object.keys({userInfo})[0],
                         value: userInfo.value
@@ -121,14 +126,14 @@ export default function useWatchers({
           watch(completed, (newVal) => {
             if (customizers.value['timer']) clearCounter()   
             if (newVal) {
-                if (navigator.onLine) {
+                if (navigator.onLine && login.value) {
                     // let currentTimeInSeconds = (performance.now() - startTime.value).toFixed(0) / 1000
                     // let previousTimeInSeconds = userInfo.value.secondsTyped
     
                     // let totalTime = (currentTimeInSeconds + previousTimeInSeconds).toFixed(2)              
                     // userInfo.value.secondsTyped = totalTime
-                    userInfo.value.testsFinished++
-                    userInfo.value.testsStarted++
+                    userInfo.value.testsFinished = Number(userInfo.value.testsFinished) + 1
+                    userInfo.value.testsStarted = Number(userInfo.value.testsStarted) + 1
                     
                     userHistory.value.tests.push({
                         date: new Date().toISOString().split('T')[0],

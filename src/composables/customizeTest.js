@@ -64,14 +64,21 @@ export function customizeTest({
     }
     else {
         if (testType === 'words') {
-            let punctuations = [',', '.', ';', '.', '.', '.', ',', ',', '?', '!']
-            let newText = res.value
-            res.value = ''
-            for (let index = 0; index < newText.length; index++) {
-                if (newText[index] === ' ' && index % 5 === 0) {
-                    res.value += punctuations[Math.ceil(Math.random() * 10) - 1] + ' '
-                } else res.value += newText[index]
-            }
+            let punctuations = [',', '.', ';', '?', '!']
+            let wordsArr = res.value.split(' ')
+            let spacing = 5
+
+            res.value = wordsArr.map((word, index) => {
+                const isLastWord = index === wordsArr.length - 1;
+                if ((index + 1) % spacing === 0 || isLastWord) {
+                    const punctuation = punctuations[Math.floor(Math.random() * punctuations.length)];
+                    return word + punctuation + ' ';
+                }
+
+                return word;
+            }).join('').trimEnd()
+
+            console.log(res.value)
         }
 
         
