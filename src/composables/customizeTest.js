@@ -53,7 +53,7 @@ export function customizeTest({
     }
 
     // Punctuations
-    if (punctuation) {
+    if (!punctuation) {
         let newText = res.value
         res.value = ''
         for (let index = 0; index < newText.length; index++) {
@@ -73,6 +73,7 @@ export function customizeTest({
                 } else res.value += newText[index]
             }
         }
+
         
         if (noSpace) {
             let newText = res.value

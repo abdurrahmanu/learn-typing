@@ -9,7 +9,7 @@
             class="container-style"
             :style="computedStyle" 
             :class="[ wordBreak, 
-            (textPosition === 'justify') && 'text-center',
+            (textPosition === 'justify') && 'text-justify',
             (textPosition === 'left') && 'text-left'] ">                 
                 <Character
                 v-for="(character, index) in currentTest"

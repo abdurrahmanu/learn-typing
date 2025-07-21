@@ -4,8 +4,8 @@ import {db} from '../firebase'
 
 export const getSingleDoc = async (ID) => {
   try {
-    const userRef = doc(db, "users", ID);
-    const docSnap = await getDoc(userRef);
+    const docRef = doc(db, "users", ID);
+    const docSnap = await getDoc(docRef);
     return docSnap.exists() ? docSnap.data() : null;
   } catch (error) {
     console.error(`Failed to fetch document with ID ${ID}:`, error);
@@ -14,18 +14,20 @@ export const getSingleDoc = async (ID) => {
 }
 
 export const addSingleDoc = async (ID) => {
-  const userDocRef = doc(db, 'users', ID);
-  await setDoc(userDocRef, userData());
-  return (await getDoc(userDocRef)).data()
+  const docRef = doc(db, 'users', ID);
+  await setDoc(docRef, userData());
+  return (await getDoc(docRef)).data()
 };
 
 export const deleteSingleDoc = async (ID) => await deleteDoc(doc(db, 'users', ID))
 
-export const updateSingleDoc = async (name, val, ID) => {
-    const updateObject = {}
-    updateObject[name] = val
-    const singleDoc = doc(db, "users", ID)
-    await updateDoc(singleDoc, updateObject)
+export const updateSingleDoc = async (updates, ID) => {
+    const updateObj = {}
 
-    // After updating online update offline
+     for (const { name, value } of updates) {
+      updateObj[name] = value;
+    }
+    
+    const docRef = doc(db, "users", ID)
+    await updateDoc(docRef, updateObj)
 }

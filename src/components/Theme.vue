@@ -33,10 +33,10 @@ const bg = ref([
 
 const toggleTheme = (color) => {
     theme.value = color
-    settingsToUpdate.value = {
+    settingsToUpdate.value.push({
         name: Object.keys({theme})[0],
         value: theme.value
-    }
+    })
 }
 </script>
 

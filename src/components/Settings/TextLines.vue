@@ -38,9 +38,9 @@ const { textLines, settingsToUpdate } = storeToRefs(customizestore)
 watch(textLines, (newVal) => {
     let lines = newVal
     textBoxHeight()
-    settingsToUpdate.value = {
+    settingsToUpdate.value.push({
         name: Object.keys({lines})[0],
         value: lines
-    }
+    })
 })
 </script>

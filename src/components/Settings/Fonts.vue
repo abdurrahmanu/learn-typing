@@ -42,10 +42,10 @@ watch(fontSize, (newVal) => {
     font.value = newVal
     let fontsize = newVal
 
-    settingsToUpdate.value = {
+    settingsToUpdate.value.push({
         name: Object.keys({fontsize})[0],
         value: fontsize
-    }
+    })
 
     if (playerInputLength.value) {        
         if (customizers.value['timer']) clearCounter()

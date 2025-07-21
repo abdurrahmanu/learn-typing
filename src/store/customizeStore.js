@@ -5,7 +5,7 @@ import { mainStore } from './mainStore'
 import { nextStore } from './nextStore'
 
 export const customizeStore = defineStore('customizeStore', () => {
-    const settingsToUpdate = ref({})
+    const settingsToUpdate = ref([])
     const count = ref(false)
     const testType_ = ref('words')
     const customChoice = ref('')
@@ -147,10 +147,10 @@ export const customizeStore = defineStore('customizeStore', () => {
 
         goNext.value = true
 
-        settingsToUpdate.value = {
+        settingsToUpdate.value.push({
             name: Object.keys({config})[0],
             value: config
-        }
+        })
     }
 
     const checkQuickSettings = () => {
@@ -195,10 +195,10 @@ export const customizeStore = defineStore('customizeStore', () => {
         let config = [customizers.value, disableOption.value]
         goNext.value = true
 
-        settingsToUpdate.value = {
+        settingsToUpdate.value.push({
             name: Object.keys({config})[0],
             value: config
-        }
+        })
     }
 
     return {

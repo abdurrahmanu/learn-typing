@@ -12,6 +12,7 @@ import { watch } from 'vue';
 import { textBoxHeight } from './textBox';
 import { updateDB } from './updateDB';
 import { userDataStore } from '../store/userDataStore';
+import { resultStore } from '../store/resultStore';
 
 export default function useWatchers({
     focus: focus, 
@@ -34,8 +35,10 @@ export default function useWatchers({
     const {resetTypingState} = typingstatestore
     
     const timerstore = timerStore()
-    const {startTime} = storeToRefs(timerstore)
     const {clearTimer, wpmTime} = timerstore
+
+    const resultstore = resultStore()
+    const {WPM, accuracy} = storeToRefs(resultstore)
     
     const correctwrongstore = charCountStore()
     const {clearResult} = correctwrongstore
@@ -92,16 +95,16 @@ export default function useWatchers({
                     router.push('/')
                 }
 
-                if (halfWayReset.value && !testCompleted.value) {
+                if (halfWayReset.value && !testCompleted.value && navigator.onLine) {
                     // let currentTimeInSeconds = (performance.now() - startTime.value).toFixed(0) / 1000
                     // let previousTimeInSeconds = userInfo.value.secondsTyped
                     // let totalTime = (currentTimeInSeconds + previousTimeInSeconds).toFixed(2)
                     // userInfo.value.secondsTyped = totalTime
                     userInfo.value.testsStarted++
-                    settingsToUpdate.value = {
+                    settingsToUpdate.value.push({
                         name: Object.keys({userInfo})[0],
                         value: userInfo.value
-                    }
+                    })
                 }
 
                 resetTypingState()
@@ -116,38 +119,40 @@ export default function useWatchers({
       
       if (completed) {
           watch(completed, (newVal) => {
-            if (customizers.value['timer']) clearCounter()
+            if (customizers.value['timer']) clearCounter()   
             if (newVal) {
-                // let currentTimeInSeconds = (performance.now() - startTime.value).toFixed(0) / 1000
-                // let previousTimeInSeconds = userInfo.value.secondsTyped
-
-                // let totalTime = (currentTimeInSeconds + previousTimeInSeconds).toFixed(2)              
-                // userInfo.value.secondsTyped = totalTime
-                userInfo.value.testsFinished++
-                userInfo.value.testsStarted++
+                if (navigator.onLine) {
+                    // let currentTimeInSeconds = (performance.now() - startTime.value).toFixed(0) / 1000
+                    // let previousTimeInSeconds = userInfo.value.secondsTyped
+    
+                    // let totalTime = (currentTimeInSeconds + previousTimeInSeconds).toFixed(2)              
+                    // userInfo.value.secondsTyped = totalTime
+                    userInfo.value.testsFinished++
+                    userInfo.value.testsStarted++
+                    
+                    userHistory.value.tests.push({
+                        date: new Date().toISOString().split('T')[0],
+                        test:'', // Yet
+                        wpm: WPM.value,
+                        accuracy: accuracy.value,
+                        mode: '', // Yet
+                    })
+                    
+                    settingsToUpdate.value.push(
+                        {
+                            name: Object.keys({userInfo})[0],
+                            value: userInfo.value
+                        },
+                        {   
+                            name: Object.keys({userHistory})[0],
+                            value: userHistory.value
+                        }
+                    )
+                }
                 wpmTime(testCompleted.value)
-
-                userHistory.value.tests.push({
-                    date: new Date().toISOString().split('T')[0],
-                    test:'',
-                    wpm: '',
-                    accuracy: '',
-                    mode: '', //  get all from ResultStore after
-                })
-
-                settingsToUpdate.value = {
-                    name: Object.keys({userInfo})[0],
-                    value: userInfo.value
-                }
-
-                // will work on this
-                settingsToUpdate.value = {
-                    name: Object.keys({userHistory})[0],
-                    value: userHistory.value
-                }
-
                 router.push({path: 'result'})
-              }
+            }
+
           }, {deep: true})
       }
 
@@ -166,10 +171,10 @@ export default function useWatchers({
 
       if (update) {
         watch(update, newVal => {
-            updateDB({
-                name: newVal.name,
-                value: newVal.value
-            })
+            if (newVal.length) {
+                updateDB(newVal)
+                settingsToUpdate.value = []
+            }
         }, {deep: true})
       }
 

@@ -18,9 +18,9 @@ const {blind, settingsToUpdate} = storeToRefs(customizestore)
 
 const customize = () => {
     blind.value = !blind.value
-    settingsToUpdate.value = {
+    settingsToUpdate.value.push({
         name: Object.keys({blind})[0],
         value: blind.value
-    }
+    })
 }
 </script>

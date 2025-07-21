@@ -38,10 +38,10 @@ const customize = () => {
     backspace.value = !backspace.value
     goNext.value = true
 
-    settingsToUpdate.value = {
+    settingsToUpdate.value.push({
         name: Object.keys({backspace})[0],
         value: backspace.value
-    }
+    })
 }
 </script>
 

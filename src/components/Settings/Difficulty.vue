@@ -46,9 +46,9 @@ const result = computed(() => {
 
 watch(difficulty, (newVal) => {
     let difficulty = newVal
-        settingsToUpdate.value = {
+        settingsToUpdate.value.push({
         name: Object.keys({difficulty})[0],
         value: difficulty
-    }
+    })
 })
 </script>

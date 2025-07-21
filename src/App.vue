@@ -22,13 +22,13 @@ const {login, user, data} = storeToRefs(authstore)
 const connectstore = connectStore()
 const {loadingApp} = storeToRefs(connectstore)
 
-onMounted( async () => {    
+onMounted( async () => {   
   loadingApp.value = true
 
   onAuthStateChanged(auth, async (user_) => {
     user.value = user_
 
-    if (user.value?.emailVerified) {
+    if (user.value?.emailVerified && navigator.onLine) {
       if (!data.value) {
         data.value = await getSingleDoc(user.value.uid)
       }

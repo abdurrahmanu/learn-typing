@@ -36,10 +36,10 @@ const { cursorType, settingsToUpdate} = storeToRefs(customizestore)
 watch(cursorType, (newVal) => {
     let cursor = newVal
 
-    settingsToUpdate.value = {
+    settingsToUpdate.value.push({
         name: Object.keys({cursor})[0],
         value: cursor
-    }
+    })
 })
 </script>
 
