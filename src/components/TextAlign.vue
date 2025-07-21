@@ -3,8 +3,8 @@
         <div @click="textPosition = 'left'">
             <alignLeft :position="textPosition === 'left'" class="w-5" />
         </div>
-        <div  @click="textPosition = 'justify'">
-            <alignJustify :position="textPosition === 'justify'" class="w-5"/>
+        <div  @click="textPosition = 'left'">
+            <alignJustify :position="textPosition === 'left'" class="w-5"/>
         </div>
     </div>
 </template>

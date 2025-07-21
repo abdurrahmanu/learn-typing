@@ -93,5 +93,9 @@ onMounted( async () => {
 .default {
   @apply appearance-none outline-none
 }
+
+.bottom-right {
+  @apply absolute bottom-0 right-[2px]
+}
 </style>
 

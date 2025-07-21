@@ -101,7 +101,7 @@ const authstore = authStore()
 const {login} = storeToRefs(authstore)
 
 const customize = customizeStore()
-const { hideElements, blind, customizers, toggleCustomTestModal, pauseTyping} = storeToRefs(customize)
+const { hideElements, customizers, toggleCustomTestModal, pauseTyping} = storeToRefs(customize)
 
 const routeToPage = (route) => {
     router.push({name: route})
