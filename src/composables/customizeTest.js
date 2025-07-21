@@ -1,7 +1,6 @@
 import { ref } from 'vue'
 
 export function customizeTest({
-    numbers,
     punctuation,
     caps,
     allCaps,
@@ -14,6 +13,10 @@ export function customizeTest({
     const res = ref(test);
     let punctuations = [',', '.', ':', ';', '-', "'", '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '=', '[', ']', '{', '}', '|', "\\", '"', '<', '>', '/', '?']
 
+    if (!caps && !camelCase && !allCaps) {
+        res.value = res.value.toLowerCase()
+    } 
+
     if (camelCase) {
         res.value = ''
         for (let index = 0; index < test.length; index++) {
@@ -23,36 +26,10 @@ export function customizeTest({
         }
     }
 
-    if (noSpace) {
-        if (punctuation) {
-            let newText = res.value
-            res.value = ''
-            for (let index = 0; index < test.length; index++) {
-                if (newText[index] !== ' ') res.value += newText[index]
-                else res.value += ''
-            }
-        }
-    }
-
     if (allCaps) {
         res.value = res.value.toUpperCase()
     }
 
-    if (!caps && !camelCase && !allCaps) {
-        res.value = res.value.toLowerCase()
-    } else {
-        if (testType === 'words') {
-            let newText = res.value
-            res.value = ''
-            for (let index = 0; index < newText.length; index++) {
-                if (!newText[index - 1]) res.value += newText[index].toUpperCase()
-                else if (newText[index - 1] === ' ' && index % 3 === 0) res.value += newText[index].toUpperCase()
-                else res.value += newText[index]
-            }
-        }
-    }
-
-    // Punctuations
     if (!punctuation) {
         let newText = res.value
         res.value = ''
@@ -66,30 +43,36 @@ export function customizeTest({
         if (testType === 'words') {
             let punctuations = [',', '.', ';', '?', '!']
             let wordsArr = res.value.split(' ')
-            let spacing = 5
+            let spacing = 5 // Punctuation mark after every 5 words
 
             res.value = wordsArr.map((word, index) => {
-                const isLastWord = index === wordsArr.length - 1;
-                if ((index + 1) % spacing === 0 || isLastWord) {
-                    const punctuation = punctuations[Math.floor(Math.random() * punctuations.length)];
-                    return word + punctuation + ' ';
-                }
+            const isLastWord = index === wordsArr.length - 1;
+            const addPunctuation = (index + 1) % spacing === 0
+            const punctuation = punctuations[Math.floor(Math.random() * punctuations.length)];
 
-                return word;
-            }).join('').trimEnd()
-
-            console.log(res.value)
+            if (isLastWord) return word + '.'
+            if (addPunctuation) return word + punctuation + ' '
+            else return word + ' '
+        }).join('').trimEnd()
         }
+    }
 
-        
-        if (noSpace) {
+    if (caps) {
+        if (testType === 'words') {
             let newText = res.value
-            res.value = ''
-            for (let index = 0; index < test.length; index++) {
-                if (newText[index] !== ' ') res.value += newText[index]
-                else res.value += ''
-            }
+            res.value = newText.split('').map((word, index) => {
+               if (newText[index - 2] && newText[index - 2] === '.') return word.charAt(0).toUpperCase() + word.slice(1)
+                else return word
+            }).join('')
         }
+    }
+
+    if (noSpace) {
+        let newText = res.value
+        res.value = newText.split('').map(word => {
+            if (word === ' ') return ''
+            else return word
+        }).join('')
     }
 
     return {res}
