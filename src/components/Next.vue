@@ -1,7 +1,7 @@
 <template>
     <div id="focus" class="mx-auto w-fit pt-20" v-if="homeOrResultRoute">        
         <div v-if="isMobile()" @click="next" class="next">NEXT</div>
-        <div v-else class="m-auto w-fit">Press <span @click="next" class="next">{{ hasCompletedSession ? 'Enter' : 'Esc' }}</span> for next</div>
+        <div v-else class="m-auto w-fit">Press <span @click="next" class="next">{{ testCompleted ? 'Enter' : 'Esc' }}</span> for next</div>
     </div>
 </template>
 
@@ -12,16 +12,20 @@ import { isMobile } from '../composables/isMobile';
 import {nextStore} from '../store/nextStore'
 import useWatchers from '../composables/useWatchers';
 import { computed } from 'vue';
+import { typingStateStore } from '../store/typingStateStore';
+
+const typingstatestore = typingStateStore()
+const {testCompleted} = storeToRefs(typingstatestore)
 
 const nextstore = nextStore()
 const {goNext} = storeToRefs(nextstore)
 
 const mainstore = mainStore()
-const {hasCompletedSession, route} = storeToRefs(mainstore)
+const { route} = storeToRefs(mainstore)
 
 window.addEventListener('keydown', event => {
-    if (event.key === 'Enter' && hasCompletedSession.value) {
-        goNext.value = true
+    if (event.key === 'Enter' && testCompleted.value) {
+        next()
     }
 })
 

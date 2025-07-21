@@ -3,21 +3,23 @@ import { mainStore } from "../store/mainStore";
 import { authStore } from "../store/authStore";
 import { customizeStore } from "../store/customizeStore";
 import { nextStore } from "../store/nextStore";
+import { typingStateStore } from "../store/typingStateStore";
 import { storeToRefs } from "pinia";
 
 export default function reRouter () {
     const auth = authStore()
     const store = mainStore()
+    const typingstore = typingStateStore()
     const customize = customizeStore()
     const nextstore = nextStore()
     const {goNext} = storeToRefs(nextstore)
 
     router.beforeEach((to, from) => {
-        if (to.name === 'result' && !store.hasCompletedSession || to.name === 'progress' && !auth.isAuthenticated) {
+        if (to.name === 'result' && !typingstore.testCompleted || to.name === 'progress' && !auth.isAuthenticated) {
             return {name: 'home'}
         }
     
-        if (from.name === 'result' && store.hasCompletedSession) goNext.value = true
+        if (from.name === 'result' && typingstore.testCompleted) goNext.value = true
     
         customize.toggleCustomTestModal = false
         store.route = to.name

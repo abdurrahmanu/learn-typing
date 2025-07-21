@@ -6,7 +6,6 @@ import { timerStore } from "../store/timerStore";
 import { customizeStore } from "../store/customizeStore";
 
 export default function evaluateInput(value) {    
-
     const charcountstore = charCountStore()
     const {correctCharCount, incorrectCharCount} = storeToRefs(charcountstore)
 

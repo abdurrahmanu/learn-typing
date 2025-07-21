@@ -19,15 +19,17 @@ import {themeStore}  from '../store/themeStore'
 import { customizeStore }  from '../store/customizeStore'
 import { typingStateStore } from '../store/typingStateStore';
 import { nextStore } from '../store/nextStore';
-import { charCountStore } from '../store/charCountStore';
 import { timerStore } from '../store/timerStore';
 
 const className = ref({
     'text-slate-500': true,
 })
 
+const timerstore = timerStore()
+const {beatCountdown} = storeToRefs(timerstore)
+
 const typingstatestore = typingStateStore()
-const {playerInputLength, playerLastInput, typedWhiteSpaces, focus, spaces, deletedValue, backspaceIsPressed, enterKey} = storeToRefs(typingstatestore)
+const {playerInputLength, testCompleted, playerLastInput, typedWhiteSpaces, focus, spaces, deletedValue, backspaceIsPressed, enterKey} = storeToRefs(typingstatestore)
 
 const theme_ = themeStore()
 const { theme } = storeToRefs(theme_)
@@ -36,7 +38,7 @@ const nextstore = nextStore()
 const {goNext} = storeToRefs(nextstore)
 
 const mainstore = mainStore()
-const { currentTest, testContainerEl, allSpacesIndex, scrollTextContainer, scrollDistance, containerHeight, hasCompletedSession } = storeToRefs(mainstore)
+const { currentTest, testContainerEl, allSpacesIndex, scrollTextContainer, scrollDistance, containerHeight } = storeToRefs(mainstore)
 const currentCharacterElement = ref(null)
 
 const customize = customizeStore()
@@ -101,7 +103,7 @@ onMounted(() => {
 
             if (playerInputLength.value === currentTest.value.length) {
                 if (customizers.value['timer']) beatCountdown.value = true
-                hasCompletedSession.value = true
+                testCompleted.value = true
             }
         }
     })

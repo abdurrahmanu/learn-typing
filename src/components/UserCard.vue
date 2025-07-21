@@ -18,11 +18,11 @@
 
         <div class="text-center md:text-left flex-1">
           <h2 class="text-2xl font-semibold text-neutral-600">
-            @{{ user.username }}
+            @{{ userInfo.username }}
           </h2>
-          <p class="text-neutral-600 text-sm">{{ user.email }}</p>
+          <p class="text-neutral-600 text-sm">{{ userInfo.email }}</p>
           <p class="mt-1 text-sky-500 font-bold text-lg">
-            Rank: {{ user.ranking }}
+            Rank: {{ userInfo.ranking }}
           </p>
         </div>
   
@@ -37,24 +37,24 @@
       <!-- Stats -->
       <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 text-center">
         <div class="bg-neutral-100 p-4 rounded-xl">
-          <p class="text-2xl font-bold text-black">{{ user.testsStarted }}</p>
+          <p class="text-2xl font-bold text-black">{{ userInfo.testsStarted }}</p>
           <p class="text-sm text-neutral-600">Tests Started</p>
         </div>
   
         <div class="bg-neutral-100 p-4 rounded-xl">
-          <p class="text-2xl font-bold text-black">{{ user.testsFinished }}</p>
+          <p class="text-2xl font-bold text-black">{{ userInfo.testsFinished }}</p>
           <p class="text-sm text-neutral-600">Tests Finished</p>
         </div>
   
         <div class="bg-neutral-100 p-4 rounded-xl col-span-2 sm:col-span-1">
-          <p class="text-2xl font-bold text-black">{{ user.minutesTyped }}</p>
+          <p class="text-2xl font-bold text-black">{{ Math.round(userInfo.secondsTyped % 60).toFixed(2) }}</p>
           <p class="text-sm text-neutral-600">Minutes Typed</p>
         </div>
       </div>
   
       <!-- Joined Time -->
       <div class="text-right text-sm pt-3 text-neutral-500">
-        Joined {{ formatJoinDate(user.joinedAt) }}
+        Joined {{ formatJoinDate(userInfo.joinedAt) }}
       </div>  
     </div>
   </div>
@@ -62,17 +62,16 @@
 
 <script setup>
 import { useAuth } from "../composables/useAuth";
-import { authStore } from "../store/authStore";
 import { storeToRefs } from "pinia";
 import {ref} from 'vue'
 import EditUser from "./EditUser.vue";
+import {userDataStore} from '../store/userDataStore'
 
-const authstore = authStore()
-const {userDataAndStats} = storeToRefs(authstore)
+const userstore = userDataStore()
+const {userInfo} = storeToRefs(userstore)
 
 const {logout} = useAuth()
 
-const {user} = userDataAndStats.value
 const editUser = ref(false)
 
 const formatJoinDate = (dateStr) => {

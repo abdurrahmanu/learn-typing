@@ -10,11 +10,10 @@ export default function inputEvent (event) {
     const value = ref('')
 
     const typingstatestore = typingStateStore()
-    const {playerInputLength, backspaceIsPressed, enterKey, z} = storeToRefs(typingstatestore)
+    const {playerInputLength, backspaceIsPressed, enterKey, beginTest} = storeToRefs(typingstatestore)
 
     const timerstore = timerStore()
     const {beatCountdown, beginCountdown, startTime} = storeToRefs(timerstore)
-
 
     const charcountstore = charCountStore()
     const {incorrectCharCount} = storeToRefs(charcountstore)
@@ -87,7 +86,10 @@ export default function inputEvent (event) {
         startTime.value = performance.now();
     }
 
-    if (!playerInputLength.value && value.value && !beginCountdown.value) startTimer() 
+    if (!playerInputLength.value && value.value && !beginCountdown.value) {
+        startTimer() 
+        beginTest.value = true
+    }
 
     return value.value
 }

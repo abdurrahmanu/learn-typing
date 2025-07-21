@@ -44,9 +44,8 @@
 <script setup>
 import { authStore } from '../store/authStore';
 import { storeToRefs } from 'pinia';
+import {userDataStore} from '../store/userDataStore'
 
-const authstore = authStore()
-const {userDataAndStats} = storeToRefs(authstore)
-
-const { bestStats: stats } = userDataAndStats.value
+const userstore = userDataStore()
+const {userInfo, bestStats: stats, userHistory} = storeToRefs(userstore)
 </script>

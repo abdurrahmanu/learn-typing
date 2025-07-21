@@ -1,14 +1,11 @@
 <template>
     <Transition name="container"> 
-        <div class="relative" v-if="currentTest">
+        <div id="focus" class="relative" v-if="currentTest">
             <focusButton class="fill-parent center-text-xy z-[2] backdrop-blur-[6px] font-bold"/>
             <div
-            id="focus" 
-            tabindex="0" 
-            ref="testContainerEl" 
-            @blur="focusInput(false)"
-            @focus="focusInput(true)" 
+            @click="focusInput"
             aria-describedby="full-text" 
+            ref="testContainerEl" 
             class="container-style"
             :style="computedStyle" 
             :class="[ wordBreak, 
@@ -35,27 +32,13 @@ import focusButton from './focusButton.vue';
 import { computed } from 'vue';
 
 const typingstatestore = typingStateStore()
-const { focus, inputEl} = storeToRefs(typingstatestore)
+const { focus, inputEl, testCompleted} = storeToRefs(typingstatestore)
 
 const store = mainStore()
 const { currentTest, testContainerEl, containerHeight} = storeToRefs(store)
 
 const customize = customizeStore()
-const { customizers, font, textPosition} = storeToRefs(customize)
-
-const focusInput = (boolean) => {
-    if (boolean) {
-        focus.value = true
-        if (isTouchScreenDevice()) {
-            inputEl.value.focus()
-            // navigator.virtualKeyboard.show()
-        }
-    } 
-    else {
-        focus.value = false
-        if (isTouchScreenDevice()) inputEl.value.blur()
-    }
-}
+const { customizers,  font, textPosition} = storeToRefs(customize)
 
 const computedStyle = computed(() => {
     return {
@@ -67,10 +50,14 @@ const computedStyle = computed(() => {
 const wordBreak = computed(() => {
     return (customizers.value['no-space'] || customizers.value['test-type'] === 'custom' || customizers.value['modes'] === 'alphabet-test') && 'break-words'
 })
+
+function focusInput() {
+    if (isTouchScreenDevice() && !focus.value) inputEl.value.focus()
+}
 </script>
 
 <style scoped>
 .container-style {
-    @apply overflow-hidden scroll-smooth leading-[1.4] outline-none
+    @apply overflow-hidden scroll-smooth leading-[1.4] outline-none max-w-[95%] mx-auto
 }
 </style>

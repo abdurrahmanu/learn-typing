@@ -31,12 +31,12 @@ import Countdown from './Countdown.vue'
 import pauseTimer from '../components/svg/pauseTimer.vue'
 import playTimer from '../components/svg/playTimer.vue'
 import {storeToRefs} from 'pinia'
-import {mainStore} from '../store/mainStore'
 import { customizeStore} from '../store/customizeStore'
 import { countdownStore } from '../store/countdownStore'
 import { themeStore } from '../store/themeStore'
 import {nextStore} from '../store/nextStore'
 import {timerStore} from '../store/timerStore'
+import { typingStateStore } from '../store/typingStateStore'
 
 const timerstore = timerStore()
 const {beginCountdown, timerID} = storeToRefs(timerstore)
@@ -50,8 +50,8 @@ const {theme} = storeToRefs(theme_)
 const nextstore = nextStore()
 const {goNext} = storeToRefs(nextstore)
 
-const store = mainStore()
-const { hasCompletedSession} = storeToRefs(store)
+const typingstatestore = typingStateStore()
+const {testCompleted} = storeToRefs(typingstatestore)
 
 const customize = customizeStore()
 const {customizers, difficulty} = storeToRefs(customize)
@@ -94,7 +94,7 @@ watch([timeForBeginner, timeForAmateur, timeForExpert], ([newBeginner, newAmateu
 watch(countdown, newVal => {
     if (newVal === 0) {
         clearInterval(timerID.value)
-        if (beginCountdown.value) hasCompletedSession.value = true
+        if (beginCountdown.value) testCompleted.value = true
         else {
             const time = {
                 'beginner': timeForBeginner.value,

@@ -3,14 +3,14 @@ import { customizeStore } from "../store/customizeStore";
 import { connectStore } from "../store/connectStore";
 import { themeStore } from "../store/themeStore";
 import { storeToRefs } from 'pinia';
-import { authStore } from "../store/authStore";
+import {userDataStore}  from '../store/userDataStore'
 
 export const updateDataFromDB = (data) => {
     const store = mainStore()
     const { customTests} = storeToRefs(store)
 
-    const authstore = authStore()
-    const {userDataAndStats} = storeToRefs(authstore)
+    const userstore = userDataStore()
+    const {userInfo, bestStats, userHistory} = storeToRefs(userstore)
 
     const theme_ = themeStore()
     const {theme } = storeToRefs(theme_)
@@ -34,9 +34,7 @@ export const updateDataFromDB = (data) => {
     disableOption.value = data.config[1] || disableOption.value
     customTests.value = data.customTests || customTests.value['demo']
     textLines.value = data.textLines || 3
-    userDataAndStats.value = {
-        user: data.user,
-        bestStats: data.bestStats,
-        userHistory: data.userHistory
-    }
+    userInfo.value = data.userInfo
+    bestStats.value = data.bestStats
+    userHistory.value = data.userHistory
 }

@@ -1,5 +1,5 @@
 <template>
-    <div ref="rangeEl" v-show="!hasCompletedSession && completionLevel"  class="max-w-[700px] m-auto">
+    <div ref="rangeEl" v-show="!testCompleted && completionLevel"  class="max-w-[700px] m-auto">
         <div :style="{'width': completionLevel + '%'}" class="flex h-[2px]">
             <div v-show="index <= playerInput.length - 1" :class="[playerInput[index] === alphabet && index <= playerInput.length - 1 ? 'bg-green-500' : 'bg-red-500', ]" :style="{'width': singleDivWidth + 'px'}" v-for="(alphabet, index) in currentTest" :key="index"></div>
         </div>
@@ -16,10 +16,10 @@ const rangeEl = ref(null)
 const singleDivWidth = ref(0)
 
 const typingstatestore = typingStateStore()
-const {completionLevel, playerInput} = storeToRefs(typingstatestore)
+const {completionLevel, playerInput, testCompleted} = storeToRefs(typingstatestore)
 
 const store = mainStore()
-const { hasCompletedSession, currentTest} = storeToRefs(store)
+const { currentTest} = storeToRefs(store)
 
 onMounted(() => {
     watchEffect(() => {

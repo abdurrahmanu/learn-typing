@@ -2,6 +2,8 @@
 ** user auth
 ** leaderboard
 
+// MY Language is bUlLsHIt down here.......
+
 it has been long so the codebase is looking strange even though I wrote it.
 
 ** countdownStore and timerStore have to be merged or refactored to be one entity
@@ -22,6 +24,8 @@ it has been long so the codebase is looking strange even though I wrote it.
 ** toggling blind mode changes user correct characters to wrong
 
 ** onLoad id is supposed to be gotten, and watched
+
+** repeat test doesnt remove test color so also blind mode doesnt edit it well
 
 --------------------------------------
 Previewing wep app on android

@@ -1,6 +1,6 @@
 <template>
     <div class="pt-20">
-        <div class="flex justify-between w-[80%] mx-auto">
+        <div class="flex pb-2 justify-between w-[80%] mx-auto">
             <p v-if="!customizers['timer']"></p>
             <Countdown
             v-else
@@ -37,7 +37,7 @@ import { textBoxHeight } from '../composables/textBox';
 import OnScreenInput from './onScreenInput.vue';
 
 const typingstatestore = typingStateStore()
-const { focus, playerInputLength} = storeToRefs(typingstatestore)
+const { focus, testCompleted, playerInputLength} = storeToRefs(typingstatestore)
 
 const timerstore = timerStore()
 const { beginCountdown} = storeToRefs(timerstore)
@@ -46,7 +46,7 @@ const nextstore = nextStore()
 const {goNext} = storeToRefs(nextstore)
 
 const mainstore = mainStore()
-const { hasCompletedSession, scrollTextContainer} = storeToRefs(mainstore)
+const { scrollTextContainer} = storeToRefs(mainstore)
 
 const customize = customizeStore()
 const { customizers} = storeToRefs(customize)
@@ -55,7 +55,7 @@ const count = countdownStore()
 const {countdown} = storeToRefs(count)
 
 const canRestart = computed(() => {
-    return !hasCompletedSession.value && playerInputLength.value
+    return !testCompleted.value && playerInputLength.value
 })
 
 useWatchers({

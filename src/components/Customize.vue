@@ -6,7 +6,7 @@
   class="mobile-quick-settings">quick settings</div> 
   <div v-if="!hideElements">
     <Transition name="customizer-transition">
-      <div v-if="!hasCompletedSession" :class="[isMobile() && focus ? 'hidden' : 'block', appTheme]" class="relative m-auto items-center p-1 flex font-[500] pb-7 config text-[13px] max-w-[900px] gap-2 justify-center flex-wrap relative z-[1]">
+      <div v-if="!testCompleted" :class="[isMobile() && focus ? 'hidden' : 'block', appTheme]" class="relative m-auto items-center p-1 flex font-[500] pb-7 config text-[13px] max-w-[900px] gap-2 justify-center flex-wrap relative z-[1]">
         <div class="flex items-center gap-3 p-[1px] parent" v-for="(optionArr, key, listIndex) in quickSettingsGroups" :key="listIndex">          
             <div 
             class="relative ring-zinc-700 hover:ring-blue-800 flex py-[2px] px-1 ring-[1px] rounded-lg cursor-pointer flex-wrap justify-center items-center"
@@ -38,13 +38,10 @@ import { themeStore } from '../store/themeStore';
 import {storeToRefs} from 'pinia'
 
 const typingstatestore = typingStateStore()
-const {focus} = storeToRefs(typingstatestore)
+const {focus, testCompleted} = storeToRefs(typingstatestore)
 
 const theme_ = themeStore()
 const {appTheme}  = storeToRefs(theme_)
-
-const store = mainStore()
-const { hasCompletedSession} = storeToRefs(store)
 
 const customize = customizeStore()
 const { quickSettingsGroups, hideElements, configs, customizers, disableOption, repeat} = storeToRefs(customize)

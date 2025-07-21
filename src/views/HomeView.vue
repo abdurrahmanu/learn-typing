@@ -1,5 +1,5 @@
 <template>
-    <div v-if="!hasCompletedSession" class="mx-auto max-w-[1500px] py-10"> 
+    <div v-if="!testCompleted" class="mx-auto max-w-[1500px] py-10"> 
         <CompletionRange v-if="isBlindMode" />
         <CompletionRangeWithErrors v-else />
         <Customize />
@@ -36,10 +36,10 @@ const nextstore = nextStore()
 const {goNext} = storeToRefs(nextstore)
 
 const typingstatestore = typingStateStore()
-const {refocus, focus, playerInput, z, inputEl} = storeToRefs(typingstatestore)
+const {refocus, testCompleted, focus, playerInput, beginTest, inputEl} = storeToRefs(typingstatestore)
 
 const mainstore = mainStore()
-const { testContainerEl, hasCompletedSession} = storeToRefs(mainstore)
+const { testContainerEl} = storeToRefs(mainstore)
 
 const connect = connectStore()
 const {connectionAvailable } = storeToRefs(connect)
@@ -59,7 +59,7 @@ function handleKeydown(event) {
         return
     }
     
-    if (eventType === 'Escape' && !hasCompletedSession.value)  {
+    if (eventType === 'Escape' && !testCompleted.value)  {
         goNext.value = true;
         return;
     }
@@ -109,9 +109,13 @@ function handleOnline() {
 }
 
 function handleClick(event) {
-    if (hasCompletedSession.value) return;
+    if (testCompleted.value) return;
     const focusElement = event.srcElement.id === 'focus' || event.srcElement.closest('#focus');
-    focusElement ? focus.value = true : focus.value = false;
+    if (focusElement) {
+        if (focus.value) return
+        else focus.value = true
+    }
+    else focus.value = false
 }
 
 onMounted(() => {
@@ -141,10 +145,11 @@ onUnmounted(() => {
 useWatchers({
   focus,
   goNext,
-  hasCompletedSession,
+  testCompleted,
   font,
   toggleCapsToast,
   playerInput,
   settingsToUpdate,
+  beginTest,
 });
 </script>

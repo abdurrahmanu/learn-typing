@@ -6,7 +6,7 @@
 <script setup>
 import Main from './components/Main.vue'
 import Loader from './components/Loader.vue'
-import { onMounted, watch} from 'vue'
+import { onMounted, onUnmounted, watch} from 'vue'
 import {connectStore} from './store/connectStore'
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './firebase';
@@ -58,6 +58,10 @@ onMounted( async () => {
     }
   })
 });
+
+onUnmounted(() => {
+  data.value = null
+})
 </script>
 
 <style>

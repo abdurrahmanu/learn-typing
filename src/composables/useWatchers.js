@@ -10,29 +10,31 @@ import { useRouter } from 'vue-router';
 import { isMobile } from './isMobile';
 import { watch } from 'vue';
 import { textBoxHeight } from './textBox';
-import { connectStore } from '../store/connectStore';
 import { updateDB } from './updateDB';
+import { userDataStore } from '../store/userDataStore';
 
 export default function useWatchers({
     focus: focus, 
     goNext: next, 
-    hasCompletedSession: completed, 
+    testCompleted: completed, 
     font: font, 
     toggleCapsToast: capsToggle, 
     playerInput: input,
     scrollTextContainer: scrollContainer,
     settingsToUpdate: update,
+    beginTest: begin
 }) {
     const router = useRouter()
-    
-    const connectstore = connectStore()
-    const {showConnectionStrength, connectionStrength} = storeToRefs(connectstore)
+
+    const userstore = userDataStore()
+    const {userHistory, userInfo, bestStats} = storeToRefs(userstore)
 
     const typingstatestore = typingStateStore()
-    const {inputEl} = storeToRefs(typingstatestore)
+    const {inputEl, testCompleted, halfWayReset, completionLevel} = storeToRefs(typingstatestore)
     const {resetTypingState} = typingstatestore
     
     const timerstore = timerStore()
+    const {startTime} = storeToRefs(timerstore)
     const {clearTimer, wpmTime} = timerstore
     
     const correctwrongstore = charCountStore()
@@ -42,10 +44,10 @@ export default function useWatchers({
     const {generateNewTest} = nextstore
         
     const customize = customizeStore()
-    const { customizers, hideElements, toggleCapsToast, pauseTyping } = storeToRefs(customize)
+    const { customizers, hideElements, toggleCapsToast, pauseTyping, settingsToUpdate } = storeToRefs(customize)
     
     const mainstore = mainStore()
-    const { hasCompletedSession, testContainerEl} = storeToRefs(mainstore)
+    const { testContainerEl} = storeToRefs(mainstore)
     const {resetToDefault} = mainstore
     
     const count = countdownStore()
@@ -71,7 +73,7 @@ export default function useWatchers({
     
     if (input) {
         watch(input, (newVal, oldVal) => {
-            if (!oldVal) wpmTime(hasCompletedSession.value)
+            if (!oldVal) wpmTime(testCompleted.value)
         })
     }
 
@@ -86,9 +88,22 @@ export default function useWatchers({
       if (next) {     
           watch(next, newVal => {
               if (newVal) {
-                if (hasCompletedSession.value) {
+                if (testCompleted.value) {
                     router.push('/')
                 }
+
+                if (halfWayReset.value && !testCompleted.value) {
+                    // let currentTimeInSeconds = (performance.now() - startTime.value).toFixed(0) / 1000
+                    // let previousTimeInSeconds = userInfo.value.secondsTyped
+                    // let totalTime = (currentTimeInSeconds + previousTimeInSeconds).toFixed(2)
+                    // userInfo.value.secondsTyped = totalTime
+                    userInfo.value.testsStarted++
+                    settingsToUpdate.value = {
+                        name: Object.keys({userInfo})[0],
+                        value: userInfo.value
+                    }
+                }
+
                 resetTypingState()
                 resetToDefault()
                 clearResult()
@@ -103,7 +118,34 @@ export default function useWatchers({
           watch(completed, (newVal) => {
             if (customizers.value['timer']) clearCounter()
             if (newVal) {
-                wpmTime(hasCompletedSession.value)
+                // let currentTimeInSeconds = (performance.now() - startTime.value).toFixed(0) / 1000
+                // let previousTimeInSeconds = userInfo.value.secondsTyped
+
+                // let totalTime = (currentTimeInSeconds + previousTimeInSeconds).toFixed(2)              
+                // userInfo.value.secondsTyped = totalTime
+                userInfo.value.testsFinished++
+                userInfo.value.testsStarted++
+                wpmTime(testCompleted.value)
+
+                userHistory.value.tests.push({
+                    date: new Date().toISOString().split('T')[0],
+                    test:'',
+                    wpm: '',
+                    accuracy: '',
+                    mode: '', //  get all from ResultStore after
+                })
+
+                settingsToUpdate.value = {
+                    name: Object.keys({userInfo})[0],
+                    value: userInfo.value
+                }
+
+                // will work on this
+                settingsToUpdate.value = {
+                    name: Object.keys({userHistory})[0],
+                    value: userHistory.value
+                }
+
                 router.push({path: 'result'})
               }
           }, {deep: true})
@@ -129,5 +171,13 @@ export default function useWatchers({
                 value: newVal.value
             })
         }, {deep: true})
+      }
+
+      if (begin) {
+        watch(begin, newVal => {
+            if (newVal) {
+
+            }
+        })
       }
 }

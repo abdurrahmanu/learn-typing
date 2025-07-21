@@ -1,6 +1,7 @@
 import { customizeStore } from '../store/customizeStore'
 import { storeToRefs } from 'pinia'
 import { authStore } from '../store/authStore'
+import {userDataStore} from '../store/userDataStore'
 
 export const userData = () => {
     const customize = customizeStore()
@@ -8,6 +9,12 @@ export const userData = () => {
 
     const authstore = authStore()
     const {user} = storeToRefs(authstore)
+
+    const userstore = userDataStore()
+    const {userInfo, bestStats, userHistory} = storeToRefs(userstore)
+    const {populateUserData} = userstore
+
+    populateUserData(user.value)
     
     return {
         difficulty: 'beginner',
@@ -19,28 +26,8 @@ export const userData = () => {
         blind: false,
         fontsize: 32,
         textLines: 3,
-        user: {
-            username: 'user',
-            uid: user.value?.uid || '',
-            email: user.value?.email || '',
-            ranking: '-',
-            testsStarted: 0,
-            testsFinished: 0,
-            minutesTyped: 0,
-            joinedAt: new Date(+user.value?.reloadUserInfo?.createdAt).toString(),
-            photoURL: user.value?.photoURL,
-        },
-        bestStats: {
-            bestWPM: 0,
-            highestAccuracy: 0,
-            rawSpeed: 0,
-            consistency: 0,
-            streakDays: 0,
-            longestTime: 0,
-            highestRank: '-',
-        },
-        userHistory: {
-            tests: []
-        }
+        userInfo: userInfo.value,
+        bestStats: bestStats.value,
+        userHistory: userHistory.value,
     }
 }

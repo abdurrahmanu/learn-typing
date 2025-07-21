@@ -50,7 +50,7 @@
 import { ref } from 'vue'
 
 const leaderboard = ref(
-  Array.from({ length: 200 }, (_, i) => ({
+  Array.from({ length: 2 }, (_, i) => ({
     username: `user${i + 1}`,
     photo: `https://i.pravatar.cc/150?img=${(i % 70) + 1}`,
     bestWPM: Math.floor(50 + Math.random() * 100),

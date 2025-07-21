@@ -49,16 +49,14 @@
 
 <script setup>
 import { ref, computed } from 'vue';
-import { authStore } from '../store/authStore';
 import { storeToRefs } from 'pinia';
+import {userDataStore} from '../store/userDataStore'
 
-const authstore = authStore()
-const {userDataAndStats} = storeToRefs(authstore)
-
-const {userHistory} = userDataAndStats.value
+const userstore = userDataStore()
+const {userHistory} = storeToRefs(userstore)
 
 const testHistory = computed(() => {
-  return userHistory.tests
+  return userHistory.value.tests
 })
 
 const rowsToShow = ref(5);
