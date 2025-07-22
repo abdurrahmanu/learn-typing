@@ -44,35 +44,52 @@ export function customizeTest({
             let punctuations = [',', '.', ';', '?', '!']
             let wordsArr = res.value.split(' ')
             let spacing = 5 // Punctuation mark after every 5 words
+            let usedPunctuations = {}
+            let totalPunctuations = 0
 
             res.value = wordsArr.map((word, index) => {
-            const isLastWord = index === wordsArr.length - 1;
-            const addPunctuation = (index + 1) % spacing === 0
-            const punctuation = punctuations[Math.floor(Math.random() * punctuations.length)];
+                const isLastWord = index === wordsArr.length - 1;
+                const addPunctuation = (index + 1) % spacing === 0
+                const punctuation = punctuations[Math.floor(Math.random() * punctuations.length)];
 
-            if (isLastWord) return word + '.'
-            if (addPunctuation) return word + punctuation + ' '
-            else return word + ' '
-        }).join('').trimEnd()
+                if (addPunctuation) {
+                    totalPunctuations++
+                    if (totalPunctuations >= wordsArr.length / 2 && usedPunctuations[punctuation] >= totalPunctuations / 2) {
+                        let index = punctuations.indexOf(punctuation)
+                        punctuations.splice(index, 1)
+                        punctuation = punctuations[Math.floor(Math.random() * punctuations.length)];
+                    }
+                    if (!usedPunctuations[punctuation]) usedPunctuations[punctuation] = 1
+                    else usedPunctuations[punctuation]++
+                }
+
+                if (isLastWord) return word + '.'
+                if (addPunctuation) return word + punctuation + ' '
+                else return word + ' '
+            }).join('').trimEnd()
         }
     }
 
     if (caps) {
         if (testType === 'words') {
             let newText = res.value
-            res.value = newText.split('').map((word, index) => {
-               if (newText[index - 2] && newText[index - 2] === '.') return word.charAt(0).toUpperCase() + word.slice(1)
-                else return word
-            }).join('')
+            res.value = newText.split(' ').map((word, index) => {
+                let capitalized = word.charAt(0).toUpperCase() + word.slice(1)
+                if (index === 0) return capitalized
+                if (punctuation) {
+                    if (newText[index - 2] && newText[index - 2] === '.') return capitalized
+                     else return word
+                } else {
+                    let random = Math.floor(Math.random() * 6)
+                    if (random < 1) return capitalized
+                    else return word
+                }
+            }).join(' ')
         }
     }
 
     if (noSpace) {
-        let newText = res.value
-        res.value = newText.split('').map(word => {
-            if (word === ' ') return ''
-            else return word
-        }).join('')
+        res.value = res.value.split(' ').map(word => word ).join('')
     }
 
     return {res}
