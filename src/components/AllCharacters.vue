@@ -1,6 +1,6 @@
 <template>
     <Transition name="container"> 
-        <div id="focus" class="relative" v-if="currentTest">
+        <div id="focus" class="relative">
             <focusButton class="fill-parent center-text-xy z-[2] backdrop-blur-[6px] font-bold"/>
             <div
             @click="focusInput"
@@ -12,7 +12,7 @@
             (textPosition === 'justify') && 'text-justify',
             (textPosition === 'left') && 'text-left'] ">                 
                 <Character
-                v-for="(character, index) in currentTest"
+                v-for="(character, index) in test"
                 :index="index"
                 :key="index"
                 :character="character" />
@@ -32,13 +32,17 @@ import focusButton from './focusButton.vue';
 import { computed } from 'vue';
 
 const typingstatestore = typingStateStore()
-const { focus, inputEl, testCompleted} = storeToRefs(typingstatestore)
+const { focus, inputEl} = storeToRefs(typingstatestore)
 
 const store = mainStore()
 const { currentTest, testContainerEl, containerHeight} = storeToRefs(store)
 
+const test = computed(() => {
+    return currentTest.value.test
+})
+
 const customize = customizeStore()
-const { customizers,  font, textPosition} = storeToRefs(customize)
+const { customizers, font, textPosition} = storeToRefs(customize)
 
 const computedStyle = computed(() => {
     return {

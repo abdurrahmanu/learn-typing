@@ -18,12 +18,16 @@ export const resultStore = defineStore('resultStore', () => {
     const mainstore = mainStore()
     const {currentTest} = storeToRefs(mainstore)
 
+    const test = computed(() => {
+        return currentTest.value.test
+    })
+
     const WPM = computed(() => {
-        return Math.round(((currentTest.value.length / 5) - (incorrectCharCount.value / 5)) / (totalTime.value/60))
+        return Math.round(((test.value.length / 5) - (incorrectCharCount.value / 5)) / (totalTime.value/60))
     })
 
     const accuracy = computed(() => {
-        return Math.round((resultData.value.correctCharCount/(currentTest.value.length) * 100))
+        return Math.round((resultData.value.correctCharCount/(test.value.length) * 100))
     })
 
     const failedToBeatCountdown = computed(() => customizers.value['timer'] && !beatCountdown.value)
@@ -58,17 +62,17 @@ export const resultStore = defineStore('resultStore', () => {
     }
 
     const errorRatio = () => {
-        const total = currentTest.value.length
+        const total = test.value.length
         const correct = failedToBeatCountdown.value ? 
         resultData.value.incorrectCharCount : 
-        (resultData.value.incorrectCharCount) + (currentTest.value.length - (resultData.value.incorrectCharCount + resultData.value.correctCharCount))
+        (resultData.value.incorrectCharCount) + (test.value.length - (resultData.value.incorrectCharCount + resultData.value.correctCharCount))
 
         return correct + '/' + total
     }
 
     const errorRatioLevel = () => {
         let result = resultData.value
-        let length = currentTest.value.length
+        let length = test.value.length
         let timer = failedToBeatCountdown.value ? 'timer' : 'no-timer'
 
         const errorRatioObject = {

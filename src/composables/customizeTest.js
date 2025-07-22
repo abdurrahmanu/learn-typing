@@ -1,5 +1,3 @@
-import { ref } from 'vue'
-
 export function customizeTest({
     punctuation,
     caps,
@@ -9,45 +7,42 @@ export function customizeTest({
     testType,
     test
 }) {
-
-    const res = ref(test);
-    let punctuations = [',', '.', ':', ';', '-', "'", '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '=', '[', ']', '{', '}', '|', "\\", '"', '<', '>', '/', '?']
-
+    
     if (!caps && !camelCase && !allCaps) {
-        res.value = res.value.toLowerCase()
+        test = test.toLowerCase()
     } 
-
-    if (camelCase) {
-        res.value = ''
-        for (let index = 0; index < test.length; index++) {
-            let random = Math.round(Math.random() + 1)
-            if (random % 2 === 0) res.value += test[index].toUpperCase()
-            else res.value += test[index].toLowerCase()
+    else {
+        if (camelCase) {
+            test = test.split('').map(char => {
+                let random = Math.floor(Math.random() * 6)
+                if (random < 2) return char.toUpperCase()
+                else return char.toLowerCase()
+            }).join('')
         }
-    }
 
-    if (allCaps) {
-        res.value = res.value.toUpperCase()
+        if (allCaps) {
+            test = test.toUpperCase()
+        }
     }
 
     if (!punctuation) {
-        let newText = res.value
-        res.value = ''
-        for (let index = 0; index < newText.length; index++) {
-            if (!punctuations.includes(newText[index])) {
-                res.value += newText[index];
-            }
+        let EnglishAlphaNumbericChar = (char) => {
+            let code = char.charCodeAt(0)
+            return (code >= 48 && code <= 57) || (code >= 65 && code <= 90) || (code >= 97 && code <= 5122)  || code === 32
         }
+
+        test = test.split('').map(char => EnglishAlphaNumbericChar(char) && char).join('')
     }
+
     else {
         if (testType === 'words') {
             let punctuations = [',', '.', ';', '?', '!']
-            let wordsArr = res.value.split(' ')
+            let wordsArr = test.split(' ')
             let spacing = 5 // Punctuation mark after every 5 words
             let usedPunctuations = {}
             let totalPunctuations = 0
 
-            res.value = wordsArr.map((word, index) => {
+            test = wordsArr.map((word, index) => {
                 const isLastWord = index === wordsArr.length - 1;
                 const addPunctuation = (index + 1) % spacing === 0
                 const punctuation = punctuations[Math.floor(Math.random() * punctuations.length)];
@@ -72,8 +67,8 @@ export function customizeTest({
 
     if (caps) {
         if (testType === 'words') {
-            let newText = res.value
-            res.value = newText.split(' ').map((word, index) => {
+            let newText = test
+            test = newText.split(' ').map((word, index) => {
                 let capitalized = word.charAt(0).toUpperCase() + word.slice(1)
                 if (index === 0) return capitalized
                 if (punctuation) {
@@ -89,8 +84,8 @@ export function customizeTest({
     }
 
     if (noSpace) {
-        res.value = res.value.split(' ').map(word => word ).join('')
+        test = test.replace(/ /g, '')
     }
 
-    return {res}
+    return test
 }

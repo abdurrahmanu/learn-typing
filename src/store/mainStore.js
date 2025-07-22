@@ -10,7 +10,11 @@ export const mainStore = defineStore('mainStore', () => {
     const containerHeight = ref(0)
     const scrollDistance = ref(0)
     const scrollTextContainer = ref({}) // Scroll top distance {top: number}
-    const currentTest = ref('') 
+    const currentTest = ref({
+        author: '',
+        name: '',
+        test: '',
+    }) 
 
     const allSpacesIndex = ref([])
     const useCustomText = ref(false)
@@ -23,7 +27,11 @@ export const mainStore = defineStore('mainStore', () => {
     const resetToDefault = () => {
         scrollDistance.value = 0
         scrollTextContainer.value = {}
-        currentTest.value = ''
+        currentTest.value = {
+            author: '',
+            name: '',
+            test: '',
+        }
         allSpacesIndex.value = []
     }
 

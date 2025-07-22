@@ -5,6 +5,8 @@ import { mainStore } from './mainStore'
 export const typingStateStore = defineStore('typingStateStore', () => {    
     const mainstore = mainStore()
     const {currentTest} = storeToRefs(mainstore)
+    const {test} = currentTest.value
+
     const spaces = ref({})
     const playerInput = ref('') 
     const refocus = ref(false)
@@ -18,7 +20,7 @@ export const typingStateStore = defineStore('typingStateStore', () => {
     const beginTest = ref(false)
 
     const completionLevel = computed(() => {
-        return ((playerInputLength.value) / currentTest.value.length) * 100 
+        return ((playerInputLength.value) / currentTest.value.test.length) * 100 
     })
 
     const resetTypingState = () => {
@@ -39,8 +41,8 @@ export const typingStateStore = defineStore('typingStateStore', () => {
     })
 
     const halfWayReset = computed(() => {
-        if (currentTest.value.length) {
-            return playerInput.value.length >= currentTest.value.length/2
+        if (test.length) {
+            return playerInput.value.length >= test.length/2
         }
 
         return false

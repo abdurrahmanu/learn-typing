@@ -5,7 +5,6 @@
 </template>
 
 <script setup>
-import { mainStore } from '../store/mainStore';
 import { themeStore } from '../store/themeStore';
 import { typingStateStore } from '../store/typingStateStore';
 import { storeToRefs } from 'pinia';
@@ -15,5 +14,4 @@ const {completionLevel, testCompleted} = storeToRefs(typingstatestore)
 
 const theme_ = themeStore()
 const {theme} = storeToRefs(theme_)
-
 </script>

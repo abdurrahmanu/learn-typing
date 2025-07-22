@@ -30,7 +30,7 @@ import evaluateInput from '../composables/evaluateInput';
 import { useRoute } from 'vue-router';
 
 const customize = customizeStore()
-const {font, settingsToUpdate, customizers, toggleCapsToast, pauseTyping, toggleCustomTestModal, isBlindMode} = storeToRefs(customize)
+const {font, settingsToUpdate, toggleCapsToast, pauseTyping, toggleCustomTestModal, isBlindMode} = storeToRefs(customize)
 
 const nextstore = nextStore()
 const {goNext} = storeToRefs(nextstore)

@@ -41,6 +41,8 @@ const mainstore = mainStore()
 const { currentTest, testContainerEl, allSpacesIndex, scrollTextContainer, scrollDistance, containerHeight } = storeToRefs(mainstore)
 const currentCharacterElement = ref(null)
 
+const {test} = currentTest.value
+
 const customize = customizeStore()
 const { customizers, cursorType, font, blind } = storeToRefs(customize)
 
@@ -51,15 +53,15 @@ const props = defineProps({
 })
 
 const currentIndex = computed(() => playerInputLength.value === props.index)
-const equality = computed(() => playerLastInput.value === currentTest.value[props.index])
+const equality = computed(() => playerLastInput.value === test[props.index])
 
 onMounted(() => {
     watch(currentIndex, (isNextChar, prevCharacter) => {
-        let isLastChar = !isNextChar && playerInputLength.value === currentTest.value.length
+        let isLastChar = !isNextChar && playerInputLength.value === test.length
         
         if (isNextChar || isLastChar) {    
-            if (!backspaceIsPressed.value && currentTest.value[props.index - 1] === ' ') spaces.value[props.index] = ' '            
-            if (backspaceIsPressed.value && currentTest.value[props.index] === ' ') spaces.value[props.index] ? delete spaces.value[props.index] : ''
+            if (!backspaceIsPressed.value && test[props.index - 1] === ' ') spaces.value[props.index] = ' '            
+            if (backspaceIsPressed.value && test[props.index] === ' ') spaces.value[props.index] ? delete spaces.value[props.index] : ''
             
             if (currentCharacterElement.value) {    
                 const parentScrollHeight = testContainerEl.value.scrollHeight
@@ -101,7 +103,7 @@ onMounted(() => {
                 }
             }
 
-            if (playerInputLength.value === currentTest.value.length) {
+            if (playerInputLength.value === test.length) {
                 if (customizers.value['timer']) beatCountdown.value = true
                 testCompleted.value = true
             }

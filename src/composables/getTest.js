@@ -1,4 +1,3 @@
-import { ref } from 'vue'
 import { englishWords } from '../../data/englishWords.js';
 import { customizeTest } from './customizeTest.js';
 import { customizeStore } from '../store/customizeStore.js';
@@ -7,11 +6,11 @@ import authoredQuotes from '../../data/quotes.json'
 import { storeToRefs } from 'pinia';
 
 export async function getTest () {
-    const test = ref({
+    let test = {
         test: '',
         author: null,
         name: null
-    })
+    }
     const customizestore = customizeStore()
     const {customizers, customChoice} = storeToRefs(customizestore)
     const mainstore = mainStore()
@@ -45,7 +44,7 @@ export async function getTest () {
         const quote = allQuotes[index]?.quote || allQuotes[index]
         const name = allQuotes[index]?.name
 
-        test.value = {
+        test = {
             author: author,
             test: quote,
             name: name
@@ -59,12 +58,10 @@ export async function getTest () {
         ]
 
         const index = Math.floor(Math.random() * quotes.length)
-        test.value['test'] = quotes[index]
+        test['test'] = quotes[index]
     }
 
     else if (testType === 'words') {
-        const _ = ref('')
-
         const words = [
             ...mostUsed,
             ...(wordType === 'common' ? mediumUsed : []),
@@ -72,16 +69,14 @@ export async function getTest () {
             ...(customizers.value['numbers'] ? numbers : [])
         ]
 
-        const numberOfWords = ref(testLength)
-        if (testLength === 'auto') numberOfWords.value = Math.round(Math.random() * 45) + 5
+        let numberOfWords = testLength
+        if (testLength === 'auto') numberOfWords = Math.round(Math.random() * 45) + 5
 
-        for (let index = 0; index < numberOfWords.value; index++) {
+        for (let index = 0; index < numberOfWords; index++) {
             let random = Math.floor(Math.random() * words.length)
             let word = words[random]     
-            index === 0 ? _.value += word : _.value += ' ' + word
+            index === 0 ? test['test'] += word : test['test'] += ' ' + word
         }
-
-        test.value['test'] = _.value
     }
 
     const params = {
@@ -92,11 +87,11 @@ export async function getTest () {
         camelCase : customizers.value['camel-case'],
         noSpace : customizers.value['no-space'],
         testType : customizers.value['test-type'],
-        test: test.value['test']
+        test: test['test']
     }
 
-    test.value['test'] = test.value['test'].replace(/[\r\n]+/g, ' ').trim();
-    test.value['test'] = customizeTest(params, test.value['test']).res.value
+    test['test'] = test['test'].replace(/[\r\n]+/g, ' ').trim();
+    test['test'] = customizeTest(params, test['test'])
 
-    return test.value
+    return test
 }

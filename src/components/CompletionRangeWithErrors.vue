@@ -1,7 +1,7 @@
 <template>
     <div ref="rangeEl" v-show="!testCompleted && completionLevel"  class="max-w-[700px] m-auto">
         <div :style="{'width': completionLevel + '%'}" class="flex h-[2px]">
-            <div v-show="index <= playerInput.length - 1" :class="[playerInput[index] === alphabet && index <= playerInput.length - 1 ? 'bg-green-500' : 'bg-red-500', ]" :style="{'width': singleDivWidth + 'px'}" v-for="(alphabet, index) in currentTest" :key="index"></div>
+            <div v-show="index <= playerInput.length - 1" :class="[playerInput[index] === alphabet && index <= playerInput.length - 1 ? 'bg-green-500' : 'bg-red-500', ]" :style="{'width': singleDivWidth + 'px'}" v-for="(alphabet, index) in currentTest.test" :key="index"></div>
         </div>
     </div>
 </template>
@@ -21,12 +21,14 @@ const {completionLevel, playerInput, testCompleted} = storeToRefs(typingstatesto
 const store = mainStore()
 const { currentTest} = storeToRefs(store)
 
+const {test} = currentTest.value
+
 onMounted(() => {
     watchEffect(() => {
-        if (currentTest.value.length) {
+        if (test.length) {
             const cssObject = getComputedStyle(rangeEl.value.parentElement)
             const width = +cssObject.getPropertyValue('width').slice(0, -2)
-            singleDivWidth.value = +(width / currentTest.value.length).toFixed(2)
+            singleDivWidth.value = +(width / test.length).toFixed(2)
         }
     })
 })
