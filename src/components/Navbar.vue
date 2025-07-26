@@ -16,35 +16,10 @@
             <div 
             v-show="route.name === 'home'" 
             class="flex items-center gap-4 text-[9px]">
-                <div id="focus" class="relative w-fit">
-                    <Clock class="peer" />
-                </div>
-                <div 
-                id="focus" 
-                v-if="!isMobile()" 
-                class="relative hidden w-fit min-[505px]:block">
-                    <TextAlign class="peer"/>
-                </div>
-                <div class="relative w-fit">
-                    <Blind class="peer"/>
-                </div>
-                <div 
-                id="focus" 
-                v-if="route.name === 'home'" 
-                class="relative w-fit" >
-                    <repeat class="w-4 peer"/>
-                </div>
-                <div 
-                v-if="customizers['modes'] !== 'alphabet-test'"
-                class="relative w-fit" >
-                    <add 
-                    @click="openCustomTestModal" 
-                    class="w-4 peer"/>
-                </div>
                 <div class="relative w-fit">
                     <feedback 
                     @click="routeToPage('about')" 
-                    class="w-4 peer"/>
+                    class="w-5 peer"/>
                 </div>
             </div>
             <div 
@@ -52,18 +27,20 @@
             class="relative w-fit" >
                 <home 
                 @click="routeToPage('home')" 
-                class="w-4 peer" />
+                class="w-5 peer" />
             </div>
             <div 
             v-if="route.name === 'home'"
             class="relative w-fit" >
-                <settings class="w-4 peer" />
+                <settings 
+                @click="routeToPage('settings')"
+                class="w-5 peer" />
             </div>
             <div 
             @click="routeToPage('user')"
             v-if="route.name !== 'user'" 
             class="relative w-fit rounded-full p-1" :class="[login ? 'ring-green-600 ring-[2px]' : 'ring-blue-500 ring-[1px]']" >
-                <user class="w-4 peer" />
+                <user class="w-3 peer" />
             </div>
         </div>
     </header>
@@ -73,13 +50,8 @@
 import Logo from './Logo.vue'
 import home from './svg/home.vue'
 import settings from './svg/settings.vue';
-import add from './svg/add.vue'
-import TextAlign from './TextAlign.vue';
-import repeat from './svg/repeat.vue';
 import user from './svg/user.vue'
-import Blind from './Blind.vue';
 import feedback from './svg/feedback.vue'
-import Clock from './Clock.vue';
 import {useRoute, useRouter} from 'vue-router'
 import { isMobile } from '../composables/isMobile';
 import { customizeStore } from '../store/customizeStore';
@@ -101,20 +73,15 @@ const authstore = authStore()
 const {login} = storeToRefs(authstore)
 
 const customize = customizeStore()
-const { hideElements, customizers, toggleCustomTestModal, pauseTyping} = storeToRefs(customize)
+const { hideElements} = storeToRefs(customize)
 
 const routeToPage = (route) => {
     router.push({name: route})
-}
-
-const openCustomTestModal = () => {
-    toggleCustomTestModal.value = true
-    pauseTyping.value = true
 }
 </script>   
 
 <style scoped>
 .header {
-    @apply sticky mx-auto flex items-center justify-between pl-3 pt-5 pb-2 pr-2 max-w-[1500px] min-w-[360px] transition-all duration-300 top-0
+    @apply sticky mx-auto flex items-center justify-between pl-3 pt-5 pb-2 pr-2 max-w-[1000px] min-w-[360px] transition-all duration-300 top-0 border-b
 }
 </style>

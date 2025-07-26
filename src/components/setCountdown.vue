@@ -19,8 +19,8 @@
 </template>
 
 <script setup>
-import { themeStore } from '../../store/themeStore';
-import { customizeStore } from '../../store/customizeStore';
+import { themeStore } from '../store/themeStore';
+import { customizeStore } from '../store/customizeStore';
 import { storeToRefs } from 'pinia';
 import PauseTimer from '../svg/pauseTimer.vue';
 import PlayTimer from '../svg/playTimer.vue';

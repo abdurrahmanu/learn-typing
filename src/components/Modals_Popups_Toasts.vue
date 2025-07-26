@@ -1,5 +1,4 @@
 <template>
-    <Settings />
     <CustomTestModal />
     <!-- <Animate /> -->
     <CapsLockToast 
@@ -9,7 +8,6 @@
 </template>
 
 <script setup>
-import Settings from './Settings/Settings.vue'
 import Animate from './Animate.vue';
 import CapsLockToast from './Toast.vue';
 import CustomTestModal from './CustomTestModal.vue';

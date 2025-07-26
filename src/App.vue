@@ -12,7 +12,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './firebase';
 import { storeToRefs } from 'pinia';
 import { authStore } from './store/authStore';
-import { updateDataFromDB } from './composables/updateDataFromDB';
+import { fetchData } from './composables/fetchData';
 import { generateTest } from './composables/generateTest';
 import { getSingleDoc, addSingleDoc } from './composables/firestoreDocs';
 
@@ -52,7 +52,7 @@ onMounted( async () => {
   watch(login, newVal => {
     if (newVal) {
       if (data.value) {
-        updateDataFromDB(data.value)
+        fetchData(data.value)
         generateTest()
       } 
     }

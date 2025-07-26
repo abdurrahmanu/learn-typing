@@ -4,7 +4,7 @@ import { customizeStore } from '../store/customizeStore';
 
 export function getAlphabets() {
     const customize = customizeStore()
-    const {customizers, mixCharacters, mixCharactersArray} = storeToRefs(customize)
+    const {customizers, mixCharacters, charsArray} = storeToRefs(customize)
     
     const jumble = customizers.value['arrangement'] === 'jumble'
     const reverse = customizers.value['arrangement'] === 'reverse'
@@ -17,13 +17,13 @@ export function getAlphabets() {
         const alphabets = ref('abcdefghijklmnopqrstuvwxyz')
         alphabets_.value = alphabets.value
 
-        if (mixCharacters.value && mixCharactersArray.value) {
+        if (mixCharacters.value && charsArray.value) {
             alphabets_.value = ''
-            let length = mixCharactersArray.value.length > 8 ? 78 : mixCharactersArray.value.length > 6 ? 66 : 60
+            let length = charsArray.value.length > 8 ? 78 : charsArray.value.length > 6 ? 66 : 60
             for (let index = 1; index < length; index++) {
-                let random = Math.ceil(Math.random()  * mixCharactersArray.value.length) - 1
+                let random = Math.ceil(Math.random()  * charsArray.value.length) - 1
                 if (index % 6 === 0) alphabets_.value += ' '
-                else alphabets_.value += mixCharactersArray.value[random]
+                else alphabets_.value += charsArray.value[random]
             }
         }
 

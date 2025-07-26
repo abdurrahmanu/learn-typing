@@ -5,7 +5,7 @@ import { themeStore } from "../store/themeStore";
 import { storeToRefs } from 'pinia';
 import {userDataStore}  from '../store/userDataStore'
 
-export const updateDataFromDB = (data) => {
+export const fetchData = (data) => {
     const store = mainStore()
     const { customTests} = storeToRefs(store)
 

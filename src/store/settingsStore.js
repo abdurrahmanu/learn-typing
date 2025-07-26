@@ -1,9 +1,10 @@
 import {defineStore} from 'pinia'
-import {ref} from 'vue'
+import {ref, computed} from 'vue'
+import { customizeStore } from './customizeStore'
 
 export const settingsStore = defineStore('settingsStore', () => {
-    const showSettings = ref(false)
-    
+
+
     return {
 
     }

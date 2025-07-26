@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import ResultView from '../views/ResultView.vue'
 import UserView from '../views/UserView.vue'
 import AboutView from '../views/AboutView.vue'
+import SettingsView from '../views/SettingsView.vue'
 
 const routes = [
     {
@@ -24,6 +25,11 @@ const routes = [
       path: '/about',
       name: 'about',
       component: AboutView
+    },
+    {
+      path: '/settings',
+      name: 'settings',
+      component: SettingsView
     }
   ]
 

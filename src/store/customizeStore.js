@@ -28,7 +28,7 @@ export const customizeStore = defineStore('customizeStore', () => {
     const textLines = ref(3)
     const shiftKey = ref(false)
     const mixCharacters = ref(false)
-    const mixCharactersArray = ref([])
+    const charsArray = ref([])
 
     const mainstore = mainStore()
     const {route} = storeToRefs(mainstore)
@@ -201,6 +201,59 @@ export const customizeStore = defineStore('customizeStore', () => {
         })
     }
 
+    const updateSingleSetting = (setting, newVal) => {
+        setting = setting.toLowerCase()
+
+        if (setting === 'backspace') {
+            backspace.value = newVal
+        }
+        else if (setting === 'blind mode') {
+            blind.value = newVal
+        }
+        else if (setting === 'blur') {
+            customizers.value['blur'] = newVal
+        }
+        else if (setting === 'caps lock') {
+            customizers.value['capslock'] = newVal
+        }
+        else if (setting === 'countdown') {
+            customizers.value['timer'] = newVal
+        }
+        else if (setting === 'custom case') {
+            customizers.value['camel-case'] = newVal
+        }
+        else if (setting === 'double words') {
+            customizers.value['double-words'] = newVal
+        }
+        else if (setting === 'no space') {
+            customizers.value['no-space'] = newVal
+        }
+        else if (setting === 'stop on error') {
+            if (!backspace.value) customizers.value['stop-on-error'] = false
+            customizers.value['stop-on-error'] = newVal
+        }
+        else if (setting === 'uppercase') {
+            customizers.value['all-caps'] = newVal
+        }
+        // if (setting === 'font size') {
+            
+        // }
+        // if (setting === 'text lines') {
+            
+        // }
+        // if (setting === 'cursor') {
+            
+        // }
+        // if (setting === 'difficulty') {
+            
+        // }
+
+        settingsToUpdate.value.push({
+            name: setting,
+            value: newVal
+        })
+    }
+
     return {
         count,
         disableOption,
@@ -217,6 +270,7 @@ export const customizeStore = defineStore('customizeStore', () => {
         checkQuickSettings, 
         changeSettings,
         settingsPage,
+        updateSingleSetting,
         font, 
         range,
         repeat,
@@ -229,7 +283,7 @@ export const customizeStore = defineStore('customizeStore', () => {
         customTestLength,
         useCustomLength,
         shiftKey,
-        mixCharactersArray,
+        charsArray,
         mixCharacters,
         isBlindMode,
         settingsToUpdate,

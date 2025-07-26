@@ -6,7 +6,7 @@
   class="mobile-quick-settings">quick settings</div> 
   <div v-if="!hideElements">
     <Transition name="customizer-transition">
-      <div v-if="!testCompleted" :class="[isMobile() && focus ? 'hidden' : 'block', appTheme]" class="relative m-auto items-center p-1 flex font-[500] pb-7 config text-[13px] max-w-[900px] gap-2 justify-center flex-wrap relative z-[1]">
+      <div v-if="!testCompleted" :class="[isMobile() && focus ? 'hidden' : 'block', appTheme]" class="m-auto items-center p-1 flex font-[500] pb-7 config text-[13px] max-w-[900px] gap-2 justify-center flex-wrap relative z-[1]">
         <div class="flex items-center gap-3 p-[1px] parent" v-for="(optionArr, key, listIndex) in quickSettingsGroups" :key="listIndex">          
             <div 
             class="relative ring-zinc-700 hover:ring-blue-800 flex py-[2px] px-1 ring-[1px] rounded-lg cursor-pointer flex-wrap justify-center items-center"
@@ -23,6 +23,36 @@
                 </div>
             </div>
         </div>
+        <div class="relative ring-[1px] rounded-lg cursor-pointer ring-zinc-700 hover:ring-blue-800 flex py-[2px] px-1">
+          <div class="flex gap-3 px-2 items-center">
+                <div id="focus" class="relative w-fit">
+                    <Clock class="peer" />
+                </div>
+                <div 
+                id="focus" 
+                v-if="!isMobile()" 
+                class="relative hidden w-fit min-[505px]:block">
+                    <TextAlign class="peer"/>
+                </div>
+                <div class="relative w-fit">
+                    <Blind class="peer"/>
+                </div>
+                <div 
+                id="focus" 
+                v-if="route.name === 'home'" 
+                class="relative w-fit" >
+                    <repeatSVG class="w-4 peer"/>
+                </div>
+                <div 
+                v-if="customizers['modes'] !== 'alphabet-test'"
+                class="relative w-fit" >
+                    <add 
+                    @click="openCustomTestModal" 
+                    class="w-4 peer"/>
+                </div>
+          </div>
+
+        </div>
     </div>
   </Transition>
   </div>  
@@ -36,6 +66,15 @@ import { typingStateStore } from '../store/typingStateStore.js';
 import { mainStore } from '../store/mainStore.js';
 import { themeStore } from '../store/themeStore';
 import {storeToRefs} from 'pinia'
+import { useRoute, useRouter } from 'vue-router';
+import Clock from './Clock.vue';
+import TextAlign from './TextAlign.vue';
+import Blind from './Blind.vue';
+import add from './svg/add.vue';
+import repeatSVG from './svg/repeat.vue';
+
+const route = useRoute()
+const router = useRouter()
 
 const typingstatestore = typingStateStore()
 const {focus, testCompleted} = storeToRefs(typingstatestore)
@@ -44,8 +83,13 @@ const theme_ = themeStore()
 const {appTheme}  = storeToRefs(theme_)
 
 const customize = customizeStore()
-const { quickSettingsGroups, hideElements, configs, customizers, disableOption, repeat} = storeToRefs(customize)
+const { quickSettingsGroups, toggleCustomTestModal, pauseTyping, hideElements, configs, customizers, disableOption, repeat} = storeToRefs(customize)
 const {checkQuickSettings} = customize
+
+const openCustomTestModal = () => {
+    toggleCustomTestModal.value = true
+    pauseTyping.value = true
+}
 
 const hoverIndex = ref(null)
 const mouseEnter = (index) => hoverIndex.value = index

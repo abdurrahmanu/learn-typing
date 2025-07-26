@@ -22,5 +22,6 @@ const customize = () => {
         name: Object.keys({blind})[0],
         value: blind.value
     })
+
 }
 </script>
