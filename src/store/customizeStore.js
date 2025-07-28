@@ -18,7 +18,7 @@ export const customizeStore = defineStore('customizeStore', () => {
     const difficulty = ref('beginner')
     const backspace = ref(true)
     const repeat = ref(false)
-    const textPosition = ref('justify')
+    const textPosition = ref('left')
     const blind = ref(false)
     const font = ref(32)
     const range = ref((font.value - 16) / 0.26)
