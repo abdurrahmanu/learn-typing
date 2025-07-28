@@ -8,7 +8,6 @@ export const countdownStore = defineStore('countdown', () => {
     const timerID = ref(null)
     const intervalID = ref(null)
     const start = ref(false)
-    const level = ref('beginner')
     const countdown = ref(0)
 
     const mainstore = mainStore()
@@ -44,7 +43,6 @@ export const countdownStore = defineStore('countdown', () => {
         intervalID,
         start,
         countdown,
-        level,
         clearCounter,
         timer,
     }

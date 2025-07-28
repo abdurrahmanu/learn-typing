@@ -7,13 +7,13 @@
 </template>
 
 <script setup>
-import { watch } from 'vue';
+import { onMounted, watch } from 'vue';
 import { storeToRefs } from 'pinia';
 import {countdownStore} from '../store/countdownStore'
 import {themeStore}  from '../store/themeStore'
 
 const theme_ = themeStore()
-const {appTheme } = storeToRefs(theme_)
+const { appTheme } = storeToRefs(theme_)
 
 const count = countdownStore()
 const { countDownElement, isNextCountDown, timerID, intervalID, countdown} = storeToRefs(count)

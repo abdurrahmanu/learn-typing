@@ -18,7 +18,7 @@ export const generateTest = async () => {
 
     if (repeat.value) {
         currentTest.value = {name: '', author: '', value: ''}
-        currentTest.value.test = storedTest.value
+        currentTest.value.test = storedTest.value.test
     }
 
     else {
