@@ -1,5 +1,6 @@
-import { defineStore } from 'pinia';
-import { ref, computed } from 'vue';
+import { defineStore, storeToRefs } from 'pinia';
+import { ref } from 'vue';
+import { mainStore } from './mainStore';
 
 export const countdownStore = defineStore('countdown', () => {
     const countDownElement = ref(null)
@@ -7,24 +8,23 @@ export const countdownStore = defineStore('countdown', () => {
     const timerID = ref(null)
     const intervalID = ref(null)
     const start = ref(false)
-    const textLength = ref()
     const level = ref('beginner')
     const countdown = ref(0)
 
-    const timeForBeginner = computed(() => {
-        let wpm = 50
-        return Math.ceil(((textLength.value / 5) * 60) / wpm)
-    })
-    
-    const timeForAmateur = computed(() => {
-        let wpm = 70
-        return Math.ceil(((textLength.value / 5) * 60) / wpm)
-    })
-    
-    const timeForExpert = computed(() => {
-        let wpm = 90
-        return Math.ceil(((textLength.value / 5) * 60) / wpm)
-    })
+    const mainstore = mainStore()
+    const {currentTest} = storeToRefs(mainstore)
+
+    const timer = (level) => {
+        const {test} = currentTest.value
+
+        let wpm = {
+            'beginner': 50,
+            'amateur': 70,
+            'expert': 90
+        }
+
+        return Math.ceil(((test.length / 5) * 60) / wpm[level])
+    }
 
     const clearCounter = () => {
         clearInterval(intervalID.value)
@@ -38,10 +38,6 @@ export const countdownStore = defineStore('countdown', () => {
     }
 
     return {
-        textLength,
-        timeForAmateur,
-        timeForBeginner,
-        timeForExpert,
         countDownElement,
         isNextCountDown,
         timerID,
@@ -49,6 +45,7 @@ export const countdownStore = defineStore('countdown', () => {
         start,
         countdown,
         level,
-        clearCounter
+        clearCounter,
+        timer,
     }
 })

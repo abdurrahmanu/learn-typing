@@ -1,5 +1,4 @@
 import { mainStore } from "../store/mainStore"
-import { countdownStore } from "../store/countdownStore"
 import { customizeStore } from '../store/customizeStore'
 import { getAlphabets } from './getAlphabets'
 import { storeToRefs } from "pinia"
@@ -13,10 +12,7 @@ export const generateTest = async () => {
     const test = computed(() => {
         return currentTest.value.test
     })
-    
-    const count = countdownStore()
-    const {textLength} = storeToRefs(count)
-    
+
     const customize = customizeStore()
     const {repeat, customizers} = storeToRefs(customize)
 
@@ -62,7 +58,6 @@ export const generateTest = async () => {
     }
 
     storedTest.value = currentTest.value
-    textLength.value = currentTest.value.length
 }
 
 

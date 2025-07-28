@@ -1,18 +1,13 @@
 <template>
     <div v-if="!testCompleted" class="mx-auto max-w-[1500px] py-10"> 
-        <CompletionRange v-if="isBlindMode" />
-        <CompletionRangeWithErrors v-else />
+        <Range />
         <Customize />
         <TestContainer />
     </div>
 </template>
-
 <script setup>
 import TestContainer from '../components/TestContainer.vue'
 import Customize from '../components/Customize.vue'
-import CompletionRange from '../components/CompletionRange.vue';
-import CompletionRangeWithErrors from '../components/CompletionRangeWithErrors.vue';
-
 import useWatchers from '../composables/useWatchers';
 import useEventListener from '../composables/useEventLIstener';
 
@@ -28,6 +23,7 @@ import preventKeyBoardScroll from '../composables/preventKeyBoardScroll'
 import inputEvent from '../composables/inputEvent'
 import evaluateInput from '../composables/evaluateInput';
 import { useRoute } from 'vue-router';
+import Range from '../components/Range.vue';
 
 const customize = customizeStore()
 const {font, settingsToUpdate, toggleCapsToast, pauseTyping, toggleCustomTestModal, isBlindMode} = storeToRefs(customize)

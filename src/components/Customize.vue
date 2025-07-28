@@ -23,11 +23,16 @@
                 </div>
             </div>
         </div>
+        
+        <div class="relative ring-[1px] rounded-lg cursor-pointer ring-zinc-700 hover:ring-blue-800 flex py-[2px] px-1">
+          <div id="focus" class="relative w-fit">
+              <Clock class="peer" />
+          </div>
+        </div>
+
         <div class="relative ring-[1px] rounded-lg cursor-pointer ring-zinc-700 hover:ring-blue-800 flex py-[2px] px-1">
           <div class="flex gap-3 px-2 items-center">
-                <div id="focus" class="relative w-fit">
-                    <Clock class="peer" />
-                </div>
+
                 <div 
                 id="focus" 
                 v-if="!isMobile()" 

@@ -7,7 +7,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { watch } from 'vue';
 import { storeToRefs } from 'pinia';
 import {countdownStore} from '../store/countdownStore'
 import {themeStore}  from '../store/themeStore'
@@ -21,11 +21,10 @@ const {clearCounter} = count
 
 const props = defineProps({
     start: Boolean,
-    length: Number,
 })
 
-onMounted(() => {
-    if (props.start) {
+watch(() => props.start, newVal => {
+    if (newVal) {
         intervalID.value = setInterval(() => {
             isNextCountDown.value = false
             timerID.value = setTimeout(() => isNextCountDown.value = true , 0);

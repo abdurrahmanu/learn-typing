@@ -82,6 +82,6 @@ const routeToPage = (route) => {
 
 <style scoped>
 .header {
-    @apply sticky mx-auto flex items-center justify-between pl-3 pt-5 pb-2 pr-2 max-w-[1000px] min-w-[360px] transition-all duration-300 top-0 border-b
+    @apply sticky mx-auto flex items-center justify-between pl-3 pt-5 pb-2 pr-2 max-w-[1000px] min-w-[360px] transition-all duration-300 top-0
 }
 </style>

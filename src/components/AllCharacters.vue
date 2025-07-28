@@ -62,6 +62,6 @@ function focusInput() {
 
 <style scoped>
 .container-style {
-    @apply overflow-hidden scroll-smooth leading-[1.4] outline-none max-w-[95%] mx-auto
+    @apply overflow-hidden scroll-smooth leading-[1.4] outline-none
 }
 </style>

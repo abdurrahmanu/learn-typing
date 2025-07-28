@@ -6,16 +6,12 @@
 </template>
 
 <script setup>
-import {ref, computed, watch} from 'vue'
+import {computed, watch} from 'vue'
 import { storeToRefs } from 'pinia';
 import { countdownStore } from '../../store/countdownStore'
 import { customizeStore } from '../../store/customizeStore'
-import { themeStore } from '../../store/themeStore';
 import {nextStore} from '../../store/nextStore'
 import { typingStateStore } from '../../store/typingStateStore';
-
-const theme_ = themeStore()
-const {theme} = theme_
 
 const nextstore = nextStore()
 const {goNext} = storeToRefs(nextstore)
