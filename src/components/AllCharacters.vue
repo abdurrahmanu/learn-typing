@@ -52,7 +52,7 @@ const computedStyle = computed(() => {
 })
 
 const wordBreak = computed(() => {
-    return (customizers.value['no-space'] || customizers.value['test-type'] === 'custom' || customizers.value['modes'] === 'alphabet-test') && 'break-words'
+    return (customizers.value['no-space'] || customizers.value['test-type'] === 'custom' || customizers.value['test-type'] === 'characters') && 'break-words'
 })
 
 function focusInput() {

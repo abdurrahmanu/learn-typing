@@ -1,5 +1,5 @@
 <template>
-    <div class="px-10 space-y-6 py-3 pb-20 border-x border-x-black max-w-[1000px] mx-auto">
+    <div class="px-5 space-y-6 py-3 pb-20 border-x border-x-black max-w-[1000px] mx-auto">
         <SearchBar />
         <div class="space-y-4" v-for="(mode, index) in modes" :key="index">
             <Mode 

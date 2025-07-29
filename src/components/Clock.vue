@@ -8,14 +8,17 @@
                 </div>
 
                 <div 
+                class="w-[30px] text-center"
                 :class="[isCountdown && level === 'beginner' ? 'text-blue-500' : '' ]" 
                 @click="changeLevel('beginner')">{{timer('beginner')}}s</div>
 
                 <div 
+                class="w-[30px] text-center"
                 :class="[isCountdown && level === 'amateur' ? 'text-blue-500' : '' ]" 
                 @click="changeLevel('amateur')">{{timer('amateur')}}s</div>
 
                 <div 
+                class="w-[30px] text-center"
                 :class="[isCountdown && level === 'expert' ? 'text-blue-500' : '' ]" 
                 @click="changeLevel('expert')">{{ timer('expert') }}s</div>
             </div>

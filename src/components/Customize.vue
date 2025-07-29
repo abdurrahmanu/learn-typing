@@ -1,22 +1,33 @@
 <template>
   <div 
-  v-if="hideElements && !(focus && isMobile()) && isMobile()" 
+  v-if="!(focus && isMobile()) && isMobile()" 
   @click="hideElements = !hideElements" 
   :class="!hideElements ? '' : ''" 
-  class="mobile-quick-settings">quick settings</div> 
-  <div v-if="!hideElements">
+  class="mobile-quick-settings">{{ hideElements ? 'Quick settings' : 'close settings' }}</div> 
+
+  <div v-if="(!isMobile() && !hideElements) || (isMobile() && !hideElements)" :class="[(isMobile() && !hideElements) && 'mobile-quick-settings-modal']">
     <Transition name="customizer-transition">
-      <div v-if="!testCompleted" :class="[isMobile() && focus ? 'hidden' : 'block', appTheme]" class="m-auto items-center p-1 flex font-[500] pb-7 config text-[13px] max-w-[900px] gap-2 justify-center flex-wrap relative z-[1]">
-        <div class="flex items-center gap-3 p-[1px] parent" v-for="(optionArr, key, listIndex) in quickSettingsGroups" :key="listIndex">          
+      <div 
+      v-if="!testCompleted" 
+      :class="[toggleQuickSettings, appTheme]" 
+      class="container config"
+      >
+        <div 
+        class="parent" 
+        v-for="(optionArr, key, listIndex) in quickSettingsGroups" 
+        :key="listIndex"
+        >          
             <div 
-            class="relative ring-zinc-700 hover:ring-blue-800 flex py-[2px] px-1 ring-[1px] rounded-lg cursor-pointer flex-wrap justify-center items-center"
+            :class="[!disableOption[key] && 'hover:ring-blue-800']"
+            class="single-group"
             @mouseenter="mouseEnter(listIndex)"
-            @mouseleave="mouseLeave(listIndex)" >
+            @mouseleave="mouseLeave(listIndex)" 
+            >
                 <div 
                 id="focus"
-                class="px-[5px] rounded-md whitespace-nowrap hover-state" 
-                :class="[disableOption[key] ? 'hide' : '', customizers[key] === option && !disableOption[key]  ? 'text-blue-500' : '', option === 'custom']"
-                @click="checkSelection(option, key)" 
+                class="single-setting hover-state" 
+                :class="[disableOption[key] && 'opacity-30', customizers[key] === option && 'text-blue-500']"
+                @click="!disableOption[key] && checkSelection(option, key)" 
                 v-for="(option, index) in optionArr" 
                 :key="index">
                     {{ option }}
@@ -32,7 +43,6 @@
 
         <div class="relative ring-[1px] rounded-lg cursor-pointer ring-zinc-700 hover:ring-blue-800 flex py-[2px] px-1">
           <div class="flex gap-3 px-2 items-center">
-
                 <div 
                 id="focus" 
                 v-if="!isMobile()" 
@@ -48,9 +58,7 @@
                 class="relative w-fit" >
                     <repeatSVG class="w-4 peer"/>
                 </div>
-                <div 
-                v-if="customizers['modes'] !== 'alphabet-test'"
-                class="relative w-fit" >
+                <div class="relative w-fit" >
                     <add 
                     @click="openCustomTestModal" 
                     class="w-4 peer"/>
@@ -64,14 +72,13 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { isMobile } from '../composables/isMobile.js';
 import {customizeStore} from '../store/customizeStore.js'
 import { typingStateStore } from '../store/typingStateStore.js';
-import { mainStore } from '../store/mainStore.js';
 import { themeStore } from '../store/themeStore';
 import {storeToRefs} from 'pinia'
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 import Clock from './Clock.vue';
 import TextAlign from './TextAlign.vue';
 import Blind from './Blind.vue';
@@ -79,7 +86,6 @@ import add from './svg/add.vue';
 import repeatSVG from './svg/repeat.vue';
 
 const route = useRoute()
-const router = useRouter()
 
 const typingstatestore = typingStateStore()
 const {focus, testCompleted} = storeToRefs(typingstatestore)
@@ -101,18 +107,24 @@ const mouseEnter = (index) => hoverIndex.value = index
 const mouseLeave = (index) => hoverIndex.value = null
 
 const checkSelection = (key, option) => {
-  if ((option === 'test-type' && key !== customizers.value['test-type']) || (option === 'modes' && key !== customizers.value['modes'])) repeat.value = false
-
+  const currentSelections = [customizers.value['words-type'], customizers.value['test-type'], customizers.value['test-length'], customizers.value['test-type'] ]
+  const nextOptions = ['test-type', 'test-length', 'words-type', 'punctuations', 'numbers']
   configs.value = [option, key]
-  let selection = +configs.value[1] || configs.value[1]
-  let currentWordType = customizers.value['words-type']
-  let currentTestType = customizers.value['test-type']
-  let currentTextLength = customizers.value['test-length']
-  let currentMode = customizers.value['modes']
 
-  if (selection === currentWordType || selection === currentTestType || selection === currentTextLength || selection === currentMode) return
+  // if (!nextOptions.includes(option)) repeat.value = true
+  // else repeat.value = false
+
+  let selection = +configs.value[1] || configs.value[1]
+  if (currentSelections.includes(selection)) return
   checkQuickSettings()
 }
+
+const toggleQuickSettings = computed(() => isMobile() && focus.value ? 'hidden' : 'block')
+
+watch(hideElements, newVal => {
+  if (newVal) pauseTyping.value = true
+  else pauseTyping.value = false
+})
 </script>
 
 <style scoped>
@@ -126,7 +138,27 @@ const checkSelection = (key, option) => {
     transform: translateY(50%);
   }
 
+  .parent {
+    @apply flex items-center gap-3 p-[1px]
+  }
+
   .mobile-quick-settings {
     @apply p-1 px-2 cursor-pointer rounded-md m-auto text-[12px] uppercase border border-slate-500 whitespace-nowrap w-fit hover:border-green-400 relative z-[1]
+  }
+
+  .container {
+    @apply m-auto items-center p-1 flex font-[500] pb-7 text-[13px] max-w-[900px] gap-2 justify-center flex-wrap relative z-[1]
+  }
+
+  .single-group {
+    @apply relative ring-zinc-700 flex py-[2px] px-1 ring-[1px] rounded-lg cursor-pointer flex-wrap justify-center items-center
+  }
+
+  .single-setting {
+    @apply px-[5px] rounded-md whitespace-nowrap
+  }
+
+  .mobile-quick-settings-modal {
+    @apply fixed top-[40%] left-[50%] translate-x-[-50%] bg-black translate-y-[-50%] rounded-md py-5 z-[3] shadow-md shadow-black w-[80%] px-5
   }
 </style>

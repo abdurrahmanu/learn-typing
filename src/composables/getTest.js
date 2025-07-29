@@ -11,10 +11,12 @@ export async function getTest () {
         author: null,
         name: null
     }
+
     const customizestore = customizeStore()
-    const {customizers, customChoice} = storeToRefs(customizestore)
+    const {customizers, customChoice, repeat, mixCharacters, charsArray} = storeToRefs(customizestore)
+
     const mainstore = mainStore()
-    const {customTests} = storeToRefs(mainstore)
+    const {customTests, storedTest} = storeToRefs(mainstore)
     const {mostUsed, mediumUsed, rarelyUsed, quotesWithNumbers, numbers, quotesWithoutAuthors, movieQuotes} = englishWords()
     const includeNumbers = customizers.value['numbers']
     const testType = customizers.value['test-type']
@@ -30,8 +32,37 @@ export async function getTest () {
             }
         })
     }).flat()
+
+    if (repeat.value) {
+        test = {
+            author: storedTest.value.author,
+            test: storedTest.value.test,
+            name: storedTest.value.name
+        }
+    }
+
+    else if (testType === 'characters') {
+        const alphabets = 'abcdefghijklmnopqrstuvwxyz'
+        const mixedChars = ''
+
+        if (mixCharacters.value && charsArray.value) {
+            let length = charsArray.value.length > 8 ? 78 : charsArray.value.length > 6 ? 66 : 60
+
+            for (let index = 1; index < length; index++) {
+                let random = Math.floor(Math.random()  * charsArray.value.length)
+                if (index % 6 === 0) mixedChars += ' '
+                else mixedChars += charsArray.value[random]
+            }
+        } 
+
+        test = {
+            author: storedTest.value.author,
+            test: mixedChars || alphabets,
+            name: storedTest.value.name
+        }
+    }
         
-    if (testType === 'quotes') {
+    else if (testType === 'quotes') {
         let allQuotes = [
             ...allMovies,
             ...authoredQuotes,
@@ -87,7 +118,10 @@ export async function getTest () {
         camelCase : customizers.value['camel-case'],
         noSpace : customizers.value['no-space'],
         testType : customizers.value['test-type'],
-        test: test['test']
+        test: test['test'],
+        jumble: customizers.value['arrangement'] === 'jumble',
+        reverse: customizers.value['arrangement'] === 'reverse',
+        space: customizers.value['spaced']
     }
 
     test['test'] = test['test'].replace(/[\r\n]+/g, ' ').trim();

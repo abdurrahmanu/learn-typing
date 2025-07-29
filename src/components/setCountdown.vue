@@ -31,5 +31,4 @@ const {theme} = theme_
 
 const customize = customizeStore()
 const { customizers} = storeToRefs(customize)
-const {changeSettings} = customize
 </script>

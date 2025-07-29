@@ -1,6 +1,6 @@
 <template>
-    <div class="max-w-[300px] w-[50%]">
-        <input v-model="searchValue" @input="debounce" type="text" placeholder="SEARCH" class="outline-none text-xs appearance-none px-3 py-1 bg-transparent border-b border-b-white w-full">
+    <div class="w-[80%] rounded-md ring-[1px] ring-black">
+        <input v-model="searchValue" @input="debounce" type="text" placeholder="SEARCH" class="outline-none appearance-none px-3 py-1 bg-transparent w-full">
     </div>
 </template>
 

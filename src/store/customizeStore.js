@@ -54,7 +54,6 @@ export const customizeStore = defineStore('customizeStore', () => {
         'camel-case': false,
         'no-space': false,
         'blur': false,
-        'modes': 'word-test',
         'spaced': false,
         'case': '',
         'arrangement': '',
@@ -70,26 +69,19 @@ export const customizeStore = defineStore('customizeStore', () => {
         'caps': false, 
         'punctuation': false,
         'numbers': false,
-        'case': customizers.value['modes'] === 'word-test' ? true : false,
-        'arrangement': customizers.value['modes'] === 'word-test' ? true : false,
-        'spaced': customizers.value['modes'] === 'word-test' ? true : false,
+        'case': customizers.value['test-type'] === 'characters' ? true : false,
+        'arrangement': customizers.value['test-type'] === 'characters' ? true : false,
+        'spaced': customizers.value['test-type'] === 'characters' ? true : false,
     })
 
     const quickSettingsGroups = computed(() => {
         return {
-        // For word-test
-        'test-length' : isMobile() || customizers.value['test-type'] === 'quotes' ? ['auto', 10, 20, 30 ] : customizers.value['test-type'] === 'custom' ? ['auto'] : ['auto', 10, 20, 30, 50, 100],
+        'test-length' : isMobile() ? ['auto', 10, 20, 30 ] : ['auto', 10, 20, 30, 50, 100],
+        'test-type' : ['quotes', 'words', 'custom', 'characters'],
         'words-type' : ['frequent', 'common', 'rare'],
-        'test-type' : ['quotes', 'words', 'custom'],
         'caps' : ['caps'],
         'punctuation' : ['punctuations'],
         'numbers' : ['numbers'],
-        // 'all-caps' : ['all caps'],
-        // 'no-space' : ['no space'],
-        // 'camel-case' : ['custom case'],
-        'modes': ['word-test', 'alphabet-test'],
-        // For alphabet-test
-        'case': ['randomcase', 'uppercase'],
         'arrangement': ['reverse', 'jumble'],
         'spaced': ['space'],
         }
@@ -99,52 +91,13 @@ export const customizeStore = defineStore('customizeStore', () => {
         if (customizers.value[group] === selection) customizers.value[group] = ''
         else customizers.value[group] = selection
 
-        if (customizers.value['test-type'] === 'quotes' || customizers.value['test-type'] === 'custom') {
-            disableOption.value['words-type'] = true
-            disableOption.value['numbers'] = true
-
-            if (customizers.value['test-type'] === 'custom') disableOption.value['test-length'] = true
-            else disableOption.value['test-length'] = false 
-        }
-        
-        else if (customizers.value['test-type'] === 'words') {
-            disableOption.value['words-type'] = false
-            disableOption.value['numbers'] = false
-            disableOption.value['test-length'] = false
-        }
-
-        if (customizers.value['modes'] === 'word-test') {
-            disableOption.value['spaced'] = true
-            disableOption.value['case'] = true
-            disableOption.value['arrangement'] = true
-            disableOption.value['numbers'] = false
-            disableOption.value['caps'] = false
-            disableOption.value['punctuation'] = false
-            disableOption.value['test-length'] = false
-            disableOption.value['words-type'] = false
-            disableOption.value['test-type'] = false
-        }
-        
-        else if (customizers.value['modes'] === 'alphabet-test') {
-            disableOption.value['spaced'] = false
-            disableOption.value['case'] = false
-            disableOption.value['arrangement'] = false
-            disableOption.value['numbers'] = true
-            disableOption.value['caps'] = true
-            disableOption.value['punctuation'] = true
-            disableOption.value['test-length'] = true
-            disableOption.value['words-type'] = true
-            disableOption.value['test-type'] = true
-        }
-
-        if (customizers.value['test-type'] === 'quotes' || customizers.value['test-type'] === 'custom') {
+        if (customizers.value['test-type'] !=='words') {
             disableOption.value['words-type'] = true
         } else {
             disableOption.value['words-type'] = false
         }
 
         let config = [customizers.value, disableOption.value]
-
         goNext.value = true
 
         settingsToUpdate.value.push({
@@ -178,27 +131,6 @@ export const customizeStore = defineStore('customizeStore', () => {
         }
 
         changeQuickSettings(group, selection)   
-    }
-
-    const settingsPage = () => {
-        showSettings.value = !showSettings.value
-        if (showSettings.value) pauseTyping.value = true
-        else pauseTyping.value = false
-    }
-
-    const changeSettings = (mode, boolean) => {
-        let booleanSwap = ['all-caps', 'camel-case', 'double-words', 'capslock', 'countdown', 'blur', 'stop-on-error', 'no-space']
-
-        if (boolean && booleanSwap.includes(mode)) customizers.value[mode] = false
-        if (!boolean && booleanSwap.includes(mode)) customizers.value[mode] = true
-
-        let config = [customizers.value, disableOption.value]
-        goNext.value = true
-
-        settingsToUpdate.value.push({
-            name: Object.keys({config})[0],
-            value: config
-        })
     }
 
     const updateSingleSetting = (setting, newVal) => {
@@ -268,8 +200,6 @@ export const customizeStore = defineStore('customizeStore', () => {
         backspace,
         blind,
         checkQuickSettings, 
-        changeSettings,
-        settingsPage,
         updateSingleSetting,
         font, 
         range,

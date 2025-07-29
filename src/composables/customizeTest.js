@@ -5,12 +5,16 @@ export function customizeTest({
     camelCase,
     noSpace ,
     testType,
-    test
+    test,
+    jumble,
+    reverse,
+    space,
 }) {
-    
+    console.log(test)
     if (!caps && !camelCase && !allCaps) {
         test = test.toLowerCase()
     } 
+
     else {
         if (camelCase) {
             test = test.split('').map(char => {
@@ -85,6 +89,28 @@ export function customizeTest({
 
     if (noSpace) {
         test = test.replace(/ /g, '')
+    }
+
+    if (jumble) {
+        // isnt working well yet
+        let text = test.split('')
+        test = ''
+        for (let index = 0; index < text.length; index++) {
+            let random = Math.floor(Math.random() * text.length)
+            test += text[random]
+            text.splice(random, 1)
+        }
+
+        test = test.trim()
+    }
+
+    if (space) {
+        test = test.split('').join(' ').trim()
+    }
+
+    if (reverse) {
+        console.log(test)
+        test = test.split('').reverse().join('')
     }
 
     return test
