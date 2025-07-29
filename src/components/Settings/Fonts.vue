@@ -26,7 +26,7 @@ const count = countdownStore()
 const {clearCounter} = count
 
 const fontSize = computed(() => {
-    return range.value <= 1 ? 16 : (16 + (range.value * 0.26)).toFixed(2)
+    return range.value <= 1 ? 60 : (60 + (range.value * 0.26)).toFixed(2)
 })
 
 watch(fontSize, (newVal) => {

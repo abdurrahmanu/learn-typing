@@ -61,6 +61,10 @@ function focusInput() {
         inputEl.value.focus()
     }
 }
+
+const width = {
+    //................. user selects width
+}
 </script>
 
 <style scoped>

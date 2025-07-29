@@ -20,7 +20,7 @@ export const customizeStore = defineStore('customizeStore', () => {
     const repeat = ref(false)
     const textPosition = ref('left')
     const blind = ref(false)
-    const font = ref(32)
+    const font = ref(70)
     const range = ref((font.value - 16) / 0.26)
     const toggleCapsToast = ref(false)
     const customTestLength = ref(200)
