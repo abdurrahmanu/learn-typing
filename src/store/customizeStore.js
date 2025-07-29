@@ -63,15 +63,7 @@ export const customizeStore = defineStore('customizeStore', () => {
     })
 
     const disableOption = ref({
-        'test-length' : false,
         'words-type': false, 
-        'test-type': false,
-        'caps': false, 
-        'punctuation': false,
-        'numbers': false,
-        'case': customizers.value['test-type'] === 'characters' ? true : false,
-        'arrangement': customizers.value['test-type'] === 'characters' ? true : false,
-        'spaced': customizers.value['test-type'] === 'characters' ? true : false,
     })
 
     const quickSettingsGroups = computed(() => {
@@ -97,7 +89,7 @@ export const customizeStore = defineStore('customizeStore', () => {
             disableOption.value['words-type'] = false
         }
 
-        let config = [customizers.value, disableOption.value]
+        let config = customizers.value
         goNext.value = true
 
         settingsToUpdate.value.push({

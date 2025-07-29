@@ -1,22 +1,23 @@
 <template>
   <div 
-  v-if="!(focus && isMobile()) && isMobile()" 
+  :id="hideElements && 'focus'"
+  v-if="!(focus && isMobile()) && isMobile()"
   @click="hideElements = !hideElements" 
-  :class="!hideElements ? '' : ''" 
-  class="mobile-quick-settings">{{ hideElements ? 'Quick settings' : 'close settings' }}</div> 
+  :class="[!hideElements ? 'hover:ring-red-400' : 'hover:ring-blue-500']" 
+  class="mobile-quick-settings">{{ hideElements ? 'quick settings' : 'close settings' }}</div> 
 
-  <div v-if="(!isMobile() && !hideElements) || (isMobile() && !hideElements)" :class="[(isMobile() && !hideElements) && 'mobile-quick-settings-modal']">
-    <Transition name="customizer-transition">
+  <div v-if="(!isMobile() && !hideElements) || (isMobile() && !hideElements)" :class="[(isMobile() && !hideElements) && 'mobile-quick-settings-modal relative']">
+
       <div 
       v-if="!testCompleted" 
-      :class="[toggleQuickSettings, appTheme]" 
+      :class="[toggleQuickSettings, appTheme, isMobile() && 'z-[10] top-[20%] w-[10%] absolute mx-auto ring-[1px] ring-black p-5']" 
       class="container config"
       >
         <div 
         class="parent" 
         v-for="(optionArr, key, listIndex) in quickSettingsGroups" 
         :key="listIndex"
-        >          
+        >         
             <div 
             :class="[!disableOption[key] && 'hover:ring-blue-800']"
             class="single-group"
@@ -24,7 +25,7 @@
             @mouseleave="mouseLeave(listIndex)" 
             >
                 <div 
-                id="focus"
+                :id="!isMobile() && 'focus'"
                 class="single-setting hover-state" 
                 :class="[disableOption[key] && 'opacity-30', customizers[key] === option && 'text-blue-500']"
                 @click="!disableOption[key] && checkSelection(option, key)" 
@@ -36,7 +37,7 @@
         </div>
         
         <div class="relative ring-[1px] rounded-lg cursor-pointer ring-zinc-700 hover:ring-blue-800 flex py-[2px] px-1">
-          <div id="focus" class="relative w-fit">
+          <div :id="!isMobile() && 'focus'" class="relative w-fit">
               <Clock class="peer" />
           </div>
         </div>
@@ -44,7 +45,7 @@
         <div class="relative ring-[1px] rounded-lg cursor-pointer ring-zinc-700 hover:ring-blue-800 flex py-[2px] px-1">
           <div class="flex gap-3 px-2 items-center">
                 <div 
-                id="focus" 
+                :id="!isMobile() && 'focus'" 
                 v-if="!isMobile()" 
                 class="relative hidden w-fit min-[505px]:block">
                     <TextAlign class="peer"/>
@@ -53,7 +54,7 @@
                     <Blind class="peer"/>
                 </div>
                 <div 
-                id="focus" 
+                :id="!isMobile() && 'focus'" 
                 v-if="route.name === 'home'" 
                 class="relative w-fit" >
                     <repeatSVG class="w-4 peer"/>
@@ -64,10 +65,8 @@
                     class="w-4 peer"/>
                 </div>
           </div>
-
         </div>
     </div>
-  </Transition>
   </div>  
 </template>
 
@@ -133,21 +132,16 @@ watch(hideElements, newVal => {
     visibility: hidden;
   }
 
-  .customizer-transition-enter-from {
-    opacity: 0;
-    transform: translateY(50%);
-  }
-
   .parent {
     @apply flex items-center gap-3 p-[1px]
   }
 
   .mobile-quick-settings {
-    @apply p-1 px-2 cursor-pointer rounded-md m-auto text-[12px] uppercase border border-slate-500 whitespace-nowrap w-fit hover:border-green-400 relative z-[1]
+    @apply p-1 px-2 cursor-pointer rounded-md m-auto text-[12px] uppercase ring-[1px] ring-slate-500 whitespace-nowrap w-fit relative z-[10]
   }
 
   .container {
-    @apply m-auto items-center p-1 flex font-[500] pb-7 text-[13px] max-w-[900px] gap-2 justify-center flex-wrap relative z-[1]
+    @apply m-auto items-center flex text-[13px] max-w-[900px] w-fit gap-2 justify-center flex-wrap relative z-[1]
   }
 
   .single-group {
@@ -159,6 +153,6 @@ watch(hideElements, newVal => {
   }
 
   .mobile-quick-settings-modal {
-    @apply fixed top-[40%] left-[50%] translate-x-[-50%] bg-black translate-y-[-50%] rounded-md py-5 z-[3] shadow-md shadow-black w-[80%] px-5
+    @apply absolute top-0 left-0 right-0 bottom-0 ring-[1px] ring-black z-[3] w-[100%] mx-auto px-10 bg-[hsla(0,0%,6%,0.8)]
   }
 </style>

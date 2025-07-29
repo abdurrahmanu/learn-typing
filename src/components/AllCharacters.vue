@@ -3,6 +3,7 @@
         <div id="focus" class="relative">
             <focusButton class="fill-parent center-text-xy z-[2] backdrop-blur-[6px] font-bold"/>
             <div
+            id="focus"
             @click="focusInput"
             aria-describedby="full-text" 
             ref="testContainerEl" 
@@ -56,7 +57,9 @@ const wordBreak = computed(() => {
 })
 
 function focusInput() {
-    if (isTouchScreenDevice() && !focus.value) inputEl.value.focus()
+    if (isTouchScreenDevice()) {
+        inputEl.value.focus()
+    }
 }
 </script>
 

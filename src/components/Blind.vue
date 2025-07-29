@@ -1,8 +1,8 @@
 <template>
     <div @click="customize" class="relative">
         <div class="flex w-fit peer">
-            <closedEye v-if="blind" id="focus" class="w-5" />
-            <openEye v-else id='focus' class="w-5" />
+            <closedEye v-if="blind" :id="!isMobile() && 'focus'" class="w-5" />
+            <openEye v-else :id="!isMobile() && 'focus'" class="w-5" />
         </div>
     </div>
 </template>
@@ -11,6 +11,7 @@
 import closedEye from './svg/closedEye.vue';
 import openEye from './svg/openEye.vue';
 import { customizeStore } from '../store/customizeStore';
+import { isMobile } from '../composables/isMobile';
 import { storeToRefs } from 'pinia';
 
 const customizestore = customizeStore()

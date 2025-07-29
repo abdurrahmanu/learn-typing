@@ -78,6 +78,10 @@ onUnmounted(() => {
   @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
 }
 
+.center-xt {
+  @apply absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2
+}
+
 .center-x {
   @apply absolute left-1/2 -translate-x-1/2
 }

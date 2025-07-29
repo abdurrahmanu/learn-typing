@@ -10,7 +10,6 @@ export function customizeTest({
     reverse,
     space,
 }) {
-    console.log(test)
     if (!caps && !camelCase && !allCaps) {
         test = test.toLowerCase()
     } 
@@ -109,7 +108,6 @@ export function customizeTest({
     }
 
     if (reverse) {
-        console.log(test)
         test = test.split('').reverse().join('')
     }
 

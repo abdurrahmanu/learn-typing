@@ -1,5 +1,5 @@
 <template>
-    <div aria-hidden="true" ref="currentCharacterElement"  class="relative inline">
+    <div id="focus" aria-hidden="true" ref="currentCharacterElement"  class="relative inline">
         <div v-if="currentIndex" class="inline-block h-[calc(100%_-_5px)] absolute left-0 bottom-0 right-0" :class="[cursorStyle, currentIndex && !backspaceIsPressed ? 'smooth-cursor-forward' : 'smooth-cursor-backward']"></div>
         <div :class="[!customizers['no-space'] && 'whitespace-pre-wrap']" class="relative inline">
             <span  

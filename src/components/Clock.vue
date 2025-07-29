@@ -1,10 +1,10 @@
 <template>
     <div class="relative">
         <div>
-            <div class="flex items-center gap-2 px-1" id="focus">  
+            <div class="flex items-center gap-2 px-1" :id="!isMobile() && 'focus'">  
                 <div class="w-5">
-                    <pauseTimer id="focus" v-if="!isCountdown" @click="toggleTimer" />
-                    <playTimer id="focus" v-else @click="toggleTimer" />
+                    <pauseTimer :id="!isMobile() && 'focus'" v-if="!isCountdown" @click="toggleTimer" />
+                    <playTimer :id="!isMobile() && 'focus'" v-else @click="toggleTimer" />
                 </div>
 
                 <div 
@@ -28,6 +28,7 @@
 
 <script setup>
 import {watch, onMounted, computed, onUpdated, ref} from 'vue'
+import { isMobile } from '../composables/isMobile'
 import pauseTimer from '../components/svg/pauseTimer.vue'
 import playTimer from '../components/svg/playTimer.vue'
 import {storeToRefs} from 'pinia'
