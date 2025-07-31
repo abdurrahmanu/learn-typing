@@ -24,7 +24,7 @@ export const userData = () => {
         theme: window.matchMedia("(prefers-color-scheme: dark)").matches ?  'dark' : 'white',
         backspace: true,
         blind: false,
-        fontsize: 32,
+        fontsize: 50,
         textLines: 3,
         userInfo: userInfo.value,
         bestStats: bestStats.value,

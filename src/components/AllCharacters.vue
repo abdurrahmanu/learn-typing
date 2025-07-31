@@ -7,7 +7,7 @@
             @click="focusInput"
             aria-describedby="full-text" 
             ref="testContainerEl" 
-            class="container-style"
+            class="container-style h-fit"
             :style="computedStyle" 
             :class="[ wordBreak, 
             (textPosition === 'center') && 'text-center',
@@ -33,22 +33,24 @@ import focusButton from './focusButton.vue';
 import { computed } from 'vue';
 
 const typingstatestore = typingStateStore()
-const { focus, inputEl} = storeToRefs(typingstatestore)
+const { inputEl} = storeToRefs(typingstatestore)
 
 const store = mainStore()
-const { currentTest, testContainerEl, containerHeight} = storeToRefs(store)
+const { currentTest, font, testContainerEl, containerHeight, lineHeight} = storeToRefs(store)
 
 const test = computed(() => {
     return currentTest.value.test
 })
 
 const customize = customizeStore()
-const { customizers, font, textPosition} = storeToRefs(customize)
+const { customizers, textPosition} = storeToRefs(customize)
 
 const computedStyle = computed(() => {
     return {
         'height' : containerHeight.value + 'px', 
-        'font-size': font.value + 'px'
+        'font-size': font.value + 'px',
+        'line-height': lineHeight.value,
+        'max-height': containerHeight.value + 'px'
     }
 })
 
@@ -69,6 +71,6 @@ const width = {
 
 <style scoped>
 .container-style {
-    @apply overflow-hidden scroll-smooth leading-[1.4] outline-none
+    @apply scroll-smooth ring-[1px] px-2 overflow-y-scroll
 }
 </style>

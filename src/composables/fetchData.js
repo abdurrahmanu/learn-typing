@@ -7,7 +7,7 @@ import {userDataStore}  from '../store/userDataStore'
 
 export const fetchData = (data) => {
     const store = mainStore()
-    const { customTests} = storeToRefs(store)
+    const { customTests, font, range, textLines} = storeToRefs(store)
 
     const userstore = userDataStore()
     const {userInfo, bestStats, userHistory} = storeToRefs(userstore)
@@ -19,7 +19,7 @@ export const fetchData = (data) => {
     const {loadingApp} = storeToRefs(connect)
 
     const customize = customizeStore()
-    const { customizers, disableOption, textLines, cursorType, difficulty, font, range, blind, backspace } = storeToRefs(customize)
+    const { customizers, disableOption, cursorType, difficulty, blind, backspace } = storeToRefs(customize)
 
     loadingApp.value = false
     

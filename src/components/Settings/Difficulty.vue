@@ -25,7 +25,7 @@ import {customizeStore} from '../../store/customizeStore'
 import { themeStore } from '../../store/themeStore';
 
 const theme_ = themeStore()
-const {theme, appTheme} = theme_
+const {appTheme} = theme_
 
 const customizestore = customizeStore()
 const { difficulty, settingsToUpdate } = storeToRefs(customizestore)

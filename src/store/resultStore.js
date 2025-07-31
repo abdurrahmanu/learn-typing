@@ -2,15 +2,15 @@ import {defineStore, storeToRefs} from 'pinia'
 import {computed} from 'vue'
 import {mainStore} from '../store/mainStore'
 import { customizeStore } from '../store/customizeStore'
-import {charCountStore} from '../store/charCountStore'
+import {characterStore} from '../store/characterStore'
 import {timerStore} from '../store/timerStore'
 
 export const resultStore = defineStore('resultStore', () => {
     const timerstore = timerStore()
     const {totalTime, beatCountdown} = storeToRefs(timerstore)
 
-    const charcountstore = charCountStore()
-    const {resultData, incorrectCharCount} = storeToRefs(charcountstore)
+    const characterstore = characterStore()
+    const {resultData, incorrectCharCount} = storeToRefs(characterstore)
 
     const customize = customizeStore()
     const {customizers, difficulty} = storeToRefs(customize)

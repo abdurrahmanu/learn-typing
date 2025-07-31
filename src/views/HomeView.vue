@@ -10,7 +10,6 @@ import TestContainer from '../components/TestContainer.vue'
 import Customize from '../components/Customize.vue'
 import useWatchers from '../composables/useWatchers';
 import useEventListener from '../composables/useEventLIstener';
-
 import { connectStore } from '../store/connectStore';
 import { nextStore } from '../store/nextStore';
 import { mainStore } from '../store/mainStore';
@@ -22,11 +21,10 @@ import preventScroll from '../composables/preventScroll'
 import preventKeyBoardScroll from '../composables/preventKeyBoardScroll'
 import inputEvent from '../composables/inputEvent'
 import evaluateInput from '../composables/evaluateInput';
-import { useRoute } from 'vue-router';
 import Range from '../components/Range.vue';
 
 const customize = customizeStore()
-const {font, settingsToUpdate, toggleCapsToast, pauseTyping, toggleCustomTestModal, isBlindMode} = storeToRefs(customize)
+const {settingsToUpdate, toggleCapsToast, pauseTyping, toggleCustomTestModal} = storeToRefs(customize)
 
 const nextstore = nextStore()
 const {goNext} = storeToRefs(nextstore)
@@ -35,7 +33,7 @@ const typingstatestore = typingStateStore()
 const {refocus, testCompleted, focus, playerInput, beginTest, inputEl} = storeToRefs(typingstatestore)
 
 const mainstore = mainStore()
-const { testContainerEl} = storeToRefs(mainstore)
+const { testContainerEl, font} = storeToRefs(mainstore)
 
 const connect = connectStore()
 const {connectionAvailable } = storeToRefs(connect)

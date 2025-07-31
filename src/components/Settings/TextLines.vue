@@ -28,12 +28,16 @@ import {customizeStore} from '../../store/customizeStore'
 import { themeStore } from '../../store/themeStore';
 import { isMobile } from '../../composables/isMobile';
 import {textBoxHeight} from '../../composables/textBox'
+import { mainStore } from '../../store/mainStore';
+
+const mainstore = mainStore()
+const {textLines} = storeToRefs(mainstore)
 
 const theme_ = themeStore()
 const {theme} = theme_
 
 const customizestore = customizeStore()
-const { textLines, settingsToUpdate } = storeToRefs(customizestore)
+const { settingsToUpdate } = storeToRefs(customizestore)
 
 watch(textLines, (newVal) => {
     let lines = newVal

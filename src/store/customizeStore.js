@@ -20,12 +20,9 @@ export const customizeStore = defineStore('customizeStore', () => {
     const repeat = ref(false)
     const textPosition = ref('left')
     const blind = ref(false)
-    const font = ref(70)
-    const range = ref((font.value - 16) / 0.26)
     const toggleCapsToast = ref(false)
     const customTestLength = ref(200)
     const useCustomLength = ref(false)
-    const textLines = ref(3)
     const shiftKey = ref(false)
     const mixCharacters = ref(false)
     const charsArray = ref([])
@@ -182,7 +179,6 @@ export const customizeStore = defineStore('customizeStore', () => {
         count,
         disableOption,
         difficulty,
-        textLines,
         configs,
         cursorType,
         showSettings,
@@ -193,8 +189,6 @@ export const customizeStore = defineStore('customizeStore', () => {
         blind,
         checkQuickSettings, 
         updateSingleSetting,
-        font, 
-        range,
         repeat,
         textPosition,
         pauseTyping,

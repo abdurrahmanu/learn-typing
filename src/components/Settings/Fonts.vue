@@ -12,6 +12,10 @@ import { countdownStore } from '../../store/countdownStore'
 import { customizeStore } from '../../store/customizeStore'
 import {nextStore} from '../../store/nextStore'
 import { typingStateStore } from '../../store/typingStateStore';
+import { mainStore } from '../../store/mainStore';
+
+const mainstore = mainStore()
+const {font, range} = storeToRefs(mainstore)
 
 const nextstore = nextStore()
 const {goNext} = storeToRefs(nextstore)
@@ -20,7 +24,7 @@ const typingstatestore = typingStateStore()
 const {playerInputLength} = typingstatestore
 
 const customizestore = customizeStore()
-const { customizers, settingsToUpdate, font, range} = storeToRefs(customizestore)
+const { customizers, settingsToUpdate} = storeToRefs(customizestore)
 
 const count = countdownStore()
 const {clearCounter} = count

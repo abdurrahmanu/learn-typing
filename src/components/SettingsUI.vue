@@ -27,26 +27,8 @@ const modes = [
         extra: []
     },
     {
-        name: 'Blind mode',
-        desc: 'Toggle to type while fully trusting your muscle memory.',
-        options: ['on', 'off'],
-        extra: []
-    },
-    {
         name: 'Blur',
         desc: 'Toggle to blur out all words excluding the current and next words. Only works with spaced test.',
-        options: ['on', 'off'],
-        extra: []
-    },
-    {
-        name: 'Caps Lock',
-        desc: 'Toggle to enable Caps lock. Untoggle to use Shift + Key instead of Caps lock.',
-        options: ['on', 'off'],
-        extra: []
-    },
-    {
-        name: 'Countdown',
-        desc: 'If toggled, countdown tests automatically end of the count, untyped characters are considered errors.',
         options: ['on', 'off'],
         extra: []
     },
@@ -75,8 +57,14 @@ const modes = [
         extra: []
     },
     {
-        name: 'Uppercase',
-        desc: 'Toggle to capitalize test.',
+        name: 'show typing container border',
+        desc: '',
+        options: ['on', 'off'],
+        extra: []
+    },
+    {
+        name: 'Test width',
+        desc: 'Maximum width of the test, this is measured in characters. Lowest should be atleast 5 characters',
         options: ['on', 'off'],
         extra: []
     },
@@ -89,7 +77,7 @@ const modes = [
     {
         name: 'Test Lines',
         desc: '',
-        options: [1, 2, 3, 4, 5, Infinity],
+        options: [],
         extra: []
     },
     {

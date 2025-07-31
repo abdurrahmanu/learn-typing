@@ -3,13 +3,12 @@ import {mainStore} from '../store/mainStore'
 import {nextStore} from '../store/nextStore'
 import { countdownStore } from '../store/countdownStore';
 import { customizeStore } from '../store/customizeStore';
-import {charCountStore} from '../store/charCountStore'
+import {characterStore} from '../store/characterStore'
 import {timerStore} from '../store/timerStore'
 import { typingStateStore } from '../store/typingStateStore';
 import { useRouter } from 'vue-router';
 import { isMobile } from './isMobile';
 import { watch } from 'vue';
-import { textBoxHeight } from './textBox';
 import { updateDB } from './updateDB';
 import { userDataStore } from '../store/userDataStore';
 import { resultStore } from '../store/resultStore';
@@ -44,7 +43,7 @@ export default function useWatchers({
     const resultstore = resultStore()
     const {WPM, accuracy} = storeToRefs(resultstore)
     
-    const correctwrongstore = charCountStore()
+    const correctwrongstore = characterStore()
     const {clearResult} = correctwrongstore
     
     const nextstore = nextStore()
@@ -82,10 +81,6 @@ export default function useWatchers({
         watch(input, (newVal, oldVal) => {
             if (!oldVal) wpmTime(testCompleted.value)
         })
-    }
-
-    if (font) {
-        watch(font, (newVal) => textBoxHeight())
     }
     
     if (capsToggle) {
@@ -127,11 +122,6 @@ export default function useWatchers({
             if (customizers.value['timer']) clearCounter()   
             if (newVal) {
                 if (navigator.onLine && login.value) {
-                    // let currentTimeInSeconds = (performance.now() - startTime.value).toFixed(0) / 1000
-                    // let previousTimeInSeconds = userInfo.value.secondsTyped
-    
-                    // let totalTime = (currentTimeInSeconds + previousTimeInSeconds).toFixed(2)              
-                    // userInfo.value.secondsTyped = totalTime
                     userInfo.value.testsFinished = Number(userInfo.value.testsFinished) + 1
                     userInfo.value.testsStarted = Number(userInfo.value.testsStarted) + 1
                     

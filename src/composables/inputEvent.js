@@ -1,6 +1,6 @@
 import { customizeStore } from "../store/customizeStore";
 import { storeToRefs } from 'pinia';
-import { charCountStore } from "../store/charCountStore";
+import { characterStore } from "../store/characterStore";
 import { typingStateStore } from "../store/typingStateStore";
 import { isMobile } from "./isMobile";
 import { timerStore } from "../store/timerStore";
@@ -15,8 +15,8 @@ export default function inputEvent (event) {
     const timerstore = timerStore()
     const {beatCountdown, beginCountdown, startTime} = storeToRefs(timerstore)
 
-    const charcountstore = charCountStore()
-    const {incorrectCharCount} = storeToRefs(charcountstore)
+    const characterstore = characterStore()
+    const {incorrectCharCount} = storeToRefs(characterstore)
     
     const customize = customizeStore()
     const {backspace, toggleCapsToast, customizers} = storeToRefs(customize)

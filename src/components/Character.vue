@@ -1,7 +1,13 @@
 <template>
-    <div id="focus" aria-hidden="true" ref="currentCharacterElement"  class="relative inline">
-        <div v-if="currentIndex" class="inline-block h-[calc(100%_-_5px)] absolute left-0 bottom-0 right-0" :class="[cursorStyle, currentIndex && !backspaceIsPressed ? 'smooth-cursor-forward' : 'smooth-cursor-backward']"></div>
-        <div :class="[!customizers['no-space'] && 'whitespace-pre-wrap']" class="relative inline">
+    <div 
+    id="focus" 
+    aria-hidden="true" 
+    ref="charEl"  
+    class="relative inline">
+        <Cursor :index="currentIndex" />
+        <div 
+        :class="[!customizers['no-space'] && 'whitespace-pre-wrap']" 
+        class="relative inline">
             <span  
             :class="[className, blurStyle, pulseStyle]"
             class="relative transition-opacity duration-75">
@@ -20,6 +26,7 @@ import { customizeStore }  from '../store/customizeStore'
 import { typingStateStore } from '../store/typingStateStore';
 import { nextStore } from '../store/nextStore';
 import { timerStore } from '../store/timerStore';
+import Cursor from '../components/Cursor.vue'
 
 const className = ref({
     'text-slate-500': true,
@@ -29,7 +36,7 @@ const timerstore = timerStore()
 const {beatCountdown} = storeToRefs(timerstore)
 
 const typingstatestore = typingStateStore()
-const {playerInputLength, testCompleted, playerLastInput, typedWhiteSpaces, focus, spaces, deletedValue, backspaceIsPressed, enterKey} = storeToRefs(typingstatestore)
+const {playerInputLength, testCompleted, playerLastInput, typedWhiteSpaces, spaces, backspaceIsPressed, enterKey} = storeToRefs(typingstatestore)
 
 const theme_ = themeStore()
 const { theme } = storeToRefs(theme_)
@@ -38,13 +45,13 @@ const nextstore = nextStore()
 const {goNext} = storeToRefs(nextstore)
 
 const mainstore = mainStore()
-const { currentTest, testContainerEl, allSpacesIndex, scrollTextContainer, scrollDistance, containerHeight } = storeToRefs(mainstore)
-const currentCharacterElement = ref(null)
+const { currentTest, testContainerEl, containerHeight, allSpacesIndex, scrollTextContainer, scrollDistance, lineHeight, font, textLines } = storeToRefs(mainstore)
+const charEl = ref(null)
 
 const {test} = currentTest.value
 
 const customize = customizeStore()
-const { customizers, cursorType, font, blind } = storeToRefs(customize)
+const { customizers, cursorType, blind } = storeToRefs(customize)
 
 const emit = defineEmits(['equal', 'unequal'])
 const props = defineProps({
@@ -56,34 +63,46 @@ const currentIndex = computed(() => playerInputLength.value === props.index)
 const equality = computed(() => playerLastInput.value === test[props.index])
 
 onMounted(() => {
-    watch(currentIndex, (isNextChar, prevCharacter) => {
+    watch(currentIndex, (isNextChar) => {
         let isLastChar = !isNextChar && playerInputLength.value === test.length
         
         if (isNextChar || isLastChar) {    
-            if (!backspaceIsPressed.value && test[props.index - 1] === ' ') spaces.value[props.index] = ' '            
-            if (backspaceIsPressed.value && test[props.index] === ' ') spaces.value[props.index] ? delete spaces.value[props.index] : ''
             
-            if (currentCharacterElement.value) {    
-                const parentScrollHeight = testContainerEl.value.scrollHeight
-                const parentHeight = testContainerEl.value.getBoundingClientRect().height
-                const cursorTopOffset = currentCharacterElement.value.getBoundingClientRect().top
-                const parentTopOffset = testContainerEl.value.getBoundingClientRect().top
-                const cursorBottomOffset = currentCharacterElement.value.getBoundingClientRect().bottom
-                const parentBottomOffset = testContainerEl.value.getBoundingClientRect().bottom
-                const lineHeight = currentCharacterElement.value.getBoundingClientRect().bottom - currentCharacterElement.value.getBoundingClientRect().top
-                const prevSiblingBottomOffset = props.index > 0 ? currentCharacterElement.value.previousElementSibling.getBoundingClientRect().bottom : 0
-                const nextSiblingTopOffset = props.index > 0 && currentCharacterElement.value.nextElementSibling ? currentCharacterElement.value.nextElementSibling.getBoundingClientRect().top : 0
-                const nextSiblingBottomOffset = props.index > 0 && currentCharacterElement.value.nextElementSibling ? currentCharacterElement.value.nextElementSibling.getBoundingClientRect().bottom : 0
-                
-                if (nextSiblingBottomOffset > cursorBottomOffset) enterKey.value = true
-                else enterKey.value = false         
-                
-                if (!(parentBottomOffset - prevSiblingBottomOffset <= lineHeight) && parentBottomOffset - cursorBottomOffset <= lineHeight && scrollDistance.value < parentScrollHeight) {
-                    if (!backspaceIsPressed.value) {     
-                        if (testContainerEl.value.scrollTop + parentHeight === parentScrollHeight) return
-                        else {
-                            if (parentScrollHeight - testContainerEl.value.scrollTop > parentHeight) scrollDistance.value += containerHeight.value - font.value - (font.value * 0.4)
-                            else scrollDistance.value += parentScrollHeight - testContainerEl.value.scrollTop
+            if (!backspaceIsPressed.value && test[props.index - 1] === ' ') {
+                spaces.value[props.index] = ' '            
+            }
+
+            if (backspaceIsPressed.value && test[props.index] === ' ') {
+                delete spaces.value[props.index + 1]
+            }
+             
+            if (charEl.value) {    
+                const testHeight = containerHeight.value
+                const testTop = testContainerEl.value.getBoundingClientRect().top
+                const testBottom = testContainerEl.value.getBoundingClientRect().bottom
+                const charTop = charEl.value.getBoundingClientRect().top
+                const charBottom = charEl.value.getBoundingClientRect().bottom
+                const charFullHeight = (font.value * lineHeight.value)
+                const charLineHeightTop = (charFullHeight - font.value)/2
+
+                const prevCharBottom = charEl.value.previousElementSibling && charEl.value.previousElementSibling.getBoundingClientRect().bottom 
+                const prevCharTop = charEl.value.previousElementSibling && charEl.value.previousElementSibling.getBoundingClientRect().top 
+                const nextCharTop = charEl.value.nextElementSibling && charEl.value.nextElementSibling.getBoundingClientRect().top
+
+                const bottomLine = charBottom + charLineHeightTop >= testBottom
+                const lastScrolledLine = charTop <= testTop && nextCharTop > testTop
+
+                const nextCharIsNextLine = nextCharTop > prevCharBottom
+                const firstCharInNextLIne = nextCharTop > prevCharBottom  && charTop === nextCharTop        
+                const lastCharInPrevLine = nextCharTop > charBottom && charTop === prevCharTop
+
+                nextCharIsNextLine ? enterKey.value = true : enterKey.value = false
+
+                console.log(containerHeight.value, testHeight)
+                if (firstCharInNextLIne) {
+                    if (!backspaceIsPressed.value) {
+                        if (bottomLine) {
+                            scrollDistance.value += testHeight * ((textLines.value - 1) || 1)/textLines.value
                             scrollTextContainer.value = {
                                 top: scrollDistance.value
                             }
@@ -91,13 +110,13 @@ onMounted(() => {
                     }
                 }
 
-                if (cursorTopOffset < parentTopOffset && props.index > 0 && nextSiblingTopOffset !== cursorTopOffset) {   
-
+                if (lastCharInPrevLine) {
                     if (backspaceIsPressed.value) {
-                        if (testContainerEl.value.scrollTop <= parentHeight) scrollDistance.value = 0
-                        else scrollDistance.value -= ((containerHeight.value / 3) * 2)
-                        scrollTextContainer.value = {
-                            top: scrollDistance.value
+                        if (lastScrolledLine) {
+                            scrollDistance.value -= testHeight * ((textLines.value - 1) || 1)/textLines.value
+                            scrollTextContainer.value = {
+                                top: scrollDistance.value
+                            }
                         }
                     }
                 }
@@ -130,14 +149,6 @@ watch([currentIndex, blind, goNext], ([newCurrent, newBlind, newNext]) => {
     }
 })
 
-const cursorStyle = computed(() => {
-    return {
-        'border-blue-700 border-[1px]': focus.value && cursorType.value === 'border',
-        'border-blue-700 border-l-[2px]': focus.value && cursorType.value === 'cursor',
-        'border-blue-700 border-b-[2px]': focus.value && cursorType.value === 'underline'
-    }
-})
-
 const blurStyle = computed(() => {
     if (customizers.value['blur']) {        
         return allSpacesIndex.value[typedWhiteSpaces.value + 1] && props.index > allSpacesIndex.value[typedWhiteSpaces.value + 1] ? 'blur-[7px]' : props.index > allSpacesIndex.value[typedWhiteSpaces.value] ? 'blur-[1px]' : ''
@@ -158,10 +169,11 @@ const pulseStyle = computed(() => {
             props.index > allSpacesIndex.value[allSpacesIndex.value.length - 1] + 1 &&
             typedWhiteSpaces.value === allSpacesIndex.value.length
         ) ?
-        'word-pulse border-transparent' :
+        'word-pulse ring-transparent' :
         ''
     }
 })
+
 </script>
 
 <style scoped>

@@ -1,13 +1,13 @@
 import { typingStateStore } from "../store/typingStateStore";
 import { mainStore } from "../store/mainStore";
 import { storeToRefs } from "pinia";
-import { charCountStore } from "../store/charCountStore";
+import { characterStore } from "../store/characterStore";
 import { timerStore } from "../store/timerStore";
 import { customizeStore } from "../store/customizeStore";
 
 export default function evaluateInput(value) {    
-    const charcountstore = charCountStore()
-    const {correctCharCount, incorrectCharCount} = storeToRefs(charcountstore)
+    const characterstore = characterStore()
+    const {correctCharCount, incorrectCharCount} = storeToRefs(characterstore)
 
     const customizestore = customizeStore()
     const {toggleCustomTestModal} = storeToRefs(customizestore)
