@@ -4,10 +4,12 @@ import {ref, computed} from 'vue'
 export const mainStore = defineStore('mainStore', () => {
     const route = ref(null)
     const demo = ref(false)
-    const font = ref(100)
+    const font = ref(30)
     const range = ref((font.value - 16) / 0.26)
-    const textLines = ref(20)
+    const textLines = ref(10)
     const lineHeight = ref(1.5)
+    const testWidth = ref(20)
+    const charWidth = ref(0)
 
     //Test container
     const testContainerEl = ref(null)
@@ -76,5 +78,7 @@ export const mainStore = defineStore('mainStore', () => {
         useCustomText,
         storedTest,
         customTests,
+        testWidth,
+        charWidth,
     }
 })

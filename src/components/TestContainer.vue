@@ -1,5 +1,5 @@
 <template>
-    <div class="pt-20 w-[90%] max-w-[1500px] mx-auto">
+    <div class="pt-16 w-[90%] max-w-[1500px] mx-auto">
         <div class="flex pb-2 justify-between">
             <p v-if="!customizers['timer']"></p>
             <Countdown v-else :start="beginCountdown"/>

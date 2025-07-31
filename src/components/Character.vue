@@ -45,7 +45,7 @@ const nextstore = nextStore()
 const {goNext} = storeToRefs(nextstore)
 
 const mainstore = mainStore()
-const { currentTest, testContainerEl, containerHeight, allSpacesIndex, scrollTextContainer, scrollDistance, lineHeight, font, textLines } = storeToRefs(mainstore)
+const { currentTest, testContainerEl, charWidth, containerHeight, allSpacesIndex, scrollTextContainer, scrollDistance, lineHeight, font, textLines } = storeToRefs(mainstore)
 const charEl = ref(null)
 
 const {test} = currentTest.value
@@ -63,6 +63,7 @@ const currentIndex = computed(() => playerInputLength.value === props.index)
 const equality = computed(() => playerLastInput.value === test[props.index])
 
 onMounted(() => {
+    charWidth.value = charEl.value.getBoundingClientRect().right - charEl.value.getBoundingClientRect().left
     watch(currentIndex, (isNextChar) => {
         let isLastChar = !isNextChar && playerInputLength.value === test.length
         

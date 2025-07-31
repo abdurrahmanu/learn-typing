@@ -7,7 +7,7 @@
             @click="focusInput"
             aria-describedby="full-text" 
             ref="testContainerEl" 
-            class="container-style h-fit"
+            class="container-style m-auto"
             :style="computedStyle" 
             :class="[ wordBreak, 
             (textPosition === 'center') && 'text-center',
@@ -36,7 +36,7 @@ const typingstatestore = typingStateStore()
 const { inputEl} = storeToRefs(typingstatestore)
 
 const mainstore = mainStore()
-const { currentTest, font, testContainerEl, containerHeight, lineHeight} = storeToRefs(mainstore)
+const { currentTest, font, testContainerEl, containerHeight, lineHeight, charWidth, testWidth} = storeToRefs(mainstore)
 const {validateTestLines} = mainstore
 
 const test = computed(() => {
@@ -47,11 +47,14 @@ const customize = customizeStore()
 const { customizers, textPosition} = storeToRefs(customize)
 
 const computedStyle = computed(() => {
+    console.log(testWidth.value * charWidth.value)
     return {
         'height' : containerHeight.value + 'px', 
         'font-size': font.value + 'px',
         'line-height': lineHeight.value,
-        'max-height': containerHeight.value + 'px'
+        'max-height': containerHeight.value + 'px',
+        'height': `min(fit-content, ${containerHeight.value}px)`,
+        'width': `min(fit-content, ${testWidth.value * charWidth.value}px)`,
     }
 })
 
@@ -76,6 +79,6 @@ onMounted(() => {
 
 <style scoped>
 .container-style {
-    @apply scroll-smooth ring-[1px] px-2 overflow-y-scroll
+    @apply scroll-smooth ring-[1px] px-2 overflow-y-scroll rounded-md ring-neutral-900
 }
 </style>
