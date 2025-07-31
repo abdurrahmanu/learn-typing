@@ -30,13 +30,14 @@ import { mainStore } from '../store/mainStore';
 import { customizeStore } from '../store/customizeStore';
 import { isTouchScreenDevice } from '../composables/isTouchScreenDevice';
 import focusButton from './focusButton.vue';
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 
 const typingstatestore = typingStateStore()
 const { inputEl} = storeToRefs(typingstatestore)
 
-const store = mainStore()
-const { currentTest, font, testContainerEl, containerHeight, lineHeight} = storeToRefs(store)
+const mainstore = mainStore()
+const { currentTest, font, testContainerEl, containerHeight, lineHeight} = storeToRefs(mainstore)
+const {validateTestLines} = mainstore
 
 const test = computed(() => {
     return currentTest.value.test
@@ -67,6 +68,10 @@ function focusInput() {
 const width = {
     //................. user selects width
 }
+
+onMounted(() => {
+    validateTestLines()
+})
 </script>
 
 <style scoped>

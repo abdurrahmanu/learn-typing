@@ -98,7 +98,6 @@ onMounted(() => {
 
                 nextCharIsNextLine ? enterKey.value = true : enterKey.value = false
 
-                console.log(containerHeight.value, testHeight)
                 if (firstCharInNextLIne) {
                     if (!backspaceIsPressed.value) {
                         if (bottomLine) {

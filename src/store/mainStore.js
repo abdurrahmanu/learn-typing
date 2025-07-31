@@ -4,9 +4,9 @@ import {ref, computed} from 'vue'
 export const mainStore = defineStore('mainStore', () => {
     const route = ref(null)
     const demo = ref(false)
-    const font = ref(60)
+    const font = ref(100)
     const range = ref((font.value - 16) / 0.26)
-    const textLines = ref(10)
+    const textLines = ref(20)
     const lineHeight = ref(1.5)
 
     //Test container
@@ -27,6 +27,26 @@ export const mainStore = defineStore('mainStore', () => {
         'demo': 'This is a custom test, you can add your own test, use the plus icon. This particular demo cannot be deleted.'
     }) 
 
+    const containerHeight = computed(() => {
+        return (font.value * lineHeight.value) * textLines.value
+    })
+
+    function validateTestLines() {
+        let overflowPixels;
+        const testBottom = testContainerEl.value.getBoundingClientRect().bottom
+        const TestIsOutofScreenView = testBottom > window.innerHeight
+
+        if (TestIsOutofScreenView) {
+            overflowPixels = testBottom - window.innerHeight  
+            let newHeight = containerHeight.value - overflowPixels
+            let numberOfLines = Math.floor(newHeight / (font.value * lineHeight.value))
+            textLines.value = numberOfLines  
+        }   
+        else {
+            overflowPixels = 0
+        }
+    }
+
     const resetToDefault = () => {
         scrollDistance.value = 0
         scrollTextContainer.value = {}
@@ -38,12 +58,9 @@ export const mainStore = defineStore('mainStore', () => {
         allSpacesIndex.value = []
     }
 
-    const containerHeight = computed(() => {
-        return (font.value * lineHeight.value) * textLines.value
-    })
-
     return {
         resetToDefault,
+        validateTestLines,
         route,
         font,
         range,
