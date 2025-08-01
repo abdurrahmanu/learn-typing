@@ -14,9 +14,9 @@ import CustomTestModal from './CustomTestModal.vue';
 
 const capsText = 'CapsLock is on, you cannot use it while it is disabled, enable in settings.'
 
-import {customizeStore} from '../store/customizeStore'
+import {settingsStore} from '../store/settingsStore'
 import {storeToRefs} from 'pinia'
 
-const customize = customizeStore()
+const customize = settingsStore()
 const { toggleCapsToast } = storeToRefs(customize)
 </script>

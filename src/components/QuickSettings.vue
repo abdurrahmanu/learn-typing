@@ -15,7 +15,7 @@
       >
         <div 
         class="parent" 
-        v-for="(optionArr, key, listIndex) in quickSettingsGroups" 
+        v-for="(optionArr, key, listIndex) in quickSettingss" 
         :key="listIndex"
         >         
             <div 
@@ -27,7 +27,7 @@
                 <div 
                 :id="!isMobile() && 'focus'"
                 class="single-setting hover-state" 
-                :class="[disableOption[key] && 'opacity-30', customizers[key] === option && 'text-blue-500']"
+                :class="[disableOption[key] && 'opacity-30', settings[key] === option && 'text-blue-500']"
                 @click="!disableOption[key] && checkSelection(option, key)" 
                 v-for="(option, index) in optionArr" 
                 :key="index">
@@ -73,9 +73,9 @@
 <script setup>
 import { ref, computed, watch } from 'vue'
 import { isMobile } from '../composables/isMobile.js';
-import {customizeStore} from '../store/customizeStore.js'
+import {settingsStore} from '../store/settingsStore.js'
 import { typingStateStore } from '../store/typingStateStore.js';
-import { themeStore } from '../store/themeStore';
+import { themeStore } from '../store/themeStore.js';
 import {storeToRefs} from 'pinia'
 import { useRoute } from 'vue-router';
 import Clock from './Clock.vue';
@@ -92,8 +92,8 @@ const {focus, testCompleted} = storeToRefs(typingstatestore)
 const theme_ = themeStore()
 const {appTheme}  = storeToRefs(theme_)
 
-const customize = customizeStore()
-const { quickSettingsGroups, toggleCustomTestModal, pauseTyping, hideElements, configs, customizers, disableOption, repeat} = storeToRefs(customize)
+const customize = settingsStore()
+const { quickSettingss, toggleCustomTestModal, pauseTyping, hideElements, settings, disableOption, repeat} = storeToRefs(customize)
 const {checkQuickSettings} = customize
 
 const openCustomTestModal = () => {
@@ -106,16 +106,14 @@ const mouseEnter = (index) => hoverIndex.value = index
 const mouseLeave = (index) => hoverIndex.value = null
 
 const checkSelection = (key, option) => {
-  const currentSelections = [customizers.value['words-type'], customizers.value['test-type'], customizers.value['test-length'], customizers.value['test-type'] ]
-  const nextOptions = ['test-type', 'test-length', 'words-type', 'punctuations', 'numbers']
-  configs.value = [option, key]
+  const currentSelections = [settings.value['words-type'], settings.value['test-type'], settings.value['test-length'], settings.value['test-type'] ]
 
   // if (!nextOptions.includes(option)) repeat.value = true
   // else repeat.value = false
 
-  let selection = +configs.value[1] || configs.value[1]
+  let selection = +key || key
   if (currentSelections.includes(selection)) return
-  checkQuickSettings()
+  checkQuickSettings(option, key)
 }
 
 const toggleQuickSettings = computed(() => isMobile() && focus.value ? 'hidden' : 'block')
@@ -137,11 +135,11 @@ watch(hideElements, newVal => {
   }
 
   .mobile-quick-settings {
-    @apply p-1 px-2 cursor-pointer rounded-md m-auto text-[12px] uppercase ring-[1px] ring-slate-500 whitespace-nowrap w-fit relative z-[10]
+    @apply p-1 px-2 cursor-pointer rounded-md m-auto text-[14px] uppercase ring-[1px] ring-slate-500 whitespace-nowrap w-fit relative z-[10]
   }
 
   .container {
-    @apply m-auto items-center flex text-[13px] max-w-[900px] w-fit gap-2 justify-center flex-wrap relative z-[1]
+    @apply m-auto items-center flex text-[14px] max-w-[900px] w-fit gap-2 justify-center flex-wrap relative z-[1] font-[400]
   }
 
   .single-group {

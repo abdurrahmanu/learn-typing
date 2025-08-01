@@ -22,10 +22,10 @@
 <script setup>
 import {watch, computed} from 'vue'
 import {storeToRefs} from 'pinia'
-import {customizeStore} from '../../store/customizeStore'
+import {settingsStore} from '../../store/settingsStore'
 
-const customizestore = customizeStore()
-const { difficulty, settingsToUpdate } = storeToRefs(customizestore)
+const settingstore = settingsStore()
+const { difficulty, settingsToUpdate } = storeToRefs(settingstore)
 
 const difficulties = ['beginner', 'amateur', 'expert']
 

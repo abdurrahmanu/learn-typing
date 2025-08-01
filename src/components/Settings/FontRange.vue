@@ -15,7 +15,7 @@
 import {computed, watch} from 'vue'
 import { storeToRefs } from 'pinia';
 import { countdownStore } from '../../store/countdownStore'
-import { customizeStore } from '../../store/customizeStore'
+import { settingsStore } from '../../store/settingsStore'
 import {nextStore} from '../../store/nextStore'
 import { typingStateStore } from '../../store/typingStateStore';
 import { mainStore } from '../../store/mainStore';
@@ -29,8 +29,8 @@ const {goNext} = storeToRefs(nextstore)
 const typingstatestore = typingStateStore()
 const {playerInputLength} = typingstatestore
 
-const customizestore = customizeStore()
-const { customizers, settingsToUpdate} = storeToRefs(customizestore)
+const settingstore = settingsStore()
+const { settings, settingsToUpdate} = storeToRefs(settingstore)
 
 const count = countdownStore()
 const {clearCounter} = count
@@ -44,7 +44,7 @@ watch(range, (newVal) => {
     })
 
     if (playerInputLength.value) {        
-        if (customizers.value['timer']) clearCounter()
+        if (settings.value['timer']) clearCounter()
         goNext.value = true
     }
 })

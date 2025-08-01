@@ -32,7 +32,7 @@
             <div 
             v-if="route.name === 'home'"
             class="relative w-fit" >
-                <settings 
+                <settingsSVG
                 @click="routeToPage('settings')"
                 class="w-5 peer" />
             </div>
@@ -49,12 +49,12 @@
 <script setup>
 import Logo from './Logo.vue'
 import home from './svg/home.vue'
-import settings from './svg/settings.vue';
+import settingsSVG from './svg/settings.vue';
 import user from './svg/user.vue'
 import feedback from './svg/feedback.vue'
 import {useRoute, useRouter} from 'vue-router'
 import { isMobile } from '../composables/isMobile';
-import { customizeStore } from '../store/customizeStore';
+import { settingsStore } from '../store/settingsStore';
 import {authStore} from '../store/authStore'
 import { themeStore } from '../store/themeStore';
 import { typingStateStore } from '../store/typingStateStore';
@@ -72,7 +72,7 @@ const {theme} = storeToRefs(theme_)
 const authstore = authStore()
 const {login} = storeToRefs(authstore)
 
-const customize = customizeStore()
+const customize = settingsStore()
 const { hideElements} = storeToRefs(customize)
 
 const routeToPage = (route) => {

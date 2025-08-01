@@ -1,7 +1,7 @@
 import {defineStore, storeToRefs} from 'pinia'
 import {computed} from 'vue'
 import {mainStore} from '../store/mainStore'
-import { customizeStore } from '../store/customizeStore'
+import { settingsStore } from '../store/settingsStore'
 import {characterStore} from '../store/characterStore'
 import {timerStore} from '../store/timerStore'
 
@@ -12,8 +12,8 @@ export const resultStore = defineStore('resultStore', () => {
     const characterstore = characterStore()
     const {resultData, incorrectCharCount} = storeToRefs(characterstore)
 
-    const customize = customizeStore()
-    const {customizers, difficulty} = storeToRefs(customize)
+    const customize = settingsStore()
+    const {settings, difficulty} = storeToRefs(customize)
 
     const mainstore = mainStore()
     const {currentTest} = storeToRefs(mainstore)
@@ -30,7 +30,7 @@ export const resultStore = defineStore('resultStore', () => {
         return Math.round((resultData.value.correctCharCount/(test.value.length) * 100))
     })
 
-    const failedToBeatCountdown = computed(() => customizers.value['timer'] && !beatCountdown.value)
+    const failedToBeatCountdown = computed(() => settings.value['timer'] && !beatCountdown.value)
 
     const accuracyBasedOnLevels = () => {
         const accuracyObject = {

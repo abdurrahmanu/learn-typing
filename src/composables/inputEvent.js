@@ -1,4 +1,4 @@
-import { customizeStore } from "../store/customizeStore";
+import { settingsStore } from "../store/settingsStore";
 import { storeToRefs } from 'pinia';
 import { characterStore } from "../store/characterStore";
 import { typingStateStore } from "../store/typingStateStore";
@@ -18,20 +18,20 @@ export default function inputEvent (event) {
     const characterstore = characterStore()
     const {incorrectCharCount} = storeToRefs(characterstore)
     
-    const customize = customizeStore()
-    const {backspace, toggleCapsToast, customizers} = storeToRefs(customize)
+    const customize = settingsStore()
+    const {backspace, toggleCapsToast, settings} = storeToRefs(customize)
 
     const eventData = event.key || event.data
     const eventType  = event.key || event.inputType
 
     const returnOnWrongInput = () => {
-        return customizers.value['stop-on-error'] && incorrectCharCount.value && (eventType !== 'Backspace' || eventType !== 'deleteContentBackward')
+        return settings.value['stop-on-error'] && incorrectCharCount.value && (eventType !== 'Backspace' || eventType !== 'deleteContentBackward')
     }
 
     const returnFromCapsLockEvent = () => {
         if (isMobile()) return false
 
-        if (!customizers.value['capslock']) {
+        if (!settings.value['capslock']) {
             if (event.getModifierState('CapsLock') && eventData !== 'CapsLock') {
                 if (!toggleCapsToast.value) toggleCapsToast.value = true
                 return true
@@ -79,7 +79,7 @@ export default function inputEvent (event) {
     }
 
     const startTimer = () => {
-        if (customizers.value['timer']) {
+        if (settings.value['timer']) {
             beatCountdown.value = false
             beginCountdown.value = true
         }

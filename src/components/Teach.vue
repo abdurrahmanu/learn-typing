@@ -73,17 +73,14 @@
 <script setup>
 import {ref, watch} from 'vue'
 import {mainStore} from '../store/mainStore'
-import { customizeStore } from '../store/customizeStore';
+import { settingsStore } from '../store/settingsStore';
 import { storeToRefs } from 'pinia';
-import {useRoute, useRouter} from 'vue-router'
 
-const route = useRoute()
-const router = useRouter()
 const keyboard = ref('normal')
 const store = mainStore()
 const { demo} = storeToRefs(store)
-const customize = customizeStore()
-const { pauseTyping, customizers } = storeToRefs(customize)
+const customize = settingsStore()
+const { pauseTyping } = storeToRefs(customize)
 const shiftKey = ref(false)
 const showSingleFinger = ref(false)
 const keyToShow = ref('')

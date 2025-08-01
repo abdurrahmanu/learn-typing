@@ -47,14 +47,14 @@ import {ref, watch} from 'vue'
 import {storeToRefs} from 'pinia';
 import {mainStore} from '../store/mainStore';
 import {themeStore}  from '../store/themeStore'
-import { customizeStore } from '../store/customizeStore';
+import { settingsStore } from '../store/settingsStore';
 import { isTouchScreenDevice } from '../composables/isTouchScreenDevice';
 import { useRoute } from 'vue-router';
 import {nextStore} from '../store/nextStore'
 
 const route = useRoute()
-const customize = customizeStore()
-const {toggleCustomTestModal, pauseTyping, customizers, customChoice, repeat} = storeToRefs(customize)
+const customize = settingsStore()
+const {toggleCustomTestModal, pauseTyping, settings, customChoice, repeat} = storeToRefs(customize)
 
 const theme_ = themeStore()
 const {theme, appTheme } = storeToRefs(theme_)
@@ -119,7 +119,7 @@ const del = (key) => {
 
 const use = (testName) => {
     if (repeat.value) return
-    customizers.value['test-type'] = 'custom'
+    settings.value['test-type'] = 'custom'
     customChoice.value = testName
     go()
 }

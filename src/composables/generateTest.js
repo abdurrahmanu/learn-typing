@@ -1,5 +1,5 @@
 import { mainStore } from "../store/mainStore"
-import { customizeStore } from '../store/customizeStore'
+import { settingsStore } from '../store/settingsStore'
 import { storeToRefs } from "pinia"
 import { getTest } from "./getTest"
 import { computed } from "vue"
@@ -12,8 +12,8 @@ export const generateTest = async () => {
         return currentTest.value.test
     })
 
-    const customize = customizeStore()
-    const {customizers} = storeToRefs(customize)
+    const settingstore = settingsStore()
+    const {settings} = storeToRefs(settingstore)
 
     currentTest.value.test = ''
     currentTest.value = await getTest()
@@ -24,7 +24,7 @@ export const generateTest = async () => {
         }
     }
 
-    if (customizers.value['double-words'] && allSpacesIndex.value.length) {
+    if (settings.value['double-words'] && allSpacesIndex.value.length) {
         let text = ''
 
         for (let index = 0; index < Math.ceil(allSpacesIndex.value.length / 2); index++) {

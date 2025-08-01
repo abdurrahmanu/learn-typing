@@ -1,7 +1,7 @@
 <template>
     <div class="pt-16 w-[90%] max-w-[1500px] mx-auto">
         <div :style="computedStyle" class="flex items-center pb-2 justify-between m-auto">
-            <p v-if="!customizers['timer']"></p>
+            <p v-if="!settings['timer']"></p>
             <Countdown v-else :start="beginCountdown"/>
             <restart 
             v-if="canRestart" 
@@ -22,7 +22,7 @@ import restart from './svg/restart.vue'
 import {storeToRefs} from 'pinia'
 import {mainStore} from '../store/mainStore'
 import {nextStore} from '../store/nextStore'
-import { customizeStore } from '../store/customizeStore';
+import { settingsStore } from '../store/settingsStore';
 import {timerStore} from '../store/timerStore'
 import { typingStateStore } from '../store/typingStateStore';
 import AllCharacters from './AllCharacters.vue';
@@ -41,8 +41,8 @@ const {goNext} = storeToRefs(nextstore)
 const mainstore = mainStore()
 const { scrollTextContainer, fontSize, testStyle} = storeToRefs(mainstore)
 
-const customize = customizeStore()
-const { customizers} = storeToRefs(customize)
+const customize = settingsStore()
+const { settings} = storeToRefs(customize)
 
 const halfTestFontSize = computed(() => {
     return fontSize.value < 40 ? fontSize.value : fontSize.value / 2

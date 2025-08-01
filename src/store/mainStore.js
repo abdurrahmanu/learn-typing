@@ -1,13 +1,14 @@
 import {defineStore} from 'pinia'
 import {ref, computed} from 'vue'
+import { isMobile } from '../composables/isMobile'
 
 export const mainStore = defineStore('mainStore', () => {
     const route = ref(null)
     const demo = ref(false)
     const fontSize = ref(55)
     const minFontSize = ref(25)
-    const maxFontSize = ref(120)
-    const testLInes = ref(10)
+    const maxFontSize = ref(isMobile() ? 50 : 120)
+    const testLInes = ref(3)
     const lineHeight = ref(1.5)
     const testWidth = ref(200)
     const charWidth = ref(0)

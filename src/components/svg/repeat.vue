@@ -6,10 +6,10 @@
 
 <script setup>
 import {storeToRefs} from 'pinia'
-import {customizeStore} from '../../store/customizeStore'
+import {settingsStore} from '../../store/settingsStore'
 import {themeStore} from '../../store/themeStore'
 
-const customize = customizeStore()
+const customize = settingsStore()
 const { repeat } = storeToRefs(customize)
 
 const theme_ = themeStore()

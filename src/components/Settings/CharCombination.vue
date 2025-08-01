@@ -16,8 +16,10 @@
 <script setup>
 import {watch, ref, computed} from 'vue'
 import {storeToRefs} from 'pinia';
-import { customizeStore } from '../../store/customizeStore';
+import { settingsStore } from '../../store/settingsStore';
 import { nextStore } from '../../store/nextStore';
+
+const shiftKey = ref(false)
 
 const nextstore = nextStore()
 const {goNext} = storeToRefs(nextstore)
@@ -38,8 +40,8 @@ const qwertyKeyboard = [
 
 const entries = [capsQwertyKeyboard, qwertyKeyboard]
 
-const customize = customizeStore()
-const { charsArray, mixCharacters, shiftKey} = storeToRefs(customize)
+const customize = settingsStore()
+const { charsArray, mixCharacters} = storeToRefs(customize)
 
 const addSelection = (alphabet) => {
     let index = charsArray.value.indexOf(alphabet)

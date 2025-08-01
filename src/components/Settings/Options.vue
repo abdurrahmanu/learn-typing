@@ -17,7 +17,7 @@
 
 <script setup>
 import Cursor from './Cursor.vue';
-import {customizeStore} from '../../store/customizeStore';
+import {settingsStore} from '../../store/settingsStore';
 import CharCombination from './CharCombination.vue';
 import Difficulty from './Difficulty.vue';
 import FontRange from './FontRange.vue';
@@ -38,8 +38,8 @@ const props = defineProps({
     }
 })
 
-const customizestore = customizeStore()
-const {updateSingleSetting} = customizestore
+const settingstore = settingsStore()
+const {updateSingleSetting} = settingstore
 
 const update = (option) => {
     selectedOption.value = option

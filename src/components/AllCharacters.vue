@@ -27,7 +27,7 @@ import { storeToRefs } from 'pinia';
 import Character from './Character.vue';
 import { typingStateStore } from '../store/typingStateStore';
 import { mainStore } from '../store/mainStore';
-import { customizeStore } from '../store/customizeStore';
+import { settingsStore } from '../store/settingsStore';
 import { isTouchScreenDevice } from '../composables/isTouchScreenDevice';
 import focusButton from './focusButton.vue';
 import { computed, onMounted, onUpdated } from 'vue';
@@ -43,11 +43,11 @@ const test = computed(() => {
     return currentTest.value.test
 })
 
-const customize = customizeStore()
-const { customizers, textPosition, showBorder} = storeToRefs(customize)
+const customize = settingsStore()
+const { settings, textPosition, showBorder} = storeToRefs(customize)
 
 const wordBreak = computed(() => {
-    return (customizers.value['no-space'] || customizers.value['test-type'] === 'custom' || customizers.value['test-type'] === 'characters') && 'break-words'
+    return (settings.value['no-space'] || settings.value['test-type'] === 'custom' || settings.value['test-type'] === 'characters') && 'break-words'
 })
 
 const borderStyle = computed(()=> {

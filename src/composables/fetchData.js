@@ -1,5 +1,5 @@
 import { mainStore } from "../store/mainStore"
-import { customizeStore } from "../store/customizeStore";
+import { settingsStore } from "../store/settingsStore";
 import { connectStore } from "../store/connectStore";
 import { themeStore } from "../store/themeStore";
 import { storeToRefs } from 'pinia';
@@ -18,8 +18,8 @@ export const fetchData = (data) => {
     const connect = connectStore()
     const {loadingApp} = storeToRefs(connect)
 
-    const customize = customizeStore()
-    const { customizers, disableOption, cursorType, difficulty, blind, backspace } = storeToRefs(customize)
+    const customize = settingsStore()
+    const { settings, disableOption, cursorType, difficulty, blind, backspace } = storeToRefs(customize)
 
     loadingApp.value = false
     
@@ -30,7 +30,7 @@ export const fetchData = (data) => {
     blind.value = data.blind || false
     difficulty.value = data.difficulty || difficulty.value
     backspace.value = data.backspace || backspace.value
-    customizers.value = data.config[0] || customizers.value
+    settings.value = data.config[0] || settings.value
     disableOption.value = data.config[1] || disableOption.value
     customTests.value = data.customTests || customTests.value['demo']
     testLInes.value = data.testLInes || 3

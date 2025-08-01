@@ -32,7 +32,7 @@ import { isMobile } from '../composables/isMobile'
 import pauseTimer from '../components/svg/pauseTimer.vue'
 import playTimer from '../components/svg/playTimer.vue'
 import {storeToRefs} from 'pinia'
-import { customizeStore} from '../store/customizeStore'
+import { settingsStore} from '../store/settingsStore'
 import { countdownStore } from '../store/countdownStore'
 import {nextStore} from '../store/nextStore'
 import {timerStore} from '../store/timerStore'
@@ -53,8 +53,8 @@ const {goNext} = storeToRefs(nextstore)
 const typingstatestore = typingStateStore()
 const {testCompleted} = storeToRefs(typingstatestore)
 
-const customize = customizeStore()
-const {customizers, difficulty, repeat} = storeToRefs(customize)
+const customize = settingsStore()
+const {settings, difficulty, repeat} = storeToRefs(customize)
 
 const go = () => {
     repeat.value = true
@@ -65,11 +65,11 @@ const go = () => {
 }
 
 const isCountdown = computed(() => {
-    return customizers.value['timer']
+    return settings.value['timer']
 })
 
 const toggleTimer = () => {
-    customizers.value['timer'] = !customizers.value['timer']
+    settings.value['timer'] = !settings.value['timer']
 }
 
 watch(countdown, newVal => {
@@ -84,7 +84,7 @@ watch(difficulty, newVal => changeLevel(difficulty.value))
 
 const changeLevel = (lvl) => {
     level.value = lvl
-    if (!isCountdown.value) customizers.value['timer'] = true
+    if (!isCountdown.value) settings.value['timer'] = true
     countdown.value = timer(lvl)
     go()
 }

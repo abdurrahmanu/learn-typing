@@ -7,15 +7,15 @@
 
 <script setup>
 import { typingStateStore } from '../store/typingStateStore'
-import { customizeStore } from '../store/customizeStore'
+import { settingsStore } from '../store/settingsStore'
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
 
 const typingstatestore = typingStateStore()
 const {backspaceIsPressed, focus} = storeToRefs(typingstatestore)
 
-const customizestore = customizeStore()
-const { cursorType } = storeToRefs(customizestore)
+const settingstore = settingsStore()
+const { cursorType } = storeToRefs(settingstore)
 
 const props = defineProps({
     index: Boolean

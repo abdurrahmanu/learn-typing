@@ -4,12 +4,12 @@
 
 <script setup>
 import useWatchers from '../composables/useWatchers';
-import { customizeStore } from '../store/customizeStore';
+import { settingsStore } from '../store/settingsStore';
 import { storeToRefs } from 'pinia';
 import SettingsUI from '../components/SettingsUI.vue';
 
-const customizestore = customizeStore()
-const { settingsToUpdate} = storeToRefs(customizestore)
+const settingstore = settingsStore()
+const { settingsToUpdate} = storeToRefs(settingstore)
 
 useWatchers({settingsToUpdate})
 </script>

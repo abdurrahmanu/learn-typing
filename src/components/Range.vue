@@ -8,9 +8,9 @@
 <script setup>
 import CompletionRange from '../components/CompletionRange.vue';
 import CompletionRangeWithErrors from '../components/CompletionRangeWithErrors.vue';
-import { customizeStore } from '../store/customizeStore';
+import { settingsStore } from '../store/settingsStore';
 import { storeToRefs } from 'pinia';
 
-const customize = customizeStore()
+const customize = settingsStore()
 const {isBlindMode} = storeToRefs(customize)
 </script>

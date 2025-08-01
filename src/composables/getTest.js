@@ -1,6 +1,6 @@
 import { englishWords } from '../../data/englishWords.js';
 import { customizeTest } from './customizeTest.js';
-import { customizeStore } from '../store/customizeStore.js';
+import { settingsStore } from '../store/settingsStore.js';
 import { mainStore } from '../store/mainStore.js';
 import authoredQuotes from '../../data/quotes.json'
 import { storeToRefs } from 'pinia';
@@ -12,16 +12,16 @@ export async function getTest () {
         name: null
     }
 
-    const customizestore = customizeStore()
-    const {customizers, customChoice, repeat, mixCharacters, charsArray} = storeToRefs(customizestore)
+    const settingstore = settingsStore()
+    const {settings, customChoice, repeat, mixCharacters, charsArray} = storeToRefs(settingstore)
 
     const mainstore = mainStore()
     const {customTests, storedTest} = storeToRefs(mainstore)
     const {mostUsed, mediumUsed, rarelyUsed, quotesWithNumbers, numbers, quotesWithoutAuthors, movieQuotes} = englishWords()
-    const includeNumbers = customizers.value['numbers']
-    const testType = customizers.value['test-type']
-    const wordType =  customizers.value['words-type']
-    const testLength = customizers.value['test-length']
+    const includeNumbers = settings.value['numbers']
+    const testType = settings.value['test-type']
+    const wordType =  settings.value['words-type']
+    const testLength = settings.value['test-length']
     const singleQoutes = Array.from(Object.values(quotesWithoutAuthors.value)).flat(2)
     const allMovies = Array.from(Object.values(movieQuotes)).map((movies, index) => {
         return movies.quotes.map(movie => {
@@ -97,7 +97,7 @@ export async function getTest () {
             ...mostUsed,
             ...(wordType === 'common' ? mediumUsed : []),
             ...(wordType === 'rare' ? rarelyUsed : []),
-            ...(customizers.value['numbers'] ? numbers : [])
+            ...(settings.value['numbers'] ? numbers : [])
         ]
 
         let numberOfWords = testLength
@@ -111,17 +111,17 @@ export async function getTest () {
     }
 
     const params = {
-        numbers : customizers.value['numbers'],
-        punctuation : customizers.value['punctuation'],
-        caps : customizers.value['caps'],
-        allCaps : customizers.value['all-caps'],
-        camelCase : customizers.value['camel-case'],
-        noSpace : customizers.value['no-space'],
-        testType : customizers.value['test-type'],
+        numbers : settings.value['numbers'],
+        punctuation : settings.value['punctuation'],
+        caps : settings.value['caps'],
+        allCaps : settings.value['all-caps'],
+        camelCase : settings.value['camel-case'],
+        noSpace : settings.value['no-space'],
+        testType : settings.value['test-type'],
         test: test['test'],
-        jumble: customizers.value['arrangement'] === 'jumble',
-        reverse: customizers.value['arrangement'] === 'reverse',
-        space: customizers.value['spaced']
+        jumble: settings.value['arrangement'] === 'jumble',
+        reverse: settings.value['arrangement'] === 'reverse',
+        space: settings.value['spaced']
     }
 
     test['test'] = test['test'].replace(/[\r\n]+/g, ' ').trim();

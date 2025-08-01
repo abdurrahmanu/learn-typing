@@ -1,19 +1,19 @@
 <template>
     <div v-if="!testCompleted" class="mx-auto max-w-[1500px] py-10"> 
         <Range />
-        <Customize />
+        <QuickSettings />
         <TestContainer />
     </div>
 </template>
 <script setup>
 import TestContainer from '../components/TestContainer.vue'
-import Customize from '../components/Customize.vue'
+import QuickSettings from '../components/QuickSettings.vue'
 import useWatchers from '../composables/useWatchers';
 import useEventListener from '../composables/useEventLIstener';
 import { connectStore } from '../store/connectStore';
 import { nextStore } from '../store/nextStore';
 import { mainStore } from '../store/mainStore';
-import {customizeStore}  from '../store/customizeStore'
+import {settingsStore}  from '../store/settingsStore'
 import { typingStateStore } from '../store/typingStateStore';
 import { storeToRefs } from 'pinia';
 import { onMounted, onUnmounted } from 'vue';
@@ -22,7 +22,7 @@ import inputEvent from '../composables/inputEvent'
 import evaluateInput from '../composables/evaluateInput';
 import Range from '../components/Range.vue';
 
-const customize = customizeStore()
+const customize = settingsStore()
 const {settingsToUpdate, toggleCapsToast, pauseTyping, toggleCustomTestModal} = storeToRefs(customize)
 
 const nextstore = nextStore()

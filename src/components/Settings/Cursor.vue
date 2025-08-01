@@ -21,14 +21,14 @@
 <script setup>
 import {watch, ref} from 'vue'
 import {storeToRefs} from 'pinia'
-import {customizeStore} from '../../store/customizeStore'
+import {settingsStore} from '../../store/settingsStore'
 import { themeStore } from '../../store/themeStore';
 
 const theme_ = themeStore()
 const {theme} = theme_
 
-const customizestore = customizeStore()
-const { cursorType, settingsToUpdate} = storeToRefs(customizestore)
+const settingstore = settingsStore()
+const { cursorType, settingsToUpdate} = storeToRefs(settingstore)
 
 watch(cursorType, (newVal) => {
     let cursor = newVal

@@ -14,14 +14,14 @@
 import {ref, watch} from 'vue'
 import Teach from '../components/Teach.vue';
 import email from '../components/svg/email.vue';
-import { customizeStore } from '../store/customizeStore';
+import { settingsStore } from '../store/settingsStore';
 import { mainStore } from '../store/mainStore';
 import { storeToRefs } from 'pinia';
 
 const toggle = ref(false)
 const name = ref('')
 
-const customize = customizeStore()
+const customize = settingsStore()
 const {pauseTyping } = storeToRefs(customize)
 
 const store = mainStore()

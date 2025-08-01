@@ -23,7 +23,7 @@
 <script setup>
 import {storeToRefs} from 'pinia'
 import {themeStore}  from '../store/themeStore'
-import { customizeStore } from '../store/customizeStore'
+import { settingsStore } from '../store/settingsStore'
 import pass from '../components/svg/pass.vue'
 import fail from '../components/svg/fail.vue'
 import LineChart from '../components/LineChart.vue'
@@ -32,7 +32,7 @@ import { resultStore } from '../store/resultStore'
 const resultstore = resultStore()
 const {resultSections, difficultyStyle} = storeToRefs(resultstore)
 
-const customize = customizeStore()
+const customize = settingsStore()
 const { difficulty} = storeToRefs(customize)
 
 const theme_ = themeStore()

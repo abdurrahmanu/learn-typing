@@ -6,7 +6,7 @@
     class="relative inline">
         <Cursor :index="currentIndex" />
         <div 
-        :class="[!customizers['no-space'] && 'whitespace-pre-wrap']" 
+        :class="[!settings['no-space'] && 'whitespace-pre-wrap']" 
         class="relative inline">
             <span  
             :class="[className, blurStyle, pulseStyle]"
@@ -22,7 +22,7 @@ import { computed, watch, ref, onMounted } from 'vue';
 import {storeToRefs} from 'pinia'
 import {mainStore} from '../store/mainStore'
 import {themeStore}  from '../store/themeStore'
-import { customizeStore }  from '../store/customizeStore'
+import { settingsStore }  from '../store/settingsStore'
 import { typingStateStore } from '../store/typingStateStore';
 import { nextStore } from '../store/nextStore';
 import { timerStore } from '../store/timerStore';
@@ -50,8 +50,8 @@ const charEl = ref(null)
 
 const {test} = currentTest.value
 
-const customize = customizeStore()
-const { customizers, cursorType, blind } = storeToRefs(customize)
+const customize = settingsStore()
+const { settings, cursorType, blind } = storeToRefs(customize)
 
 const emit = defineEmits(['equal', 'unequal'])
 const props = defineProps({
@@ -123,7 +123,7 @@ onMounted(() => {
             }
 
             if (playerInputLength.value === test.length) {
-                if (customizers.value['timer']) beatCountdown.value = true
+                if (settings.value['timer']) beatCountdown.value = true
                 testCompleted.value = true
             }
         }
@@ -150,7 +150,7 @@ watch([currentIndex, blind, goNext], ([newCurrent, newBlind, newNext]) => {
 })
 
 const blurStyle = computed(() => {
-    if (customizers.value['blur']) {        
+    if (settings.value['blur']) {        
         return allSpacesIndex.value[typedWhiteSpaces.value + 1] && props.index > allSpacesIndex.value[typedWhiteSpaces.value + 1] ? 'blur-[7px]' : props.index > allSpacesIndex.value[typedWhiteSpaces.value] ? 'blur-[1px]' : ''
     }
 })

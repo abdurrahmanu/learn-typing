@@ -2,7 +2,7 @@ import {storeToRefs} from 'pinia'
 import {mainStore} from '../store/mainStore'
 import {nextStore} from '../store/nextStore'
 import { countdownStore } from '../store/countdownStore';
-import { customizeStore } from '../store/customizeStore';
+import { settingsStore } from '../store/settingsStore';
 import {characterStore} from '../store/characterStore'
 import {timerStore} from '../store/timerStore'
 import { typingStateStore } from '../store/typingStateStore';
@@ -48,8 +48,8 @@ export default function useWatchers({
     const nextstore = nextStore()
     const {generateNewTest} = nextstore
         
-    const customize = customizeStore()
-    const { customizers, hideElements, toggleCapsToast, pauseTyping, settingsToUpdate } = storeToRefs(customize)
+    const customize = settingsStore()
+    const { settings, hideElements, toggleCapsToast, pauseTyping, settingsToUpdate } = storeToRefs(customize)
     
     const mainstore = mainStore()
     const { testContainerEl} = storeToRefs(mainstore)
@@ -118,7 +118,7 @@ export default function useWatchers({
       
       if (completed) {
           watch(completed, (newVal) => {
-            if (customizers.value['timer']) clearCounter()   
+            if (settings.value['timer']) clearCounter()   
             if (newVal) {
                 if (navigator.onLine && login.value) {
                     userInfo.value.testsFinished = Number(userInfo.value.testsFinished) + 1

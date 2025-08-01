@@ -14,13 +14,13 @@
 import {ref} from 'vue'
 import {themeStore}  from '../store/themeStore'
 import { storeToRefs } from 'pinia';
-import { customizeStore } from '../store/customizeStore';
+import { settingsStore } from '../store/settingsStore';
 
 const theme_ = themeStore()
 const {theme} = storeToRefs(theme_)
 
-const customizestore = customizeStore()
-const {settingsToUpdate} = storeToRefs(customizestore)
+const settingstore = settingsStore()
+const {settingsToUpdate} = storeToRefs(settingstore)
 
 const colors = ref([
     'dark',
