@@ -1,7 +1,7 @@
 <template>
     <div @click="customize" class="relative">
         <div class="flex w-fit peer">
-            <closedEye v-if="blind" :id="!isMobile() && 'focus'" class="w-5" />
+            <closedEye v-if="settings['blind-mode']" :id="!isMobile() && 'focus'" class="w-5" />
             <openEye v-else :id="!isMobile() && 'focus'" class="w-5" />
         </div>
     </div>
@@ -15,14 +15,9 @@ import { isMobile } from '../composables/isMobile';
 import { storeToRefs } from 'pinia';
 
 const settingstore = settingsStore()
-const {blind, settingsToUpdate} = storeToRefs(settingstore)
+const {settings} = storeToRefs(settingstore)
 
 const customize = () => {
-    blind.value = !blind.value
-    settingsToUpdate.value.push({
-        name: Object.keys({blind})[0],
-        value: blind.value
-    })
-
+    settings.value['blind-mode'] = !settings.value['blind-mode']
 }
 </script>

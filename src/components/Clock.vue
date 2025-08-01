@@ -54,22 +54,22 @@ const typingstatestore = typingStateStore()
 const {testCompleted} = storeToRefs(typingstatestore)
 
 const customize = settingsStore()
-const {settings, difficulty, repeat} = storeToRefs(customize)
+const {settings, difficulty} = storeToRefs(customize)
 
 const go = () => {
-    repeat.value = true
+    settings.value['repeat'] = true
     goNext.value = true
     setTimeout(() => {
-        repeat.value = false
+        settings.value['repeat'] = false
     }, 0);
 }
 
 const isCountdown = computed(() => {
-    return settings.value['timer']
+    return settings.value['countdown']
 })
 
 const toggleTimer = () => {
-    settings.value['timer'] = !settings.value['timer']
+    settings.value['countdown'] = !settings.value['countdown']
 }
 
 watch(countdown, newVal => {
@@ -84,7 +84,7 @@ watch(difficulty, newVal => changeLevel(difficulty.value))
 
 const changeLevel = (lvl) => {
     level.value = lvl
-    if (!isCountdown.value) settings.value['timer'] = true
+    if (!isCountdown.value) settings.value['countdown'] = true
     countdown.value = timer(lvl)
     go()
 }

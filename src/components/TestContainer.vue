@@ -1,7 +1,7 @@
 <template>
     <div class="pt-16 w-[90%] max-w-[1500px] mx-auto">
         <div :style="computedStyle" class="flex items-center pb-2 justify-between m-auto">
-            <p v-if="!settings['timer']"></p>
+            <p v-if="!settings['countdown']"></p>
             <Countdown v-else :start="beginCountdown"/>
             <restart 
             v-if="canRestart" 

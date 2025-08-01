@@ -22,8 +22,6 @@ export const userData = () => {
         config: [settings.value, disableOption.value],
         cursor: 'cursor',
         theme: window.matchMedia("(prefers-color-scheme: dark)").matches ?  'dark' : 'white',
-        backspace: true,
-        blind: false,
         fontsize: 50,
         testLInes: 3,
         userInfo: userInfo.value,

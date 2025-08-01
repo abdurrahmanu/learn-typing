@@ -44,7 +44,7 @@ watch(range, (newVal) => {
     })
 
     if (playerInputLength.value) {        
-        if (settings.value['timer']) clearCounter()
+        if (settings.value['countdown']) clearCounter()
         goNext.value = true
     }
 })

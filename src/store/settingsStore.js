@@ -10,12 +10,8 @@ export const settingsStore = defineStore('settingsStore', () => {
     const toggleCustomTestModal = ref(false)
     const pauseTyping = ref(true)
     const hideElements = ref(isMobile() ? true : false)
-    const cursorType = ref('border')
     const difficulty = ref('beginner')
-    const backspace = ref(true)
-    const repeat = ref(false)
     const textPosition = ref('left')
-    const blind = ref(false)
     const toggleCapsToast = ref(false)
     const mixCharacters = ref(false)
     const charsArray = ref([])
@@ -27,11 +23,9 @@ export const settingsStore = defineStore('settingsStore', () => {
     const nextstore = nextStore()
     const {goNext} = storeToRefs(nextstore)
 
-    const isBlindMode = computed(() => {
-        return blind.value && route.value === 'home'
-    })
-
     const settings = ref({
+        'cursor': 'border',
+        'repeat': false,
         'stop-on-error': false,
         'test-length': 'auto',
         'words-type': 'frequent', 
@@ -50,7 +44,12 @@ export const settingsStore = defineStore('settingsStore', () => {
         'arrangement': '',
         'double-words': false,
         'capslock': true,
-        'timer': false,
+        'countdown': false,
+        'blind-mode': false,
+    })
+
+    const isBlindMode = computed(() => {
+        return settings.value['blind-mode'] && route.value === 'home'
     })
 
     const disableOption = ref({
@@ -59,18 +58,18 @@ export const settingsStore = defineStore('settingsStore', () => {
 
     const quickSettingss = computed(() => {
         return {
-        'test-length' : isMobile() ? ['auto', 10, 20, 30 ] : ['auto', 10, 20, 30, 50, 100],
-        'test-type' : ['quotes', 'words', 'custom', 'characters'],
-        'words-type' : ['frequent', 'common', 'rare'],
-        'caps' : ['caps'],
-        'punctuation' : ['punctuations'],
-        'numbers' : ['numbers'],
-        'arrangement': ['reverse', 'jumble'],
-        'spaced': ['space'],
+            'test-length' : isMobile() ? ['auto', 10, 20, 30 ] : ['auto', 10, 20, 30, 50, 100],
+            'test-type' : ['quotes', 'words', 'custom', 'characters'],
+            'words-type' : ['frequent', 'common', 'rare'],
+            'caps' : ['caps'],
+            'punctuation' : ['punctuations'],
+            'numbers' : ['numbers'],
+            'arrangement': ['reverse', 'jumble'],
+            'spaced': ['space'],
         }
     })
 
-    const changeQuickSettings = (group, selection) => {
+    const toggleQuickSetting = (group, selection) => {
         if (settings.value[group] === selection) settings.value[group] = ''
         else settings.value[group] = selection
 
@@ -90,7 +89,7 @@ export const settingsStore = defineStore('settingsStore', () => {
     }
 
     const checkQuickSettings = (option, key) => {
-        let selection = +key || key
+        let selection = isFinite(key) ? +key : key
         let group = option
         let arr = ['arrangement', 'case', 'spaced']
 
@@ -111,43 +110,17 @@ export const settingsStore = defineStore('settingsStore', () => {
                 if (settings.value['reverse']) settings.value['reverse'] = false
             } 
         }
-        changeQuickSettings(group, selection)   
+
+        toggleQuickSetting(group, selection)   
     }
 
     const updateSingleSetting = (setting, newVal) => {
         setting = setting.toLowerCase()
 
-        if (setting === 'backspace') {
-            backspace.value = newVal
+        if (setting in settings.value) {
+            settings.value[setting] = newVal
         }
-        else if (setting === 'blind mode') {
-            blind.value = newVal
-        }
-        else if (setting === 'blur') {
-            settings.value['blur'] = newVal
-        }
-        else if (setting === 'caps lock') {
-            settings.value['capslock'] = newVal
-        }
-        else if (setting === 'countdown') {
-            settings.value['timer'] = newVal
-        }
-        else if (setting === 'custom case') {
-            settings.value['camel-case'] = newVal
-        }
-        else if (setting === 'double words') {
-            settings.value['double-words'] = newVal
-        }
-        else if (setting === 'no space') {
-            settings.value['no-space'] = newVal
-        }
-        else if (setting === 'stop on error') {
-            if (!backspace.value) settings.value['stop-on-error'] = false
-            settings.value['stop-on-error'] = newVal
-        }
-        else if (setting === 'uppercase') {
-            settings.value['all-caps'] = newVal
-        }
+
         else if (setting === 'show border') {
             showBorder.value = newVal
         }
@@ -161,16 +134,12 @@ export const settingsStore = defineStore('settingsStore', () => {
     return {
         disableOption,
         difficulty,
-        cursorType,
         showBorder,
         settings,
         quickSettingss,
         hideElements,
-        backspace,
-        blind,
         checkQuickSettings, 
         updateSingleSetting,
-        repeat,
         textPosition,
         pauseTyping,
         toggleCustomTestModal,

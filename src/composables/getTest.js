@@ -13,7 +13,7 @@ export async function getTest () {
     }
 
     const settingstore = settingsStore()
-    const {settings, customChoice, repeat, mixCharacters, charsArray} = storeToRefs(settingstore)
+    const {settings, customChoice, mixCharacters, charsArray} = storeToRefs(settingstore)
 
     const mainstore = mainStore()
     const {customTests, storedTest} = storeToRefs(mainstore)
@@ -33,7 +33,7 @@ export async function getTest () {
         })
     }).flat()
 
-    if (repeat.value) {
+    if (settings.value['repeat']) {
         test = {
             author: storedTest.value.author,
             test: storedTest.value.test,

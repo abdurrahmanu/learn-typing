@@ -19,7 +19,7 @@ export default function inputEvent (event) {
     const {incorrectCharCount} = storeToRefs(characterstore)
     
     const customize = settingsStore()
-    const {backspace, toggleCapsToast, settings} = storeToRefs(customize)
+    const {toggleCapsToast, settings} = storeToRefs(customize)
 
     const eventData = event.key || event.data
     const eventType  = event.key || event.inputType
@@ -46,7 +46,7 @@ export default function inputEvent (event) {
     }
 
     const invalidBackspaceEvent = () => {
-        let noError = !backspace.value || !incorrectCharCount.value || !playerInputLength.value
+        let noError = !settings.value['backspace'] || !incorrectCharCount.value || !playerInputLength.value
         return (eventType === 'Backspace' || eventType === 'deleteContentBackward') && noError
     }
 
@@ -79,7 +79,7 @@ export default function inputEvent (event) {
     }
 
     const startTimer = () => {
-        if (settings.value['timer']) {
+        if (settings.value['countdown']) {
             beatCountdown.value = false
             beginCountdown.value = true
         }

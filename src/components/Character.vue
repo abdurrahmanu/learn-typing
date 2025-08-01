@@ -51,7 +51,7 @@ const charEl = ref(null)
 const {test} = currentTest.value
 
 const customize = settingsStore()
-const { settings, cursorType, blind } = storeToRefs(customize)
+const { settings } = storeToRefs(customize)
 
 const emit = defineEmits(['equal', 'unequal'])
 const props = defineProps({
@@ -123,14 +123,14 @@ onMounted(() => {
             }
 
             if (playerInputLength.value === test.length) {
-                if (settings.value['timer']) beatCountdown.value = true
+                if (settings.value['countdown']) beatCountdown.value = true
                 testCompleted.value = true
             }
         }
     })
 })
 
-watch([currentIndex, blind, goNext], ([newCurrent, newBlind, newNext]) => {
+watch([currentIndex, goNext], ([newCurrent, newBlind, newNext]) => {
 
     className.value = {
         // UNTYPED CHARS
@@ -138,14 +138,14 @@ watch([currentIndex, blind, goNext], ([newCurrent, newBlind, newNext]) => {
         'text-zinc-500': theme.value === 'white' && props.index > playerInputLength.value,
 
         // CORRECT CHARS
-        'text-green-400': !blind.value && !newCurrent && equality.value && theme.value === 'dark'&& !blind.value,
-        'text-green-500': !blind.value && !newCurrent && equality.value && theme.value === 'white' && !blind.value,
+        'text-green-400': !settings.value['blind-mode'] && !newCurrent && equality.value && theme.value === 'dark'&& !settings.value['blind-mode'],
+        'text-green-500': !settings.value['blind-mode'] && !newCurrent && equality.value && theme.value === 'white' && !settings.value['blind-mode'],
         
         // INCORRECT CHARS
-        'text-red-500': !blind.value && !currentIndex.value && !equality.value && theme.value === 'dark',
-        'text-red-600': !blind.value && !currentIndex.value && !equality.value && theme.value === 'white',
+        'text-red-500': !settings.value['blind-mode'] && !currentIndex.value && !equality.value && theme.value === 'dark',
+        'text-red-600': !settings.value['blind-mode'] && !currentIndex.value && !equality.value && theme.value === 'white',
 
-        'opacity-100 animate-pulse' : (cursorType.value === 'pulse' || cursorType === 'word-pulse') && props.character === ' ',
+        'opacity-100 animate-pulse' : (settings.value['cursor'] === 'pulse' || settings.value['cursor'] === 'word-pulse') && props.character === ' ',
     }
 })
 
@@ -156,7 +156,7 @@ const blurStyle = computed(() => {
 })
 
 const pulseStyle = computed(() => {
-    if (cursorType.value === 'word-pulse') {        
+    if (settings.value['cursor'] === 'word-pulse') {        
         return (
             typedWhiteSpaces.value === 0 && props.index < allSpacesIndex.value[0] + 1
         ) || 

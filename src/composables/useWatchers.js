@@ -22,7 +22,6 @@ export default function useWatchers({
     playerInput: input,
     scrollTextContainer: scrollContainer,
     settingsToUpdate: update,
-    beginTest: begin
 }) {
     const router = useRouter()
 
@@ -30,10 +29,10 @@ export default function useWatchers({
     const {login} = storeToRefs(authstore)
 
     const userstore = userDataStore()
-    const {userHistory, userInfo, bestStats} = storeToRefs(userstore)
+    const {userHistory, userInfo} = storeToRefs(userstore)
 
     const typingstatestore = typingStateStore()
-    const {inputEl, testCompleted, halfWayReset, completionLevel} = storeToRefs(typingstatestore)
+    const {inputEl, testCompleted, halfWayReset} = storeToRefs(typingstatestore)
     const {resetTypingState} = typingstatestore
     
     const timerstore = timerStore()
@@ -118,7 +117,7 @@ export default function useWatchers({
       
       if (completed) {
           watch(completed, (newVal) => {
-            if (settings.value['timer']) clearCounter()   
+            if (settings.value['countdown']) clearCounter()   
             if (newVal) {
                 if (navigator.onLine && login.value) {
                     userInfo.value.testsFinished = Number(userInfo.value.testsFinished) + 1
@@ -171,13 +170,5 @@ export default function useWatchers({
                 settingsToUpdate.value = []
             }
         }, {deep: true})
-      }
-
-      if (begin) {
-        watch(begin, newVal => {
-            if (newVal) {
-
-            }
-        })
       }
 }

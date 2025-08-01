@@ -19,17 +19,14 @@ export const fetchData = (data) => {
     const {loadingApp} = storeToRefs(connect)
 
     const customize = settingsStore()
-    const { settings, disableOption, cursorType, difficulty, blind, backspace } = storeToRefs(customize)
+    const { settings, disableOption, difficulty } = storeToRefs(customize)
 
     loadingApp.value = false
     
     theme.value = data.theme || theme.value
     font.value = data.fontsize || font.value
     range.value = (font.value - 16) / 0.26
-    cursorType.value = data.cursor || cursorType.value
-    blind.value = data.blind || false
     difficulty.value = data.difficulty || difficulty.value
-    backspace.value = data.backspace || backspace.value
     settings.value = data.config[0] || settings.value
     disableOption.value = data.config[1] || disableOption.value
     customTests.value = data.customTests || customTests.value['demo']

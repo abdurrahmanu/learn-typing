@@ -30,7 +30,7 @@ export const resultStore = defineStore('resultStore', () => {
         return Math.round((resultData.value.correctCharCount/(test.value.length) * 100))
     })
 
-    const failedToBeatCountdown = computed(() => settings.value['timer'] && !beatCountdown.value)
+    const failedToBeatCountdown = computed(() => settings.value['countdown'] && !beatCountdown.value)
 
     const accuracyBasedOnLevels = () => {
         const accuracyObject = {

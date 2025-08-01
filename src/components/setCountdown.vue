@@ -1,16 +1,16 @@
 <template>
     <div :class="[theme === 'dark' ? 'hover:bg-neutral-800' : 'hover:bg-zinc-200']" class="py-2 pl-5">
         <div class="flex justify-between w-full p-1 border border-transparent rounded-sm ">
-            <div @click="settings['timer'] = !settings['timer']" class="flex gap-3 items-center w-fit">
+            <div @click="settings['countdown'] = !settings['countdown']" class="flex gap-3 items-center w-fit">
                 <div class="relative w-4 h-4">
-                    <input name="countdown" :checked="settings['timer']"  type="checkbox" class="appearance-none shadow-sm shadow-black w-4 h-4 peer ring-blue-500 rounded-full hover:ring-[2px] ring-[1px] hover:ring-blue-500" id="">
+                    <input name="countdown" :checked="settings['countdown']"  type="checkbox" class="appearance-none shadow-sm shadow-black w-4 h-4 peer ring-blue-500 rounded-full hover:ring-[2px] ring-[1px] hover:ring-blue-500" id="">
                     <good />
                 </div>
                 <label class="text-[13px] font-bold uppercase w-fit gap-2 flex items-center">
                     <div>Countdown</div>
-                    <PlayTimer v-if="settings['timer']" class="inline-block w-5" /> 
-                    <PauseTimer v-if="!settings['timer']" class="inline-block w-5" />
-                    <div class="px-1 leading-normal rounded-full text-[10px]" :class="[!settings['timer'] ? 'text-[#4d7c0f]' : 'text-[#a16207]']">{{ !settings['timer'] ? 'easy' : 'medium' }}</div>
+                    <PlayTimer v-if="settings['countdown']" class="inline-block w-5" /> 
+                    <PauseTimer v-if="!settings['countdown']" class="inline-block w-5" />
+                    <div class="px-1 leading-normal rounded-full text-[10px]" :class="[!settings['countdown'] ? 'text-[#4d7c0f]' : 'text-[#a16207]']">{{ !settings['countdown'] ? 'easy' : 'medium' }}</div>
                 </label>
             </div>
         </div>

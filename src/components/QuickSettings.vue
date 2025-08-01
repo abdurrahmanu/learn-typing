@@ -93,7 +93,7 @@ const theme_ = themeStore()
 const {appTheme}  = storeToRefs(theme_)
 
 const customize = settingsStore()
-const { quickSettingss, toggleCustomTestModal, pauseTyping, hideElements, settings, disableOption, repeat} = storeToRefs(customize)
+const { quickSettingss, toggleCustomTestModal, pauseTyping, hideElements, settings, disableOption} = storeToRefs(customize)
 const {checkQuickSettings} = customize
 
 const openCustomTestModal = () => {
@@ -107,9 +107,6 @@ const mouseLeave = (index) => hoverIndex.value = null
 
 const checkSelection = (key, option) => {
   const currentSelections = [settings.value['words-type'], settings.value['test-type'], settings.value['test-length'], settings.value['test-type'] ]
-
-  // if (!nextOptions.includes(option)) repeat.value = true
-  // else repeat.value = false
 
   let selection = +key || key
   if (currentSelections.includes(selection)) return

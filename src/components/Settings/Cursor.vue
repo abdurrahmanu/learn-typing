@@ -1,43 +1,37 @@
 <template>
-    <div class="flex flex-wrap gap-x-2">
-        <div @click="cursorType = 'border'" class="flex px-5 py-1 ring-[2px] cursor-pointer rounded-md" :class="[cursorType === 'border' ? 'ring-blue-500' : 'hover:ring-blue-800 hover:ring-[1px] ring-slate-500']">
-            <p class="border-[1px] w-fit border-blue-500">A</p>
-        </div>
-        <div @click="cursorType = 'cursor'" class="flex px-5 py-1 ring-[2px] cursor-pointer rounded-md" :class="[cursorType === 'cursor' ? 'ring-blue-500' : 'hover:ring-blue-800 hover:ring-[1px] ring-slate-500']">
-            <p class="border-l-[1px] w-fit border-l-blue-500 ">A</p>
-        </div>
-        <div @click="cursorType = 'underline'" class="flex px-5 py-1 ring-[2px] cursor-pointer rounded-md" :class="[cursorType === 'underline' ? 'ring-blue-500' : 'hover:ring-blue-800 hover:ring-[1px] ring-slate-500']">
-            <p class="border-b-[1px] w-fit border-b-blue-500">A</p>
-        </div>
-        <div @click="cursorType = 'pulse'" class="flex px-5 py-1 ring-[2px] cursor-pointer rounded-md" :class="[cursorType === 'pulse' ? 'ring-blue-500' : 'hover:ring-blue-800 hover:ring-[1px] ring-slate-500']">
-            <p class="w-fit pulse">A</p>
-        </div>
-        <div @click="cursorType = 'word-pulse'" class="flex px-5 py-1 ring-[2px] cursor-pointer rounded-md" :class="[cursorType === 'word-pulse' ? 'ring-blue-500' : 'hover:ring-blue-800 hover:ring-[1px] ring-slate-500']">
-            <p class="w-fit pulse">word</p>
+    <div class="flex gap-2">
+        <div 
+        v-for="(value, cursor, index) in allCursors" 
+        :key="index" 
+        @click="changeCursor(cursor)" 
+        class="flex px-5 py-1 ring-[2px] cursor-pointer rounded-md" 
+        :class="[cursorStyle(cursor)]">
+            <p class="w-fit border-blue-500" :class="value">A</p>
         </div>
     </div>
 </template>
 
 <script setup>
-import {watch, ref} from 'vue'
 import {storeToRefs} from 'pinia'
 import {settingsStore} from '../../store/settingsStore'
-import { themeStore } from '../../store/themeStore';
-
-const theme_ = themeStore()
-const {theme} = theme_
 
 const settingstore = settingsStore()
-const { cursorType, settingsToUpdate} = storeToRefs(settingstore)
+const { settings} = storeToRefs(settingstore)
 
-watch(cursorType, (newVal) => {
-    let cursor = newVal
+const allCursors = {
+    border: "border-[1px] border-blue-500",
+    cursor: "border-l-[1px] border-l-blue-500",
+    underline: "border-b-[1px] border-b-blue-500",
+    pulse: 'animate-pulse'
+}
 
-    settingsToUpdate.value.push({
-        name: Object.keys({cursor})[0],
-        value: cursor
-    })
-})
+const cursorStyle = (cursor) => {
+    return settings.value['cursor'] === cursor ? 'ring-blue-500' : 'hover:ring-blue-800 hover:ring-[1px] ring-slate-500'
+}
+
+const changeCursor = (cursor) => {
+    settings.value['cursor'] = cursor
+}
 </script>
 
 <style scoped>

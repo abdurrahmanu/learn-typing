@@ -15,7 +15,7 @@ const typingstatestore = typingStateStore()
 const {backspaceIsPressed, focus} = storeToRefs(typingstatestore)
 
 const settingstore = settingsStore()
-const { cursorType } = storeToRefs(settingstore)
+const { settings } = storeToRefs(settingstore)
 
 const props = defineProps({
     index: Boolean
@@ -23,9 +23,9 @@ const props = defineProps({
 
 const cursorStyle = computed(() => {
     return {
-        'border-blue-700 border-[1px]': focus.value && cursorType.value === 'border',
-        'border-blue-700 border-l-[2px]': focus.value && cursorType.value === 'cursor',
-        'border-blue-700 border-b-[2px]': focus.value && cursorType.value === 'underline'
+        'border-blue-700 border-[1px]': focus.value && settings.value['cursor'] === 'border',
+        'border-blue-700 border-l-[2px]': focus.value && settings.value['cursor'] === 'cursor',
+        'border-blue-700 border-b-[2px]': focus.value && settings.value['cursor'] === 'underline'
     }
 })
 

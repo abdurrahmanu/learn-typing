@@ -54,7 +54,7 @@ import {nextStore} from '../store/nextStore'
 
 const route = useRoute()
 const customize = settingsStore()
-const {toggleCustomTestModal, pauseTyping, settings, customChoice, repeat} = storeToRefs(customize)
+const {toggleCustomTestModal, pauseTyping, settings, customChoice} = storeToRefs(customize)
 
 const theme_ = themeStore()
 const {theme, appTheme } = storeToRefs(theme_)
@@ -118,7 +118,7 @@ const del = (key) => {
 }
 
 const use = (testName) => {
-    if (repeat.value) return
+    if (settings.value['repeat']) return
     settings.value['test-type'] = 'custom'
     customChoice.value = testName
     go()
