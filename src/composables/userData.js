@@ -25,7 +25,7 @@ export const userData = () => {
         backspace: true,
         blind: false,
         fontsize: 50,
-        textLines: 3,
+        testLInes: 3,
         userInfo: userInfo.value,
         bestStats: bestStats.value,
         userHistory: userHistory.value,

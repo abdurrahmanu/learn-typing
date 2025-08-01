@@ -4,12 +4,14 @@ import {ref, computed} from 'vue'
 export const mainStore = defineStore('mainStore', () => {
     const route = ref(null)
     const demo = ref(false)
-    const font = ref(30)
-    const range = ref((font.value - 16) / 0.26)
-    const textLines = ref(10)
+    const fontSize = ref(55)
+    const minFontSize = ref(25)
+    const maxFontSize = ref(120)
+    const testLInes = ref(10)
     const lineHeight = ref(1.5)
-    const testWidth = ref(20)
+    const testWidth = ref(200)
     const charWidth = ref(0)
+    const range = ref(fontSize.value)
 
     //Test container
     const testContainerEl = ref(null)
@@ -30,10 +32,22 @@ export const mainStore = defineStore('mainStore', () => {
     }) 
 
     const containerHeight = computed(() => {
-        return (font.value * lineHeight.value) * textLines.value
+        return (fontSize.value * lineHeight.value) * testLInes.value
+    })
+
+    const testStyle = computed(() => {
+        return {
+            'font-size': fontSize.value + 'px',
+            'line-height': lineHeight.value,
+            'height': `fit-content`,
+            'max-height': containerHeight.value + 'px',
+            'width': `${testWidth.value * charWidth.value}px`,
+            'max-width': '90%'
+        }
     })
 
     function validateTestLines() {
+        if (!(testContainerEl.value instanceof HTMLElement)) return
         let overflowPixels;
         const testBottom = testContainerEl.value.getBoundingClientRect().bottom
         const TestIsOutofScreenView = testBottom > window.innerHeight
@@ -41,8 +55,8 @@ export const mainStore = defineStore('mainStore', () => {
         if (TestIsOutofScreenView) {
             overflowPixels = testBottom - window.innerHeight  
             let newHeight = containerHeight.value - overflowPixels
-            let numberOfLines = Math.floor(newHeight / (font.value * lineHeight.value))
-            textLines.value = numberOfLines  
+            let numberOfLines = Math.floor(newHeight / (fontSize.value * lineHeight.value))
+            testLInes.value = numberOfLines - 1
         }   
         else {
             overflowPixels = 0
@@ -64,14 +78,17 @@ export const mainStore = defineStore('mainStore', () => {
         resetToDefault,
         validateTestLines,
         route,
-        font,
+        testStyle,
+        minFontSize,
+        maxFontSize,
+        fontSize,
         range,
         demo,
         testContainerEl,
         containerHeight,
         scrollDistance,
         lineHeight,
-        textLines,
+        testLInes,
         scrollTextContainer,
         currentTest,
         allSpacesIndex,

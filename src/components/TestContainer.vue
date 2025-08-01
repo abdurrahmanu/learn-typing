@@ -1,12 +1,12 @@
 <template>
     <div class="pt-16 w-[90%] max-w-[1500px] mx-auto">
-        <div class="flex pb-2 justify-between">
+        <div :style="computedStyle" class="flex items-center pb-2 justify-between m-auto">
             <p v-if="!customizers['timer']"></p>
             <Countdown v-else :start="beginCountdown"/>
             <restart 
             v-if="canRestart" 
             @click="goNext = true" 
-            class="w-6"/>
+            :style="{'width': halfTestFontSize + 'px'}"/>
             <WordCount />
         </div>
         <OnScreenInput />
@@ -39,14 +39,24 @@ const nextstore = nextStore()
 const {goNext} = storeToRefs(nextstore)
 
 const mainstore = mainStore()
-const { scrollTextContainer} = storeToRefs(mainstore)
+const { scrollTextContainer, fontSize, testStyle} = storeToRefs(mainstore)
 
 const customize = customizeStore()
 const { customizers} = storeToRefs(customize)
 
+const halfTestFontSize = computed(() => {
+    return fontSize.value < 40 ? fontSize.value : fontSize.value / 2
+})
+
 const canRestart = computed(() => {
     return !testCompleted.value && playerInputLength.value
 })
+
+const computedStyle = computed(() => ({
+    ...testStyle.value,
+    'font-size': (fontSize.value < 40 ? fontSize.value : fontSize.value / 2) + 'px'
+}))
+
 
 useWatchers({
     scrollTextContainer,

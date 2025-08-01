@@ -63,9 +63,9 @@ const modes = [
         extra: []
     },
     {
-        name: 'Test width',
-        desc: 'Maximum width of the test, this is measured in characters. Lowest should be atleast 5 characters',
-        options: ['on', 'off'],
+        name: 'Test Width',
+        desc: 'This sets the test width which is measured in number of characters. Minimum should be at least 20. When lower than 20 it is set to minimun, whem more than maximum container width, it is set to fit the container boundaries.',
+        options: [],
         extra: []
     },
     {
@@ -78,6 +78,12 @@ const modes = [
         name: 'Test Lines',
         desc: '',
         options: [],
+        extra: []
+    },
+    {
+        name: 'Show Border',
+        desc: 'This shows the test boundary style when enabled',
+        options: ['on', 'off'],
         extra: []
     },
     {

@@ -105,5 +105,9 @@ onUnmounted(() => {
 .bottom-right {
   @apply absolute bottom-0 right-[2px]
 }
+
+.range-style {
+    @apply w-full h-1 outline-none bg-blue-500 accent-blue-800 appearance-none
+}
 </style>
 

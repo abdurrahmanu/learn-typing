@@ -1,7 +1,13 @@
 <template>
     <div class="w-[90%]">
         <p>{{ fontSize }}px</p>
-        <input name="range" type="range" class="w-full h-1 outline-none bg-blue-500 accent-blue-800 appearance-none" v-model="range"/>
+        <input 
+        name="range" 
+        type="range" 
+        step="1"
+        :max="maxFontSize - minFontSize"
+        class="range-style" 
+        v-model="range"/>
     </div>
 </template>
 
@@ -15,7 +21,7 @@ import { typingStateStore } from '../../store/typingStateStore';
 import { mainStore } from '../../store/mainStore';
 
 const mainstore = mainStore()
-const {font, range} = storeToRefs(mainstore)
+const {fontSize, range, minFontSize, maxFontSize} = storeToRefs(mainstore)
 
 const nextstore = nextStore()
 const {goNext} = storeToRefs(nextstore)
@@ -29,17 +35,12 @@ const { customizers, settingsToUpdate} = storeToRefs(customizestore)
 const count = countdownStore()
 const {clearCounter} = count
 
-const fontSize = computed(() => {
-    return range.value <= 1 ? 60 : (60 + (range.value * 0.26)).toFixed(2)
-})
-
-watch(fontSize, (newVal) => {
-    font.value = newVal
-    let fontsize = newVal
-
+watch(range, (newVal) => {
+    fontSize.value = +newVal + minFontSize.value
+    
     settingsToUpdate.value.push({
-        name: Object.keys({fontsize})[0],
-        value: fontsize
+        name: Object.keys({fontSize})[0],
+        value: newVal
     })
 
     if (playerInputLength.value) {        

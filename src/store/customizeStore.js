@@ -1,5 +1,5 @@
 import {defineStore, storeToRefs} from 'pinia'
-import {ref, computed} from 'vue'
+import {ref, computed, reactive} from 'vue'
 import { isMobile } from '../composables/isMobile'
 import { mainStore } from './mainStore'
 import { nextStore } from './nextStore'
@@ -12,7 +12,6 @@ export const customizeStore = defineStore('customizeStore', () => {
     const toggleCustomTestModal = ref(false)
     const pauseTyping = ref(true)
     const configs = ref([])
-    const showSettings = ref(false)
     const hideElements = ref(isMobile() ? true : false)
     const cursorType = ref('border')
     const difficulty = ref('beginner')
@@ -26,6 +25,8 @@ export const customizeStore = defineStore('customizeStore', () => {
     const shiftKey = ref(false)
     const mixCharacters = ref(false)
     const charsArray = ref([])
+    const showBorder = ref(false)
+    
 
     const mainstore = mainStore()
     const {route} = storeToRefs(mainstore)
@@ -156,6 +157,10 @@ export const customizeStore = defineStore('customizeStore', () => {
         else if (setting === 'uppercase') {
             customizers.value['all-caps'] = newVal
         }
+        else if (setting === 'show border') {
+            console.log(newVal)
+            showBorder.value = newVal
+        }
         // if (setting === 'font size') {
             
         // }
@@ -181,7 +186,7 @@ export const customizeStore = defineStore('customizeStore', () => {
         difficulty,
         configs,
         cursorType,
-        showSettings,
+        showBorder,
         customizers,
         quickSettingsGroups,
         hideElements,

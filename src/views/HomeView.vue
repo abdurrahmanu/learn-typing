@@ -18,7 +18,6 @@ import { typingStateStore } from '../store/typingStateStore';
 import { storeToRefs } from 'pinia';
 import { onMounted, onUnmounted } from 'vue';
 import preventScroll from '../composables/preventScroll'
-import preventKeyBoardScroll from '../composables/preventKeyBoardScroll'
 import inputEvent from '../composables/inputEvent'
 import evaluateInput from '../composables/evaluateInput';
 import Range from '../components/Range.vue';

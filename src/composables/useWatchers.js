@@ -18,7 +18,6 @@ export default function useWatchers({
     focus: focus, 
     goNext: next, 
     testCompleted: completed, 
-    font: font, 
     toggleCapsToast: capsToggle, 
     playerInput: input,
     scrollTextContainer: scrollContainer,
@@ -54,7 +53,7 @@ export default function useWatchers({
     
     const mainstore = mainStore()
     const { testContainerEl} = storeToRefs(mainstore)
-    const {resetToDefault} = mainstore
+    const {resetToDefault, validateTestLines} = mainstore
     
     const count = countdownStore()
     const {clearCounter} = count
@@ -166,7 +165,8 @@ export default function useWatchers({
 
       if (update) {
         watch(update, newVal => {
-            if (newVal.length) {
+            if (newVal.length) {                
+                validateTestLines()
                 updateDB(newVal)
                 settingsToUpdate.value = []
             }

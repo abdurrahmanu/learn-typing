@@ -1,38 +1,35 @@
 <template>
-    <div class="flex flex-wrap gap-x-2 font-[400] gap-y-2 items-center">
-        <div @click="difficulty = 'beginner'" class="cursor-pointer flex px-3 py-1 ring-[1px] rounded-l-md hover:ring-black" :class="[difficulty === 'beginner' ? 'bg-[#44b0d3] ring-transparent text-black font-bold' : 'ring-[#44b0d3]']">
-            <p class="w-fit">Beginner</p>
-        </div>
-        <div @click="difficulty = 'amateur'" class="cursor-pointer flex px-3 py-1 ring-[1px] hover:ring-black" :class="[difficulty === 'amateur' ? 'bg-[#ffa07a] ring-transparent text-black font-bold' : 'ring-[#ffa07a]']">
-            <p class="w-fit">Amateur</p>
-        </div>
-        <div @click="difficulty = 'expert'" class="cursor-pointer flex px-3 py-1 ring-[1px] rounded-r-md hover:ring-black" :class="[difficulty === 'expert' ? 'ring-transparent bg-[#4d5f43] text-black font-bold' : 'ring-[#2e4053]']">
-            <p class="w-fit">Expert</p>
+    <div>
+        <div class="flex flex-wrap gap-2">
+            <div
+            v-for="(diff, index) in difficulties" 
+            :key="index" 
+            @click="changeDiff(diff)" 
+            class="cursor-pointer flex px-3 py-1 ring-[1px] rounded-md mx-1" 
+            :class="[difficulty === diff ? 'ring-green-500 text-green-500' : 'ring-black hover:ring-4']">
+                {{diff}}
+            </div>
         </div>
 
-        <div :class="[appTheme,]" class="flex gap-[2px] rounded-md text-black">
-            <div class="py-1 rounded-l-md" :class="[appTheme]">Accuracy: {{ result.accuracy }}</div>
-            <div class="px-2 py-1" :class="[appTheme]">WPM: {{ result.wpm }}</div>
-            <div class="px-2 py-1 rounded-r-md" :class="[appTheme]">Error percentage {{ result.errorPercentage }}</div>
+        <div class="flex flex-wrap gap-3 pt-4">
+            <div>Accuracy: {{ result.accuracy }}</div>
+            <div>WPM: {{ result.wpm }}</div>
+            <div>Error percentage {{ result.errorPercentage }}</div>
         </div>
     </div>
 </template>
 
 <script setup>
-import {watch, ref, computed} from 'vue'
+import {watch, computed} from 'vue'
 import {storeToRefs} from 'pinia'
 import {customizeStore} from '../../store/customizeStore'
-import { themeStore } from '../../store/themeStore';
-
-const theme_ = themeStore()
-const {appTheme} = theme_
 
 const customizestore = customizeStore()
 const { difficulty, settingsToUpdate } = storeToRefs(customizestore)
 
-const bg = computed(() => {
-    return difficulty.value === 'beginner' ? 'bg-[#44b0d3]' : difficulty.value === 'amateur' ? 'bg-[#ffa07a]' : 'bg-[#4d5f43]'
-})
+const difficulties = ['beginner', 'amateur', 'expert']
+
+const changeDiff = (diff) => difficulty.value = diff
 
 const result = computed(() => {
     return {        
@@ -43,7 +40,6 @@ const result = computed(() => {
 })
 
 watch(difficulty, (newVal) => {
-    let difficulty = newVal
         settingsToUpdate.value.push({
         name: Object.keys({difficulty})[0],
         value: difficulty

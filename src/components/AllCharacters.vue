@@ -7,9 +7,9 @@
             @click="focusInput"
             aria-describedby="full-text" 
             ref="testContainerEl" 
-            class="container-style m-auto"
-            :style="computedStyle" 
-            :class="[ wordBreak, 
+            class="container-style"
+            :style="testStyle" 
+            :class="[ wordBreak, borderStyle,
             (textPosition === 'center') && 'text-center',
             (textPosition === 'left') && 'text-left'] ">                 
                 <Character
@@ -30,13 +30,13 @@ import { mainStore } from '../store/mainStore';
 import { customizeStore } from '../store/customizeStore';
 import { isTouchScreenDevice } from '../composables/isTouchScreenDevice';
 import focusButton from './focusButton.vue';
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, onUpdated } from 'vue';
 
 const typingstatestore = typingStateStore()
 const { inputEl} = storeToRefs(typingstatestore)
 
 const mainstore = mainStore()
-const { currentTest, font, testContainerEl, containerHeight, lineHeight, charWidth, testWidth} = storeToRefs(mainstore)
+const { currentTest, testContainerEl, testStyle} = storeToRefs(mainstore)
 const {validateTestLines} = mainstore
 
 const test = computed(() => {
@@ -44,32 +44,20 @@ const test = computed(() => {
 })
 
 const customize = customizeStore()
-const { customizers, textPosition} = storeToRefs(customize)
-
-const computedStyle = computed(() => {
-    console.log(testWidth.value * charWidth.value)
-    return {
-        'height' : containerHeight.value + 'px', 
-        'font-size': font.value + 'px',
-        'line-height': lineHeight.value,
-        'max-height': containerHeight.value + 'px',
-        'height': `min(fit-content, ${containerHeight.value}px)`,
-        'width': `min(fit-content, ${testWidth.value * charWidth.value}px)`,
-    }
-})
+const { customizers, textPosition, showBorder} = storeToRefs(customize)
 
 const wordBreak = computed(() => {
     return (customizers.value['no-space'] || customizers.value['test-type'] === 'custom' || customizers.value['test-type'] === 'characters') && 'break-words'
+})
+
+const borderStyle = computed(()=> {
+    return showBorder.value && 'ring-[1px] ring-neutral-900 rounded-md'
 })
 
 function focusInput() {
     if (isTouchScreenDevice()) {
         inputEl.value.focus()
     }
-}
-
-const width = {
-    //................. user selects width
 }
 
 onMounted(() => {
@@ -79,6 +67,6 @@ onMounted(() => {
 
 <style scoped>
 .container-style {
-    @apply scroll-smooth ring-[1px] px-2 overflow-y-scroll rounded-md ring-neutral-900
+    @apply scroll-smooth px-2 mx-auto overflow-hidden
 }
 </style>

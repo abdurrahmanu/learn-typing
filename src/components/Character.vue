@@ -45,7 +45,7 @@ const nextstore = nextStore()
 const {goNext} = storeToRefs(nextstore)
 
 const mainstore = mainStore()
-const { currentTest, testContainerEl, charWidth, containerHeight, allSpacesIndex, scrollTextContainer, scrollDistance, lineHeight, font, textLines } = storeToRefs(mainstore)
+const { currentTest, testContainerEl, charWidth, containerHeight, allSpacesIndex, scrollTextContainer, scrollDistance, lineHeight, fontSize, testLInes } = storeToRefs(mainstore)
 const charEl = ref(null)
 
 const {test} = currentTest.value
@@ -83,8 +83,8 @@ onMounted(() => {
                 const testBottom = testContainerEl.value.getBoundingClientRect().bottom
                 const charTop = charEl.value.getBoundingClientRect().top
                 const charBottom = charEl.value.getBoundingClientRect().bottom
-                const charFullHeight = (font.value * lineHeight.value)
-                const charLineHeightTop = (charFullHeight - font.value)/2
+                const charFullHeight = (fontSize.value * lineHeight.value)
+                const charLineHeightTop = (charFullHeight - fontSize.value)/2
 
                 const prevCharBottom = charEl.value.previousElementSibling && charEl.value.previousElementSibling.getBoundingClientRect().bottom 
                 const prevCharTop = charEl.value.previousElementSibling && charEl.value.previousElementSibling.getBoundingClientRect().top 
@@ -102,7 +102,7 @@ onMounted(() => {
                 if (firstCharInNextLIne) {
                     if (!backspaceIsPressed.value) {
                         if (bottomLine) {
-                            scrollDistance.value += testHeight * ((textLines.value - 1) || 1)/textLines.value
+                            scrollDistance.value += testHeight * ((testLInes.value - 1) || 1)/testLInes.value
                             scrollTextContainer.value = {
                                 top: scrollDistance.value
                             }
@@ -113,7 +113,7 @@ onMounted(() => {
                 if (lastCharInPrevLine) {
                     if (backspaceIsPressed.value) {
                         if (lastScrolledLine) {
-                            scrollDistance.value -= testHeight * ((textLines.value - 1) || 1)/textLines.value
+                            scrollDistance.value -= testHeight * ((testLInes.value - 1) || 1)/testLInes.value
                             scrollTextContainer.value = {
                                 top: scrollDistance.value
                             }

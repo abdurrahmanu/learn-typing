@@ -7,7 +7,7 @@ import {userDataStore}  from '../store/userDataStore'
 
 export const fetchData = (data) => {
     const store = mainStore()
-    const { customTests, font, range, textLines} = storeToRefs(store)
+    const { customTests, font, range, testLInes} = storeToRefs(store)
 
     const userstore = userDataStore()
     const {userInfo, bestStats, userHistory} = storeToRefs(userstore)
@@ -33,7 +33,7 @@ export const fetchData = (data) => {
     customizers.value = data.config[0] || customizers.value
     disableOption.value = data.config[1] || disableOption.value
     customTests.value = data.customTests || customTests.value['demo']
-    textLines.value = data.textLines || 3
+    testLInes.value = data.testLInes || 3
     userInfo.value = data.userInfo
     bestStats.value = data.bestStats
     userHistory.value = data.userHistory
