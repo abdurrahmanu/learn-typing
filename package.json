@@ -1,13 +1,75 @@
 {
   "name": "kiboard",
+  "description": "Typing App",
+  "author": "Ahmed Abdulrahman",
+  "main": "main.js",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
     "preview": "vite preview",
-    "host": "vite --host" 
+    "build": "vite build",
+    "host": "vite --host",
+    "electron:start": "electron .",
+    "electron:builder": "electron-builder",
+    "electron:dev": "vite dev & electron ."
   },
+  "build": {
+    "appId": "com.ahmadabdulrahman.kiboard",
+    "productName": "kiBoard",
+  "copyright": "Copyright © 2025 🕳️",
+  "directories": {
+    "output": "dist"
+  },
+  "files": [
+    "dist/**",        
+    "main.js",         
+    "preload.js",      
+    "node_modules/**", 
+    "package.json"
+  ],
+  "extraResources": [],
+  "asar": true,
+
+  "win": {
+    "target": [
+      {
+        "target": "nsis",
+        "arch": [
+          "x64",
+          "ia32"
+        ]
+      }
+    ],
+    "icon": "build/icons/kiboard.ico"  
+  },
+  "nsis": {
+    "oneClick": false,
+    "perMachine": false,
+    "allowToChangeInstallationDirectory": true,
+    "createDesktopShortcut": true,
+    "createStartMenuShortcut": true,
+    "shortcutName": "kiBoard"
+  },
+
+  "mac": {
+    "target": ["dmg"],
+    "icon": "build/icons/kiboard.icns" 
+  },
+
+  "linux": {
+    "target": ["AppImage"],
+    "icon": "build/icons/kiboard.png", 
+    "category": "Utility"
+  },
+
+  "publish": [
+    {
+      "provider": "generic",
+      "url": "https://yourdomain.com/downloads/" 
+    }
+  ]
+},
   "dependencies": {
     "@vueuse/firebase": "^12.0.0",
     "@vueuse/integrations": "^12.5.0",
@@ -24,6 +86,9 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.1.0",
     "autoprefixer": "^10.4.14",
+    "electron": "^37.2.5",
+    "electron-builder": "^26.0.12",
+    "electron-devtools-installer": "^4.0.0",
     "postcss": "^8.4.27",
     "tailwindcss": "^3.3.3",
     "vite": "^4.3.2"

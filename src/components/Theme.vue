@@ -1,5 +1,5 @@
 <template>
-    <div :class="[theme === 'dark' ? 'ring-white' : 'ring-black']" class='container center-x'>
+    <div :class="[theme === 'dark' ? 'ring-white' : 'ring-black']" class='container'>
         <div 
         v-for="(color, index) in colors" 
         :key="index" 
@@ -42,7 +42,7 @@ const toggleTheme = (color) => {
 
 <style scoped>
 .container {
-    @apply flex gap-1 rounded-full p-[3px] w-fit ring-[2px] bg-neutral-400 fixed m-auto bottom-2
+    @apply flex gap-1 rounded-full p-[3px] w-fit ring-[2px] h-fit bg-neutral-400
 }
 
 .color {

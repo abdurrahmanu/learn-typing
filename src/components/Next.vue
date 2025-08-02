@@ -1,5 +1,5 @@
 <template>
-    <div id="focus" class="mx-auto w-fit pt-20" v-if="homeOrResultRoute">        
+    <div id="focus" class="mx-auto w-fit" v-if="homeOrResultRoute">        
         <div v-if="isMobile()" @click="next" class="next">NEXT</div>
         <div v-else class="m-auto w-fit">Press <span @click="next" class="next">{{ testCompleted ? 'Enter' : 'Esc' }}</span> for next</div>
     </div>

@@ -11,7 +11,7 @@
       <div class="flex flex-col md:flex-row items-center gap-6">
         <div class="rounded-full w-24 h-24 border-4 border-sky-500 relative">
             <img
-              src="/vite.svg"
+              src="/kiboard.svg"
               alt="Profile"
               class="object-cover w-10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"/>
         </div>

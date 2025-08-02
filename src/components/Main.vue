@@ -4,9 +4,8 @@
         <div class="main">
             <Navbar />
             <RouterView />
-            <Next />
-            <Theme />
             <Modals_Popups_Toasts/>
+            <Footer />
         </div>
     </main>
 </template>
@@ -15,8 +14,7 @@
 import Modals_Popups_Toasts from './Modals_Popups_Toasts.vue'
 import Connectivity from './Connectivity.vue'
 import Navbar from './Navbar.vue'
-import Theme from './Theme.vue'
-import Next from './Next.vue';
+import Footer from './Footer.vue';
 
 import {themeStore}  from '../store/themeStore'
 import {storeToRefs} from 'pinia'

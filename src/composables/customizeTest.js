@@ -49,7 +49,7 @@ export function customizeTest({
             test = wordsArr.map((word, index) => {
                 const isLastWord = index === wordsArr.length - 1;
                 const addPunctuation = (index + 1) % spacing === 0
-                const punctuation = punctuations[Math.floor(Math.random() * punctuations.length)];
+                let punctuation = punctuations[Math.floor(Math.random() * punctuations.length)];
 
                 if (addPunctuation) {
                     totalPunctuations++
