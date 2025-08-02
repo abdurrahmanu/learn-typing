@@ -1,5 +1,5 @@
 <template>
-    <div class="w-[90%]">
+    <div>
         <p>{{ testWidth }}</p>
         <input 
         name="range" 
@@ -13,7 +13,6 @@
 </template>
 
 <script setup>
-import { isMobile } from '../../composables/isMobile';
 import { onMounted } from 'vue';
 import { mainStore } from '../../store/mainStore';
 import { settingsStore } from '../../store/settingsStore';

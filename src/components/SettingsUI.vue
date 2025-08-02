@@ -1,7 +1,11 @@
 <template>
-    <div class="px-5 space-y-6 py-3 pb-20 border-x border-x-black max-w-[1000px] mx-auto">
+    <div class="px-5 py-3 pb-20 text-sm border-x-black max-w-[900px] mx-auto">
         <SearchBar />
-        <div class="space-y-4" v-for="(mode, index) in modes" :key="index">
+        <div 
+        :class="[theme === 'dark' ? 'hover:bg-[#282a2d]': 'hover:bg-gray-400']"
+        class="space-y-4 p-4 transition-all duration-75" 
+        v-for="(mode, index) in modes" 
+        :key="index">
             <Mode 
             :name="mode.name" 
             :desc="mode.desc" />
@@ -16,8 +20,49 @@
 import Mode from './Settings/Mode.vue';
 import Options from './Settings/Options.vue';
 import SearchBar from './Settings/SearchBar.vue'
+import { themeStore } from '../store/themeStore';
+import { storeToRefs } from 'pinia';
+
+const themestore = themeStore()
+const {theme} = storeToRefs(themestore)
 
 const modes = [
+    {
+        name: 'Cursor',
+        desc: '',
+        options: null,
+        extra: []
+    },
+    {
+        name: 'Difficulty',
+        desc: '',
+        options: null,
+        extra: []
+    },
+    {
+        name: 'Test Width',
+        desc: 'This sets the test width which is measured in number of characters. Minimum should be at least 20. When lower than 20 it is set to minimun, whem more than maximum container width, it is set to fit the container boundaries.',
+        options: [],
+        extra: []
+    },
+    {
+        name: 'Font size',
+        desc: '',
+        options: null,
+        extra: []
+    },
+    {
+        name: 'Test Lines',
+        desc: '',
+        options: [],
+        extra: []
+    },
+    {
+        name: 'Show Border',
+        desc: 'This shows the test boundary style when enabled',
+        options: ['on', 'off'],
+        extra: []
+    },
     {
         name: 'Backspace',
         desc: 'Toggle to enable Backspace or delete key.',
@@ -54,42 +99,6 @@ const modes = [
         options: ['on', 'off'],
         extra: []
     },
-    {
-        name: 'Test Width',
-        desc: 'This sets the test width which is measured in number of characters. Minimum should be at least 20. When lower than 20 it is set to minimun, whem more than maximum container width, it is set to fit the container boundaries.',
-        options: [],
-        extra: []
-    },
-    {
-        name: 'Font size',
-        desc: '',
-        options: null,
-        extra: []
-    },
-    {
-        name: 'Test Lines',
-        desc: '',
-        options: [],
-        extra: []
-    },
-    {
-        name: 'Show Border',
-        desc: 'This shows the test boundary style when enabled',
-        options: ['on', 'off'],
-        extra: []
-    },
-    {
-        name: 'Cursor',
-        desc: '',
-        options: null,
-        extra: []
-    },
-    {
-        name: 'Difficulty',
-        desc: '',
-        options: null,
-        extra: []
-    }
 ]
 
 </script>

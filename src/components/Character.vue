@@ -9,7 +9,7 @@
         :class="[!settings['no-space'] && 'whitespace-pre-wrap']" 
         class="relative inline">
             <span  
-            :class="[className, blurStyle, pulseStyle]"
+            :class="[!blind && className, blurStyle, pulseStyle]"
             class="relative transition-opacity duration-75">
                 {{ character }}
             </span>
@@ -41,9 +41,6 @@ const {playerInputLength, testCompleted, playerLastInput, typedWhiteSpaces, spac
 const theme_ = themeStore()
 const { theme } = storeToRefs(theme_)
 
-const nextstore = nextStore()
-const {goNext} = storeToRefs(nextstore)
-
 const mainstore = mainStore()
 const { currentTest, testContainerEl, charWidth, containerHeight, allSpacesIndex, scrollTextContainer, scrollDistance, lineHeight, fontSize, testLInes } = storeToRefs(mainstore)
 const charEl = ref(null)
@@ -61,6 +58,7 @@ const props = defineProps({
 
 const currentIndex = computed(() => playerInputLength.value === props.index)
 const equality = computed(() => playerLastInput.value === test[props.index])
+const blind = computed(() => settings.value['blind-mode'])
 
 onMounted(() => {
     charWidth.value = charEl.value.getBoundingClientRect().right - charEl.value.getBoundingClientRect().left
@@ -123,40 +121,43 @@ onMounted(() => {
             }
 
             if (playerInputLength.value === test.length) {
-                if (settings.value['countdown']) beatCountdown.value = true
+                if (settings.value.countdown) beatCountdown.value = true
                 testCompleted.value = true
             }
         }
     })
 })
 
-watch([currentIndex, goNext], ([newCurrent, newBlind, newNext]) => {
-
+watch(currentIndex, newCurrent => {
     className.value = {
         // UNTYPED CHARS
         'text-slate-500': theme.value === 'dark' && props.index > playerInputLength.value,
         'text-zinc-500': theme.value === 'white' && props.index > playerInputLength.value,
 
         // CORRECT CHARS
-        'text-green-400': !settings.value['blind-mode'] && !newCurrent && equality.value && theme.value === 'dark'&& !settings.value['blind-mode'],
-        'text-green-500': !settings.value['blind-mode'] && !newCurrent && equality.value && theme.value === 'white' && !settings.value['blind-mode'],
+        'text-green-400': !blind.value && !newCurrent && equality.value && theme.value === 'dark'&& !blind.value,
+        'text-green-500': !blind.value && !newCurrent && equality.value && theme.value === 'white' && !blind.value,
         
         // INCORRECT CHARS
-        'text-red-500': !settings.value['blind-mode'] && !currentIndex.value && !equality.value && theme.value === 'dark',
-        'text-red-600': !settings.value['blind-mode'] && !currentIndex.value && !equality.value && theme.value === 'white',
+        'text-red-500': !blind.value && !currentIndex.value && !equality.value && theme.value === 'dark',
+        'text-red-600': !blind.value && !currentIndex.value && !equality.value && theme.value === 'white',
 
-        'opacity-100 animate-pulse' : (settings.value['cursor'] === 'pulse' || settings.value['cursor'] === 'word-pulse') && props.character === ' ',
+        'opacity-100 animate-pulse' : (settings.value.cursor === 'pulse' || settings.value.cursor === 'word-pulse') && props.character === ' ',
     }
 })
 
+const blindStyle = computed(() => {
+    return
+})
+
 const blurStyle = computed(() => {
-    if (settings.value['blur']) {        
+    if (settings.value.blur) {        
         return allSpacesIndex.value[typedWhiteSpaces.value + 1] && props.index > allSpacesIndex.value[typedWhiteSpaces.value + 1] ? 'blur-[7px]' : props.index > allSpacesIndex.value[typedWhiteSpaces.value] ? 'blur-[1px]' : ''
     }
 })
 
 const pulseStyle = computed(() => {
-    if (settings.value['cursor'] === 'word-pulse') {        
+    if (settings.value.cursor === 'word-pulse') {        
         return (
             typedWhiteSpaces.value === 0 && props.index < allSpacesIndex.value[0] + 1
         ) || 

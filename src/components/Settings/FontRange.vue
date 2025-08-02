@@ -1,5 +1,5 @@
 <template>
-    <div class="w-[90%]">
+    <div>
         <p>{{ fontSize }}px</p>
         <input 
         name="range" 

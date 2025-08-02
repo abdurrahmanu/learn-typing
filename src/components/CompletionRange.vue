@@ -1,6 +1,6 @@
 <template>
     <div v-show="!testCompleted && completionLevel" class="max-w-[700px] m-auto">
-        <div :class="theme === 'dark' ? 'bg-white' : 'bg-black'" :style="{'width': completionLevel + '%'}" class="h-[2px]"></div>
+        <div :class="theme === 'dark' ? 'bg-white' : 'bg-black'" :style="{'width': completionLevel + '%'}" class="h-1"></div>
     </div>
 </template>
 

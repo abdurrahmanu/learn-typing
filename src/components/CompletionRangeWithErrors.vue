@@ -1,6 +1,6 @@
 <template>
     <div ref="rangeEl" v-show="!testCompleted && completionLevel"  class="max-w-[700px] m-auto">
-        <div :style="{'width': completionLevel + '%'}" class="flex h-[2px]">
+        <div :style="{'width': completionLevel + '%'}" class="flex h-1">
             <div v-show="index <= playerInput.length - 1" :class="[playerInput[index] === alphabet && index <= playerInput.length - 1 ? 'bg-green-500' : 'bg-red-500', ]" :style="{'width': singleDivWidth + 'px'}" v-for="(alphabet, index) in currentTest.test" :key="index"></div>
         </div>
     </div>

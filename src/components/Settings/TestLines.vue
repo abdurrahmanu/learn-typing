@@ -1,5 +1,5 @@
 <template>
-    <div class="w-[90%]">
+    <div>
         <p>{{ testLInes }}</p>
         <input 
         name="range" 

@@ -1,5 +1,5 @@
 <template>
-    <div class="h-[1px]">
+    <div class="py-2 h-2">
         <CompletionRange v-if="isBlindMode" />
         <CompletionRangeWithErrors v-else />
     </div>

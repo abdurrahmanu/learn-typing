@@ -107,7 +107,7 @@ onUnmounted(() => {
 }
 
 .range-style {
-    @apply w-full h-1 outline-none bg-blue-500 accent-blue-800 appearance-none
+    @apply w-full h-1 outline-none bg-green-700 accent-green-500 appearance-none
 }
 </style>
 
