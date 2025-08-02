@@ -9,6 +9,7 @@ export function customizeTest({
     jumble,
     reverse,
     space,
+    repeat,
 }) {
     if (!caps && !camelCase && !allCaps) {
         test = test.toLowerCase()
@@ -104,11 +105,16 @@ export function customizeTest({
     }
 
     if (space) {
-        test = test.split('').join(' ').trim()
+        test = test.split('').map((char, index) => {
+            if (index === test.length - 1 || test[index + 1] === ' ' || char === ' ') return char
+            else return char + ' '
+        }).join('').trim()
     }
 
     if (reverse) {
-        test = test.split('').reverse().join('')
+        test = test.split(' ').map((word, index) => {
+            return word.split('').reverse().join('')
+        }).join(' ')
     }
 
     return test

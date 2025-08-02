@@ -39,6 +39,22 @@ export async function getTest () {
             test: storedTest.value.test,
             name: storedTest.value.name
         }
+
+        const params = {
+            allCaps : settings.value['all-caps'],
+            camelCase : settings.value['camel-case'],
+            noSpace : settings.value['no-space'],
+            test: test['test'],
+            jumble: settings.value['arrangement'] === 'jumble',
+            reverse: settings.value['arrangement'] === 'reverse',
+            space: settings.value['spaced'],
+            repeat: settings.value['repeat']
+        }
+
+        test['test'] = test['test'].replace(/[\r\n]+/g, ' ').trim();
+        test['test'] = customizeTest(params, test['test'])
+
+        return test
     }
 
     else if (testType === 'characters') {
