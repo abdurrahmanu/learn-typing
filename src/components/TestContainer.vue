@@ -3,7 +3,7 @@
         <div :style="computedStyle" class="flex items-center pb-2 justify-between m-auto">
             <p v-if="!settings['countdown']"></p>
             <Countdown v-else :start="beginCountdown"/>
-            <restart 
+            <restart
             v-if="canRestart" 
             @click="goNext = true" 
             :style="{'width': halfTestFontSize + 'px'}"/>

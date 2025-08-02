@@ -90,6 +90,7 @@ export async function getTest () {
         
         const index = Math.floor(Math.random() * quotes.length)
         test['test'] = quotes[index]
+        customChoice.value = ''
     }
 
     else if (testType === 'words') {
