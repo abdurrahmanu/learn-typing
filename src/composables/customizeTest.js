@@ -23,7 +23,7 @@ export function customizeTest({
             }).join('')
         }
 
-        if (allCaps) {
+        else if (allCaps) {
             test = test.toUpperCase()
         }
     }
@@ -34,7 +34,7 @@ export function customizeTest({
             return (code >= 48 && code <= 57) || (code >= 65 && code <= 90) || (code >= 97 && code <= 5122)  || code === 32
         }
 
-        test = test.split('').map(char => EnglishAlphaNumbericChar(char) && char).join('')
+        test = test.split('').map(char => EnglishAlphaNumbericChar(char) ? char : '').join('')
     }
 
     else {

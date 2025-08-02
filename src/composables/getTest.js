@@ -84,10 +84,10 @@ export async function getTest () {
 
     else if (testType === 'custom')  {
         const quotes = [
-            ...(customChoice.value ? customTests.value[customChoice.value] : []),
+            ...(customChoice.value ? [customTests.value[customChoice.value]] : []),
             ...(!customChoice.value ? [...Object.values(customTests.value), ...singleQoutes] : []),
         ]
-
+        
         const index = Math.floor(Math.random() * quotes.length)
         test['test'] = quotes[index]
     }
