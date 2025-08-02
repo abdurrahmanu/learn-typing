@@ -1,5 +1,5 @@
 <template>
-    <CustomTestModal />
+    <CustomModal />
     <!-- <Animate /> -->
     <CapsLockToast 
     top 
@@ -10,7 +10,7 @@
 <script setup>
 import Animate from './Animate.vue';
 import CapsLockToast from './Toast.vue';
-import CustomTestModal from './CustomTestModal.vue';
+import CustomModal from './CustomModal.vue';
 
 const capsText = 'CapsLock is on, you cannot use it while it is disabled, enable in settings.'
 

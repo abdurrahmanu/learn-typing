@@ -21,7 +21,7 @@ export default function reRouter () {
     
         if (from.name === 'result' && typingstore.testCompleted) goNext.value = true
     
-        customize.toggleCustomTestModal = false
+        customize.toggleCustomModal = false
         store.route = to.name
     })
 }

@@ -12,13 +12,13 @@
     <Cursor v-if="name == 'Cursor'" />
     <Difficulty v-if="name === 'Difficulty'" />
     <FontRange v-if="name === 'Font size'" />
-    <CharCombination v-if="name === ''" />
+    <CustomChars v-if="name === ''" />
 </template>
 
 <script setup>
 import Cursor from './Cursor.vue';
 import {settingsStore} from '../../store/settingsStore';
-import CharCombination from './CharCombination.vue';
+import CustomChars from '../CustomChars.vue';
 import Difficulty from './Difficulty.vue';
 import FontRange from './FontRange.vue';
 import TestLines from './TestLines.vue';

@@ -61,7 +61,7 @@
                 </div>
                 <div class="relative w-fit" >
                     <add 
-                    @click="openCustomTestModal" 
+                    @click="openCustomModal" 
                     class="w-4 peer"/>
                 </div>
           </div>
@@ -93,11 +93,11 @@ const theme_ = themeStore()
 const {appTheme}  = storeToRefs(theme_)
 
 const customize = settingsStore()
-const { quickSettingss, toggleCustomTestModal, pauseTyping, hideElements, settings, disableOption} = storeToRefs(customize)
+const { quickSettingss, toggleCustomModal, pauseTyping, hideElements, settings, disableOption} = storeToRefs(customize)
 const {checkQuickSettings} = customize
 
-const openCustomTestModal = () => {
-    toggleCustomTestModal.value = true
+const openCustomModal = () => {
+    toggleCustomModal.value = true
     pauseTyping.value = true
 }
 

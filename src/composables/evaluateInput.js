@@ -10,7 +10,7 @@ export default function evaluateInput(value) {
     const {correctCharCount, incorrectCharCount} = storeToRefs(characterstore)
 
     const settingstore = settingsStore()
-    const {toggleCustomTestModal} = storeToRefs(settingstore)
+    const {toggleCustomModal} = storeToRefs(settingstore)
 
     const typingstatestore = typingStateStore()
     const {playerInput, deletedValue, playerInputLength, backspaceIsPressed, playerLastInput} = storeToRefs(typingstatestore)
@@ -23,7 +23,7 @@ export default function evaluateInput(value) {
     const timerstore = timerStore()
     const { characterEqualityArray} = storeToRefs(timerstore)
 
-    if (toggleCustomTestModal.value) return // temporary --------- will fix later
+    if (toggleCustomModal.value) return // temporary --------- will fix later
 
     if (value === 'delete') {
         deletedValue.value = playerInput.value.slice(-1);

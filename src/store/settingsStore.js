@@ -7,7 +7,7 @@ import { nextStore } from './nextStore'
 export const settingsStore = defineStore('settingsStore', () => {
     const settingsToUpdate = ref([])
     const customChoice = ref('')
-    const toggleCustomTestModal = ref(false)
+    const toggleCustomModal = ref(false)
     const pauseTyping = ref(true)
     const hideElements = ref(isMobile() ? true : false)
     const difficulty = ref('beginner')
@@ -142,7 +142,7 @@ export const settingsStore = defineStore('settingsStore', () => {
         updateSingleSetting,
         textPosition,
         pauseTyping,
-        toggleCustomTestModal,
+        toggleCustomModal,
         customChoice,
         toggleCapsToast,
         charsArray,

@@ -9,7 +9,6 @@
             :name="mode.name"
             :options="mode.options" />
         </div>
-        <CharCombination />
     </div>
 </template>
 
@@ -17,7 +16,6 @@
 import Mode from './Settings/Mode.vue';
 import Options from './Settings/Options.vue';
 import SearchBar from './Settings/SearchBar.vue'
-import CharCombination from './Settings/CharCombination.vue';
 
 const modes = [
     {
@@ -57,12 +55,6 @@ const modes = [
         extra: []
     },
     {
-        name: 'show typing container border',
-        desc: '',
-        options: ['on', 'off'],
-        extra: []
-    },
-    {
         name: 'Test Width',
         desc: 'This sets the test width which is measured in number of characters. Minimum should be at least 20. When lower than 20 it is set to minimun, whem more than maximum container width, it is set to fit the container boundaries.',
         options: [],
@@ -95,12 +87,6 @@ const modes = [
     {
         name: 'Difficulty',
         desc: '',
-        options: null,
-        extra: []
-    },
-    {
-        name: 'Character Combination',
-        desc: 'Toggle to randomly repeat and shuffles your selection. A minimum of two characters and maximum of ten.',
         options: null,
         extra: []
     }

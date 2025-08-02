@@ -43,7 +43,7 @@ export async function getTest () {
 
     else if (testType === 'characters') {
         const alphabets = 'abcdefghijklmnopqrstuvwxyz'
-        const mixedChars = ''
+        let mixedChars = ''
 
         if (mixCharacters.value && charsArray.value) {
             let length = charsArray.value.length > 8 ? 78 : charsArray.value.length > 6 ? 66 : 60

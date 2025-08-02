@@ -23,7 +23,7 @@ import evaluateInput from '../composables/evaluateInput';
 import Range from '../components/Range.vue';
 
 const customize = settingsStore()
-const {settingsToUpdate, toggleCapsToast, pauseTyping, toggleCustomTestModal} = storeToRefs(customize)
+const {settingsToUpdate, toggleCapsToast, pauseTyping, toggleCustomModal} = storeToRefs(customize)
 
 const nextstore = nextStore()
 const {goNext} = storeToRefs(nextstore)
@@ -41,8 +41,7 @@ function handleKeydown(event) {
     const eventType = event.inputType || event.key
     const pasteDropReplaceEvents = ['insertFromPaste','insertFromDrop','insertReplacementText']
 
-    if (toggleCustomTestModal.value) return // temporary --------- will fix later
-
+    if (toggleCustomModal.value) return // temporary --------- will fix later
 
     if (pasteDropReplaceEvents.includes(eventType)) return
 
