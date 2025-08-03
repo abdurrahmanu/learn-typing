@@ -1,7 +1,7 @@
 <template>
-    <div class="space-y-2">
+    <div class="space-y-2 text-[15px]">
         <label class="font-bold uppercase w-fit flex items-center">
-            <div>{{ name }}</div>
+            <div>{{ name }}</div> 
         </label>
         <p class="text-justify">{{ desc }}</p>
     </div>

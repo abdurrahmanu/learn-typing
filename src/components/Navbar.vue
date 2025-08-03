@@ -63,7 +63,7 @@ const currentRouteStyle = (r) => {
 
 <style scoped>
 .header {
-    @apply sticky mx-auto flex items-center bg-inherit justify-between px-5 pt-5 max-w-[1500px] min-w-[360px] transition-all duration-300 top-0 z-[1]
+    @apply sticky mx-auto flex items-center bg-inherit justify-between px-5 py-4 max-w-[1500px] min-w-[360px] transition-all duration-300 top-0 z-[1]
 }
 
 .nav-item {

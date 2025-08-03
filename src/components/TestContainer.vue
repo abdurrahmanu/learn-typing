@@ -1,5 +1,5 @@
 <template>
-    <div :class="[isMobile() ? 'pt-6' : 'pt-16']" class="w-[90%] max-w-[1500px] mx-auto">
+    <div :class="[isMobile() ? 'pt-6' : 'pt-16']" class="w-[90%] mx-auto">
         <div :style="computedStyle" class="flex items-center pb-2 justify-between m-auto">
             <p v-if="!settings['countdown']"></p>
             <Countdown v-else :start="beginCountdown"/>

@@ -11,7 +11,7 @@
             </div>
         </div>
 
-        <div class="flex flex-wrap gap-3 pt-4">
+        <div class="flex flex-wrap gap-3 pt-4 text-[13px]">
             <div>Accuracy: {{ result.accuracy }}</div>
             <div>WPM: {{ result.wpm }}</div>
             <div>Error percentage {{ result.errorPercentage }}</div>

@@ -30,7 +30,7 @@ import { mainStore } from '../store/mainStore';
 import { settingsStore } from '../store/settingsStore';
 import { isTouchScreenDevice } from '../composables/isTouchScreenDevice';
 import focusButton from './focusButton.vue';
-import { computed, onMounted, onUpdated } from 'vue';
+import { computed, onMounted } from 'vue';
 
 const typingstatestore = typingStateStore()
 const { inputEl} = storeToRefs(typingstatestore)

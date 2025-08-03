@@ -1,5 +1,5 @@
 <template>
-    <div class="pb-20 text-base border-x-black max-w-[900px] mx-auto bg-inherit">
+    <div class="pb-20 text-base border-x-black max-w-[1000px] mx-auto bg-inherit">
         <SearchBar />
         <div 
         :class="[theme === 'dark' ? 'hover:bg-[#282a2d]': 'hover:bg-gray-400']"
@@ -24,7 +24,7 @@ import { themeStore } from '../store/themeStore';
 import { storeToRefs } from 'pinia';
 
 const themestore = themeStore()
-const {theme, appTheme} = storeToRefs(themestore)
+const {theme} = storeToRefs(themestore)
 
 const modes = [
     {
@@ -41,7 +41,7 @@ const modes = [
     },
     {
         name: 'Test Width',
-        desc: 'This sets the test width which is measured in number of characters. Minimum should be at least 20. When lower than 20 it is set to minimun, whem more than maximum container width, it is set to fit the container boundaries.',
+        desc: 'This sets the test width which is measured in number of characters. Minimum should be 20. Maximum width is set to fit the test container boundaries.',
         options: [],
         extra: []
     },

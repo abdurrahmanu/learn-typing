@@ -24,7 +24,6 @@ import {mainStore} from '../store/mainStore'
 import {themeStore}  from '../store/themeStore'
 import { settingsStore }  from '../store/settingsStore'
 import { typingStateStore } from '../store/typingStateStore';
-import { nextStore } from '../store/nextStore';
 import { timerStore } from '../store/timerStore';
 import Cursor from '../components/Cursor.vue'
 
@@ -42,7 +41,8 @@ const theme_ = themeStore()
 const { theme } = storeToRefs(theme_)
 
 const mainstore = mainStore()
-const { currentTest, charEl, testContainerEl, charWidth, containerHeight, allSpacesIndex, scrollTextContainer, scrollDistance, lineHeight, fontSize, testLInes } = storeToRefs(mainstore)
+const { currentTest, testContainerEl, containerHeight, allSpacesIndex, scrollTextContainer, scrollDistance, lineHeight, fontSize, testLInes } = storeToRefs(mainstore)
+const charEl = ref(null)
 
 const {test} = currentTest.value
 
@@ -60,7 +60,6 @@ const equality = computed(() => playerLastInput.value === test[props.index])
 const blind = computed(() => settings.value['blind-mode'])
 
 onMounted(() => {
-    charWidth.value = charEl.value.getBoundingClientRect().right - charEl.value.getBoundingClientRect().left
     watch(currentIndex, (isNextChar) => {
         let isLastChar = !isNextChar && playerInputLength.value === test.length
         

@@ -10,8 +10,8 @@ export const mainStore = defineStore('mainStore', () => {
     const maxFontSize = ref(isMobile() ? 50 : 120)
     const testLInes = ref(3)
     const lineHeight = ref(1.5)
-    const testWidth = ref(200)
-    const charWidth = ref(0)
+    const testWidth = ref(50)
+    const charWidth = ref(20)
     const range = ref(fontSize.value)
 
     //Test container
@@ -27,7 +27,6 @@ export const mainStore = defineStore('mainStore', () => {
     const allSpacesIndex = ref([])
     const useCustomText = ref(false)
     const storedTest = ref('')
-    const charEl = ref(null)
 
     const customTests = ref({
         'demo': 'This is a custom test, you can add your own test, use the plus icon. This particular demo cannot be deleted.'
@@ -99,6 +98,5 @@ export const mainStore = defineStore('mainStore', () => {
         customTests,
         testWidth,
         charWidth,
-        charEl,
     }
 })
