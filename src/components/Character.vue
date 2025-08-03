@@ -128,7 +128,7 @@ onMounted(() => {
     })
 })
 
-watch(currentIndex, newCurrent => {
+watch([currentIndex], ([newCurrent]) => {
     className.value = {
         // UNTYPED CHARS
         'text-slate-500': theme.value === 'dark' && props.index > playerInputLength.value,

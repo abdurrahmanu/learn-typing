@@ -9,7 +9,6 @@ export function customizeTest({
     jumble,
     reverse,
     space,
-    repeat,
 }) {
     if (!caps && !camelCase && !allCaps) {
         test = test.toLowerCase()
@@ -92,16 +91,21 @@ export function customizeTest({
     }
 
     if (jumble) {
-        // isnt working well yet
-        let text = test.split('')
-        test = ''
-        for (let index = 0; index < text.length; index++) {
-            let random = Math.floor(Math.random() * text.length)
-            test += text[random]
-            text.splice(random, 1)
+        function jumbleEachWord(str) {
+            return str
+                .split(' ')
+                .map(word => {
+                let arr = word.split('');
+                for (let i = arr.length - 1; i > 0; i--) {
+                    let j = Math.floor(Math.random() * (i + 1));
+                    [arr[i], arr[j]] = [arr[j], arr[i]];
+                }
+                return arr.join('');
+                })
+                .join(' '); 
         }
 
-        test = test.trim()
+        test = jumbleEachWord(test);
     }
 
     if (space) {

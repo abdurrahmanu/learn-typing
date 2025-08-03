@@ -23,9 +23,8 @@ const themestore = themeStore()
 const { appTheme } = storeToRefs(themestore)
 </script>
 
-
 <style scoped>
 .page {
-    @apply font-light max-w-[2000px] mx-auto select-none relative min-h-[100dvh] container overflow-y-auto scroll-smooth transition-all duration-300
+    @apply font-light max-w-[2000px] mx-auto select-none relative min-h-[100dvh] container transition-all duration-300
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
     <Transition name="container"> 
         <div id="focus" class="relative">
-            <focusButton class="fill-parent center-text-xy z-[2] backdrop-blur-[6px] font-bold"/>
+            <focusButton class="fill-parent center-text-xy z-[1] backdrop-blur-[6px] font-bold"/>
             <div
             id="focus"
             @click="focusInput"

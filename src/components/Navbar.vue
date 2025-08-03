@@ -1,87 +1,79 @@
 <template>
-    <header 
-    :class="[theme === 'dark' ? 'bg-[#2c2e31] hover:bg-zinc-700' : 'bg-gray-300 hover:bg-zinc-200']"
-    class="header">
-
-        <Logo 
+    <header :class="[appTheme]" class="header">
+        <div 
         @click="routeToPage('about')" 
-        v-show="!(focus && isMobile())" 
-        class="flex cursor-pointer" />
+        class="flex items-center gap-1">
+            <Logo class="flex cursor-pointer" /> 
+            <p class="text-sm font-bold">KiBoard</p>
+        </div>
+
+        <div class="nav-container center-x ">
+            <div 
+            @click="routeToPage(key)" 
+            :class="[currentRouteStyle(key)]" 
+            class="nav-item"
+            v-for="(NavItem, key, index) in navItems" 
+            :key="index">
+                <component :is="NavItem" class="w-5"/>
+            </div>
+        </div>
 
         <div 
-        v-show="(!focus && isMobile()) || !isMobile()" 
-        :class="[!hideElements ? 'right-[50%] translate-x-[50%]' : 'left-[50%] translate-x-[-50%]']"
-        class="absolute flex items-center gap-4 w-fit" 
-        >
-            <div 
-            v-show="route.name === 'home'" 
-            class="flex items-center gap-4 text-[9px]">
-                <div class="relative w-fit">
-                    <feedback 
-                    @click="routeToPage('about')" 
-                    class="w-5 peer"/>
-                </div>
-            </div>
-            <div 
-            v-if="route.name !== 'home'"             
-            class="relative w-fit" >
-                <home 
-                @click="routeToPage('home')" 
-                class="w-5 peer" />
-            </div>
-            <div 
-            v-if="route.name === 'home'"
-            class="relative w-fit" >
-                <settingsSVG
-                @click="routeToPage('settings')"
-                class="w-5 peer" />
-            </div>
-            <div 
-            @click="routeToPage('user')"
-            v-if="route.name !== 'user'" 
-            class="relative w-fit rounded-full p-1" :class="[login ? 'ring-green-600 ring-[2px]' : 'ring-blue-500 ring-[1px]']" >
-                <user class="w-3 peer" />
-            </div>
+        @click="routeToPage('user')" 
+        :class="[currentRouteStyle('user')]" 
+        class="nav-item">
+            <userSVG class="w-5" />
         </div>
     </header>
 </template>
 
 <script setup>
 import Logo from './Logo.vue'
-import home from './svg/home.vue'
+import homeSVG from './svg/home.vue'
 import settingsSVG from './svg/settings.vue';
-import user from './svg/user.vue'
-import feedback from './svg/feedback.vue'
-import {useRoute, useRouter} from 'vue-router'
-import { isMobile } from '../composables/isMobile';
-import { settingsStore } from '../store/settingsStore';
-import {authStore} from '../store/authStore'
+import userSVG from './svg/user.vue'
+import feedbackSVG from './svg/feedback.vue'
+import {useRouter} from 'vue-router'
 import { themeStore } from '../store/themeStore';
-import { typingStateStore } from '../store/typingStateStore';
 import {storeToRefs} from 'pinia';
+import { ref, computed } from 'vue';
+import { mainStore } from '../store/mainStore';
 
-const typingstatestore = typingStateStore()
-const {focus} = storeToRefs(typingstatestore)
-
-const route = useRoute()
+const navItems = {
+    'home': homeSVG,
+    'about': feedbackSVG,
+    'settings': settingsSVG,
+}
 const router = useRouter()
 
+const mainstore = mainStore()
+const {route} = storeToRefs(mainstore)
+
+const currentRoute = ref(route.value)
+
 const theme_ = themeStore()
-const {theme} = storeToRefs(theme_)
-
-const authstore = authStore()
-const {login} = storeToRefs(authstore)
-
-const customize = settingsStore()
-const { hideElements} = storeToRefs(customize)
+const {appTheme} = storeToRefs(theme_)
 
 const routeToPage = (route) => {
+    currentRoute.value = route
     router.push({name: route})
+}
+
+const currentRouteStyle = (r) => {
+    return route.value === r ? 'border-b-blue-500 shadow-blue-800 shadow' : 'border-b-transparent'
 }
 </script>   
 
 <style scoped>
 .header {
-    @apply sticky mx-auto flex items-center justify-between pl-3 pt-5 pb-2 pr-2 max-w-[1000px] min-w-[360px] transition-all duration-300 top-0
+    @apply sticky mx-auto flex items-center justify-between px-5 pt-5 max-w-[1500px] min-w-[360px] transition-all duration-300 top-0 z-10
+}
+
+.nav-item {
+    @apply relative pb-1 px-1 w-fit border-b-[2px] relative pb-1 px-1 w-fit border-b-[2px]
+}
+
+.nav-container {
+    @apply absolute flex items-center gap-5 w-fit transition-all duration-75
 }
 </style>

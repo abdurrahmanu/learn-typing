@@ -17,7 +17,6 @@
   "build": {
     "appId": "com.ahmadabdulrahman.kiboard",
     "productName": "kiBoard",
-  "copyright": "Copyright © 2025 🕳️",
   "directories": {
     "output": "dist"
   },
@@ -30,7 +29,6 @@
   ],
   "extraResources": [],
   "asar": true,
-
   "win": {
     "target": [
       {

@@ -1,5 +1,5 @@
 <template>
-    <div class="px-5 py-3 pb-20 text-sm border-x-black max-w-[900px] mx-auto">
+    <div class="md:px-4 px-2 pb-20 text-base border-x-black max-w-[900px] mx-auto">
         <SearchBar />
         <div 
         :class="[theme === 'dark' ? 'hover:bg-[#282a2d]': 'hover:bg-gray-400']"
@@ -29,13 +29,13 @@ const {theme} = storeToRefs(themestore)
 const modes = [
     {
         name: 'Cursor',
-        desc: '',
+        desc: 'Use your preferred cursor type',
         options: null,
         extra: []
     },
     {
         name: 'Difficulty',
-        desc: '',
+        desc: 'Change difficulty',
         options: null,
         extra: []
     },
@@ -47,13 +47,13 @@ const modes = [
     },
     {
         name: 'Font size',
-        desc: '',
+        desc: 'Increase or reduce font size',
         options: null,
         extra: []
     },
     {
         name: 'Test Lines',
-        desc: '',
+        desc: 'Select the number of lines for the test',
         options: [],
         extra: []
     },

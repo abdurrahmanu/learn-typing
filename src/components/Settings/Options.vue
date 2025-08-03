@@ -4,7 +4,7 @@
         @click="update(option)" 
         v-for="(option, index) in options" 
         :key="index" 
-        :class="[selectedOption === option ? 'ring-green-500 text-green-500' : 'ring-black hover:ring-4']"
+        :class="[selectedOption === option ? 'ring-green-700 text-green-600' : 'ring-black hover:ring-4']"
         class="text-center w-full px-3 max-w-[150px] py-1 rounded-md ring-[1px]">{{ option }}</p>
     </div>
     <TestWidth v-if="name === 'Test Width'" />

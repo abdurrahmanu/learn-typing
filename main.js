@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron/main')
+const { app, BrowserWindow, Menu, ipcMain } = require('electron/main')
 const path = require('node:path')
 
 function createWindow () {
@@ -7,15 +7,16 @@ function createWindow () {
     height: 900,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
-      nodeIntegration: true,
+      contextIsolation: true,
+      nodeIntegration: false
     },
-    // show: false,
-    alwaysOnTop: true,
-    frame: true,
   })
 
+  // const menu = Menu.buildFromTemplate(menuTemplate);
   window.loadFile(path.join(__dirname, 'dist', 'index.html'))
+  Menu.setApplicationMenu(null);
 }
+
 
 app.whenReady().then(() => {
   createWindow()

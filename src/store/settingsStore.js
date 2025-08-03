@@ -13,7 +13,7 @@ export const settingsStore = defineStore('settingsStore', () => {
     const difficulty = ref('beginner')
     const textPosition = ref('left')
     const toggleCapsToast = ref(false)
-    const mixCharacters = ref(false)
+    const useCharacters = ref(false)
     const charsArray = ref([])
     const showBorder = ref(false)
     
@@ -54,6 +54,7 @@ export const settingsStore = defineStore('settingsStore', () => {
 
     const disableOption = ref({
         'words-type': false, 
+        'test-length': false,
     })
 
     const quickSettingss = computed(() => {
@@ -74,8 +75,10 @@ export const settingsStore = defineStore('settingsStore', () => {
         else settings.value[group] = selection
 
         if (settings.value['test-type'] !=='words') {
+            disableOption.value['test-length'] = true
             disableOption.value['words-type'] = true
-        } else {
+        } else {            
+            disableOption.value['test-length'] = false
             disableOption.value['words-type'] = false
         }
 
@@ -146,7 +149,7 @@ export const settingsStore = defineStore('settingsStore', () => {
         customChoice,
         toggleCapsToast,
         charsArray,
-        mixCharacters,
+        useCharacters,
         isBlindMode,
         settingsToUpdate,
     }

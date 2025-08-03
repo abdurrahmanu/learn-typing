@@ -13,12 +13,12 @@ export async function getTest () {
     }
 
     const settingstore = settingsStore()
-    const {settings, customChoice, mixCharacters, charsArray} = storeToRefs(settingstore)
+    const {settings, customChoice, useCharacters, charsArray} = storeToRefs(settingstore)
 
     const mainstore = mainStore()
     const {customTests, storedTest} = storeToRefs(mainstore)
     const {mostUsed, mediumUsed, rarelyUsed, quotesWithNumbers, numbers, quotesWithoutAuthors, movieQuotes} = englishWords()
-    const includeNumbers = settings.value['numbers']
+    const includeNumbers = settings.value.numbers
     const testType = settings.value['test-type']
     const wordType =  settings.value['words-type']
     const testLength = settings.value['test-length']
@@ -33,35 +33,52 @@ export async function getTest () {
         })
     }).flat()
 
-    if (settings.value['repeat']) {
+    if (settings.value.repeat) {
         test = {
             author: storedTest.value.author,
             test: storedTest.value.test,
             name: storedTest.value.name
         }
 
-        const params = {
-            allCaps : settings.value['all-caps'],
-            camelCase : settings.value['camel-case'],
-            noSpace : settings.value['no-space'],
-            test: test['test'],
-            jumble: settings.value['arrangement'] === 'jumble',
-            reverse: settings.value['arrangement'] === 'reverse',
-            space: settings.value['spaced'],
-            repeat: settings.value['repeat']
-        }
+        // const params = {
+        //     allCaps : settings.value['all-caps'],
+        //     camelCase : settings.value['camel-case'],
+        //     noSpace : settings.value['no-space'],
+        //     test: test.test,
+        //     jumble: settings.value.arrangement === 'jumble',
+        //     reverse: settings.value.arrangement === 'reverse',
+        //     space: settings.value.spaced,
+        //     repeat: settings.value.repeat
+        // }
 
-        test['test'] = test['test'].replace(/[\r\n]+/g, ' ').trim();
-        test['test'] = customizeTest(params, test['test'])
+        // test.test = test.test.replace(/[\r\n]+/g, ' ').trim();
+        // test.test = customizeTest(params, test.test)
 
         return test
     }
 
     else if (testType === 'characters') {
-        const alphabets = 'abcdefghijklmnopqrstuvwxyz'
+        let alphabets = 'abcdefghijklmnopqrstuvwxyz'
         let mixedChars = ''
 
-        if (mixCharacters.value && charsArray.value) {
+        if (includeNumbers) {
+            let numbers = []
+            for (let index = 0; index < 5; index++) {
+                const ran = Math.floor(Math.random() * 26);
+                numbers.push(ran)
+            }
+
+            alphabets = alphabets.split('').map((char, index) => {
+                let indexOf = numbers.indexOf(index)
+                if (indexOf > 0) {
+                    let ran = Math.floor(Math.random() * 100)
+                    return char + `${ran}`
+                }
+                else return char
+            }).join('')
+        }
+
+        if (useCharacters.value && charsArray.value) {
             let length = charsArray.value.length > 8 ? 78 : charsArray.value.length > 6 ? 66 : 60
 
             for (let index = 1; index < length; index++) {
@@ -79,12 +96,13 @@ export async function getTest () {
     }
         
     else if (testType === 'quotes') {
-        let allQuotes = [
-            ...allMovies,
-            ...authoredQuotes,
-            ...singleQoutes,
-            ...(includeNumbers ? quotesWithNumbers : [])
-        ];
+        let allQuotes = includeNumbers
+            ? quotesWithNumbers
+            : [
+                ...allMovies,
+                ...authoredQuotes,
+                ...singleQoutes
+            ];
 
         let index = Math.floor(Math.random() * allQuotes.length)
         const author =  allQuotes[index]?.author
@@ -105,7 +123,26 @@ export async function getTest () {
         ]
         
         const index = Math.floor(Math.random() * quotes.length)
-        test['test'] = quotes[index]
+
+        test.test = quotes[index]
+
+        if (includeNumbers) {
+            let numbers = []
+            for (let index = 0; index < test.test.length / 13; index++) {
+                const ran = Math.floor(Math.random() * test.test.length);
+                numbers.push(ran)
+            }
+
+            test.test = test.test.split('').map((char, index) => {
+                let indexOf = numbers.indexOf(index)
+                if (indexOf > 0) {
+                    let ran = Math.floor(Math.random() * 100)
+                    return char + `${ran}`
+                }
+                else return char
+            }).join('')
+        }
+
         customChoice.value = ''
     }
 
@@ -114,7 +151,7 @@ export async function getTest () {
             ...mostUsed,
             ...(wordType === 'common' ? mediumUsed : []),
             ...(wordType === 'rare' ? rarelyUsed : []),
-            ...(settings.value['numbers'] ? numbers : [])
+            ...(settings.value.numbers ? numbers : [])
         ]
 
         let numberOfWords = testLength
@@ -123,26 +160,26 @@ export async function getTest () {
         for (let index = 0; index < numberOfWords; index++) {
             let random = Math.floor(Math.random() * words.length)
             let word = words[random]     
-            index === 0 ? test['test'] += word : test['test'] += ' ' + word
+            index === 0 ? test.test += word : test.test += ' ' + word
         }
     }
 
     const params = {
-        numbers : settings.value['numbers'],
-        punctuation : settings.value['punctuation'],
-        caps : settings.value['caps'],
+        numbers : settings.value.numbers,
+        punctuation : settings.value.punctuation,
+        caps : settings.value.caps,
         allCaps : settings.value['all-caps'],
         camelCase : settings.value['camel-case'],
         noSpace : settings.value['no-space'],
         testType : settings.value['test-type'],
-        test: test['test'],
-        jumble: settings.value['arrangement'] === 'jumble',
-        reverse: settings.value['arrangement'] === 'reverse',
-        space: settings.value['spaced']
+        test: test.test,
+        jumble: settings.value.arrangement === 'jumble',
+        reverse: settings.value.arrangement === 'reverse',
+        space: settings.value.spaced
     }
 
-    test['test'] = test['test'].replace(/[\r\n]+/g, ' ').trim();
-    test['test'] = customizeTest(params, test['test'])
+    test.test = test.test.replace(/[\r\n]+/g, ' ').trim();
+    test.test = customizeTest(params, test.test)
 
     return test
 }

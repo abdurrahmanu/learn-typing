@@ -13,7 +13,7 @@
             </div>
         </div>
         <div class="min-h-[25px] h-fit">Selection: {{ charsArray.join(' , ') }}</div>
-        <p @click="charsArray.length && closeModal()" :class="[charsArray.length < 2 && 'opacity-30 ring-[1px]' ]" class="hover:ring-2 px-10 py-1 rounded-md ring-[2px] ring-green-600 w-fit mx-auto">USE SELECTION</p>
+        <p @click="charsArray.length && closeModal()" :class="[charsArray.length < 2 && 'opacity-30 ring-[1px]' ]" class="hover:ring-2 px-10 py-1 rounded-md ring-[2px] ring-green-600 w-fit mx-auto">{{!useCharacters && charsArray.length ? 'USE SELECTION' : 'CANCEL SELECTION'}}</p>
     </div>
 </template>
 
@@ -35,7 +35,6 @@ const {goNext} = storeToRefs(nextstore)
 const theme_ = themeStore()
 const { appTheme, theme } = storeToRefs(theme_)
 
-
 const capsQwertyKeyboard = [
     ['~', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+'],
     ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '{', '}', '|'],
@@ -53,7 +52,7 @@ const qwertyKeyboard = [
 const entries = [capsQwertyKeyboard, qwertyKeyboard]
 
 const customize = settingsStore()
-const { charsArray, mixCharacters} = storeToRefs(customize)
+const { charsArray, useCharacters} = storeToRefs(customize)
 
 const addSelection = (alphabet) => {
     let index = charsArray.value.indexOf(alphabet)
@@ -77,12 +76,8 @@ const keyStyle = (entry) => {
     }
 }
 
-watch(charsArray, (newVal) => {
-    if (newVal.length < 2) mixCharacters.value = false
-    else mixCharacters.value = true
-}, {deep: true})
-
 const closeModal = () => {
+    useCharacters.value = !useCharacters.value
     toggleCustomModal.value = !toggleCustomModal.value
     goNext.value = true
 }

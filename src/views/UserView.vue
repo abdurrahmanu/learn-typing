@@ -1,5 +1,5 @@
 <template>
-  <div class="pb-12 py-6 max-h-screen overflow-y-scroll text-xs">
+  <div class="pb-12 py-6 max-h-screen overflow-y-scroll text-sm">
     <div v-if="login" class="space-y-10">
       <UserCard />
       <UserBestStats />
@@ -12,9 +12,9 @@
     </div>
 
     <div v-else>
-      <div class="gap-10 m-auto space-y-4 font-cursive w-fit rounded-md p-10">
+      <div class="gap-10 m-auto space-y-4 font-cursive w-fit rounded-md p-10 text-base">
           <div class="flex justify-center font-bold">
-              <p class="px-3 text-center cursor-pointer">SIGN IN</p>
+              <p class="px-5 text-center cursor-pointer">SIGN IN</p>
           </div>
           <p @click='loginWithGoogle' class="flex items-center justify-center gap-3 px-10 py-1 font-medium border rounded-md cursor-pointer border-neutral-600 active:border-green-500"><google />GOOGLE</p>
       </div>

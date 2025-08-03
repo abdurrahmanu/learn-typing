@@ -15,6 +15,7 @@ import { authStore } from './store/authStore';
 import { fetchData } from './composables/fetchData';
 import { generateTest } from './composables/generateTest';
 import { getSingleDoc, addSingleDoc } from './composables/firestoreDocs';
+import { useRouter } from 'vue-router';
 
 const authstore = authStore()
 const {login, user, data} = storeToRefs(authstore)

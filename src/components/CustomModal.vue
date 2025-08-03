@@ -13,7 +13,6 @@
 <script setup>
 import {storeToRefs} from 'pinia';
 import { settingsStore } from '../store/settingsStore';
-import { useRoute } from 'vue-router';
 import CustomChars from './CustomChars.vue';
 import CustomTest from './CustomTest.vue';
 import CustomQuotes from './CustomQuotes.vue'
@@ -30,6 +29,6 @@ const closeModal = () => {
 
 <style scoped>
 .overlay {
-    @apply fixed top-[-100px] bottom-0 left-0 right-0 bg-[hsla(0,0%,6%,0.8)] text-xs z-[4] flex items-center justify-center
+    @apply fixed top-[-50px] bottom-0 left-0 right-0 bg-[hsla(0,0%,6%,0.8)] flex z-[4] items-center justify-center
 }
 </style>
