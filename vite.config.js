@@ -10,7 +10,7 @@ export default defineConfig({
   path: path.resolve(__dirname, './dist'),
   server: {
     host: true,
-    port: 1111
+    port: 1000
   }
 })
 

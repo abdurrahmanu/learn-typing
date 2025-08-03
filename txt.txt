@@ -31,3 +31,16 @@ Previewing vue.js app in android
 
 // if I load my page, first loading then check if user exists, if yes login, else no-user
 
+Unused dependencies
+* @vueuse/firebase
+* an-array-of-english-words
+* core-js
+* vue-chartjs
+Unused devDependencies
+* autoprefixer
+* electron-devtools-installer
+* postcss
+* tailwindcss
+
+
+      // "node_modules/**",

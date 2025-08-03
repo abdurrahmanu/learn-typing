@@ -17,64 +17,59 @@
   "build": {
     "appId": "com.ahmadabdulrahman.kiboard",
     "productName": "kiBoard",
-  "directories": {
-    "output": "dist"
-  },
-  "files": [
-    "dist/**",        
-    "main.js",         
-    "preload.js",      
-    "node_modules/**", 
-    "package.json"
-  ],
-  "extraResources": [],
-  "asar": true,
-  "asarUnpack": "**/*.{png,jpg,json,node}",
-  "win": {
-    "target": [
-      {
-        "target": "nsis",
-        "arch": [
-          "x64",
-          "ia32"
-        ]
-      }
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "dist/**",
+      "main.js",
+      "preload.js",
+      "package.json"
     ],
-    "icon": "build/icons/kiboard.ico"  
+    "extraResources": [],
+    "asar": true,
+    "asarUnpack": "**/*.{png,jpg,json,node}",
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": "x64"
+        }
+      ],
+      "icon": "build/icons/kiboard.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "kiBoard"
+    },
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "icon": "build/icons/kiboard.icns"
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "icon": "build/icons/kiboard.png",
+      "category": "Utility"
+    },
+    "publish": [
+      {
+        "provider": "generic",
+        "url": "https://yourdomain.com/downloads/"
+      }
+    ]
   },
-  "nsis": {
-    "oneClick": false,
-    "perMachine": false,
-    "allowToChangeInstallationDirectory": true,
-    "createDesktopShortcut": true,
-    "createStartMenuShortcut": true,
-    "shortcutName": "kiBoard"
-  },
-
-  "mac": {
-    "target": ["dmg"],
-    "icon": "build/icons/kiboard.icns" 
-  },
-
-  "linux": {
-    "target": ["AppImage"],
-    "icon": "build/icons/kiboard.png", 
-    "category": "Utility"
-  },
-
-  "publish": [
-    {
-      "provider": "generic",
-      "url": "https://yourdomain.com/downloads/" 
-    }
-  ]
-},
   "dependencies": {
-    "@vueuse/firebase": "^12.0.0",
     "@vueuse/integrations": "^12.5.0",
-    "an-array-of-english-words": "^2.0.0",
+    "autoprefixer": "^10.4.21",
     "chart.js": "^4.4.7",
-    "core-js": "^3.8.3",
     "firebase": "^10.14.1",
     "pinia": "^2.1.7",
     "qrcode": "^1.5.4",
@@ -84,10 +79,8 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.1.0",
-    "autoprefixer": "^10.4.14",
     "electron": "^37.2.5",
     "electron-builder": "^26.0.12",
-    "electron-devtools-installer": "^4.0.0",
     "postcss": "^8.4.27",
     "tailwindcss": "^3.3.3",
     "vite": "^4.3.2"
