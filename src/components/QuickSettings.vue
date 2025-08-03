@@ -6,12 +6,13 @@
   :class="[!hideElements ? 'hover:ring-red-400' : 'hover:ring-blue-500']" 
   class="mobile-quick-settings">{{ hideElements ? 'quick settings' : 'close settings' }}</div> 
 
-  <div v-if="(!isMobile() && !hideElements) || (isMobile() && !hideElements)" :class="[(isMobile() && !hideElements) && 'mobile-quick-settings-modal relative']">
+  <div 
+  v-if="(!isMobile() && !hideElements) || (isMobile() && !hideElements)" 
+  :class="[(isMobile() && !hideElements) && 'mobile-quick-settings-modal relative']">
       <div 
       v-if="!testCompleted" 
-      :class="[toggleQuickSettings, appTheme, isMobile() && 'z-[10] top-[20%] w-[10%] absolute mx-auto ring-[1px] ring-black p-5']" 
-      class="container config"
-      >
+      :class="[toggleQuickSettings, isMobile() && 'z-[10] bg-inherit top-[20%] w-[10%] absolute mx-auto ring-[1px] ring-black p-5']" 
+      class="container config">
         <div 
         class="parent" 
         v-for="(optionArr, key, listIndex) in quickSettingss" 
@@ -128,7 +129,7 @@ watch(hideElements, newVal => {
   }
   
   .single-setting {
-    @apply px-[5px] rounded-md whitespace-nowrap
+    @apply px-[5px] rounded-md whitespace-nowrap selection:bg-none select-none
   }
 
   .mobile-quick-settings {

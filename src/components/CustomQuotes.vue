@@ -6,7 +6,7 @@
                     <p class="text-red-400">{{ isMobile() ? 'Maximum of 40 words / 500 characters' : 'Maximum of 150 words / 1200 characters' }}</p>
                     <div class="relative w-[90%] m-auto">  
                         <p @click="textValue = ''" v-if="textValue" class="absolute top-0 right-0 px-2 py-[2px] uppercase hover:text-red-500 cursor-default">X</p>     
-                        <textarea v-model="textValue" :class="[appTheme]" class="w-full h-40 p-2 pt-2 border rounded-md outline-none border-slate-500" :placeholder="textAreaPlaceholder" :maxlength="isTouchScreenDevice() ? 500 : 1200" name="custom-textarea" />
+                        <textarea v-model="textValue" :class="[appTheme]" class="w-full bg-inherit h-40 p-2 pt-2 border rounded-md outline-none border-slate-500" :placeholder="textAreaPlaceholder" :maxlength="isTouchScreenDevice() ? 500 : 1200" name="custom-textarea" />
                     </div>
                     <div @click="startSavingCustomText" class="py-[2px] text-sm m-auto text-center border rounded-full px-4 w-fit border-slate-600 hover:bg-green-800 hover:text-white font-medium">ADD TEST</div>
                 </div>

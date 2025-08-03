@@ -1,5 +1,5 @@
 <template>
-    <div class="space-y-5 max-w-[700px] mx-auto w-[95%] rounded-md py-5 z-[3] text-center text-black text-base md:text-lg" :class="[appTheme]">
+    <div class="space-y-5 max-w-[700px] mx-auto w-[95%] rounded-md py-5 z-[3] text-center text-black text-base md:text-lg bg-inherit">
         <p>SELECT A MAXIMUM OF 15 CHARACTERS</p>
         <p @click="shiftKey = !shiftKey" class="hover:ring-4 px-10 py-1 rounded-md ring-[2px] ring-blue-600 w-fit mx-auto">{{ shiftKey ? 'NEXT KEYS' : 'PREVIOUS KEYS' }}</p>
         <div class="relative h-fit w-fit mx-auto ring-[2px] ring-black p-2 rounded-md space-y-1">            

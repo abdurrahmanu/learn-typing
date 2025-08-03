@@ -1,5 +1,5 @@
 <template>
-    <div class="md:px-4 px-2 pb-20 text-base border-x-black max-w-[900px] mx-auto">
+    <div class="md:px-4 px-2 pb-20 text-base border-x-black max-w-[900px] mx-auto bg-inherit">
         <SearchBar />
         <div 
         :class="[theme === 'dark' ? 'hover:bg-[#282a2d]': 'hover:bg-gray-400']"
@@ -24,7 +24,7 @@ import { themeStore } from '../store/themeStore';
 import { storeToRefs } from 'pinia';
 
 const themestore = themeStore()
-const {theme} = storeToRefs(themestore)
+const {theme, appTheme} = storeToRefs(themestore)
 
 const modes = [
     {

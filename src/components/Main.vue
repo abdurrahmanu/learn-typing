@@ -1,7 +1,7 @@
 <template>
     <main :class="[appTheme]" class="page main-font">
         <Connectivity />
-        <div class="main">
+        <div class="main bg-inherit">
             <Navbar />
             <RouterView />
             <Modals_Popups_Toasts/>
@@ -25,6 +25,6 @@ const { appTheme } = storeToRefs(themestore)
 
 <style scoped>
 .page {
-    @apply font-light max-w-[2000px] mx-auto select-none relative min-h-[100dvh] container transition-all duration-300
+    @apply font-light max-w-[2000px] mx-auto select-none min-h-[100dvh] container transition-all duration-300
 }
 </style>

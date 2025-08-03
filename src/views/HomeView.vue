@@ -1,5 +1,5 @@
 <template>
-    <div v-if="!testCompleted" class="mx-auto max-w-[1500px] py-10"> 
+    <div v-if="!testCompleted" class="mx-auto max-w-[1500px] py-10 bg-inherit"> 
         <Range />
         <QuickSettings />
         <TestContainer />

@@ -1,5 +1,5 @@
 <template>
-    <header :class="[appTheme]" class="header">
+    <header class="header">
         <div 
         @click="routeToPage('about')" 
         class="flex items-center gap-1">
@@ -7,7 +7,7 @@
             <p class="text-sm font-bold">KiBoard</p>
         </div>
 
-        <div class="nav-container center-x ">
+        <div class="nav-container center-x">
             <div 
             @click="routeToPage(key)" 
             :class="[currentRouteStyle(key)]" 
@@ -51,22 +51,19 @@ const {route} = storeToRefs(mainstore)
 
 const currentRoute = ref(route.value)
 
-const theme_ = themeStore()
-const {appTheme} = storeToRefs(theme_)
-
 const routeToPage = (route) => {
     currentRoute.value = route
     router.push({name: route})
 }
 
 const currentRouteStyle = (r) => {
-    return route.value === r ? 'border-b-blue-500 shadow-blue-800 shadow' : 'border-b-transparent'
+    return route.value === r ? 'border-b-blue-500 shadow-blue-900 shadow-sm' : 'border-b-transparent'
 }
 </script>   
 
 <style scoped>
 .header {
-    @apply sticky mx-auto flex items-center justify-between px-5 pt-5 max-w-[1500px] min-w-[360px] transition-all duration-300 top-0 z-10
+    @apply sticky mx-auto flex items-center bg-inherit justify-between px-5 pt-5 max-w-[1500px] min-w-[360px] transition-all duration-300 top-0 z-[1]
 }
 
 .nav-item {
@@ -74,6 +71,6 @@ const currentRouteStyle = (r) => {
 }
 
 .nav-container {
-    @apply absolute flex items-center gap-5 w-fit transition-all duration-75
+    @apply absolute flex items-center gap-2 w-fit transition-all duration-75
 }
 </style>

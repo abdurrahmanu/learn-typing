@@ -6,7 +6,7 @@
             :key="index" 
             @click="changeDiff(diff)" 
             class="cursor-pointer flex px-3 py-1 ring-[1px] rounded-md mx-1" 
-            :class="[difficulty === diff ? 'ring-green-500 text-green-500' : 'ring-black hover:ring-4']">
+            :class="[difficulty === diff ? 'ring-green-700 text-green-700' : 'ring-black hover:ring-4']">
                 {{diff}}
             </div>
         </div>
