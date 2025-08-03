@@ -1,5 +1,5 @@
 <template>
-    <div class="ring-[1px] ring-black mx-auto" :style="{'width': width}">{{ width }}</div>
+    <!-- <div class="ring-[1px] ring-black mx-auto" :style="{'width': width}">{{ width }}</div> -->
     <div>
         <p>{{ testWidth }}</p>
         <input 
