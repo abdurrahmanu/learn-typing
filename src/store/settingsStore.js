@@ -1,7 +1,6 @@
 import {defineStore, storeToRefs} from 'pinia'
 import {ref, computed} from 'vue'
 import { isMobile } from '../composables/isMobile'
-import { mainStore } from './mainStore'
 import { nextStore } from './nextStore'
 
 export const settingsStore = defineStore('settingsStore', () => {
@@ -14,9 +13,6 @@ export const settingsStore = defineStore('settingsStore', () => {
     const toggleCapsToast = ref(false)
     const useCharacters = ref(false)
     const charsArray = ref([])
-    
-    const mainstore = mainStore()
-    const {route} = storeToRefs(mainstore)
 
     const nextstore = nextStore()
     const {goNext} = storeToRefs(nextstore)
@@ -51,8 +47,9 @@ export const settingsStore = defineStore('settingsStore', () => {
         'fontsize': 45,
     })
 
+
     const isBlindMode = computed(() => {
-        return settings.value['blind-mode'] && route.value === 'home'
+        return settings.value['blind-mode']
     })
 
     const disableOption = ref({
@@ -73,9 +70,8 @@ export const settingsStore = defineStore('settingsStore', () => {
         }
     })
 
-    const toggleQuickSetting = (group, selection) => {
-        if (settings.value[group] === selection) settings.value[group] = ''
-        else settings.value[group] = selection
+    const toggleQuickSetting = (selection, group) => {
+        updateSingleSetting(group, selection)
 
         if (settings.value['test-type'] !=='words') {
             disableOption.value['test-length'] = true
@@ -84,18 +80,14 @@ export const settingsStore = defineStore('settingsStore', () => {
             disableOption.value['test-length'] = false
             disableOption.value['words-type'] = false
         }
-
-        let config = settings.value
-        goNext.value = true
-
-        settingsToUpdate.value.push({
-            name: Object.keys({config})[0],
-            value: config
-        })
     }
 
     const checkQuickSettings = (option, key) => {
         let selection = isFinite(key) ? +key : key
+        const currentUserPrefrences = [settings.value['words-type'], settings.value['test-type'], settings.value['test-length'], settings.value['test-type'] ]
+
+        if (currentUserPrefrences.includes(selection)) return
+
         let group = option
         let arr = ['arrangement', 'case', 'spaced']
 
@@ -121,9 +113,12 @@ export const settingsStore = defineStore('settingsStore', () => {
     }
 
     const updateSingleSetting = (setting, newVal) => {
-        setting = setting.toLowerCase()
+        let updateSettings = ['no-space', 'arrangement', 'stop-on-error', 'words-type', 'caps', 'punctuation', 'test-type', 'caps',
+        'numbers', 'all-caps', 'backspace', 'camel-case', 'no-space','spaced', 'double-words', 'blind-mode', 'countdown', 'capslock', 'test-length']
 
-        if (setting in settings.value) {
+        if (settings.value[setting] === newVal) settings.value[setting] = ''        
+
+        else if (setting in settings.value) {
             settings.value[setting] = newVal
         }
 
@@ -131,6 +126,8 @@ export const settingsStore = defineStore('settingsStore', () => {
             name: setting,
             value: newVal
         })
+
+        if (updateSettings.includes(setting)) goNext.value = true
     }
 
     return {

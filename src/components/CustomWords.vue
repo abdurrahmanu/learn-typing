@@ -50,8 +50,9 @@ import { nextStore } from '../store/nextStore';
 import { isTouchScreenDevice } from '../composables/isTouchScreenDevice';
 import { isMobile } from '../composables/isMobile';
 
-const customize = settingsStore()
-const {settings, customChoice, toggleCustomModal} = storeToRefs(customize)
+const settingstore = settingsStore()
+const {settings, customChoice, toggleCustomModal} = storeToRefs(settingstore)
+const {updateSingleSetting} = settingstore
 
 const themestore = themeStore()
 const {theme, appTheme } = storeToRefs(themestore)
@@ -115,11 +116,9 @@ const del = (key) => {
 }
 
 const useTest = (testName) => {
-    if (settings.value['repeat']) settings.value['repeat'] = false
-    settings.value['test-type'] = 'custom'
     customChoice.value = testName
     toggleCustomModal.value = false
-    goNext.value = true
+    updateSingleSetting('test-type', 'custom')
 }
 </script>
 

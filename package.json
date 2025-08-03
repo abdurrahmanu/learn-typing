@@ -29,6 +29,7 @@
   ],
   "extraResources": [],
   "asar": true,
+  "asarUnpack": "**/*.{png,jpg,json,node}",
   "win": {
     "target": [
       {

@@ -28,7 +28,7 @@
                 :id="!isMobile() && 'focus'"
                 class="single-setting hover-state" 
                 :class="[disableOption[key] && 'opacity-30', settings[key] === option && 'text-blue-500']"
-                @click="!disableOption[key] && checkSelection(option, key)" 
+                @click="!disableOption[key] && checkQuickSettings(option, key)" 
                 v-for="(option, index) in optionArr" 
                 :key="index">
                     {{ option }}
@@ -59,7 +59,6 @@ import { ref, computed, watch } from 'vue'
 import { isMobile } from '../composables/isMobile.js';
 import {settingsStore} from '../store/settingsStore.js'
 import { typingStateStore } from '../store/typingStateStore.js';
-import { themeStore } from '../store/themeStore.js';
 import {storeToRefs} from 'pinia'
 import ClockSVG from './Clock.vue';
 import TextAlign from './TextAlign.vue';
@@ -77,9 +76,6 @@ const settingsItems = {
 const typingstatestore = typingStateStore()
 const {focus, testCompleted} = storeToRefs(typingstatestore)
 
-const theme_ = themeStore()
-const {appTheme}  = storeToRefs(theme_)
-
 const customize = settingsStore()
 const { quickSettingss, toggleCustomModal, pauseTyping, hideElements, settings, disableOption} = storeToRefs(customize)
 const {checkQuickSettings} = customize
@@ -92,14 +88,6 @@ const openCustomModal = () => {
 const hoverIndex = ref(null)
 const mouseEnter = (index) => hoverIndex.value = index
 const mouseLeave = (index) => hoverIndex.value = null
-
-const checkSelection = (key, option) => {
-  const currentSelections = [settings.value['words-type'], settings.value['test-type'], settings.value['test-length'], settings.value['test-type'] ]
-
-  let selection = +key || key
-  if (currentSelections.includes(selection)) return
-  checkQuickSettings(option, key)
-}
 
 const toggleQuickSettings = computed(() => isMobile() && focus.value ? 'hidden' : 'block')
 

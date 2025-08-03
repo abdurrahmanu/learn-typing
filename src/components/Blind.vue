@@ -13,11 +13,15 @@ import openEye from './svg/openEye.vue';
 import { settingsStore } from '../store/settingsStore';
 import { isMobile } from '../composables/isMobile';
 import { storeToRefs } from 'pinia';
+import {ref} from 'vue'
 
+const bool = ref(false)
 const settingstore = settingsStore()
 const {settings} = storeToRefs(settingstore)
+const {updateSingleSetting} = settingstore
 
 const customize = () => {
-    settings.value['blind-mode'] = !settings.value['blind-mode']
+    bool.value = !bool.value
+    updateSingleSetting('blind-mode', bool.value)
 }
 </script>

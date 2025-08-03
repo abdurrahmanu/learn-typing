@@ -115,11 +115,9 @@ const del = (key) => {
 }
 
 const useTest = (testName) => {
-    if (settings.value['repeat']) settings.value['repeat'] = false
-    settings.value['test-type'] = 'custom'
     customChoice.value = testName
     toggleCustomModal.value = false
-    goNext.value = true
+    updateSingleSetting('test-type', 'custom')
 }
 </script>
 

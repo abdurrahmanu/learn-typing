@@ -25,7 +25,7 @@ export default function inputEvent (event) {
     const eventType  = event.key || event.inputType
 
     const returnOnWrongInput = () => {
-        return settings.value['stop-on-error'] && incorrectCharCount.value && (eventType !== 'Backspace' || eventType !== 'deleteContentBackward')
+        return settings.value['stop-on-error'] && settings.value['backspace'] && incorrectCharCount.value && (eventType !== 'Backspace' || eventType !== 'deleteContentBackward')
     }
 
     const returnFromCapsLockEvent = () => {

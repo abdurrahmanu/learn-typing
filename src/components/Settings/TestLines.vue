@@ -23,7 +23,7 @@ const emit = defineEmits(['emitUpdate'])
 const settingstore = settingsStore()
 const { settings} = storeToRefs(settingstore)
 
-const testLines = ref(settings.value['testLines'])
+const testLines = ref(settings.value['test-lines'])
 
 watch(testLines, newVal => {
      emit('emitUpdate', testLines)

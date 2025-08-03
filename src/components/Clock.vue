@@ -34,7 +34,6 @@ import playTimer from '../components/svg/playTimer.vue'
 import {storeToRefs} from 'pinia'
 import { settingsStore} from '../store/settingsStore'
 import { countdownStore } from '../store/countdownStore'
-import {nextStore} from '../store/nextStore'
 import {timerStore} from '../store/timerStore'
 import { typingStateStore } from '../store/typingStateStore'
 
@@ -47,23 +46,17 @@ const countstore = countdownStore()
 const {countdown} = storeToRefs(countstore)
 const {timer} = countstore
 
-const nextstore = nextStore()
-const {goNext} = storeToRefs(nextstore)
-
 const typingstatestore = typingStateStore()
 const {testCompleted} = storeToRefs(typingstatestore)
 
 const settingstore = settingsStore()
 const {settings} = storeToRefs(settingstore)
+const {updateSingleSetting} = settingstore
 
 const difficulty = computed(() => settings.value.difficulty)
 
 const go = () => {
-    settings.value['repeat'] = true
-    goNext.value = true
-    setTimeout(() => {
-        settings.value['repeat'] = false
-    }, 0);
+    updateSingleSetting('repeat', true)
 }
 
 const isCountdown = computed(() => {

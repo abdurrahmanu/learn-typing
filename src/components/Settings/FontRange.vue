@@ -14,10 +14,6 @@
 <script setup>
 import { watch} from 'vue'
 import { storeToRefs } from 'pinia';
-import { countdownStore } from '../../store/countdownStore'
-import { settingsStore } from '../../store/settingsStore'
-import {nextStore} from '../../store/nextStore'
-import { typingStateStore } from '../../store/typingStateStore';
 import { mainStore } from '../../store/mainStore';
 
 const emit = defineEmits(['emitUpdate'])
@@ -25,25 +21,8 @@ const emit = defineEmits(['emitUpdate'])
 const mainstore = mainStore()
 const {fontSize, range, minFontSize, maxFontSize} = storeToRefs(mainstore)
 
-const nextstore = nextStore()
-const {goNext} = storeToRefs(nextstore)
-
-const typingstatestore = typingStateStore()
-const {playerInputLength} = typingstatestore
-
-const settingstore = settingsStore()
-const { settings} = storeToRefs(settingstore)
-
-const count = countdownStore()
-const {clearCounter} = count
-
 watch(range, (newVal) => {
     emit('emitUpdate', +newVal + minFontSize.value)
-
-    if (playerInputLength.value) {        
-        if (settings.value['countdown']) clearCounter()
-        goNext.value = true
-    }
 })
 </script>
 

@@ -6,26 +6,8 @@
 
 it has been long so the codebase is looking strange even though I wrote it.
 
-** countdownStore and timerStore have to be merged or refactored to be one entity
-** check network connection before sending to db to avoid errors
-
 ** will come back for capslock in inputEvent.js
 ** clearly understand the use of enterKey.value
-
-** wrongCoutn doesnt reduce, -- think it is from backspace -- mistakenly deleted code!!
-
-** the use of preventKeyboardScroll and preventScroll
-** alphabet only settings should be shown only in alphabet-test
-
-** next button takes us to result page
-** container focus isnt working as it is supposed to
-
-** if custom test modal is opened, focus doesnt focus into the custom test input field -- fix
-** toggling blind mode changes user correct characters to wrong
-
-** onLoad id is supposed to be gotten, and watched
-
-** repeat test doesnt remove test color so also blind mode doesnt edit it well
 
 --------------------------------------
 Previewing wep app on android
@@ -45,16 +27,6 @@ Previewing vue.js app in android
 3. vite will automatically use your ip as the server ip, 
 4. run the command with npm run host
 5. access your app in external device, just use {your ip}:{port} eg: 192.168.10.1:5173.
-
-
-
-
-
-
-
-
-
-
 
 
 // if I load my page, first loading then check if user exists, if yes login, else no-user

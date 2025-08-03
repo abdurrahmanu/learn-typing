@@ -11,6 +11,6 @@ import CompletionRangeWithErrors from '../components/CompletionRangeWithErrors.v
 import { settingsStore } from '../store/settingsStore';
 import { storeToRefs } from 'pinia';
 
-const customize = settingsStore()
-const {isBlindMode} = storeToRefs(customize)
+const settingstore = settingsStore()
+const {isBlindMode} = storeToRefs(settingstore)
 </script>

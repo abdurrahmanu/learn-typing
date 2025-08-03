@@ -3,7 +3,7 @@
         <label class="font-bold uppercase w-fit flex items-center">
             <div>{{ name }}</div> 
         </label>
-        <p class="text-justify">{{ desc }}</p>
+        <p class="text-justify pb-2">{{ desc }}</p>
     </div>
 </template>
 
