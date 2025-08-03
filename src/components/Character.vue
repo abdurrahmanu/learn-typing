@@ -42,8 +42,7 @@ const theme_ = themeStore()
 const { theme } = storeToRefs(theme_)
 
 const mainstore = mainStore()
-const { currentTest, testContainerEl, charWidth, containerHeight, allSpacesIndex, scrollTextContainer, scrollDistance, lineHeight, fontSize, testLInes } = storeToRefs(mainstore)
-const charEl = ref(null)
+const { currentTest, charEl, testContainerEl, charWidth, containerHeight, allSpacesIndex, scrollTextContainer, scrollDistance, lineHeight, fontSize, testLInes } = storeToRefs(mainstore)
 
 const {test} = currentTest.value
 

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <p>{{ fontSize }}px</p>
+        <p class="flex flex-col justify-center pb-1" :style="{'font-size': fontSize + 'px', 'min-height': maxFontSize + 'px'}">{{ fontSize }}px</p>
         <input 
         name="range" 
         type="range" 

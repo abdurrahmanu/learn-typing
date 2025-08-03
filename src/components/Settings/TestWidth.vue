@@ -1,4 +1,5 @@
 <template>
+    <div class="ring-[1px] ring-black mx-auto" :style="{'width': width}">{{ width }}</div>
     <div>
         <p>{{ testWidth }}</p>
         <input 
@@ -13,7 +14,7 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
+import { computed, onMounted } from 'vue';
 import { mainStore } from '../../store/mainStore';
 import { settingsStore } from '../../store/settingsStore';
 import { storeToRefs } from 'pinia';
@@ -22,10 +23,14 @@ import { ref, watch } from 'vue';
 const containerWidth = ref(0)
 
 const mainstore = mainStore()
-const {testWidth, testContainerEl} = storeToRefs(mainstore)
+const {testWidth, testContainerEl, testStyle} = storeToRefs(mainstore)
 
 const settingstore = settingsStore()
 const { settingsToUpdate} = storeToRefs(settingstore)
+
+const width = computed(() => {
+    return testStyle.value.width
+})
 
 onMounted(() => {
     if (testContainerEl.value instanceof HTMLElement) {

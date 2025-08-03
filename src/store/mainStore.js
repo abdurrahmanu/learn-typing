@@ -27,6 +27,7 @@ export const mainStore = defineStore('mainStore', () => {
     const allSpacesIndex = ref([])
     const useCustomText = ref(false)
     const storedTest = ref('')
+    const charEl = ref(null)
 
     const customTests = ref({
         'demo': 'This is a custom test, you can add your own test, use the plus icon. This particular demo cannot be deleted.'
@@ -42,7 +43,7 @@ export const mainStore = defineStore('mainStore', () => {
             'line-height': lineHeight.value,
             'height': `fit-content`,
             'max-height': containerHeight.value + 'px',
-            'width': `${testWidth.value * charWidth.value}px`,
+            'width': `${(testWidth.value * charWidth.value).toFixed(0)}px`,
             'max-width': '90%'
         }
     })
@@ -98,5 +99,6 @@ export const mainStore = defineStore('mainStore', () => {
         customTests,
         testWidth,
         charWidth,
+        charEl,
     }
 })

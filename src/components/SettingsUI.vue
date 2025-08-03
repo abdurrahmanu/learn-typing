@@ -1,9 +1,9 @@
 <template>
-    <div class="md:px-4 px-2 pb-20 text-base border-x-black max-w-[900px] mx-auto bg-inherit">
+    <div class="pb-20 text-base border-x-black max-w-[900px] mx-auto bg-inherit">
         <SearchBar />
         <div 
         :class="[theme === 'dark' ? 'hover:bg-[#282a2d]': 'hover:bg-gray-400']"
-        class="space-y-4 p-4 transition-all duration-75" 
+        class="space-y-4 p-4 transition-all duration-75 relative" 
         v-for="(mode, index) in modes" 
         :key="index">
             <Mode 
