@@ -10,12 +10,10 @@ export const settingsStore = defineStore('settingsStore', () => {
     const toggleCustomModal = ref(false)
     const pauseTyping = ref(true)
     const hideElements = ref(isMobile() ? true : false)
-    const difficulty = ref('beginner')
     const textPosition = ref('left')
     const toggleCapsToast = ref(false)
     const useCharacters = ref(false)
     const charsArray = ref([])
-    const showBorder = ref(false)
     
     const mainstore = mainStore()
     const {route} = storeToRefs(mainstore)
@@ -24,6 +22,7 @@ export const settingsStore = defineStore('settingsStore', () => {
     const {goNext} = storeToRefs(nextstore)
 
     const settings = ref({
+        'difficulty': 'beginner',
         'cursor': 'border',
         'repeat': false,
         'stop-on-error': false,
@@ -46,6 +45,10 @@ export const settingsStore = defineStore('settingsStore', () => {
         'capslock': true,
         'countdown': false,
         'blind-mode': false,
+        'show-border': false,
+        'test-lines': 4,
+        'test-width': 50,
+        'fontsize': 45,
     })
 
     const isBlindMode = computed(() => {
@@ -124,10 +127,6 @@ export const settingsStore = defineStore('settingsStore', () => {
             settings.value[setting] = newVal
         }
 
-        else if (setting === 'show border') {
-            showBorder.value = newVal
-        }
-
         settingsToUpdate.value.push({
             name: setting,
             value: newVal
@@ -136,8 +135,6 @@ export const settingsStore = defineStore('settingsStore', () => {
 
     return {
         disableOption,
-        difficulty,
-        showBorder,
         settings,
         quickSettingss,
         hideElements,

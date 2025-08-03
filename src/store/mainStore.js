@@ -1,20 +1,25 @@
-import {defineStore} from 'pinia'
+import {defineStore, storeToRefs} from 'pinia'
 import {ref, computed} from 'vue'
 import { isMobile } from '../composables/isMobile'
+import { settingsStore } from './settingsStore'
 
 export const mainStore = defineStore('mainStore', () => {
     const route = ref(null)
     const demo = ref(false)
-    const fontSize = ref(55)
     const minFontSize = ref(25)
     const maxFontSize = ref(isMobile() ? 50 : 120)
-    const testLInes = ref(3)
     const lineHeight = ref(1.5)
-    const testWidth = ref(50)
     const charWidth = ref(20)
+    
+    const settingstore = settingsStore()
+    const {settings} = storeToRefs(settingstore)
+    const {updateSingleSetting} = settingstore
+    
+    const fontSize = computed(() => settings.value.fontsize)
+    const testLines = computed(() => settings.value['test-lines'])
+    const testWidth = computed(() => settings.value['test-width'])
+    
     const range = ref(fontSize.value)
-
-    //Test container
     const testContainerEl = ref(null)
     const scrollDistance = ref(0)
     const scrollTextContainer = ref({}) // Scroll top distance {top: number}
@@ -33,7 +38,7 @@ export const mainStore = defineStore('mainStore', () => {
     }) 
 
     const containerHeight = computed(() => {
-        return (fontSize.value * lineHeight.value) * testLInes.value
+        return (fontSize.value * lineHeight.value) * testLines.value
     })
 
     const testStyle = computed(() => {
@@ -57,7 +62,7 @@ export const mainStore = defineStore('mainStore', () => {
             overflowPixels = testBottom - window.innerHeight  
             let newHeight = containerHeight.value - overflowPixels
             let numberOfLines = Math.floor(newHeight / (fontSize.value * lineHeight.value))
-            testLInes.value = numberOfLines - 1
+            updateSingleSetting('test-lines', numberOfLines - 1)
         }   
         else {
             overflowPixels = 0
@@ -89,14 +94,12 @@ export const mainStore = defineStore('mainStore', () => {
         containerHeight,
         scrollDistance,
         lineHeight,
-        testLInes,
         scrollTextContainer,
         currentTest,
         allSpacesIndex,
         useCustomText,
         storedTest,
         customTests,
-        testWidth,
         charWidth,
     }
 })

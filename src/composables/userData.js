@@ -23,7 +23,6 @@ export const userData = () => {
         cursor: 'cursor',
         theme: window.matchMedia("(prefers-color-scheme: dark)").matches ?  'dark' : 'white',
         fontsize: 50,
-        testLInes: 3,
         userInfo: userInfo.value,
         bestStats: bestStats.value,
         userHistory: userHistory.value,

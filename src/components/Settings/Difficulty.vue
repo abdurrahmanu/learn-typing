@@ -20,12 +20,16 @@
 </template>
 
 <script setup>
-import {watch, computed} from 'vue'
+import {computed, watch, ref} from 'vue'
 import {storeToRefs} from 'pinia'
 import {settingsStore} from '../../store/settingsStore'
 
+const emit = defineEmits(['emitUpdate'])
+
 const settingstore = settingsStore()
-const { difficulty, settingsToUpdate } = storeToRefs(settingstore)
+const { settings } = storeToRefs(settingstore)
+
+const difficulty = ref(settings.value.difficulty)
 
 const difficulties = ['beginner', 'amateur', 'expert']
 
@@ -39,10 +43,7 @@ const result = computed(() => {
     }
 })
 
-watch(difficulty, (newVal) => {
-        settingsToUpdate.value.push({
-        name: Object.keys({difficulty})[0],
-        value: difficulty
-    })
+watch(difficulty, newVal => {
+     emit('emitUpdate', newVal)
 })
 </script>

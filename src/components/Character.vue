@@ -41,7 +41,7 @@ const theme_ = themeStore()
 const { theme } = storeToRefs(theme_)
 
 const mainstore = mainStore()
-const { currentTest, testContainerEl, containerHeight, allSpacesIndex, scrollTextContainer, scrollDistance, lineHeight, fontSize, testLInes } = storeToRefs(mainstore)
+const { currentTest, testContainerEl, containerHeight, allSpacesIndex, scrollTextContainer, scrollDistance, lineHeight, fontSize } = storeToRefs(mainstore)
 const charEl = ref(null)
 
 const {test} = currentTest.value
@@ -49,7 +49,6 @@ const {test} = currentTest.value
 const customize = settingsStore()
 const { settings } = storeToRefs(customize)
 
-const emit = defineEmits(['equal', 'unequal'])
 const props = defineProps({
     character: String,
     index: Number,
@@ -58,6 +57,7 @@ const props = defineProps({
 const currentIndex = computed(() => playerInputLength.value === props.index)
 const equality = computed(() => playerLastInput.value === test[props.index])
 const blind = computed(() => settings.value['blind-mode'])
+const testLines = computed(() => settings.value['test-lines'])
 
 onMounted(() => {
     watch(currentIndex, (isNextChar) => {
@@ -98,7 +98,7 @@ onMounted(() => {
                 if (firstCharInNextLIne) {
                     if (!backspaceIsPressed.value) {
                         if (bottomLine) {
-                            scrollDistance.value += testHeight * ((testLInes.value - 1) || 1)/testLInes.value
+                            scrollDistance.value += testHeight * ((testLines.value - 1) || 1)/testLines.value
                             scrollTextContainer.value = {
                                 top: scrollDistance.value
                             }
@@ -109,7 +109,7 @@ onMounted(() => {
                 if (lastCharInPrevLine) {
                     if (backspaceIsPressed.value) {
                         if (lastScrolledLine) {
-                            scrollDistance.value -= testHeight * ((testLInes.value - 1) || 1)/testLInes.value
+                            scrollDistance.value -= testHeight * ((testLines.value - 1) || 1)/testLines.value
                             scrollTextContainer.value = {
                                 top: scrollDistance.value
                             }
@@ -170,6 +170,10 @@ const pulseStyle = computed(() => {
         ) ?
         'word-pulse ring-transparent' :
         ''
+    } 
+
+    if (settings.value.cursor ==='pulse' && currentIndex.value) {
+        return 'animate-pulse'
     }
 })
 

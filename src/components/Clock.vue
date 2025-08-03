@@ -53,8 +53,10 @@ const {goNext} = storeToRefs(nextstore)
 const typingstatestore = typingStateStore()
 const {testCompleted} = storeToRefs(typingstatestore)
 
-const customize = settingsStore()
-const {settings, difficulty} = storeToRefs(customize)
+const settingstore = settingsStore()
+const {settings} = storeToRefs(settingstore)
+
+const difficulty = computed(() => settings.value.difficulty)
 
 const go = () => {
     settings.value['repeat'] = true

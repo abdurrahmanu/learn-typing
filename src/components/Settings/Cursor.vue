@@ -6,7 +6,7 @@
         @click="changeCursor(cursor)" 
         class="flex px-5 py-1 ring-[2px] cursor-pointer rounded-md" 
         :class="[cursorStyle(cursor)]">
-            <p class="w-fit border-blue-500" :class="value">A</p>
+            <p class="w-fit border-blue-500" :class="value">{{ cursor === 'word-pulse' ? 'word' : 'A' }}</p>
         </div>
     </div>
 </template>
@@ -15,6 +15,7 @@
 import {storeToRefs} from 'pinia'
 import {settingsStore} from '../../store/settingsStore'
 
+const emit = defineEmits(['emitUpdate'])
 const settingstore = settingsStore()
 const { settings} = storeToRefs(settingstore)
 
@@ -22,15 +23,16 @@ const allCursors = {
     border: "border-[1px] border-blue-500",
     cursor: "border-l-[1px] border-l-blue-500",
     underline: "border-b-[1px] border-b-blue-500",
-    pulse: 'animate-pulse'
+    pulse: 'animate-pulse',
+    'word-pulse': 'animate-pulse'
 }
 
 const cursorStyle = (cursor) => {
-    return settings.value['cursor'] === cursor ? 'ring-blue-500' : 'hover:ring-blue-800 hover:ring-[1px] ring-slate-500'
+    return settings.value.cursor === cursor ? 'ring-blue-500' : 'hover:ring-blue-800 hover:ring-[1px] ring-slate-500'
 }
 
 const changeCursor = (cursor) => {
-    settings.value['cursor'] = cursor
+    emit('emitUpdate', cursor)
 }
 </script>
 

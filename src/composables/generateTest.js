@@ -28,7 +28,7 @@ export const generateTest = async () => {
         let text = ''
 
         for (let index = 0; index < Math.ceil(allSpacesIndex.value.length / 2); index++) {
-            let word = text.slice(allSpacesIndex.value[index - 1], allSpacesIndex.value[index])
+            let word = currentTest.value.test.slice(allSpacesIndex.value[index - 1], allSpacesIndex.value[index])
             let firstWordSpace = (index === 0 ? ' ' : '') 
 
             text += word + firstWordSpace + word

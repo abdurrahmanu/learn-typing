@@ -23,9 +23,9 @@ const props = defineProps({
 
 const cursorStyle = computed(() => {
     return {
-        'border-blue-700 border-[1px]': focus.value && settings.value['cursor'] === 'border',
-        'border-blue-700 border-l-[2px]': focus.value && settings.value['cursor'] === 'cursor',
-        'border-blue-700 border-b-[2px]': focus.value && settings.value['cursor'] === 'underline'
+        'border-blue-700 border-[1px]': focus.value && settings.value.cursor === 'border',
+        'border-blue-700 border-l-[2px]': focus.value && settings.value.cursor === 'cursor',
+        'border-blue-700 border-b-[2px]': focus.value && settings.value.cursor === 'underline',
     }
 })
 

@@ -1,34 +1,31 @@
 <template>
     <div>
-        <p>{{ testLInes }}</p>
+        <p>{{ testLines }}</p>
         <input 
         name="range" 
         type="range" 
         step="1"
         min="1"
-        :max="isMobile() ? 3 : 30"
+        :max="isMobile() ? 3 : 15"
         class="range-style" 
-        v-model="testLInes"/>
+        v-model="testLines"/>
     </div>
 </template>
 
 <script setup>
-import { watch } from 'vue';
-import { mainStore } from '../../store/mainStore';
 import { settingsStore } from '../../store/settingsStore';
 import { isMobile } from '../../composables/isMobile';
 import { storeToRefs } from 'pinia';
+import { watch, ref } from 'vue';
 
-const mainstore = mainStore()
-const {testLInes} = storeToRefs(mainstore)
+const emit = defineEmits(['emitUpdate'])
 
 const settingstore = settingsStore()
-const { settingsToUpdate} = storeToRefs(settingstore)
+const { settings} = storeToRefs(settingstore)
 
-watch(testLInes, newVal => {
-    settingsToUpdate.value.push({
-        name: Object.keys({testLInes})[0],
-        value: newVal
-    })
+const testLines = ref(settings.value['testLines'])
+
+watch(testLines, newVal => {
+     emit('emitUpdate', testLines)
 })
 </script>

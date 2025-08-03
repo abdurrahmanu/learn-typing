@@ -7,7 +7,7 @@ import {userDataStore}  from '../store/userDataStore'
 
 export const fetchData = (data) => {
     const store = mainStore()
-    const { customTests, font, range, testLInes} = storeToRefs(store)
+    const { customTests, font, range} = storeToRefs(store)
 
     const userstore = userDataStore()
     const {userInfo, bestStats, userHistory} = storeToRefs(userstore)
@@ -19,18 +19,15 @@ export const fetchData = (data) => {
     const {loadingApp} = storeToRefs(connect)
 
     const customize = settingsStore()
-    const { settings, disableOption, difficulty } = storeToRefs(customize)
+    const { settings, disableOption } = storeToRefs(customize)
 
     loadingApp.value = false
     
     theme.value = data.theme || theme.value
-    font.value = data.fontsize || font.value
     range.value = (font.value - 16) / 0.26
-    difficulty.value = data.difficulty || difficulty.value
     settings.value = data.config[0] || settings.value
     disableOption.value = data.config[1] || disableOption.value
     customTests.value = data.customTests || customTests.value['demo']
-    testLInes.value = data.testLInes || 3
     userInfo.value = data.userInfo
     bestStats.value = data.bestStats
     userHistory.value = data.userHistory

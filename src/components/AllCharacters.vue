@@ -44,14 +44,14 @@ const test = computed(() => {
 })
 
 const customize = settingsStore()
-const { settings, textPosition, showBorder} = storeToRefs(customize)
+const { settings, textPosition} = storeToRefs(customize)
 
 const wordBreak = computed(() => {
     return (settings.value['no-space'] || settings.value['test-type'] === 'custom' || settings.value['test-type'] === 'characters') && 'break-words'
 })
 
 const borderStyle = computed(()=> {
-    return showBorder.value && 'ring-[1px] ring-neutral-900 rounded-md'
+    return settings.value['show-border'] && 'ring-[1px] ring-neutral-900 rounded-md'
 })
 
 function focusInput() {

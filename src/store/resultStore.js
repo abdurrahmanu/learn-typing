@@ -13,10 +13,12 @@ export const resultStore = defineStore('resultStore', () => {
     const {resultData, incorrectCharCount} = storeToRefs(characterstore)
 
     const customize = settingsStore()
-    const {settings, difficulty} = storeToRefs(customize)
+    const {settings} = storeToRefs(customize)
 
     const mainstore = mainStore()
     const {currentTest} = storeToRefs(mainstore)
+
+    const difficulty = computed(() => settings.value.difficulty)
 
     const test = computed(() => {
         return currentTest.value.test

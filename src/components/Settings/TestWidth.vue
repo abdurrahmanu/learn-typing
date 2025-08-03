@@ -14,17 +14,20 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, watch, ref} from 'vue';
 import { mainStore } from '../../store/mainStore';
 import { settingsStore } from '../../store/settingsStore';
 import { storeToRefs } from 'pinia';
-import { ref, watch } from 'vue';
+
+const emit = defineEmits(['emitUpdate'])
 
 const mainstore = mainStore()
-const {testWidth, testStyle} = storeToRefs(mainstore)
+const { testStyle} = storeToRefs(mainstore)
 
 const settingstore = settingsStore()
-const { settingsToUpdate} = storeToRefs(settingstore)
+const { settings} = storeToRefs(settingstore)
+
+const testWidth = ref(settings.value['test-width'])
 
 const width = computed(() => {
     return {
@@ -34,9 +37,6 @@ const width = computed(() => {
 })
 
 watch(testWidth, newVal => {
-    settingsToUpdate.value.push({
-        name: Object.keys({testWidth})[0],
-        value: newVal
-    })
+     emit('emitUpdate', newVal)
 })
 </script>

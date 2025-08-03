@@ -1,7 +1,7 @@
 <template>
     <div :class="appTheme" class="cursor-default py-10 text-lg">
         <p class="py-1 text-2xl text-center text-slate-500 stats">STATISTICS</p>
-        <div class="my-2 px-3 ring-[1px] uppercase rounded-full cursor-pointer w-fit mx-auto" :class="[difficultyStyle]">{{ difficulty }}</div>
+        <div class="my-2 px-3 ring-[1px] uppercase rounded-full cursor-pointer w-fit mx-auto" :class="[difficultyStyle]">{{ settings.difficulty }}</div>
 
         <div class="flex justify-center mt-10 w-fit mx-auto ring-[1px] ring-transparent hover:ring-zinc-600 rounded-md text-xl p-5">
             <div v-for="(sectionValue, sectionKey, index) in resultSections" :key="index" class="px-2 text-center last:border-r-transparent border-r-2 border-r-black">
@@ -33,7 +33,7 @@ const resultstore = resultStore()
 const {resultSections, difficultyStyle} = storeToRefs(resultstore)
 
 const customize = settingsStore()
-const { difficulty} = storeToRefs(customize)
+const { settings} = storeToRefs(customize)
 
 const theme_ = themeStore()
 const { appTheme } = storeToRefs(theme_)
