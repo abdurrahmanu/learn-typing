@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div :style="width" class="absolute border-b-[2px] pb-[2px] border-b-black mx-auto text-center center-x bottom-16 text-xs uppercase font-bold">Test box width</div>
-        <!-- {{ testWidth }} -->
+        <!-- <div :style="width" class="absolute border-b-[2px] pb-[2px] border-b-black mx-auto text-center center-x bottom-16 text-xs uppercase font-bold">Test box width</div> -->
+        <p>{{ testWidth }} characters</p>
         <input
         name="range" 
         type="range" 

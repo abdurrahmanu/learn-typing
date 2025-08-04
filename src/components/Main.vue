@@ -1,18 +1,18 @@
 <template>
     <main :class="[appTheme]" class="page main-font">
-        <Connectivity />
-        <div class="main bg-inherit">
+        <div class="main bg-inherit flex flex-col h-screen">
             <Navbar />
-            <RouterView />
-            <Modals_Popups_Toasts/>
-            <Footer />
+            <div class="bg-inherit overflow-auto flex-1">
+                <RouterView />
+                <Modals_Popups_Toasts/>
+                <Footer />
+            </div>
         </div>
     </main>
 </template>
 
 <script setup>
 import Modals_Popups_Toasts from './Modals_Popups_Toasts.vue'
-import Connectivity from './Connectivity.vue'
 import Navbar from './Navbar.vue'
 import Footer from './Footer.vue';
 

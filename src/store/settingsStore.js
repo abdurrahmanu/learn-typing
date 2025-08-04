@@ -21,17 +21,15 @@ export const settingsStore = defineStore('settingsStore', () => {
         'difficulty': 'beginner',
         'cursor': 'border',
         'repeat': false,
-        'stop-on-error': false,
         'test-length': 'auto',
         'words-type': 'frequent', 
+        'character-case': '',
         'cursor': 'border',
         'test-type': 'words',
         'caps': false,
         'punctuation': false,
         'numbers': false,
-        'all-caps': false,
         'backspace': true,
-        'camel-case': false,
         'no-space': false,
         'blur': false,
         'spaced': false,
@@ -113,15 +111,16 @@ export const settingsStore = defineStore('settingsStore', () => {
     }
 
     const updateSingleSetting = (setting, newVal) => {
-        let updateSettings = ['no-space', 'arrangement', 'stop-on-error', 'words-type', 'caps', 'punctuation', 'test-type', 'caps',
-        'numbers', 'all-caps', 'backspace', 'camel-case', 'no-space','spaced', 'double-words', 'blind-mode', 'countdown', 'capslock', 'test-length']
+
+        let updateSettings = ['arrangement', 'character-case', 'words-type', 'caps', 'punctuation', 'test-type', 'caps',
+        'numbers', 'backspace', 'no-space','spaced', 'double-words', 'blind-mode', 'countdown', 'capslock', 'test-length']
 
         if (settings.value[setting] === newVal) settings.value[setting] = ''        
 
         else if (setting in settings.value) {
             settings.value[setting] = newVal
         }
-
+        
         settingsToUpdate.value.push({
             name: setting,
             value: newVal

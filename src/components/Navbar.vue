@@ -1,30 +1,33 @@
 <template>
-    <header class="header">
-        <div 
-        @click="routeToPage('about')" 
-        class="flex items-center gap-1">
-            <Logo class="flex cursor-pointer" /> 
-            <p class="text-sm font-bold">KiBoard</p>
-        </div>
-
-        <div class="nav-container center-x">
+    <div class="sticky top-0 z-[1]">
+        <Connectivity />
+        <header class="header">
             <div 
-            @click="routeToPage(key)" 
-            :class="[currentRouteStyle(key)]" 
-            class="nav-item"
-            v-for="(NavItem, key, index) in navItems" 
-            :key="index">
-                <component :is="NavItem" class="w-5"/>
+            @click="routeToPage('about')" 
+            class="flex items-center gap-1">
+                <Logo class="flex cursor-pointer" /> 
+                <p class="text-sm font-bold">KiBoard</p>
             </div>
-        </div>
-
-        <div 
-        @click="routeToPage('user')" 
-        :class="[currentRouteStyle('user')]" 
-        class="nav-item">
-            <userSVG class="w-5" />
-        </div>
-    </header>
+    
+            <div class="nav-container center-x">
+                <div 
+                @click="routeToPage(key)" 
+                :class="[currentRouteStyle(key)]" 
+                class="nav-item"
+                v-for="(NavItem, key, index) in navItems" 
+                :key="index">
+                    <component :is="NavItem" class="w-5"/>
+                </div>
+            </div>
+    
+            <div 
+            @click="routeToPage('user')" 
+            :class="[currentRouteStyle('user')]" 
+            class="nav-item">
+                <userSVG class="w-5" />
+            </div>
+        </header>
+    </div>
 </template>
 
 <script setup>
@@ -33,10 +36,10 @@ import homeSVG from './svg/home.vue'
 import settingsSVG from './svg/settings.vue';
 import userSVG from './svg/user.vue'
 import feedbackSVG from './svg/feedback.vue'
+import Connectivity from './Connectivity.vue'
 import {useRouter} from 'vue-router'
-import { themeStore } from '../store/themeStore';
 import {storeToRefs} from 'pinia';
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 import { mainStore } from '../store/mainStore';
 
 const navItems = {
@@ -63,7 +66,7 @@ const currentRouteStyle = (r) => {
 
 <style scoped>
 .header {
-    @apply sticky mx-auto flex items-center bg-inherit justify-between px-5 py-4 max-w-[1500px] min-w-[360px] transition-all duration-300 top-0 z-[1]
+    @apply mx-auto flex items-center bg-inherit justify-between px-5 py-4 max-w-[1500px] min-w-[360px] transition-all duration-300
 }
 
 .nav-item {

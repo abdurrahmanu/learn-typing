@@ -13,7 +13,6 @@ export const searchStore = defineStore('searchStore', () => {
         'double-words': 'Toggle to repeat every word twice. Can only work with spaced test.',
         'letter-combination': 'Toggle to randomly repeat and shuffles your selection. A minimum of two characters and maximum of ten.',
         'no-space': 'Toggle to remove all spaces in test. e.g. thisisanexample',
-        'stop-on-error': 'With this toggled, you will not be able to go forward until you clear your error.',
         'font-size': 'test fontsize',
         'test-lines': 'test lines'
     }

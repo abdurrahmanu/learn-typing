@@ -1,9 +1,9 @@
 <template>
-    <div class="pb-20 text-base border-x-black max-w-[1000px] mx-auto bg-inherit">
+    <div class="pb-20 text-base border-x-black max-w-[800px] mx-auto bg-inherit">
         <SearchBar />
-        <div 
+        <div
         :class="[theme === 'dark' ? 'hover:bg-[#282a2d]': 'hover:bg-gray-400']"
-        class="space-y-4 p-4 transition-all duration-75 relative" 
+        class="space-y-2 p-4 transition-all duration-75 relative" 
         v-for="(mode, index) in modes" 
         :key="index">
             <Mode 
@@ -31,7 +31,7 @@ const modes = [
     {
         name: 'Cursor',
         setting: 'cursor',
-        desc: 'Use your preferred cursor type',
+        desc: 'Use your preferred cursor',
         options: null,
         extra: []
     },
@@ -45,14 +45,14 @@ const modes = [
     {
         name: 'Test Width',
         setting: 'test-width',
-        desc: 'This sets the test width which is measured in number of characters. Minimum should be 20. Maximum width is set to fit the test container boundaries.',
+        desc: 'This sets the test width measured in number of characters. Minimum is 20. Maximum width is set to fit the test container boundaries.',
         options: [],
         extra: []
     },
     {
         name: 'Font size',
         setting: 'fontsize',
-        desc: 'Increase or reduce font size',
+        desc: 'Increase and reduce font size',
         options: null,
         extra: []
     },
@@ -73,45 +73,38 @@ const modes = [
     {
         name: 'Backspace',
         setting: 'backspace',
-        desc: 'Toggle to enable Backspace or delete key.',
-        options: ['on', 'off'],
+        desc: 'Allows or disallows user to delete errors. enabling correct, you must clear error before going forward',
+        options: ['on', 'off', 'correct'],
         extra: []
     },
     {
         name: 'Blur',
         setting: 'blur',
-        desc: 'Toggle to blur out all words excluding the current and next words. Only works with spaced test.',
+        desc: 'Blur out all words excluding the current and next words. Only works with spaced test.',
         options: ['on', 'off'],
         extra: []
     },
     {
-        name: 'Custom case',
-        setting: 'camel-case',
-        desc: 'Toggle to randomize positons of uppercase and lowercase alphabets. eg. tHiS is An EXaMplE',
-        options: ['on', 'off'],
+        name: 'Character case',
+        setting: 'character-case',
+        desc: 'Change test case to upper, lower or camel case',
+        options: ['upper', 'lower', 'camel'],
         extra: []
     },
     {
         name: 'Double words',
         setting: 'double-words',
-        desc: 'Toggle to repeat every word twice. Can only work with spaced test.',
+        desc: 'Enable to repeat every word twice. Can only work with spaced test.',
         options: ['on', 'off'],
         extra: []
     },
     {
         name: 'No space',
         setting: 'no-space',
-        desc: 'Toggle to remove all spaces in test. e.g. thisisanexample',
+        desc: 'Enable to remove all spaces in test. e.g. thisisanexample',
         options: ['on', 'off'],
         extra: []
-    },
-    {
-        name: 'Stop on error',
-        setting: 'stop-on-error',
-        desc: 'With this toggled, you will not be able to go forward until you clear your error. Only works while backspace is enabled',
-        options: ['on', 'off'],
-        extra: []
-    },
+    }
 ]
 
 </script>

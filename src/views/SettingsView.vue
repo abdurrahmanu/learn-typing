@@ -1,7 +1,5 @@
 <template>
-    <div class="bg-inherit relative">
-        <SettingsUI />
-    </div>
+    <SettingsUI />  
 </template>
 
 <script setup>

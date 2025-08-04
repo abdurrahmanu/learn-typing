@@ -1,8 +1,7 @@
 export function customizeTest({
     punctuation,
     caps,
-    allCaps,
-    camelCase,
+    characterCase,
     noSpace ,
     testType,
     test,
@@ -10,22 +9,21 @@ export function customizeTest({
     reverse,
     space,
 }) {
-    if (!caps && !camelCase && !allCaps) {
+
+    if (characterCase === 'lower') {
         test = test.toLowerCase()
     } 
 
-    else {
-        if (camelCase) {
-            test = test.split('').map(char => {
-                let random = Math.floor(Math.random() * 6)
-                if (random < 2) return char.toUpperCase()
-                else return char.toLowerCase()
-            }).join('')
-        }
+    else if (characterCase === 'camel') {
+        test = test.split('').map(char => {
+            let random = Math.floor(Math.random() * 6)
+            if (random < 2) return char.toUpperCase()
+            else return char.toLowerCase()
+        }).join('')
+    }
 
-        else if (allCaps) {
-            test = test.toUpperCase()
-        }
+    else if (characterCase === 'upper') {
+        test = test.toUpperCase()
     }
 
     if (!punctuation) {
@@ -69,21 +67,20 @@ export function customizeTest({
     }
 
     if (caps) {
-        if (testType === 'words') {
-            let newText = test
-            test = newText.split(' ').map((word, index) => {
-                let capitalized = word.charAt(0).toUpperCase() + word.slice(1)
-                if (index === 0) return capitalized
-                if (punctuation) {
-                    if (newText[index - 2] && newText[index - 2] === '.') return capitalized
-                     else return word
-                } else {
-                    let random = Math.floor(Math.random() * 6)
-                    if (random < 1) return capitalized
+        test = test.toLowerCase()        
+        let newText = test
+        test = newText.split(' ').map((word, index) => {
+            let capitalized = word.charAt(0).toUpperCase() + word.slice(1)
+            if (index === 0) return capitalized
+            if (punctuation) {
+                if (newText[index - 2] && newText[index - 2] === '.') return capitalized
                     else return word
-                }
-            }).join(' ')
-        }
+            } else {
+                let random = Math.floor(Math.random() * 6)
+                if (random < 1) return capitalized
+                else return word
+            }
+        }).join(' ')
     }
 
     if (noSpace) {

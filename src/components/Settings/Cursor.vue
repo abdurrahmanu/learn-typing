@@ -4,7 +4,7 @@
         v-for="(value, cursor, index) in allCursors" 
         :key="index" 
         @click="changeCursor(cursor)" 
-        class="flex px-5 py-1 ring-[2px] cursor-pointer rounded-md" 
+        class="flex px-5 py-1 ring-[1px] cursor-pointer rounded-md" 
         :class="[cursorStyle(cursor)]">
             <p class="w-fit border-blue-500" :class="value">{{ cursor === 'word-pulse' ? 'word' : 'A' }}</p>
         </div>
