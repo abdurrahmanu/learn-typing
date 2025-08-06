@@ -1,14 +1,14 @@
 <template>
     <Transition name="container"> 
-        <div id="focus" class="relative">
-            <focusButton class="fill-parent center-text-xy z-[1] backdrop-blur-[6px] font-bold"/>
+        <div id="focus">
+            <!-- <focusButton class="fill-parent center-text-xy z-[1] backdrop-blur-[6px] font-bold"/> -->
             <div
             id="focus"
             @click="focusInput"
             aria-describedby="full-text" 
-            ref="testContainerEl" 
+            ref="testEl" 
             class="container-style"
-            :style="testStyle" 
+            :style="style" 
             :class="[ wordBreak, borderStyle,
             (textPosition === 'center') && 'text-center',
             (textPosition === 'left') && 'text-left'] ">                 
@@ -30,21 +30,20 @@ import { mainStore } from '../store/mainStore';
 import { settingsStore } from '../store/settingsStore';
 import { isTouchScreenDevice } from '../composables/isTouchScreenDevice';
 import focusButton from './focusButton.vue';
-import { computed, onMounted } from 'vue';
+import { computed } from 'vue';
 
 const typingstatestore = typingStateStore()
 const { inputEl} = storeToRefs(typingstatestore)
 
 const mainstore = mainStore()
-const { currentTest, testContainerEl, testStyle} = storeToRefs(mainstore)
-const {validateTestLines} = mainstore
+const { currentTest, testEl} = storeToRefs(mainstore)
 
 const test = computed(() => {
     return currentTest.value.test
 })
 
-const customize = settingsStore()
-const { settings, textPosition} = storeToRefs(customize)
+const setttingstore = settingsStore()
+const { settings, textPosition, testStyle, testHeight, contentFitHeight} = storeToRefs(setttingstore)
 
 const wordBreak = computed(() => {
     return (settings.value['no-space'] || settings.value['test-type'] === 'custom' || settings.value['test-type'] === 'characters') && 'break-words'
@@ -60,9 +59,11 @@ function focusInput() {
     }
 }
 
-onMounted(() => {
-    validateTestLines()
-})
+const style = computed(() => ({
+    ...testStyle.value,
+    'height': contentFitHeight.value + 'px',
+    'max-height': `min(${testHeight.value}px, ${contentFitHeight.value}px)`
+}))
 </script>
 
 <style scoped>

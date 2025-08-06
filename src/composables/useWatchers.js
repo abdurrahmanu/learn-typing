@@ -13,6 +13,7 @@ import { updateDB } from './updateDB';
 import { userDataStore } from '../store/userDataStore';
 import { resultStore } from '../store/resultStore';
 import { authStore } from '../store/authStore';
+import { validateTestLines } from './validateTestLines';
 
 export default function useWatchers({
     focus: focus, 
@@ -51,21 +52,21 @@ export default function useWatchers({
     const { settings, hideElements, toggleCapsToast, pauseTyping, settingsToUpdate } = storeToRefs(customize)
     
     const mainstore = mainStore()
-    const { testContainerEl} = storeToRefs(mainstore)
-    const {resetToDefault, validateTestLines} = mainstore
+    const { testEl} = storeToRefs(mainstore)
+    const {resetToDefault} = mainstore
     
     const count = countdownStore()
     const {clearCounter} = count
     
     if (scrollContainer) {
         watch(scrollContainer, (newVal, oldVal)=> {
-            if (testContainerEl.value instanceof HTMLElement) {
+            if (testEl.value instanceof HTMLElement) {
                 if (Object.keys(newVal).length) {
-                    testContainerEl.value.scrollTo({
+                    testEl.value.scrollTo({
                         top: newVal.top
                     })
                 } else {
-                    testContainerEl.value.scrollTo({
+                    testEl.value.scrollTo({
                         top: 0
                     })
                 }
@@ -165,7 +166,6 @@ export default function useWatchers({
       if (update) {
         watch(update, newVal => {
             if (newVal.length) {                
-                validateTestLines()
                 updateDB(newVal)
                 settingsToUpdate.value = []
             }

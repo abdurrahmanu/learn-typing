@@ -7,8 +7,8 @@
   class="mobile-quick-settings">{{ hideElements ? 'quick settings' : 'close settings' }}</div> 
 
   <div 
-  v-if="(!isMobile() && !hideElements) || (isMobile() && !hideElements)" 
-  :class="[(isMobile() && !hideElements) && 'mobile-quick-settings-modal relative']">
+  v-if="((!isMobile() && !hideElements) || (isMobile() && !hideElements))" 
+  :class="[(isMobile() && !hideElements) && 'mobile-quick-settings-modal relative', (focus && beginTest) && 'invisible pointer-events-none']">
       <div 
       v-if="!testCompleted" 
       :class="[toggleQuickSettings, isMobile() && 'z-[10] bg-inherit top-[20%] w-[10%] absolute mx-auto ring-[1px] ring-black p-5']" 
@@ -74,7 +74,7 @@ const settingsItems = {
 }
 
 const typingstatestore = typingStateStore()
-const {focus, testCompleted} = storeToRefs(typingstatestore)
+const {focus, testCompleted, beginTest} = storeToRefs(typingstatestore)
 
 const customize = settingsStore()
 const { quickSettingss, toggleCustomModal, pauseTyping, hideElements, settings, disableOption} = storeToRefs(customize)
@@ -125,6 +125,6 @@ watch(hideElements, newVal => {
   }
 
   .mobile-quick-settings-modal {
-    @apply absolute top-0 left-0 right-0 bottom-0 ring-[1px] ring-black z-[2] w-[100%] mx-auto px-10 bg-[hsla(0,0%,6%,0.8)]
+    @apply absolute top-0 left-0 right-0 bottom-0 ring-[1px] ring-black z-[2] w-[100%] mx-auto px-10 bg-inherit
   }
 </style>

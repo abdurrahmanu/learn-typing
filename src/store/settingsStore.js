@@ -13,6 +13,8 @@ export const settingsStore = defineStore('settingsStore', () => {
     const toggleCapsToast = ref(false)
     const useCharacters = ref(false)
     const charsArray = ref([])
+    const charWidth = ref(20)
+    const lineHeight = ref(1.5)
 
     const nextstore = nextStore()
     const {goNext} = storeToRefs(nextstore)
@@ -33,18 +35,17 @@ export const settingsStore = defineStore('settingsStore', () => {
         'no-space': false,
         'blur': false,
         'spaced': false,
-        'case': '',
+        'case': 'lower',
         'arrangement': '',
         'double-words': false,
         'capslock': true,
         'countdown': false,
         'blind-mode': false,
         'show-border': false,
-        'test-lines': 4,
+        'test-lines': 3,
         'test-width': 50,
         'fontsize': 45,
     })
-
 
     const isBlindMode = computed(() => {
         return settings.value['blind-mode']
@@ -65,6 +66,24 @@ export const settingsStore = defineStore('settingsStore', () => {
             'numbers' : ['numbers'],
             'arrangement': ['reverse', 'jumble'],
             'spaced': ['space'],
+        }
+    })
+
+    const testLines = ref(settings.value['test-lines'])
+    const testWidth = ref(settings.value['test-width'])
+    const minFontSize = ref(25)
+    const maxFontSize = ref(isMobile() ? 50 : 120)
+    const fontSize = ref(settings.value.fontsize + minFontSize.value)
+    const range = ref(fontSize.value - minFontSize.value)
+    const testHeight = ref('fit-content')
+    const contentFitHeight = ref((lineHeight.value * settings.value.fontsize) * testLines.value)
+
+    const testStyle = computed(() => {
+        return {
+            'font-size': settings.value['fontsize'] + 'px',
+            'line-height': lineHeight.value,
+            'width': `${(testWidth.value * charWidth.value).toFixed(0)}px`,
+            'max-width': '90%'
         }
     })
 
@@ -111,9 +130,8 @@ export const settingsStore = defineStore('settingsStore', () => {
     }
 
     const updateSingleSetting = (setting, newVal) => {
-
         let updateSettings = ['arrangement', 'character-case', 'words-type', 'caps', 'punctuation', 'test-type', 'caps',
-        'numbers', 'backspace', 'no-space','spaced', 'double-words', 'blind-mode', 'countdown', 'capslock', 'test-length']
+        'numbers', 'backspace', 'no-space','spaced', 'fontsize', 'double-words', 'blind-mode', 'countdown', 'capslock', 'test-length']
 
         if (settings.value[setting] === newVal) settings.value[setting] = ''        
 
@@ -124,12 +142,20 @@ export const settingsStore = defineStore('settingsStore', () => {
         settingsToUpdate.value.push({
             name: setting,
             value: newVal
-        })
+        })        
 
         if (updateSettings.includes(setting)) goNext.value = true
     }
 
     return {
+        lineHeight,
+        charWidth,
+        testStyle,
+        range,
+        fontSize,
+        testLines,
+        testWidth,
+        charWidth,
         disableOption,
         settings,
         quickSettingss,
@@ -145,5 +171,9 @@ export const settingsStore = defineStore('settingsStore', () => {
         useCharacters,
         isBlindMode,
         settingsToUpdate,
+        minFontSize,
+        maxFontSize,
+        testHeight,
+        contentFitHeight,
     }
 })

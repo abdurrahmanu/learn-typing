@@ -1,5 +1,5 @@
 <template>
-    <div v-if="!testCompleted" class="mx-auto max-w-[1500px] py-10 bg-inherit"> 
+    <div ref="testContainerEl" v-if="!testCompleted" class="mx-auto relative max-w-[1500px] overflow-hidden w-full py-10 flex-1 bg-inherit"> 
         <Range />
         <QuickSettings />
         <TestContainer />
@@ -21,6 +21,7 @@ import preventScroll from '../composables/preventScroll'
 import inputEvent from '../composables/inputEvent'
 import evaluateInput from '../composables/evaluateInput';
 import Range from '../components/Range.vue';
+import { validateTestLines } from '../composables/validateTestLines';
 
 const customize = settingsStore()
 const {settingsToUpdate, toggleCapsToast, pauseTyping, toggleCustomModal} = storeToRefs(customize)
@@ -32,7 +33,7 @@ const typingstatestore = typingStateStore()
 const {refocus, testCompleted, focus, playerInput, beginTest, inputEl} = storeToRefs(typingstatestore)
 
 const mainstore = mainStore()
-const { testContainerEl, font} = storeToRefs(mainstore)
+const { testEl, testContainerEl, font} = storeToRefs(mainstore)
 
 const connect = connectStore()
 const {connectionAvailable } = storeToRefs(connect)
@@ -66,20 +67,16 @@ function handleKeydown(event) {
     let value = inputEvent(event)
 
     if (value) evaluateInput(value);
-
-    // if (focus.value) {
-    //     preventKeyBoardScroll(event);
-    // }
 }
 
 function handleTouchMove(event) {
-    if (event.target === testContainerEl.value || testContainerEl.value.contains(event.srcElement)) {
+    if (event.target === testEl.value || testEl.value.contains(event.srcElement)) {
         preventScroll(event);
     }
 }
 
 function handleWheel(event) {
-    if (event.target === testContainerEl.value || testContainerEl.value.contains(event.srcElement)) {
+    if (event.target === testEl.value || testEl.value.contains(event.srcElement)) {
         preventScroll(event);
     }
 }
@@ -111,15 +108,17 @@ function handleClick(event) {
 }
 
 onMounted(() => {
-  useEventListener('touchmove', handleTouchMove)
-  useEventListener('wheel', handleWheel)
-  useEventListener('blur', handleBlur)
-  useEventListener('focus', handleFocus)
-  useEventListener('offline', handleOffline)
-  useEventListener('online', handleOnline)
-  useEventListener('keydown', handleKeydown)
-  useEventListener('click', handleClick)
-  useEventListener('input', handleKeydown, false, inputEl.value)
+    let mounted = true
+    validateTestLines(mounted)
+    useEventListener('touchmove', handleTouchMove)
+    useEventListener('wheel', handleWheel)
+    useEventListener('blur', handleBlur)
+    useEventListener('focus', handleFocus)
+    useEventListener('offline', handleOffline)
+    useEventListener('online', handleOnline)
+    useEventListener('keydown', handleKeydown)
+    useEventListener('click', handleClick)
+    useEventListener('input', handleKeydown, false, inputEl.value)
 })
 
 onUnmounted(() => {

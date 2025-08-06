@@ -41,13 +41,13 @@ const theme_ = themeStore()
 const { theme } = storeToRefs(theme_)
 
 const mainstore = mainStore()
-const { currentTest, testContainerEl, containerHeight, allSpacesIndex, scrollTextContainer, scrollDistance, lineHeight, fontSize } = storeToRefs(mainstore)
+const { currentTest, testEl, allSpacesIndex, scrollTextContainer, scrollDistance, } = storeToRefs(mainstore)
 const charEl = ref(null)
 
 const {test} = currentTest.value
 
-const customize = settingsStore()
-const { settings } = storeToRefs(customize)
+const settingstore = settingsStore()
+const { settings, lineHeight, testHeight, contentFitHeight , testLines} = storeToRefs(settingstore)
 
 const props = defineProps({
     character: String,
@@ -57,7 +57,7 @@ const props = defineProps({
 const currentIndex = computed(() => playerInputLength.value === props.index)
 const equality = computed(() => playerLastInput.value === test[props.index])
 const blind = computed(() => settings.value['blind-mode'])
-const testLines = computed(() => settings.value['test-lines'])
+const font = computed(() => settings.value['fontsize'])
 
 onMounted(() => {
     watch(currentIndex, (isNextChar) => {
@@ -74,13 +74,13 @@ onMounted(() => {
             }
              
             if (charEl.value) {    
-                const testHeight = containerHeight.value
-                const testTop = testContainerEl.value.getBoundingClientRect().top
-                const testBottom = testContainerEl.value.getBoundingClientRect().bottom
+                const height = Math.min(testHeight.value, contentFitHeight.value)                
+                const testTop = testEl.value.getBoundingClientRect().top
+                const testBottom = testEl.value.getBoundingClientRect().bottom
                 const charTop = charEl.value.getBoundingClientRect().top
                 const charBottom = charEl.value.getBoundingClientRect().bottom
-                const charFullHeight = (fontSize.value * lineHeight.value)
-                const charLineHeightTop = (charFullHeight - fontSize.value)/2
+                const charFullHeight = (font.value * lineHeight.value)
+                const charLineHeightTop = (charFullHeight - font.value)/2
 
                 const prevCharBottom = charEl.value.previousElementSibling && charEl.value.previousElementSibling.getBoundingClientRect().bottom 
                 const prevCharTop = charEl.value.previousElementSibling && charEl.value.previousElementSibling.getBoundingClientRect().top 
@@ -98,7 +98,7 @@ onMounted(() => {
                 if (firstCharInNextLIne) {
                     if (!backspaceIsPressed.value) {
                         if (bottomLine) {
-                            scrollDistance.value += testHeight * ((testLines.value - 1) || 1)/testLines.value
+                            scrollDistance.value += height * ((testLines.value - 1) || 1)/testLines.value
                             scrollTextContainer.value = {
                                 top: scrollDistance.value
                             }
@@ -109,7 +109,7 @@ onMounted(() => {
                 if (lastCharInPrevLine) {
                     if (backspaceIsPressed.value) {
                         if (lastScrolledLine) {
-                            scrollDistance.value -= testHeight * ((testLines.value - 1) || 1)/testLines.value
+                            scrollDistance.value -= height * ((testLines.value - 1) || 1)/testLines.value
                             scrollTextContainer.value = {
                                 top: scrollDistance.value
                             }

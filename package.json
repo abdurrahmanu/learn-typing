@@ -67,7 +67,6 @@
     ]
   },
   "dependencies": {
-    "@vueuse/integrations": "^12.5.0",
     "autoprefixer": "^10.4.21",
     "chart.js": "^4.4.7",
     "firebase": "^10.14.1",

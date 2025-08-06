@@ -1,6 +1,6 @@
 <template>
-    <div :class="[isMobile() ? 'pt-6' : 'pt-16']" class="w-[90%] mx-auto">
-        <div :style="computedStyle" class="flex items-center pb-2 justify-between m-auto">
+    <div :class="[isMobile() ? 'pt-6' : 'pt-14']">
+        <div :style="containerStyle" class="flex items-center pb-2 justify-between m-auto">
             <p v-if="!settings['countdown']"></p>
             <Countdown v-else :start="beginCountdown"/>
             <restart
@@ -40,24 +40,25 @@ const nextstore = nextStore()
 const {goNext} = storeToRefs(nextstore)
 
 const mainstore = mainStore()
-const { scrollTextContainer, fontSize, testStyle} = storeToRefs(mainstore)
+const { scrollTextContainer } = storeToRefs(mainstore)
 
-const customize = settingsStore()
-const { settings} = storeToRefs(customize)
+const settingstore = settingsStore()
+const { settings, testStyle} = storeToRefs(settingstore)
+
+const font = computed(() => settings.value['fontsize'])
 
 const halfTestFontSize = computed(() => {
-    return fontSize.value < 40 ? fontSize.value : fontSize.value / 2
+    return font.value < 40 ? font.value : font.value / 2
 })
 
 const canRestart = computed(() => {
     return !testCompleted.value && playerInputLength.value
 })
 
-const computedStyle = computed(() => ({
+const containerStyle = computed(() => ({
     ...testStyle.value,
-    'font-size': (fontSize.value < 40 ? fontSize.value : fontSize.value / 2) + 'px'
+    'font-size': (font.value < 40 ? font.value : font.value / 2) + 'px'
 }))
-
 
 useWatchers({
     scrollTextContainer,

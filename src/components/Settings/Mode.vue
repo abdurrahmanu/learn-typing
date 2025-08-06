@@ -1,5 +1,5 @@
 <template>
-    <div class="text-[17px]">
+    <div class="text-[16px]">
         <label class="font-bold uppercase w-fit flex items-center">
             <div>{{ name }}</div> 
         </label>

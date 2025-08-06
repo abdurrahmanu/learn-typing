@@ -16,16 +16,14 @@
 import { settingsStore } from '../../store/settingsStore';
 import { isMobile } from '../../composables/isMobile';
 import { storeToRefs } from 'pinia';
-import { watch, ref } from 'vue';
+import { watch } from 'vue';
 
 const emit = defineEmits(['emitUpdate'])
 
 const settingstore = settingsStore()
-const { settings} = storeToRefs(settingstore)
-
-const testLines = ref(settings.value['test-lines'])
+const { testLines } = storeToRefs(settingstore)
 
 watch(testLines, newVal => {
-     emit('emitUpdate', testLines)
+     emit('emitUpdate', newVal)
 })
 </script>

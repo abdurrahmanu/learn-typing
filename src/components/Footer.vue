@@ -1,8 +1,6 @@
 <template>
-    <div class="fixed w-full bottom-0 py-2 flex flex-col items-center space-y-5 bg-inherit">
-        <div class="w-fit mx-auto flex gap-10 flex-wrap justify-center">        
-            <Next />     
-        </div>
+    <div class="w-full max-w-[1500px] mx-auto py-2 h-fit flex flex-col items-center space-y-5">
+        <Next />     
         <Theme />
     </div>
 </template>

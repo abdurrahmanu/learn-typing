@@ -1,11 +1,11 @@
 <template>
-    <div class="relative flex gap-4 justify-start max-w-[300px]">
+    <div class="relative flex gap-4 justify-start max-w-[300px] text-sm">
         <p 
         @click="update(option)" 
         v-for="(option, index) in options" 
         :key="index" 
         :class="[selectedOption(option)]"
-        class="text-center font-mono font-bold w-full px-3 max-w-[150px] py-1 ring-[3px] rounded-full uppercase">{{ option }}</p>
+        class="text-center font-mono font-bold w-full px-1 max-w-[100px] py-[2px] ring-[2px] rounded-full uppercase">{{ option }}</p>
     </div>
     <div v-for="(comp, name_, index) in components" :key="index">
         <component :is="comp" @emitUpdate="update" v-if="name === name_"></component>
@@ -20,7 +20,7 @@ import Difficulty from './Difficulty.vue';
 import FontRange from './FontRange.vue';
 import TestLines from './TestLines.vue';
 import TestWidth from './TestWidth.vue';
-import {ref, computed} from 'vue'
+import {ref} from 'vue'
 import { storeToRefs } from 'pinia';
 
 const themestore = themeStore()

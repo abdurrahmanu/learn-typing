@@ -2,10 +2,10 @@
     <main :class="[appTheme]" class="page main-font">
         <div class="main bg-inherit flex flex-col h-screen">
             <Navbar />
-            <div class="bg-inherit overflow-auto flex-1">
+            <div class="bg-inherit overflow-auto flex-1 flex flex-col">
                 <RouterView />
                 <Modals_Popups_Toasts/>
-                <Footer />
+                <Footer :class="[(focus && beginTest) && 'invisible pointer-events-none']" />
             </div>
         </div>
     </main>
@@ -15,6 +15,10 @@
 import Modals_Popups_Toasts from './Modals_Popups_Toasts.vue'
 import Navbar from './Navbar.vue'
 import Footer from './Footer.vue';
+import { typingStateStore } from '../store/typingStateStore';
+
+const typingstore = typingStateStore()
+const { focus, beginTest } = storeToRefs(typingstore)
 
 import {themeStore}  from '../store/themeStore'
 import {storeToRefs} from 'pinia'

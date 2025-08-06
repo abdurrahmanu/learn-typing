@@ -4,12 +4,12 @@
 
 <script setup>
 import { storeToRefs } from 'pinia';
-import { mainStore } from '../store/mainStore';
+import { settingsStore } from '../store/settingsStore';
 import { onMounted, onUpdated, ref } from 'vue';
 
 const el = ref(null)
 
-const {fontSize, charWidth} = storeToRefs(mainStore())
+const {fontSize, charWidth} = storeToRefs(settingsStore())
 
 onMounted(() => {
     let width = getComputedStyle(el.value).width

@@ -1,5 +1,5 @@
 <template>
-    <div class="pb-20 text-base border-x-black max-w-[800px] mx-auto bg-inherit">
+    <div class="text-base max-w-[800px] mx-auto bg-inherit flex-1 border border-neutral-900 overflow-scroll">
         <SearchBar />
         <div
         :class="[theme === 'dark' ? 'hover:bg-[#282a2d]': 'hover:bg-gray-400']"
@@ -106,5 +106,4 @@ const modes = [
         extra: []
     }
 ]
-
 </script>
