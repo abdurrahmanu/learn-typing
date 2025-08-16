@@ -1,10 +1,3 @@
-import {defineStore, storeToRefs} from 'pinia'
-import {computed} from 'vue'
-import {mainStore} from '../store/mainStore'
-import { settingsStore } from '../store/settingsStore'
-import {characterStore} from '../store/characterStore'
-import {timerStore} from '../store/timerStore'
-
 export const resultStore = defineStore('resultStore', () => {
     const timerstore = timerStore()
     const {totalTime, beatCountdown} = storeToRefs(timerstore)

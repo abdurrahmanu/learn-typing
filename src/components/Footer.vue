@@ -6,6 +6,5 @@
 </template>
 
 <script setup>
-import Theme from './Theme.vue';
-import Next from './Next.vue'
+
 </script>

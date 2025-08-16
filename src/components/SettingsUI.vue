@@ -1,9 +1,9 @@
 <template>
-    <div class="text-base max-w-[800px] mx-auto bg-inherit flex-1 border border-neutral-900 overflow-scroll">
+    <div class="max-w-[1000px] w-full mx-auto bg-inherit flex-1 shadow-[inset_0_2px_6px_rgba(0,0,0,0.45)] overflow-scroll text-[20px]">
         <SearchBar />
         <div
-        :class="[theme === 'dark' ? 'hover:bg-[#282a2d]': 'hover:bg-gray-400']"
-        class="space-y-2 p-4 transition-all duration-75 relative" 
+        :class="[theme === 'dark' ? 'hover:bg-slate-800': 'hover:bg-neutral-200']"
+        class="p-4 transition-all duration-75 relative w-[99%] mx-auto" 
         v-for="(mode, index) in modes" 
         :key="index">
             <Mode 
@@ -18,16 +18,17 @@
 </template>
 
 <script setup>
-import Mode from './Settings/Mode.vue';
-import Options from './Settings/Options.vue';
-import SearchBar from './Settings/SearchBar.vue'
-import { themeStore } from '../store/themeStore';
-import { storeToRefs } from 'pinia';
-
 const themestore = themeStore()
 const {theme} = storeToRefs(themestore)
 
 const modes = [
+    {
+        name: 'Fonts',
+        setting: 'font',
+        desc: '',
+        options: null,
+        extra: []
+    },
     {
         name: 'Cursor',
         setting: 'cursor',
@@ -35,13 +36,13 @@ const modes = [
         options: null,
         extra: []
     },
-    // {
-    //     name: 'Difficulty',
-    //     setting: '',
-    //     desc: 'Change difficulty',
-    //     options: null,
-    //     extra: []
-    // },
+    {
+        name: 'Difficulty',
+        setting: 'difficulty',
+        desc: 'Change difficulty',
+        options: null,
+        extra: []
+    },
     {
         name: 'Test Width',
         setting: 'test-width',

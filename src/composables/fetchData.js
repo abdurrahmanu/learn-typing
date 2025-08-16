@@ -1,13 +1,6 @@
-import { mainStore } from "../store/mainStore"
-import { settingsStore } from "../store/settingsStore";
-import { connectStore } from "../store/connectStore";
-import { themeStore } from "../store/themeStore";
-import { storeToRefs } from 'pinia';
-import {userDataStore}  from '../store/userDataStore'
-
 export const fetchData = (data) => {
     const store = mainStore()
-    const { customTests, font, range} = storeToRefs(store)
+    const { customTests, font} = storeToRefs(store)
 
     const userstore = userDataStore()
     const {userInfo, bestStats, userHistory} = storeToRefs(userstore)
@@ -24,7 +17,6 @@ export const fetchData = (data) => {
     loadingApp.value = false
     
     theme.value = data.theme || theme.value
-    range.value = (font.value - 16) / 0.26
     settings.value = data.config[0] || settings.value
     disableOption.value = data.config[1] || disableOption.value
     customTests.value = data.customTests || customTests.value['demo']

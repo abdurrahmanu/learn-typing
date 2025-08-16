@@ -1,9 +1,5 @@
 import { englishWords } from '../../data/englishWords.js';
-import { customizeTest } from './customizeTest.js';
-import { settingsStore } from '../store/settingsStore.js';
-import { mainStore } from '../store/mainStore.js';
 import authoredQuotes from '../../data/quotes.json'
-import { storeToRefs } from 'pinia';
 
 export async function getTest () {
     let test = {

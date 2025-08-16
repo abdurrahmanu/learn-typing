@@ -19,13 +19,6 @@
 </template>
 
 <script setup>
-import { themeStore } from '../store/themeStore';
-import { settingsStore } from '../store/settingsStore';
-import { storeToRefs } from 'pinia';
-import PauseTimer from '../svg/pauseTimer.vue';
-import PlayTimer from '../svg/playTimer.vue';
-import good from '../svg/good.vue';
-
 const theme_ = themeStore()
 const {theme} = theme_
 

@@ -6,10 +6,6 @@
 </template>
 
 <script setup>
-import {ref, watch, onMounted} from 'vue'
-import { connectStore } from '../store/connectStore';
-import { storeToRefs } from 'pinia';
-
 const connect = connectStore()
 const {connectionAvailable, connectionStrength, showConnectionStrength} = storeToRefs(connect)
 

@@ -1,10 +1,10 @@
 <template>
     <div class="relative">
         <div>
-            <div class="flex items-center gap-2 px-1" :id="!isMobile() && 'focus'">  
+            <div class="flex items-center gap-2 px-1" :id="!mobile && 'focus'">  
                 <div class="w-5">
-                    <pauseTimer :id="!isMobile() && 'focus'" v-if="!isCountdown" @click="toggleTimer" />
-                    <playTimer :id="!isMobile() && 'focus'" v-else @click="toggleTimer" />
+                    <pauseTimer :id="!mobile && 'focus'" v-if="!isCountdown" @click="toggleTimer" />
+                    <playTimer :id="!mobile && 'focus'" v-else @click="toggleTimer" />
                 </div>
 
                 <div 
@@ -27,16 +27,7 @@
 </template>
 
 <script setup>
-import {watch, onMounted, computed, onUpdated, ref} from 'vue'
-import { isMobile } from '../composables/isMobile'
-import pauseTimer from '../components/svg/pauseTimer.vue'
-import playTimer from '../components/svg/playTimer.vue'
-import {storeToRefs} from 'pinia'
-import { settingsStore} from '../store/settingsStore'
-import { countdownStore } from '../store/countdownStore'
-import {timerStore} from '../store/timerStore'
-import { typingStateStore } from '../store/typingStateStore'
-
+const mobile = isMobile()
 const level = ref('beginner')
 
 const timerstore = timerStore()
@@ -46,7 +37,7 @@ const countstore = countdownStore()
 const {countdown} = storeToRefs(countstore)
 const {timer} = countstore
 
-const typingstatestore = typingStateStore()
+const typingstatestore = typingStore()
 const {testCompleted} = storeToRefs(typingstatestore)
 
 const settingstore = settingsStore()

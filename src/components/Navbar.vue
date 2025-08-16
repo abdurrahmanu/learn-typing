@@ -31,16 +31,10 @@
 </template>
 
 <script setup>
-import Logo from './Logo.vue'
 import homeSVG from './svg/home.vue'
 import settingsSVG from './svg/settings.vue';
 import userSVG from './svg/user.vue'
 import feedbackSVG from './svg/feedback.vue'
-import Connectivity from './Connectivity.vue'
-import {useRouter} from 'vue-router'
-import {storeToRefs} from 'pinia';
-import { ref } from 'vue';
-import { mainStore } from '../store/mainStore';
 
 const navItems = {
     'home': homeSVG,

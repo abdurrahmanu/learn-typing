@@ -47,8 +47,6 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-
 const leaderboard = ref(
   Array.from({ length: 2 }, (_, i) => ({
     username: `user${i + 1}`,

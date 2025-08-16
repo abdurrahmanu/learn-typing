@@ -41,14 +41,7 @@
 </template>
 
 <script setup>
-import {ref, watch} from 'vue'
-import {storeToRefs} from 'pinia';
-import {mainStore} from '../store/mainStore';
-import {themeStore}  from '../store/themeStore'
-import { settingsStore } from '../store/settingsStore';
-import { nextStore } from '../store/nextStore';
-import { isTouchScreenDevice } from '../composables/isTouchScreenDevice';
-import { isMobile } from '../composables/isMobile';
+const mobile = isMobile()
 
 const settingstore = settingsStore()
 const {settings, customChoice, toggleCustomModal} = storeToRefs(settingstore)

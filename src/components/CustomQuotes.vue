@@ -3,7 +3,7 @@
             <div>            
                 <div v-if="!saveCustomText" class="space-y-1 text-center">
                     <p>Using this enables custom test type</p>
-                    <p class="text-red-400">{{ isMobile() ? 'Maximum of 40 words / 500 characters' : 'Maximum of 150 words / 1200 characters' }}</p>
+                    <p class="text-red-400">{{ mobile() ? 'Maximum of 40 words / 500 characters' : 'Maximum of 150 words / 1200 characters' }}</p>
                     <div class="relative w-[90%] m-auto">  
                         <p @click="textValue = ''" v-if="textValue" class="absolute top-0 right-0 px-2 py-[2px] uppercase hover:text-red-500 cursor-default">X</p>     
                         <textarea v-model="textValue" :class="[appTheme]" class="w-full bg-inherit h-40 p-2 pt-2 border rounded-md outline-none border-slate-500" :placeholder="textAreaPlaceholder" :maxlength="isTouchScreenDevice() ? 500 : 1200" name="custom-textarea" />
@@ -41,14 +41,7 @@
 </template>
 
 <script setup>
-import {ref, watch} from 'vue'
-import {storeToRefs} from 'pinia';
-import {mainStore} from '../store/mainStore';
-import {themeStore}  from '../store/themeStore'
-import { settingsStore } from '../store/settingsStore';
-import { nextStore } from '../store/nextStore';
-import { isTouchScreenDevice } from '../composables/isTouchScreenDevice';
-import { isMobile } from '../composables/isMobile';
+const mobile = isMobile()
 
 const customize = settingsStore()
 const {settings, customChoice, toggleCustomModal} = storeToRefs(customize)

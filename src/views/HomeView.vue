@@ -1,35 +1,17 @@
 <template>
     <div ref="testContainerEl" v-if="!testCompleted" class="mx-auto relative max-w-[1500px] overflow-hidden w-full py-10 flex-1 bg-inherit"> 
-        <Range />
         <QuickSettings />
         <TestContainer />
     </div>
 </template>
 <script setup>
-import TestContainer from '../components/TestContainer.vue'
-import QuickSettings from '../components/QuickSettings.vue'
-import useWatchers from '../composables/useWatchers';
-import useEventListener from '../composables/useEventLIstener';
-import { connectStore } from '../store/connectStore';
-import { nextStore } from '../store/nextStore';
-import { mainStore } from '../store/mainStore';
-import {settingsStore}  from '../store/settingsStore'
-import { typingStateStore } from '../store/typingStateStore';
-import { storeToRefs } from 'pinia';
-import { onMounted, onUnmounted } from 'vue';
-import preventScroll from '../composables/preventScroll'
-import inputEvent from '../composables/inputEvent'
-import evaluateInput from '../composables/evaluateInput';
-import Range from '../components/Range.vue';
-import { validateTestLines } from '../composables/validateTestLines';
-
 const customize = settingsStore()
 const {settingsToUpdate, toggleCapsToast, pauseTyping, toggleCustomModal} = storeToRefs(customize)
 
 const nextstore = nextStore()
 const {goNext} = storeToRefs(nextstore)
 
-const typingstatestore = typingStateStore()
+const typingstatestore = typingStore()
 const {refocus, testCompleted, focus, playerInput, beginTest, inputEl} = storeToRefs(typingstatestore)
 
 const mainstore = mainStore()
@@ -71,13 +53,11 @@ function handleKeydown(event) {
 
 function handleTouchMove(event) {
     if (event.target === testEl.value || testEl.value.contains(event.srcElement)) {
-        preventScroll(event);
     }
 }
 
 function handleWheel(event) {
     if (event.target === testEl.value || testEl.value.contains(event.srcElement)) {
-        preventScroll(event);
     }
 }
 

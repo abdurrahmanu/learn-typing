@@ -1,6 +1,3 @@
-import {defineStore, storeToRefs} from 'pinia'
-import {ref, computed} from 'vue'
-
 export const mainStore = defineStore('mainStore', () => {
     const route = ref(null)
     const demo = ref(false)

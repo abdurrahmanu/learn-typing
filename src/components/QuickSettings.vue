@@ -1,18 +1,18 @@
 <template>
   <div
   :id="hideElements && 'focus'"
-  v-show="isMobile() && !focus"
+  v-show="mobile && !focus"
   @click="hideElements = !hideElements" 
   :class="[!hideElements ? 'hover:ring-red-400' : 'hover:ring-blue-500']" 
   class="mobile-quick-settings">{{ hideElements ? 'quick settings' : 'close settings' }}</div> 
 
   <div 
-  v-if="((!isMobile() && !hideElements) || (isMobile() && !hideElements))" 
-  :class="[(isMobile() && !hideElements) && 'mobile-quick-settings-modal relative', (focus && beginTest) && 'invisible pointer-events-none']">
+  v-if="((!mobile && !hideElements) || (mobile && !hideElements))" 
+  :class="[(mobile && !hideElements) && 'mobile-quick-settings-modal relative', (focus && beginTest) && 'invisible pointer-events-none']">
       <div 
       v-if="!testCompleted" 
-      :class="[toggleQuickSettings, isMobile() && 'z-[10] bg-inherit top-[20%] w-[10%] absolute mx-auto ring-[1px] ring-black p-5']" 
-      class="container config">
+      :class="[toggleQuickSettings, mobile && 'z-[10] bg-inherit top-[20%] w-[10%] absolute mx-auto ring-[1px] ring-black p-5']" 
+      class="container fira-code text-[18px]">
         <div 
         class="parent" 
         v-for="(optionArr, key, listIndex) in quickSettingss" 
@@ -25,7 +25,7 @@
             @mouseleave="mouseLeave(listIndex)" 
             >
                 <div 
-                :id="!isMobile() && 'focus'"
+                :id="!mobile && 'focus'"
                 class="single-setting hover-state" 
                 :class="[disableOption[key] && 'opacity-30', settings[key] === option && 'text-blue-500']"
                 @click="!disableOption[key] && checkQuickSettings(option, key)" 
@@ -37,14 +37,14 @@
         </div>
         
         <div class="relative ring-[1px] rounded-lg cursor-pointer ring-zinc-700 hover:ring-blue-800 flex py-[2px] px-1">
-          <div :id="!isMobile() && 'focus'" class="relative w-fit">
+          <div :id="!mobile && 'focus'" class="relative w-fit">
               <ClockSVG />
           </div>
         </div>
 
         <div class="relative ring-[1px] rounded-lg cursor-pointer ring-zinc-700 hover:ring-blue-800 flex py-[2px] px-1">
             <div class="flex gap-3 px-2 items-center w-fit">
-                <div :id="(!isMobile() && key !== 'add') && 'focus'" class="relative pb-1 px-1 w-fit" v-for="(settingsSVG, key, index) in settingsItems" :key="index">
+                <div :id="(!mobile && key !== 'add') && 'focus'" class="relative pb-1 px-1 w-fit" v-for="(settingsSVG, key, index) in settingsItems" :key="index">
                     <component :is="settingsSVG" @click="key === 'add' && openCustomModal(key)" class="w-4"/>
                 </div>
             </div>
@@ -55,16 +55,13 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue'
-import { isMobile } from '../composables/isMobile.js';
-import {settingsStore} from '../store/settingsStore.js'
-import { typingStateStore } from '../store/typingStateStore.js';
-import {storeToRefs} from 'pinia'
 import ClockSVG from './Clock.vue';
 import TextAlign from './TextAlign.vue';
 import BlindSVG from './Blind.vue';
 import addSVG from './svg/add.vue';
 import repeatSVG from './svg/repeat.vue';
+
+const mobile = isMobile()
 
 const settingsItems = {
   'textAlign': TextAlign,
@@ -73,8 +70,8 @@ const settingsItems = {
   'add': addSVG
 }
 
-const typingstatestore = typingStateStore()
-const {focus, testCompleted, beginTest} = storeToRefs(typingstatestore)
+const typingstore = typingStore()
+const {focus, testCompleted, beginTest} = storeToRefs(typingstore)
 
 const customize = settingsStore()
 const { quickSettingss, toggleCustomModal, pauseTyping, hideElements, settings, disableOption} = storeToRefs(customize)
@@ -89,7 +86,7 @@ const hoverIndex = ref(null)
 const mouseEnter = (index) => hoverIndex.value = index
 const mouseLeave = (index) => hoverIndex.value = null
 
-const toggleQuickSettings = computed(() => isMobile() && focus.value ? 'hidden' : 'block')
+const toggleQuickSettings = computed(() => mobile && focus.value ? 'hidden' : 'block')
 
 watch(hideElements, newVal => {
   if (newVal) pauseTyping.value = true
@@ -104,14 +101,13 @@ watch(hideElements, newVal => {
   }
 
   .parent {
-    @apply flex items-center gap-3 p-[1px]
+    @apply flex items-center p-[1px]
   }
-
   
   .container {
-    @apply m-auto items-center flex text-[14px] max-w-[900px] w-fit gap-2 justify-center flex-wrap relative z-[1] font-[400]
+    @apply m-auto items-center flex max-w-[900px] w-fit gap-3 justify-center flex-wrap relative z-[1]
   }
-  
+
   .single-group {
     @apply relative ring-zinc-700 flex py-[2px] px-1 ring-[1px] rounded-lg cursor-pointer flex-wrap justify-center items-center
   }
@@ -121,7 +117,7 @@ watch(hideElements, newVal => {
   }
 
   .mobile-quick-settings {
-    @apply p-1 px-2 cursor-pointer rounded-md m-auto text-[14px] uppercase ring-[1px] ring-slate-500 whitespace-nowrap w-fit relative z-[3]
+    @apply p-1 px-2 cursor-pointer rounded-md m-auto uppercase ring-[1px] ring-slate-500 whitespace-nowrap w-fit relative z-[3]
   }
 
   .mobile-quick-settings-modal {

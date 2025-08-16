@@ -1,7 +1,7 @@
 <template>
-    <div class="py-4 sticky top-0 z-[1] bg-inherit px-3">
-        <div class="rounded-md ring-[2px] ring-black px-2">
-            <input v-model="searchValue" @input="debounce" type="text" placeholder="under development" class="outline-none text-center appearance-none px-3 py-1 bg-transparent w-full">
+    <div class="py-4 sticky top-0 z-[1] bg-inherit px-3 w-[99%] mx-auto">
+        <div class="ring-[1px] ring-blue-900 px-2">
+            <input v-model="searchValue" @input="debounce" type="text" placeholder="Search settings" class="outline-none text-center appearance-none px-3 py-1 bg-transparent w-full">
         </div>
     </div>
 </template>

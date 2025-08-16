@@ -71,11 +71,6 @@
 </template>
 
 <script setup>
-import {ref, watch} from 'vue'
-import {mainStore} from '../store/mainStore'
-import { settingsStore } from '../store/settingsStore';
-import { storeToRefs } from 'pinia';
-
 const keyboard = ref('normal')
 const store = mainStore()
 const { demo} = storeToRefs(store)

@@ -1,8 +1,4 @@
-import {defineStore, storeToRefs} from 'pinia'
-import {ref, computed} from 'vue'
-import { mainStore } from './mainStore'
-
-export const typingStateStore = defineStore('typingStateStore', () => {    
+export const typingStore = defineStore('typingStore', () => {    
     const mainstore = mainStore()
     const {currentTest} = storeToRefs(mainstore)
     const {test} = currentTest.value

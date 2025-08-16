@@ -9,8 +9,6 @@
 </template>
 
 <script setup>
-import { watchEffect, ref } from 'vue';
-
 const transitionType = ref('')
 const toastEl = ref(null)
 const props = defineProps({

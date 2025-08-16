@@ -7,12 +7,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
-import { mainStore } from '../store/mainStore';
-import { typingStateStore } from '../store/typingStateStore';
-import { storeToRefs } from 'pinia'
-
-const typingstatestore = typingStateStore()
+const typingstatestore = typingStore()
 const { spaces } = storeToRefs(typingstatestore)
 
 const store = mainStore()

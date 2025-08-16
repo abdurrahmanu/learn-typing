@@ -23,16 +23,6 @@
 </template>
 
 <script setup>
-import { storeToRefs } from 'pinia';
-import google from '../components/svg/google.vue'
-import { useAuth } from '../composables/useAuth';
-import { authStore } from '../store/authStore';
-import UserCard from '../components/UserCard.vue';
-import UserStats from '../components/UserStats.vue';
-import UserBestStats from '../components/UserBestStats.vue'
-import LineChart from '../components/LineChart.vue';
-import LeaderBoard from '../components/LeaderBoard.vue'
-
 const authstore = authStore()
 const {login} = storeToRefs(authstore)
 const {loginWithGoogle} = useAuth()

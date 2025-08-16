@@ -1,8 +1,3 @@
-import {defineStore, storeToRefs} from 'pinia'
-import {ref, computed} from 'vue'
-import { isMobile } from '../composables/isMobile'
-import { nextStore } from './nextStore'
-
 export const settingsStore = defineStore('settingsStore', () => {
     const settingsToUpdate = ref([])
     const customChoice = ref('')
@@ -15,6 +10,21 @@ export const settingsStore = defineStore('settingsStore', () => {
     const charsArray = ref([])
     const charWidth = ref(20)
     const lineHeight = ref(1.5)
+    const fonts = [
+    'amiri',
+    'caveat',
+    'exo',
+    // 'itim',
+    'montserrat',
+    // 'pacifico',
+    'reddit-mono',
+    // 'roboto-mono',
+    // 'shadows-into-light',
+    'fira-code',
+    // 'source-code-pro',
+    'inter',
+    'fraktur'
+    ];
 
     const nextstore = nextStore()
     const {goNext} = storeToRefs(nextstore)
@@ -45,6 +55,7 @@ export const settingsStore = defineStore('settingsStore', () => {
         'test-lines': 3,
         'test-width': 50,
         'fontsize': 45,
+        'font': 'redit-font',
     })
 
     const isBlindMode = computed(() => {
@@ -131,13 +142,13 @@ export const settingsStore = defineStore('settingsStore', () => {
 
     const updateSingleSetting = (setting, newVal) => {
         let updateSettings = ['arrangement', 'character-case', 'words-type', 'caps', 'punctuation', 'test-type', 'caps',
-        'numbers', 'backspace', 'no-space','spaced', 'fontsize', 'double-words', 'blind-mode', 'countdown', 'capslock', 'test-length']
-
+        'numbers', 'backspace', 'difficulty', 'fonts', 'no-space','spaced', 'fontsize', 'double-words', 'blind-mode', 'countdown', 'capslock', 'test-length']
+        
         if (settings.value[setting] === newVal) settings.value[setting] = ''        
-
+            
         else if (setting in settings.value) {
             settings.value[setting] = newVal
-        }
+        }        
         
         settingsToUpdate.value.push({
             name: setting,
@@ -175,5 +186,6 @@ export const settingsStore = defineStore('settingsStore', () => {
         maxFontSize,
         testHeight,
         contentFitHeight,
+        fonts,
     }
 })

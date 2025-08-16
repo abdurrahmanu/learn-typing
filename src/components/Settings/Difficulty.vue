@@ -11,7 +11,7 @@
             </div>
         </div>
 
-        <div class="flex flex-wrap gap-3 pt-4 text-[13px]">
+        <div class="flex flex-wrap gap-6 pt-4 text-[16px]">
             <div>Accuracy: {{ result.accuracy }}</div>
             <div>WPM: {{ result.wpm }}</div>
             <div>Error percentage {{ result.errorPercentage }}</div>
@@ -33,7 +33,9 @@ const difficulty = ref(settings.value.difficulty)
 
 const difficulties = ['beginner', 'amateur', 'expert']
 
-const changeDiff = (diff) => difficulty.value = diff
+const changeDiff = (diff) => {
+    difficulty.value = diff
+}
 
 const result = computed(() => {
     return {        
@@ -43,7 +45,7 @@ const result = computed(() => {
     }
 })
 
-watch(difficulty, newVal => {
+watch(difficulty, newVal => {    
      emit('emitUpdate', newVal)
 })
 </script>

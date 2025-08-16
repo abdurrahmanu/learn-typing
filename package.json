@@ -72,6 +72,8 @@
     "firebase": "^10.14.1",
     "pinia": "^2.1.7",
     "qrcode": "^1.5.4",
+    "unplugin-auto-import": "^20.0.0",
+    "unplugin-vue-components": "^29.0.0",
     "vue": "^3.2.13",
     "vue-chartjs": "^5.3.0",
     "vue-router": "^4.0.3"

@@ -50,9 +50,6 @@
 </template>
 
 <script setup>
-import arrowBack from '../components/svg/arrowBack.vue'
-import { ref } from 'vue'
-
 const props = defineProps({
   userData: Object
 })

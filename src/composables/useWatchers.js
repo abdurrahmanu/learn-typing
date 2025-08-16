@@ -1,19 +1,4 @@
-import {storeToRefs} from 'pinia'
-import {mainStore} from '../store/mainStore'
-import {nextStore} from '../store/nextStore'
-import { countdownStore } from '../store/countdownStore';
-import { settingsStore } from '../store/settingsStore';
-import {characterStore} from '../store/characterStore'
-import {timerStore} from '../store/timerStore'
-import { typingStateStore } from '../store/typingStateStore';
 import { useRouter } from 'vue-router';
-import { isMobile } from './isMobile';
-import { watch } from 'vue';
-import { updateDB } from './updateDB';
-import { userDataStore } from '../store/userDataStore';
-import { resultStore } from '../store/resultStore';
-import { authStore } from '../store/authStore';
-import { validateTestLines } from './validateTestLines';
 
 export default function useWatchers({
     focus: focus, 
@@ -32,7 +17,7 @@ export default function useWatchers({
     const userstore = userDataStore()
     const {userHistory, userInfo} = storeToRefs(userstore)
 
-    const typingstatestore = typingStateStore()
+    const typingstatestore = typingStore()
     const {inputEl, testCompleted, halfWayReset} = storeToRefs(typingstatestore)
     const {resetTypingState} = typingstatestore
     

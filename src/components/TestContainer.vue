@@ -1,13 +1,19 @@
 <template>
-    <div :class="[isMobile() ? 'pt-6' : 'pt-14']">
-        <div :style="containerStyle" class="flex items-center pb-2 justify-between m-auto">
-            <p v-if="!settings['countdown']"></p>
-            <Countdown v-else :start="beginCountdown"/>
-            <restart
-            v-if="canRestart" 
-            @click="goNext = true" 
-            :style="{'width': halfTestFontSize + 'px'}"/>
-            <WordCount />
+    <div :class="[mobile ? 'pt-6' : 'pt-14']">
+        <div :style="containerStyle" class="relative w-fit mx-auto space-y-1">
+            <div class="max-w-[1000px] w-full mx-auto">
+                <Range class="mx-auto" />
+            </div>
+
+            <div class="flex items-center pb-2 justify-between m-auto relative">
+                <p v-if="!settings['countdown']"></p>
+                <Countdown v-else :start="beginCountdown"/>
+                <restart
+                v-if="canRestart"
+                @click="goNext = true"
+                :style="{'width': halfTestFontSize + 'px'}"/>
+                <WordCount />
+            </div>
         </div>
         <OnScreenInput />
         <AllCharacters />
@@ -15,22 +21,9 @@
 </template>
 
 <script setup>
-import { onMounted, computed } from 'vue';
-import Countdown from './Countdown.vue';
-import WordCount from './WordCount.vue';
-import restart from './svg/restart.vue'
-import {storeToRefs} from 'pinia'
-import {mainStore} from '../store/mainStore'
-import {nextStore} from '../store/nextStore'
-import { settingsStore } from '../store/settingsStore';
-import {timerStore} from '../store/timerStore'
-import { typingStateStore } from '../store/typingStateStore';
-import AllCharacters from './AllCharacters.vue';
-import useWatchers from '../composables/useWatchers';
-import OnScreenInput from './onScreenInput.vue';
-import { isMobile } from '../composables/isMobile';
+const mobile = isMobile()
 
-const typingstatestore = typingStateStore()
+const typingstatestore = typingStore()
 const { focus, testCompleted, playerInputLength} = storeToRefs(typingstatestore)
 
 const timerstore = timerStore()

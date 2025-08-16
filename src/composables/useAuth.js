@@ -1,9 +1,5 @@
 import { auth, provider } from '../firebase';
 import { signInWithPopup, signOut, signInWithRedirect, getRedirectResult } from 'firebase/auth';
-import { authStore } from '../store/authStore';
-import { storeToRefs } from 'pinia';
-import { useRouter } from 'vue-router';
-import { isMobile } from './isMobile';
 
 export function useAuth() {
   const router = useRouter()

@@ -10,11 +10,6 @@
 </template>
 
 <script setup>
-import alignLeft from './svg/alignLeft.vue';
-import alignJustify from './svg/alignJustify.vue';
-import {storeToRefs} from 'pinia'
-import { settingsStore } from '../store/settingsStore';
-
 const customize = settingsStore()
 const {textPosition} = storeToRefs(customize)
 </script>

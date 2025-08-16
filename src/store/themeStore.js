@@ -1,11 +1,8 @@
-import {defineStore} from 'pinia'
-import {ref, computed} from 'vue'
-
 export const themeStore = defineStore('themeStore', () => {
     const openBackgrounds = ref(false)
     const theme = ref(window.matchMedia("(prefers-color-scheme: dark)").matches ?  'dark' : 'white')
     const appTheme = computed(() => {
-        if (theme.value === 'dark') return 'bg-[#2c2e31] text-slate-400'
+        if (theme.value === 'dark') return 'bg-slate-900 text-slate-300'
         if (theme.value === 'white') return 'bg-gray-300 text-neutral-700'
     })
 

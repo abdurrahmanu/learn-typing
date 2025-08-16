@@ -1,8 +1,3 @@
-import { mainStore } from "../store/mainStore"
-import {settingsStore} from "../store/settingsStore"
-import { storeToRefs } from "pinia"
-import { computed } from "vue"
-
 export function validateTestLines(onMounted) {
     const settingstore = settingsStore()
     const {updateSingleSetting} = settingstore

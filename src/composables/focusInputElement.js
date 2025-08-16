@@ -1,6 +1,6 @@
 import { storeToRefs } from "pinia"
 import { settingsStore } from "../store/settingsStore"
-import { typingStateStore } from "../store/typingStateStore"
+import { typingStore } from "../store/typingStore"
 import { mainStore } from "../store/mainStore"
 
 export default function focusInputElement (delay) {
@@ -10,7 +10,7 @@ export default function focusInputElement (delay) {
     const customize = settingsStore()
     const { pauseTyping } = storeToRefs(customize)
 
-    const typingstatestore = typingStateStore()
+    const typingstatestore = typingStore()
     const {focus} = storeToRefs(typingstatestore)
 
     if (pauseTyping.value && route.value !== 'home') return

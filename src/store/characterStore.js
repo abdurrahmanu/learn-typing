@@ -1,15 +1,6 @@
-import {defineStore} from 'pinia'
-import {ref, computed} from 'vue'
-
 export const characterStore = defineStore('characterStore', () => {
     const correctCharCount = ref(0)
     const incorrectCharCount = ref(0)
-
-    const typingRect = computed(() => {
-        return {
-
-        }
-    })
 
     const resultData = computed(() => {
         return {

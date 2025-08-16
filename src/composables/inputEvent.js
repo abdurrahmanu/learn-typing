@@ -1,15 +1,7 @@
-import { settingsStore } from "../store/settingsStore";
-import { storeToRefs } from 'pinia';
-import { characterStore } from "../store/characterStore";
-import { typingStateStore } from "../store/typingStateStore";
-import { isMobile } from "./isMobile";
-import { timerStore } from "../store/timerStore";
-import { ref } from "vue";
-
 export default function inputEvent (event) {
     const value = ref('')
 
-    const typingstatestore = typingStateStore()
+    const typingstatestore = typingStore()
     const {playerInputLength, backspaceIsPressed, enterKey, beginTest} = storeToRefs(typingstatestore)
 
     const timerstore = timerStore()

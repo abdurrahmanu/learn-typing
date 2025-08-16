@@ -1,9 +1,3 @@
-import { mainStore } from "../store/mainStore"
-import { settingsStore } from '../store/settingsStore'
-import { storeToRefs } from "pinia"
-import { getTest } from "./getTest"
-import { computed } from "vue"
-
 export const generateTest = async () => {
     const store = mainStore()
     const {currentTest, storedTest, allSpacesIndex} = storeToRefs(store)

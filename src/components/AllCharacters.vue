@@ -9,7 +9,7 @@
             ref="testEl" 
             class="container-style"
             :style="style" 
-            :class="[ wordBreak, borderStyle,
+            :class="[ wordBreak, borderStyle, settings.font,
             (textPosition === 'center') && 'text-center',
             (textPosition === 'left') && 'text-left'] ">                 
                 <Character
@@ -23,16 +23,7 @@
 </template>
 
 <script setup>
-import { storeToRefs } from 'pinia';
-import Character from './Character.vue';
-import { typingStateStore } from '../store/typingStateStore';
-import { mainStore } from '../store/mainStore';
-import { settingsStore } from '../store/settingsStore';
-import { isTouchScreenDevice } from '../composables/isTouchScreenDevice';
-import focusButton from './focusButton.vue';
-import { computed } from 'vue';
-
-const typingstatestore = typingStateStore()
+const typingstatestore = typingStore()
 const { inputEl} = storeToRefs(typingstatestore)
 
 const mainstore = mainStore()

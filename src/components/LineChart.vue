@@ -10,7 +10,6 @@
 </template>
 
 <script setup>
-import {ref, onMounted, computed} from 'vue'
 import { Chart, LineController, LineElement, PointElement, LinearScale, Title, CategoryScale } from 'chart.js'
 Chart.register(LineController, LineElement, PointElement, LinearScale, Title, CategoryScale,);
 

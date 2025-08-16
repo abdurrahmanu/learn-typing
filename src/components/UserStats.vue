@@ -48,10 +48,6 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
-import { storeToRefs } from 'pinia';
-import {userDataStore} from '../store/userDataStore'
-
 const userstore = userDataStore()
 const {userHistory} = storeToRefs(userstore)
 

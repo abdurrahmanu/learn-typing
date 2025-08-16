@@ -6,9 +6,6 @@
 </template>
 
 <script setup>
-import { storeToRefs } from 'pinia';
-import { typingStateStore } from '../store/typingStateStore';
-
-const typingstatestore = typingStateStore()
+const typingstatestore = typingStore()
 const {inputEl} = storeToRefs(typingstatestore)
 </script>

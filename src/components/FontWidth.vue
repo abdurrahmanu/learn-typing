@@ -3,10 +3,6 @@
 </template>
 
 <script setup>
-import { storeToRefs } from 'pinia';
-import { settingsStore } from '../store/settingsStore';
-import { onMounted, onUpdated, ref } from 'vue';
-
 const el = ref(null)
 
 const {fontSize, charWidth} = storeToRefs(settingsStore())

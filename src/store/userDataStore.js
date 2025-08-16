@@ -1,6 +1,3 @@
-import {defineStore} from 'pinia'
-import {ref} from 'vue'
-
 export const userDataStore = defineStore('userDataStore', () => {
     const userInfo = ref('is this suppose to reload?')
     const bestStats = ref({})

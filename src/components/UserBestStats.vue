@@ -42,10 +42,6 @@
 </template>
 
 <script setup>
-import { authStore } from '../store/authStore';
-import { storeToRefs } from 'pinia';
-import {userDataStore} from '../store/userDataStore'
-
 const userstore = userDataStore()
 const {userInfo, bestStats: stats, userHistory} = storeToRefs(userstore)
 </script>

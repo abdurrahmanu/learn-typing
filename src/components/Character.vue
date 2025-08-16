@@ -18,15 +18,6 @@
 </template>
 
 <script setup>
-import { computed, watch, ref, onMounted } from 'vue';
-import {storeToRefs} from 'pinia'
-import {mainStore} from '../store/mainStore'
-import {themeStore}  from '../store/themeStore'
-import { settingsStore }  from '../store/settingsStore'
-import { typingStateStore } from '../store/typingStateStore';
-import { timerStore } from '../store/timerStore';
-import Cursor from '../components/Cursor.vue'
-
 const className = ref({
     'text-slate-500': true,
 })
@@ -34,8 +25,8 @@ const className = ref({
 const timerstore = timerStore()
 const {beatCountdown} = storeToRefs(timerstore)
 
-const typingstatestore = typingStateStore()
-const {playerInputLength, testCompleted, playerLastInput, typedWhiteSpaces, spaces, backspaceIsPressed, enterKey} = storeToRefs(typingstatestore)
+const typingstatestore = typingStore()
+const {playerInputLength, testCompleted, beginTest, focus, playerLastInput, typedWhiteSpaces, spaces, backspaceIsPressed, enterKey} = storeToRefs(typingstatestore)
 
 const theme_ = themeStore()
 const { theme } = storeToRefs(theme_)
@@ -121,6 +112,8 @@ onMounted(() => {
             if (playerInputLength.value === test.length) {
                 if (settings.value.countdown) beatCountdown.value = true
                 testCompleted.value = true
+                beginTest.value = false
+                focus.value = false
             }
         }
     })

@@ -6,12 +6,7 @@
 </template>
 
 <script setup>
-import { typingStateStore } from '../store/typingStateStore'
-import { settingsStore } from '../store/settingsStore'
-import { storeToRefs } from 'pinia'
-import { computed } from 'vue'
-
-const typingstatestore = typingStateStore()
+const typingstatestore = typingStore()
 const {backspaceIsPressed, focus} = storeToRefs(typingstatestore)
 
 const settingstore = settingsStore()

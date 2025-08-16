@@ -1,20 +1,14 @@
 <template>
     <div id="focus" class="mx-auto w-fit" v-if="homeOrResultRoute">        
-        <div v-if="isMobile()" @click="next" class="next">NEXT</div>
+        <div v-if="mobile" @click="next" class="next">NEXT</div>
         <div v-else class="m-auto w-fit">Press <span @click="next" class="next">{{ testCompleted ? 'Enter' : 'Esc' }}</span> for next</div>
     </div>
 </template>
 
 <script setup>
-import { storeToRefs } from 'pinia';
-import { mainStore } from '../store/mainStore';
-import { isMobile } from '../composables/isMobile';
-import {nextStore} from '../store/nextStore'
-import useWatchers from '../composables/useWatchers';
-import { computed } from 'vue';
-import { typingStateStore } from '../store/typingStateStore';
+const mobile = isMobile()
 
-const typingstatestore = typingStateStore()
+const typingstatestore = typingStore()
 const {testCompleted} = storeToRefs(typingstatestore)
 
 const nextstore = nextStore()

@@ -1,5 +1,3 @@
-import { isMobile } from "./isMobile";
-
 export default function useEventListener(event, listener, remove, target) { 
 
     if (target && isMobile()) { // inputEl event

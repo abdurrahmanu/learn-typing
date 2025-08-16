@@ -61,12 +61,6 @@
 </template>
 
 <script setup>
-import { useAuth } from "../composables/useAuth";
-import { storeToRefs } from "pinia";
-import {ref} from 'vue'
-import EditUser from "./EditUser.vue";
-import {userDataStore} from '../store/userDataStore'
-
 const userstore = userDataStore()
 const {userInfo} = storeToRefs(userstore)
 

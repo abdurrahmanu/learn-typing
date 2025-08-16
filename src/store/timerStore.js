@@ -1,11 +1,6 @@
-import {defineStore} from 'pinia'
-import {ref, computed} from 'vue'
-import { typingStateStore } from './typingStateStore'
-import { storeToRefs } from 'pinia'
-
 export const timerStore = defineStore('timerStore', () => {
 
-    const typingState = typingStateStore()
+    const typingState = typingStore()
     const {playerInput, playerInputLength} = storeToRefs(typingState)
 
     const characterEqualityArray = ref([])

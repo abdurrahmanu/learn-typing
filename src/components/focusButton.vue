@@ -3,12 +3,7 @@
 </template>
 
 <script setup>
-import { storeToRefs } from 'pinia';
-import { isTouchScreenDevice } from '../composables/isTouchScreenDevice';
-import { typingStateStore } from '../store/typingStateStore';
-import { computed } from 'vue';
-
-const typingstatestore = typingStateStore()
+const typingstatestore = typingStore()
 const {refocus, focus} = storeToRefs(typingstatestore)
 
 const shouldFocus = computed(() => {

@@ -11,13 +11,6 @@
 </template>
 
 <script setup>
-import {storeToRefs} from 'pinia';
-import { settingsStore } from '../store/settingsStore';
-import CustomChars from './CustomChars.vue';
-import CustomTest from './CustomTest.vue';
-import CustomQuotes from './CustomQuotes.vue'
-import CustomWords from './CustomWords.vue'
-
 const settingstore = settingsStore()
 const {toggleCustomModal, pauseTyping, settings} = storeToRefs(settingstore)
 

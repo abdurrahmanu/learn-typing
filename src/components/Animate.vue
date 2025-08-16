@@ -7,12 +7,6 @@
 </template>
 
 <script setup>
-import {ref, onMounted} from 'vue'
-import {settingsStore} from '../store/settingsStore'
-import { storeToRefs } from 'pinia';
-import {themeStore}  from '../store/themeStore'
-
-
 const theme_ = themeStore()
 const {theme} = storeToRefs(theme_)
 

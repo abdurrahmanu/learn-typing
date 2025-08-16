@@ -1,5 +1,5 @@
 <template>
-    <main :class="[appTheme]" class="page main-font">
+    <main :class="[appTheme]" class="page">
         <div class="main bg-inherit flex flex-col h-screen">
             <Navbar />
             <div class="bg-inherit overflow-auto flex-1 flex flex-col">
@@ -12,16 +12,11 @@
 </template>
 
 <script setup>
-import Modals_Popups_Toasts from './Modals_Popups_Toasts.vue'
-import Navbar from './Navbar.vue'
-import Footer from './Footer.vue';
-import { typingStateStore } from '../store/typingStateStore';
-
-const typingstore = typingStateStore()
+const typingstore = typingStore()
 const { focus, beginTest } = storeToRefs(typingstore)
 
-import {themeStore}  from '../store/themeStore'
-import {storeToRefs} from 'pinia'
+const settingstore = settingsStore()
+const {settings} = storeToRefs(settingstore)
 
 const themestore = themeStore()
 const { appTheme } = storeToRefs(themestore)
@@ -32,3 +27,5 @@ const { appTheme } = storeToRefs(themestore)
     @apply font-light max-w-[2000px] mx-auto select-none min-h-[100dvh] container transition-all duration-300
 }
 </style>
+
+

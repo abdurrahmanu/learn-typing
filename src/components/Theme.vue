@@ -11,11 +11,6 @@
 </template>
 
 <script setup>
-import {ref} from 'vue'
-import {themeStore}  from '../store/themeStore'
-import { storeToRefs } from 'pinia';
-import { settingsStore } from '../store/settingsStore';
-
 const theme_ = themeStore()
 const {theme} = storeToRefs(theme_)
 

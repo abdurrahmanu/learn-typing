@@ -1,5 +1,4 @@
-import { doc, getDoc, setDoc, updateDoc, deleteDoc, collection } from 'firebase/firestore'
-import {userData} from './userData'
+import { doc, getDoc, setDoc, updateDoc, deleteDoc } from 'firebase/firestore'
 import {db} from '../firebase'
 
 export const getSingleDoc = async (ID) => {
@@ -8,7 +7,6 @@ export const getSingleDoc = async (ID) => {
     const docSnap = await getDoc(docRef);
     return docSnap.exists() ? docSnap.data() : null;
   } catch (error) {
-    console.error(`Failed to fetch document with ID ${ID}:`, error);
     return null;
   }
 }
@@ -31,3 +29,4 @@ export const updateSingleDoc = async (updates, ID) => {
     const docRef = doc(db, "users", ID)
     await updateDoc(docRef, updateObj)
 }
+

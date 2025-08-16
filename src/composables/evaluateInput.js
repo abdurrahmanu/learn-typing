@@ -1,10 +1,3 @@
-import { typingStateStore } from "../store/typingStateStore";
-import { mainStore } from "../store/mainStore";
-import { storeToRefs } from "pinia";
-import { characterStore } from "../store/characterStore";
-import { timerStore } from "../store/timerStore";
-import { settingsStore } from "../store/settingsStore";
-
 export default function evaluateInput(value) {    
     const characterstore = characterStore()
     const {correctCharCount, incorrectCharCount} = storeToRefs(characterstore)
@@ -12,7 +5,7 @@ export default function evaluateInput(value) {
     const settingstore = settingsStore()
     const {toggleCustomModal} = storeToRefs(settingstore)
 
-    const typingstatestore = typingStateStore()
+    const typingstatestore = typingStore()
     const {playerInput, deletedValue, playerInputLength, backspaceIsPressed, playerLastInput} = storeToRefs(typingstatestore)
 
     const mainstore = mainStore()

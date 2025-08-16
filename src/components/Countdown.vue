@@ -1,5 +1,5 @@
 <template>
-    <div :class="appTheme" class="w-fit">
+    <div class="w-fit bg-inherit">
         <Transition name="slide-left" mode="out-in">
             <div v-if="isNextCountDown" ref="countDownElement">{{ countdown }}s </div>
         </Transition>
@@ -7,14 +7,6 @@
 </template>
 
 <script setup>
-import { onMounted, watch } from 'vue';
-import { storeToRefs } from 'pinia';
-import {countdownStore} from '../store/countdownStore'
-import {themeStore}  from '../store/themeStore'
-
-const theme_ = themeStore()
-const { appTheme } = storeToRefs(theme_)
-
 const count = countdownStore()
 const { countDownElement, isNextCountDown, timerID, intervalID, countdown} = storeToRefs(count)
 const {clearCounter} = count

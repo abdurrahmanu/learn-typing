@@ -18,12 +18,6 @@
 </template>
 
 <script setup>
-import { ref} from 'vue'
-import {storeToRefs} from 'pinia';
-import { settingsStore } from '../store/settingsStore';
-import { nextStore } from '../store/nextStore';
-import { themeStore } from '../store/themeStore';
-
 const shiftKey = ref(false)
 
 const settingstore = settingsStore()

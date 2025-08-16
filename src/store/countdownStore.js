@@ -1,7 +1,3 @@
-import { defineStore, storeToRefs } from 'pinia';
-import { ref } from 'vue';
-import { mainStore } from './mainStore';
-
 export const countdownStore = defineStore('countdown', () => {
     const countDownElement = ref(null)
     const isNextCountDown = ref(true)

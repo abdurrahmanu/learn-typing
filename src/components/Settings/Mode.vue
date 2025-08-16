@@ -1,9 +1,9 @@
 <template>
-    <div class="text-[16px]">
+    <div class="space-y-2">
         <label class="font-bold uppercase w-fit flex items-center">
             <div>{{ name }}</div> 
         </label>
-        <p class="text-justify max-w-[700px] leading-7">{{ desc }}</p>
+        <p v-if="desc.length" class="text-justify leading-10">{{ desc }}</p>
     </div>
 </template>
 
