@@ -11,8 +11,8 @@
   :class="[(mobile && !hideElements) && 'mobile-quick-settings-modal relative', (focus && beginTest) && 'invisible pointer-events-none']">
       <div 
       v-if="!testCompleted" 
-      :class="[toggleQuickSettings, mobile && 'z-[10] bg-inherit top-[20%] w-[10%] absolute mx-auto ring-[1px] ring-black p-5']" 
-      class="container fira-code text-[18px]">
+      :class="[toggleQuickSettings, !mobile && 'text-[18px]', mobile && 'z-[10] text-[16px] bg-inherit top-[20%] w-[10%] absolute mx-auto ring-[1px] ring-black p-5']" 
+      class="container exo">
         <div 
         class="parent" 
         v-for="(optionArr, key, listIndex) in quickSettingss" 

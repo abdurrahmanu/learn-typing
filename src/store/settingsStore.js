@@ -11,17 +11,17 @@ export const settingsStore = defineStore('settingsStore', () => {
     const charWidth = ref(20)
     const lineHeight = ref(1.5)
     const fonts = [
-    'amiri',
+    // 'amiri',
     'caveat',
     'exo',
-    // 'itim',
+    'itim',
     'montserrat',
     // 'pacifico',
     'reddit-mono',
-    // 'roboto-mono',
+    'roboto-mono',
     // 'shadows-into-light',
     'fira-code',
-    // 'source-code-pro',
+    'source-code-pro',
     'inter',
     'fraktur'
     ];
@@ -55,7 +55,7 @@ export const settingsStore = defineStore('settingsStore', () => {
         'test-lines': 3,
         'test-width': 50,
         'fontsize': 45,
-        'font': 'redit-font',
+        'font': 'reddit-mono',
     })
 
     const isBlindMode = computed(() => {

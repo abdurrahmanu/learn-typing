@@ -1,11 +1,11 @@
 <template>
-    <div class="relative flex gap-4 justify-start py-1">
+    <div class="relative flex gap-4 justify-start pt-3">
         <p 
         @click="update(option)" 
         v-for="(option, index) in options" 
         :key="index" 
         :class="[selectedOption(option)]"
-        class="text-center font-mono font-bold w-full p-1 max-w-[100px] ring-[2px] rounded-full uppercase">{{ option }}</p>
+        class="text-center font-mono font-bold w-full p-[2px] text-sm max-w-[100px] ring-[2px] rounded-full uppercase">{{ option }}</p>
     </div>
     <div v-for="(comp, name_, index) in components" :key="index">
         <component :is="comp" @emitUpdate="update" v-if="name === name_"></component>
