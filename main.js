@@ -1,5 +1,8 @@
-const { app, BrowserWindow, Menu, ipcMain } = require('electron/main')
-const path = require('node:path')
+// const { app, BrowserWindow, Menu, ipcMain } = require('electron/main')
+// const path = require('node:path')
+
+import path from 'node:path'
+import { app, BrowserWindow, Menu, ipcMain } from 'electron'
 
 function createWindow () {
   const window = new BrowserWindow({
@@ -16,7 +19,6 @@ function createWindow () {
   window.loadFile(path.join(__dirname, 'dist', 'index.html'))
   Menu.setApplicationMenu(null);
 }
-
 
 app.whenReady().then(() => {
   createWindow()
