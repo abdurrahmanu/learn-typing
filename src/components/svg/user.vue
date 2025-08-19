@@ -4,7 +4,7 @@
 			viewBox="0 0 472.615 472.615" style="enable-background:new 0 0 472.615 472.615;" xml:space="preserve">
 		<g>
 			<g>
-				<circle cx="236.308" cy="117.504" r="111.537" :fill="login ? 'red' : (hoverbg || svgFill)"/>
+				<circle cx="236.308" cy="117.504" r="111.537" :fill="login ? 'green' : (hoverbg || svgFill)"/>
 			</g>
 		</g>
 		<g>
