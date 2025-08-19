@@ -2,7 +2,7 @@
     <div class="max-w-[1000px] w-full mx-auto bg-inherit flex-1 shadow-[inset_0_2px_6px_rgba(0,0,0,0.45)] overflow-scroll text-[20px]">
         <SearchBar />
         <div
-        :class="[theme === 'dark' ? 'hover:bg-slate-800': 'hover:bg-neutral-200']"
+        :class="[theme === 'dark' ? 'hover:bg-neutral-900': 'hover:bg-neutral-200']"
         class="p-4 transition-all duration-75 relative w-[99%] mx-auto" 
         v-for="(mode, index) in modes" 
         :key="index">
@@ -36,13 +36,13 @@ const modes = [
         options: null,
         extra: []
     },
-    {
-        name: 'Difficulty',
-        setting: 'difficulty',
-        desc: 'Change difficulty',
-        options: null,
-        extra: []
-    },
+    // {
+    //     name: 'Difficulty',
+    //     setting: 'difficulty',
+    //     desc: 'Change difficulty',
+    //     options: null,
+    //     extra: []
+    // },
     {
         name: 'Test Width',
         setting: 'test-width',

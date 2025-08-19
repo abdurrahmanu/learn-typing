@@ -4,9 +4,9 @@
         v-for="(value, cursor, index) in allCursors" 
         :key="index" 
         @click="changeCursor(cursor)" 
-        class="flex px-5 py-1 ring-[1px] cursor-pointer rounded-md" 
+        class="flex px-5 py-1 ring-[1px] ring-slate-500 font-bold cursor-pointer rounded-md" 
         :class="[cursorStyle(cursor)]">
-            <p class="w-fit border-blue-500" :class="value">{{ cursor === 'word-pulse' ? 'word' : 'A' }}</p>
+            <p class="w-fit" :class="value">{{ cursor === 'word-pulse' ? 'word' : 'A' }}</p>
         </div>
     </div>
 </template>
@@ -19,6 +19,9 @@ const emit = defineEmits(['emitUpdate'])
 const settingstore = settingsStore()
 const { settings} = storeToRefs(settingstore)
 
+const themestore = themeStore()
+const {theme} = storeToRefs(themestore)
+
 const allCursors = {
     border: "border-[1px] border-blue-500",
     cursor: "border-l-[1px] border-l-blue-500",
@@ -28,7 +31,16 @@ const allCursors = {
 }
 
 const cursorStyle = (cursor) => {
-    return settings.value.cursor === cursor ? 'ring-blue-500' : 'hover:ring-blue-800 hover:ring-[1px] ring-slate-500'
+    let style = ''
+    if (settings.value.cursor === cursor) {
+        if (theme.value === 'dark') style = 'bg-slate-300 text-black'
+        else style = 'bg-neutral-600 text-white' 
+    } else {
+        if (theme.value === 'dark') style = ''
+        else style = 'ring-black hover:ring-4'
+    }
+
+    return style
 }
 
 const changeCursor = (cursor) => {

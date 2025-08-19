@@ -5,7 +5,7 @@
         v-for="(option, index) in options" 
         :key="index" 
         :class="[selectedOption(option)]"
-        class="text-center font-mono font-bold w-full p-[2px] text-sm max-w-[100px] ring-[2px] rounded-full uppercase">{{ option }}</p>
+        class="text-center font-mono font-bold w-full p-[2px] text-sm max-w-[100px] ring-neutral-600 ring-[1px] uppercase">{{ option }}</p>
     </div>
     <div v-for="(comp, name_, index) in components" :key="index">
         <component :is="comp" @emitUpdate="update" v-if="name === name_"></component>
@@ -55,7 +55,7 @@ const userOption = ref(settings.value[props.setting] === false ? 'off' :
                         settings.value[props.setting] === true ? 'on' : 
                              settings.value[props.setting])
 
-const update = (option) => {            
+const update = (option) => {                
     userOption.value = option    
     let value = option === 'on' ? true : option === 'off' ? false : option
     updateSingleSetting(props.setting, value)
