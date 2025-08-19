@@ -5,6 +5,9 @@
     </div>
 </template>
 <script setup>
+import useEventListener from '../composables/useEventListener'
+import useWatchers from '../composables/useWatchers'
+
 const customize = settingsStore()
 const {settingsToUpdate, toggleCapsToast, pauseTyping, toggleCustomModal} = storeToRefs(customize)
 
