@@ -3,7 +3,6 @@
 </template>
 
 <script setup>
-import {ref} from 'vue'
 import { useQRCode } from '@vueuse/integrations/useQRCode'
 
 const text = ref('A')

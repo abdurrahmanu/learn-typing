@@ -1,8 +1,3 @@
-import { storeToRefs } from "pinia"
-import { settingsStore } from "../store/settingsStore"
-import { typingStore } from "../store/typingStore"
-import { mainStore } from "../store/mainStore"
-
 export default function focusInputElement (delay) {
     const mainstore = mainStore()
     const {route} = storeToRefs(mainstore)

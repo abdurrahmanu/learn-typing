@@ -49,11 +49,6 @@
 </template>
 
 <script setup>
-import {storeToRefs} from 'pinia'
-import {themeStore}  from '../../store/themeStore'
-import {ref} from 'vue'
-import { authStore } from '../../store/authStore'
-
 const authstore = authStore()
 const {login} = storeToRefs(authstore)
 

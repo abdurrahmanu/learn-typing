@@ -12,9 +12,6 @@
 </template>
 
 <script setup>
-import {storeToRefs} from 'pinia'
-import {settingsStore} from '../../store/settingsStore'
-
 const emit = defineEmits(['emitUpdate'])
 const settingstore = settingsStore()
 const { settings} = storeToRefs(settingstore)

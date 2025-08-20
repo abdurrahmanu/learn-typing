@@ -13,10 +13,6 @@
 </template>
 
 <script setup>
-import { watch } from 'vue';
-import { settingsStore } from '../../store/settingsStore';
-import { storeToRefs } from 'pinia';
-
 const emit = defineEmits(['emitUpdate'])
 
 const settingstore = settingsStore()

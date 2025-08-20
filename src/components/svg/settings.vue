@@ -5,14 +5,7 @@
 </template>
 
 <script setup>
-import {storeToRefs} from 'pinia'
-import {themeStore} from '../../store/themeStore'
-import { settingsStore } from '../../store/settingsStore';
-import {useRoute} from 'vue-router'
-import {ref} from 'vue'
-
 const hoverbg = ref('')
-const route = useRoute()
 const settingstore = settingsStore()
 const {settingsPage} = settingstore
 

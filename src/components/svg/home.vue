@@ -7,10 +7,6 @@
 </template>
 
 <script setup>
-import {storeToRefs} from 'pinia'
-import {themeStore}  from '../../store/themeStore'
-import {ref} from 'vue'
-
 const hoverbg = ref('')
 const themestore = themeStore()
 const { svgFill } = storeToRefs(themestore)

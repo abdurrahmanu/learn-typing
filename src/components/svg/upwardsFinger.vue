@@ -3,9 +3,6 @@
 </template>
 
 <script setup>
-import {storeToRefs} from 'pinia'
-import {themeStore} from '../../store/themeStore'
-
 const themestore = themeStore()
 const { svgFill } = storeToRefs(themestore)
 </script>

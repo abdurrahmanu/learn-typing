@@ -4,9 +4,6 @@ viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier"
 </template>
         
 <script setup>
-import {ref} from 'vue'
-import {storeToRefs} from 'pinia'
-import {themeStore} from '../../store/themeStore'
 
 const hoverbg = ref('')
 const themestore = themeStore()

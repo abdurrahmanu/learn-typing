@@ -6,17 +6,14 @@
         type="range" 
         step="1"
         min="1"
-        :max="isMobile() ? 3 : 15"
+        :max="mobile ? 3 : 15"
         class="range-style" 
         v-model="testLines"/>
     </div>
 </template>
 
 <script setup>
-import { settingsStore } from '../../store/settingsStore';
-import { isMobile } from '../../composables/isMobile';
-import { storeToRefs } from 'pinia';
-import { watch } from 'vue';
+const mobile = isMobile()
 
 const emit = defineEmits(['emitUpdate'])
 

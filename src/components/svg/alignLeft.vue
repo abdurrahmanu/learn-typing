@@ -8,14 +8,9 @@
 </template>
 
 <script setup>
-import {ref} from 'vue'
-import {computed} from 'vue'
-import {storeToRefs} from 'pinia'
-import {themeStore} from '../../store/themeStore'
-
 const hoverbg = ref('')
 const themestore = themeStore()
-const {theme, svgFill } = storeToRefs(themestore)
+const {theme } = storeToRefs(themestore)
 
 const props = defineProps({
     position: Boolean

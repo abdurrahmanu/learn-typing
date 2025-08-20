@@ -2,10 +2,6 @@
 <svg @mouseover="hoverbg = '#4299e1'" @mouseleave="hoverbg = ''" :fill="hoverbg || svgFill" viewBox="-64 0 512 512" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M365.52 209.85L59.22 67.01c-16.06-7.49-35.15-.54-42.64 15.52L3.01 111.61c-7.49 16.06-.54 35.15 15.52 42.64L236.96 256.1 18.49 357.99C2.47 365.46-4.46 384.5 3.01 400.52l13.52 29C24 445.54 43.04 452.47 59.06 445l306.47-142.91a32.003 32.003 0 0 0 18.48-29v-34.23c-.01-12.45-7.21-23.76-18.49-29.01z"></path></g></svg></template>
 
 <script setup>
-import {ref} from 'vue'
-import {storeToRefs} from 'pinia'
-import {themeStore} from '../../store/themeStore'
-
 const hoverbg = ref('')
 const themestore = themeStore()
 const { svgFill } = storeToRefs(themestore)

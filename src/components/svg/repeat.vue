@@ -5,10 +5,6 @@
 </template>
 
 <script setup>
-import {storeToRefs} from 'pinia'
-import {settingsStore} from '../../store/settingsStore'
-import {themeStore} from '../../store/themeStore'
-
 const settingstore = settingsStore()
 const { settings } = storeToRefs(settingstore)
 

@@ -16,9 +16,6 @@
 </template>
 
 <script setup>
-import { themeStore } from '../../store/themeStore';
-import { storeToRefs } from 'pinia';
-
 const themestore = themeStore()
 const {theme} = storeToRefs(themestore)
 </script>

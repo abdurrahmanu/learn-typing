@@ -7,11 +7,6 @@
 </template>
 
 <script setup>
-import {computed} from 'vue'
-import {storeToRefs} from 'pinia'
-import {themeStore}  from '../../store/themeStore'
-import {ref} from 'vue'
-
 const hoverbg = ref('')
 const themestore = themeStore()
 const {theme} = storeToRefs(themestore)

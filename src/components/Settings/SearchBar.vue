@@ -7,10 +7,6 @@
 </template>
 
 <script setup>
-import {ref} from 'vue'
-import { searchStore } from '../../store/searchStore'
-import { storeToRefs } from 'pinia'
-
 const searchstore = searchStore()
 const {useValue} = storeToRefs(searchstore)
 
