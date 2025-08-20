@@ -2,6 +2,7 @@ export const mainStore = defineStore('mainStore', () => {
     const route = ref(null)
     const demo = ref(false)
 
+    const AIfocus = ref(false)
     const testContainerEl = ref(null)
     const testEl = ref(null)
     const scrollDistance = ref(0)
@@ -39,5 +40,6 @@ export const mainStore = defineStore('mainStore', () => {
         useCustomText,
         storedTest,
         testContainerEl,
+        AIfocus
     }
 })

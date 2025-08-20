@@ -15,12 +15,13 @@ const typingstatestore = typingStore()
 const {refocus, testCompleted, focus, playerInput, beginTest, inputEl} = storeToRefs(typingstatestore)
 
 const mainstore = mainStore()
-const { testEl, testContainerEl, font} = storeToRefs(mainstore)
+const { testEl, testContainerEl, font, AIfocus} = storeToRefs(mainstore)
 
 const connect = connectStore()
 const {connectionAvailable } = storeToRefs(connect)
 
 function handleKeydown(event) {
+    if (AIfocus.value) return
     const eventType = event.inputType || event.key
     const pasteDropReplaceEvents = ['insertFromPaste','insertFromDrop','insertReplacementText']
 
