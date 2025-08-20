@@ -3,11 +3,12 @@
     <FontWidth />
     <AITestGenerator />
     <Loader v-if="loadingApp" />
-    <Main v-else />
+    <!-- <Main v-else /> -->
   </div>
 </template>
 
 <script setup>
+import {auth} from './firebase'
 import { onAuthStateChanged } from 'firebase/auth'
 import AITestGenerator from './components/AITestGenerator.vue'
 
@@ -21,9 +22,9 @@ const connectstore = connectStore()
 const {loadingApp} = storeToRefs(connectstore)
 
 onMounted( async () => {   
-  loadingApp.value = true
-
-  onAuthStateChanged(auth, async (_) => {
+  loadingApp.value = false
+  
+  onAuthStateChanged( auth, async (_) => {
     user.value = _
 
     if (user.value?.emailVerified && navigator.onLine) {
@@ -48,7 +49,8 @@ onMounted( async () => {
       data.value = null
       generateTest()
     }
-})
+
+  })
 
   watch(login, newVal => {
     if (newVal) {

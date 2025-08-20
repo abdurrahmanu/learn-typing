@@ -2,11 +2,19 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
-import path from 'path'
+// import path from 'path'
 
 export default defineConfig({
   base: './',
-  path: path.resolve(__dirname, './dist'),
+  // path: path.resolve(__dirname, './dist'),
+  build: {
+    outDir: 'dist'
+  },
+  resolve: {
+    alias: {
+      // '@': path.resolve(__dirname, './src')
+    }
+  },
   server: {
     host: true,
     port: 1000
@@ -21,11 +29,10 @@ export default defineConfig({
           'pinia',
         ],
         dirs: [
-          'src/composables',
-          'src/stores',
-          'src/composables/**'
+          './src/composables',
+          './src/stores',
         ],
-        dts: './auto-imports.d.ts'
+        dts: 'auto-imports.d.ts'
       }
     ),
     Components({

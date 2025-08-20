@@ -1,7 +1,7 @@
 <template>
   <div class="p-6 space-y-4">
-    <textarea v-model="userInput" class="border w-full p-2" placeholder="Ask AI to generate a test..." />
-    <button @click="askAI" class="bg-blue-500 text-white px-4 py-2 rounded" :disabled="loading">
+    <input @focus="pauseTyping = true" @blur="pauseTyping = false" v-model="userInput" class="border w-full p-2 text-black" placeholder="Ask AI to generate a test..." />
+    <button @click="askAI" class="bg-blue-500  px-4 py-2 rounded" :disabled="loading">
       {{ loading ? "Generating..." : "Generate Test" }}
     </button>
 
@@ -24,22 +24,30 @@
 const nextstore = nextStore()
 const {generateNewTest} = nextstore
 
+const settingstore = settingsStore()
+const {pauseTyping} = storeToRefs(settingstore)
+
 const userInput = ref("")
 const aiResponse = ref(null)
 const loading = ref(false)
 
 const askAI = async () => {
     loading.value = true
+
     const res = await fetch("/.netlify/functions/ai", {
     method: "POST",
     body: JSON.stringify({ prompt: userInput.value })
     })
+    console.log(res);
+    
     const data = await res.json()
     loading.value = false
 
     try {
     aiResponse.value = JSON.parse(data.choices[0].message.content)
     } catch (e) {
+      console.log(e);
+      
     aiResponse.value = { error: "Invalid response format" }
     }
 }
