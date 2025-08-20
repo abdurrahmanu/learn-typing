@@ -1,7 +1,6 @@
 <template>
     <Transition name="container"> 
         <div id="focus">
-            <!-- <focusButton class="fill-parent center-text-xy z-[1] backdrop-blur-[6px] font-bold"/> -->
             <div
             id="focus"
             @click="focusInput"
@@ -12,6 +11,7 @@
             :class="[ wordBreak, borderStyle, settings.font,
             (textPosition === 'center') && 'text-center',
             (textPosition === 'left') && 'text-left'] ">                 
+                <focusButton class="fill-parent center-text-xy text-sm z-[1] backdrop-blur-[6px] font-bold"/>
                 <Character
                 v-for="(character, index) in test"
                 :index="index"
@@ -59,6 +59,6 @@ const style = computed(() => ({
 
 <style scoped>
 .container-style {
-    @apply scroll-smooth px-2 mx-auto overflow-hidden
+    @apply scroll-smooth px-2 mx-auto overflow-hidden relative
 }
 </style>

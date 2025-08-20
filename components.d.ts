@@ -11,6 +11,7 @@ declare module 'vue' {
     About: typeof import('./src/components/svg/about.vue')['default']
     AboutView: typeof import('./src/views/AboutView.vue')['default']
     Add: typeof import('./src/components/svg/add.vue')['default']
+    AITestGenerator: typeof import('./src/components/AITestGenerator.vue')['default']
     AlignJustify: typeof import('./src/components/svg/alignJustify.vue')['default']
     AlignLeft: typeof import('./src/components/svg/alignLeft.vue')['default']
     AlignRight: typeof import('./src/components/svg/alignRight.vue')['default']

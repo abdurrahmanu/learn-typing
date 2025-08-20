@@ -1,10 +1,10 @@
 import router from "../router";
 
-export default function reRouter () {
+export default function routeRedirect () {
     const auth = authStore()
     const store = mainStore()
     const typingstore = typingStore()
-    const customize = settingsStore()
+    const settingstore = settingsStore()
     const nextstore = nextStore()
     const {goNext} = storeToRefs(nextstore)
 
@@ -15,7 +15,7 @@ export default function reRouter () {
     
         if (from.name === 'result' && typingstore.testCompleted) goNext.value = true
     
-        customize.toggleCustomModal = false
+        settingstore.toggleCustomModal = false
         store.route = to.name
     })
 }

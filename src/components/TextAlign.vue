@@ -10,6 +10,6 @@
 </template>
 
 <script setup>
-const customize = settingsStore()
-const {textPosition} = storeToRefs(customize)
+const settingstore = settingsStore()
+const {textPosition} = storeToRefs(settingstore)
 </script>

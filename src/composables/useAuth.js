@@ -4,14 +4,11 @@ import { signInWithPopup, signOut, signInWithRedirect, getRedirectResult } from 
 export function useAuth() {
   const router = useRouter()
 
-  const authstore = authStore()
-  const {data} = storeToRefs(authstore)
-
   const loginWithGoogle = async () => {
     try {
         provider.setCustomParameters({
             prompt: 'select_account'
-        });
+        })
       
       await signInWithPopup(auth, provider)
       router.push('/')

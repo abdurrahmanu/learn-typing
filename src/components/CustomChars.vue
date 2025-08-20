@@ -1,5 +1,5 @@
 <template>
-    <div :class="[appTheme]" class="space-y-5 max-w-[700px] mx-auto w-[95%] rounded-md py-5 z-[3] text-center text-black text-base md:text-lg">
+    <div class="space-y-5 max-w-[700px] mx-auto w-[95%] rounded-md py-5 z-[3] text-center text-black text-base md:text-lg">
         <p>SELECT A MAXIMUM OF 15 CHARACTERS</p>
         <p @click="shiftKey = !shiftKey" class="hover:ring-4 px-10 py-1 rounded-md ring-[2px] ring-blue-600 w-fit mx-auto">{{ shiftKey ? 'NEXT KEYS' : 'PREVIOUS KEYS' }}</p>
         <div class="relative h-fit w-fit mx-auto ring-[2px] ring-black p-2 rounded-md space-y-1">            
@@ -8,7 +8,7 @@
                 @click="addSelection(entry)"  
                 v-for="(entry, index) in line" 
                 :key="index" 
-                :class="[keyStyle(entry), appTheme]" 
+                :class="[keyStyle(entry)]" 
                 class="key-class">{{ entry }}</div>
             </div>
         </div>
@@ -21,13 +21,13 @@
 const shiftKey = ref(false)
 
 const settingstore = settingsStore()
-const {toggleCustomModal} = storeToRefs(settingstore)
+const { charsArray, useCharacters, toggleCustomModal} = storeToRefs(settingstore)
 
 const nextstore = nextStore()
 const {goNext} = storeToRefs(nextstore)
 
-const theme_ = themeStore()
-const { appTheme, theme } = storeToRefs(theme_)
+const themestore = themeStore()
+const { theme } = storeToRefs(themestore)
 
 const capsQwertyKeyboard = [
     ['~', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+'],
@@ -44,9 +44,6 @@ const qwertyKeyboard = [
 ]
 
 const entries = [capsQwertyKeyboard, qwertyKeyboard]
-
-const customize = settingsStore()
-const { charsArray, useCharacters} = storeToRefs(customize)
 
 const addSelection = (alphabet) => {
     let index = charsArray.value.indexOf(alphabet)

@@ -15,10 +15,6 @@ export const mainStore = defineStore('mainStore', () => {
     const allSpacesIndex = ref([])
     const useCustomText = ref(false)
     const storedTest = ref('')
-    
-    const customTests = ref({
-        'demo': 'This is a custom test, you can add your own test, use the plus icon. This particular demo cannot be deleted.'
-    }) 
 
     const resetToDefault = () => {
         scrollDistance.value = 0
@@ -42,7 +38,6 @@ export const mainStore = defineStore('mainStore', () => {
         allSpacesIndex,
         useCustomText,
         storedTest,
-        customTests,
         testContainerEl,
     }
 })

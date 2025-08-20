@@ -73,9 +73,9 @@ const settingsItems = {
 const typingstore = typingStore()
 const {focus, testCompleted, beginTest} = storeToRefs(typingstore)
 
-const customize = settingsStore()
-const { quickSettingss, toggleCustomModal, pauseTyping, hideElements, settings, disableOption} = storeToRefs(customize)
-const {checkQuickSettings} = customize
+const settingstore = settingsStore()
+const { quickSettingss, toggleCustomModal, pauseTyping, hideElements, settings, disableOption} = storeToRefs(settingstore)
+const {checkQuickSettings} = settingstore
 
 const openCustomModal = () => {
     toggleCustomModal.value = true

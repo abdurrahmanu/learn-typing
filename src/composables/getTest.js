@@ -9,10 +9,11 @@ export async function getTest () {
     }
 
     const settingstore = settingsStore()
-    const {settings, customChoice, useCharacters, charsArray} = storeToRefs(settingstore)
+    const {settings, customTests, customChoice, useCharacters, charsArray} = storeToRefs(settingstore)
 
     const mainstore = mainStore()
-    const {customTests, storedTest} = storeToRefs(mainstore)
+    const { storedTest} = storeToRefs(mainstore)
+
     const {mostUsed, mediumUsed, rarelyUsed, quotesWithNumbers, numbers, quotesWithoutAuthors, movieQuotes} = englishWords()
     const includeNumbers = settings.value.numbers
     const testType = settings.value['test-type']

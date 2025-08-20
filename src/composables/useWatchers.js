@@ -33,8 +33,8 @@ export default function useWatchers({
     const nextstore = nextStore()
     const {generateNewTest} = nextstore
         
-    const customize = settingsStore()
-    const { settings, hideElements, toggleCapsToast, pauseTyping, settingsToUpdate } = storeToRefs(customize)
+    const settingstore = settingsStore()
+    const { settings, hideElements, toggleCapsToast, pauseTyping, settingsToUpdate } = storeToRefs(settingstore)
     
     const mainstore = mainStore()
     const { testEl} = storeToRefs(mainstore)
@@ -86,8 +86,9 @@ export default function useWatchers({
                     userInfo.value.testsStarted = Number(userInfo.value.testsStarted) + 1
                     
                     settingsToUpdate.value.push({
-                        name: Object.keys({userInfo})[0],
-                        value: userInfo.value
+                        type: 'userInfo',
+                        name: 'testsStarted',
+                        value: userInfo.value.testsStarted
                     })
                 }
 
@@ -119,12 +120,19 @@ export default function useWatchers({
                     
                     settingsToUpdate.value.push(
                         {
-                            name: Object.keys({userInfo})[0],
-                            value: userInfo.value
+                            type: 'userInfo',
+                            name: 'testsFinished',
+                            value: userInfo.value.testsFinished
+                        },
+                        {
+                            type: 'userInfo',
+                            name: 'testsStarted',
+                            value: userInfo.value.testsStarted
                         },
                         {   
-                            name: Object.keys({userHistory})[0],
-                            value: userHistory.value
+                            type: 'userHistory',
+                            name: 'tests',
+                            value: userHistory.value.tests
                         }
                     )
                 }
@@ -150,7 +158,7 @@ export default function useWatchers({
 
       if (update) {
         watch(update, newVal => {
-            if (newVal.length) {                
+            if (newVal.length) {      
                 updateDB(newVal)
                 settingsToUpdate.value = []
             }

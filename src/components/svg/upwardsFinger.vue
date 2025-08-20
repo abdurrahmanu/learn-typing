@@ -6,6 +6,6 @@
 import {storeToRefs} from 'pinia'
 import {themeStore} from '../../store/themeStore'
 
-const theme_ = themeStore()
-const { svgFill } = storeToRefs(theme_)
+const themestore = themeStore()
+const { svgFill } = storeToRefs(themestore)
 </script>

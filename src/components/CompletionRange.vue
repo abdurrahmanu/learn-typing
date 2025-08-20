@@ -8,6 +8,6 @@
 const typingstatestore = typingStore()
 const {completionLevel, testCompleted} = storeToRefs(typingstatestore)
 
-const theme_ = themeStore()
-const {theme} = storeToRefs(theme_)
+const themestore = themeStore()
+const {theme} = storeToRefs(themestore)
 </script>

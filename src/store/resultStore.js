@@ -5,8 +5,8 @@ export const resultStore = defineStore('resultStore', () => {
     const characterstore = characterStore()
     const {resultData, incorrectCharCount} = storeToRefs(characterstore)
 
-    const customize = settingsStore()
-    const {settings} = storeToRefs(customize)
+    const settingstore = settingsStore()
+    const {settings} = storeToRefs(settingstore)
 
     const mainstore = mainStore()
     const {currentTest} = storeToRefs(mainstore)

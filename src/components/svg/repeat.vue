@@ -12,7 +12,7 @@ import {themeStore} from '../../store/themeStore'
 const settingstore = settingsStore()
 const { settings } = storeToRefs(settingstore)
 
-const theme_ = themeStore()
-const { theme } = storeToRefs(theme_)
+const themestore = themeStore()
+const { theme } = storeToRefs(themestore)
 </script>
 

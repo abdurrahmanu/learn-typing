@@ -1,12 +1,12 @@
 <template>
-        <div class="max-w-[700px] w-[95%] rounded-md py-5 z-[3] text-base md:text-lg" :class="[appTheme]">
+        <div class="max-w-[700px] w-[95%] rounded-md py-5 z-[3] text-base md:text-lg">
             <div>            
                 <div v-if="!saveCustomText" class="space-y-1 text-center">
                     <p>Using this enables custom test type</p>
                     <p class="text-red-400">{{ mobile ? 'Maximum of 40 words / 500 characters' : 'Maximum of 150 words / 1200 characters' }}</p>
                     <div class="relative w-[90%] m-auto">  
                         <p @click="textValue = ''" v-if="textValue" class="absolute top-0 right-0 px-2 py-[2px] uppercase hover:text-red-500 cursor-default">X</p>     
-                        <textarea v-model="textValue" :class="[appTheme]" class="w-full bg-inherit h-40 p-2 pt-2 border rounded-md outline-none border-slate-500" :placeholder="textAreaPlaceholder" :maxlength="touchScreen ? 500 : 1200" name="custom-textarea" />
+                        <textarea v-model="textValue" class="w-full bg-inherit h-40 p-2 pt-2 border rounded-md outline-none border-slate-500" :placeholder="textAreaPlaceholder" :maxlength="touchScreen ? 500 : 1200" name="custom-textarea" />
                     </div>
                     <div @click="startSavingCustomText" class="py-[2px] text-sm m-auto text-center border rounded-full px-4 w-fit border-slate-600 hover:bg-green-800 hover:text-white font-medium">ADD TEST</div>
                 </div>
@@ -26,7 +26,7 @@
                 <div class="font-medium text-sm">CUSTOM TESTS</div>
                 <div class="max-h-[calc(100dvh_-_50dvh)] overflow-y-auto h-fit p-2">
                     <div class="relative overflow-y-auto space-y-[5px]">                
-                        <div v-for="(test, key, index) in customTests" :key="index" class="p-2 border hover:shadow-sm" :class="[theme === 'dark' ? 'border-neutral-700' : 'border-slate-400']">
+                        <div v-for="(test, key, index) in customQuotes" :key="index" class="p-2 border hover:shadow-sm" :class="[theme === 'dark' ? 'border-neutral-700' : 'border-slate-400']">
                             <div class="space-x-1 font-medium uppercase"> 
                                 <span>{{ key }}</span> 
                                 <span @click="useTest(key)" class=" px-3 text-white text-xs bg-green-900 rounded-full py-[1px] hover:bg-green-800 ml-1">use</span> 
@@ -44,17 +44,11 @@
 const mobile = isMobile()
 const touchScreen = isTouchScreenDevice()
 
-const customize = settingsStore()
-const {settings, customChoice, toggleCustomModal} = storeToRefs(customize)
+const settingstore = settingsStore()
+const { customChoice, settingsToUpdate, customQuotes, toggleCustomModal} = storeToRefs(settingstore)
 
 const themestore = themeStore()
-const {theme, appTheme } = storeToRefs(themestore)
-
-const nextstore = nextStore()
-const {goNext} = storeToRefs(nextstore)
-
-const mainstore = mainStore()
-const { customTests } = storeToRefs(mainstore)
+const {theme} = storeToRefs(themestore)
 
 const textAreaPlaceholder = ref('Add your preferred test, quote or story.')
 const titlePlaceholder = ref('Title')
@@ -87,7 +81,14 @@ const saveNewCustomText = () => {
         return
     }
     
-    customTests.value[customTestTitle.value] = textAreaValueStore.value.trim()
+    customQuotes.value[customTestTitle.value] = textAreaValueStore.value.trim()
+
+    settingsToUpdate.value.push({
+        type: 'customQuotes',
+        name: customTestTitle.value,
+        value: customQuotes.value[customTestTitle.value] 
+    })        
+
     textSaved.value = true
     customTestTitle.value = ''
     textAreaValueStore.value = ''

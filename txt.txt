@@ -1,12 +1,8 @@
-** if ID does not exist remotely -> delete and create new ID || use that ID to save remotely
-** user auth
-** leaderboard
-
 // MY Language is bUlLsHIt down here.......
 
 it has been long so the codebase is looking strange even though I wrote it.
 
-** will come back for capslock in inputEvent.js
+** I will come back for capslock in inputEvent.js
 ** clearly understand the use of enterKey.value
 
 --------------------------------------
@@ -17,7 +13,7 @@ Previewing wep app on android
 5. use IPv4 address:host e.g 192.168.173.144:5173/index.html on mobile phone
 
 ---------------------------------
-Previewing vue.js app in android
+Previewing vue.js app on android
 1. connect to same network - wifi / hotspot
 2. Add "host": "vite --host" in package.json scripts / change server setting inside vite.config.js too with this setting
   server: {
@@ -27,9 +23,6 @@ Previewing vue.js app in android
 3. vite will automatically use your ip as the server ip, 
 4. run the command with npm run host
 5. access your app in external device, just use {your ip}:{port} eg: 192.168.10.1:5173.
-
-
-// if I load my page, first loading then check if user exists, if yes login, else no-user
 
 Unused dependencies
 * @vueuse/firebase
@@ -43,4 +36,6 @@ Unused devDependencies
 * tailwindcss
 
 
-      // "node_modules/**",
+// "node_modules/**",
+
+------- separate disabled from settings in updateSingleDoc

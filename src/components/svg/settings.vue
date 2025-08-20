@@ -16,6 +16,6 @@ const route = useRoute()
 const settingstore = settingsStore()
 const {settingsPage} = settingstore
 
-const theme_ = themeStore()
-const { svgFill } = storeToRefs(theme_)
+const themestore = themeStore()
+const { svgFill } = storeToRefs(themestore)
 </script>

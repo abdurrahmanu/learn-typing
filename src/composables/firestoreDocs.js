@@ -1,11 +1,11 @@
-import { doc, getDoc, setDoc, updateDoc, deleteDoc } from 'firebase/firestore'
+import { doc, getDoc, setDoc, deleteDoc } from 'firebase/firestore'
 import {db} from '../firebase'
 
 export const getSingleDoc = async (ID) => {
   try {
     const docRef = doc(db, "users", ID);
-    const docSnap = await getDoc(docRef);
-    return docSnap.exists() ? docSnap.data() : null;
+    const snap = await getDoc(docRef);
+    return snap.exists() ? snap.data() : {};
   } catch (error) {
     return null;
   }
@@ -13,20 +13,24 @@ export const getSingleDoc = async (ID) => {
 
 export const addSingleDoc = async (ID) => {
   const docRef = doc(db, 'users', ID);
-  await setDoc(docRef, userData());
-  return (await getDoc(docRef)).data()
-};
+  await setDoc(docRef, createUser(docRef))
+  const data = (await getDoc(docRef)).data()
+  return data
+}
 
 export const deleteSingleDoc = async (ID) => await deleteDoc(doc(db, 'users', ID))
 
 export const updateSingleDoc = async (updates, ID) => {
-    const updateObj = {}
+  const docRef = doc(db, "users", ID)
+  const snap = await getDoc(docRef)
+  let data = snap.exists() ? snap.data() : {}
 
-     for (const { name, value } of updates) {
-      updateObj[name] = value;
-    }
-    
-    const docRef = doc(db, "users", ID)
-    await updateDoc(docRef, updateObj)
+  for (const update of updates) {
+    const {type, name, value} = update
+
+    if (data[type]?.[name]) data[type][name] = value
+    else data[type] = value
+
+    await setDoc(docRef, {data} , { merge: true })
+  }
 }
-

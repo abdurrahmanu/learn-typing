@@ -3,16 +3,19 @@
     @click.self="closeModal" 
     v-if="toggleCustomModal" 
     class="overlay">
-        <CustomChars v-if="settings['test-type'] === 'characters'"/>
-        <CustomTest v-if="settings['test-type'] === 'custom'" />
-        <CustomQuotes v-if="settings['test-type'] === 'quotes'" />
-        <CustomWords v-if="settings['test-type'] === 'words'" />
+        <CustomChars :class="[appTheme]" v-if="settings['test-type'] === 'characters'"/>
+        <CustomTest :class="[appTheme]" v-if="settings['test-type'] === 'custom'" />
+        <CustomQuotes :class="[appTheme]" v-if="settings['test-type'] === 'quotes'" />
+        <CustomWords :class="[appTheme]" v-if="settings['test-type'] === 'words'" />
     </div>
 </template>
 
 <script setup>
 const settingstore = settingsStore()
 const {toggleCustomModal, pauseTyping, settings} = storeToRefs(settingstore)
+
+const themestore = themeStore()
+const { appTheme } = storeToRefs(themestore)
 
 const closeModal = () => {
     toggleCustomModal.value = false

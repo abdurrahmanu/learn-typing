@@ -7,8 +7,8 @@ export default function focusInputElement (delay) {
     const mainstore = mainStore()
     const {route} = storeToRefs(mainstore)
 
-    const customize = settingsStore()
-    const { pauseTyping } = storeToRefs(customize)
+    const settingstore = settingsStore()
+    const { pauseTyping } = storeToRefs(settingstore)
 
     const typingstatestore = typingStore()
     const {focus} = storeToRefs(typingstatestore)

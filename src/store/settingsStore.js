@@ -26,6 +26,18 @@ export const settingsStore = defineStore('settingsStore', () => {
     'fraktur'
     ];
 
+    const customTests = ref({
+        'demo': 'This is a custom test, you can add your own test, use the plus icon. This particular demo cannot be deleted.'
+    }) 
+
+    const customQuotes = ref({
+        'demo': 'This is a custom quote, you can add your own test, use the plus icon. This particular demo cannot be deleted.'
+    }) 
+
+    const customWords = ref({
+        'demo': 'gado'
+    }) 
+
     const nextstore = nextStore()
     const {goNext} = storeToRefs(nextstore)
 
@@ -56,6 +68,7 @@ export const settingsStore = defineStore('settingsStore', () => {
         'test-width': 50,
         'fontsize': 45,
         'font': 'reddit-mono',
+        'theme': '',
     })
 
     const isBlindMode = computed(() => {
@@ -104,9 +117,33 @@ export const settingsStore = defineStore('settingsStore', () => {
         if (settings.value['test-type'] !=='words') {
             disableOption.value['test-length'] = true
             disableOption.value['words-type'] = true
+            settingsToUpdate.value.push(
+                {
+                    type: 'disableOption',
+                    name: 'test-length',
+                    value: true
+                },
+                {
+                    type: 'disableOption',
+                    name: 'words-type',
+                    value: true
+                }
+            )        
         } else {            
             disableOption.value['test-length'] = false
             disableOption.value['words-type'] = false
+            settingsToUpdate.value.push(
+                {
+                    type: 'disableOption',
+                    name: 'test-length',
+                    value: false
+                }, 
+                {
+                    type: 'disableOption',
+                    name: 'words-type',
+                    value: false
+                },
+            )       
         }
     }
 
@@ -144,13 +181,11 @@ export const settingsStore = defineStore('settingsStore', () => {
         let updateSettings = ['arrangement', 'character-case', 'words-type', 'caps', 'punctuation', 'test-type', 'caps',
         'numbers', 'backspace', 'difficulty', 'fonts', 'no-space','spaced', 'fontsize', 'double-words', 'blind-mode', 'countdown', 'capslock', 'test-length']
         
-        if (settings.value[setting] === newVal) settings.value[setting] = ''        
-            
-        else if (setting in settings.value) {
-            settings.value[setting] = newVal
-        }        
+        if (settings.value[setting] === newVal) newVal = ''            
+        settings.value[setting] = newVal
         
         settingsToUpdate.value.push({
+            type: 'settings',
             name: setting,
             value: newVal
         })        
@@ -187,5 +222,8 @@ export const settingsStore = defineStore('settingsStore', () => {
         testHeight,
         contentFitHeight,
         fonts,
+        customQuotes,
+        customWords,
+        customTests,
     }
 })

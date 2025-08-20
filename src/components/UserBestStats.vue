@@ -43,5 +43,5 @@
 
 <script setup>
 const userstore = userDataStore()
-const {userInfo, bestStats: stats, userHistory} = storeToRefs(userstore)
+const {bestStats: stats} = storeToRefs(userstore)
 </script>

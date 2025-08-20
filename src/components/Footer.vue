@@ -4,7 +4,3 @@
         <Theme />
     </div>
 </template>
-
-<script setup>
-
-</script>

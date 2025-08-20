@@ -13,8 +13,8 @@ import {themeStore}  from '../../store/themeStore'
 import {ref} from 'vue'
 
 const hoverbg = ref('')
-const theme_ = themeStore()
-const {theme, appTheme } = storeToRefs(theme_)
+const themestore = themeStore()
+const {theme} = storeToRefs(themestore)
 
 const props = defineProps({
     position: Boolean

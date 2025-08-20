@@ -11,8 +11,8 @@
 </template>
 
 <script setup>
-const theme_ = themeStore()
-const {theme} = storeToRefs(theme_)
+const themestore = themeStore()
+const {theme} = storeToRefs(themestore)
 
 const settingstore = settingsStore()
 const {settingsToUpdate} = storeToRefs(settingstore)
@@ -29,7 +29,7 @@ const bg = ref([
 const toggleTheme = (color) => {
     theme.value = color
     settingsToUpdate.value.push({
-        name: Object.keys({theme})[0],
+        type: 'theme',
         value: theme.value
     })
 }

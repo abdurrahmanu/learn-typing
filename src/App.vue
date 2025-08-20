@@ -1,13 +1,18 @@
 <template>
-  <FontWidth />
-  <Loader v-if="loadingApp" />
-  <Main v-if="!loadingApp" />
+  <div :class="[appTheme]">
+    <FontWidth />
+    <AITestGenerator />
+    <Loader v-if="loadingApp" />
+    <Main v-else />
+  </div>
 </template>
 
 <script setup>
 import { onAuthStateChanged } from 'firebase/auth'
-import { settingsStore } from './store/settingsStore'
-import { storeToRefs } from 'pinia'
+import AITestGenerator from './components/AITestGenerator.vue'
+
+const themestore = themeStore()
+const { appTheme } = storeToRefs(themestore)
 
 const authstore = authStore()
 const {login, user, data} = storeToRefs(authstore)
@@ -15,45 +20,45 @@ const {login, user, data} = storeToRefs(authstore)
 const connectstore = connectStore()
 const {loadingApp} = storeToRefs(connectstore)
 
-const settingstore = settingsStore()
-const {settings} = storeToRefs(settingstore)
-
 onMounted( async () => {   
   loadingApp.value = true
 
-  onAuthStateChanged(auth, async (user_) => {
-    user.value = user_
+  onAuthStateChanged(auth, async (_) => {
+    user.value = _
 
     if (user.value?.emailVerified && navigator.onLine) {
+      // sign in
       if (!data.value) {
         data.value = await getSingleDoc(user.value.uid)
       }
+
+      // sign up
       if (!data.value) {
         data.value = await addSingleDoc(user.value.uid)
       }
+      
       if (data.value) {
         login.value = true
       }
     }
     
     else {
+      loadingApp.value = false
       login.value = false
       data.value = null
       generateTest()
     }
-
-    loadingApp.value = false
-  })
+})
 
   watch(login, newVal => {
     if (newVal) {
       if (data.value) {
-        fetchData(data.value)
+        getUser()
         generateTest()
       } 
     }
   })
-});
+})
 
 onUnmounted(() => {
   data.value = null

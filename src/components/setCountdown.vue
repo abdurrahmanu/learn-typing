@@ -19,9 +19,9 @@
 </template>
 
 <script setup>
-const theme_ = themeStore()
-const {theme} = theme_
+const themestore = themeStore()
+const {theme} = themestore
 
-const customize = settingsStore()
-const { settings} = storeToRefs(customize)
+const settingstore = settingsStore()
+const { settings} = storeToRefs(settingstore)
 </script>

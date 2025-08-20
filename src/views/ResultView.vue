@@ -1,5 +1,5 @@
 <template>
-    <div :class="appTheme" class="cursor-default py-10 px-4 text-lg space-y-4 flex-1">
+    <div class="cursor-default bg-inherit py-10 px-4 text-lg space-y-4 flex-1">
         <p class="header">STATISTICS</p>
         <div class="difficulty-badge" :class="[difficultyStyle]">{{ settings.difficulty }}</div>
         <div
@@ -22,11 +22,8 @@
 const resultstore = resultStore()
 const {resultSections, difficultyStyle} = storeToRefs(resultstore)
 
-const customize = settingsStore()
-const { settings} = storeToRefs(customize)
-
-const theme_ = themeStore()
-const { appTheme } = storeToRefs(theme_)
+const settingstore = settingsStore()
+const { settings} = storeToRefs(settingstore)
 </script>
 
 <style scoped>

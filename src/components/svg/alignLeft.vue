@@ -14,8 +14,8 @@ import {storeToRefs} from 'pinia'
 import {themeStore} from '../../store/themeStore'
 
 const hoverbg = ref('')
-const theme_ = themeStore()
-const {theme, svgFill } = storeToRefs(theme_)
+const themestore = themeStore()
+const {theme, svgFill } = storeToRefs(themestore)
 
 const props = defineProps({
     position: Boolean

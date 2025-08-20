@@ -13,6 +13,6 @@ import {themeStore} from '../../store/themeStore'
 import {ref} from 'vue'
 
 const hoverbg = ref('')
-const theme_ = themeStore()
-const { svgFill } = storeToRefs(theme_)
+const themestore = themeStore()
+const { svgFill } = storeToRefs(themestore)
 </script>

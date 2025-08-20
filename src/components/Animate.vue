@@ -7,11 +7,11 @@
 </template>
 
 <script setup>
-const theme_ = themeStore()
-const {theme} = storeToRefs(theme_)
+const themestore = themeStore()
+const {theme} = storeToRefs(themestore)
 
-const customize = settingsStore()
-const {pauseTyping} = storeToRefs(customize)
+const settingstore = settingsStore()
+const {pauseTyping} = storeToRefs(settingstore)
 
 const animation = ref(true)
 const boxesContainer = ref(null)

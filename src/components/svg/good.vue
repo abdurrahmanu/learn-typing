@@ -19,6 +19,6 @@
 import { themeStore } from '../../store/themeStore';
 import { storeToRefs } from 'pinia';
 
-const theme_ = themeStore()
-const {theme} = storeToRefs(theme_)
+const themestore = themeStore()
+const {theme} = storeToRefs(themestore)
 </script>

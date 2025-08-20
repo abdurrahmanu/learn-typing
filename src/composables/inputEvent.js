@@ -10,8 +10,8 @@ export default function inputEvent (event) {
     const characterstore = characterStore()
     const {incorrectCharCount} = storeToRefs(characterstore)
     
-    const customize = settingsStore()
-    const {toggleCapsToast, settings} = storeToRefs(customize)
+    const settingstore = settingsStore()
+    const {toggleCapsToast, settings} = storeToRefs(settingstore)
 
     const eventData = event.key || event.data
     const eventType  = event.key || event.inputType

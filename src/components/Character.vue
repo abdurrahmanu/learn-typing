@@ -28,8 +28,8 @@ const {beatCountdown} = storeToRefs(timerstore)
 const typingstatestore = typingStore()
 const {playerInputLength, testCompleted, beginTest, focus, playerLastInput, typedWhiteSpaces, spaces, backspaceIsPressed, enterKey} = storeToRefs(typingstatestore)
 
-const theme_ = themeStore()
-const { theme } = storeToRefs(theme_)
+const themestore = themeStore()
+const { theme } = storeToRefs(themestore)
 
 const mainstore = mainStore()
 const { currentTest, testEl, allSpacesIndex, scrollTextContainer, scrollDistance, } = storeToRefs(mainstore)
