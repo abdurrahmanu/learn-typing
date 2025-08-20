@@ -4,7 +4,7 @@ export const themeStore = defineStore('themeStore', () => {
     const theme = ref(window.matchMedia("(prefers-color-scheme: dark)").matches ?  'dark' : 'white')
 
     const appTheme = computed(() => {
-        if (theme.value === 'dark') return 'bg-[#010203] text-[#6e777e]'
+        if (theme.value === 'dark') return 'bg-[#2f343f] text-[#eee]'
         if (theme.value === 'white') return 'bg-gray-300 text-neutral-700'
     })
 
@@ -20,4 +20,3 @@ export const themeStore = defineStore('themeStore', () => {
         openBackgrounds,
     }
 })
-

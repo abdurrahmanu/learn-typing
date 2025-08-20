@@ -21,9 +21,9 @@ export default defineConfig({
           'pinia',
         ],
         dirs: [
-          'src',
           'src/composables',
-          'src/store'
+          'src/store',
+          'src/composables/**'
         ],
         dts: './auto-imports.d.ts'
       }

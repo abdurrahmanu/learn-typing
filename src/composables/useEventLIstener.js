@@ -1,5 +1,5 @@
 export default function useEventListener(event, listener, remove, target) { 
-    if (target && isMobile()) { // inputEl event
+    if (target && isMobile()) {
         if (!remove) target.addEventListener('input', listener);
         else target.removeEventListener('input', listener);
     }
