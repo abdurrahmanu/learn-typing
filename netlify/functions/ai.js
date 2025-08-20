@@ -6,13 +6,13 @@ export async function handler(event) {
   const res = await fetch("https://api.openai.com/v1/chat/completions", {
     method: "POST",
     headers: {
-      "Authorization": `Bearer ${process.env.VITE_OPENAI_API_KEY}`,
+      "Authorization": `Bearer ${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}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
       model: "gpt-4o-mini",
       messages: [
-        { role: "system", content: "You are a test generator. Always reply in JSON format." },
+        { role: "system", content: "You are a typing test generator. Always reply in JSON format." },
         { role: "user", content: prompt }
       ]
     }),
