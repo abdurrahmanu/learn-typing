@@ -22,7 +22,7 @@ export default defineConfig({
         ],
         dirs: [
           'src/composables',
-          'src/store',
+          'src/stores',
           'src/composables/**'
         ],
         dts: './auto-imports.d.ts'
