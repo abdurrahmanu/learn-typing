@@ -13,7 +13,8 @@
     "host": "vite --host",
     "electron:start": "electron .",
     "electron:builder": "electron-builder",
-    "electron:dev": "vite dev & electron ."
+    "electron:dev": "vite dev & electron .",
+    "netlify:dev": "netlify dev"
   },
   "build": {
     "appId": "com.ahmadabdulrahman.kiboard",
@@ -72,6 +73,7 @@
     "chart.js": "^4.4.7",
     "dotenv": "^17.2.1",
     "firebase": "^10.14.1",
+    "node-fetch": "^3.3.2",
     "pinia": "^2.1.7",
     "qrcode": "^1.5.4",
     "unplugin-auto-import": "^20.0.0",
@@ -84,6 +86,7 @@
     "@vitejs/plugin-vue": "^4.1.0",
     "electron": "^37.2.5",
     "electron-builder": "^26.0.12",
+    "netlify-cli": "^23.2.0",
     "postcss": "^8.4.27",
     "tailwindcss": "^3.3.3",
     "vite": "^4.3.2"

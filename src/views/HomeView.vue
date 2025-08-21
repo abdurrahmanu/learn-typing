@@ -21,7 +21,6 @@ const connect = connectStore()
 const {connectionAvailable } = storeToRefs(connect)
 
 function handleKeydown(event) {
-    if (AIfocus.value) return
     const eventType = event.inputType || event.key
     const pasteDropReplaceEvents = ['insertFromPaste','insertFromDrop','insertReplacementText']
 
@@ -89,7 +88,9 @@ function handleClick(event) {
 }
 
 onMounted(() => {
+    let mobile = isMobile()
     let mounted = true
+
     validateTestLines(mounted)
     useEventListener('touchmove', handleTouchMove)
     useEventListener('wheel', handleWheel)
@@ -97,21 +98,22 @@ onMounted(() => {
     useEventListener('focus', handleFocus)
     useEventListener('offline', handleOffline)
     useEventListener('online', handleOnline)
-    useEventListener('keydown', handleKeydown)
     useEventListener('click', handleClick)
-    useEventListener('input', handleKeydown, false, inputEl.value)
+    mobile ? useEventListener('input', handleKeydown, false, inputEl.value) :
+    useEventListener('keydown', handleKeydown)
 })
 
 onUnmounted(() => {
-  useEventListener('touchmove', handleTouchMove, true)
-  useEventListener('wheel', handleWheel, true)
-  useEventListener('blur', handleBlur, true)
-  useEventListener('focus', handleFocus, true)
-  useEventListener('offline', handleOffline, true)
-  useEventListener('online', handleOnline, true)
-  useEventListener('keydown', handleKeydown, true)
-  useEventListener('click', handleClick, true)
-  useEventListener('input', handleKeydown, false, inputEl.value)
+    let mobile = isMobile()
+    useEventListener('touchmove', handleTouchMove, true)
+    useEventListener('wheel', handleWheel, true)
+    useEventListener('blur', handleBlur, true)
+    useEventListener('focus', handleFocus, true)
+    useEventListener('offline', handleOffline, true)
+    useEventListener('online', handleOnline, true)
+    useEventListener('click', handleClick, true)
+    mobile ? useEventListener('input', handleKeydown, false, inputEl.value) :
+    useEventListener('keydown', handleKeydown, true)
 })
 
 useWatchers({

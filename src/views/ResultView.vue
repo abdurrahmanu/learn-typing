@@ -1,5 +1,5 @@
 <template>
-    <div class="cursor-default bg-inherit py-10 px-4 text-lg space-y-4 flex-1">
+    <div class="cursor-default bg-inherit py-10 px-4 text-lg space-y-4 flex-1 overflow-scroll">
         <p class="header">STATISTICS</p>
         <div class="difficulty-badge" :class="[difficultyStyle]">{{ settings.difficulty }}</div>
         <div
@@ -19,6 +19,8 @@
 </template>
 
 <script setup>
+let mobile = isMobile()
+
 const resultstore = resultStore()
 const {resultSections, difficultyStyle} = storeToRefs(resultstore)
 

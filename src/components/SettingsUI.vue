@@ -23,13 +23,6 @@ const {theme} = storeToRefs(themestore)
 
 const modes = [
     {
-        name: 'Fonts',
-        setting: 'font',
-        desc: '',
-        options: null,
-        extra: []
-    },
-    {
         name: 'Cursor',
         setting: 'cursor',
         desc: 'Use your preferred cursor',
@@ -62,6 +55,13 @@ const modes = [
         setting: 'test-lines',
         desc: 'Select the number of lines for the test',
         options: [],
+        extra: []
+    },
+    {
+        name: 'Fonts',
+        setting: 'font',
+        desc: '',
+        options: null,
         extra: []
     },
     {

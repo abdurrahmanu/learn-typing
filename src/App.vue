@@ -1,9 +1,9 @@
 <template>
   <div :class="[appTheme]">
     <FontWidth />
-    <AITestGenerator />
+    <!-- <AITestGenerator /> -->
     <Loader v-if="loadingApp" />
-    <!-- <Main v-else /> -->
+    <Main v-else />
   </div>
 </template>
 

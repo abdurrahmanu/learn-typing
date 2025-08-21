@@ -1,6 +1,6 @@
 <template>
   <div class="p-6 space-y-4">
-    <input @focus="AIfocus = true, pauseTyping = true" @blur="AIfocus = false, pauseTyping = false" v-model="userInput" class="border w-full p-2 text-black" placeholder="Ask AI to generate a test..." />
+    <input @focus="pauseTyping = true" @blur="pauseTyping = false" v-model="userInput" class="border w-full p-2 text-black" placeholder="Ask AI to generate a test..." />
     <button @click="askAI" class="bg-blue-500  px-4 py-2 rounded" :disabled="loading">
       {{ loading ? "Generating..." : "Generate Test" }}
     </button>
@@ -39,14 +39,14 @@ const askAI = async () => {
     
     const res = await fetch("/.netlify/functions/ai", {
       method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ prompt: userInput.value })
     })
-    console.log(100);
-
+    
     const data = await res.json()
-    console.log(data);
+    
     loading.value = false
-
+    
     try {
     aiResponse.value = JSON.parse(data.choices[0].message.content)
     } catch (e) {
