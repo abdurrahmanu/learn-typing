@@ -87,10 +87,10 @@ function handleClick(event) {
     else focus.value = false
 }
 
-onMounted(() => {
-    let mobile = isMobile()
-    let mounted = true
+let mobile = isMobile()
 
+onMounted(() => {
+    let mounted = true
     validateTestLines(mounted)
     useEventListener('touchmove', handleTouchMove)
     useEventListener('wheel', handleWheel)
@@ -104,7 +104,6 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
-    let mobile = isMobile()
     useEventListener('touchmove', handleTouchMove, true)
     useEventListener('wheel', handleWheel, true)
     useEventListener('blur', handleBlur, true)
