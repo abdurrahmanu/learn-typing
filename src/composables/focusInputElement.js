@@ -1,14 +1,14 @@
-export default function focusInputElement (delay) {
-    const mainstore = mainStore()
-    const {route} = storeToRefs(mainstore)
+export default function focusInputElement(delay) {
+  const mainstore = mainStore();
+  const { route } = storeToRefs(mainstore);
 
-    const settingstore = settingsStore()
-    const { pauseTyping } = storeToRefs(settingstore)
+  const settingstore = settingsStore();
+  const { pauseTyping } = storeToRefs(settingstore);
 
-    const typingstatestore = typingStore()
-    const {focus} = storeToRefs(typingstatestore)
+  const typingstore = typingStore();
+  const { focus } = storeToRefs(typingstore);
 
-    if (pauseTyping.value && route.value !== 'home') return
+  if (pauseTyping.value && route.value !== "home") return;
 
-    focus.value = true
+  focus.value = true;
 }

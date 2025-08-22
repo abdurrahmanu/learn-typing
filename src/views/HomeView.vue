@@ -1,121 +1,139 @@
 <template>
-    <div ref="testContainerEl" v-if="!testCompleted" class="mx-auto relative max-w-[1500px] overflow-hidden w-full py-10 flex-1 bg-inherit"> 
-        <QuickSettings />
-        <TestContainer />
-    </div>
+  <div
+    ref="testContainerEl"
+    v-if="!testCompleted"
+    class="mx-auto relative max-w-[1500px] overflow-hidden w-full py-10 flex-1 bg-inherit"
+  >
+    <QuickSettings />
+    <TestContainer />
+  </div>
 </template>
 <script setup>
-const settingstore = settingsStore()
-const {settingsToUpdate, toggleCapsToast, pauseTyping, toggleCustomModal} = storeToRefs(settingstore)
+const settingstore = settingsStore();
+const { settingsToUpdate, toggleCapsToast, pauseTyping, toggleCustomModal } =
+  storeToRefs(settingstore);
 
-const nextstore = nextStore()
-const {goNext} = storeToRefs(nextstore)
+const nextstore = nextStore();
+const { goNext } = storeToRefs(nextstore);
 
-const typingstatestore = typingStore()
-const {refocus, testCompleted, focus, playerInput, beginTest, inputEl} = storeToRefs(typingstatestore)
+const typingstatestore = typingStore();
+const { refocus, testCompleted, focus, playerInput, beginTest, inputEl } =
+  storeToRefs(typingstatestore);
 
-const mainstore = mainStore()
-const { testEl, testContainerEl, font, AIfocus} = storeToRefs(mainstore)
+const mainstore = mainStore();
+const { testEl, testContainerEl, font } = storeToRefs(mainstore);
 
-const connect = connectStore()
-const {connectionAvailable } = storeToRefs(connect)
+const connect = connectStore();
+const { connectionAvailable } = storeToRefs(connect);
 
 function handleKeydown(event) {
-    const eventType = event.inputType || event.key
-    const pasteDropReplaceEvents = ['insertFromPaste','insertFromDrop','insertReplacementText']
+  const eventType = event.inputType || event.key;
+  const pasteDropReplaceEvents = [
+    "insertFromPaste",
+    "insertFromDrop",
+    "insertReplacementText",
+  ];
 
-    if (toggleCustomModal.value) return // temporary --------- will fix later
+  if (toggleCustomModal.value) return; // temporary --------- will fix later
 
-    if (pasteDropReplaceEvents.includes(eventType)) return
+  if (pasteDropReplaceEvents.includes(eventType)) return;
 
-    if (pauseTyping.value) {
-        focus.value = true
-        pauseTyping.value = false
-        return
-    }
-    
-    if (eventType === 'Escape' && !testCompleted.value)  {
-        goNext.value = true;
-        return;
-    }
+  if (pauseTyping.value) {
+    focus.value = true;
+    pauseTyping.value = false;
+    return;
+  }
 
-    if (eventType === 'CapsLock') {
-        toggleCapsToast.value = true;
-        setTimeout(() => {
-            toggleCapsToast.value = false;
-        }, 2000);
-    }
+  if (eventType === "Escape" && !testCompleted.value) {
+    goNext.value = true;
+    return;
+  }
 
-    let value = inputEvent(event)
+  if (eventType === "CapsLock") {
+    toggleCapsToast.value = true;
+    setTimeout(() => {
+      toggleCapsToast.value = false;
+    }, 2000);
+  }
 
-    if (value) evaluateInput(value);
+  let value = inputEvent(event);
+
+  if (value) evaluateInput(value);
 }
 
 function handleTouchMove(event) {
-    if (event.target === testEl.value || testEl.value.contains(event.srcElement)) {
-    }
+  if (
+    event.target === testEl.value ||
+    testEl.value.contains(event.srcElement)
+  ) {
+  }
 }
 
 function handleWheel(event) {
-    if (event.target === testEl.value || testEl.value.contains(event.srcElement)) {
-    }
+  if (
+    event.target === testEl.value ||
+    testEl.value.contains(event.srcElement)
+  ) {
+  }
 }
 
 function handleBlur() {
-    refocus.value = true;
+  refocus.value = true;
 }
 
 function handleFocus() {
-    refocus.value = false;
+  refocus.value = false;
 }
 
 function handleOffline() {
-    connectionAvailable.value = false;
+  connectionAvailable.value = false;
 }
 
 function handleOnline() {
-    // DB();
+  // DB();
 }
 
 function handleClick(event) {
-    if (testCompleted.value) return;
-    const focusElement = event.srcElement.id === 'focus' || event.srcElement.closest('#focus');
-    if (focusElement) {
-        if (focus.value) return
-        else focus.value = true
-    }
-    else focus.value = false
+  if (testCompleted.value) return;
+  const focusElement =
+    event.srcElement.id === "focus" || event.srcElement.closest("#focus");
+  if (focusElement) {
+    if (focus.value) return;
+    else focus.value = true;
+  } else focus.value = false;
 }
 
-let mobile = isMobile()
+let mobile = isMobile();
 
 onMounted(() => {
-    let mounted = true
-    validateTestLines(mounted)
-    useEventListener('touchmove', handleTouchMove)
-    useEventListener('wheel', handleWheel)
-    useEventListener('blur', handleBlur)
-    useEventListener('focus', handleFocus)
-    useEventListener('offline', handleOffline)
-    useEventListener('online', handleOnline)
-    useEventListener('click', handleClick)
-    mobile ? useEventListener('input', handleKeydown, false, inputEl.value) :
-    useEventListener('keydown', handleKeydown)
-})
+  let mounted = true;
+  validateTestLines(mounted);
+  useListener("touchmove", handleTouchMove);
+  useListener("wheel", handleWheel);
+  useListener("blur", handleBlur);
+  useListener("focus", handleFocus);
+  useListener("offline", handleOffline);
+  useListener("online", handleOnline);
+  useListener("click", handleClick);
+  mobile
+    ? useListener("input", handleKeydown, false, inputEl.value)
+    : useListener("keydown", handleKeydown);
+});
 
 onUnmounted(() => {
-    useEventListener('touchmove', handleTouchMove, true)
-    useEventListener('wheel', handleWheel, true)
-    useEventListener('blur', handleBlur, true)
-    useEventListener('focus', handleFocus, true)
-    useEventListener('offline', handleOffline, true)
-    useEventListener('online', handleOnline, true)
-    useEventListener('click', handleClick, true)
-    mobile ? useEventListener('input', handleKeydown, false, inputEl.value) :
-    useEventListener('keydown', handleKeydown, true)
-})
+  useListener("touchmove", handleTouchMove, true);
+  useListener("wheel", handleWheel, true);
+  useListener("blur", handleBlur, true);
+  useListener("focus", handleFocus, true);
+  useListener("offline", handleOffline, true);
+  useListener("online", handleOnline, true);
+  useListener("click", handleClick, true);
+  mobile
+    ? useListener("input", handleKeydown, false, inputEl.value)
+    : useListener("keydown", handleKeydown, true);
+});
 
-useWatchers({
+useWatcher({
   focus,
   goNext,
   testCompleted,

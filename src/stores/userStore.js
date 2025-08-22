@@ -1,4 +1,4 @@
-export const userDataStore = defineStore('userDataStore', () => {
+export const userStore = defineStore('userStore', () => {
     const userInfo = ref({
         username: '',
         uid: '',

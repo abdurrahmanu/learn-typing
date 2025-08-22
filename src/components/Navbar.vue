@@ -1,28 +1,28 @@
 <template>
-    <div class="sticky top-0 z-[1]">
+    <div class="sticky transition-all duration-75 top-0 z-[1]">
         <Connectivity />
         <header class="header">
-            <div 
-            @click="routeToPage('about')" 
+            <div
+            @click="routeToPage('about')"
             class="flex items-center gap-1">
-                <Logo class="flex cursor-pointer" /> 
+                <Logo class="flex cursor-pointer" />
                 <p class="text-sm font-bold">KiBoard</p>
             </div>
-    
+
             <div class="nav-container center-x">
-                <div 
-                @click="routeToPage(key)" 
-                :class="[currentRouteStyle(key)]" 
+                <div
+                @click="routeToPage(key)"
+                :class="[currentRouteStyle(key)]"
                 class="nav-item"
-                v-for="(NavItem, key, index) in navItems" 
+                v-for="(NavItem, key, index) in navItems"
                 :key="index">
                     <component :is="NavItem" class="w-5"/>
                 </div>
             </div>
-    
-            <div 
-            @click="routeToPage('user')" 
-            :class="[currentRouteStyle('user')]" 
+
+            <div
+            @click="routeToPage('user')"
+            :class="[currentRouteStyle('user')]"
             class="nav-item">
                 <userSVG class="w-5" />
             </div>
@@ -41,6 +41,7 @@ const navItems = {
     'about': feedbackSVG,
     'settings': settingsSVG,
 }
+
 const router = useRouter()
 
 const mainstore = mainStore()
@@ -56,7 +57,7 @@ const routeToPage = (route) => {
 const currentRouteStyle = (r) => {
     return route.value === r ? 'border-b-blue-500 shadow-blue-900 shadow-sm' : 'border-b-transparent'
 }
-</script>   
+</script>
 
 <style scoped>
 .header {

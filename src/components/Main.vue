@@ -14,6 +14,9 @@
 <script setup>
 const typingstore = typingStore()
 const { focus, beginTest } = storeToRefs(typingstore)
+
+const settingstore = settingsStore()
+const {pauseTyping} = storeToRefs(settingstore)
 </script>
 
 <style scoped>

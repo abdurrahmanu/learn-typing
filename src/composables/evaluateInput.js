@@ -1,43 +1,47 @@
-export default function evaluateInput(value) {    
-    const characterstore = characterStore()
-    const {correctCharCount, incorrectCharCount} = storeToRefs(characterstore)
+export default function evaluateInput(value) {
+  const characterstore = characterStore();
+  const { correctCharCount, incorrectCharCount } = storeToRefs(characterstore);
 
-    const settingstore = settingsStore()
-    const {toggleCustomModal} = storeToRefs(settingstore)
+  const settingstore = settingsStore();
+  const { toggleCustomModal } = storeToRefs(settingstore);
 
-    const typingstatestore = typingStore()
-    const {playerInput, deletedValue, playerInputLength, backspaceIsPressed, playerLastInput} = storeToRefs(typingstatestore)
+  const typingstore = typingStore();
+  const {
+    playerInput,
+    deletedValue,
+    playerInputLength,
+    backspaceIsPressed,
+    playerLastInput,
+  } = storeToRefs(typingstore);
 
-    const mainstore = mainStore()
-    const {currentTest} = storeToRefs(mainstore)
+  const mainstore = mainStore();
+  const { currentTest } = storeToRefs(mainstore);
 
-    const {test} = currentTest.value
+  const { test } = currentTest.value;
 
-    const timerstore = timerStore()
-    const { characterEqualityArray} = storeToRefs(timerstore)
+  const timerstore = timerStore();
+  const { characterEqualityArray } = storeToRefs(timerstore);
 
-    if (toggleCustomModal.value) return // temporary --------- will fix later
+  if (toggleCustomModal.value) return; // temporary --------- will fix later
 
-    if (value === 'delete') {
-        deletedValue.value = playerInput.value.slice(-1);
-        playerInput.value = playerInput.value.slice(0, -1);
-    } else {
-        playerInput.value += value;
-    }
+  if (value === "delete") {
+    deletedValue.value = playerInput.value.slice(-1);
+    playerInput.value = playerInput.value.slice(0, -1);
+  } else {
+    playerInput.value += value;
+  }
 
-    if (backspaceIsPressed.value) {
-        let equality = deletedValue.value === test[playerInputLength.value]
-        if (equality) correctCharCount.value--
-        else incorrectCharCount.value--
+  if (backspaceIsPressed.value) {
+    let equality = deletedValue.value === test[playerInputLength.value];
+    if (equality) correctCharCount.value--;
+    else incorrectCharCount.value--;
 
-        characterEqualityArray.value.push(equality)
-    } 
-    
-    else {
-        let equality = playerLastInput.value === test[playerInputLength.value - 1]
-        if (equality) correctCharCount.value++
-        else incorrectCharCount.value++
+    characterEqualityArray.value.push(equality);
+  } else {
+    let equality = playerLastInput.value === test[playerInputLength.value - 1];
+    if (equality) correctCharCount.value++;
+    else incorrectCharCount.value++;
 
-        characterEqualityArray.value.push(equality)
-    }
+    characterEqualityArray.value.push(equality);
+  }
 }

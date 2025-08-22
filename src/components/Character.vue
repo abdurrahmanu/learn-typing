@@ -1,258 +1,284 @@
 <template>
-    <div 
-    id="focus" 
-    aria-hidden="true" 
-    ref="charEl"  
-    class="relative inline">
-        <Cursor :index="currentIndex" />
-        <div 
-        :class="[!settings['no-space'] && 'whitespace-pre-wrap']" 
-        class="relative inline">
-            <span  
-            :class="[!blind && className, blurStyle, pulseStyle]"
-            class="relative transition-opacity duration-75">
-                {{ character }}
-            </span>
-        </div>
+  <div id="focus" aria-hidden="true" ref="charEl" class="relative inline">
+    <Cursor :index="currentIndex" />
+    <div
+      :class="[!settings['no-space'] && 'whitespace-pre-wrap']"
+      class="relative inline"
+    >
+      <span
+        :class="[!blind && className, blurStyle, pulseStyle]"
+        class="relative transition-opacity duration-75"
+      >
+        {{ character }}
+      </span>
     </div>
+  </div>
 </template>
 
 <script setup>
 const className = ref({
-    'text-slate-500': true,
-})
+  "text-slate-500": true,
+});
 
-const timerstore = timerStore()
-const {beatCountdown} = storeToRefs(timerstore)
+const timerstore = timerStore();
+const { beatCountdown } = storeToRefs(timerstore);
 
-const typingstatestore = typingStore()
-const {playerInputLength, testCompleted, beginTest, focus, playerLastInput, typedWhiteSpaces, spaces, backspaceIsPressed, enterKey} = storeToRefs(typingstatestore)
+const typingstore = typingStore();
+const {
+  playerInputLength,
+  testCompleted,
+  beginTest,
+  focus,
+  playerLastInput,
+  typedWhiteSpaces,
+  spaces,
+  backspaceIsPressed,
+  enterKey,
+} = storeToRefs(typingstore);
 
-const themestore = themeStore()
-const { theme } = storeToRefs(themestore)
+const themestore = themeStore();
+const { theme } = storeToRefs(themestore);
 
-const mainstore = mainStore()
-const { currentTest, testEl, allSpacesIndex, scrollTextContainer, scrollDistance, } = storeToRefs(mainstore)
-const charEl = ref(null)
+const mainstore = mainStore();
+const {
+  currentTest,
+  testEl,
+  allSpacesIndex,
+  scrollTextContainer,
+  scrollDistance,
+} = storeToRefs(mainstore);
+const charEl = ref(null);
 
-const {test} = currentTest.value
+const { test } = currentTest.value;
 
-const settingstore = settingsStore()
-const { settings, lineHeight, testHeight, contentFitHeight , testLines} = storeToRefs(settingstore)
+const settingstore = settingsStore();
+const { settings, lineHeight, testHeight, contentFitHeight, testLines } =
+  storeToRefs(settingstore);
 
 const props = defineProps({
-    character: String,
-    index: Number,
-})
+  character: String,
+  index: Number,
+});
 
-const currentIndex = computed(() => playerInputLength.value === props.index)
-const equality = computed(() => playerLastInput.value === test[props.index])
-const blind = computed(() => settings.value['blind-mode'])
-const font = computed(() => settings.value['fontsize'])
+const currentIndex = computed(() => playerInputLength.value === props.index);
+const equality = computed(() => playerLastInput.value === test[props.index]);
+const blind = computed(() => settings.value["blind-mode"]);
+const font = computed(() => settings.value["fontsize"]);
 
 onMounted(() => {
-    watch(currentIndex, (isNextChar) => {
-        let isLastChar = !isNextChar && playerInputLength.value === test.length
-        
-        if (isNextChar || isLastChar) {    
-            
-            if (!backspaceIsPressed.value && test[props.index - 1] === ' ') {
-                spaces.value[props.index] = ' '            
+  watch(currentIndex, (isNextChar) => {
+    let isLastChar = !isNextChar && playerInputLength.value === test.length;
+
+    if (isNextChar || isLastChar) {
+      if (!backspaceIsPressed.value && test[props.index - 1] === " ") {
+        spaces.value[props.index] = " ";
+      }
+
+      if (backspaceIsPressed.value && test[props.index] === " ") {
+        delete spaces.value[props.index + 1];
+      }
+
+      if (charEl.value) {
+        const height = Math.min(testHeight.value, contentFitHeight.value);
+        const testTop = testEl.value.getBoundingClientRect().top;
+        const testBottom = testEl.value.getBoundingClientRect().bottom;
+        const charTop = charEl.value.getBoundingClientRect().top;
+        const charBottom = charEl.value.getBoundingClientRect().bottom;
+        const charFullHeight = font.value * lineHeight.value;
+        const charLineHeightTop = (charFullHeight - font.value) / 2;
+
+        const prevCharBottom =
+          charEl.value.previousElementSibling &&
+          charEl.value.previousElementSibling.getBoundingClientRect().bottom;
+        const prevCharTop =
+          charEl.value.previousElementSibling &&
+          charEl.value.previousElementSibling.getBoundingClientRect().top;
+        const nextCharTop =
+          charEl.value.nextElementSibling &&
+          charEl.value.nextElementSibling.getBoundingClientRect().top;
+
+        const bottomLine = charBottom + charLineHeightTop >= testBottom;
+        const lastScrolledLine = charTop <= testTop && nextCharTop > testTop;
+
+        const nextCharIsNextLine = nextCharTop > prevCharBottom;
+        const firstCharInNextLIne =
+          nextCharTop > prevCharBottom && charTop === nextCharTop;
+        const lastCharInPrevLine =
+          nextCharTop > charBottom && charTop === prevCharTop;
+
+        nextCharIsNextLine ? (enterKey.value = true) : (enterKey.value = false);
+
+        if (firstCharInNextLIne) {
+          if (!backspaceIsPressed.value) {
+            if (bottomLine) {
+              scrollDistance.value +=
+                (height * (testLines.value - 1 || 1)) / testLines.value;
+              scrollTextContainer.value = {
+                top: scrollDistance.value,
+              };
             }
-
-            if (backspaceIsPressed.value && test[props.index] === ' ') {
-                delete spaces.value[props.index + 1]
-            }
-             
-            if (charEl.value) {    
-                const height = Math.min(testHeight.value, contentFitHeight.value)                
-                const testTop = testEl.value.getBoundingClientRect().top
-                const testBottom = testEl.value.getBoundingClientRect().bottom
-                const charTop = charEl.value.getBoundingClientRect().top
-                const charBottom = charEl.value.getBoundingClientRect().bottom
-                const charFullHeight = (font.value * lineHeight.value)
-                const charLineHeightTop = (charFullHeight - font.value)/2
-
-                const prevCharBottom = charEl.value.previousElementSibling && charEl.value.previousElementSibling.getBoundingClientRect().bottom 
-                const prevCharTop = charEl.value.previousElementSibling && charEl.value.previousElementSibling.getBoundingClientRect().top 
-                const nextCharTop = charEl.value.nextElementSibling && charEl.value.nextElementSibling.getBoundingClientRect().top
-
-                const bottomLine = charBottom + charLineHeightTop >= testBottom
-                const lastScrolledLine = charTop <= testTop && nextCharTop > testTop
-
-                const nextCharIsNextLine = nextCharTop > prevCharBottom
-                const firstCharInNextLIne = nextCharTop > prevCharBottom  && charTop === nextCharTop        
-                const lastCharInPrevLine = nextCharTop > charBottom && charTop === prevCharTop
-
-                nextCharIsNextLine ? enterKey.value = true : enterKey.value = false
-
-                if (firstCharInNextLIne) {
-                    if (!backspaceIsPressed.value) {
-                        if (bottomLine) {
-                            scrollDistance.value += height * ((testLines.value - 1) || 1)/testLines.value
-                            scrollTextContainer.value = {
-                                top: scrollDistance.value
-                            }
-                        }
-                    }
-                }
-
-                if (lastCharInPrevLine) {
-                    if (backspaceIsPressed.value) {
-                        if (lastScrolledLine) {
-                            scrollDistance.value -= height * ((testLines.value - 1) || 1)/testLines.value
-                            scrollTextContainer.value = {
-                                top: scrollDistance.value
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (playerInputLength.value === test.length) {
-                if (settings.value.countdown) beatCountdown.value = true
-                testCompleted.value = true
-                beginTest.value = false
-                focus.value = false
-            }
+          }
         }
-    })
-})
+
+        if (lastCharInPrevLine) {
+          if (backspaceIsPressed.value) {
+            if (lastScrolledLine) {
+              scrollDistance.value -=
+                (height * (testLines.value - 1 || 1)) / testLines.value;
+              scrollTextContainer.value = {
+                top: scrollDistance.value,
+              };
+            }
+          }
+        }
+      }
+
+      if (playerInputLength.value === test.length) {
+        if (settings.value.countdown) beatCountdown.value = true;
+        testCompleted.value = true;
+        beginTest.value = false;
+        focus.value = false;
+      }
+    }
+  });
+});
 
 watch([currentIndex], ([newCurrent]) => {
-    className.value = {
-        // UNTYPED CHARS
-        'text-slate-500': theme.value === 'dark' && props.index > playerInputLength.value,
-        'text-zinc-500': theme.value === 'white' && props.index > playerInputLength.value,
+  className.value = {
+    // UNTYPED CHARS
+    "text-slate-500":
+      theme.value === "dark" && props.index > playerInputLength.value,
+    "text-zinc-500":
+      theme.value === "white" && props.index > playerInputLength.value,
 
-        // CORRECT CHARS
-        'text-green-400': !blind.value && !newCurrent && equality.value && theme.value === 'dark'&& !blind.value,
-        'text-green-500': !blind.value && !newCurrent && equality.value && theme.value === 'white' && !blind.value,
-        
-        // INCORRECT CHARS
-        'text-red-500': !blind.value && !currentIndex.value && !equality.value && theme.value === 'dark',
-        'text-red-600': !blind.value && !currentIndex.value && !equality.value && theme.value === 'white',
+    // CORRECT CHARS
+    "text-green-400":
+      !blind.value &&
+      !newCurrent &&
+      equality.value &&
+      theme.value === "dark" &&
+      !blind.value,
+    "text-green-500":
+      !blind.value &&
+      !newCurrent &&
+      equality.value &&
+      theme.value === "white" &&
+      !blind.value,
 
-        'opacity-100 animate-pulse' : (settings.value.cursor === 'pulse' || settings.value.cursor === 'word-pulse') && props.character === ' ',
-    }
-})
+    // INCORRECT CHARS
+    "text-red-500":
+      !blind.value &&
+      !currentIndex.value &&
+      !equality.value &&
+      theme.value === "dark",
+    "text-red-600":
+      !blind.value &&
+      !currentIndex.value &&
+      !equality.value &&
+      theme.value === "white",
+
+    "opacity-100 animate-pulse":
+      (settings.value.cursor === "pulse" ||
+        settings.value.cursor === "word-pulse") &&
+      props.character === " ",
+  };
+});
 
 const blindStyle = computed(() => {
-    return
-})
+  return;
+});
 
 const blurStyle = computed(() => {
-    if (settings.value.blur) {        
-        return allSpacesIndex.value[typedWhiteSpaces.value + 1] && props.index > allSpacesIndex.value[typedWhiteSpaces.value + 1] ? 'blur-[7px]' : props.index > allSpacesIndex.value[typedWhiteSpaces.value] ? 'blur-[1px]' : ''
-    }
-})
+  if (settings.value.blur) {
+    return allSpacesIndex.value[typedWhiteSpaces.value + 1] &&
+      props.index > allSpacesIndex.value[typedWhiteSpaces.value + 1]
+      ? "blur-[7px]"
+      : props.index > allSpacesIndex.value[typedWhiteSpaces.value]
+      ? "blur-[1px]"
+      : "";
+  }
+});
 
 const pulseStyle = computed(() => {
-    if (settings.value.cursor === 'word-pulse') {        
-        return (
-            typedWhiteSpaces.value === 0 && props.index < allSpacesIndex.value[0] + 1
-        ) || 
-        (
-            allSpacesIndex.value[typedWhiteSpaces.value - 1] + 1 &&
-            props.index > allSpacesIndex.value[typedWhiteSpaces.value -1] + 1 &&
-            props.index < allSpacesIndex.value[typedWhiteSpaces.value] + 1
-        ) ||
-        (
-            props.index > allSpacesIndex.value[allSpacesIndex.value.length - 1] + 1 &&
-            typedWhiteSpaces.value === allSpacesIndex.value.length
-        ) ?
-        'word-pulse ring-transparent' :
-        ''
-    } 
+  if (settings.value.cursor === "word-pulse") {
+    return (typedWhiteSpaces.value === 0 &&
+      props.index < allSpacesIndex.value[0] + 1) ||
+      (allSpacesIndex.value[typedWhiteSpaces.value - 1] + 1 &&
+        props.index > allSpacesIndex.value[typedWhiteSpaces.value - 1] + 1 &&
+        props.index < allSpacesIndex.value[typedWhiteSpaces.value] + 1) ||
+      (props.index >
+        allSpacesIndex.value[allSpacesIndex.value.length - 1] + 1 &&
+        typedWhiteSpaces.value === allSpacesIndex.value.length)
+      ? "word-pulse ring-transparent"
+      : "";
+  }
 
-    if (settings.value.cursor ==='pulse' && currentIndex.value) {
-        return 'animate-pulse'
-    }
-})
-
+  if (settings.value.cursor === "pulse" && currentIndex.value) {
+    return "animate-pulse";
+  }
+});
 </script>
 
 <style scoped>
 .word-pulse {
-    transition: all 2s ease;
-    animation: wordpulse 2s infinite;
+  transition: all 2s ease;
+  animation: wordpulse 2s infinite;
 }
 
 @keyframes wordpulse {
-    0% {
-        opacity: 70%
-    }
-    50% {
-        opacity: 45%;
-    }
-    100% {
-        opacity: 70%;
-    }
+  0% {
+    opacity: 70%;
+  }
+  50% {
+    opacity: 45%;
+  }
+  100% {
+    opacity: 70%;
+  }
 }
-
 
 .pulse {
-    transition: all 1.5s ease;
-    animation: pulse 1.5s infinite;
+  transition: all 1.5s ease;
+  animation: pulse 1.5s infinite;
 }
 
-
 @keyframes pulse {
-    0% {
-        opacity: 70%
-    }
-    50% {
-        opacity: 40%;
-    }
-    100% {
-        opacity: 70%;
-    }
+  0% {
+    opacity: 70%;
+  }
+  50% {
+    opacity: 40%;
+  }
+  100% {
+    opacity: 70%;
+  }
 }
 
 .smooth-cursor-forward {
-    transition: all 0.1s ease-out;
-    animation: forward 0.1s ease-out;
+  transition: all 0.1s ease-out;
+  animation: forward 0.1s ease-out;
 }
 
 @keyframes forward {
-    0% {
-        transform: translateX(-70%)
-    }
-    100% {
-        transform: translateX(0%);
-    }
+  0% {
+    transform: translateX(-70%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
 }
 
 .smooth-cursor-backward {
-    transition: all 0.2s ease;
-    animation: backwards 0.2s ease;
+  transition: all 0.2s ease;
+  animation: backwards 0.2s ease;
 }
 
 @keyframes backwards {
-    0% {
-        transform: translateX(80%)
-    }
-    100% {
-        transform: translateX(0%);
-    }
+  0% {
+    transform: translateX(80%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
 }
 </style>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

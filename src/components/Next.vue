@@ -1,41 +1,47 @@
 <template>
-    <div id="focus" class="mx-auto w-fit" v-if="homeOrResultRoute">        
-        <div v-if="mobile" @click="next" class="next">NEXT</div>
-        <div v-else class="m-auto w-fit">Press <span @click="next" class="next">{{ testCompleted ? 'Enter' : 'Esc' }}</span> for next</div>
+  <div id="focus" class="mx-auto w-fit" v-if="homeOrResultRoute">
+    <div v-if="mobile" @click="next" class="next">NEXT</div>
+    <div v-else class="m-auto w-fit">
+      Press
+      <span @click="next" class="next">{{
+        testCompleted ? "Enter" : "Esc"
+      }}</span>
+      for next
     </div>
+  </div>
 </template>
 
 <script setup>
-const mobile = isMobile()
+const mobile = isMobile();
 
-const typingstatestore = typingStore()
-const {testCompleted} = storeToRefs(typingstatestore)
+const typingstore = typingStore();
+const { testCompleted } = storeToRefs(typingstore);
 
-const nextstore = nextStore()
-const {goNext} = storeToRefs(nextstore)
+const nextstore = nextStore();
+const { goNext } = storeToRefs(nextstore);
 
-const mainstore = mainStore()
-const { route} = storeToRefs(mainstore)
+const mainstore = mainStore();
+const { route } = storeToRefs(mainstore);
 
-window.addEventListener('keydown', event => {
-    if (event.key === 'Enter' && testCompleted.value) {
-        next()
-    }
-})
+window.addEventListener("keydown", (event) => {
+  if (event.key === "Enter" && testCompleted.value) {
+    next();
+  }
+});
 
 const next = () => {
-    goNext.value = true
-}
+  goNext.value = true;
+};
 
 const homeOrResultRoute = computed(() => {
-    return route.value == 'home' || route.value == 'result'
-})
+  return route.value == "home" || route.value == "result";
+});
 
-useWatchers({ goNext })
-</script> 
+useWatcher({ goNext });
+</script>
 
 <style scoped>
 .next {
-    @apply py-1 px-5 m-auto text-xs text-center border rounded-sm w-fit font-bold border-neutral-600
+  @apply py-1 px-5 m-auto text-xs text-center border rounded-sm w-fit font-bold border-neutral-600;
 }
 </style>

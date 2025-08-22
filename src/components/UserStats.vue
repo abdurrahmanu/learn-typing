@@ -1,10 +1,16 @@
 <template>
-  <div class="w-[95%] max-w-[1000px] mx-auto mt-10 p-10 bg-white rounded-xl shadow-xl">
-      <h2 class="text-xl pb-3 font-semibold text-black tracking-wide">User History</h2>
+  <div
+    class="w-[95%] max-w-[1000px] mx-auto mt-10 p-10 bg-white rounded-xl shadow-xl"
+  >
+    <h2 class="text-xl pb-3 font-semibold text-black tracking-wide">
+      User History
+    </h2>
 
     <div class="overflow-hidden">
       <table class="w-full text-left text-sm text-neutral-800">
-        <thead class="bg-neutral-100 text-neutral-700 text-sm uppercase tracking-wide">
+        <thead
+          class="bg-neutral-100 text-neutral-700 text-sm uppercase tracking-wide"
+        >
           <tr>
             <th class="px-4 py-3">WPM</th>
             <th class="px-4 py-3">Accuracy</th>
@@ -36,11 +42,8 @@
         >
           LOAD MORE
         </button>
-        <p
-          class="text-sm text-neutral-500"
-          v-else
-        >
-        {{ testHistory.length ? 'All results loaded' : '' }}
+        <p class="text-sm text-neutral-500" v-else>
+          {{ testHistory.length ? "All results loaded" : "" }}
         </p>
       </div>
     </div>
@@ -48,12 +51,12 @@
 </template>
 
 <script setup>
-const userstore = userDataStore()
-const {userHistory} = storeToRefs(userstore)
+const userstore = userStore();
+const { userHistory } = storeToRefs(userstore);
 
 const testHistory = computed(() => {
-  return userHistory.value.tests
-})
+  return userHistory.value.tests;
+});
 
 const rowsToShow = ref(5);
 
@@ -68,9 +71,9 @@ const loadMore = () => {
 const formatDate = (dateStr) => {
   const d = new Date(dateStr);
   return d.toLocaleDateString(undefined, {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
+    month: "short",
+    day: "numeric",
+    year: "numeric",
   });
 };
 </script>

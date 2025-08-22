@@ -1,86 +1,99 @@
 <template>
-    <div class="relative">
-        <div>
-            <div class="flex items-center gap-2 px-1" :id="!mobile && 'focus'">  
-                <div class="w-5">
-                    <pauseTimer :id="!mobile && 'focus'" v-if="!isCountdown" @click="toggleTimer" />
-                    <playTimer :id="!mobile && 'focus'" v-else @click="toggleTimer" />
-                </div>
-
-                <div 
-                class="w-[30px] text-center"
-                :class="[isCountdown && level === 'beginner' ? 'text-blue-500' : '' ]" 
-                @click="changeLevel('beginner')">{{timer('beginner')}}s</div>
-
-                <div 
-                class="w-[30px] text-center"
-                :class="[isCountdown && level === 'amateur' ? 'text-blue-500' : '' ]" 
-                @click="changeLevel('amateur')">{{timer('amateur')}}s</div>
-
-                <div 
-                class="w-[30px] text-center"
-                :class="[isCountdown && level === 'expert' ? 'text-blue-500' : '' ]" 
-                @click="changeLevel('expert')">{{ timer('expert') }}s</div>
-            </div>
+  <div class="relative">
+    <div>
+      <div class="flex items-center gap-2 px-1" :id="!mobile && 'focus'">
+        <div class="w-5">
+          <pauseTimer
+            :id="!mobile && 'focus'"
+            v-if="!isCountdown"
+            @click="toggleTimer"
+          />
+          <playTimer :id="!mobile && 'focus'" v-else @click="toggleTimer" />
         </div>
+
+        <div
+          class="w-[30px] text-center"
+          :class="[isCountdown && level === 'beginner' ? 'text-blue-500' : '']"
+          @click="changeLevel('beginner')"
+        >
+          {{ timer("beginner") }}s
+        </div>
+
+        <div
+          class="w-[30px] text-center"
+          :class="[isCountdown && level === 'amateur' ? 'text-blue-500' : '']"
+          @click="changeLevel('amateur')"
+        >
+          {{ timer("amateur") }}s
+        </div>
+
+        <div
+          class="w-[30px] text-center"
+          :class="[isCountdown && level === 'expert' ? 'text-blue-500' : '']"
+          @click="changeLevel('expert')"
+        >
+          {{ timer("expert") }}s
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script setup>
-const mobile = isMobile()
-const level = ref('beginner')
+const mobile = isMobile();
+const level = ref("beginner");
 
-const timerstore = timerStore()
-const {beginCountdown, timerID} = storeToRefs(timerstore)
+const timerstore = timerStore();
+const { beginCountdown, timerID } = storeToRefs(timerstore);
 
-const countstore = countdownStore()
-const {countdown} = storeToRefs(countstore)
-const {timer} = countstore
+const countstore = countdownStore();
+const { countdown } = storeToRefs(countstore);
+const { timer } = countstore;
 
-const typingstatestore = typingStore()
-const {testCompleted} = storeToRefs(typingstatestore)
+const typingstore = typingStore();
+const { testCompleted } = storeToRefs(typingstore);
 
-const settingstore = settingsStore()
-const {settings} = storeToRefs(settingstore)
-const {updateSingleSetting} = settingstore
+const settingstore = settingsStore();
+const { settings } = storeToRefs(settingstore);
+const { updateSingleSetting } = settingstore;
 
-const difficulty = computed(() => settings.value.difficulty)
+const difficulty = computed(() => settings.value.difficulty);
 
 const go = () => {
-    updateSingleSetting('repeat', true)
-}
+  updateSingleSetting("repeat", true);
+};
 
 const isCountdown = computed(() => {
-    return settings.value['countdown']
-})
+  return settings.value["countdown"];
+});
 
 const toggleTimer = () => {
-    settings.value['countdown'] = !settings.value['countdown']
-}
+  settings.value["countdown"] = !settings.value["countdown"];
+};
 
-watch(countdown, newVal => {
-    if (newVal === 0) {
-        clearInterval(timerID.value)
-        if (beginCountdown.value) testCompleted.value = true
-        else countdown.value = timer(level.value)
-    }
-})
+watch(countdown, (newVal) => {
+  if (newVal === 0) {
+    clearInterval(timerID.value);
+    if (beginCountdown.value) testCompleted.value = true;
+    else countdown.value = timer(level.value);
+  }
+});
 
-watch(difficulty, newVal => changeLevel(difficulty.value))
+watch(difficulty, (newVal) => changeLevel(difficulty.value));
 
 const changeLevel = (lvl) => {
-    level.value = lvl
-    if (!isCountdown.value) settings.value['countdown'] = true
-    countdown.value = timer(lvl)
-    go()
-}
+  level.value = lvl;
+  if (!isCountdown.value) settings.value["countdown"] = true;
+  countdown.value = timer(lvl);
+  go();
+};
 
 onMounted(() => {
-    countdown.value = timer(level.value)
-})
+  countdown.value = timer(level.value);
+});
 
 onUpdated(() => {
-    countdown.value = timer(level.value)
-    // go()
-})
+  countdown.value = timer(level.value);
+  // go()
+});
 </script>
