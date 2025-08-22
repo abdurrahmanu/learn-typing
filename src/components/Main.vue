@@ -21,5 +21,3 @@ const { focus, beginTest } = storeToRefs(typingstore)
     @apply font-light bg-inherit max-w-[2000px] mx-auto select-none min-h-[100dvh] container transition-all duration-300
 }
 </style>
-
-

@@ -32,11 +32,12 @@
         <p class="text-2xl font-bold">{{ stats.streakDays }}</p>
         <p class="text-sm text-neutral-600">Streak Days</p>
       </div>
-
+      
+<!--
       <div class="bg-neutral-200 p-4 rounded-xl col-span-2 sm:col-span-3">
         <p class="text-xl font-semibold text-black">{{ stats.highestRank }}</p>
         <p class="text-sm text-neutral-600">Highest Rank Ever</p>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

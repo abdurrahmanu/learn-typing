@@ -1,5 +1,6 @@
 export default function useEventListener(event, listener, remove, target) { 
-    if (target && isMobile()) {
+    let mobile = isMobile()
+    if (target && mobile) {
         if (!remove) target.addEventListener('input', listener);
         else target.removeEventListener('input', listener);
     }
