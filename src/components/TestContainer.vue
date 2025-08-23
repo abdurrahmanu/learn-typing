@@ -1,10 +1,9 @@
 <template>
   <div :class="[mobile ? 'pt-6' : 'pt-14']">
-    <div :style="containerStyle" class="relative w-fit mx-auto space-y-1">
+    <div :style="containerStyle" class="relative w-fit mx-auto space-y-1 min-h-[50px]">
       <div class="max-w-[1000px] w-full mx-auto">
         <Range class="mx-auto" />
       </div>
-
       <div class="flex items-center pb-2 justify-between m-auto relative">
         <p v-if="!settings['countdown']"></p>
         <Countdown v-else :start="beginCountdown" />
@@ -34,7 +33,7 @@ const nextstore = nextStore();
 const { goNext } = storeToRefs(nextstore);
 
 const mainstore = mainStore();
-const { scrollTextContainer } = storeToRefs(mainstore);
+const { scrollTextContainer, currentTest } = storeToRefs(mainstore);
 
 const settingstore = settingsStore();
 const { settings, testStyle } = storeToRefs(settingstore);

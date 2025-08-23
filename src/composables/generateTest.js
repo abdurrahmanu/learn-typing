@@ -11,7 +11,7 @@ export const generateTest = async () => {
 
     currentTest.value.test = ''
     currentTest.value = await getTest()
-    
+
     for (let index = 0; index < test.value.length; index++) {
         if (test.value[index] === ' ') {
             allSpacesIndex.value.push(index)
@@ -23,7 +23,7 @@ export const generateTest = async () => {
 
         for (let index = 0; index < Math.ceil(allSpacesIndex.value.length / 2); index++) {
             let word = currentTest.value.test.slice(allSpacesIndex.value[index - 1], allSpacesIndex.value[index])
-            let firstWordSpace = (index === 0 ? ' ' : '') 
+            let firstWordSpace = (index === 0 ? ' ' : '')
 
             text += word + firstWordSpace + word
         }
@@ -39,8 +39,3 @@ export const generateTest = async () => {
 
     storedTest.value = currentTest.value
 }
-
-
-
-
-

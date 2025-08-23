@@ -9,16 +9,15 @@
         class="container-style"
         :style="style"
         :class="[
+          centerLoader,
           wordBreak,
           borderStyle,
           settings.font,
           textPosition === 'center' && 'text-center',
           textPosition === 'left' && 'text-left',
-        ]"
-      >
-        <focusButton
-          class="fill-parent center-text-xy text-sm z-[1] backdrop-blur-[6px] font-bold"
-        />
+        ]">
+        <TestLoader v-if="!currentTest?.test"/>
+        <FocusTest class="focus-button fill-parent center-text-xy"/>
         <Character
           v-for="(character, index) in test"
           :index="index"
@@ -31,6 +30,8 @@
 </template>
 
 <script setup>
+import FocusButton from './FocusTest.vue';
+
 const typingstore = typingStore();
 const { inputEl } = storeToRefs(typingstore);
 
@@ -60,6 +61,10 @@ const borderStyle = computed(() => {
   );
 });
 
+const centerLoader = computed(() => {
+  if (!currentTest.value.test) return 'flex justify-center items-center'
+})
+
 function focusInput() {
   if (isTouchScreenDevice()) {
     inputEl.value.focus();
@@ -75,6 +80,10 @@ const style = computed(() => ({
 
 <style scoped>
 .container-style {
-  @apply scroll-smooth px-2 mx-auto overflow-hidden relative;
+  @apply scroll-smooth px-2 mx-auto overflow-hidden relative ;
+}
+
+.focus-button {
+  @apply text-sm z-[1] backdrop-blur-[6px] font-bold
 }
 </style>

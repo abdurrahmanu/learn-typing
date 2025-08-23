@@ -1,13 +1,10 @@
 <template>
-  <div
-    ref="testContainerEl"
-    v-if="!testCompleted"
-    class="mx-auto relative max-w-[1500px] overflow-hidden w-full py-10 flex-1 bg-inherit"
-  >
+  <div v-if="!testCompleted" ref="testContainerEl" class="home">
     <QuickSettings />
     <TestContainer />
   </div>
 </template>
+
 <script setup>
 const settingstore = settingsStore();
 const { settingsToUpdate, toggleCapsToast, pauseTyping, toggleCustomModal } =
@@ -144,3 +141,9 @@ useWatcher({
   beginTest,
 });
 </script>
+
+<style scoped>
+.home {
+  @apply mx-auto relative max-w-[1500px] overflow-hidden w-full py-10 flex-1 bg-inherit
+}
+</style>
