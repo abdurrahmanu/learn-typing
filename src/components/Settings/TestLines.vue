@@ -1,14 +1,14 @@
 <template>
     <div>
-        <p>{{ testLines }}</p>
-        <input 
-        name="range" 
-        type="range" 
+        <input
+        name="range"
+        type="range"
         step="1"
         min="1"
         :max="mobile ? 3 : 15"
-        class="range-style" 
+        class="range-style"
         v-model="testLines"/>
+        <p class="px-2">{{ testLines }}</p>
     </div>
 </template>
 

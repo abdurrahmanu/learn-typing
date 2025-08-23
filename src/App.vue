@@ -21,9 +21,9 @@ const {login, user, data} = storeToRefs(authstore)
 const connectstore = connectStore()
 const {loadingApp} = storeToRefs(connectstore)
 
-onMounted( async () => {   
+onMounted( async () => {
   loadingApp.value = false
-  
+
   onAuthStateChanged( auth, async (_) => {
     user.value = _
 
@@ -37,12 +37,12 @@ onMounted( async () => {
       if (!data.value) {
         data.value = await addSingleDoc(user.value.uid)
       }
-      
+
       if (data.value) {
         login.value = true
       }
     }
-    
+
     else {
       loadingApp.value = false
       login.value = false
@@ -57,7 +57,7 @@ onMounted( async () => {
       if (data.value) {
         getUser()
         generateTest()
-      } 
+      }
     }
   })
 })
@@ -118,7 +118,15 @@ onUnmounted(() => {
 }
 
 .range-style {
-    @apply w-[70%] h-1 outline-none
+    @apply w-[100%] h-1 outline-none
+}
+
+.inner-shadow-light {
+  @apply shadow-[inset_0_2px_8px_rgba(0,0,0,0.3)]
+}
+
+.inner-shadow-dark {
+  @apply shadow-[inset_0_2px_6px_rgba(255,255,255,0.15)]
 }
 
 .amiri {
@@ -190,4 +198,3 @@ onUnmounted(() => {
 }
 
 </style>
-

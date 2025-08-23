@@ -1,14 +1,14 @@
 <template>
     <div>
-        <p>{{ testWidth }} characters</p>
         <input
-        name="range" 
-        type="range" 
+        name="range"
+        type="range"
         step="1"
         min="20"
         :max="100"
-        class="range-style" 
+        class="range-style"
         v-model="testWidth"/>
+        <p class="px-2">{{ testWidth }} characters</p>
     </div>
 </template>
 

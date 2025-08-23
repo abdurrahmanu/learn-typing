@@ -30,8 +30,6 @@
 </template>
 
 <script setup>
-import FocusButton from './FocusTest.vue';
-
 const typingstore = typingStore();
 const { inputEl } = storeToRefs(typingstore);
 

@@ -1,14 +1,14 @@
 <template>
-    <div>
-        <p class="flex flex-col justify-center pb-1" :style="{'font-size': fontSize + 'px', 'min-height': maxFontSize + 'px'}">{{ +font }}px</p>
-        <input 
-        name="range" 
-        type="range" 
+    <div class="space-y-3">
+        <input
+        name="range"
+        type="range"
         step="1"
         :min="minFontSize"
         :max="maxFontSize"
-        class="range-style" 
+        class="range-style"
         v-model="range"/>
+        <p class="px-2 leading-none" :style="{'font-size': settings.fontsize + 'px', 'height': maxFontSize + 10 + 'px'}">{{ +font }}px</p>
     </div>
 </template>
 
@@ -25,15 +25,3 @@ watch(range, (newVal) => {
     emit('emitUpdate', font)
 })
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
