@@ -1,16 +1,11 @@
 <template>
-  <div class="md:w-[40%] w-full flex flex-wrap px-3">
-    <div class="relative flex flex-wrap w-full gap-4">
-      <p
-        @click="update(option)"
-        v-for="(option, index) in options"
-        :key="index"
-        :class="[selectedOption(option), theme === 'dark' ? 'inner-shadow-dark' : 'inner-shadow-light']"
-        class="text-center font-mono h-fit font-bold w-full p-[2px] px-10 max-w-[300px] rounded-md uppercase"
-      >
-        {{ option }}
-      </p>
-    </div>
+  <div class="md:w-[40%] w-full flex flex-wrap px-3 py-1">
+    <ToggleSwitch
+    v-if="options.length"
+    :options="options"
+    :setting="setting"
+    @update="update" />
+
     <div v-for="(comp, name_, index) in components" :key="index" class="w-full">
       <component
         :is="comp"
@@ -28,6 +23,7 @@ import FontRange from "./FontRange.vue";
 import TestLines from "./TestLines.vue";
 import TestWidth from "./TestWidth.vue";
 import Fonts from "./Fonts.vue";
+import ToggleSwitch from "../ToggleSwitch.vue";
 
 const themestore = themeStore();
 const { theme } = storeToRefs(themestore);
@@ -72,18 +68,5 @@ const update = (option) => {
   userOption.value = option;
   let value = option === "on" ? true : option === "off" ? false : option;
   updateSingleSetting(props.setting, value);
-};
-
-const selectedOption = (option) => {
-  let style = "";
-  if (userOption.value === option) {
-    if (theme.value === "dark") style = "bg-slate-300 text-black";
-    else style = "bg-neutral-600 text-white";
-  } else {
-    if (theme.value === "dark") style = "";
-    else style = "ring-black hover:ring-4";
-  }
-
-  return style;
 };
 </script>

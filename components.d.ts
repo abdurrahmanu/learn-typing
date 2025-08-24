@@ -94,6 +94,7 @@ declare module 'vue' {
     TextAlign: typeof import('./src/components/TextAlign.vue')['default']
     Theme: typeof import('./src/components/Theme.vue')['default']
     Toast: typeof import('./src/components/Toast.vue')['default']
+    ToggleSwitch: typeof import('./src/components/ToggleSwitch.vue')['default']
     UpwardsFinger: typeof import('./src/components/svg/upwardsFinger.vue')['default']
     User: typeof import('./src/components/svg/user.vue')['default']
     UserBestStats: typeof import('./src/components/UserBestStats.vue')['default']

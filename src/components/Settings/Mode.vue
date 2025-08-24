@@ -1,9 +1,9 @@
 <template>
     <div class="space-y-1 md:w-[57%] px-3">
-        <label :class="[mobile ? 'text-sm' : 'text-[18px]']" class="font-bold uppercase w-fit flex items-center">
+        <label :class="[mobile ? 'text-sm' : 'text-base']" class="font-bold uppercase w-fit flex items-center">
             <div>{{ name }}</div>
         </label>
-        <p v-if="desc.length" :class="[mobile ? 'text-base' : 'text-[23px]']" class="text-justify leading-10">{{ desc }}</p>
+        <p v-if="desc.length" class="text-justify text-[17px] leading-7 font-extralight">{{ desc }}</p>
     </div>
 </template>
 

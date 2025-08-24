@@ -28,7 +28,7 @@ const modes = [
     name: "Cursor",
     setting: "cursor",
     desc: "Use your preferred cursor",
-    options: null,
+    options: [],
     extra: [],
   },
   // {
@@ -49,7 +49,7 @@ const modes = [
     name: "Font size",
     setting: "fontsize",
     desc: "Set your preferred font size",
-    options: null,
+    options: [],
     extra: [],
   },
   {
@@ -63,7 +63,7 @@ const modes = [
     name: "Fonts",
     setting: "font",
     desc: "",
-    options: null,
+    options: [],
     extra: [],
   },
   {

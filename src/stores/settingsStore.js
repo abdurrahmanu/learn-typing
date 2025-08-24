@@ -28,15 +28,15 @@ export const settingsStore = defineStore('settingsStore', () => {
 
     const customTests = ref({
         'demo': 'This is a custom test, you can add your own test, use the plus icon. This particular demo cannot be deleted.'
-    }) 
+    })
 
     const customQuotes = ref({
         'demo': 'This is a custom quote, you can add your own test, use the plus icon. This particular demo cannot be deleted.'
-    }) 
+    })
 
     const customWords = ref({
         'demo': 'gado'
-    }) 
+    })
 
     const nextstore = nextStore()
     const {goNext} = storeToRefs(nextstore)
@@ -46,8 +46,8 @@ export const settingsStore = defineStore('settingsStore', () => {
         'cursor': 'border',
         'repeat': false,
         'test-length': 'auto',
-        'words-type': 'frequent', 
-        'character-case': '',
+        'words-type': 'frequent',
+        'character-case': 'lower',
         'cursor': 'border',
         'test-type': 'words',
         'caps': false,
@@ -76,7 +76,7 @@ export const settingsStore = defineStore('settingsStore', () => {
     })
 
     const disableOption = ref({
-        'words-type': false, 
+        'words-type': false,
         'test-length': false,
     })
 
@@ -128,8 +128,8 @@ export const settingsStore = defineStore('settingsStore', () => {
                     name: 'words-type',
                     value: true
                 }
-            )        
-        } else {            
+            )
+        } else {
             disableOption.value['test-length'] = false
             disableOption.value['words-type'] = false
             settingsToUpdate.value.push(
@@ -137,13 +137,13 @@ export const settingsStore = defineStore('settingsStore', () => {
                     type: 'disableOption',
                     name: 'test-length',
                     value: false
-                }, 
+                },
                 {
                     type: 'disableOption',
                     name: 'words-type',
                     value: false
                 },
-            )       
+            )
         }
     }
 
@@ -156,39 +156,39 @@ export const settingsStore = defineStore('settingsStore', () => {
         let group = option
         let arr = ['arrangement', 'case', 'spaced']
 
-        if (arr.includes(group)) {       
+        if (arr.includes(group)) {
             if (selection === 'uppercase') {
                 if (settings.value['randomcase']) settings.value['randomcase'] = false
             }
-          
+
             if (selection === 'randomcase') {
                 if (settings.value['uppercase']) settings.value['uppercase'] = false
             }
-          
+
             if (selection === 'reverse') {
                 if (settings.value['jumble']) settings.value['jumble'] = false
             }
-            
+
             if (selection === 'jumble') {
                 if (settings.value['reverse']) settings.value['reverse'] = false
-            } 
+            }
         }
 
-        toggleQuickSetting(group, selection)   
+        toggleQuickSetting(group, selection)
     }
 
     const updateSingleSetting = (setting, newVal) => {
         let updateSettings = ['arrangement', 'character-case', 'words-type', 'caps', 'punctuation', 'test-type', 'caps',
         'numbers', 'backspace', 'difficulty', 'fonts', 'no-space','spaced', 'fontsize', 'double-words', 'blind-mode', 'countdown', 'capslock', 'test-length']
-        
-        if (settings.value[setting] === newVal) newVal = ''            
+
+        if (settings.value[setting] === newVal) newVal = ''
         settings.value[setting] = newVal
-        
+
         settingsToUpdate.value.push({
             type: 'settings',
             name: setting,
             value: newVal
-        })        
+        })
 
         if (updateSettings.includes(setting)) goNext.value = true
     }
@@ -206,7 +206,7 @@ export const settingsStore = defineStore('settingsStore', () => {
         settings,
         quickSettingss,
         hideElements,
-        checkQuickSettings, 
+        checkQuickSettings,
         updateSingleSetting,
         textPosition,
         pauseTyping,

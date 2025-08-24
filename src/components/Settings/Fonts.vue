@@ -1,18 +1,20 @@
 <template>
-    <div class="space-y-2 text-xl">
-        <p :class="settings.font" class="h-[50px] text-center">The lazy brown fox got into the hole</p>
-        <div class="flex gap-4 flex-wrap justify-center">
-            <div
-            v-for="font in fonts"
-            @click="newFont = font"
-            :key="font"
-            class="text-center h-fit w-full p-[2px] px-10 max-w-[300px] rounded-md"
-            :class="[font,
-            theme === 'dark' ? 'inner-shadow-dark' : 'inner-shadow-light',
-            currentFont(font)]">
-                <p class="px-2 min-w-[130px] hover:text-green-900 rounded-md py-1 text-center">{{ font }}</p>
-            </div>
-        </div>
+    <div class="py-1 space-y-2">
+        <select
+        v-model="newFont"
+        :class="[settings.font]"
+        class="px-4 py-2 appearance-none outline-none rounded-md text-black min-w-[300px]"
+        name=""
+        id="">
+            <option disabled value="Select font">Select font</option>
+            <option
+            class="px-3 bg-slate-200 appearance-none checked:bg-green-300"
+            :class="[font]"
+            v-for="(font, index) in fonts"
+            :key="index"
+            :value="font">{{ font }}</option>
+        </select>
+        <p :class="settings.font">The lazy brown fox got into the hole</p>
     </div>
 </template>
 
@@ -24,23 +26,18 @@ const settingstore = settingsStore()
 const { settings } = storeToRefs(settingstore)
 const {fonts} = settingstore
 
-const themestore = themeStore();
-const { theme } = storeToRefs(themestore);
 
-const currentFont = (font) => {
-    let style = "";
-    if (settings.value.font === font) {
-        if (theme.value === "dark") style = "bg-slate-300 text-black";
-        else style = "bg-neutral-600 text-white";
-    } else {
-        if (theme.value === "dark") style = "";
-        else style = "ring-black hover:ring-4";
-    }
-
-  return style;
-}
+const font = computed(() => {
+    return settings.value.font
+})
 
 watch(newFont, newVal => {
      emit('emitUpdate', newVal)
 })
+
+watch(font, newVal => {
+    newFont.value = settings.value.font
+})
+
+onMounted(() => newFont.value = settings.value.font)
 </script>
