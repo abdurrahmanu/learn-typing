@@ -7,7 +7,7 @@
 
 <script setup>
 const settingstore = settingsStore();
-const { settingsToUpdate, toggleCapsToast, pauseTyping, toggleCustomModal } =
+const { settingsToUpdate, showQuickSettings, toggleCapsToast, pauseTyping, toggleCustomModal } =
   storeToRefs(settingstore);
 
 const nextstore = nextStore();
@@ -31,7 +31,7 @@ function handleKeydown(event) {
     "insertReplacementText",
   ];
 
-  if (toggleCustomModal.value) return; // temporary --------- will fix later
+  if (toggleCustomModal.value || showQuickSettings.value) return; // temporary --------- will fix later
 
   if (pasteDropReplaceEvents.includes(eventType)) return;
 

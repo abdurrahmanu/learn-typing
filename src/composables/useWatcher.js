@@ -36,7 +36,7 @@ export default function useWatcher({
   const settingstore = settingsStore();
   const {
     settings,
-    hideElements,
+    showQuickSettings,
     toggleCapsToast,
     pauseTyping,
     settingsToUpdate,
@@ -168,7 +168,6 @@ export default function useWatcher({
       if (newVal) {
         pauseTyping.value = false;
         inputEl.value.focus();
-        if (isMobile()) newVal ? (hideElements.value = true) : "";
       } else {
         pauseTyping.value = true;
         inputEl.value.blur();

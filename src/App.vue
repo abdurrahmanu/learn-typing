@@ -10,7 +10,6 @@
 <script setup>
 import {auth} from './firebase'
 import { onAuthStateChanged } from 'firebase/auth'
-import AITestGenerator from './components/AITestGenerator.vue'
 
 const themestore = themeStore()
 const { appTheme } = storeToRefs(themestore)

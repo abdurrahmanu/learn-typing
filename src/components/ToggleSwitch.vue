@@ -1,9 +1,9 @@
 <template>
-    <div class="rounded-full font-bold flex items-center text-xs ring-[2px] ring-neutral-700">
+    <div class="rounded-full flex items-center text-xs ring-[2px] ring-neutral-700">
         <button
         v-for="(option, index) in options" :key="index"
         :class="[selectedOption(option)]"
-        class="flex-1 text-center uppercase px-6 rounded-full py-2"
+        class="flex-1 text-center uppercase px-4 rounded-full py-1"
         @click="update(option, index)">
         {{ option }}
         </button>
@@ -15,9 +15,6 @@ const emit = defineEmits(['update'])
 
 const settingstore = settingsStore()
 const { settings } = storeToRefs(settingstore)
-
-const themestore = themeStore();
-const { theme } = storeToRefs(themestore);
 
 const toggleIndex = ref(0)
 
@@ -36,9 +33,3 @@ const selectedOption = (opt) => {
     return value === opt && 'bg-green-600 text-white'
 }
 </script>
-
-<style scoped>
-.bg {
-    background: #b9b8b8;
-}
-</style>

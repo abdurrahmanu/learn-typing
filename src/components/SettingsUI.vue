@@ -2,7 +2,7 @@
   <div
     :class="[theme === 'dark' ? 'inner-shadow-dark' : 'inner-shadow-light']"
     class="max-w-[1000px] w-full mx-auto bg-inherit flex-1 overflow-scroll text-[20px]">
-    <SearchBar />
+    <!-- <SearchBar /> -->
     <div
       :class="[theme === 'dark' ? 'hover:bg-neutral-900 border-b-neutral-800' : 'hover:bg-zinc-200 border-b-neutral-400']"
       class="py-5 transition-all duration-75 relative w-[99%] mx-auto flex flex-col md:flex-row justify-between border-b-[1px]"
